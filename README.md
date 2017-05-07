@@ -1,4 +1,4 @@
-[![Language: Swift 3](https://img.shields.io/badge/language-swift3-f48041.svg?style=flat)](https://developer.apple.com/swift) ![Platform: iOS 10+](https://img.shields.io/badge/platform-iOS%2010%2B-blue.svg?style=flat)
+[![Language: Swift 3.1](https://img.shields.io/badge/language-swift3.1-f48041.svg?style=flat)](https://developer.apple.com/swift) ![Platform: iOS 10.3+](https://img.shields.io/badge/platform-iOS%2010.3%2B-blue.svg?style=flat)
 
 # WaterMe 2
 This is the followup to [WaterMe](http://www.saturdayapps.com). WaterMe was an unexpected success for me. The numbers for it are small potatoes compared to a regular app. But with 2k monthly active users, I feel compelled to provide an update with user requested features. I also want to use this chance to try to monetize the app. 
