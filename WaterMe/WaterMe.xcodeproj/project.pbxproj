@@ -14,6 +14,7 @@
 		50BB0F691EC0011800850FF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F671EC0011800850FF4 /* LaunchScreen.storyboard */; };
 		50BB0F6A1EC0011800850FF4 /* Subscription.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F681EC0011800850FF4 /* Subscription.storyboard */; };
 		50BB0F6C1EC001C200850FF4 /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F6B1EC001C200850FF4 /* Videos */; };
+		50BB0F711EC00E9500850FF4 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BB0F701EC00E9500850FF4 /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,8 @@
 		50BB0F671EC0011800850FF4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		50BB0F681EC0011800850FF4 /* Subscription.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Subscription.storyboard; sourceTree = "<group>"; };
 		50BB0F6B1EC001C200850FF4 /* Videos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Videos; sourceTree = "<group>"; };
+		50BB0F6F1EC00E8E00850FF4 /* WaterMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WaterMe.entitlements; sourceTree = "<group>"; };
+		50BB0F701EC00E9500850FF4 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		A628444B2D8DB663671AEDAA /* Pods-WaterMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.debug.xcconfig"; sourceTree = "<group>"; };
 		BD699BFA37D3AF3C06F2E16F /* Pods-WaterMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.release.xcconfig"; sourceTree = "<group>"; };
 		FE05FF8D436BDE53480BB717 /* Pods_WaterMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaterMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -36,6 +39,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1CDCBC66D8248B650D75B0D9 /* Pods_WaterMe.framework in Frameworks */,
+				50BB0F711EC00E9500850FF4 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +82,7 @@
 				50BB0F6B1EC001C200850FF4 /* Videos */,
 				50BB0F651EBFF9A700850FF4 /* Settings.bundle */,
 				50BB0F671EC0011800850FF4 /* LaunchScreen.storyboard */,
+				50BB0F6F1EC00E8E00850FF4 /* WaterMe.entitlements */,
 				50BB0F5F1EBFCDE500850FF4 /* Info.plist */,
 			);
 			path = WaterMe;
@@ -86,6 +91,7 @@
 		E7A7E92A7350217B27E6B8B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50BB0F701EC00E9500850FF4 /* CloudKit.framework */,
 				FE05FF8D436BDE53480BB717 /* Pods_WaterMe.framework */,
 			);
 			name = Frameworks;
@@ -128,6 +134,14 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = V6ESYGU6CV;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -322,6 +336,7 @@
 			baseConfigurationReference = A628444B2D8DB663671AEDAA /* Pods-WaterMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WaterMe/WaterMe.entitlements;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
@@ -338,6 +353,7 @@
 			baseConfigurationReference = BD699BFA37D3AF3C06F2E16F /* Pods-WaterMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WaterMe/WaterMe.entitlements;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
