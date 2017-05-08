@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = self.window ?? UIWindow(frame: UIScreen.main.bounds)
         self.window = window
         
-        let vc = UIViewController()
+        let vc = SubscriptionChoiceViewController.newVC()
         
         window.rootViewController = vc
         window.backgroundColor = .white
