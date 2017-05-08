@@ -12,6 +12,7 @@
 		50BB0F591EBFCDE500850FF4 /* Subscription.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F571EBFCDE500850FF4 /* Subscription.storyboard */; };
 		50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */; };
 		50BB0F5E1EBFCDE500850FF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F5C1EBFCDE500850FF4 /* LaunchScreen.storyboard */; };
+		50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F651EBFF9A700850FF4 /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50BB0F5D1EBFCDE500850FF4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		50BB0F5F1EBFCDE500850FF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50BB0F651EBFF9A700850FF4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		A628444B2D8DB663671AEDAA /* Pods-WaterMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.debug.xcconfig"; sourceTree = "<group>"; };
 		BD699BFA37D3AF3C06F2E16F /* Pods-WaterMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.release.xcconfig"; sourceTree = "<group>"; };
 		FE05FF8D436BDE53480BB717 /* Pods_WaterMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaterMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +74,7 @@
 				50BB0F571EBFCDE500850FF4 /* Subscription.storyboard */,
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
 				50BB0F5C1EBFCDE500850FF4 /* LaunchScreen.storyboard */,
+				50BB0F651EBFF9A700850FF4 /* Settings.bundle */,
 				50BB0F5F1EBFCDE500850FF4 /* Info.plist */,
 			);
 			path = WaterMe;
@@ -148,6 +151,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */,
 				50BB0F5E1EBFCDE500850FF4 /* LaunchScreen.storyboard in Resources */,
 				50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */,
 				50BB0F591EBFCDE500850FF4 /* Subscription.storyboard in Resources */,
@@ -379,6 +383,7 @@
 				50BB0F641EBFCDE500850FF4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

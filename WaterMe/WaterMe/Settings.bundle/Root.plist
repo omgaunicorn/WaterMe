@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>StringsTable</key>
+	<string>Root</string>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Water Notification Hour</string>
+			<key>Key</key>
+			<string>REMINDER_HOUR</string>
+			<key>DefaultValue</key>
+			<integer>8</integer>
+			<key>Titles</key>
+			<array>
+				<string>4 am</string>
+				<string>5 am</string>
+				<string>6 am</string>
+				<string>7 am</string>
+				<string>8 am</string>
+				<string>9 am</string>
+				<string>10 am</string>
+				<string>11 am</string>
+				<string>Noon</string>
+				<string>1 pm</string>
+				<string>2 pm</string>
+				<string>3 pm</string>
+				<string>4 pm</string>
+				<string>5 pm</string>
+				<string>6 pm</string>
+				<string>7 pm</string>
+				<string>8 pm</string>
+				<string>9 pm</string>
+				<string>10 pm</string>
+				<string>11 pm</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<integer>4</integer>
+				<integer>5</integer>
+				<integer>6</integer>
+				<integer>7</integer>
+				<integer>8</integer>
+				<integer>9</integer>
+				<integer>10</integer>
+				<integer>11</integer>
+				<integer>12</integer>
+				<integer>13</integer>
+				<integer>14</integer>
+				<integer>15</integer>
+				<integer>16</integer>
+				<integer>17</integer>
+				<integer>18</integer>
+				<integer>19</integer>
+				<integer>20</integer>
+				<integer>21</integer>
+				<integer>22</integer>
+				<integer>23</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Number of Reminder Days</string>
+			<key>Key</key>
+			<string>NUMBER_OF_REMINDER_DAYS</string>
+			<key>DefaultValue</key>
+			<integer>14</integer>
+			<key>Titles</key>
+			<array>
+				<string>7 Days</string>
+				<string>8 Days</string>
+				<string>9 Days</string>
+				<string>10 Days</string>
+				<string>11 Days</string>
+				<string>12 Days</string>
+				<string>13 Days</string>
+				<string>14 Days</string>
+				<string>15 Days</string>
+				<string>16 Days</string>
+				<string>17 Days</string>
+				<string>18 Days</string>
+				<string>19 Days</string>
+				<string>20 Days</string>
+				<string>21 Days</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<integer>7</integer>
+				<integer>8</integer>
+				<integer>9</integer>
+				<integer>10</integer>
+				<integer>11</integer>
+				<integer>12</integer>
+				<integer>13</integer>
+				<integer>14</integer>
+				<integer>15</integer>
+				<integer>16</integer>
+				<integer>17</integer>
+				<integer>18</integer>
+				<integer>19</integer>
+				<integer>20</integer>
+				<integer>21</integer>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Ask for Notifications</string>
+			<key>Key</key>
+			<string>FIRST_RUN</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Credits.Content</string>
+		</dict>
+	</array>
+</dict>
+</plist>
