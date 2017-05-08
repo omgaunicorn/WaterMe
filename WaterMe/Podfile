@@ -3,6 +3,7 @@ target 'WaterMe' do
 	use_frameworks!
 	
 	pod 'RealmSwift'
+    pod 'WaterMeData', :path => 'WaterMeData'
 end
 
 post_install do |installer|

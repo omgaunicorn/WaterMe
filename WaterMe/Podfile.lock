@@ -4,14 +4,22 @@ PODS:
   - Realm/Headers (2.7.0)
   - RealmSwift (2.7.0):
     - Realm (= 2.7.0)
+  - WaterMeData (1.0.0):
+    - RealmSwift
 
 DEPENDENCIES:
   - RealmSwift
+  - WaterMeData (from `WaterMeData`)
+
+EXTERNAL SOURCES:
+  WaterMeData:
+    :path: WaterMeData
 
 SPEC CHECKSUMS:
   Realm: 07e5d3a9e0e41d65fd5f9f05150ed6295d0f093b
   RealmSwift: 6d06425d3900c86473c4f323bf6949b43fca22bc
+  WaterMeData: b92a5b8cb70cddf8ed04804cf6b432023111ec7a
 
-PODFILE CHECKSUM: 9804c28c9765e33776a3c8065420bcfc68b7e5ec
+PODFILE CHECKSUM: 92d441fbdef9cf1bcb6192248f833e06f3ca9792
 
 COCOAPODS: 1.2.1
