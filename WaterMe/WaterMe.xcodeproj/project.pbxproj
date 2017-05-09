@@ -114,6 +114,7 @@
 			buildConfigurationList = 50BB0F621EBFCDE500850FF4 /* Build configuration list for PBXNativeTarget "WaterMe" */;
 			buildPhases = (
 				EE1C420035706C3C84EA2DC2 /* [CP] Check Pods Manifest.lock */,
+				50BB0F7A1EC214AC00850FF4 /* Swiftlint */,
 				50BB0F4C1EBFCDE500850FF4 /* Sources */,
 				50BB0F4D1EBFCDE500850FF4 /* Frameworks */,
 				50BB0F4E1EBFCDE500850FF4 /* Resources */,
@@ -188,6 +189,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		50BB0F7A1EC214AC00850FF4 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
 		7B323A8DF8AAFDBE4BB40F9B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

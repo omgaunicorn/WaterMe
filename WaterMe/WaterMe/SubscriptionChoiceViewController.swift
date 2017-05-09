@@ -12,6 +12,7 @@ class SubscriptionChoiceViewController: UIViewController {
     
     class func newVC() -> SubscriptionChoiceViewController {
         let sb = UIStoryboard(name: "SubscriptionChoice", bundle: Bundle(for: self))
+        // swiftlint:disable:next force_cast
         let vc = sb.instantiateInitialViewController() as! SubscriptionChoiceViewController
         return vc
     }

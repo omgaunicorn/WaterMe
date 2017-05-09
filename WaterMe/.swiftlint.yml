@@ -1,0 +1,31 @@
+disabled_rules:
+    - colon
+    - trailing_whitespace
+    - empty_parentheses_with_trailing_closure
+    - variable_name
+    - type_name
+    - line_length
+    # - opening_brace
+    # - cyclomatic_complexity
+    # - file_length
+    # - function_body_length
+    # - function_parameter_count
+    # - nesting
+    # - type_body_length
+
+opt_in_rules:
+  - vertical_whitespace
+  - operator_usage_whitespace
+  - outlet_setter
+
+# configurable rules can be customized from this configuration file
+# binary rules can set their severity level
+
+force_cast: warning
+force_try: warning
+
+trailing_comma:
+    mandatory_comma: false
+excluded:
+  - Pods
+  - HipstapaperCommon/Tests
