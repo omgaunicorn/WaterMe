@@ -8,10 +8,6 @@
 
 import Foundation
 
-enum SubscriptionLevel: String {
-    case free, basic, pro
-}
-
 extension UserDefaults {
     
     enum Constants {

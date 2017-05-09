@@ -18,6 +18,9 @@
 		50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */; };
 		50BB0F771EC01DE400850FF4 /* SubscriptionChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F761EC01DE400850FF4 /* SubscriptionChoiceViewController.swift */; };
 		50BB0F791EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F781EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift */; };
+		50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */; };
+		50BB0F7E1EC21E9B00850FF4 /* SubscriptionLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7D1EC21E9B00850FF4 /* SubscriptionLevel.swift */; };
+		50BB0F801EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7F1EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +37,9 @@
 		50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		50BB0F761EC01DE400850FF4 /* SubscriptionChoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceViewController.swift; sourceTree = "<group>"; };
 		50BB0F781EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewController.swift; sourceTree = "<group>"; };
+		50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
+		50BB0F7D1EC21E9B00850FF4 /* SubscriptionLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionLevel.swift; sourceTree = "<group>"; };
+		50BB0F7F1EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewCell.swift; sourceTree = "<group>"; };
 		A628444B2D8DB663671AEDAA /* Pods-WaterMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.debug.xcconfig"; sourceTree = "<group>"; };
 		BD699BFA37D3AF3C06F2E16F /* Pods-WaterMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.release.xcconfig"; sourceTree = "<group>"; };
 		FE05FF8D436BDE53480BB717 /* Pods_WaterMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaterMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,8 +90,11 @@
 			children = (
 				50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */,
 				50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */,
+				50BB0F7D1EC21E9B00850FF4 /* SubscriptionLevel.swift */,
+				50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */,
 				50BB0F761EC01DE400850FF4 /* SubscriptionChoiceViewController.swift */,
 				50BB0F781EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift */,
+				50BB0F7F1EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift */,
 				50BB0F681EC0011800850FF4 /* SubscriptionChoice.storyboard */,
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
 				50BB0F6B1EC001C200850FF4 /* Videos */,
@@ -255,8 +264,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */,
 				50BB0F771EC01DE400850FF4 /* SubscriptionChoiceViewController.swift in Sources */,
+				50BB0F801EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift in Sources */,
 				50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */,
+				50BB0F7E1EC21E9B00850FF4 /* SubscriptionLevel.swift in Sources */,
 				50BB0F791EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift in Sources */,
 				50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */,
 			);
