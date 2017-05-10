@@ -34,7 +34,7 @@ public extension Subscription.Level {
         case PrivateKeys.kSubscriptionProYearly, PrivateKeys.kSubscriptionProMonthly:
             self = .pro(productIdentifier: id)
         default:
-            assert(false, "Invalid ProductID Found: \(id)")
+//            assert(false, "Invalid ProductID Found: \(id)")
             return nil
         }
     }
