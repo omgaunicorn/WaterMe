@@ -20,11 +20,9 @@
 		50BB0F771EC01DE400850FF4 /* SubscriptionChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F761EC01DE400850FF4 /* SubscriptionChoiceViewController.swift */; };
 		50BB0F791EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F781EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift */; };
 		50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */; };
-		50BB0F7E1EC21E9B00850FF4 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7D1EC21E9B00850FF4 /* Subscription.swift */; };
 		50BB0F801EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7F1EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift */; };
-		50C96A301EC2B21C002802C1 /* SubscriptionInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A2F1EC2B21C002802C1 /* SubscriptionInformation.swift */; };
 		50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */; };
-		50C96A3A1EC2CFE8002802C1 /* NoDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A391EC2CFE8002802C1 /* NoDeviceTests.swift */; };
+		50C96A3A1EC2CFE8002802C1 /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,12 +51,10 @@
 		50BB0F761EC01DE400850FF4 /* SubscriptionChoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceViewController.swift; sourceTree = "<group>"; };
 		50BB0F781EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewController.swift; sourceTree = "<group>"; };
 		50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
-		50BB0F7D1EC21E9B00850FF4 /* Subscription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subscription.swift; sourceTree = "<group>"; };
 		50BB0F7F1EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewCell.swift; sourceTree = "<group>"; };
-		50C96A2F1EC2B21C002802C1 /* SubscriptionInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionInformation.swift; sourceTree = "<group>"; };
 		50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkExtensions.swift; sourceTree = "<group>"; };
 		50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoDeviceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		50C96A391EC2CFE8002802C1 /* NoDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDeviceTests.swift; sourceTree = "<group>"; };
+		50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
 		50C96A3B1EC2CFE8002802C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5377468C8F6F58D092A55320 /* Pods-NoDeviceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.release.xcconfig"; sourceTree = "<group>"; };
 		8ECA152863ABAF082087BBC8 /* Pods_NoDeviceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoDeviceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,11 +119,9 @@
 			isa = PBXGroup;
 			children = (
 				50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */,
-				50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */,
 				50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */,
-				50BB0F7D1EC21E9B00850FF4 /* Subscription.swift */,
+				50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */,
 				50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */,
-				50C96A2F1EC2B21C002802C1 /* SubscriptionInformation.swift */,
 				50BB0F761EC01DE400850FF4 /* SubscriptionChoiceViewController.swift */,
 				50BB0F781EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift */,
 				50BB0F7F1EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift */,
@@ -145,7 +139,7 @@
 		50C96A381EC2CFE8002802C1 /* NoDeviceTests */ = {
 			isa = PBXGroup;
 			children = (
-				50C96A391EC2CFE8002802C1 /* NoDeviceTests.swift */,
+				50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */,
 				50C96A3B1EC2CFE8002802C1 /* Info.plist */,
 			);
 			path = NoDeviceTests;
@@ -393,9 +387,7 @@
 				50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */,
 				50BB0F771EC01DE400850FF4 /* SubscriptionChoiceViewController.swift in Sources */,
 				50BB0F801EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift in Sources */,
-				50C96A301EC2B21C002802C1 /* SubscriptionInformation.swift in Sources */,
 				50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */,
-				50BB0F7E1EC21E9B00850FF4 /* Subscription.swift in Sources */,
 				50BB0F791EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift in Sources */,
 				50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */,
 			);
@@ -405,7 +397,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50C96A3A1EC2CFE8002802C1 /* NoDeviceTests.swift in Sources */,
+				50C96A3A1EC2CFE8002802C1 /* SubscriptionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -601,6 +593,7 @@
 				50C96A3E1EC2CFE8002802C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -4,11 +4,14 @@ target 'WaterMe' do
 	
 	pod 'RealmSwift'
     pod 'WaterMeData', :path => 'WaterMeData'
+    pod 'WaterMeStore', :path => 'WaterMeStore'
 end
 
 target 'NoDeviceTests' do
+	platform :ios, '10.3'
 	use_frameworks!
     pod 'WaterMeData', :path => 'WaterMeData'
+    pod 'WaterMeStore', :path => 'WaterMeStore'
 end
 
 post_install do |installer|

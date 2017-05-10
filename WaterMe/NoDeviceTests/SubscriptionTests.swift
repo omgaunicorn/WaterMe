@@ -9,7 +9,7 @@
 @testable import WaterMeData
 import XCTest
 
-class NoDeviceTests: XCTestCase {
+class SubscriptionTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

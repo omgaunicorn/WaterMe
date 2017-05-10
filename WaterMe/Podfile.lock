@@ -6,20 +6,25 @@ PODS:
     - Realm (= 2.7.0)
   - WaterMeData (1.0.0):
     - RealmSwift
+  - WaterMeStore (1.0.0)
 
 DEPENDENCIES:
   - RealmSwift
   - WaterMeData (from `WaterMeData`)
+  - WaterMeStore (from `WaterMeStore`)
 
 EXTERNAL SOURCES:
   WaterMeData:
     :path: WaterMeData
+  WaterMeStore:
+    :path: WaterMeStore
 
 SPEC CHECKSUMS:
   Realm: 07e5d3a9e0e41d65fd5f9f05150ed6295d0f093b
   RealmSwift: 6d06425d3900c86473c4f323bf6949b43fca22bc
   WaterMeData: b92a5b8cb70cddf8ed04804cf6b432023111ec7a
+  WaterMeStore: 84ba14b8fef73774ab7399b8a902061b0584e17d
 
-PODFILE CHECKSUM: f4e57fc34a3631bd5a6b96e831cc0e48428bda65
+PODFILE CHECKSUM: 2f5205966d5ef60663116722f0af6f5635284ed8
 
 COCOAPODS: 1.2.1

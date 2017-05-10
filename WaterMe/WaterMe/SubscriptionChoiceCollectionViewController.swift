@@ -6,6 +6,7 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
+import WaterMeStore
 import UIKit
 
 class SubscriptionChoiceCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {

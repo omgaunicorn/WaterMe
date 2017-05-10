@@ -8,25 +8,25 @@
 
 import Foundation
 
-struct Subscription {
+public struct Subscription {
     
-    enum Level: String {
+    public enum Level: String {
         case free, basic, pro
     }
     
-    enum Price {
+    public enum Price {
         case free, paid(price: Double, locale: Locale)
     }
     
-    var level: Subscription.Level
-    var localizedTitle: String
-    var localizedDescription: String
-    var price: Price
+    public var level: Subscription.Level
+    public var localizedTitle: String
+    public var localizedDescription: String
+    public var price: Price
     
 }
 
-extension Subscription {
-    static func free() -> Subscription {
+public extension Subscription {
+    public static func free() -> Subscription {
         return Subscription(level: .free,
                      localizedTitle: "Free",
                      localizedDescription: "• Unlimited number of plants\n• Unlimited number of reminders",

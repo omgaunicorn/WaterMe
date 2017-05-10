@@ -6,7 +6,7 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
-import StoreKit
+import WaterMeStore
 import UIKit
 
 class SubscriptionChoiceViewController: UIViewController, HasSubscriptionType {
