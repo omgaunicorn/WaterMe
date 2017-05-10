@@ -24,3 +24,12 @@ struct Subscription {
     var price: Price
     
 }
+
+extension Subscription {
+    static func free() -> Subscription {
+        return Subscription(level: .free,
+                     localizedTitle: "Free",
+                     localizedDescription: "• Unlimited number of plants\n• Unlimited number of reminders",
+                     price: .free)
+    }
+}

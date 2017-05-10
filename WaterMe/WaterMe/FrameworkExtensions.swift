@@ -10,6 +10,10 @@ enum Result<T> {
     case error(Error), success(T)
 }
 
+protocol Resettable {
+    func reset()
+}
+
 extension Sequence {
     func first<T>(of type: T.Type? = nil) -> T? {
         return self.first(where: { $0 is T }) as? T

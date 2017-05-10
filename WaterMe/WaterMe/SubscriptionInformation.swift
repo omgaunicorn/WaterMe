@@ -9,10 +9,6 @@
 import WaterMeData
 import StoreKit
 
-protocol Resettable {
-    func reset()
-}
-
 protocol SubscriptionLoaderType: Resettable {
     var results: Result<[Subscription]>? { get }
     func start(completion: ((Result<[Subscription]>) -> Void)?)
@@ -66,7 +62,16 @@ class SubscriptionLoader: NSObject, SubscriptionLoaderType, SKProductsRequestDel
     }
     
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        let subscriptions = response.products.flatMap() { product -> Subscription? in
+        let subscriptions = Subscription.subscriptions(from: response.products)
+        let result = Result.success(subscriptions)
+        self.results = result
+        completion?(result)
+    }
+}
+
+extension Subscription {
+    static func subscriptions(from products: [SKProduct]) -> [Subscription] {
+        let subscriptions = products.flatMap() { product -> Subscription? in
             let level: Subscription.Level
             switch product.productIdentifier {
             case PrivateKeys.kBasicSubscriptionProductKey:
@@ -83,13 +88,6 @@ class SubscriptionLoader: NSObject, SubscriptionLoaderType, SKProductsRequestDel
                                             price: .paid(price: product.price.doubleValue, locale: product.priceLocale))
             return subscription
         }
-        let freeSubscription = Subscription(level: .free,
-                                            localizedTitle: "Free",
-                                            localizedDescription: "• Unlimited number of plants\n• Unlimited number of reminders",
-                                            price: .free)
-        
-        let result = Result.success(subscriptions + [freeSubscription])
-        self.results = result
-        completion?(result)
+        return subscriptions + [Subscription.free()]
     }
 }
