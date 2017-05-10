@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1CDCBC66D8248B650D75B0D9 /* Pods_WaterMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE05FF8D436BDE53480BB717 /* Pods_WaterMe.framework */; };
+		33BDD37BD3A2AB3CD89988C6 /* Pods_NoDeviceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ECA152863ABAF082087BBC8 /* Pods_NoDeviceTests.framework */; };
 		50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */; };
 		50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */; };
 		50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F651EBFF9A700850FF4 /* Settings.bundle */; };
@@ -23,9 +24,21 @@
 		50BB0F801EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7F1EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift */; };
 		50C96A301EC2B21C002802C1 /* SubscriptionInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A2F1EC2B21C002802C1 /* SubscriptionInformation.swift */; };
 		50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */; };
+		50C96A3A1EC2CFE8002802C1 /* NoDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A391EC2CFE8002802C1 /* NoDeviceTests.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		50C96A3F1EC2D047002802C1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50BB0F4F1EBFCDE500850FF4;
+			remoteInfo = WaterMe;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		3CD9201016969CB096E78F03 /* Pods-NoDeviceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		50BB0F501EBFCDE500850FF4 /* WaterMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaterMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -44,6 +57,11 @@
 		50BB0F7F1EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewCell.swift; sourceTree = "<group>"; };
 		50C96A2F1EC2B21C002802C1 /* SubscriptionInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionInformation.swift; sourceTree = "<group>"; };
 		50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkExtensions.swift; sourceTree = "<group>"; };
+		50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoDeviceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		50C96A391EC2CFE8002802C1 /* NoDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoDeviceTests.swift; sourceTree = "<group>"; };
+		50C96A3B1EC2CFE8002802C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5377468C8F6F58D092A55320 /* Pods-NoDeviceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.release.xcconfig"; sourceTree = "<group>"; };
+		8ECA152863ABAF082087BBC8 /* Pods_NoDeviceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoDeviceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A628444B2D8DB663671AEDAA /* Pods-WaterMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.debug.xcconfig"; sourceTree = "<group>"; };
 		BD699BFA37D3AF3C06F2E16F /* Pods-WaterMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.release.xcconfig"; sourceTree = "<group>"; };
 		FE05FF8D436BDE53480BB717 /* Pods_WaterMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaterMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +77,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50C96A341EC2CFE8002802C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				33BDD37BD3A2AB3CD89988C6 /* Pods_NoDeviceTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -67,6 +93,8 @@
 			children = (
 				A628444B2D8DB663671AEDAA /* Pods-WaterMe.debug.xcconfig */,
 				BD699BFA37D3AF3C06F2E16F /* Pods-WaterMe.release.xcconfig */,
+				3CD9201016969CB096E78F03 /* Pods-NoDeviceTests.debug.xcconfig */,
+				5377468C8F6F58D092A55320 /* Pods-NoDeviceTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -75,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				50BB0F521EBFCDE500850FF4 /* WaterMe */,
+				50C96A381EC2CFE8002802C1 /* NoDeviceTests */,
 				50BB0F511EBFCDE500850FF4 /* Products */,
 				18ACE9D1B7A6202F5F3BDC54 /* Pods */,
 				E7A7E92A7350217B27E6B8B5 /* Frameworks */,
@@ -85,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				50BB0F501EBFCDE500850FF4 /* WaterMe.app */,
+				50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,11 +142,21 @@
 			path = WaterMe;
 			sourceTree = "<group>";
 		};
+		50C96A381EC2CFE8002802C1 /* NoDeviceTests */ = {
+			isa = PBXGroup;
+			children = (
+				50C96A391EC2CFE8002802C1 /* NoDeviceTests.swift */,
+				50C96A3B1EC2CFE8002802C1 /* Info.plist */,
+			);
+			path = NoDeviceTests;
+			sourceTree = "<group>";
+		};
 		E7A7E92A7350217B27E6B8B5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				50BB0F701EC00E9500850FF4 /* CloudKit.framework */,
 				FE05FF8D436BDE53480BB717 /* Pods_WaterMe.framework */,
+				8ECA152863ABAF082087BBC8 /* Pods_NoDeviceTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -145,6 +185,27 @@
 			productReference = 50BB0F501EBFCDE500850FF4 /* WaterMe.app */;
 			productType = "com.apple.product-type.application";
 		};
+		50C96A361EC2CFE8002802C1 /* NoDeviceTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50C96A3C1EC2CFE8002802C1 /* Build configuration list for PBXNativeTarget "NoDeviceTests" */;
+			buildPhases = (
+				A850C1070160C4CC07161906 /* [CP] Check Pods Manifest.lock */,
+				50C96A331EC2CFE8002802C1 /* Sources */,
+				50C96A341EC2CFE8002802C1 /* Frameworks */,
+				50C96A351EC2CFE8002802C1 /* Resources */,
+				04D2E331FFCFA58970ED4C84 /* [CP] Embed Pods Frameworks */,
+				E1C5A76AD1ACA703CCA496E0 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				50C96A401EC2D047002802C1 /* PBXTargetDependency */,
+			);
+			name = NoDeviceTests;
+			productName = NoDeviceTests;
+			productReference = 50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -168,6 +229,11 @@
 							};
 						};
 					};
+					50C96A361EC2CFE8002802C1 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = V6ESYGU6CV;
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 50BB0F4B1EBFCDE500850FF4 /* Build configuration list for PBXProject "WaterMe" */;
@@ -184,6 +250,7 @@
 			projectRoot = "";
 			targets = (
 				50BB0F4F1EBFCDE500850FF4 /* WaterMe */,
+				50C96A361EC2CFE8002802C1 /* NoDeviceTests */,
 			);
 		};
 /* End PBXProject section */
@@ -201,9 +268,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50C96A351EC2CFE8002802C1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		04D2E331FFCFA58970ED4C84 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		50BB0F7A1EC214AC00850FF4 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -233,6 +322,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		A850C1070160C4CC07161906 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		D6FECF1B9685EBE3960FFE23 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -246,6 +350,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E1C5A76AD1ACA703CCA496E0 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EE1C420035706C3C84EA2DC2 /* [CP] Check Pods Manifest.lock */ = {
@@ -282,7 +401,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50C96A331EC2CFE8002802C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50C96A3A1EC2CFE8002802C1 /* NoDeviceTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		50C96A401EC2D047002802C1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 50BB0F4F1EBFCDE500850FF4 /* WaterMe */;
+			targetProxy = 50C96A3F1EC2D047002802C1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		50BB0F601EBFCDE500850FF4 /* Debug */ = {
@@ -412,6 +547,32 @@
 			};
 			name = Release;
 		};
+		50C96A3D1EC2CFE8002802C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3CD9201016969CB096E78F03 /* Pods-NoDeviceTests.debug.xcconfig */;
+			buildSettings = {
+				DEVELOPMENT_TEAM = V6ESYGU6CV;
+				INFOPLIST_FILE = NoDeviceTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.NoDeviceTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		50C96A3E1EC2CFE8002802C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5377468C8F6F58D092A55320 /* Pods-NoDeviceTests.release.xcconfig */;
+			buildSettings = {
+				DEVELOPMENT_TEAM = V6ESYGU6CV;
+				INFOPLIST_FILE = NoDeviceTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.NoDeviceTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -432,6 +593,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		50C96A3C1EC2CFE8002802C1 /* Build configuration list for PBXNativeTarget "NoDeviceTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50C96A3D1EC2CFE8002802C1 /* Debug */,
+				50C96A3E1EC2CFE8002802C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
