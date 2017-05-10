@@ -66,26 +66,3 @@ public class SubscriptionLoader: NSObject, SubscriptionLoaderType, SKProductsReq
         completion?(result)
     }
 }
-
-internal extension Subscription {
-    internal static func subscriptions(from products: [SKProduct]) -> [Subscription] {
-        let subscriptions = products.flatMap() { product -> Subscription? in
-            let level: Subscription.Level
-            switch product.productIdentifier {
-            case PrivateKeys.kBasicSubscriptionProductKey:
-                level = .basic
-            case PrivateKeys.kProSubscriptionProductKey:
-                level = .pro
-            default:
-                assert(false, "Invalid ProductID Found: \(product.productIdentifier)")
-                return nil
-            }
-            let subscription = Subscription(level: level,
-                                            localizedTitle: product.localizedTitle,
-                                            localizedDescription: product.localizedDescription,
-                                            price: .paid(price: product.price.doubleValue, locale: product.priceLocale))
-            return subscription
-        }
-        return subscriptions + [Subscription.free()]
-    }
-}
