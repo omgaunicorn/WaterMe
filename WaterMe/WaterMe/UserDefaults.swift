@@ -15,7 +15,7 @@ extension UserDefaults {
         static let kFirstRun = "FIRST_RUN"
         static let kReminderHour = "REMINDER_HOUR"
         static let kNumberOfReminderDays = "NUMBER_OF_REMINDER_DAYS"
-        static let kSubscriptionLevel = "kSubscriptionLevelKey"
+        static let kSubscriptionProductIdentifierKey = "kSubscriptionProductIdentifierKey"
     }
     
     var isFirstRun: Bool {
@@ -53,14 +53,17 @@ extension UserDefaults {
     
     var subscriptionLevel: Subscription.Level {
         get {
-            guard
-                let string = self.object(forKey: Constants.kSubscriptionLevel) as? String,
-                let value = Subscription.Level(rawValue: string)
-            else { fatalError("Must call configure() before accessing user defaults") }
-            return value
+            let productID = self.object(forKey: Constants.kSubscriptionProductIdentifierKey) as? String
+            let level = Subscription.Level(productIdentifier: productID)
+            return level ?? .free
         }
         set {
-            self.set(newValue.rawValue, forKey: Constants.kSubscriptionLevel)
+            switch newValue {
+            case .free:
+                self.removeObject(forKey: Constants.kSubscriptionProductIdentifierKey)
+            case .basic(let id), .pro(let id):
+                self.set(id, forKey: Constants.kSubscriptionProductIdentifierKey)
+            }
         }
     }
     
@@ -68,8 +71,7 @@ extension UserDefaults {
         self.register(defaults: [
             Constants.kFirstRun : true,
             Constants.kReminderHour : 8,
-            Constants.kNumberOfReminderDays : 14,
-            Constants.kSubscriptionLevel : Subscription.Level.free.rawValue
+            Constants.kNumberOfReminderDays : 14
         ])
     }
 }

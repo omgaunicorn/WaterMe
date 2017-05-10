@@ -27,7 +27,12 @@ public extension HasSubscriptionType {
 
 public class SubscriptionLoader: NSObject, SubscriptionLoaderType, SKProductsRequestDelegate {
     
-    private static let productIdentifiers: Set<String> = [PrivateKeys.kBasicSubscriptionProductKey, PrivateKeys.kProSubscriptionProductKey]
+    private static let productIdentifiers: Set<String> = [
+        PrivateKeys.kSubscriptionProYearly,
+        PrivateKeys.kSubscriptionProMonthly,
+        PrivateKeys.kSubscriptionBasicYearly,
+        PrivateKeys.kSubscriptionBasicMonthly
+    ]
     
     private let request: SKProductsRequest
     
