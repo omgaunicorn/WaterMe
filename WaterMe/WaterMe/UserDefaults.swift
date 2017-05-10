@@ -50,11 +50,11 @@ extension UserDefaults {
         }
     }
     
-    var subscriptionLevel: SubscriptionLevel {
+    var subscriptionLevel: Subscription.Level {
         get {
             guard
                 let string = self.object(forKey: Constants.kSubscriptionLevel) as? String,
-                let value = SubscriptionLevel(rawValue: string)
+                let value = Subscription.Level(rawValue: string)
             else { fatalError("Must call configure() before accessing user defaults") }
             return value
         }
@@ -68,7 +68,7 @@ extension UserDefaults {
             Constants.kFirstRun : true,
             Constants.kReminderHour : 8,
             Constants.kNumberOfReminderDays : 14,
-            Constants.kSubscriptionLevel : SubscriptionLevel.free.rawValue
+            Constants.kSubscriptionLevel : Subscription.Level.free.rawValue
         ])
     }
 }

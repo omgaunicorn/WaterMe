@@ -6,20 +6,39 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
+import StoreKit
 import UIKit
 
-class SubscriptionChoiceViewController: UIViewController {
+class SubscriptionChoiceViewController: UIViewController, HasSubscriptionType {
     
-    class func newVC() -> SubscriptionChoiceViewController {
+    class func newVC(subscriptionLoader: SubscriptionLoaderType? = nil) -> SubscriptionChoiceViewController {
         let sb = UIStoryboard(name: "SubscriptionChoice", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
-        let vc = sb.instantiateInitialViewController() as! SubscriptionChoiceViewController
+        var vc = sb.instantiateInitialViewController() as! SubscriptionChoiceViewController
+        
+        vc.configure(with: subscriptionLoader)
+        
         return vc
     }
     
+    /*@IBOutlet*/ private weak var collectionViewController: SubscriptionChoiceCollectionViewController?
+    
+    var subscriptionLoader: SubscriptionLoaderType = SubscriptionLoader()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("\(type(of: self)) Loaded")
+        
+        self.collectionViewController = self.childViewControllers.first()
+        
+        self.subscriptionLoader.start() { result in
+            switch result {
+            case .success(let results):
+                self.collectionViewController?.data = results
+            case .error:
+                self.collectionViewController?.data = []
+            }
+            self.collectionViewController?.reload()
+        }
     }
     
 }

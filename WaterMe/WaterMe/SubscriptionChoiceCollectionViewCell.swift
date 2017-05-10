@@ -14,12 +14,12 @@ class SubscriptionChoiceCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var descriptionLabel: UILabel?
     @IBOutlet private weak var button: UIButton?
     
-    var model: SubscriptionLevel? {
+    var model: Subscription? {
         didSet {
             guard let model = self.model else { self.recycle(); return; }
             self.titleLabel?.text = model.localizedTitle
             self.descriptionLabel?.text = model.localizedDescription
-            self.button?.setTitle(model.localizedCallToAction, for: .normal)
+            self.button?.setTitle("XXXX", for: .normal)
         }
     }
     

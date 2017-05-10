@@ -10,6 +10,12 @@ import UIKit
 
 class SubscriptionChoiceCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    var data: [Subscription] = []
+    
+    func reload() {
+        self.collectionView?.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("\(type(of: self)) Loaded")
@@ -20,14 +26,12 @@ class SubscriptionChoiceCollectionViewController: UICollectionViewController, UI
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return self.data.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let id = "Cell"
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: id, for: indexPath) as! SubscriptionChoiceCollectionViewCell
-        let model = SubscriptionLevel(rawValue: indexPath.row)!
-        cell.model = model
         return cell
     }
     
@@ -43,20 +47,5 @@ class SubscriptionChoiceCollectionViewController: UICollectionViewController, UI
         self.collectionView?.contentInset.bottom = bottomInset
         self.collectionView?.scrollIndicatorInsets.top = topInset
         self.collectionView?.scrollIndicatorInsets.bottom = bottomInset
-    }
-}
-
-fileprivate extension SubscriptionLevel {
-    init?(rawValue: Int) {
-        switch rawValue {
-        case 0:
-            self = .free
-        case 1:
-            self = .basic
-        case 2:
-            self = .pro
-        default:
-            return nil
-        }
     }
 }
