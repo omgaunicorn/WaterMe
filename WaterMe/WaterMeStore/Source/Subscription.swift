@@ -22,7 +22,6 @@ public struct Subscription {
     public var localizedTitle: String
     public var localizedDescription: String
     public var price: Price
-    
 }
 
 public extension Subscription.Level {

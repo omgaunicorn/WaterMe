@@ -19,6 +19,7 @@ class SubscriptionChoiceCollectionViewController: UICollectionViewController, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        SubscriptionChoiceCollectionViewCell.register(with: self.collectionView)
         print("\(type(of: self)) Loaded")
     }
     
@@ -31,13 +32,24 @@ class SubscriptionChoiceCollectionViewController: UICollectionViewController, UI
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let id = "Cell"
+        let id = SubscriptionChoiceCollectionViewCell.identifier
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: id, for: indexPath) as! SubscriptionChoiceCollectionViewCell
+        cell.model = self.data[indexPath.row]
         return cell
     }
     
+    let resizingCell = SubscriptionChoiceCollectionViewCell.newCell()
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.bounds.size.width, height: floor(collectionView.bounds.size.height / 2))
+        let model = self.data[indexPath.row]
+        let width = collectionView.frame.size.width
+        self.resizingCell.frame.size.width = width
+        self.resizingCell.widthConstraint!.constant = width
+        self.resizingCell.model = model
+        self.resizingCell.layoutSubviews()
+        let height = self.resizingCell.frame.size.height
+        print(height)
+        return CGSize(width: width, height: height)
     }
     
     override func viewDidLayoutSubviews() {
