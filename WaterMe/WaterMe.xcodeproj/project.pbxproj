@@ -9,21 +9,21 @@
 /* Begin PBXBuildFile section */
 		1CDCBC66D8248B650D75B0D9 /* Pods_WaterMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE05FF8D436BDE53480BB717 /* Pods_WaterMe.framework */; };
 		33BDD37BD3A2AB3CD89988C6 /* Pods_NoDeviceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ECA152863ABAF082087BBC8 /* Pods_NoDeviceTests.framework */; };
-		500827051EC3E62500F23D7D /* SubscriptionChoiceCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500827031EC3E62500F23D7D /* SubscriptionChoiceCollectionViewCell.xib */; };
-		501F921A1EC556B70014939D /* Router.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501F92191EC556B70014939D /* Router.storyboard */; };
-		501F921C1EC557040014939D /* RouterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F921B1EC557040014939D /* RouterViewController.swift */; };
+		501F92211EC55DF50014939D /* RouterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F921F1EC55DF50014939D /* RouterViewController.swift */; };
+		501F92221EC55DF50014939D /* Router.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501F92201EC55DF50014939D /* Router.storyboard */; };
+		501F92281EC55E080014939D /* SubscriptionChoice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501F92231EC55E080014939D /* SubscriptionChoice.storyboard */; };
+		501F92291EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92241EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift */; };
+		501F922A1EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 501F92251EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib */; };
+		501F922B1EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */; };
+		501F922C1EC55E080014939D /* SubscriptionChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */; };
 		50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */; };
 		50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */; };
 		50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F651EBFF9A700850FF4 /* Settings.bundle */; };
 		50BB0F691EC0011800850FF4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F671EC0011800850FF4 /* LaunchScreen.storyboard */; };
-		50BB0F6A1EC0011800850FF4 /* SubscriptionChoice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F681EC0011800850FF4 /* SubscriptionChoice.storyboard */; };
 		50BB0F6C1EC001C200850FF4 /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F6B1EC001C200850FF4 /* Videos */; };
 		50BB0F711EC00E9500850FF4 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BB0F701EC00E9500850FF4 /* CloudKit.framework */; };
 		50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */; };
-		50BB0F771EC01DE400850FF4 /* SubscriptionChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F761EC01DE400850FF4 /* SubscriptionChoiceViewController.swift */; };
-		50BB0F791EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F781EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift */; };
 		50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */; };
-		50BB0F801EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7F1EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift */; };
 		50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */; };
 		50C96A3A1EC2CFE8002802C1 /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */; };
 /* End PBXBuildFile section */
@@ -40,24 +40,24 @@
 
 /* Begin PBXFileReference section */
 		3CD9201016969CB096E78F03 /* Pods-NoDeviceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.debug.xcconfig"; sourceTree = "<group>"; };
-		500827031EC3E62500F23D7D /* SubscriptionChoiceCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscriptionChoiceCollectionViewCell.xib; sourceTree = "<group>"; };
-		501F92191EC556B70014939D /* Router.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Router.storyboard; sourceTree = "<group>"; };
-		501F921B1EC557040014939D /* RouterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterViewController.swift; sourceTree = "<group>"; };
+		501F921F1EC55DF50014939D /* RouterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterViewController.swift; sourceTree = "<group>"; };
+		501F92201EC55DF50014939D /* Router.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Router.storyboard; sourceTree = "<group>"; };
+		501F92231EC55E080014939D /* SubscriptionChoice.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubscriptionChoice.storyboard; sourceTree = "<group>"; };
+		501F92241EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewCell.swift; sourceTree = "<group>"; };
+		501F92251EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscriptionChoiceCollectionViewCell.xib; sourceTree = "<group>"; };
+		501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewController.swift; sourceTree = "<group>"; };
+		501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceViewController.swift; sourceTree = "<group>"; };
 		50BB0F501EBFCDE500850FF4 /* WaterMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaterMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50BB0F5F1EBFCDE500850FF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50BB0F651EBFF9A700850FF4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		50BB0F671EC0011800850FF4 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		50BB0F681EC0011800850FF4 /* SubscriptionChoice.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubscriptionChoice.storyboard; sourceTree = "<group>"; };
 		50BB0F6B1EC001C200850FF4 /* Videos */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Videos; sourceTree = "<group>"; };
 		50BB0F6F1EC00E8E00850FF4 /* WaterMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WaterMe.entitlements; sourceTree = "<group>"; };
 		50BB0F701EC00E9500850FF4 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		50BB0F761EC01DE400850FF4 /* SubscriptionChoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceViewController.swift; sourceTree = "<group>"; };
-		50BB0F781EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewController.swift; sourceTree = "<group>"; };
 		50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
-		50BB0F7F1EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewCell.swift; sourceTree = "<group>"; };
 		50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkExtensions.swift; sourceTree = "<group>"; };
 		50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoDeviceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
@@ -101,6 +101,27 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		501F921D1EC55D610014939D /* SubscriptionChoice */ = {
+			isa = PBXGroup;
+			children = (
+				501F92231EC55E080014939D /* SubscriptionChoice.storyboard */,
+				501F92241EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift */,
+				501F92251EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib */,
+				501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */,
+				501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */,
+			);
+			path = SubscriptionChoice;
+			sourceTree = "<group>";
+		};
+		501F921E1EC55DA80014939D /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				501F92201EC55DF50014939D /* Router.storyboard */,
+				501F921F1EC55DF50014939D /* RouterViewController.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
 		50BB0F471EBFCDE500850FF4 = {
 			isa = PBXGroup;
 			children = (
@@ -128,13 +149,8 @@
 				50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */,
 				50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */,
 				50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */,
-				50BB0F761EC01DE400850FF4 /* SubscriptionChoiceViewController.swift */,
-				50BB0F781EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift */,
-				50BB0F7F1EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift */,
-				500827031EC3E62500F23D7D /* SubscriptionChoiceCollectionViewCell.xib */,
-				50BB0F681EC0011800850FF4 /* SubscriptionChoice.storyboard */,
-				501F92191EC556B70014939D /* Router.storyboard */,
-				501F921B1EC557040014939D /* RouterViewController.swift */,
+				501F921E1EC55DA80014939D /* Router */,
+				501F921D1EC55D610014939D /* SubscriptionChoice */,
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
 				50BB0F6B1EC001C200850FF4 /* Videos */,
 				50BB0F651EBFF9A700850FF4 /* Settings.bundle */,
@@ -264,12 +280,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				50BB0F691EC0011800850FF4 /* LaunchScreen.storyboard in Resources */,
+				501F92221EC55DF50014939D /* Router.storyboard in Resources */,
 				50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */,
+				501F92281EC55E080014939D /* SubscriptionChoice.storyboard in Resources */,
 				50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */,
-				50BB0F6A1EC0011800850FF4 /* SubscriptionChoice.storyboard in Resources */,
-				500827051EC3E62500F23D7D /* SubscriptionChoiceCollectionViewCell.xib in Resources */,
+				501F922A1EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib in Resources */,
 				50BB0F6C1EC001C200850FF4 /* Videos in Resources */,
-				501F921A1EC556B70014939D /* Router.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,14 +410,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				501F922C1EC55E080014939D /* SubscriptionChoiceViewController.swift in Sources */,
+				501F92291EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift in Sources */,
 				50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */,
+				501F922B1EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift in Sources */,
 				50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */,
-				50BB0F771EC01DE400850FF4 /* SubscriptionChoiceViewController.swift in Sources */,
-				50BB0F801EC2202100850FF4 /* SubscriptionChoiceCollectionViewCell.swift in Sources */,
 				50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */,
-				501F921C1EC557040014939D /* RouterViewController.swift in Sources */,
-				50BB0F791EC01DF500850FF4 /* SubscriptionChoiceCollectionViewController.swift in Sources */,
 				50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */,
+				501F92211EC55DF50014939D /* RouterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
