@@ -24,7 +24,7 @@ class SubscriptionChoiceViewController: UIViewController, HasSubscriptionType {
     /*@IBOutlet*/ private weak var collectionViewController: SubscriptionChoiceCollectionViewController?
     @IBOutlet private weak var restoreBarButtonItem: UIBarButtonItem? {
         didSet {
-            self.restoreBarButtonItem?.title = "Restore2"
+            self.restoreBarButtonItem?.title = "Restore"
         }
     }
     
@@ -37,7 +37,7 @@ class SubscriptionChoiceViewController: UIViewController, HasSubscriptionType {
         self.collectionViewController = self.childViewControllers.first()
         
         // configure my vc
-        self.title = "WaterMe Premium"
+        self.title = "Premium"
         
         // get the subscription information
         self.subscriptionLoader.start() { result in

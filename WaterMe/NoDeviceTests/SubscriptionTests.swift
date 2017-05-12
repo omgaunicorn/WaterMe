@@ -88,6 +88,28 @@ class SubscriptionTests: XCTestCase {
         XCTAssert(wrong == nil)
     }
     
+    func testValidPeriodInit() {
+        let proMonth = Subscription.Period(productIdentifier: PrivateKeys.kSubscriptionProMonthly)
+        let proYear = Subscription.Period(productIdentifier: PrivateKeys.kSubscriptionProYearly)
+        let basicMonth = Subscription.Period(productIdentifier: PrivateKeys.kSubscriptionBasicMonthly)
+        let basicYear = Subscription.Period(productIdentifier: PrivateKeys.kSubscriptionBasicYearly)
+        
+        XCTAssert(proMonth != nil)
+        XCTAssert(proYear != nil)
+        XCTAssert(basicMonth != nil)
+        XCTAssert(basicYear != nil)
+        
+        XCTAssert(proMonth! == .month)
+        XCTAssert(proYear! == .year)
+        XCTAssert(basicMonth! == .month)
+        XCTAssert(basicYear! == .year)
+    }
+    
+    func testInvalidPeriodInit() {
+        let wrong = Subscription.Period(productIdentifier: "GARBAGE DATA")
+        XCTAssert(wrong == nil)
+    }
+    
     func testPriceEquality() {
         let free1 = Subscription.Price.free
         let free2 = Subscription.Price.free

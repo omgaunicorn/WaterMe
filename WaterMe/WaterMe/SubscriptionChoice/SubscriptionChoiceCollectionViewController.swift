@@ -32,6 +32,7 @@ class SubscriptionChoiceCollectionViewController: UICollectionViewController, UI
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let id = SubscriptionChoiceCollectionViewCell.identifier
+        // swiftlint:disable:next force_cast
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: id, for: indexPath) as! SubscriptionChoiceCollectionViewCell
         cell.model = self.data[indexPath.row]
         return cell
@@ -50,6 +51,10 @@ class SubscriptionChoiceCollectionViewController: UICollectionViewController, UI
         self.resizingCell.widthConstraint?.constant = width
         let newSize = self.resizingCell.contentView.systemLayoutSizeFitting(CGSize(width: width, height: 200))
         return CGSize(width: width, height: newSize.height)
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
     }
     
     override func viewDidLayoutSubviews() {

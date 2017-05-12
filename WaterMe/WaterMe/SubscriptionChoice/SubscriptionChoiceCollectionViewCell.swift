@@ -19,6 +19,7 @@ class SubscriptionChoiceCollectionViewCell: UICollectionViewCell {
     }
     
     class func newCell() -> SubscriptionChoiceCollectionViewCell {
+        // swiftlint:disable:next force_cast
         let cell = self.nib.instantiate(withOwner: nil, options: nil).first as! SubscriptionChoiceCollectionViewCell
         return cell
     }
@@ -27,7 +28,6 @@ class SubscriptionChoiceCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var titleLabel: UILabel?
     @IBOutlet private weak var descriptionLabel: UILabel?
     @IBOutlet private weak var priceLabel: UILabel?
-    @IBOutlet private weak var button: UIButton?
     
     private let numberFormatter: NumberFormatter = {
         let nf = NumberFormatter()
@@ -43,13 +43,11 @@ class SubscriptionChoiceCollectionViewCell: UICollectionViewCell {
                 self.priceLabel?.text = "Free"
             case let .paid(price, locale):
                 self.numberFormatter.locale = locale
-                let priceString = self.numberFormatter.string(from: NSNumber(value: price))
-                self.priceLabel?.text = priceString
+                let priceString = self.numberFormatter.string(from: NSNumber(value: price)) ?? ""
+                self.priceLabel?.text = priceString + " " + model.period.localizedString
             }
             self.titleLabel?.text = model.localizedTitle
             self.descriptionLabel?.text = model.localizedDescription
-            
-            self.button?.setTitle(model.level.callToAction, for: .normal)
         }
     }
     
@@ -66,21 +64,21 @@ class SubscriptionChoiceCollectionViewCell: UICollectionViewCell {
     
     private func recycle() {
         self.titleLabel?.text = nil
+        self.priceLabel?.text = nil
         self.descriptionLabel?.text = nil
-        self.button?.setTitle(nil, for: .normal)
     }
     
 }
 
-fileprivate extension Subscription.Level {
-    fileprivate var callToAction: String {
+fileprivate extension Subscription.Period {
+    fileprivate var localizedString: String {
         switch self {
-        case .free:
-            return "Use WaterMe for Free"
-        case .basic:
-            return "Switch to Basic"
-        case .pro:
-            return "Go Pro"
+        case .month:
+            return "per Month"
+        case .year:
+            return "per Year"
+        case .none:
+            return ""
         }
     }
 }

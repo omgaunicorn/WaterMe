@@ -105,10 +105,10 @@
 			isa = PBXGroup;
 			children = (
 				501F92231EC55E080014939D /* SubscriptionChoice.storyboard */,
+				501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */,
+				501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */,
 				501F92241EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift */,
 				501F92251EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib */,
-				501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */,
-				501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */,
 			);
 			path = SubscriptionChoice;
 			sourceTree = "<group>";
