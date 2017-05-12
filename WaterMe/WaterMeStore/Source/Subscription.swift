@@ -24,6 +24,33 @@ public struct Subscription {
     public var price: Price
 }
 
+extension Subscription.Price: Comparable {
+    
+    public static func == (lhs: Subscription.Price, rhs: Subscription.Price) -> Bool {
+        switch lhs {
+        case .free:
+            guard case .free = rhs else { return false }
+            return true
+        case .paid(let lhsPrice, _):
+            guard case .paid(let rhsPrice, _) = rhs else { return false }
+            return lhsPrice == rhsPrice
+        }
+    }
+    
+    public static func < (lhs: Subscription.Price, rhs:Subscription.Price) -> Bool {
+        return lhs.doubleValue < rhs.doubleValue
+    }
+    
+    private var doubleValue: Double {
+        switch self {
+        case .free:
+            return 0
+        case .paid(let price, _):
+            return price
+        }
+    }
+}
+
 public extension Subscription.Level {
     public init?(productIdentifier: String?) {
         guard let id = productIdentifier else { self = .free; return; }
@@ -33,7 +60,6 @@ public extension Subscription.Level {
         case PrivateKeys.kSubscriptionProYearly, PrivateKeys.kSubscriptionProMonthly:
             self = .pro(productIdentifier: id)
         default:
-//            assert(false, "Invalid ProductID Found: \(id)")
             return nil
         }
     }

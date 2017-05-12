@@ -28,4 +28,4 @@ trailing_comma:
     mandatory_comma: false
 excluded:
   - Pods
-  - HipstapaperCommon/Tests
+  - NoDeviceTests

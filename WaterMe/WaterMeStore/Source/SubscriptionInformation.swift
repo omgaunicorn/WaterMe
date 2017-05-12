@@ -65,7 +65,8 @@ public class SubscriptionLoader: NSObject, SubscriptionLoaderType, SKProductsReq
     }
     
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        let subscriptions = Subscription.subscriptions(from: response.products)
+        var subscriptions = Subscription.subscriptions(from: response.products)
+        subscriptions.sort(by: { $0.0.price < $0.1.price })
         let result = Result.success(subscriptions)
         self.results = result
         completion?(result)
