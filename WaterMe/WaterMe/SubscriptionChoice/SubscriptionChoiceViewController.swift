@@ -9,7 +9,7 @@
 import WaterMeStore
 import UIKit
 
-class SubscriptionChoiceViewController: UIViewController, HasSubscriptionType {
+class SubscriptionChoiceViewController: UIViewController, HasSubscriptionLoaderType {
     
     class func newVC(subscriptionLoader: SubscriptionLoaderType? = nil) -> SubscriptionChoiceViewController {
         let sb = UIStoryboard(name: "SubscriptionChoice", bundle: Bundle(for: self))
@@ -39,8 +39,7 @@ class SubscriptionChoiceViewController: UIViewController, HasSubscriptionType {
         
         // register for events from the collection view controller
         self.collectionViewController?.subscriptionSelected = { [weak self] subscription in
-            print(subscription)
-            let vc = SubscriptionMigrationViewController.newVC()
+            let vc = SubscriptionMigrationViewController.newVC(subscription: subscription)
             self?.show(vc, sender: self)
         }
         

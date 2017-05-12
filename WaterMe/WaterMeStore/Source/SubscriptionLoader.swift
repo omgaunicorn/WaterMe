@@ -13,11 +13,11 @@ public protocol SubscriptionLoaderType: Resettable {
     func start(completion: ((Result<[Subscription]>) -> Void)?)
 }
 
-public protocol HasSubscriptionType {
+public protocol HasSubscriptionLoaderType {
     var subscriptionLoader: SubscriptionLoaderType { get set }
 }
 
-public extension HasSubscriptionType {
+public extension HasSubscriptionLoaderType {
     mutating func configure(with subscriptionLoader: SubscriptionLoaderType?) {
         if let subscriptionLoader = subscriptionLoader {
             self.subscriptionLoader = subscriptionLoader

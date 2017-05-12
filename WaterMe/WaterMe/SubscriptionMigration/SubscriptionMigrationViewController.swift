@@ -9,18 +9,32 @@
 import WaterMeStore
 import UIKit
 
-class SubscriptionMigrationViewController: UIViewController {
+class SubscriptionMigrationViewController: UIViewController, HasSubscriptionType {
     
-    class func newVC() -> SubscriptionMigrationViewController {
+    class func newVC(subscription: Subscription) -> SubscriptionMigrationViewController {
         let sb = UIStoryboard(name: "SubscriptionMigration", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
-        let vc = sb.instantiateInitialViewController() as! SubscriptionMigrationViewController
+        var vc = sb.instantiateInitialViewController() as! SubscriptionMigrationViewController
+        vc.configure(with: subscription)
         return vc
     }
     
+    @IBOutlet private weak var tempLabel: UILabel?
+    
+    var subscription: Subscription!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .red
+        
+        // configure my vc
+        self.title = "Migration"
+        
+        // configure the label
+        self.tempLabel?.text = self.subscription.localizedTitle
+    }
+    
+    @IBAction private func tempStartBuyProcess(_ sender: NSObject?) {
+        print("Buy!")
     }
     
 }

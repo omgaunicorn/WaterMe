@@ -32,6 +32,11 @@ class SubscriptionChoiceCollectionViewController: UICollectionViewController, UI
         return self.data.count
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.collectionView?.deselectAllItems(animated: animated)
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let id = SubscriptionChoiceCollectionViewCell.identifier
         // swiftlint:disable:next force_cast

@@ -29,6 +29,16 @@ public struct Subscription {
     public var price: Price
 }
 
+public protocol HasSubscriptionType {
+    var subscription: Subscription! { get set }
+}
+
+public extension HasSubscriptionType {
+    public mutating func configure(with subscription: Subscription) {
+        self.subscription = subscription
+    }
+}
+
 extension Subscription.Price: Comparable {
     
     public static func == (lhs: Subscription.Price, rhs: Subscription.Price) -> Bool {
