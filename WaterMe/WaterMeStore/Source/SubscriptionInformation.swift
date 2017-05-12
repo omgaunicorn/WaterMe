@@ -46,9 +46,12 @@ public class SubscriptionLoader: NSObject, SubscriptionLoaderType, SKProductsReq
     }
     
     public func start(completion: ((Result<[Subscription]>) -> Void)?) {
-        self.completion = completion
-        self.results = nil
-        self.request.start()
+        if let existingResults = self.results {
+            completion?(existingResults)
+        } else {
+            self.completion = completion
+            self.request.start()
+        }
     }
     
     public func reset() {

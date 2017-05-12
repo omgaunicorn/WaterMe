@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bQ2-mU-26R">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1Bc-fJ-HSp">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Subscription Choice View Controller-->
+        <!--Premium-->
         <scene sceneID="Icu-Nx-NKk">
             <objects>
                 <viewController id="bQ2-mU-26R" customClass="SubscriptionChoiceViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -36,16 +36,23 @@
                             <constraint firstItem="Uwx-eY-fm6" firstAttribute="centerX" secondItem="kGc-Ze-JPC" secondAttribute="centerX" id="yMd-Yc-j8F"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Premium" id="OLi-CP-5ht">
+                        <barButtonItem key="leftBarButtonItem" title="Restore" id="iO4-Yx-KeP"/>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="cWK-9V-sJz"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="restoreBarButtonItem" destination="iO4-Yx-KeP" id="h1Q-Fj-yRf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S9G-Ql-fZW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-247" y="154"/>
+            <point key="canvasLocation" x="750" y="153.16901408450704"/>
         </scene>
         <!--Subscription Choice Collection View Controller-->
         <scene sceneID="egV-qX-fh0">
             <objects>
                 <collectionViewController id="xJA-7n-kEs" customClass="SubscriptionChoiceCollectionViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" id="58H-Nc-QdK">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="58H-Nc-QdK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -64,7 +71,25 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q6v-tp-76L" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="738.75" y="152.11267605633802"/>
+            <point key="canvasLocation" x="1736.25" y="152.11267605633802"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="grX-ai-89N">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1Bc-fJ-HSp" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Bj-nd-xIk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bQ2-mU-26R" kind="relationship" relationship="rootViewController" id="YBe-1i-Pao"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="juT-Oo-JQP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-247.5" y="153.16901408450704"/>
         </scene>
     </scenes>
 </document>

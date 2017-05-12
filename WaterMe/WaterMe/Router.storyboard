@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1Hs-jg-GYh">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Router View Controller-->
+        <scene sceneID="oJo-dt-yZA">
+            <objects>
+                <viewController id="1Hs-jg-GYh" customClass="RouterViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mbd-cQ-2SO"/>
+                        <viewControllerLayoutGuide type="bottom" id="9jO-K0-Qj2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="V2H-gP-Yj5">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1HS-XH-FYD">
+                                <rect key="frame" x="124" y="318.5" width="127" height="30"/>
+                                <state key="normal" title="WaterMe Premium"/>
+                                <connections>
+                                    <action selector="premiumButtonTapped:" destination="1Hs-jg-GYh" eventType="touchUpInside" id="a08-Gv-Ww2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="1HS-XH-FYD" firstAttribute="centerX" secondItem="V2H-gP-Yj5" secondAttribute="centerX" id="80y-d3-Nrg"/>
+                            <constraint firstItem="1HS-XH-FYD" firstAttribute="centerY" secondItem="V2H-gP-Yj5" secondAttribute="centerY" id="9MY-Si-PeZ"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lmu-UG-HSI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-246" y="173"/>
+        </scene>
+    </scenes>
+</document>

@@ -25,16 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
-        let window = self.window ?? UIWindow(frame: UIScreen.main.bounds)
-        self.window = window
-        
-        let vc = SubscriptionChoiceViewController.newVC()
-        
-        window.rootViewController = vc
-        window.backgroundColor = .white
-        window.makeKeyAndVisible()
-        
         return true
     }
     

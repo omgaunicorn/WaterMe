@@ -11,25 +11,35 @@ import UIKit
 
 class SubscriptionChoiceViewController: UIViewController, HasSubscriptionType {
     
-    class func newVC(subscriptionLoader: SubscriptionLoaderType? = nil) -> SubscriptionChoiceViewController {
+    class func newVC(subscriptionLoader: SubscriptionLoaderType? = nil) -> UINavigationController {
         let sb = UIStoryboard(name: "SubscriptionChoice", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
-        var vc = sb.instantiateInitialViewController() as! SubscriptionChoiceViewController
-        
+        let navVC = sb.instantiateInitialViewController() as! UINavigationController
+        // swiftlint:disable:next force_cast
+        var vc = navVC.viewControllers.first as! SubscriptionChoiceViewController
         vc.configure(with: subscriptionLoader)
-        
-        return vc
+        return navVC
     }
     
     /*@IBOutlet*/ private weak var collectionViewController: SubscriptionChoiceCollectionViewController?
+    @IBOutlet private weak var restoreBarButtonItem: UIBarButtonItem? {
+        didSet {
+            self.restoreBarButtonItem?.title = "Restore2"
+        }
+    }
     
-    var subscriptionLoader: SubscriptionLoaderType = SubscriptionLoader()
+    lazy var subscriptionLoader: SubscriptionLoaderType = SubscriptionLoader()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // populate children VC's
         self.collectionViewController = self.childViewControllers.first()
         
+        // configure my vc
+        self.title = "WaterMe Premium"
+        
+        // get the subscription information
         self.subscriptionLoader.start() { result in
             switch result {
             case .success(let results):

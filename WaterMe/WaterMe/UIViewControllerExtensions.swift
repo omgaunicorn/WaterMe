@@ -16,7 +16,8 @@ extension UIViewController {
         
         while next != nil {
             current = next
-            next = next?.parent
+            guard let nextParent = next?.parent, type(of: nextParent) != UINavigationController.self else { next = nil; continue; }
+            next = nextParent
         }
         
         return current!
