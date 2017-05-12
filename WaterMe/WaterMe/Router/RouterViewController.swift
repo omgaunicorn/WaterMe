@@ -24,9 +24,14 @@ class RouterViewController: UIViewController {
         let sl = SubscriptionLoader()
         sl.start() { _ in
             let vc = SubscriptionChoiceViewController.newVC(subscriptionLoader: sl)
-            self.present(vc, animated: true) {
+            let navVC = UINavigationController(rootViewController: vc)
+            self.present(navVC, animated: true) {
                 sender.isEnabled = true
             }
         }
+    }
+    
+    @objc private func restorePurchases(_ sender: NSObject?) {
+        print("Restore Purchases")
     }
 }

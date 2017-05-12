@@ -13,6 +13,8 @@ class SubscriptionChoiceCollectionViewController: UICollectionViewController, UI
     
     var data: [Subscription] = []
     
+    var subscriptionSelected: ((Subscription) -> Void)?
+    
     func reload() {
         self.collectionView?.reloadData()
     }
@@ -54,7 +56,8 @@ class SubscriptionChoiceCollectionViewController: UICollectionViewController, UI
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+        let model = self.data[indexPath.row]
+        self.subscriptionSelected?(model)
     }
     
     override func viewDidLayoutSubviews() {
@@ -66,4 +69,5 @@ class SubscriptionChoiceCollectionViewController: UICollectionViewController, UI
         self.collectionView?.scrollIndicatorInsets.top = topInset
         self.collectionView?.scrollIndicatorInsets.bottom = bottomInset
     }
+    
 }

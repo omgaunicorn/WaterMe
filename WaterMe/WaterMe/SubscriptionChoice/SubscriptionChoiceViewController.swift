@@ -11,14 +11,12 @@ import UIKit
 
 class SubscriptionChoiceViewController: UIViewController, HasSubscriptionType {
     
-    class func newVC(subscriptionLoader: SubscriptionLoaderType? = nil) -> UINavigationController {
+    class func newVC(subscriptionLoader: SubscriptionLoaderType? = nil) -> SubscriptionChoiceViewController {
         let sb = UIStoryboard(name: "SubscriptionChoice", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
-        let navVC = sb.instantiateInitialViewController() as! UINavigationController
-        // swiftlint:disable:next force_cast
-        var vc = navVC.viewControllers.first as! SubscriptionChoiceViewController
+        var vc = sb.instantiateInitialViewController() as! SubscriptionChoiceViewController
         vc.configure(with: subscriptionLoader)
-        return navVC
+        return vc
     }
     
     /*@IBOutlet*/ private weak var collectionViewController: SubscriptionChoiceCollectionViewController?
@@ -38,6 +36,11 @@ class SubscriptionChoiceViewController: UIViewController, HasSubscriptionType {
         
         // configure my vc
         self.title = "Premium"
+        
+        // register for events from the collection view controller
+        self.collectionViewController?.subscriptionSelected = { [weak self] subscription in
+            print(subscription)
+        }
         
         // get the subscription information
         self.subscriptionLoader.start() { result in
