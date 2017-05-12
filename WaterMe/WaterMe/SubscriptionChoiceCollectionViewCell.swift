@@ -23,7 +23,7 @@ class SubscriptionChoiceCollectionViewCell: UICollectionViewCell {
         return cell
     }
     
-    @IBOutlet weak var widthConstraint: NSLayoutConstraint?
+    @IBOutlet private(set) var widthConstraint: NSLayoutConstraint?
     @IBOutlet private weak var titleLabel: UILabel?
     @IBOutlet private weak var descriptionLabel: UILabel?
     @IBOutlet private weak var priceLabel: UILabel?
@@ -53,15 +53,21 @@ class SubscriptionChoiceCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private func recycle() {
-        self.titleLabel?.text = nil
-        self.descriptionLabel?.text = nil
-        self.button?.setTitle(nil, for: .normal)
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.widthConstraint?.isActive = false
+        self.recycle()
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         self.recycle()
+    }
+    
+    private func recycle() {
+        self.titleLabel?.text = nil
+        self.descriptionLabel?.text = nil
+        self.button?.setTitle(nil, for: .normal)
     }
     
 }
