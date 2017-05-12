@@ -26,6 +26,8 @@
 		50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */; };
 		50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */; };
 		50C96A3A1EC2CFE8002802C1 /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */; };
+		50D3A0811EC57F68001B4A7D /* SubscriptionMigration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50D3A0801EC57F68001B4A7D /* SubscriptionMigration.storyboard */; };
+		50D3A0831EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3A0821EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,8 @@
 		50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoDeviceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
 		50C96A3B1EC2CFE8002802C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50D3A0801EC57F68001B4A7D /* SubscriptionMigration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubscriptionMigration.storyboard; sourceTree = "<group>"; };
+		50D3A0821EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionMigrationViewController.swift; sourceTree = "<group>"; };
 		5377468C8F6F58D092A55320 /* Pods-NoDeviceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.release.xcconfig"; sourceTree = "<group>"; };
 		8ECA152863ABAF082087BBC8 /* Pods_NoDeviceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoDeviceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A628444B2D8DB663671AEDAA /* Pods-WaterMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.debug.xcconfig"; sourceTree = "<group>"; };
@@ -151,6 +155,7 @@
 				50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */,
 				501F921E1EC55DA80014939D /* Router */,
 				501F921D1EC55D610014939D /* SubscriptionChoice */,
+				50D3A07F1EC57F32001B4A7D /* SubscriptionMigration */,
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
 				50BB0F6B1EC001C200850FF4 /* Videos */,
 				50BB0F651EBFF9A700850FF4 /* Settings.bundle */,
@@ -168,6 +173,15 @@
 				50C96A3B1EC2CFE8002802C1 /* Info.plist */,
 			);
 			path = NoDeviceTests;
+			sourceTree = "<group>";
+		};
+		50D3A07F1EC57F32001B4A7D /* SubscriptionMigration */ = {
+			isa = PBXGroup;
+			children = (
+				50D3A0801EC57F68001B4A7D /* SubscriptionMigration.storyboard */,
+				50D3A0821EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift */,
+			);
+			path = SubscriptionMigration;
 			sourceTree = "<group>";
 		};
 		E7A7E92A7350217B27E6B8B5 /* Frameworks */ = {
@@ -283,6 +297,7 @@
 				501F92221EC55DF50014939D /* Router.storyboard in Resources */,
 				50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */,
 				501F92281EC55E080014939D /* SubscriptionChoice.storyboard in Resources */,
+				50D3A0811EC57F68001B4A7D /* SubscriptionMigration.storyboard in Resources */,
 				50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */,
 				501F922A1EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib in Resources */,
 				50BB0F6C1EC001C200850FF4 /* Videos in Resources */,
@@ -418,6 +433,7 @@
 				50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */,
 				50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */,
 				501F92211EC55DF50014939D /* RouterViewController.swift in Sources */,
+				50D3A0831EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

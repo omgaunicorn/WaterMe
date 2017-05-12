@@ -40,6 +40,8 @@ class SubscriptionChoiceViewController: UIViewController, HasSubscriptionType {
         // register for events from the collection view controller
         self.collectionViewController?.subscriptionSelected = { [weak self] subscription in
             print(subscription)
+            let vc = SubscriptionMigrationViewController.newVC()
+            self?.show(vc, sender: self)
         }
         
         // get the subscription information

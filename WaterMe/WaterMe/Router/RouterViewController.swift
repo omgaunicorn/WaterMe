@@ -19,15 +19,14 @@ class RouterViewController: UIViewController {
     }
     
     @IBAction private func premiumButtonTapped(_ sender: NSObject?) {
-        guard let sender = sender as? UIControl else { return }
-        sender.isEnabled = false
+        let sender = sender as? UIControl
+        sender?.isEnabled = false
         let sl = SubscriptionLoader()
         sl.start() { _ in
+            sender?.isEnabled = true
             let vc = SubscriptionChoiceViewController.newVC(subscriptionLoader: sl)
             let navVC = UINavigationController(rootViewController: vc)
-            self.present(navVC, animated: true) {
-                sender.isEnabled = true
-            }
+            self.show(navVC, sender: sender ?? self)
         }
     }
     
