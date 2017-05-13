@@ -9,6 +9,32 @@
 import WaterMeStore
 import UIKit
 
+
+// Eventual Boot Sequence
+/*
+ 1. Check for Core Data database
+    YES - migrate to free realm, present new subscription options
+    NO - Go to 2
+ 
+ 2. Check realm for icloud logged in user
+    YES - Check if there is a realm for Pro photo sync
+        YES - Load pro data assuming the user is Pro
+        NO - Load app assuming user has Premium cloud sync
+    NO - Go to 3
+ 
+ 3. Check if there is a local realm on disk
+    YES - Assume user is free and load app
+    NO - Go to 4
+ 
+ 4. Check if there is a receipt
+    NO - Assume new free user - create local realm
+    YES - Go to 5
+ 
+ 5. Read receipt and check for subscription
+    YES (subscription present) - Assume receipt is valid, configure realm for subscription level
+    NO (subscription not present) - Assume new user - setup for local free realm
+*/
+
 class RouterViewController: UIViewController {
     
     class func newVC() -> RouterViewController {
