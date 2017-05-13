@@ -39,7 +39,7 @@
                     <navigationItem key="navigationItem" title="Premium" id="OLi-CP-5ht">
                         <barButtonItem key="leftBarButtonItem" title="Restore" id="iO4-Yx-KeP">
                             <connections>
-                                <action selector="restorePurchases:" destination="S9G-Ql-fZW" id="KfM-dU-Rst"/>
+                                <action selector="restorePurchases:" destination="bQ2-mU-26R" id="GuC-bx-pWV"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="cWK-9V-sJz">

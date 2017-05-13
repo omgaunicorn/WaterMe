@@ -29,8 +29,4 @@ class RouterViewController: UIViewController {
             self.show(navVC, sender: sender ?? self)
         }
     }
-    
-    @objc private func restorePurchases(_ sender: NSObject?) {
-        print("Restore Purchases")
-    }
 }

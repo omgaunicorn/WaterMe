@@ -56,4 +56,9 @@ class SubscriptionChoiceViewController: UIViewController, HasSubscriptionLoaderT
         }
     }
     
+    @IBAction private func restorePurchases(_ sender: NSObject?) {
+        let vc = RestorePurchaseViewController.newVC()
+        self.show(vc, sender: sender ?? self)
+    }
+    
 }
