@@ -6,6 +6,7 @@
 //
 //
 
+import XCGLogger
 import StoreKit
 
 public protocol SubscriptionPurchaseType: Resettable {
@@ -47,6 +48,7 @@ public class SubscriptionPurchaser: NSObject, SubscriptionPurchaseType, SKPaymen
     
     public func start(completionHandler: @escaping (PurchaseResult) -> Void) -> Bool {
         guard self.completionHandler == nil else { return false }
+        log.debug("Starting Purchase: \(self.productToPurchase.productIdentifier)")
         self.completionHandler = completionHandler
         let queue = SKPaymentQueue.default()
         let payment = SKPayment(product: self.productToPurchase)
@@ -58,6 +60,7 @@ public class SubscriptionPurchaser: NSObject, SubscriptionPurchaseType, SKPaymen
     public func reset() {
         SKPaymentQueue.default().remove(self)
         self.completionHandler = nil
+        log.debug("Finished Purchase: \(self.productToPurchase.productIdentifier)")
     }
     
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
@@ -65,26 +68,33 @@ public class SubscriptionPurchaser: NSObject, SubscriptionPurchaseType, SKPaymen
             let completionHandler = self.completionHandler,
             let transaction = transactions.filter({ $0.payment.productIdentifier == self.productToPurchase.productIdentifier }).last
         else {
-            NSLog("Warning: \(#function): Unexpected Transaction Seen.")
+            log.warning("Unexpected Transaction Seen: \(transactions)")
+            log.severe("Finishing Unknown Transactions. Do not shit this!")
+            transactions.forEach({ queue.finishTransaction($0) })
             return
         }
         switch transaction.transactionState {
         case .purchasing:
-            print("...purchasing...")
+            log.debug("Purchasing: \(transaction.payment.productIdentifier)")
         case .deferred:
+            log.debug("Deferred: \(transaction.payment.productIdentifier)")
             self.reset()
             completionHandler(.deferred(self.subscription))
         case .purchased, .restored:
+            log.debug("Purchased / Restored: \(transaction.payment.productIdentifier)")
             queue.finishTransaction(transaction)
             self.reset()
             completionHandler(.success(self.subscription))
         case .failed:
+            let error = transaction.error!
+            log.debug("Failed: \(transaction.payment.productIdentifier) - Error: \(error)")
             queue.finishTransaction(transaction)
             self.reset()
-            completionHandler(.failed(transaction.error!, self.subscription))
+            completionHandler(.failed(error, self.subscription))
         }
     }
     
     deinit {
+        SKPaymentQueue.default().remove(self)
     }
 }

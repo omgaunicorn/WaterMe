@@ -6,7 +6,10 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
+import XCGLogger
 import UIKit
+
+let log = XCGLogger.default
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,6 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     override init() {
         super.init()
+        
+        // configure logging
+        log.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, showDate: true, writeToFile: true, fileLevel: .debug)
         
         // as early as possible, configure standard defaults
         UserDefaults.standard.configure()

@@ -6,6 +6,10 @@
 //
 //
 
+import XCGLogger
+
+internal let log = XCGLogger.default
+
 public protocol Resettable {
     func reset()
 }
