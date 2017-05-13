@@ -39,7 +39,8 @@ class SubscriptionChoiceViewController: UIViewController, HasSubscriptionLoaderT
         
         // register for events from the collection view controller
         self.collectionViewController?.subscriptionSelected = { [weak self] subscription in
-            let vc = SubscriptionMigrationViewController.newVC(subscriptionPurchaser: SubscriptionPurchaser(itemToPurchase: subscription)!)
+            let purchaser = SubscriptionPurchaser(itemToPurchase: subscription)!
+            let vc = SubscriptionMigrationViewController.newVC(subscriptionPurchaser: purchaser)
             self?.show(vc, sender: self)
         }
         

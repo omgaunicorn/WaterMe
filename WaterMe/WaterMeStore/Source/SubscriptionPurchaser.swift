@@ -35,13 +35,14 @@ public class SubscriptionPurchaser: NSObject, SubscriptionPurchaseType, SKPaymen
     public let subscription: Subscription
     
     private let productToPurchase: SKProduct
-    private var completionHandler: ((PurchaseResult) -> Void)?
+    private var completionHandler: ((PurchaseResult) -> Void)? // if nil we have not started yet
     
     public required init?(itemToPurchase: Subscription) {
         guard let productToPurchase = itemToPurchase.product else { return nil }
         self.productToPurchase = productToPurchase
         self.subscription = itemToPurchase
         super.init()
+        SKPaymentQueue.default().add(self) // add queue now to allow unwanted transactions to flow through. hacky, but needed for now
     }
     
     public func start(completionHandler: @escaping (PurchaseResult) -> Void) -> Bool {
@@ -60,21 +61,30 @@ public class SubscriptionPurchaser: NSObject, SubscriptionPurchaseType, SKPaymen
     }
     
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        guard let transaction = transactions.filter({ $0.payment.productIdentifier == self.productToPurchase.productIdentifier }).last else { return }
+        guard
+            let completionHandler = self.completionHandler,
+            let transaction = transactions.filter({ $0.payment.productIdentifier == self.productToPurchase.productIdentifier }).last
+        else {
+            NSLog("Warning: \(#function): Unexpected Transaction Seen.")
+            return
+        }
         switch transaction.transactionState {
         case .purchasing:
-            break
+            print("...purchasing...")
         case .deferred:
-            self.completionHandler?(.deferred(self.subscription))
             self.reset()
+            completionHandler(.deferred(self.subscription))
         case .purchased, .restored:
             queue.finishTransaction(transaction)
-            self.completionHandler?(.success(self.subscription))
             self.reset()
+            completionHandler(.success(self.subscription))
         case .failed:
             queue.finishTransaction(transaction)
-            self.completionHandler?(.failed(transaction.error!, self.subscription))
             self.reset()
+            completionHandler(.failed(transaction.error!, self.subscription))
         }
+    }
+    
+    deinit {
     }
 }

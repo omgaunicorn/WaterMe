@@ -39,11 +39,11 @@ class SubscriptionMigrationViewController: UIViewController, HasSubscriptionPurc
         self.subscriptionPurchaser.start() { result in
             switch result {
             case .deferred:
-                print("deferred")
+                self.tempLabel?.text = "Deferred, you big baby"
             case .failed(let error, _):
-                print("failed with error: \(error)")
+                self.tempLabel?.text = error.localizedDescription
             case .success:
-                print("yay!")
+                self.tempLabel?.text = "Purchased!"
             }
         }
     }
