@@ -69,7 +69,7 @@ public class SubscriptionPurchaser: NSObject, SubscriptionPurchaseType, SKPaymen
             let transaction = transactions.filter({ $0.payment.productIdentifier == self.productToPurchase.productIdentifier }).last
         else {
             log.warning("Unexpected Transaction Seen: \(transactions)")
-            log.severe("Finishing Unknown Transactions. Do not shit this!")
+            log.severe("Finishing Unknown Transactions. Do not ship this!")
             transactions.forEach({ queue.finishTransaction($0) })
             return
         }
