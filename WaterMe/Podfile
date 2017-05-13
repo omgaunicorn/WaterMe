@@ -3,6 +3,7 @@ target 'WaterMe' do
 	use_frameworks!
 	
 	pod 'RealmSwift'
+	pod 'XCGLogger', '~> 5.0.1'
     pod 'WaterMeData', :path => 'WaterMeData'
     pod 'WaterMeStore', :path => 'WaterMeStore'
 end

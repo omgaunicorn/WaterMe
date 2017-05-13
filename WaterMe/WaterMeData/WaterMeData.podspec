@@ -27,13 +27,13 @@ Pod::Spec.new do |s|
 
   s.source       = { :git => "https://github.com/jeffreybergier/WaterMe2.git", :tag => "#{s.version}" }
 
-
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
   s.source_files = "Source"
 
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
-  s.dependency "RealmSwift"
+  s.dependency 'RealmSwift'
+  s.dependency 'XCGLogger', '~> 5.0.1'
 
 end
