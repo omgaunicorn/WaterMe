@@ -6,7 +6,7 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
-import Foundation
+import StoreKit
 
 public struct Subscription {
     
@@ -27,6 +27,7 @@ public struct Subscription {
     public var localizedTitle: String
     public var localizedDescription: String
     public var price: Price
+    internal var product: SKProduct?
 }
 
 public protocol HasSubscriptionType {
@@ -73,6 +74,7 @@ public extension Subscription {
             level: .free,
             localizedTitle: "WaterMe Free",
             localizedDescription: "🌺  Unlimited number of plants\n🔔  Unlimited number of reminders",
-            price: .free)
+            price: .free,
+            product: nil)
     }
 }

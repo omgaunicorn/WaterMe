@@ -62,5 +62,6 @@ internal extension Subscription {
         self.localizedTitle = product.localizedTitle
         self.localizedDescription = product.localizedDescription
         self.price = .paid(price: product.price.doubleValue, locale: product.priceLocale)
+        self.product = product as? SKProduct
     }
 }

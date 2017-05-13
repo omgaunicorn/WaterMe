@@ -6,16 +6,13 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
-import WaterMeStore
 import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    
-    let bootTransactionObserver: BootTransactionObserverType = BootTransactionObserver()
-    
+        
     override init() {
         super.init()
         
