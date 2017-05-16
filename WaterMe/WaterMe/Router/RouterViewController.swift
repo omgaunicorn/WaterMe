@@ -6,9 +6,9 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
+import WaterMeData
 import WaterMeStore
 import UIKit
-
 
 // Eventual Boot Sequence
 /*
@@ -54,5 +54,15 @@ class RouterViewController: UIViewController {
             let navVC = UINavigationController(rootViewController: vc)
             self.show(navVC, sender: sender ?? self)
         }
+    }
+    
+    @IBAction private func localRealm(_ sender: NSObject?) {
+        let rc = RealmController(kind: .local)
+        print(rc)
+        print(rc.realm)
+    }
+    
+    @IBAction private func syncedRealm(_ sender: NSObject?) {
+
     }
 }

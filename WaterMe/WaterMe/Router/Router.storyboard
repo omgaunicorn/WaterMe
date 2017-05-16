@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1Hs-jg-GYh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="1Hs-jg-GYh">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -21,18 +21,40 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1HS-XH-FYD">
-                                <rect key="frame" x="124" y="318.5" width="127" height="30"/>
-                                <state key="normal" title="WaterMe Premium"/>
-                                <connections>
-                                    <action selector="premiumButtonTapped:" destination="1Hs-jg-GYh" eventType="touchUpInside" id="a08-Gv-Ww2"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="lJo-t2-u1C">
+                                <rect key="frame" x="112.5" y="267.5" width="150" height="132"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1HS-XH-FYD">
+                                        <rect key="frame" x="0.0" y="0.0" width="150" height="36"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <state key="normal" title="In-App Purchase"/>
+                                        <connections>
+                                            <action selector="premiumButtonTapped:" destination="1Hs-jg-GYh" eventType="touchUpInside" id="a08-Gv-Ww2"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t2k-Aw-y9T">
+                                        <rect key="frame" x="0.0" y="48" width="150" height="36"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <state key="normal" title="Local Realm"/>
+                                        <connections>
+                                            <action selector="localRealm:" destination="1Hs-jg-GYh" eventType="touchUpInside" id="59X-Ew-MsK"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CKI-Gs-Uif">
+                                        <rect key="frame" x="0.0" y="96" width="150" height="36"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <state key="normal" title="Sync Realm"/>
+                                        <connections>
+                                            <action selector="syncedRealm:" destination="1Hs-jg-GYh" eventType="touchUpInside" id="Mfo-c9-g4v"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1HS-XH-FYD" firstAttribute="centerX" secondItem="V2H-gP-Yj5" secondAttribute="centerX" id="80y-d3-Nrg"/>
-                            <constraint firstItem="1HS-XH-FYD" firstAttribute="centerY" secondItem="V2H-gP-Yj5" secondAttribute="centerY" id="9MY-Si-PeZ"/>
+                            <constraint firstItem="lJo-t2-u1C" firstAttribute="centerY" secondItem="V2H-gP-Yj5" secondAttribute="centerY" id="MUZ-Uz-ptn"/>
+                            <constraint firstItem="lJo-t2-u1C" firstAttribute="centerX" secondItem="V2H-gP-Yj5" secondAttribute="centerX" id="MWP-nq-oIF"/>
                         </constraints>
                     </view>
                 </viewController>
