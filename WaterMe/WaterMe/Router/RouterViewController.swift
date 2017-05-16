@@ -63,6 +63,21 @@ class RouterViewController: UIViewController {
     }
     
     @IBAction private func syncedRealm(_ sender: NSObject?) {
-
+        if let user = RealmController.loggedInUser {
+            let rc = RealmController(kind: .synced(user))
+            print(rc)
+            print(rc.realm)
+        } else {
+            RealmController.loginWithCloudKit() { result in
+                switch result {
+                case .error(let error):
+                    print(error)
+                case .success(let rc):
+                    print(rc)
+                    print(rc.realm)
+                }
+                
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@
 //
 //
 
+import CloudKit
 import RealmSwift
 
 public class RealmController {
@@ -18,6 +19,30 @@ public class RealmController {
         let fm = FileManager.default
         let exists = fm.fileExists(atPath: self.localRealmDirectory.path)
         return exists
+    }
+    
+    public static var loggedInUser: SyncUser? {
+        return SyncUser.current
+    }
+    
+    public static func loginWithCloudKit(completionHandler: ((Result<RealmController>) -> Void)?) {
+        let container = CKContainer.default()
+        container.fetchUserRecordID { id, error in
+            guard let id = id else {
+                completionHandler?(.error(error!))
+                return
+            }
+            let server = PrivateKeys.kRealmServer
+            let credential = SyncCredentials.cloudKit(token: id.recordName)
+            SyncUser.logIn(with: credential, server: server) { user, error in
+                guard let user = user else {
+                    completionHandler?(.error(error!))
+                    return
+                }
+                let rc = RealmController(kind: .synced(user))
+                completionHandler?(.success(rc))
+            }
+        }
     }
     
     private static let localRealmDirectory: URL = {
@@ -42,7 +67,9 @@ public class RealmController {
             let realm = try! Realm(configuration: config)
             return realm
         case .synced(let user):
-            fatalError()
+            config.syncConfiguration = SyncConfiguration(user: user, realmURL: self.realmURL, enableSSLValidation: true)
+            let realm = try! Realm(configuration: config)
+            return realm
         }
     }
     
@@ -52,7 +79,7 @@ public class RealmController {
         case .local:
             self.realmURL = RealmController.localRealmDirectory.appendingPathComponent("Realm.realm", isDirectory: false)
         case .synced(let user):
-            fatalError()
+            self.realmURL = PrivateKeys.kRealmServer.appendingPathComponent("~").appendingPathComponent("WaterMeBasic")
         }
     }
     
