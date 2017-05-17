@@ -9,6 +9,10 @@
 import CloudKit
 import RealmSwift
 
+public protocol HasRealmControllers {
+    
+}
+
 public class RealmController {
     
     public let kind: Kind
@@ -20,7 +24,7 @@ public class RealmController {
             try! type(of: self).createLocalRealmDirectoryIfNeeded()
             let realm = try! Realm(configuration: self.realmConfig)
             return realm
-        case .synced(let user):
+        case .basic(let user), .pro(let user):
             let realm = try! Realm(configuration: self.realmConfig)
             return realm
         }

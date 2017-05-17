@@ -6,6 +6,8 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
+import RealmSwift
+import CloudKit
 import WaterMeData
 import WaterMeStore
 import UIKit
@@ -17,9 +19,9 @@ import UIKit
     NO - Go to 2
  
  2. Check realm for icloud logged in user
-    YES - Check if there is a realm for Pro photo sync
+    YES - Check the Basic Realm receipt object to see if there is a realm for Pro photo sync
         YES - Load pro data assuming the user is Pro
-        NO - Load app assuming user has Premium cloud sync
+        NO - Load app assuming user has Basic cloud sync
     NO - Go to 3
  
  3. Check if there is a local realm on disk
@@ -68,19 +70,36 @@ class RouterViewController: UIViewController {
         print("Local Realm Exists: \(RealmController.localRealmExists)")
         print("LoggedIn User: \(RealmController.loggedInUser)")
         if let user = RealmController.loggedInUser {
-            let rc = RealmController(kind: .synced(user))
-            print(rc)
-            print(rc.realm)
+            let proRC = RealmController(kind: .pro(user))
+            let basicRC = RealmController(kind: .basic(user))
+            print("Already Logged In")
+            print("ProRC: \(proRC)")
+            print("ProRC Realm: \(proRC.realm)")
+            print("BasicRC: \(basicRC)")
+            print("BasicRC Realm: \(basicRC.realm)")
         } else {
-            RealmController.loginWithCloudKit() { result in
+            print("Getting CKToken")
+            CKContainer.default().token() { result in
                 switch result {
                 case .error(let error):
-                    print(error)
-                case .success(let rc):
-                    print(rc)
-                    print(rc.realm)
+                    print("CloudKitError: \(error)")
+                case .success(let token):
+                    print("Logging into Realm")
+                    SyncUser.cloudKitUser(with: token) { result in
+                        switch result {
+                        case .error(let error):
+                            print("Realm Error: \(error)")
+                        case .success(let user):
+                            print("Logged In")
+                            let proRC = RealmController(kind: .pro(user))
+                            let basicRC = RealmController(kind: .basic(user))
+                            print("ProRC: \(proRC)")
+                            print("ProRC Realm: \(proRC.realm)")
+                            print("BasicRC: \(basicRC)")
+                            print("BasicRC Realm: \(basicRC.realm)")
+                        }
+                    }
                 }
-                
             }
         }
     }

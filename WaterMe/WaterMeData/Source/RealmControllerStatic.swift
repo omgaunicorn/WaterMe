@@ -12,7 +12,7 @@ import RealmSwift
 public extension RealmController {
     
     public enum Kind {
-        case local, synced(SyncUser)
+        case local, basic(SyncUser), pro(SyncUser)
     }
     
     public class var localRealmExists: Bool {
@@ -23,26 +23,6 @@ public extension RealmController {
     
     public class var loggedInUser: SyncUser? {
         return SyncUser.current
-    }
-    
-    public class func loginWithCloudKit(completionHandler: ((Result<RealmController>) -> Void)?) {
-        let container = CKContainer.default()
-        container.fetchUserRecordID { id, error in
-            guard let id = id else {
-                completionHandler?(.error(error!))
-                return
-            }
-            let server = PrivateKeys.kRealmServer
-            let credential = SyncCredentials.cloudKit(token: id.recordName)
-            SyncUser.logIn(with: credential, server: server) { user, error in
-                guard let user = user else {
-                    completionHandler?(.error(error!))
-                    return
-                }
-                let rc = RealmController(kind: .synced(user))
-                completionHandler?(.success(rc))
-            }
-        }
     }
     
     internal class var localRealmDirectory: URL {
@@ -62,14 +42,17 @@ public extension RealmController {
     }
 }
 
-internal extension RealmController.Kind {
+public extension RealmController.Kind {
+    
     internal var configuration: Realm.Configuration {
         let url: URL
         switch self {
         case .local:
             url = RealmController.localRealmFile
-        case .synced(let user):
+        case .basic(let user):
             url = user.realmURL(withAppName: "WaterMeBasic")
+        case .pro(let user):
+            url = user.realmURL(withAppName: "WaterMePro")
         }
         let config = type(of: self).config(from: self, realmURL: url)
         return config
@@ -81,14 +64,22 @@ internal extension RealmController.Kind {
         switch kind {
         case .local:
             config.fileURL = realmURL
-        case .synced(let user):
+        case .basic(let user), .pro(let user):
             config.syncConfiguration = SyncConfiguration(user: user, realmURL: realmURL, enableSSLValidation: true)
         }
         return config
     }
 }
 
-fileprivate extension SyncUser {
+public extension SyncUser {
+    public static func cloudKitUser(with cloudKitID: CKRecordID, completionHandler: ((Result<SyncUser>) -> Void)?) {
+        let server = PrivateKeys.kRealmServer
+        let credential = SyncCredentials.cloudKit(token: cloudKitID.recordName)
+        SyncUser.logIn(with: credential, server: server) { user, error in
+            guard let user = user else { completionHandler?(.error(error!)); return; }
+            completionHandler?(.success(user))
+        }
+    }
     fileprivate func realmURL(withAppName appName: String) -> URL {
         return self.authenticationServer!.realmURL(withAppName: appName)
     }
@@ -110,5 +101,17 @@ internal extension URL {
         }
         let url = components.url!
         return url
+    }
+}
+
+public extension CKContainer {
+    public func token(completionHandler: ((Result<CKRecordID>) -> Void)?) {
+        self.fetchUserRecordID { id, error in
+            if let id = id {
+                completionHandler?(.success(id))
+            } else {
+                completionHandler?(.error(error!))
+            }
+        }
     }
 }
