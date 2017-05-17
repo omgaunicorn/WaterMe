@@ -16,6 +16,7 @@
 		501F922A1EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 501F92251EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib */; };
 		501F922B1EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */; };
 		501F922C1EC55E080014939D /* SubscriptionChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */; };
+		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
 		50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */; };
 		50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */; };
 		50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F651EBFF9A700850FF4 /* Settings.bundle */; };
@@ -51,6 +52,7 @@
 		501F92251EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscriptionChoiceCollectionViewCell.xib; sourceTree = "<group>"; };
 		501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewController.swift; sourceTree = "<group>"; };
 		501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceViewController.swift; sourceTree = "<group>"; };
+		505086AE1ECBD43200745012 /* RealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
 		50BB0F501EBFCDE500850FF4 /* WaterMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaterMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */,
+				505086AE1ECBD43200745012 /* RealmTests.swift */,
 				50C96A3B1EC2CFE8002802C1 /* Info.plist */,
 			);
 			path = NoDeviceTests;
@@ -458,6 +461,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50C96A3A1EC2CFE8002802C1 /* SubscriptionTests.swift in Sources */,
+				505086AF1ECBD43200745012 /* RealmTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

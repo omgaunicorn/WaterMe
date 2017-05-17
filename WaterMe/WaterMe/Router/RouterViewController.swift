@@ -57,12 +57,16 @@ class RouterViewController: UIViewController {
     }
     
     @IBAction private func localRealm(_ sender: NSObject?) {
+        print("Local Realm Exists: \(RealmController.localRealmExists)")
+        print("LoggedIn User: \(RealmController.loggedInUser)")
         let rc = RealmController(kind: .local)
         print(rc)
         print(rc.realm)
     }
     
     @IBAction private func syncedRealm(_ sender: NSObject?) {
+        print("Local Realm Exists: \(RealmController.localRealmExists)")
+        print("LoggedIn User: \(RealmController.loggedInUser)")
         if let user = RealmController.loggedInUser {
             let rc = RealmController(kind: .synced(user))
             print(rc)
