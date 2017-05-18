@@ -73,7 +73,15 @@ class RouterViewController: UIViewController, HasRealmControllers {
             // check receipt
             do {
                 let receipt = try InAppReceiptManager.shared.receipt()
+                let activeBasicMonthly = receipt.activeAutoRenewableSubscriptionPurchases(ofProductIdentifier: WaterMeStore.PrivateKeys.kSubscriptionBasicMonthly, forDate: Date())
+                let activeBasicYearly = receipt.activeAutoRenewableSubscriptionPurchases(ofProductIdentifier: WaterMeStore.PrivateKeys.kSubscriptionBasicYearly, forDate: Date())
+                let activeProMonthly = receipt.activeAutoRenewableSubscriptionPurchases(ofProductIdentifier: WaterMeStore.PrivateKeys.kSubscriptionProMonthly, forDate: Date())
+                let activeProYearly = receipt.activeAutoRenewableSubscriptionPurchases(ofProductIdentifier: WaterMeStore.PrivateKeys.kSubscriptionProYearly, forDate: Date())
                 print(receipt)
+                print(activeBasicMonthly)
+                print(activeBasicYearly)
+                print(activeProMonthly)
+                print(activeProYearly)
             } catch {
                 print(error)
             }

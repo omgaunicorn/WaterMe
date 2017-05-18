@@ -63,7 +63,7 @@ public class SubscriptionLoader: NSObject, SubscriptionLoaderType, SKProductsReq
     public func request(_ request: SKRequest, didFailWithError error: Error) {
         let result = Result<[Subscription]>.error(error)
         self.results = result
-        completion?(result)
+        self.completion?(result)
         self.completion = nil
     }
     
