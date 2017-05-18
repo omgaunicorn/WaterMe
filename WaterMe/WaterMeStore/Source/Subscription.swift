@@ -40,6 +40,38 @@ public extension HasSubscriptionType {
     }
 }
 
+extension Subscription.Level: Comparable {
+    public static func == (lhs: Subscription.Level, rhs: Subscription.Level) -> Bool {
+        switch lhs {
+        case .free:
+            guard case .free = rhs else { return false }
+            return true
+        case .basic(let lhsPID):
+            guard case .basic(let rhsPID) = rhs else { return false }
+            return lhsPID == rhsPID
+        case .pro(let lhsPID):
+            guard case .pro(let rhsPID) = rhs else { return false }
+            return lhsPID == rhsPID
+        }
+    }
+    
+    public static func < (lhs: Subscription.Level, rhs:Subscription.Level) -> Bool {
+        switch rhs {
+        case .free:
+            return false
+        case .basic:
+            switch lhs {
+            case .free:
+                return true
+            case .basic, .pro:
+                return false
+            }
+        case .pro:
+            return true
+        }
+    }
+}
+
 extension Subscription.Price: Comparable {
     
     public static func == (lhs: Subscription.Price, rhs: Subscription.Price) -> Bool {

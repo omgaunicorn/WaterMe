@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1CDCBC66D8248B650D75B0D9 /* Pods_WaterMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE05FF8D436BDE53480BB717 /* Pods_WaterMe.framework */; };
 		33BDD37BD3A2AB3CD89988C6 /* Pods_NoDeviceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ECA152863ABAF082087BBC8 /* Pods_NoDeviceTests.framework */; };
+		501C0E811ECDED7D00D4EE7C /* ReceiptMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E801ECDED7D00D4EE7C /* ReceiptMonitor.swift */; };
 		501F92211EC55DF50014939D /* RouterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F921F1EC55DF50014939D /* RouterViewController.swift */; };
 		501F92221EC55DF50014939D /* Router.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501F92201EC55DF50014939D /* Router.storyboard */; };
 		501F92281EC55E080014939D /* SubscriptionChoice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501F92231EC55E080014939D /* SubscriptionChoice.storyboard */; };
@@ -45,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		3CD9201016969CB096E78F03 /* Pods-NoDeviceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.debug.xcconfig"; sourceTree = "<group>"; };
+		501C0E801ECDED7D00D4EE7C /* ReceiptMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptMonitor.swift; sourceTree = "<group>"; };
 		501F921F1EC55DF50014939D /* RouterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterViewController.swift; sourceTree = "<group>"; };
 		501F92201EC55DF50014939D /* Router.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Router.storyboard; sourceTree = "<group>"; };
 		501F92231EC55E080014939D /* SubscriptionChoice.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubscriptionChoice.storyboard; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */,
+				501C0E801ECDED7D00D4EE7C /* ReceiptMonitor.swift */,
 				50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */,
 				50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */,
 				50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */,
@@ -453,6 +456,7 @@
 				50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */,
 				501F92211EC55DF50014939D /* RouterViewController.swift in Sources */,
 				50D3A0831EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift in Sources */,
+				501C0E811ECDED7D00D4EE7C /* ReceiptMonitor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -71,19 +71,22 @@ class RouterViewController: UIViewController, HasRealmControllers {
             self.configure(withBasic: freeRC, andPro: nil)
         } else {
             // check receipt
-            do {
-                let receipt = try InAppReceiptManager.shared.receipt()
-                let activeBasicMonthly = receipt.activeAutoRenewableSubscriptionPurchases(ofProductIdentifier: WaterMeStore.PrivateKeys.kSubscriptionBasicMonthly, forDate: Date())
-                let activeBasicYearly = receipt.activeAutoRenewableSubscriptionPurchases(ofProductIdentifier: WaterMeStore.PrivateKeys.kSubscriptionBasicYearly, forDate: Date())
-                let activeProMonthly = receipt.activeAutoRenewableSubscriptionPurchases(ofProductIdentifier: WaterMeStore.PrivateKeys.kSubscriptionProMonthly, forDate: Date())
-                let activeProYearly = receipt.activeAutoRenewableSubscriptionPurchases(ofProductIdentifier: WaterMeStore.PrivateKeys.kSubscriptionProYearly, forDate: Date())
-                print(receipt)
-                print(activeBasicMonthly)
-                print(activeBasicYearly)
-                print(activeProMonthly)
-                print(activeProYearly)
-            } catch {
-                print(error)
+            let appD = UIApplication.shared.delegate as! AppDelegate
+            let mon = appD.receiptMonitor
+            if mon.receiptChanged == true {
+                mon.updateReceipt()
+            }
+            let level = mon.purchased.level
+            print(level)
+            switch level {
+            case .free:
+                // auto-configure free account
+//                let freeRC = RealmController(kind: .local)
+//                self.configure(withBasic: freeRC, andPro: nil)
+                break
+            case .basic, .pro:
+                // present login / migration screen
+                break
             }
         }
     }
