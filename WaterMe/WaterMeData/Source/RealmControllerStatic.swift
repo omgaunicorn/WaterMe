@@ -67,6 +67,9 @@ public extension RealmController.Kind {
         case .basic(let user), .pro(let user):
             config.syncConfiguration = SyncConfiguration(user: user, realmURL: realmURL, enableSSLValidation: true)
         }
+        config.objectTypes = [
+            Receipt.self
+        ]
         return config
     }
 }

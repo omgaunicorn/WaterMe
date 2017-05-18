@@ -31,6 +31,16 @@ class RouterViewController: UIViewController, HasRealmControllers {
         if self.basicRealmController == nil {
             self.startBootSequence()
         }
+        let appD = UIApplication.shared.delegate as! AppDelegate
+        let mon = appD.receiptMonitor
+        if mon.receiptChanged == true {
+            mon.updateReceipt()
+        }
+        let expDate = mon.purchased.expirationDate
+        let data = mon.receiptData!
+        
+        self.basicRealmController!.updateReceipt(data: data, expirationDate: expDate)
+        print(self.basicRealmController!.receipt)
     }
     
     private func startBootSequence() {

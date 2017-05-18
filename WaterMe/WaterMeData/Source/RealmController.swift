@@ -35,10 +35,8 @@ public extension HasRealmControllers {
     }
 }
 
-
-
 public class RealmController {
-    
+
     public let kind: Kind
     private let realmConfig: Realm.Configuration
     
@@ -59,4 +57,34 @@ public class RealmController {
         self.realmConfig = kind.configuration
     }
     
+    public var receipt: Receipt {
+        return self.createReceiptIfNeeded()
+    }
+    
+    public func updateReceipt(data: Data?, expirationDate: Date?) {
+        guard data != nil || expirationDate != nil else { return }
+        let receipt = self.createReceiptIfNeeded()
+        let realm = self.realm
+        realm.beginWrite()
+        if let data = data {
+            receipt.pkcs7Data = data
+        }
+        if let expirationDate = expirationDate {
+            receipt.expirationDate = expirationDate
+        }
+        try! realm.commitWrite()
+    }
+    
+    private func createReceiptIfNeeded() -> Receipt {
+        let realm = self.realm
+        if let receipt = realm.objects(Receipt.self).first {
+            return receipt
+        } else {
+            let receipt = Receipt()
+            realm.beginWrite()
+            realm.add(receipt)
+            try! realm.commitWrite()
+            return receipt
+        }
+    }
 }
