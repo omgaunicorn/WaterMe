@@ -10,6 +10,11 @@
 		1CDCBC66D8248B650D75B0D9 /* Pods_WaterMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE05FF8D436BDE53480BB717 /* Pods_WaterMe.framework */; };
 		33BDD37BD3A2AB3CD89988C6 /* Pods_NoDeviceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8ECA152863ABAF082087BBC8 /* Pods_NoDeviceTests.framework */; };
 		501C0E811ECDED7D00D4EE7C /* ReceiptMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E801ECDED7D00D4EE7C /* ReceiptMonitor.swift */; };
+		501C0E8B1ECE5EFF00D4EE7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */; };
+		501C0E8D1ECE5EFF00D4EE7C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E8C1ECE5EFF00D4EE7C /* ViewController.swift */; };
+		501C0E901ECE5EFF00D4EE7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E8E1ECE5EFF00D4EE7C /* Main.storyboard */; };
+		501C0E921ECE5EFF00D4EE7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E911ECE5EFF00D4EE7C /* Assets.xcassets */; };
+		501C0E951ECE5EFF00D4EE7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E931ECE5EFF00D4EE7C /* LaunchScreen.storyboard */; };
 		501F92211EC55DF50014939D /* RouterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F921F1EC55DF50014939D /* RouterViewController.swift */; };
 		501F92221EC55DF50014939D /* Router.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501F92201EC55DF50014939D /* Router.storyboard */; };
 		501F92281EC55E080014939D /* SubscriptionChoice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501F92231EC55E080014939D /* SubscriptionChoice.storyboard */; };
@@ -47,6 +52,13 @@
 /* Begin PBXFileReference section */
 		3CD9201016969CB096E78F03 /* Pods-NoDeviceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		501C0E801ECDED7D00D4EE7C /* ReceiptMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptMonitor.swift; sourceTree = "<group>"; };
+		501C0E881ECE5EFF00D4EE7C /* AdminConsole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdminConsole.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		501C0E8C1ECE5EFF00D4EE7C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		501C0E8F1ECE5EFF00D4EE7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		501C0E911ECE5EFF00D4EE7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		501C0E941ECE5EFF00D4EE7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		501C0E961ECE5EFF00D4EE7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		501F921F1EC55DF50014939D /* RouterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterViewController.swift; sourceTree = "<group>"; };
 		501F92201EC55DF50014939D /* Router.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Router.storyboard; sourceTree = "<group>"; };
 		501F92231EC55E080014939D /* SubscriptionChoice.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubscriptionChoice.storyboard; sourceTree = "<group>"; };
@@ -82,6 +94,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		501C0E851ECE5EFF00D4EE7C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50BB0F4D1EBFCDE500850FF4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -113,6 +132,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		501C0E891ECE5EFF00D4EE7C /* AdminConsole */ = {
+			isa = PBXGroup;
+			children = (
+				501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */,
+				501C0E8C1ECE5EFF00D4EE7C /* ViewController.swift */,
+				501C0E8E1ECE5EFF00D4EE7C /* Main.storyboard */,
+				501C0E911ECE5EFF00D4EE7C /* Assets.xcassets */,
+				501C0E931ECE5EFF00D4EE7C /* LaunchScreen.storyboard */,
+				501C0E961ECE5EFF00D4EE7C /* Info.plist */,
+			);
+			path = AdminConsole;
+			sourceTree = "<group>";
+		};
 		501F921D1EC55D610014939D /* SubscriptionChoice */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,6 +171,7 @@
 			children = (
 				50BB0F521EBFCDE500850FF4 /* WaterMe */,
 				50C96A381EC2CFE8002802C1 /* NoDeviceTests */,
+				501C0E891ECE5EFF00D4EE7C /* AdminConsole */,
 				50BB0F511EBFCDE500850FF4 /* Products */,
 				18ACE9D1B7A6202F5F3BDC54 /* Pods */,
 				E7A7E92A7350217B27E6B8B5 /* Frameworks */,
@@ -150,6 +183,7 @@
 			children = (
 				50BB0F501EBFCDE500850FF4 /* WaterMe.app */,
 				50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */,
+				501C0E881ECE5EFF00D4EE7C /* AdminConsole.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -217,6 +251,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		501C0E871ECE5EFF00D4EE7C /* AdminConsole */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 501C0E971ECE5EFF00D4EE7C /* Build configuration list for PBXNativeTarget "AdminConsole" */;
+			buildPhases = (
+				501C0E841ECE5EFF00D4EE7C /* Sources */,
+				501C0E851ECE5EFF00D4EE7C /* Frameworks */,
+				501C0E861ECE5EFF00D4EE7C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AdminConsole;
+			productName = AdminConsole;
+			productReference = 501C0E881ECE5EFF00D4EE7C /* AdminConsole.app */;
+			productType = "com.apple.product-type.application";
+		};
 		50BB0F4F1EBFCDE500850FF4 /* WaterMe */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50BB0F621EBFCDE500850FF4 /* Build configuration list for PBXNativeTarget "WaterMe" */;
@@ -269,6 +320,11 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Saturday Apps";
 				TargetAttributes = {
+					501C0E871ECE5EFF00D4EE7C = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = V6ESYGU6CV;
+						ProvisioningStyle = Automatic;
+					};
 					50BB0F4F1EBFCDE500850FF4 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = V6ESYGU6CV;
@@ -304,11 +360,22 @@
 			targets = (
 				50BB0F4F1EBFCDE500850FF4 /* WaterMe */,
 				50C96A361EC2CFE8002802C1 /* NoDeviceTests */,
+				501C0E871ECE5EFF00D4EE7C /* AdminConsole */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		501C0E861ECE5EFF00D4EE7C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				501C0E951ECE5EFF00D4EE7C /* LaunchScreen.storyboard in Resources */,
+				501C0E921ECE5EFF00D4EE7C /* Assets.xcassets in Resources */,
+				501C0E901ECE5EFF00D4EE7C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50BB0F4E1EBFCDE500850FF4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -442,6 +509,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		501C0E841ECE5EFF00D4EE7C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				501C0E8D1ECE5EFF00D4EE7C /* ViewController.swift in Sources */,
+				501C0E8B1ECE5EFF00D4EE7C /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50BB0F4C1EBFCDE500850FF4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -479,7 +555,54 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		501C0E8E1ECE5EFF00D4EE7C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				501C0E8F1ECE5EFF00D4EE7C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		501C0E931ECE5EFF00D4EE7C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				501C0E941ECE5EFF00D4EE7C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		501C0E981ECE5EFF00D4EE7C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = V6ESYGU6CV;
+				INFOPLIST_FILE = AdminConsole/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe.AdminConsole;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		501C0E991ECE5EFF00D4EE7C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = V6ESYGU6CV;
+				INFOPLIST_FILE = AdminConsole/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe.AdminConsole;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		50BB0F601EBFCDE500850FF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -636,6 +759,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		501C0E971ECE5EFF00D4EE7C /* Build configuration list for PBXNativeTarget "AdminConsole" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				501C0E981ECE5EFF00D4EE7C /* Debug */,
+				501C0E991ECE5EFF00D4EE7C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		50BB0F4B1EBFCDE500850FF4 /* Build configuration list for PBXProject "WaterMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
