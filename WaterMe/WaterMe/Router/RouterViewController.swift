@@ -13,25 +13,25 @@ import WaterMeData
 import WaterMeStore
 import UIKit
 
-class RouterViewController: UIViewController, HasRealmControllers {
+class RouterViewController: UIViewController {
     
-    class func newVC(basicRealmController: RealmController? = nil, proRealmController: RealmController? = nil) -> RouterViewController {
+    class func newVC() -> RouterViewController {
         let sb = UIStoryboard(name: "Router", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let vc = sb.instantiateInitialViewController() as! RouterViewController
-        vc.configure(withBasic: basicRealmController, andPro: proRealmController)
         return vc
     }
     
-    var basicRealmController: RealmController!
-    var proRealmController: RealmController?
+    var receipt: ReceiptController?
+    var basic: BasicController?
+    var pro: ProController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if self.basicRealmController == nil {
+        if self.basic == nil {
             self.startBootSequence()
         }
-        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
+//        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
     }
     
     @objc private func timerFired(_ timer: NSObject?) {
@@ -43,8 +43,8 @@ class RouterViewController: UIViewController, HasRealmControllers {
         let expDate = Date() //mon.purchased.expirationDate
         let data = mon.receiptData!
         
-        self.basicRealmController!.updateReceipt(data: data, expirationDate: expDate)
-        print(self.basicRealmController!.receipt)
+        self.receipt!.updateReceipt(data: data, expirationDate: expDate)
+        print(self.receipt!.receipt)
     }
     
     private func startBootSequence() {
@@ -73,16 +73,20 @@ class RouterViewController: UIViewController, HasRealmControllers {
             NO (subscription not present) - Assume new user - setup for local free realm
         */
         
-        if let alreadyLoggedInUser = RealmController.loggedInUser {
-            let basicRC = RealmController(kind: .basic(alreadyLoggedInUser))
-            var proRC: RealmController?
+        if let alreadyLoggedInUser = SyncUser.current {
+            let receiptRC = ReceiptController(user: alreadyLoggedInUser)
+            let basicRC = BasicController(kind: .sync(alreadyLoggedInUser))
+            var proRC: ProController?
             // if basicRC.reciept.pro == true {
             //    proRC = RealmController(kind: .pro(alreadyLoggedInUser))
             // }
-            self.configure(withBasic: basicRC, andPro: proRC)
-        } else if RealmController.localRealmExists == true {
-            let freeRC = RealmController(kind: .local)
-            self.configure(withBasic: freeRC, andPro: nil)
+            self.receipt = receiptRC
+            self.basic = basicRC
+            self.pro = proRC
+        } else if BasicController.localRealmExists == true {
+            let freeRC = BasicController(kind: .local)
+            self.basic = freeRC
+            self.pro = nil
         } else {
             // check receipt
             let appD = UIApplication.shared.delegate as! AppDelegate
@@ -118,24 +122,30 @@ class RouterViewController: UIViewController, HasRealmControllers {
     }
     
     @IBAction private func localRealm(_ sender: NSObject?) {
-        print("Local Realm Exists: \(RealmController.localRealmExists)")
-        print("LoggedIn User: \(RealmController.loggedInUser)")
-        let rc = RealmController(kind: .local)
+        print("Local Realm Exists: \(BasicController.localRealmExists)")
+        print("LoggedIn User: \(SyncUser.current)")
+        let rc = BasicController(kind: .local)
         print(rc)
-        print(rc.realm)
+        print(rc.realm.schema)
+        self.basic = rc
+        self.receipt = nil
+        self.pro = nil
     }
     
     @IBAction private func syncedRealm(_ sender: NSObject?) {
-        print("Local Realm Exists: \(RealmController.localRealmExists)")
-        print("LoggedIn User: \(RealmController.loggedInUser)")
-        if let user = RealmController.loggedInUser {
-            let proRC = RealmController(kind: .pro(user))
-            let basicRC = RealmController(kind: .basic(user))
+        print("Local Realm Exists: \(BasicController.localRealmExists)")
+        print("LoggedIn User: \(SyncUser.current)")
+        if let user = SyncUser.current {
+            let receipt = ReceiptController(user: user)
+            let basic = BasicController(kind: .sync(user))
+            let pro = ProController(user: user)
+            self.basic = basic
+            self.pro = pro
+            self.receipt = receipt
             print("Already Logged In")
-            print("ProRC: \(proRC)")
-            print("ProRC Realm: \(proRC.realm)")
-            print("BasicRC: \(basicRC)")
-            print("BasicRC Realm: \(basicRC.realm)")
+            print("Basic Schema: \(basic.realm.schema)")
+            print("Receipt Schema: \(receipt.realm.schema)")
+            print("Pro Schema: \(pro.realm.schema)")
         } else {
             print("Getting CKToken")
             CKContainer.default().token() { result in
@@ -150,12 +160,15 @@ class RouterViewController: UIViewController, HasRealmControllers {
                             print("Realm Error: \(error)")
                         case .success(let user):
                             print("Logged In")
-                            let proRC = RealmController(kind: .pro(user))
-                            let basicRC = RealmController(kind: .basic(user))
-                            print("ProRC: \(proRC)")
-                            print("ProRC Realm: \(proRC.realm)")
-                            print("BasicRC: \(basicRC)")
-                            print("BasicRC Realm: \(basicRC.realm)")
+                            let receipt = ReceiptController(user: user)
+                            let basic = BasicController(kind: .sync(user))
+                            let pro = ProController(user: user)
+                            self.basic = basic
+                            self.pro = pro
+                            self.receipt = receipt
+                            print("Basic Schema: \(basic.realm.schema)")
+                            print("Receipt Schema: \(receipt.realm.schema)")
+                            print("Pro Schema: \(pro.realm.schema)")
                         }
                     }
                 }

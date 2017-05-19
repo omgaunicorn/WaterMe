@@ -32,7 +32,7 @@ class ViewController: UIViewController {
 
     private func doRealm(user: SyncUser) {
         let kind = RealmController.Kind.basic(user)
-        let realmController = RealmController(kind: kind, overrideUserPath: "xxx/")
+        let realmController = RealmController(kind: kind, overrideUserPath: "a585e812c45049b8aaaba33797ab7767/")
         self.realmController = realmController
         realmController.receiptChanged = { receipt in
             print(receipt)
