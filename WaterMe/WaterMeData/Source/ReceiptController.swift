@@ -32,13 +32,16 @@ public class ReceiptController {
         return self.createReceiptIfNeeded()
     }
     
-    public func updateReceipt(data: Data?, expirationDate: Date?) {
+    public func updateReceipt(data: Data?, productIdentifier: String?, expirationDate: Date?) {
         guard data != nil || expirationDate != nil else { return }
         let receipt = self.createReceiptIfNeeded()
         let realm = self.realm
         realm.beginWrite()
         if let data = data {
             receipt.pkcs7Data = data
+        }
+        if let productIdentifier = productIdentifier {
+            receipt.productIdentifier = productIdentifier
         }
         if let expirationDate = expirationDate {
             receipt.expirationDate = expirationDate

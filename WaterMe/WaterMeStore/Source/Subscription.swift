@@ -54,7 +54,6 @@ extension Subscription.Level: Comparable {
             return lhsPID == rhsPID
         }
     }
-    
     public static func < (lhs: Subscription.Level, rhs:Subscription.Level) -> Bool {
         switch rhs {
         case .free:
@@ -72,8 +71,29 @@ extension Subscription.Level: Comparable {
     }
 }
 
+public extension Subscription.Level {
+    public init?(productIdentifier: String?) {
+        guard let id = productIdentifier else { self = .free; return; }
+        switch id {
+        case PrivateKeys.kSubscriptionBasicMonthly, PrivateKeys.kSubscriptionBasicYearly:
+            self = .basic(productIdentifier: id)
+        case PrivateKeys.kSubscriptionProYearly, PrivateKeys.kSubscriptionProMonthly:
+            self = .pro(productIdentifier: id)
+        default:
+            return nil
+        }
+    }
+    public var rawValue: String {
+        switch self {
+        case .free:
+            return "free"
+        case .basic(productIdentifier: let pID), .pro(productIdentifier: let pID):
+            return pID
+        }
+    }
+}
+
 extension Subscription.Price: Comparable {
-    
     public static func == (lhs: Subscription.Price, rhs: Subscription.Price) -> Bool {
         switch lhs {
         case .free:
@@ -84,17 +104,27 @@ extension Subscription.Price: Comparable {
             return lhsPrice == rhsPrice
         }
     }
-    
     public static func < (lhs: Subscription.Price, rhs:Subscription.Price) -> Bool {
         return lhs.doubleValue < rhs.doubleValue
     }
-    
     private var doubleValue: Double {
         switch self {
         case .free:
             return 0
         case .paid(let price, _):
             return price
+        }
+    }
+}
+
+internal extension Subscription.Period {
+    internal init?(productIdentifier: String) {
+        if productIdentifier.contains("monthly") {
+            self = .month
+        } else if productIdentifier.contains("yearly") {
+            self = .year
+        } else {
+            return nil
         }
     }
 }

@@ -31,7 +31,7 @@ class RouterViewController: UIViewController {
         if self.basic == nil {
             self.startBootSequence()
         }
-//        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
     }
     
     @objc private func timerFired(_ timer: NSObject?) {
@@ -40,10 +40,12 @@ class RouterViewController: UIViewController {
         if mon.receiptChanged == true {
             mon.updateReceipt()
         }
-        let expDate = Date() //mon.purchased.expirationDate
+        
+        let pID = mon.purchased.level.rawValue
+        let expDate = mon.purchased.expirationDate
         let data = mon.receiptData!
         
-        self.receipt!.updateReceipt(data: data, expirationDate: expDate)
+        self.receipt!.updateReceipt(data: data, productIdentifier: mon.purchased.level.rawValue, expirationDate: expDate)
         print(self.receipt!.receipt)
     }
     
@@ -73,16 +75,15 @@ class RouterViewController: UIViewController {
             NO (subscription not present) - Assume new user - setup for local free realm
         */
         
-        if let alreadyLoggedInUser = SyncUser.current {
-            let receiptRC = ReceiptController(user: alreadyLoggedInUser)
-            let basicRC = BasicController(kind: .sync(alreadyLoggedInUser))
-            var proRC: ProController?
-            // if basicRC.reciept.pro == true {
-            //    proRC = RealmController(kind: .pro(alreadyLoggedInUser))
-            // }
+        if let user = SyncUser.current {
+            let receiptRC = ReceiptController(user: user)
+            let basicRC = BasicController(kind: .sync(user))
             self.receipt = receiptRC
             self.basic = basicRC
-            self.pro = proRC
+            if let level = Subscription.Level(productIdentifier: receiptRC.receipt.productIdentifier), case .pro = level {
+                let proRC = ProController(user: user)
+                self.pro = proRC
+            }
         } else if BasicController.localRealmExists == true {
             let freeRC = BasicController(kind: .local)
             self.basic = freeRC

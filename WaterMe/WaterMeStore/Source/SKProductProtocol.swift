@@ -25,35 +25,6 @@ internal extension Subscription {
         }
         return subscriptions + [Subscription.free()]
     }
-}
-
-public extension Subscription.Level {
-    public init?(productIdentifier: String?) {
-        guard let id = productIdentifier else { self = .free; return; }
-        switch id {
-        case PrivateKeys.kSubscriptionBasicMonthly, PrivateKeys.kSubscriptionBasicYearly:
-            self = .basic(productIdentifier: id)
-        case PrivateKeys.kSubscriptionProYearly, PrivateKeys.kSubscriptionProMonthly:
-            self = .pro(productIdentifier: id)
-        default:
-            return nil
-        }
-    }
-}
-
-internal extension Subscription.Period {
-    internal init?(productIdentifier: String) {
-        if productIdentifier.contains("monthly") {
-            self = .month
-        } else if productIdentifier.contains("yearly") {
-            self = .year
-        } else {
-            return nil
-        }
-    }
-}
-
-internal extension Subscription {
     internal init?(product: SKProductProtocol) {
         guard let level = Subscription.Level(productIdentifier: product.productIdentifier),
             let period = Subscription.Period(productIdentifier: product.productIdentifier) else { return nil }
