@@ -5,8 +5,8 @@ target 'WaterMe' do
 	pod 'RealmSwift'
 	pod 'XCGLogger', '~> 5.0.1'
 	pod 'TPInAppReceipt'
-  pod 'WaterMeData', :path => 'WaterMeData'
-  pod 'WaterMeStore', :path => 'WaterMeStore'
+	pod 'WaterMeData', :path => 'WaterMeData'
+	pod 'WaterMeStore', :path => 'WaterMeStore'
 end
 
 target 'AdminConsole' do
@@ -15,9 +15,7 @@ target 'AdminConsole' do
 	
 	pod 'RealmSwift'
 	pod 'XCGLogger', '~> 5.0.1'
-	pod 'TPInAppReceipt'
-  pod 'WaterMeData', :path => 'WaterMeData'
-  pod 'WaterMeStore', :path => 'WaterMeStore'
+	pod 'WaterMeData', :path => 'WaterMeData'
 end
 
 target 'NoDeviceTests' do
