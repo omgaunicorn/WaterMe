@@ -42,35 +42,23 @@ public extension RealmController {
     }
 }
 
-public extension RealmController.Kind {
+public extension Realm.Configuration {
     
-    internal var configuration: Realm.Configuration {
-        let url: URL
-        switch self {
-        case .local:
-            url = RealmController.localRealmFile
-        case .basic(let user):
-            url = user.realmURL(withAppName: "WaterMeBasic")
-        case .pro(let user):
-            url = user.realmURL(withAppName: "WaterMePro")
-        }
-        let config = type(of: self).config(from: self, realmURL: url)
-        return config
-    }
-    
-    private static func config(from kind: RealmController.Kind, realmURL: URL) -> Realm.Configuration {
-        var config = Realm.Configuration()
-        config.schemaVersion = 1
+    init(kind: RealmController.Kind, userPath: String) {
+        let schemaVersion: UInt64 = 1
+        var fileURL: URL?
+        var syncConfig: SyncConfiguration?
         switch kind {
         case .local:
-            config.fileURL = realmURL
-        case .basic(let user), .pro(let user):
-            config.syncConfiguration = SyncConfiguration(user: user, realmURL: realmURL, enableSSLValidation: true)
+            fileURL = RealmController.localRealmFile
+        case .basic(let user):
+            let url = user.realmURL(withAppName: "WaterMeBasic", userPath: userPath)
+            syncConfig = SyncConfiguration(user: user, realmURL: url, enableSSLValidation: true)
+        case .pro(let user):
+            let url = user.realmURL(withAppName: "WaterMePro", userPath: userPath)
+            syncConfig = SyncConfiguration(user: user, realmURL: url, enableSSLValidation: true)
         }
-        config.objectTypes = [
-            Receipt.self
-        ]
-        return config
+        self.init(fileURL: fileURL, syncConfiguration: syncConfig, schemaVersion: schemaVersion, objectTypes: [Receipt.self])
     }
 }
 
@@ -83,14 +71,14 @@ public extension SyncUser {
             completionHandler?(.success(user))
         }
     }
-    fileprivate func realmURL(withAppName appName: String) -> URL {
-        return self.authenticationServer!.realmURL(withAppName: appName)
+    fileprivate func realmURL(withAppName appName: String, userPath: String) -> URL {
+        return self.authenticationServer!.realmURL(withAppName: appName, userPath: userPath)
     }
 }
 
 //@testable internal
 internal extension URL {
-    internal func realmURL(withAppName appName: String) -> URL {
+    internal func realmURL(withAppName appName: String, userPath: String) -> URL {
         var components = URLComponents(url: self, resolvingAgainstBaseURL: false)!
         if components.scheme == "https" {
             components.scheme = "realms"
@@ -98,9 +86,9 @@ internal extension URL {
             components.scheme = "realm"
         }
         if components.path.characters.last == "/" {
-            components.path += "~/" + appName
+            components.path += userPath + appName
         } else {
-            components.path += "/~/" + appName
+            components.path += "/" + userPath + appName
         }
         let url = components.url!
         return url

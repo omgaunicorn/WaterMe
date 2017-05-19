@@ -31,12 +31,16 @@ class RouterViewController: UIViewController, HasRealmControllers {
         if self.basicRealmController == nil {
             self.startBootSequence()
         }
+        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func timerFired(_ timer: NSObject?) {
         let appD = UIApplication.shared.delegate as! AppDelegate
         let mon = appD.receiptMonitor
         if mon.receiptChanged == true {
             mon.updateReceipt()
         }
-        let expDate = mon.purchased.expirationDate
+        let expDate = Date() //mon.purchased.expirationDate
         let data = mon.receiptData!
         
         self.basicRealmController!.updateReceipt(data: data, expirationDate: expDate)

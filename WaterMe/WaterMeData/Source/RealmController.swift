@@ -52,13 +52,33 @@ public class RealmController {
         }
     }
     
-    public init(kind: Kind) {
+    public init(kind: Kind, overrideUserPath: String = "~/") {
         self.kind = kind
-        self.realmConfig = kind.configuration
+        self.realmConfig = Realm.Configuration(kind: kind, userPath: overrideUserPath)
     }
     
     public var receipt: Receipt {
         return self.createReceiptIfNeeded()
+    }
+    
+    public var receiptChanged: ((Receipt) -> Void)? {
+        didSet {
+            if self.receiptChanged == nil {
+                self.receiptToken?.stop()
+                self.receiptToken = nil
+            } else {
+                self.configureReceiptNotificationsIfNeeded()
+                self.receiptChanged?(self.receipt)
+            }
+        }
+    }
+    
+    private func configureReceiptNotificationsIfNeeded() {
+        guard self.receiptToken == nil else { return }
+        let receipts = realm.objects(Receipt.self)
+        self.receiptToken = receipts.addNotificationBlock() { [unowned self] _ in
+            self.receiptChanged?(self.receipt)
+        }
     }
     
     public func updateReceipt(data: Data?, expirationDate: Date?) {
@@ -86,5 +106,11 @@ public class RealmController {
             try! realm.commitWrite()
             return receipt
         }
+    }
+    
+    private var receiptToken: NotificationToken?
+    
+    deinit {
+        self.receiptToken?.stop()
     }
 }
