@@ -6,6 +6,7 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
+import WaterMeData
 import RealmSwift
 import UIKit
 
@@ -37,6 +38,23 @@ class UserTableViewController: UITableViewController {
                 print(error)
             }
         }
+        
+        let url = WaterMeData.PrivateKeys.kRealmServer.appendingPathComponent("realmsec/list")
+        var request = URLRequest(url: url)
+        request.setValue("sharedSecret=\(PrivateKeys.requestSharedSecret)", forHTTPHeaderField: "Cookie")
+        let task = URLSession.shared.dataTask(with: request) { _data, __response, error in
+            let _response = __response as? HTTPURLResponse
+            let _sharedSecret = (_response?.allHeaderFields["Shared-Secret"] ?? _response?.allHeaderFields["shared-secret"]) as? String
+            guard
+                let data = _data,
+                let response = _response,
+                let sharedSecret = _sharedSecret,
+                response.statusCode == 200,
+                sharedSecret == PrivateKeys.responseSharedSecret
+            else { print(error ?? _response!); return; }
+            self.adminController.processServerDirectoryData(data)
+        }
+        task.resume()
         
 //        Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
     }
