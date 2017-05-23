@@ -14,6 +14,9 @@ class SummmaryViewController: UIViewController {
     
     @IBOutlet private weak var totalUsersLabel: UILabel?
     @IBOutlet private weak var totalSizeLabel: UILabel?
+    @IBOutlet private weak var totalPremUserCountLabel: UILabel?
+    @IBOutlet private weak var totalProUserCountLabel: UILabel?
+    @IBOutlet private weak var totalSuspectUserCountLabel: UILabel?
     @IBOutlet private weak var auditButton: UIButton?
     @IBOutlet private weak var refreshButton: UIButton?
     @IBOutlet private weak var deleteLocalButton: UIButton?
@@ -36,12 +39,33 @@ class SummmaryViewController: UIViewController {
         self.notificationToken = users.addNotificationBlock() { [weak self] changes in
             switch changes {
             case .initial(let data), .update(let data, _, _, _):
-                self?.totalUsersLabel?.text = String(data.count)
-                self?.totalSizeLabel?.text = self?.sizeFormatter.string(fromByteCount: data.reduce(0, { $0.0 + Int64($0.1.size) }))
+                self?.updateUI(with: .success(data))
             case .error(let error):
-                print(error)
+                self?.updateUI(with: .error(error))
             }
         }
+    }
+    
+    private func updateUI(with result: Result<AnyRealmCollection<RealmUser>>) {
+        switch result {
+        case .success(let data):
+            self.totalUsersLabel?.text = String(data.count)
+            self.totalSizeLabel?.text = self.sizeFormatter.string(fromByteCount: data.reduce(0, { $0.0 + Int64($0.1.size) }))
+            let (premium, pro, suspicious) = self.sumSubscriptionTypes(with: data)
+            self.totalPremUserCountLabel?.text = String(premium)
+            self.totalProUserCountLabel?.text = String(pro)
+            self.totalSuspectUserCountLabel?.text = String(suspicious)
+        case .error(let error):
+            print(error)
+        }
+    }
+    
+    func sumSubscriptionTypes(with data: AnyRealmCollection<RealmUser>) -> (prem: Int, pro: Int, suspicious: Int) {
+        let subscriptions = data.map({ $0.subscription })
+        let prem = subscriptions.filter({ $0 == .basic })
+        let pro = subscriptions.filter({ $0 == .pro })
+        let sus = subscriptions.filter({ $0 == .suspicious })
+        return (prem.count, pro.count, sus.count)
     }
     
     @IBAction private func auditButtonTapped(_ sender: UIButton?) {

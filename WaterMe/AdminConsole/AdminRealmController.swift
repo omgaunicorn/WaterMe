@@ -8,18 +8,34 @@
 
 import RealmSwift
 
+enum Subscription: String {
+    case basic, pro, suspicious
+    static let kReceiptKey = "WaterMeReceipt.realm"
+    static let kBasicKey = "WaterMeBasic.realm"
+    static let kProKey = "WaterMePro.realm"
+}
+
 class RealmFile: Object {
-    dynamic var uuid = ""
-    dynamic var name = ""
-    dynamic var size = 0
+    fileprivate(set) dynamic var uuid = ""
+    fileprivate(set) dynamic var name = ""
+    fileprivate(set) dynamic var size = 0
     override static func primaryKey() -> String? {
         return "uuid"
     }
 }
 
 class RealmUser: Object {
-    dynamic var uuid = ""
-    dynamic var size = 0
+    fileprivate(set) dynamic var uuid = ""
+    fileprivate(set) dynamic var size = 0
+    private dynamic var subscriptionString: String = Subscription.suspicious.rawValue
+    fileprivate(set) var subscription: Subscription {
+        get {
+            return Subscription(rawValue: self.subscriptionString) ?? .suspicious
+        }
+        set {
+            self.subscriptionString = newValue.rawValue
+        }
+    }
     let files = List<RealmFile>()
     override static func primaryKey() -> String? {
         return "uuid"
@@ -30,7 +46,7 @@ class AdminRealmController {
     
     let config: Realm.Configuration = {
         var c = Realm.Configuration()
-        c.schemaVersion = 2
+        c.schemaVersion = 3
         c.objectTypes = [RealmUser.self, RealmFile.self]
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         c.fileURL = url.appendingPathComponent("AdminConsole.realm", isDirectory: false)
@@ -128,8 +144,20 @@ class AdminRealmController {
         realmUser.files.removeAll()
         realmUser.files.append(objectsIn: files)
         let totalSize = files.reduce(0, { $0.1.size + $0.0 })
-        print(totalSize)
         realmUser.size = totalSize
+        let receiptPresent = realmUser.files.filter({ $0.name == Subscription.kReceiptKey }).isEmpty == false
+        let basicPresent = realmUser.files.filter({ $0.name == Subscription.kBasicKey }).isEmpty == false
+        let proPresent = realmUser.files.filter({ $0.name == Subscription.kProKey }).isEmpty == false
+        let otherPresent = realmUser.files.filter({ $0.name != Subscription.kProKey && $0.name != Subscription.kBasicKey && $0.name != Subscription.kReceiptKey }).isEmpty == false
+        if otherPresent == true {
+            realmUser.subscription = Subscription.suspicious
+        } else if basicPresent && receiptPresent && !proPresent {
+            realmUser.subscription = Subscription.basic
+        } else if basicPresent && receiptPresent && proPresent {
+            realmUser.subscription = Subscription.pro
+        } else {
+            realmUser.subscription = Subscription.suspicious
+        }
         try realm.commitWrite()
     }
 }

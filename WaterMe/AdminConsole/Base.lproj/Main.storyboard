@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PjW-gb-IfD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PjW-gb-IfD">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -107,6 +107,10 @@
         <scene sceneID="388-af-JcO">
             <objects>
                 <viewController id="11e-R1-71Z" customClass="SummmaryViewController" customModule="AdminConsole" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vjo-eL-kTn"/>
+                        <viewControllerLayoutGuide type="bottom" id="dep-jk-WSk"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WkT-lz-4hi">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -268,7 +272,10 @@
                         <outlet property="auditButton" destination="Spf-qM-23s" id="xcf-g9-5t0"/>
                         <outlet property="deleteLocalButton" destination="C67-zX-qeW" id="UOa-lQ-YOO"/>
                         <outlet property="refreshButton" destination="qNl-Cp-eYa" id="KF4-0V-gaX"/>
+                        <outlet property="totalPremUserCountLabel" destination="9dF-16-RZx" id="VFl-Ke-niV"/>
+                        <outlet property="totalProUserCountLabel" destination="osV-dD-fTP" id="oQN-a2-fRB"/>
                         <outlet property="totalSizeLabel" destination="oMs-gx-JmT" id="8mU-fc-5js"/>
+                        <outlet property="totalSuspectUserCountLabel" destination="nld-oX-5aP" id="TIX-Pd-cID"/>
                         <outlet property="totalUsersLabel" destination="Z5u-4P-GGq" id="Jli-i7-2kE"/>
                     </connections>
                 </viewController>
