@@ -19,6 +19,7 @@ class RealmFile: Object {
 
 class RealmUser: Object {
     dynamic var uuid = ""
+    dynamic var size = 0
     let files = List<RealmFile>()
     override static func primaryKey() -> String? {
         return "uuid"
@@ -29,7 +30,7 @@ class AdminRealmController {
     
     let config: Realm.Configuration = {
         var c = Realm.Configuration()
-        c.schemaVersion = 1
+        c.schemaVersion = 2
         c.objectTypes = [RealmUser.self, RealmFile.self]
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         c.fileURL = url.appendingPathComponent("AdminConsole.realm", isDirectory: false)
@@ -126,6 +127,9 @@ class AdminRealmController {
         realm.beginWrite()
         realmUser.files.removeAll()
         realmUser.files.append(objectsIn: files)
+        let totalSize = files.reduce(0, { $0.1.size + $0.0 })
+        print(totalSize)
+        realmUser.size = totalSize
         try realm.commitWrite()
     }
 }

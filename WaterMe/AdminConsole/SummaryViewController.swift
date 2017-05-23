@@ -7,10 +7,13 @@
 //
 
 import WaterMeData
+import RealmSwift
 import UIKit
 
 class SummmaryViewController: UIViewController {
     
+    @IBOutlet private weak var totalUsersLabel: UILabel?
+    @IBOutlet private weak var totalSizeLabel: UILabel?
     @IBOutlet private weak var auditButton: UIButton?
     @IBOutlet private weak var refreshButton: UIButton?
     @IBOutlet private weak var deleteLocalButton: UIButton?
@@ -19,9 +22,26 @@ class SummmaryViewController: UIViewController {
     }
     
     private let adminController = AdminRealmController()
+    private let sizeFormatter: ByteCountFormatter = {
+        let nf = ByteCountFormatter()
+        nf.includesUnit = false
+        nf.allowedUnits = [.useMB]
+        return nf
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let users = self.adminController.allUsers()
+        self.notificationToken = users.addNotificationBlock() { [weak self] changes in
+            switch changes {
+            case .initial(let data), .update(let data, _, _, _):
+                self?.totalUsersLabel?.text = String(data.count)
+                self?.totalSizeLabel?.text = self?.sizeFormatter.string(fromByteCount: data.reduce(0, { $0.0 + Int64($0.1.size) }))
+            case .error(let error):
+                print(error)
+            }
+        }
     }
     
     @IBAction private func auditButtonTapped(_ sender: UIButton?) {
@@ -53,6 +73,12 @@ class SummmaryViewController: UIViewController {
         }
         let actionSheet = UIAlertController(cancelDeleteActionSheetWithDeleteHandler: deleteHandler, sourceView: sender)
         self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    private var notificationToken: NotificationToken?
+    
+    deinit {
+        self.notificationToken?.stop()
     }
 }
 
