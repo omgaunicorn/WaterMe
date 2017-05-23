@@ -30,23 +30,19 @@ class SummmaryViewController: UIViewController {
     
     @IBAction private func refreshButtonTapped(_ sender: UIButton?) {
         self.buttons.forEach({ $0.isEnabled = false })
-        let url = WaterMeData.PrivateKeys.kRealmServer.appendingPathComponent("realmsec/list")
-        var request = URLRequest(url: url)
-        request.setValue("sharedSecret=\(PrivateKeys.requestSharedSecret)", forHTTPHeaderField: "Cookie")
-        let task = URLSession.shared.dataTask(with: request) { _data, __response, error in
-            let _response = __response as? HTTPURLResponse
-            let _sharedSecret = (_response?.allHeaderFields["Shared-Secret"] ?? _response?.allHeaderFields["shared-secret"]) as? String
-            guard
-                let data = _data,
-                let response = _response,
-                let sharedSecret = _sharedSecret,
-                response.statusCode == 200,
-                sharedSecret == PrivateKeys.responseSharedSecret
-                else { print(error ?? _response!); return; }
-            self.adminController.processServerDirectoryData(data)
-            DispatchQueue.main.async(execute: { self.buttons.forEach({ $0.isEnabled = true }) })
+        URLSession.shared.downloadROSFileTree() { result in
+            switch result {
+            case .success(let data):
+                do {
+                    try self.adminController.processServerDirectoryData(data)
+                } catch {
+                    print(error)
+                }
+            case .error(let error):
+                print(error)
+            }
+            self.buttons.forEach({ $0.isEnabled = true })
         }
-        task.resume()
     }
     
     @IBAction private func deleteLocalButtonTapped(_ sender: UIButton?) {
@@ -55,13 +51,44 @@ class SummmaryViewController: UIViewController {
             self.adminController.deleteAll()
             self.buttons.forEach({ $0.isEnabled = true })
         }
-        
-        let actionSheet = UIAlertController(title: "Are you sure?", message: nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(cancelDeleteActionSheetWithDeleteHandler: deleteHandler, sourceView: sender)
+        self.present(actionSheet, animated: true, completion: nil)
+    }
+}
+
+extension String: Error {}
+
+extension URLSession {
+    fileprivate func downloadROSFileTree(completionHandler: ((Result<Data>) -> Void)?) {
+        let url = WaterMeData.PrivateKeys.kRealmServer.appendingPathComponent("realmsec/list")
+        var request = URLRequest(url: url)
+        request.setValue("sharedSecret=\(PrivateKeys.requestSharedSecret)", forHTTPHeaderField: "Cookie")
+        let task = self.dataTask(with: request) { _data, __response, error in
+            DispatchQueue.main.async {
+                let _response = __response as? HTTPURLResponse
+                let _sharedSecret = (_response?.allHeaderFields["Shared-Secret"] ?? _response?.allHeaderFields["shared-secret"]) as? String
+                guard let data = _data, let response = _response, response.statusCode == 200 else {
+                    completionHandler?(.error(__response?.debugDescription ?? error!))
+                    return
+                }
+                guard let sharedSecret = _sharedSecret, sharedSecret == PrivateKeys.responseSharedSecret else {
+                    completionHandler?(.error("SharedSecret does not match."))
+                    return
+                }
+                completionHandler?(.success(data))
+            }
+        }
+        task.resume()
+    }
+}
+
+extension UIAlertController {
+    convenience init(cancelDeleteActionSheetWithDeleteHandler deleteHandler: @escaping (UIAlertAction) -> Void, sourceView: UIView?) {
+        self.init(title: nil, message: "Are you sure you want to delete this stuff?", preferredStyle: .actionSheet)
         let delete = UIAlertAction(title: "Delete", style: .destructive, handler: deleteHandler)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        actionSheet.addAction(delete)
-        actionSheet.addAction(cancel)
-        actionSheet.popoverPresentationController?.sourceView = sender
-        self.present(actionSheet, animated: true, completion: nil)
+        self.addAction(delete)
+        self.addAction(cancel)
+        self.popoverPresentationController?.sourceView = sourceView
     }
 }
