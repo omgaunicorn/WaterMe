@@ -45,6 +45,13 @@ class AdminRealmController {
         return AnyRealmCollection(collection)
     }
     
+    func deleteAll() {
+        let realm = self.realm
+        realm.beginWrite()
+        realm.deleteAll()
+        try! realm.commitWrite()
+    }
+    
     func processServerDirectoryData(_ data: Data) {
         let json = try! JSONSerialization.jsonObject(with: data, options: [])
         let dict = json as! NSDictionary

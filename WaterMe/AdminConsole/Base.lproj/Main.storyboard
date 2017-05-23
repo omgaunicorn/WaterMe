@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="PjW-gb-IfD">
-    <device id="retina4_7" orientation="portrait">
+    <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -34,11 +35,11 @@
                         <viewControllerLayoutGuide type="bottom" id="WAY-ig-mwR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GHD-Bl-oub">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qPG-lU-T6o">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                                 <connections>
                                     <segue destination="PEZ-Df-aIv" kind="embed" id="QzF-O0-JbI"/>
                                 </connections>
@@ -63,19 +64,26 @@
             <objects>
                 <tableViewController id="PEZ-Df-aIv" customClass="UserTableViewController" customModule="AdminConsole" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yv7-oC-s9d">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <containerView key="tableHeaderView" opaque="NO" contentMode="scaleToFill" id="dzn-gN-Oeh">
+                            <rect key="frame" x="0.0" y="0.0" width="1024" height="200"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <connections>
+                                <segue destination="11e-R1-71Z" kind="embed" id="xcU-sY-GHI"/>
+                            </connections>
+                        </containerView>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Basic" textLabel="x2c-O8-5hc" style="IBUITableViewCellStyleDefault" id="k3T-8K-ute">
-                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <rect key="frame" x="0.0" y="228" width="1024" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k3T-8K-ute" id="tvI-qm-Y6H">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x2c-O8-5hc">
-                                            <rect key="frame" x="15" y="0.0" width="345" height="43.5"/>
+                                            <rect key="frame" x="176" y="0.0" width="672" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
@@ -93,7 +101,75 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cXY-Jr-aCd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="620" y="271"/>
+            <point key="canvasLocation" x="619.921875" y="270.3125"/>
+        </scene>
+        <!--Summmary View Controller-->
+        <scene sceneID="388-af-JcO">
+            <objects>
+                <viewController id="11e-R1-71Z" customClass="SummmaryViewController" customModule="AdminConsole" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WkT-lz-4hi">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="200"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rHX-Zf-tef">
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="200"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="HKh-Mg-mp4">
+                                        <rect key="frame" x="846" y="20" width="158" height="160"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Spf-qM-23s">
+                                                <rect key="frame" x="0.0" y="0.0" width="158" height="88"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                <state key="normal" title="Peform Audit"/>
+                                                <connections>
+                                                    <action selector="auditButtonTapped:" destination="11e-R1-71Z" eventType="touchUpInside" id="czI-H1-9yK"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qNl-Cp-eYa">
+                                                <rect key="frame" x="0.0" y="88" width="158" height="36"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                <state key="normal" title="Refresh Data"/>
+                                                <connections>
+                                                    <action selector="refreshButtonTapped:" destination="11e-R1-71Z" eventType="touchUpInside" id="Gl3-BD-2At"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C67-zX-qeW">
+                                                <rect key="frame" x="0.0" y="124" width="158" height="36"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                <color key="tintColor" red="0.67648654509999995" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <state key="normal" title="Delete Local Data"/>
+                                                <connections>
+                                                    <action selector="deleteLocalButtonTapped:" destination="11e-R1-71Z" eventType="touchUpInside" id="lFc-bk-Ump"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="HKh-Mg-mp4" secondAttribute="trailing" constant="20" symbolic="YES" id="IGc-hf-Pmn"/>
+                                    <constraint firstItem="HKh-Mg-mp4" firstAttribute="top" secondItem="rHX-Zf-tef" secondAttribute="top" constant="20" symbolic="YES" id="gHB-Yn-QSW"/>
+                                    <constraint firstAttribute="bottom" secondItem="HKh-Mg-mp4" secondAttribute="bottom" constant="20" symbolic="YES" id="nzf-Ny-1EM"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="rHX-Zf-tef" firstAttribute="top" secondItem="WkT-lz-4hi" secondAttribute="topMargin" id="Qov-KH-dhv"/>
+                            <constraint firstItem="rHX-Zf-tef" firstAttribute="centerX" secondItem="WkT-lz-4hi" secondAttribute="centerX" id="lcv-Gz-8qH"/>
+                            <constraint firstItem="rHX-Zf-tef" firstAttribute="width" secondItem="WkT-lz-4hi" secondAttribute="width" id="mOg-X8-rsQ"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="rHX-Zf-tef" secondAttribute="bottom" id="sNF-5h-ZVg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="auditButton" destination="Spf-qM-23s" id="xcf-g9-5t0"/>
+                        <outlet property="deleteLocalButton" destination="C67-zX-qeW" id="UOa-lQ-YOO"/>
+                        <outlet property="refreshButton" destination="qNl-Cp-eYa" id="KF4-0V-gaX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="oLc-Sd-o2a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1322.4609375" y="47.65625"/>
         </scene>
     </scenes>
 </document>

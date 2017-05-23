@@ -12,8 +12,8 @@ import UIKit
 
 class UserTableViewController: UITableViewController {
 
-    var users: AnyRealmCollection<RealmUser>?
-    let adminController = AdminRealmController()
+    private var users: AnyRealmCollection<RealmUser>?
+    private let adminController = AdminRealmController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,39 +38,6 @@ class UserTableViewController: UITableViewController {
                 print(error)
             }
         }
-        
-        let url = WaterMeData.PrivateKeys.kRealmServer.appendingPathComponent("realmsec/list")
-        var request = URLRequest(url: url)
-        request.setValue("sharedSecret=\(PrivateKeys.requestSharedSecret)", forHTTPHeaderField: "Cookie")
-        let task = URLSession.shared.dataTask(with: request) { _data, __response, error in
-            let _response = __response as? HTTPURLResponse
-            let _sharedSecret = (_response?.allHeaderFields["Shared-Secret"] ?? _response?.allHeaderFields["shared-secret"]) as? String
-            guard
-                let data = _data,
-                let response = _response,
-                let sharedSecret = _sharedSecret,
-                response.statusCode == 200,
-                sharedSecret == PrivateKeys.responseSharedSecret
-            else { print(error ?? _response!); return; }
-            self.adminController.processServerDirectoryData(data)
-        }
-        task.resume()
-        
-//        Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
-    }
-    
-    var delete = true
-    @objc private func timerFired(_ timer: NSObject?) {
-        if self.delete {
-            let realm = self.adminController.realm
-            realm.beginWrite()
-            realm.deleteAll()
-            try! realm.commitWrite()
-        } else {
-            let data = PrivateKeys.jsonSampleData.data(using: .utf8)!
-            self.adminController.processServerDirectoryData(data)
-        }
-        self.delete = !self.delete
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
