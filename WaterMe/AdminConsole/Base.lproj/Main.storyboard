@@ -63,7 +63,7 @@
         <scene sceneID="4ob-zw-kNA">
             <objects>
                 <tableViewController id="PEZ-Df-aIv" customClass="UserTableViewController" customModule="AdminConsole" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="yv7-oC-s9d">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="108" sectionHeaderHeight="28" sectionFooterHeight="28" id="yv7-oC-s9d">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -75,22 +75,47 @@
                             </connections>
                         </containerView>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Basic" textLabel="x2c-O8-5hc" style="IBUITableViewCellStyleDefault" id="k3T-8K-ute">
-                                <rect key="frame" x="0.0" y="248" width="1024" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserTableViewCell" rowHeight="100" id="k3T-8K-ute" customClass="UserTableViewCell" customModule="AdminConsole" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="248" width="1024" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k3T-8K-ute" id="tvI-qm-Y6H">
-                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="99.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="x2c-O8-5hc">
-                                            <rect key="frame" x="176" y="0.0" width="672" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="3nh-4H-yJv">
+                                            <rect key="frame" x="8" y="12.5" width="289" height="74.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Basic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VO2-j8-BOI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="39.5" height="19.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20 mb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lxW-kv-T5l">
+                                                    <rect key="frame" x="0.0" y="27.5" width="46.5" height="19.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="f3b2d68d155218a8e58cb5c9a89f2818" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n3z-3Y-8VE">
+                                                    <rect key="frame" x="0.0" y="55" width="289" height="19.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="3nh-4H-yJv" firstAttribute="centerY" secondItem="tvI-qm-Y6H" secondAttribute="centerY" id="6vy-Yw-WLd"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="3nh-4H-yJv" secondAttribute="leading" id="E2n-d2-d2q"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dataPresentLabel" destination="VO2-j8-BOI" id="D2J-0Z-WNe"/>
+                                    <outlet property="idLabel" destination="n3z-3Y-8VE" id="6Wv-UG-on9"/>
+                                    <outlet property="sizeLabel" destination="lxW-kv-T5l" id="T2Y-XT-Fed"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -261,7 +286,7 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="Yru-S1-V71" firstAttribute="top" secondItem="uwZ-Ep-PX8" secondAttribute="bottom" constant="8" symbolic="YES" id="8oH-nt-wbI"/>
                                     <constraint firstItem="uwZ-Ep-PX8" firstAttribute="leading" secondItem="rHX-Zf-tef" secondAttribute="leading" constant="20" symbolic="YES" id="Ep8-FB-06l"/>

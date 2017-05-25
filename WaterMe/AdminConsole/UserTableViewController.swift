@@ -39,11 +39,11 @@ class UserTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let id = "Basic"
+        let id = UserTableViewCell.reuseID
         let cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
-        let data = self.users![indexPath.row]
-        cell.textLabel?.text = data.uuid
-        return cell
+        guard let userCell = cell as? UserTableViewCell, let user = self.users?[indexPath.row] else { return cell }
+        userCell.configure(with: user)
+        return userCell
     }
     
     override func viewDidLayoutSubviews() {

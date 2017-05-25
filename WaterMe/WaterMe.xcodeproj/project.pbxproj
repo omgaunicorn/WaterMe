@@ -24,6 +24,7 @@
 		501F922B1EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */; };
 		501F922C1EC55E080014939D /* SubscriptionChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */; };
 		503F74491ED3BB64005EF5F2 /* SummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503F74481ED3BB64005EF5F2 /* SummaryViewController.swift */; };
+		504A8D511ED6A04F002D928D /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D501ED6A04F002D928D /* UserTableViewCell.swift */; };
 		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
 		50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */; };
 		50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */; };
@@ -73,6 +74,7 @@
 		501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewController.swift; sourceTree = "<group>"; };
 		501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceViewController.swift; sourceTree = "<group>"; };
 		503F74481ED3BB64005EF5F2 /* SummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SummaryViewController.swift; sourceTree = "<group>"; };
+		504A8D501ED6A04F002D928D /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		505086AE1ECBD43200745012 /* RealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
 		50BB0F501EBFCDE500850FF4 /* WaterMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaterMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			children = (
 				501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */,
 				501C0E8C1ECE5EFF00D4EE7C /* UserTableViewController.swift */,
+				504A8D501ED6A04F002D928D /* UserTableViewCell.swift */,
 				503F74481ED3BB64005EF5F2 /* SummaryViewController.swift */,
 				50C1AA961ED006B300E3BF0A /* AdminRealmController.swift */,
 				501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */,
@@ -582,6 +585,7 @@
 				501C0E8B1ECE5EFF00D4EE7C /* AppDelegate.swift in Sources */,
 				501C0E9B1ECE602400D4EE7C /* PrivateKeys.swift in Sources */,
 				50C1AA971ED006B300E3BF0A /* AdminRealmController.swift in Sources */,
+				504A8D511ED6A04F002D928D /* UserTableViewCell.swift in Sources */,
 				503F74491ED3BB64005EF5F2 /* SummaryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
