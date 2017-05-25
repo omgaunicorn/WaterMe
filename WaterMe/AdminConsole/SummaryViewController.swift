@@ -17,6 +17,7 @@ class SummmaryViewController: UIViewController {
     @IBOutlet private weak var totalPremUserCountLabel: UILabel?
     @IBOutlet private weak var totalProUserCountLabel: UILabel?
     @IBOutlet private weak var totalSuspectUserCountLabel: UILabel?
+    @IBOutlet private weak var totalEmptyUserCountLabel: UILabel?
     @IBOutlet private weak var auditButton: UIButton?
     @IBOutlet private weak var refreshButton: UIButton?
     @IBOutlet private weak var deleteLocalButton: UIButton?
@@ -51,21 +52,23 @@ class SummmaryViewController: UIViewController {
         case .success(let data):
             self.totalUsersLabel?.text = String(data.count)
             self.totalSizeLabel?.text = self.sizeFormatter.string(fromByteCount: data.reduce(0, { $0.0 + Int64($0.1.size) }))
-            let (premium, pro, suspicious) = self.sumSubscriptionTypes(with: data)
+            let (premium, pro, suspicious, empty) = self.sumSubscriptionTypes(with: data)
             self.totalPremUserCountLabel?.text = String(premium)
             self.totalProUserCountLabel?.text = String(pro)
             self.totalSuspectUserCountLabel?.text = String(suspicious)
+            self.totalEmptyUserCountLabel?.text = String(empty)
         case .error(let error):
             print(error)
         }
     }
     
-    func sumSubscriptionTypes(with data: AnyRealmCollection<RealmUser>) -> (prem: Int, pro: Int, suspicious: Int) {
-        let subscriptions = data.map({ $0.subscription })
-        let prem = subscriptions.filter({ $0 == .basic })
-        let pro = subscriptions.filter({ $0 == .pro })
-        let sus = subscriptions.filter({ $0 == .suspicious })
-        return (prem.count, pro.count, sus.count)
+    func sumSubscriptionTypes(with data: AnyRealmCollection<RealmUser>) -> (prem: Int, pro: Int, suspicious: Int, empty: Int) {
+        let dataPresents = data.map({ $0.dataPresent })
+        let prem = dataPresents.filter({ $0 == .basic })
+        let pro = dataPresents.filter({ $0 == .pro })
+        let sus = dataPresents.filter({ $0 == .suspicious })
+        let empty = dataPresents.filter({ $0 == .none })
+        return (prem.count, pro.count, sus.count, empty.count)
     }
     
     @IBAction private func auditButtonTapped(_ sender: UIButton?) {

@@ -8,8 +8,8 @@
 
 import RealmSwift
 
-enum Subscription: String {
-    case basic, pro, suspicious
+enum DataPresent: String {
+    case basic, pro, suspicious, none
     static let kReceiptKey = "WaterMeReceipt.realm"
     static let kBasicKey = "WaterMeBasic.realm"
     static let kProKey = "WaterMePro.realm"
@@ -27,13 +27,13 @@ class RealmFile: Object {
 class RealmUser: Object {
     fileprivate(set) dynamic var uuid = ""
     fileprivate(set) dynamic var size = 0
-    private dynamic var subscriptionString: String = Subscription.suspicious.rawValue
-    fileprivate(set) var subscription: Subscription {
+    private dynamic var _dataPresent: String = DataPresent.suspicious.rawValue
+    fileprivate(set) var dataPresent: DataPresent {
         get {
-            return Subscription(rawValue: self.subscriptionString) ?? .suspicious
+            return DataPresent(rawValue: _dataPresent) ?? .suspicious
         }
         set {
-            self.subscriptionString = newValue.rawValue
+            _dataPresent = newValue.rawValue
         }
     }
     let files = List<RealmFile>()
@@ -46,7 +46,7 @@ class AdminRealmController {
     
     let config: Realm.Configuration = {
         var c = Realm.Configuration()
-        c.schemaVersion = 3
+        c.schemaVersion = 4
         c.objectTypes = [RealmUser.self, RealmFile.self]
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         c.fileURL = url.appendingPathComponent("AdminConsole.realm", isDirectory: false)
@@ -145,18 +145,20 @@ class AdminRealmController {
         realmUser.files.append(objectsIn: files)
         let totalSize = files.reduce(0, { $0.1.size + $0.0 })
         realmUser.size = totalSize
-        let receiptPresent = realmUser.files.filter({ $0.name == Subscription.kReceiptKey }).isEmpty == false
-        let basicPresent = realmUser.files.filter({ $0.name == Subscription.kBasicKey }).isEmpty == false
-        let proPresent = realmUser.files.filter({ $0.name == Subscription.kProKey }).isEmpty == false
-        let otherPresent = realmUser.files.filter({ $0.name != Subscription.kProKey && $0.name != Subscription.kBasicKey && $0.name != Subscription.kReceiptKey }).isEmpty == false
-        if otherPresent == true {
-            realmUser.subscription = Subscription.suspicious
+        let receiptPresent = realmUser.files.filter({ $0.name == DataPresent.kReceiptKey }).isEmpty == false
+        let basicPresent = realmUser.files.filter({ $0.name == DataPresent.kBasicKey }).isEmpty == false
+        let proPresent = realmUser.files.filter({ $0.name == DataPresent.kProKey }).isEmpty == false
+        let otherPresent = realmUser.files.filter({ $0.name != DataPresent.kProKey && $0.name != DataPresent.kBasicKey && $0.name != DataPresent.kReceiptKey }).isEmpty == false
+        if realmUser.files.isEmpty {
+            realmUser.dataPresent = .none
+        } else if otherPresent == true {
+            realmUser.dataPresent = DataPresent.suspicious
         } else if basicPresent && receiptPresent && !proPresent {
-            realmUser.subscription = Subscription.basic
+            realmUser.dataPresent = DataPresent.basic
         } else if basicPresent && receiptPresent && proPresent {
-            realmUser.subscription = Subscription.pro
+            realmUser.dataPresent = DataPresent.pro
         } else {
-            realmUser.subscription = Subscription.suspicious
+            realmUser.dataPresent = DataPresent.suspicious
         }
         try realm.commitWrite()
     }
