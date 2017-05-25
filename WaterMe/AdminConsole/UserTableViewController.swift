@@ -54,6 +54,8 @@ class UserTableViewController: UITableViewController {
         self.tableView.contentInset.bottom = bottomInset
     }
     
+    @IBAction private func unwindToUserTableViewController(_ segue: UIStoryboardSegue) { }
+    
     private var notificationToken: NotificationToken?
     
     deinit {

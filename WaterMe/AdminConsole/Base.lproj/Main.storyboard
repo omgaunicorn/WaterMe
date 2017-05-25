@@ -115,6 +115,7 @@
                                     <outlet property="dataPresentLabel" destination="VO2-j8-BOI" id="D2J-0Z-WNe"/>
                                     <outlet property="idLabel" destination="n3z-3Y-8VE" id="6Wv-UG-on9"/>
                                     <outlet property="sizeLabel" destination="lxW-kv-T5l" id="T2Y-XT-Fed"/>
+                                    <segue destination="QYT-Bt-jTq" kind="presentation" trigger="accessoryAction" modalPresentationStyle="formSheet" id="cZC-jS-2La"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -165,7 +166,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C67-zX-qeW">
                                                 <rect key="frame" x="0.0" y="98" width="158" height="36"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                                <color key="tintColor" red="0.67648654509999995" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Delete Local Data"/>
                                                 <connections>
                                                     <action selector="deleteLocalButtonTapped:" destination="11e-R1-71Z" eventType="touchUpInside" id="lFc-bk-Ump"/>
@@ -321,6 +322,50 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oLc-Sd-o2a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1322.4609375" y="47.65625"/>
+        </scene>
+        <!--Realms-->
+        <scene sceneID="14d-8N-ixU">
+            <objects>
+                <viewController id="nij-Ph-Eps" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="foO-Zf-Oik"/>
+                        <viewControllerLayoutGuide type="bottom" id="mAU-YU-UDk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="v5n-MK-3I0">
+                        <rect key="frame" x="0.0" y="0.0" width="540" height="620"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="0.40000000600000002" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Realms" id="WLI-zz-Anw">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="z6Y-Br-cOh">
+                            <connections>
+                                <segue destination="6zT-m0-fjq" kind="unwind" unwindAction="unwindToUserTableViewController:" id="83A-tY-H6M"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="so4-PW-Zaz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="6zT-m0-fjq" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1621.2890625" y="445.3125"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="NtY-AM-auC">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QYT-Bt-jTq" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="B63-Sv-SIm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="nij-Ph-Eps" kind="relationship" relationship="rootViewController" id="jOW-dB-dL8"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OXT-CS-ff1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1180.6640625" y="445.3125"/>
         </scene>
     </scenes>
 </document>
