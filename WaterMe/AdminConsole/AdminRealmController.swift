@@ -13,6 +13,26 @@ enum DataPresent: String {
     static let kReceiptKey = "WaterMeReceipt.realm"
     static let kBasicKey = "WaterMeBasic.realm"
     static let kProKey = "WaterMePro.realm"
+    var isSuspicious: Bool {
+        switch self {
+        case .basic, .pro:
+            return false
+        case .suspicious, .none:
+            return true
+        }
+    }
+    var localizedString: String {
+        switch self {
+        case .basic:
+            return "WaterMe Basic"
+        case .none:
+            return "No Realms"
+        case .pro:
+            return "WaterMe Pro"
+        case .suspicious:
+            return "Suspicious Realms"
+        }
+    }
 }
 
 class RealmFile: Object {
@@ -36,6 +56,7 @@ class RealmUser: Object {
             _dataPresent = newValue.rawValue
         }
     }
+    fileprivate(set) dynamic var isSizeSuspicious = false
     let files = List<RealmFile>()
     override static func primaryKey() -> String? {
         return "uuid"
@@ -46,7 +67,7 @@ class AdminRealmController {
     
     let config: Realm.Configuration = {
         var c = Realm.Configuration()
-        c.schemaVersion = 4
+        c.schemaVersion = 5
         c.objectTypes = [RealmUser.self, RealmFile.self]
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         c.fileURL = url.appendingPathComponent("AdminConsole.realm", isDirectory: false)
@@ -145,6 +166,7 @@ class AdminRealmController {
         realmUser.files.append(objectsIn: files)
         let totalSize = files.reduce(0, { $0.1.size + $0.0 })
         realmUser.size = totalSize
+        realmUser.isSizeSuspicious = totalSize >= 10000000 ? true : false
         let receiptPresent = realmUser.files.filter({ $0.name == DataPresent.kReceiptKey }).isEmpty == false
         let basicPresent = realmUser.files.filter({ $0.name == DataPresent.kBasicKey }).isEmpty == false
         let proPresent = realmUser.files.filter({ $0.name == DataPresent.kProKey }).isEmpty == false
