@@ -37,9 +37,24 @@ class ReceiptWatcher {
         let receiptController = ReceiptController(user: user, overrideUserPath: owningUserID)
         self.receiptControllers[owningUserID] = receiptController
         receiptController.receiptChanged = { receipt, controller in
-            print(controller.config.syncConfiguration?.realmURL)
-            print(controller.overridenUserPath)
-            print("NewReceipt:\n \(receipt.pkcs7Data)")
+            guard let receiptData = receipt.pkcs7Data else { return }
+            let jsonDict = [
+                "receipt-data" : receiptData.base64EncodedString(),
+                "password" : PrivateKeys.kReceiptValidationSharedSecret
+            ]
+            let jsonData = try! JSONSerialization.data(withJSONObject: jsonDict, options: [])
+            let url = URL(string: "https://sandbox.itunes.apple.com/verifyReceipt")!
+            var request = URLRequest(url: url)
+            request.httpMethod = "POST"
+            request.httpBody = jsonData
+            let task = URLSession.shared.dataTask(with: request) { data, request, error in
+                let json = try! JSONSerialization.jsonObject(with: data!, options: [])
+                print(json)
+                print(request)
+                print(error)
+                print("done")
+            }
+            task.resume()
         }
     }
     
