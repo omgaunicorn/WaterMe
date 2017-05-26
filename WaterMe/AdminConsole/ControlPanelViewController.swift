@@ -114,7 +114,7 @@ extension URLSession {
     fileprivate func downloadROSFileTree(completionHandler: ((Result<Data>) -> Void)?) {
         let url = WaterMeData.PrivateKeys.kRealmServer.appendingPathComponent("realmsec/list")
         var request = URLRequest(url: url)
-        request.setValue("sharedSecret=\(PrivateKeys.requestSharedSecret)", forHTTPHeaderField: "Cookie")
+        request.setValue("sharedSecret=\(PrivateKeys.kRequestSharedSecret)", forHTTPHeaderField: "Cookie")
         let task = self.dataTask(with: request) { _data, __response, error in
             DispatchQueue.main.async {
                 let _response = __response as? HTTPURLResponse
@@ -123,7 +123,7 @@ extension URLSession {
                     completionHandler?(.error(__response?.debugDescription ?? error!))
                     return
                 }
-                guard let sharedSecret = _sharedSecret, sharedSecret == PrivateKeys.responseSharedSecret else {
+                guard let sharedSecret = _sharedSecret, sharedSecret == PrivateKeys.kResponseSharedSecret else {
                     completionHandler?(.error("SharedSecret does not match."))
                     return
                 }
