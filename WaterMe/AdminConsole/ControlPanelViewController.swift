@@ -1,8 +1,8 @@
 //
-//  SummaryViewController.swift
+//  ControlPanelViewController.swift
 //  WaterMe
 //
-//  Created by Jeffrey Bergier on 5/22/17.
+//  Created by Jeffrey Bergier on 5/25/17.
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
@@ -10,14 +10,10 @@ import WaterMeData
 import RealmSwift
 import UIKit
 
-class SummmaryViewController: UIViewController {
+class ControlPanelViewController: UIViewController {
     
-    @IBOutlet private weak var totalUsersLabel: UILabel?
-    @IBOutlet private weak var totalSizeLabel: UILabel?
-    @IBOutlet private weak var totalPremUserCountLabel: UILabel?
-    @IBOutlet private weak var totalProUserCountLabel: UILabel?
-    @IBOutlet private weak var totalSuspectUserCountLabel: UILabel?
-    @IBOutlet private weak var totalEmptyUserCountLabel: UILabel?
+    @IBOutlet private weak var summaryView: UserSummmaryView?
+    @IBOutlet private weak var syncView: SynchronizingView?
     @IBOutlet private weak var auditButton: UIButton?
     @IBOutlet private weak var refreshButton: UIButton?
     @IBOutlet private weak var deleteLocalButton: UIButton?
@@ -26,69 +22,76 @@ class SummmaryViewController: UIViewController {
     }
     
     private let adminController = AdminRealmController()
-    private let sizeFormatter: ByteCountFormatter = {
-        let nf = ByteCountFormatter()
-        nf.includesUnit = false
-        nf.allowedUnits = [.useMB]
-        return nf
-    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.configureSyncView()
         let users = self.adminController.allUsers()
-        self.notificationToken = users.addNotificationBlock() { [weak self] changes in
-            switch changes {
-            case .initial(let data), .update(let data, _, _, _):
-                self?.updateUI(with: .success(data))
-            case .error(let error):
-                self?.updateUI(with: .error(error))
-            }
-        }
+        self.notificationToken = users.addNotificationBlock() { [weak self] changes in self?.realmDataChanged(changes) }
     }
     
-    private func updateUI(with result: Result<AnyRealmCollection<RealmUser>>) {
-        switch result {
-        case .success(let data):
-            self.totalUsersLabel?.text = String(data.count)
-            self.totalSizeLabel?.text = self.sizeFormatter.string(fromByteCount: data.reduce(0, { $0.0 + Int64($0.1.size) }))
-            let (premium, pro, suspicious, empty) = self.sumSubscriptionTypes(with: data)
-            self.totalPremUserCountLabel?.text = String(premium)
-            self.totalProUserCountLabel?.text = String(pro)
-            self.totalSuspectUserCountLabel?.text = String(suspicious)
-            self.totalEmptyUserCountLabel?.text = String(empty)
+    private func realmDataChanged(_ changes: RealmCollectionChange<AnyRealmCollection<RealmUser>>) {
+        switch changes {
+        case .initial(let data), .update(let data, _, _, _):
+            self.summaryView?.updateUI(with: .success(data))
         case .error(let error):
-            print(error)
+            self.summaryView?.updateUI(with: .error(error))
         }
     }
     
-    func sumSubscriptionTypes(with data: AnyRealmCollection<RealmUser>) -> (prem: Int, pro: Int, suspicious: Int, empty: Int) {
-        let dataPresents = data.map({ $0.dataPresent })
-        let prem = dataPresents.filter({ $0 == .basic })
-        let pro = dataPresents.filter({ $0 == .pro })
-        let sus = dataPresents.filter({ $0 == .suspicious })
-        let empty = dataPresents.filter({ $0 == .none })
-        return (prem.count, pro.count, sus.count, empty.count)
+    private func configureSyncView() {
+        guard let user = SyncUser.current else { log.info("Realm User Not Logged In"); return }
+        let sessions = SyncUser.allSessions(user)()
+        print(sessions)
     }
     
     @IBAction private func auditButtonTapped(_ sender: UIButton?) {
-//        self.buttons.forEach({ $0.isEnabled = false })
+        //        self.buttons.forEach({ $0.isEnabled = false })
     }
     
     @IBAction private func refreshButtonTapped(_ sender: UIButton?) {
+        
         self.buttons.forEach({ $0.isEnabled = false })
+        
+        var isDownloadOpFinished = false
+        var isRealmOpFinished = true
+        
+        if SyncUser.current == nil {
+            isRealmOpFinished = false
+            log.info("Need to login to Realm")
+            let server = WaterMeData.PrivateKeys.kRealmServer
+            let credentials = SyncCredentials.usernamePassword(username: PrivateKeys.kRealmAdminLogin, password: PrivateKeys.kRealmAdminPassword, register: false)
+            SyncUser.logIn(with: credentials, server: server) { user, error in
+                DispatchQueue.main.async {
+                    isRealmOpFinished = true
+                    if let user = user {
+                        log.info("Login Succeeded")
+                        self.configureSyncView()
+                    } else {
+                        log.error(error!)
+                    }
+                }
+                if isDownloadOpFinished && isRealmOpFinished {
+                    self.buttons.forEach({ $0.isEnabled = true })
+                }
+            }
+        }
+        
         URLSession.shared.downloadROSFileTree() { result in
+            isDownloadOpFinished = true
             switch result {
             case .success(let data):
                 do {
                     try self.adminController.processServerDirectoryData(data)
                 } catch {
-                    print(error)
+                    log.error(error)
                 }
             case .error(let error):
-                print(error)
+                log.error(error)
             }
-            self.buttons.forEach({ $0.isEnabled = true })
+            if isDownloadOpFinished && isRealmOpFinished {
+                self.buttons.forEach({ $0.isEnabled = true })
+            }
         }
     }
     
