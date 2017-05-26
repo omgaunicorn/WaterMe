@@ -23,41 +23,8 @@ class ControlPanelViewController: UIViewController {
     
     private let adminController = AdminRealmController()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let users = self.adminController.allUsers()
-        self.notificationToken = users.addNotificationBlock() { [weak self] changes in self?.realmDataChanged(changes) }
-    }
-    
-    private func realmDataChanged(_ changes: RealmCollectionChange<AnyRealmCollection<RealmUser>>) {
-        switch changes {
-        case .initial(let data), .update(let data, _, _, _):
-            self.summaryView?.updateUI(with: .success(data))
-            self.updateSyncSessionProgressNotifications()
-        case .error(let error):
-            self.summaryView?.updateUI(with: .error(error))
-        }
-    }
-    
-    private func updateSyncSessionProgressNotifications() {
-        guard let user = SyncUser.current else { log.info("Realm User Not Logged In"); return }
-        self.progressTokens = nil
-        let sessions = user.allSessions()
-        print("Sessions: \(sessions.count)")
-        self.progressTokens = sessions.flatMap() { session -> SyncSession.ProgressNotificationToken? in
-            return session.addProgressNotification(for: .download, mode: .reportIndefinitely) { [weak self] progress in
-                if progress.isTransferComplete {
-                    self?.syncView?.stop()
-                } else {
-                    self?.syncView?.start()
-                }
-            }
-        }
-        
-    }
-    
     @IBAction private func auditButtonTapped(_ sender: UIButton?) {
-        //        self.buttons.forEach({ $0.isEnabled = false })
+//        self.buttons.forEach({ $0.isEnabled = false })
     }
     
     @IBAction private func refreshButtonTapped(_ sender: UIButton?) {
@@ -89,15 +56,13 @@ class ControlPanelViewController: UIViewController {
         
         URLSession.shared.downloadROSFileTree() { result in
             isDownloadOpFinished = true
-            switch result {
-            case .success(let data):
-                do {
-                    try self.adminController.processServerDirectoryData(data)
-                } catch {
+            self.adminController.processServerDirectoryData(result) { processed in
+                switch processed {
+                case .success:
+                    log.info("User File Data Reloaded Successfully")
+                case .error(let error):
                     log.error(error)
                 }
-            case .error(let error):
-                log.error(error)
             }
             if isDownloadOpFinished && isRealmOpFinished {
                 self.buttons.forEach({ $0.isEnabled = true })
@@ -113,18 +78,6 @@ class ControlPanelViewController: UIViewController {
         }
         let actionSheet = UIAlertController(cancelDeleteActionSheetWithDeleteHandler: deleteHandler, sourceView: sender)
         self.present(actionSheet, animated: true, completion: nil)
-    }
-    
-    private var notificationToken: NotificationToken?
-    private var progressTokens: [SyncSession.ProgressNotificationToken]? {
-        didSet {
-            oldValue?.forEach({ $0.stop() })
-        }
-    }
-    
-    deinit {
-        self.progressTokens = nil
-        self.notificationToken?.stop()
     }
 }
 

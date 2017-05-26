@@ -37,7 +37,7 @@ class ReceiptWatcher {
         let receipt = ReceiptController(user: user, overrideUserPath: owningUserID)
         self.receiptControllers[owningUserID] = receipt
         receipt.receiptChanged = { receipt in
-            print("NewReceipt: \(receipt.pkcs7Data!)")
+            print("NewReceipt:\n \(receipt.pkcs7Data!)")
         }
     }
     

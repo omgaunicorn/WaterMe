@@ -6,6 +6,7 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
+import WaterMeData
 import RealmSwift
 
 enum DataPresent: String {
@@ -98,6 +99,20 @@ class AdminRealmController {
         realm.beginWrite()
         realm.deleteAll()
         try! realm.commitWrite()
+    }
+    
+    func processServerDirectoryData(_ data: Result<Data>, completion: ((Result<Void>) -> Void)?) {
+        switch data {
+        case .success(let data):
+            do {
+                try processServerDirectoryData(data)
+                completion?(.success())
+            } catch {
+                completion?(.error(error))
+            }
+        case .error(let error):
+            completion?(.error(error))
+        }
     }
     
     func processServerDirectoryData(_ data: Data) throws {

@@ -19,6 +19,8 @@ class UserSummmaryView: UIView {
     @IBOutlet private weak var totalSuspectUserCountLabel: UILabel?
     @IBOutlet private weak var totalEmptyUserCountLabel: UILabel?
     
+    private let adminController = AdminRealmController()
+    
     private let sizeFormatter: ByteCountFormatter = {
         let nf = ByteCountFormatter()
         nf.includesUnit = false
@@ -26,7 +28,22 @@ class UserSummmaryView: UIView {
         return nf
     }()
     
-    func updateUI(with result: Result<AnyRealmCollection<RealmUser>>) {
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let users = self.adminController.allUsers()
+        self.notificationToken = users.addNotificationBlock() { [weak self] changes in self?.realmDataChanged(changes) }
+    }
+    
+    private func realmDataChanged(_ changes: RealmCollectionChange<AnyRealmCollection<RealmUser>>) {
+        switch changes {
+        case .initial(let data), .update(let data, _, _, _):
+            self.updateUI(with: .success(data))
+        case .error(let error):
+            self.updateUI(with: .error(error))
+        }
+    }
+    
+    private func updateUI(with result: Result<AnyRealmCollection<RealmUser>>) {
         switch result {
         case .success(let data):
             self.totalUsersLabel?.text = String(data.count)
@@ -49,5 +66,10 @@ class UserSummmaryView: UIView {
         let empty = dataPresents.filter({ $0 == .none })
         return (prem.count, pro.count, sus.count, empty.count)
     }
-
+    
+    private var notificationToken: NotificationToken?
+    
+    deinit {
+        self.notificationToken?.stop()
+    }
 }
