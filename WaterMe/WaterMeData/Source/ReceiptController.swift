@@ -12,8 +12,9 @@ public class ReceiptController {
     
     private static let objectTypes: [Object.Type] = [Receipt.self]
     
-    private let user: SyncUser
-    private let config: Realm.Configuration
+    public let user: SyncUser
+    public let overridenUserPath: String?
+    public let config: Realm.Configuration
     public var realm: Realm {
         return try! Realm(configuration: self.config)
     }
@@ -25,6 +26,7 @@ public class ReceiptController {
         realmConfig.syncConfiguration = SyncConfiguration(user: user, realmURL: url, enableSSLValidation: true)
         realmConfig.schemaVersion = RealmSchemaVersion
         realmConfig.objectTypes = type(of: self).objectTypes
+        self.overridenUserPath = overrideUserPath
         self.config = realmConfig
     }
     
@@ -49,25 +51,32 @@ public class ReceiptController {
         try! realm.commitWrite()
     }
     
-    public var receiptChanged: ((Receipt) -> Void)? {
+    public var receiptChanged: ((Receipt, ReceiptController) -> Void)? {
         didSet {
             if self.receiptChanged == nil {
                 self.receiptToken?.stop()
                 self.receiptToken = nil
             } else {
                 self.configureReceiptNotificationsIfNeeded()
-                self.receiptChanged?(self.receipt)
             }
         }
     }
     
     private func configureReceiptNotificationsIfNeeded() {
-        guard self.receiptToken == nil else { return }
+        guard self.receiptToken == nil else {
+            // if the receipt token is already configured
+            // we just want to call into the receiptChanged callback
+            // this is so when this configure method is called
+            // the callback gets called at least once
+            self.receiptChanged?(self.receipt, self)
+            return
+        }
         self.receiptToken = realm.objects(Receipt.self).addNotificationBlock() { [weak self] changes in
+            guard let weakSelf = self else { return }
             switch changes {
             case .initial(let data), .update(let data, _, _, _):
                 guard let receipt = data.first else { return }
-                self?.receiptChanged?(receipt)
+                self?.receiptChanged?(receipt, weakSelf)
             case .error(let error):
                 log.error("Error reading receipt: \(error)")
             }

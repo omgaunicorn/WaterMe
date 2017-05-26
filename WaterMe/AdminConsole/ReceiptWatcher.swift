@@ -34,9 +34,11 @@ class ReceiptWatcher {
     
     private func createNewReceiptController(for user: SyncUser, owningUserID: String) {
         guard self.receiptControllers[owningUserID] == nil else { return }
-        let receipt = ReceiptController(user: user, overrideUserPath: owningUserID)
-        self.receiptControllers[owningUserID] = receipt
-        receipt.receiptChanged = { receipt in
+        let receiptController = ReceiptController(user: user, overrideUserPath: owningUserID)
+        self.receiptControllers[owningUserID] = receiptController
+        receiptController.receiptChanged = { receipt, controller in
+            print(controller.config.syncConfiguration?.realmURL)
+            print(controller.overridenUserPath)
             print("NewReceipt:\n \(receipt.pkcs7Data)")
         }
     }
