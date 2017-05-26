@@ -13,6 +13,7 @@ target 'AdminConsole' do
 	platform :ios, '10.3'
 	use_frameworks!
 	
+	pod 'SwiftyStoreKit'
 	pod 'RealmSwift'
 	pod 'XCGLogger', '~> 5.0.1'
 	pod 'WaterMeData', :path => 'WaterMeData'
