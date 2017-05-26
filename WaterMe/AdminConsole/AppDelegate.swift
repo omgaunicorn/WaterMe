@@ -15,6 +15,7 @@ let log = XCGLogger.default
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    private let receiptWatcher = ReceiptWatcher()
     
     override init() {
         super.init()

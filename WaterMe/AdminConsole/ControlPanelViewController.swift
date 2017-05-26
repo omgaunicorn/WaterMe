@@ -25,7 +25,6 @@ class ControlPanelViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureSyncView()
         let users = self.adminController.allUsers()
         self.notificationToken = users.addNotificationBlock() { [weak self] changes in self?.realmDataChanged(changes) }
     }
@@ -34,15 +33,27 @@ class ControlPanelViewController: UIViewController {
         switch changes {
         case .initial(let data), .update(let data, _, _, _):
             self.summaryView?.updateUI(with: .success(data))
+            self.updateSyncSessionProgressNotifications()
         case .error(let error):
             self.summaryView?.updateUI(with: .error(error))
         }
     }
     
-    private func configureSyncView() {
+    private func updateSyncSessionProgressNotifications() {
         guard let user = SyncUser.current else { log.info("Realm User Not Logged In"); return }
-        let sessions = SyncUser.allSessions(user)()
-        print(sessions)
+        self.progressTokens = nil
+        let sessions = user.allSessions()
+        print("Sessions: \(sessions.count)")
+        self.progressTokens = sessions.flatMap() { session -> SyncSession.ProgressNotificationToken? in
+            return session.addProgressNotification(for: .download, mode: .reportIndefinitely) { [weak self] progress in
+                if progress.isTransferComplete {
+                    self?.syncView?.stop()
+                } else {
+                    self?.syncView?.start()
+                }
+            }
+        }
+        
     }
     
     @IBAction private func auditButtonTapped(_ sender: UIButton?) {
@@ -64,9 +75,8 @@ class ControlPanelViewController: UIViewController {
             SyncUser.logIn(with: credentials, server: server) { user, error in
                 DispatchQueue.main.async {
                     isRealmOpFinished = true
-                    if let user = user {
+                    if user != nil {
                         log.info("Login Succeeded")
-                        self.configureSyncView()
                     } else {
                         log.error(error!)
                     }
@@ -106,8 +116,14 @@ class ControlPanelViewController: UIViewController {
     }
     
     private var notificationToken: NotificationToken?
+    private var progressTokens: [SyncSession.ProgressNotificationToken]? {
+        didSet {
+            oldValue?.forEach({ $0.stop() })
+        }
+    }
     
     deinit {
+        self.progressTokens = nil
         self.notificationToken?.stop()
     }
 }

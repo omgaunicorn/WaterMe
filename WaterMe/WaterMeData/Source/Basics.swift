@@ -20,6 +20,13 @@ public enum Result<T> {
 
 internal extension URL {
     internal func realmURL(withAppName appName: String, userPath: String) -> URL {
+        var userPath = userPath
+        if userPath.characters.first == "/" {
+            userPath.remove(at: userPath.startIndex)
+        }
+        if userPath.characters.last != "/" {
+            userPath += "/"
+        }
         var components = URLComponents(url: self, resolvingAgainstBaseURL: false)!
         if components.scheme == "https" {
             components.scheme = "realms"

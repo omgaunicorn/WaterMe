@@ -39,6 +39,10 @@ class RealmFile: Object {
     fileprivate(set) dynamic var uuid = ""
     fileprivate(set) dynamic var name = ""
     fileprivate(set) dynamic var size = 0
+    let owners = LinkingObjects(fromType: RealmUser.self, property: "files")
+    var owner: RealmUser? {
+        return self.owners.first
+    }
     override static func primaryKey() -> String? {
         return "uuid"
     }
@@ -67,7 +71,7 @@ class AdminRealmController {
     
     let config: Realm.Configuration = {
         var c = Realm.Configuration()
-        c.schemaVersion = 5
+        c.schemaVersion = 6
         c.objectTypes = [RealmUser.self, RealmFile.self]
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         c.fileURL = url.appendingPathComponent("AdminConsole.realm", isDirectory: false)
@@ -80,6 +84,12 @@ class AdminRealmController {
     
     func allUsers() -> AnyRealmCollection<RealmUser> {
         let collection = self.realm.objects(RealmUser.self)
+        return AnyRealmCollection(collection)
+    }
+    
+    func allReceiptFiles() -> AnyRealmCollection<RealmFile> {
+        let keyPath = #keyPath(RealmFile.name)
+        let collection = self.realm.objects(RealmFile.self).filter("\(keyPath) = 'WaterMeReceipt.realm'")
         return AnyRealmCollection(collection)
     }
     
@@ -164,6 +174,11 @@ class AdminRealmController {
         realm.beginWrite()
         realmUser.files.removeAll()
         realmUser.files.append(objectsIn: files)
+        // hack to trigger notifications again when pairing files with users
+        realmUser.files.forEach() { file in
+            let oldSize = file.size
+            file.size = oldSize
+        }
         let totalSize = files.reduce(0, { $0.1.size + $0.0 })
         realmUser.size = totalSize
         realmUser.isSizeSuspicious = totalSize >= 10000000 ? true : false
