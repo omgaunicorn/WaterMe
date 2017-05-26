@@ -1,5 +1,5 @@
 //
-//  SynchronizingView.swift
+//  SynchronizingViewController.swift
 //  WaterMe
 //
 //  Created by Jeffrey Bergier on 5/25/17.
@@ -9,15 +9,15 @@
 import RealmSwift
 import UIKit
 
-class SynchronizingView: UIView {
+class SynchronizingViewController: UIViewController {
     
     @IBOutlet private weak var spinner: UIActivityIndicatorView?
     @IBOutlet private weak var label: UILabel?
     
     private let adminController = AdminRealmController()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         self.stop()
         let receipts = self.adminController.allReceiptFiles()
         self.notificationToken = receipts.addNotificationBlock() { [weak self] changes in self?.realmDataChanged(changes) }

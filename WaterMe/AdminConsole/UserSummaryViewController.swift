@@ -1,5 +1,5 @@
 //
-//  SummaryViewController.swift
+//  UserSummaryViewController.swift
 //  WaterMe
 //
 //  Created by Jeffrey Bergier on 5/22/17.
@@ -10,7 +10,7 @@ import WaterMeData
 import RealmSwift
 import UIKit
 
-class UserSummmaryView: UIView {
+class UserSummaryViewController: UIViewController {
     
     @IBOutlet private weak var totalUsersLabel: UILabel?
     @IBOutlet private weak var totalSizeLabel: UILabel?
@@ -28,8 +28,8 @@ class UserSummmaryView: UIView {
         return nf
     }()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override func viewDidLoad() {
+        super.viewDidLoad()
         let users = self.adminController.allUsers()
         self.notificationToken = users.addNotificationBlock() { [weak self] changes in self?.realmDataChanged(changes) }
     }

@@ -12,8 +12,6 @@ import UIKit
 
 class ControlPanelViewController: UIViewController {
     
-    @IBOutlet private weak var summaryView: UserSummmaryView?
-    @IBOutlet private weak var syncView: SynchronizingView?
     @IBOutlet private weak var auditButton: UIButton?
     @IBOutlet private weak var refreshButton: UIButton?
     @IBOutlet private weak var deleteLocalButton: UIButton?
@@ -35,18 +33,15 @@ class ControlPanelViewController: UIViewController {
         var isRealmOpFinished = true
         
         if SyncUser.current == nil {
-            isRealmOpFinished = false
             log.info("Need to login to Realm")
-            let server = WaterMeData.PrivateKeys.kRealmServer
-            let credentials = SyncCredentials.usernamePassword(username: PrivateKeys.kRealmAdminLogin, password: PrivateKeys.kRealmAdminPassword, register: false)
-            SyncUser.logIn(with: credentials, server: server) { user, error in
-                DispatchQueue.main.async {
-                    isRealmOpFinished = true
-                    if user != nil {
-                        log.info("Login Succeeded")
-                    } else {
-                        log.error(error!)
-                    }
+            isRealmOpFinished = false
+            SyncUser.adminLogin() { result in
+                isRealmOpFinished = true
+                switch result {
+                case .success:
+                    log.info("Login Succeeded")
+                case .error(let error):
+                    log.error(error)
                 }
                 if isDownloadOpFinished && isRealmOpFinished {
                     self.buttons.forEach({ $0.isEnabled = true })
@@ -82,6 +77,38 @@ class ControlPanelViewController: UIViewController {
 }
 
 extension String: Error {}
+
+extension SyncUser {
+    fileprivate class func adminLogin(completionHandler: ((Result<SyncUser>) -> Void)?) {
+        let server = WaterMeData.PrivateKeys.kRealmServer
+        let credentials = SyncCredentials.usernamePassword(username: PrivateKeys.kRealmAdminLogin, password: PrivateKeys.kRealmAdminPassword, register: false)
+        SyncUser.logIn(with: credentials, server: server) { user, error in
+            DispatchQueue.main.async {
+                if let user = user {
+                    completionHandler?(.success(user))
+                } else {
+                    completionHandler?(.error(error!))
+                }
+            }
+        }
+    }
+}
+
+extension AdminRealmController {
+    fileprivate func processServerDirectoryData(_ data: Result<Data>, completion: ((Result<Void>) -> Void)?) {
+        switch data {
+        case .success(let data):
+            do {
+                try processServerDirectoryData(data)
+                completion?(.success())
+            } catch {
+                completion?(.error(error))
+            }
+        case .error(let error):
+            completion?(.error(error))
+        }
+    }
+}
 
 extension URLSession {
     fileprivate func downloadROSFileTree(completionHandler: ((Result<Data>) -> Void)?) {

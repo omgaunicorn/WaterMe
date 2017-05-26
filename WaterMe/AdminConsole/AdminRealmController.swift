@@ -101,20 +101,6 @@ class AdminRealmController {
         try! realm.commitWrite()
     }
     
-    func processServerDirectoryData(_ data: Result<Data>, completion: ((Result<Void>) -> Void)?) {
-        switch data {
-        case .success(let data):
-            do {
-                try processServerDirectoryData(data)
-                completion?(.success())
-            } catch {
-                completion?(.error(error))
-            }
-        case .error(let error):
-            completion?(.error(error))
-        }
-    }
-    
     func processServerDirectoryData(_ data: Data) throws {
         let json = try JSONSerialization.jsonObject(with: data, options: [])
         let dict = json as? NSDictionary
