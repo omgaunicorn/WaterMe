@@ -63,6 +63,7 @@ class RealmUser: Object {
     }
     fileprivate(set) dynamic var isSizeSuspicious = false
     let files = List<RealmFile>()
+    fileprivate(set) dynamic var latestReceipt: Receipt?
     override static func primaryKey() -> String? {
         return "uuid"
     }
@@ -72,8 +73,8 @@ class AdminRealmController {
     
     let config: Realm.Configuration = {
         var c = Realm.Configuration()
-        c.schemaVersion = 6
-        c.objectTypes = [RealmUser.self, RealmFile.self]
+        c.schemaVersion = 7
+        c.objectTypes = [RealmUser.self, RealmFile.self, Receipt.self]
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         c.fileURL = url.appendingPathComponent("AdminConsole.realm", isDirectory: false)
         return c
@@ -81,6 +82,12 @@ class AdminRealmController {
     
     var realm: Realm {
         return try! Realm(configuration: self.config)
+    }
+    
+    func user(withUUID uuid: String) -> RealmUser? {
+        let realm = self.realm
+        let user = realm.object(ofType: RealmUser.self, forPrimaryKey: uuid)
+        return user
     }
     
     func allUsers() -> AnyRealmCollection<RealmUser> {
@@ -92,6 +99,17 @@ class AdminRealmController {
         let keyPath = #keyPath(RealmFile.name)
         let collection = self.realm.objects(RealmFile.self).filter("\(keyPath) = 'WaterMeReceipt.realm'")
         return AnyRealmCollection(collection)
+    }
+    
+    func update(user: RealmUser, with receipt: Receipt) {
+        let realm = self.realm
+        realm.beginWrite()
+        if let oldReceipt = user.latestReceipt {
+            realm.delete(oldReceipt)
+        }
+        let newReceipt = Receipt.__admin_console_only_newReceiptByCopyingReceipt(receipt)
+        user.latestReceipt = newReceipt
+        try! realm.commitWrite()
     }
     
     func deleteAll() {

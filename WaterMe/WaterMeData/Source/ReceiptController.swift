@@ -42,7 +42,7 @@ public class ReceiptController {
         try! realm.commitWrite()
     }
     
-    public func __admin_console_only_UpdateReceipt(appleStatusCode: Int, productID: String?, purchaseDate: Date?, expirationDate: Date?) {
+    public func __admin_console_only_UpdateReceipt(appleStatusCode: Int, productID: String?, purchaseDate: Date?, expirationDate: Date?) -> Receipt {
         let receipt = self.createReceiptIfNeeded()
         let realm = self.realm
         realm.beginWrite()
@@ -52,6 +52,7 @@ public class ReceiptController {
         receipt.server_expirationDate = expirationDate
         receipt.server_lastVerifyDate = Date()
         try! realm.commitWrite()
+        return receipt
     }
     
     public func updateReceipt(productID: String?, purchaseDate: Date?, expirationDate: Date?) {

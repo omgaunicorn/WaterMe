@@ -17,7 +17,7 @@ class ReceiptWatcher {
     
     private let adminController = AdminRealmController()
     private var receiptControllers = [String : ReceiptController]()
-    private var tasksInProgress = [String : Void]() {
+    private var tasksInProgress = Set<String>() {
         didSet {
             self.inProgressChanged?(self.tasksInProgress.count)
         }
@@ -51,6 +51,10 @@ class ReceiptWatcher {
     }
     
     private func verify(receipt: Receipt, from controller: ReceiptController) {
+        guard let userUUID = controller.overridenUserPath else {
+            print("This controller is not configured correctly")
+            return
+        }
         let lastCheckedInterval = receipt.server_lastVerifyDate.timeIntervalSinceNow
         guard lastCheckedInterval <= -60 else {
             print("Not enough time has passed since last verification")
@@ -60,19 +64,21 @@ class ReceiptWatcher {
             print("No receipt data found. Can't check receipt")
             return
         }
-        self.tasksInProgress[controller.overridenUserPath!] = ()
+        self.tasksInProgress.insert(userUUID)
         URLSession.shared.validate(receiptData: receiptData) { result in
             switch result {
             case .success(let receiptStatus, let subscription):
                 print("updating receipt in realm: \(receiptStatus) \(subscription)")
-                controller.__admin_console_only_UpdateReceipt(appleStatusCode: receiptStatus,
-                                                              productID: subscription?.productID,
-                                                              purchaseDate: subscription?.purchaseDate,
-                                                              expirationDate: subscription?.expirationDate)
+                let updatedReceipt = controller.__admin_console_only_UpdateReceipt(appleStatusCode: receiptStatus,
+                                                                                   productID: subscription?.productID,
+                                                                                   purchaseDate: subscription?.purchaseDate,
+                                                                                   expirationDate: subscription?.expirationDate)
+                guard let user = self.adminController.user(withUUID: userUUID) else { return }
+                self.adminController.update(user: user, with: updatedReceipt)
             case .failure(let error):
                 print(error)
             }
-            self.tasksInProgress[controller.overridenUserPath!] = nil
+            self.tasksInProgress.remove(userUUID)
         }
     }
     
