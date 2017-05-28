@@ -71,7 +71,7 @@ class RealmUser: Object {
 
 class AdminRealmController {
     
-    let config: Realm.Configuration = {
+    private let config: Realm.Configuration = {
         var c = Realm.Configuration()
         c.schemaVersion = 7
         c.objectTypes = [RealmUser.self, RealmFile.self, Receipt.self]
@@ -80,7 +80,7 @@ class AdminRealmController {
         return c
     }()
     
-    var realm: Realm {
+    private var realm: Realm {
         return try! Realm(configuration: self.config)
     }
     
@@ -107,9 +107,17 @@ class AdminRealmController {
         if let oldReceipt = user.latestReceipt {
             realm.delete(oldReceipt)
         }
-        let newReceipt = receipt.realmFreeCopy()
+        let newReceipt = receipt.__admin_console_only_realmFreeCopy()
         user.latestReceipt = newReceipt
         try! realm.commitWrite()
+    }
+    
+    func update(realmFile: RealmFile, name: String, size: Int) throws {
+        let realm = self.realm
+        realm.beginWrite()
+        realmFile.name = name
+        realmFile.size = size
+        try realm.commitWrite()
     }
     
     func deleteAll() {
@@ -152,7 +160,7 @@ class AdminRealmController {
         }
     }
     
-    func newOrExistingRealmFile(withUUID uuid: String) throws -> RealmFile {
+    private func newOrExistingRealmFile(withUUID uuid: String) throws -> RealmFile {
         let realm = self.realm
         if let existing = realm.object(ofType: RealmFile.self, forPrimaryKey: uuid) {
             return existing
@@ -166,15 +174,7 @@ class AdminRealmController {
         }
     }
     
-    func update(realmFile: RealmFile, name: String, size: Int) throws {
-        let realm = self.realm
-        realm.beginWrite()
-        realmFile.name = name
-        realmFile.size = size
-        try realm.commitWrite()
-    }
-    
-    func newOrExistingRealmUser(withUUID uuid: String) throws -> RealmUser {
+    private func newOrExistingRealmUser(withUUID uuid: String) throws -> RealmUser {
         let realm = self.realm
         if let existing = realm.object(ofType: RealmUser.self, forPrimaryKey: uuid) {
             return existing
@@ -188,7 +188,7 @@ class AdminRealmController {
         }
     }
     
-    func update(realmUser: RealmUser, files: AnySequence<RealmFile>) throws {
+    private func update(realmUser: RealmUser, files: AnySequence<RealmFile>) throws {
         let realm = self.realm
         realm.beginWrite()
         realmUser.files.removeAll()

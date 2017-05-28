@@ -156,10 +156,8 @@ fileprivate extension URLSession {
                 DispatchQueue.main.async { completionHandler?(.failure(AnyError("Unable to convert response data into JSON"))) }
                 return
             }
-            let now = Date()
             let validPurchases = purchasesArray
                 .flatMap({ PurchasedSubscription(json: $0) })
-                .filter({ $0.expirationDate >= now })
                 .sorted(by: { $0.0.expirationDate > $0.1.expirationDate })
             DispatchQueue.main.async { completionHandler?(.success(receiptStatus: status, currentSubscription: validPurchases.first)) }
         }

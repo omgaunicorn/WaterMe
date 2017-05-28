@@ -10,12 +10,16 @@ import UIKit
 
 class ReceiptVerifyingViewController: LoadingViewController {
     
-    private let receiptWatcher = ReceiptWatcher()
+    private var receiptWatcher = ReceiptWatcher()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.start()
+        self.reset()
+    }
+    
+    func reset() {
+        self.stop()
+        self.receiptWatcher = ReceiptWatcher()
         self.receiptWatcher.inProgressChanged = { [weak self] count in
             if count > 0 {
                 self?.start()

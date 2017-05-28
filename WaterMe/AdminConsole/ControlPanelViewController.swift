@@ -13,6 +13,7 @@ import UIKit
 
 class ControlPanelViewController: UIViewController {
     
+    /*@IBOutlet*/ private weak var receiptVerifyingViewController: ReceiptVerifyingViewController?
     @IBOutlet private weak var auditButton: UIButton?
     @IBOutlet private weak var refreshButton: UIButton?
     @IBOutlet private weak var deleteLocalButton: UIButton?
@@ -22,17 +23,19 @@ class ControlPanelViewController: UIViewController {
     
     private let adminController = AdminRealmController()
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.receiptVerifyingViewController = self.childViewControllers.first()!
+    }
+    
     @IBAction private func auditButtonTapped(_ sender: UIButton?) {
 //        self.buttons.forEach({ $0.isEnabled = false })
     }
     
     @IBAction private func refreshButtonTapped(_ sender: UIButton?) {
-        
         self.buttons.forEach({ $0.isEnabled = false })
-        
         var isDownloadOpFinished = false
         var isRealmOpFinished = true
-        
         if SyncUser.current == nil {
             log.info("Need to login to Realm")
             isRealmOpFinished = false
@@ -46,10 +49,10 @@ class ControlPanelViewController: UIViewController {
                 }
                 if isDownloadOpFinished && isRealmOpFinished {
                     self.buttons.forEach({ $0.isEnabled = true })
+                    self.receiptVerifyingViewController?.reset()
                 }
             }
         }
-        
         URLSession.shared.downloadROSFileTree() { result in
             isDownloadOpFinished = true
             self.adminController.processServerDirectoryData(result) { processed in
@@ -62,6 +65,7 @@ class ControlPanelViewController: UIViewController {
             }
             if isDownloadOpFinished && isRealmOpFinished {
                 self.buttons.forEach({ $0.isEnabled = true })
+                self.receiptVerifyingViewController?.reset()
             }
         }
     }
@@ -70,6 +74,7 @@ class ControlPanelViewController: UIViewController {
         let deleteHandler: (UIAlertAction) -> Void = { _ in
             self.buttons.forEach({ $0.isEnabled = false })
             self.adminController.deleteAll()
+            self.receiptVerifyingViewController?.reset()
             self.buttons.forEach({ $0.isEnabled = true })
         }
         let actionSheet = UIAlertController(cancelDeleteActionSheetWithDeleteHandler: deleteHandler, sourceView: sender)

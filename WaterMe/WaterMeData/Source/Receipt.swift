@@ -22,8 +22,10 @@ public class Receipt: Object {
     internal(set) public dynamic var client_productID: String?
     internal(set) public dynamic var client_purchaseDate: Date?
     internal(set) public dynamic var client_expirationDate: Date?
-    
-    public func realmFreeCopy() -> Receipt {
+}
+
+public extension Receipt {
+    public func __admin_console_only_realmFreeCopy() -> Receipt {
         let newReceipt = Receipt()
         newReceipt.pkcs7Data = self.pkcs7Data
         newReceipt.server_lastVerifyDate = self.server_lastVerifyDate
