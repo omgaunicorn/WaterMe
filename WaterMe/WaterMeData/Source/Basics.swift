@@ -11,7 +11,7 @@ import RealmSwift
 import XCGLogger
 import CloudKit
 
-internal let RealmSchemaVersion: UInt64 = 1
+internal let RealmSchemaVersion: UInt64 = 2
 
 internal let log = XCGLogger.default
 

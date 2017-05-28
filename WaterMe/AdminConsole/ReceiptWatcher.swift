@@ -41,7 +41,16 @@ class ReceiptWatcher {
         receiptController.receiptChanged = { receipt, controller in
             guard let receiptData = receipt.pkcs7Data else { return }
             URLSession.shared.validate(receiptData: receiptData) { result in
-                print(result)
+                switch result {
+                case .success(let receiptStatus, let subscription):
+                    print("updating receipt in realm: \(receiptStatus) \(subscription)")
+                    controller.__admin_console_only_UpdateReceipt(appleStatusCode: receiptStatus,
+                                                                  productID: subscription?.productID,
+                                                                  purchaseDate: subscription?.purchaseDate,
+                                                                  expirationDate: subscription?.expirationDate)
+                case .failure(let error):
+                    print(error)
+                }
             }
         }
     }

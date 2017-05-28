@@ -45,7 +45,7 @@ class RouterViewController: UIViewController {
         let expDate = mon.purchased.expirationDate
         let data = mon.receiptData!
         
-        self.receipt!.updateReceipt(data: data, productIdentifier: mon.purchased.level.rawValue, expirationDate: expDate)
+        self.receipt!.updateReceipt(data: data)
         print(self.receipt!.receipt)
     }
     
