@@ -36,6 +36,13 @@ enum DataPresent: String {
     }
 }
 
+class ConsoleError: Object {
+    dynamic var code = 0
+    dynamic var file = ""
+    dynamic var line = 0
+    dynamic var function = ""
+}
+
 class RealmFile: Object {
     fileprivate(set) dynamic var uuid = ""
     fileprivate(set) dynamic var name = ""
@@ -73,8 +80,8 @@ class AdminRealmController {
     
     private let config: Realm.Configuration = {
         var c = Realm.Configuration()
-        c.schemaVersion = 7
-        c.objectTypes = [RealmUser.self, RealmFile.self, Receipt.self]
+        c.schemaVersion = 8
+        c.objectTypes = [RealmUser.self, RealmFile.self, Receipt.self, ConsoleError.self]
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         c.fileURL = url.appendingPathComponent("AdminConsole.realm", isDirectory: false)
         return c
@@ -82,12 +89,6 @@ class AdminRealmController {
     
     private var realm: Realm {
         return try! Realm(configuration: self.config)
-    }
-    
-    func user(withUUID uuid: String) -> RealmUser? {
-        let realm = self.realm
-        let user = realm.object(ofType: RealmUser.self, forPrimaryKey: uuid)
-        return user
     }
     
     func allUsers() -> AnyRealmCollection<RealmUser> {
@@ -99,6 +100,29 @@ class AdminRealmController {
         let keyPath = #keyPath(RealmFile.name)
         let collection = self.realm.objects(RealmFile.self).filter("\(keyPath) = 'WaterMeReceipt.realm'")
         return AnyRealmCollection(collection)
+    }
+    
+    func allErrors() -> AnyRealmCollection<ConsoleError> {
+        let collection = self.realm.objects(ConsoleError.self)
+        return AnyRealmCollection(collection)
+    }
+    
+    func user(withUUID uuid: String) -> RealmUser? {
+        let realm = self.realm
+        let user = realm.object(ofType: RealmUser.self, forPrimaryKey: uuid)
+        return user
+    }
+    
+    func addError(with code: Int, file: String, function: String, line: Int) {
+        let error = ConsoleError()
+        error.code = code
+        error.file = file
+        error.function = function
+        error.line = line
+        let realm = self.realm
+        realm.beginWrite()
+        realm.add(error)
+        try! realm.commitWrite()
     }
     
     func update(user: RealmUser, with receipt: Receipt) {

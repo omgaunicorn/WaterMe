@@ -29,7 +29,12 @@ class ReceiptWatcher {
     }
     
     private func realmDataChanged(_ changes: RealmCollectionChange<AnyRealmCollection<RealmFile>>) {
-        guard let user = SyncUser.current else { log.info("Can't watch receipts. No User logged in"); return; }
+        guard let user = SyncUser.current else {
+            let error = ReceiptWatcherError.noUserLoggedIn
+            log.error(error.localizedDescription)
+            self.adminController.addError(with: error.rawValue, file: #file, function: #function, line: #line)
+            return
+        }
         switch changes {
         case .initial(let data), .update(let data, _, _, _):
             data.forEach() { file in
@@ -37,7 +42,8 @@ class ReceiptWatcher {
                 self.createNewReceiptController(for: user, owningUserID: owningUserID)
             }
         case .error(let error):
-            log.error(error)
+            log.error(error.localizedDescription)
+            self.adminController.addError(with: (error as NSError).code, file: #file, function: #function, line: #line)
         }
     }
     
@@ -52,23 +58,28 @@ class ReceiptWatcher {
     
     private func verify(receipt: Receipt, from controller: ReceiptController) {
         guard let userUUID = controller.overridenUserPath else {
-            print("This controller is not configured correctly")
+            let error = ReceiptWatcherError.receiptControllerConfiguredIncorrectly
+            log.error(error.localizedDescription)
+            self.adminController.addError(with: error.rawValue, file: #file, function: #function, line: #line)
             return
         }
         let lastCheckedInterval = receipt.server_lastVerifyDate.timeIntervalSinceNow
         guard lastCheckedInterval <= -60 else {
-            print("Not enough time has passed since last verification")
+            let error = ReceiptWatcherError.receiptVerifiedRecently
+            log.error(error.localizedDescription)
+            self.adminController.addError(with: error.rawValue, file: #file, function: #function, line: #line)
             return
         }
         guard let receiptData = receipt.pkcs7Data else {
-            print("No receipt data found. Can't check receipt")
+            let error = ReceiptWatcherError.noNSDataFoundForReceipt
+            log.error(error.localizedDescription)
+            self.adminController.addError(with: error.rawValue, file: #file, function: #function, line: #line)
             return
         }
         self.tasksInProgress.insert(userUUID)
         URLSession.shared.validate(receiptData: receiptData) { result in
             switch result {
             case .success(let receiptStatus, let subscription):
-                print("updating receipt in realm: \(receiptStatus) \(subscription)")
                 let updatedReceipt = controller.__admin_console_only_UpdateReceipt(appleStatusCode: receiptStatus,
                                                                                    productID: subscription?.productID,
                                                                                    purchaseDate: subscription?.purchaseDate,
@@ -76,7 +87,9 @@ class ReceiptWatcher {
                 guard let user = self.adminController.user(withUUID: userUUID) else { return }
                 self.adminController.update(user: user, with: updatedReceipt)
             case .failure(let error):
-                print(error)
+                log.error(error.localizedDescription)
+                self.adminController.addError(with: error.rawValue, file: #file, function: #function, line: #line)
+                return
             }
             self.tasksInProgress.remove(userUUID)
         }
@@ -105,7 +118,7 @@ fileprivate extension PurchasedSubscription {
     }
 }
 
-fileprivate typealias AppleReceiptValidationResult = Result<(receiptStatus: Int, currentSubscription: PurchasedSubscription?), AnyError>
+fileprivate typealias AppleReceiptValidationResult = Result<(receiptStatus: Int, currentSubscription: PurchasedSubscription?), ReceiptWatcherError>
 
 fileprivate extension URLSession {
     fileprivate func validate(receiptData: Data, completionHandler: ((AppleReceiptValidationResult) -> Void)?) {
@@ -119,7 +132,7 @@ fileprivate extension URLSession {
             "password" : PrivateKeys.kReceiptValidationSharedSecret
         ]
         guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonDict, options: []) else {
-            completionHandler?(.failure(AnyError("Unable to convert Receipt Data Payload into JSON for request.")))
+            completionHandler?(.failure(.requestJSONParseError))
             return
         }
         var request = URLRequest(url: url)
@@ -127,15 +140,15 @@ fileprivate extension URLSession {
         request.httpBody = jsonData
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let response = response as? HTTPURLResponse else {
-                DispatchQueue.main.async { completionHandler?(.failure(AnyError(error!))) }
+                DispatchQueue.main.async { completionHandler?(.failure(.urlResponseNotHTTPResponse)) }
                 return
             }
             guard response.statusCode == 200 else {
-                DispatchQueue.main.async { completionHandler?(.failure(AnyError("Unexpected HTTPResponse: \(response)"))) }
+                DispatchQueue.main.async { completionHandler?(.failure(.unexpectedServerResponseCode)) }
                 return
             }
             guard let data = data else {
-                DispatchQueue.main.async { completionHandler?(.failure(AnyError("No data received in response"))) }
+                DispatchQueue.main.async { completionHandler?(.failure(.noDataReceivedFromResponse)) }
                 return
             }
             guard
@@ -143,7 +156,7 @@ fileprivate extension URLSession {
                 let json = _json,
                 let status = json.value(forKeyPath: "status") as? Int
             else {
-                DispatchQueue.main.async { completionHandler?(.failure(AnyError("Unable to convert response data into JSON"))) }
+                DispatchQueue.main.async { completionHandler?(.failure(.responseJSONParseError)) }
                 return
             }
             guard status != 21007 else {
@@ -153,13 +166,19 @@ fileprivate extension URLSession {
                 return
             }
             guard let purchasesArray = json.value(forKeyPath: "receipt.in_app") as? NSArray else {
-                DispatchQueue.main.async { completionHandler?(.failure(AnyError("Unable to convert response data into JSON"))) }
+                DispatchQueue.main.async { completionHandler?(.failure(.responseJSONDidNotContainReceiptData)) }
                 return
             }
             let validPurchases = purchasesArray
                 .flatMap({ PurchasedSubscription(json: $0) })
                 .sorted(by: { $0.0.expirationDate > $0.1.expirationDate })
-            DispatchQueue.main.async { completionHandler?(.success(receiptStatus: status, currentSubscription: validPurchases.first)) }
+            DispatchQueue.main.async {
+                if purchasesArray.count == validPurchases.count {
+                    completionHandler?(.success(receiptStatus: status, currentSubscription: validPurchases.first))
+                } else {
+                    completionHandler?(.failure(.responseJSONPurchasesContainedUnexpectedData))
+                }
+            }
         }
         task.resume()
     }
