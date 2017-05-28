@@ -137,12 +137,12 @@ class AdminRealmController {
         try! realm.commitWrite()
     }
     
-    func update(realmFile: RealmFile, name: String, size: Int) throws {
+    func update(realmFile: RealmFile, name: String, size: Int) {
         let realm = self.realm
         realm.beginWrite()
         realmFile.name = name
         realmFile.size = size
-        try realm.commitWrite()
+        try! realm.commitWrite()
     }
     
     func deleteAll() {
@@ -152,15 +152,25 @@ class AdminRealmController {
         try! realm.commitWrite()
     }
     
-    func processServerDirectoryData(_ data: Data) throws {
-        let json = try JSONSerialization.jsonObject(with: data, options: [])
+    func processServerDirectoryData(_ data: Data) {
+        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) else {
+            let error = AdminRealmControllerError.jsonErrorDecodingFileList
+            log.error(error)
+            self.addError(with: error.rawValue, file: #file, function: #function, line: #line)
+            return
+        }
         let dict = json as? NSDictionary
         let realmDataFiles = dict?["files"] as? NSArray
         let dir0 = realmDataFiles?.filter({ ($0 as! NSDictionary)["directoryName"] as! String == "0" }).first as! NSDictionary
         let dir0Files = dir0["files"] as? NSArray
         let userDir = dir0Files?.filter({ ($0 as? NSDictionary)?["directoryName"] as? String == "user_data" }).first as? NSDictionary
         let userFiles = (userDir?["files"] as? NSArray)?.filter({ ($0 as? NSDictionary)?["directoryName"] is String }) ?? []
-        guard userFiles.isEmpty == false else { throw "No users found in data. There is probably a server issue." }
+        guard userFiles.isEmpty == false else {
+            let error = AdminRealmControllerError.noFilesFoundInFileListJSON
+            log.error(error)
+            self.addError(with: error.rawValue, file: #file, function: #function, line: #line)
+            return
+        }
         for file in userFiles {
             guard
                 let dict = file as? NSDictionary,
@@ -168,24 +178,34 @@ class AdminRealmController {
                 let userID = dict["directoryName"] as? String,
                 userID.contains("_") == false && userID.contains(".") == false,
                 subFiles.count > 0
-            else { continue }
-            let realmFiles = try subFiles.flatMap() { realmFile throws -> RealmFile? in
+            else {
+                let error = AdminRealmControllerError.invalidUserNameFoundInFileListJSON
+                log.error(error)
+                self.addError(with: error.rawValue, file: #file, function: #function, line: #line)
+                continue
+            }
+            let realmFiles = subFiles.flatMap() { realmFile -> RealmFile? in
                 guard
                     let realmFile = realmFile as? NSDictionary,
                     let name = realmFile["fileName"] as? String,
                     name.contains(".realm") == true && name.contains(".realm.lock") == false && name.contains("_") == false
-                else { return nil }
+                else {
+                    let error = AdminRealmControllerError.invalidFileFoundInRealmFolderOfFileListJSON
+                    log.error(error)
+                    self.addError(with: error.rawValue, file: #file, function: #function, line: #line)
+                    return nil
+                }
                 let size = realmFile["size"] as? Int ?? 0
-                let liveObject = try self.newOrExistingRealmFile(withUUID: userID + "/" + name)
-                try self.update(realmFile: liveObject, name: name, size: size)
+                let liveObject = self.newOrExistingRealmFile(withUUID: userID + "/" + name)
+                self.update(realmFile: liveObject, name: name, size: size)
                 return liveObject
             }
-            let liveRealmUser = try self.newOrExistingRealmUser(withUUID: userID)
-            try self.update(realmUser: liveRealmUser, files: AnySequence(realmFiles))
+            let liveRealmUser = self.newOrExistingRealmUser(withUUID: userID)
+            self.update(realmUser: liveRealmUser, files: AnySequence(realmFiles))
         }
     }
     
-    private func newOrExistingRealmFile(withUUID uuid: String) throws -> RealmFile {
+    private func newOrExistingRealmFile(withUUID uuid: String) -> RealmFile {
         let realm = self.realm
         if let existing = realm.object(ofType: RealmFile.self, forPrimaryKey: uuid) {
             return existing
@@ -194,12 +214,12 @@ class AdminRealmController {
             new.uuid = uuid
             realm.beginWrite()
             realm.add(new)
-            try realm.commitWrite()
+            try! realm.commitWrite()
             return new
         }
     }
     
-    private func newOrExistingRealmUser(withUUID uuid: String) throws -> RealmUser {
+    private func newOrExistingRealmUser(withUUID uuid: String) -> RealmUser {
         let realm = self.realm
         if let existing = realm.object(ofType: RealmUser.self, forPrimaryKey: uuid) {
             return existing
@@ -208,12 +228,12 @@ class AdminRealmController {
             new.uuid = uuid
             realm.beginWrite()
             realm.add(new)
-            try realm.commitWrite()
+            try! realm.commitWrite()
             return new
         }
     }
     
-    private func update(realmUser: RealmUser, files: AnySequence<RealmFile>) throws {
+    private func update(realmUser: RealmUser, files: AnySequence<RealmFile>) {
         let realm = self.realm
         realm.beginWrite()
         realmUser.files.removeAll()
@@ -241,6 +261,6 @@ class AdminRealmController {
         } else {
             realmUser.dataPresent = DataPresent.suspicious
         }
-        try realm.commitWrite()
+        try! realm.commitWrite()
     }
 }

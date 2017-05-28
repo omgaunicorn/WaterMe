@@ -26,9 +26,8 @@ class ErrorTableViewCell: UITableViewCell {
     }()
     
     func configure(with error: ConsoleError) {
-        let typedError = ReceiptWatcherError(rawValue: error.code)
-        let errorDescription = typedError?.localizedDescription ?? "UNKNOWN ERROR"
-        self.descriptionLabel?.text = errorDescription + "\n\n\n"
+        let localizedError = LocalizedError(rawValue: error.code)
+        self.descriptionLabel?.text = localizedError.localizedDescription + "\n\n"
         self.fileLabel?.text = error.file
         self.lineLabel?.text = String(error.line)
         self.functionLabel?.text = error.function

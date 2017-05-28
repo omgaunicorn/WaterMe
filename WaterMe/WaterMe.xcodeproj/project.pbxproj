@@ -46,7 +46,7 @@
 		50D3A08A1EC76DD3001B4A7D /* RestorePurchase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50D3A0891EC76DD3001B4A7D /* RestorePurchase.storyboard */; };
 		50D3A08C1EC76DE5001B4A7D /* RestorePurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3A08B1EC76DE5001B4A7D /* RestorePurchaseViewController.swift */; };
 		50DFA8B31ED7A08E000D2956 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */; };
-		50DFA8B51ED7A352000D2956 /* FrameworkExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B41ED7A352000D2956 /* FrameworkExtensions.swift */; };
+		50DFA8B51ED7A352000D2956 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */; };
 		50DFA8B71ED7B27F000D2956 /* SynchronizingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */; };
 		50DFA8B91ED7BCE0000D2956 /* ReceiptWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B81ED7BCE0000D2956 /* ReceiptWatcher.swift */; };
 		E40A96204E3937C8C544656A /* Pods_AdminConsole.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C8D0FAA9D43EF574E48EBC0 /* Pods_AdminConsole.framework */; };
@@ -109,7 +109,7 @@
 		50D3A0891EC76DD3001B4A7D /* RestorePurchase.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RestorePurchase.storyboard; sourceTree = "<group>"; };
 		50D3A08B1EC76DE5001B4A7D /* RestorePurchaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorePurchaseViewController.swift; sourceTree = "<group>"; };
 		50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
-		50DFA8B41ED7A352000D2956 /* FrameworkExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkExtensions.swift; sourceTree = "<group>"; };
+		50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 		50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizingViewController.swift; sourceTree = "<group>"; };
 		50DFA8B81ED7BCE0000D2956 /* ReceiptWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptWatcher.swift; sourceTree = "<group>"; };
 		5377468C8F6F58D092A55320 /* Pods-NoDeviceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -167,7 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */,
-				50DFA8B41ED7A352000D2956 /* FrameworkExtensions.swift */,
+				50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */,
 				504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */,
 				504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */,
 				501C0E8C1ECE5EFF00D4EE7C /* UserTableViewController.swift */,
@@ -608,7 +608,7 @@
 				501C0E8D1ECE5EFF00D4EE7C /* UserTableViewController.swift in Sources */,
 				50DFA8B71ED7B27F000D2956 /* SynchronizingViewController.swift in Sources */,
 				501C0E8B1ECE5EFF00D4EE7C /* AppDelegate.swift in Sources */,
-				50DFA8B51ED7A352000D2956 /* FrameworkExtensions.swift in Sources */,
+				50DFA8B51ED7A352000D2956 /* ErrorTypes.swift in Sources */,
 				504A8D611EDB5A46002D928D /* ErrorTableViewCell.swift in Sources */,
 				50DFA8B31ED7A08E000D2956 /* ControlPanelViewController.swift in Sources */,
 				504A8D5D1EDA8D41002D928D /* ReceiptVerifyingViewController.swift in Sources */,

@@ -11,6 +11,12 @@ import WaterMeData
 import RealmSwift
 import UIKit
 
+extension Sequence {
+    func first<T>(of type: T.Type? = nil) -> T? {
+        return self.first(where: { $0 is T }) as? T
+    }
+}
+
 class ControlPanelViewController: UIViewController {
     
     /*@IBOutlet*/ private weak var receiptVerifyingViewController: ReceiptVerifyingViewController?
@@ -46,6 +52,7 @@ class ControlPanelViewController: UIViewController {
                     log.info("Login Succeeded")
                 case .failure(let error):
                     log.error(error)
+                    self.adminController.addError(with: error.rawValue, file: #file, function: #function, line: #line)
                 }
                 if isDownloadOpFinished && isRealmOpFinished {
                     self.buttons.forEach({ $0.isEnabled = true })
@@ -55,13 +62,12 @@ class ControlPanelViewController: UIViewController {
         }
         URLSession.shared.downloadROSFileTree() { result in
             isDownloadOpFinished = true
-            self.adminController.processServerDirectoryData(result) { processed in
-                switch processed {
-                case .success:
-                    log.info("User File Data Reloaded Successfully")
-                case .failure(let error):
-                    log.error(error)
-                }
+            switch result {
+            case .success(let data):
+                self.adminController.processServerDirectoryData(data)
+            case .failure(let error):
+                log.error(error)
+                self.adminController.addError(with: error.rawValue, file: #file, function: #function, line: #line)
             }
             if isDownloadOpFinished && isRealmOpFinished {
                 self.buttons.forEach({ $0.isEnabled = true })
@@ -85,7 +91,7 @@ class ControlPanelViewController: UIViewController {
 extension String: Error {}
 
 extension SyncUser {
-    fileprivate class func adminLogin(completionHandler: ((Result<SyncUser, AnyError>) -> Void)?) {
+    fileprivate class func adminLogin(completionHandler: ((Result<SyncUser, AdminRealmControllerError>) -> Void)?) {
         let server = WaterMeData.PrivateKeys.kRealmServer
         let credentials = SyncCredentials.usernamePassword(username: PrivateKeys.kRealmAdminLogin, password: PrivateKeys.kRealmAdminPassword, register: false)
         SyncUser.logIn(with: credentials, server: server) { user, error in
@@ -93,31 +99,15 @@ extension SyncUser {
                 if let user = user {
                     completionHandler?(.success(user))
                 } else {
-                    completionHandler?(.failure(AnyError(error!)))
+                    completionHandler?(.failure(.adminUserLoginError))
                 }
             }
         }
     }
 }
 
-extension AdminRealmController {
-    fileprivate func processServerDirectoryData(_ data: Result<Data, AnyError>, completion: ((Result<Void, AnyError>) -> Void)?) {
-        switch data {
-        case .success(let data):
-            do {
-                try processServerDirectoryData(data)
-                completion?(.success())
-            } catch {
-                completion?(.failure(AnyError(error)))
-            }
-        case .failure(let error):
-            completion?(.failure(error))
-        }
-    }
-}
-
 extension URLSession {
-    fileprivate func downloadROSFileTree(completionHandler: ((Result<Data, AnyError>) -> Void)?) {
+    fileprivate func downloadROSFileTree(completionHandler: ((Result<Data, AdminRealmControllerError>) -> Void)?) {
         let url = WaterMeData.PrivateKeys.kRealmServer.appendingPathComponent("realmsec/list")
         var request = URLRequest(url: url)
         request.setValue("sharedSecret=\(PrivateKeys.kRequestSharedSecret)", forHTTPHeaderField: "Cookie")
@@ -126,11 +116,11 @@ extension URLSession {
                 let _response = __response as? HTTPURLResponse
                 let _sharedSecret = (_response?.allHeaderFields["Shared-Secret"] ?? _response?.allHeaderFields["shared-secret"]) as? String
                 guard let data = _data, let response = _response, response.statusCode == 200 else {
-                    completionHandler?(.failure(AnyError(__response?.debugDescription ?? error!)))
+                    completionHandler?(.failure(.unexpectedResponseFileListJSON))
                     return
                 }
                 guard let sharedSecret = _sharedSecret, sharedSecret == PrivateKeys.kResponseSharedSecret else {
-                    completionHandler?(.failure(AnyError("SharedSecret does not match.")))
+                    completionHandler?(.failure(.invalidSharedSecretInResponseFileListJSON))
                     return
                 }
                 completionHandler?(.success(data))

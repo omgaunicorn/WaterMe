@@ -6,10 +6,18 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
-
-extension Sequence {
-    func first<T>(of type: T.Type? = nil) -> T? {
-        return self.first(where: { $0 is T }) as? T
+struct LocalizedError: Error {
+    
+    var receiptWatcherError: ReceiptWatcherError?
+    var adminRealmControllerError: AdminRealmControllerError?
+    
+    var localizedDescription: String {
+        return receiptWatcherError?.localizedDescription ?? adminRealmControllerError?.localizedDescription ?? "UNKNOWN ERROR"
+    }
+    
+    init(rawValue: Int) {
+        self.receiptWatcherError = ReceiptWatcherError(rawValue: rawValue)
+        self.adminRealmControllerError = AdminRealmControllerError(rawValue: rawValue)
     }
 }
 
@@ -41,6 +49,30 @@ enum ReceiptWatcherError: Int, Error {
             return "JSON Object did not contain 'receipt.in_app' purchase array."
         case .responseJSONPurchasesContainedUnexpectedData:
             return "The array of purchases received from Apple contained unexpected data. It couldn't all be converted to PurchasedSubscription objects."
+        }
+    }
+}
+
+enum AdminRealmControllerError: Int, Error {
+    
+    case jsonErrorDecodingFileList = 300001, noFilesFoundInFileListJSON, invalidUserNameFoundInFileListJSON, invalidFileFoundInRealmFolderOfFileListJSON, unexpectedResponseFileListJSON, invalidSharedSecretInResponseFileListJSON, adminUserLoginError
+    
+    var localizedDescription: String {
+        switch self {
+        case .jsonErrorDecodingFileList:
+            return "FileSizeList response could not be converted into JSON Objects"
+        case .noFilesFoundInFileListJSON:
+            return "No Realm files were found in the FileSizeList JSON."
+        case .invalidUserNameFoundInFileListJSON:
+            return "An invalid username was found in the FileSizeList JSON"
+        case .invalidFileFoundInRealmFolderOfFileListJSON:
+            return "An invalid file was found in the folder that contains Realm files."
+        case .unexpectedResponseFileListJSON:
+            return "Received an unexpected response while downloading the FileSizeList."
+        case .invalidSharedSecretInResponseFileListJSON:
+            return "INVALID SHARED SECRET FROM FILELISTJSON SERVER. SOMETHING MASSIVE IS WRONG."
+        case .adminUserLoginError:
+            return "Failed to login as the Admin user for the ROS"
         }
     }
 }
