@@ -6,6 +6,7 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
+import Result
 import WaterMeData
 import RealmSwift
 import UIKit
@@ -39,11 +40,11 @@ class UserSummaryViewController: UIViewController {
         case .initial(let data), .update(let data, _, _, _):
             self.updateUI(with: .success(data))
         case .error(let error):
-            self.updateUI(with: .error(error))
+            self.updateUI(with: .failure(AnyError(error)))
         }
     }
     
-    private func updateUI(with result: Result<AnyRealmCollection<RealmUser>>) {
+    private func updateUI(with result: Result<AnyRealmCollection<RealmUser>, AnyError>) {
         switch result {
         case .success(let data):
             self.totalUsersLabel?.text = String(data.count)
@@ -53,7 +54,7 @@ class UserSummaryViewController: UIViewController {
             self.totalProUserCountLabel?.text = String(pro)
             self.totalSuspectUserCountLabel?.text = String(suspicious)
             self.totalEmptyUserCountLabel?.text = String(empty)
-        case .error(let error):
+        case .failure(let error):
             log.error(error)
         }
     }

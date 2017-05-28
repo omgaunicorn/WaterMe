@@ -6,6 +6,8 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
+import Result
+import WaterMeStore
 import WaterMeData
 import RealmSwift
 
@@ -51,12 +53,7 @@ class ReceiptWatcher {
     }
 }
 
-fileprivate struct AppleJSONSubscription {
-    var purchaseDate: Date
-    var expirationDate: Date
-    var productID: String
-    var isTrial: Bool
-    
+fileprivate extension PurchasedSubscription {
     init?(json: Any) {
         guard
             let dict = json as? NSDictionary,
@@ -64,20 +61,15 @@ fileprivate struct AppleJSONSubscription {
             let purchaseMSString = dict["purchase_date_ms"] as? String,
             let expireMS = Int(expireMSString),
             let purchaseMS = Int(purchaseMSString),
-            let pID = dict["product_id"] as? String,
-            let isTrialString = dict["is_trial_period"] as? String,
-            let isTrial = Bool(isTrialString)
+            let pID = dict["product_id"] as? String
         else { return nil }
         let expireDate = Date(timeIntervalSince1970: TimeInterval(expireMS / 1000))
         let purchaseDate = Date(timeIntervalSince1970: TimeInterval(purchaseMS / 1000))
-        self.expirationDate = expireDate
-        self.purchaseDate = purchaseDate
-        self.isTrial = isTrial
-        self.productID = pID
+        self.init(productID: pID, purchaseDate: purchaseDate, expirationDate: expireDate)
     }
 }
 
-fileprivate typealias AppleReceiptValidationResult = Result<(receiptStatus: Int, currentSubscription: AppleJSONSubscription?)>
+fileprivate typealias AppleReceiptValidationResult = Result<(receiptStatus: Int, currentSubscription: PurchasedSubscription?), AnyError>
 
 fileprivate extension URLSession {
     fileprivate func validate(receiptData: Data, completionHandler: ((AppleReceiptValidationResult) -> Void)?) {
@@ -91,7 +83,7 @@ fileprivate extension URLSession {
             "password" : PrivateKeys.kReceiptValidationSharedSecret
         ]
         guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonDict, options: []) else {
-            completionHandler?(.error("Unable to convert Receipt Data Payload into JSON for request."))
+            completionHandler?(.failure(AnyError("Unable to convert Receipt Data Payload into JSON for request.")))
             return
         }
         var request = URLRequest(url: url)
@@ -99,15 +91,15 @@ fileprivate extension URLSession {
         request.httpBody = jsonData
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let response = response as? HTTPURLResponse else {
-                completionHandler?(.error(error!))
+                completionHandler?(.failure(AnyError(error!)))
                 return
             }
             guard response.statusCode == 200 else {
-                completionHandler?(.error("Unexpected HTTPResponse: \(response)"))
+                completionHandler?(.failure(AnyError("Unexpected HTTPResponse: \(response)")))
                 return
             }
             guard let data = data else {
-                completionHandler?(.error("No data received in response"))
+                completionHandler?(.failure(AnyError("No data received in response")))
                 return
             }
             guard
@@ -115,7 +107,7 @@ fileprivate extension URLSession {
                 let json = _json,
                 let status = json.value(forKeyPath: "status") as? Int
             else {
-                completionHandler?(.error("Unable to convert response data into JSON"))
+                completionHandler?(.failure(AnyError("Unable to convert response data into JSON")))
                 return
             }
             guard status != 21007 else {
@@ -125,12 +117,12 @@ fileprivate extension URLSession {
                 return
             }
             guard let purchasesArray = json.value(forKeyPath: "receipt.in_app") as? NSArray else {
-                completionHandler?(.error("Unable to convert response data into JSON"))
+                completionHandler?(.failure(AnyError("Unable to convert response data into JSON")))
                 return
             }
             let now = Date()
             let validPurchases = purchasesArray
-                .flatMap({ AppleJSONSubscription(json: $0) })
+                .flatMap({ PurchasedSubscription(json: $0) })
                 .filter({ $0.expirationDate >= now })
                 .sorted(by: { $0.0.expirationDate > $0.1.expirationDate })
             completionHandler?(.success(receiptStatus: status, currentSubscription: validPurchases.first))

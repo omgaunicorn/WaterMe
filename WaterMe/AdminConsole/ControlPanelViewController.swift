@@ -6,6 +6,7 @@
 //  Copyright © 2017 Saturday Apps. All rights reserved.
 //
 
+import Result
 import WaterMeData
 import RealmSwift
 import UIKit
@@ -40,7 +41,7 @@ class ControlPanelViewController: UIViewController {
                 switch result {
                 case .success:
                     log.info("Login Succeeded")
-                case .error(let error):
+                case .failure(let error):
                     log.error(error)
                 }
                 if isDownloadOpFinished && isRealmOpFinished {
@@ -55,7 +56,7 @@ class ControlPanelViewController: UIViewController {
                 switch processed {
                 case .success:
                     log.info("User File Data Reloaded Successfully")
-                case .error(let error):
+                case .failure(let error):
                     log.error(error)
                 }
             }
@@ -79,7 +80,7 @@ class ControlPanelViewController: UIViewController {
 extension String: Error {}
 
 extension SyncUser {
-    fileprivate class func adminLogin(completionHandler: ((Result<SyncUser>) -> Void)?) {
+    fileprivate class func adminLogin(completionHandler: ((Result<SyncUser, AnyError>) -> Void)?) {
         let server = WaterMeData.PrivateKeys.kRealmServer
         let credentials = SyncCredentials.usernamePassword(username: PrivateKeys.kRealmAdminLogin, password: PrivateKeys.kRealmAdminPassword, register: false)
         SyncUser.logIn(with: credentials, server: server) { user, error in
@@ -87,7 +88,7 @@ extension SyncUser {
                 if let user = user {
                     completionHandler?(.success(user))
                 } else {
-                    completionHandler?(.error(error!))
+                    completionHandler?(.failure(AnyError(error!)))
                 }
             }
         }
@@ -95,23 +96,23 @@ extension SyncUser {
 }
 
 extension AdminRealmController {
-    fileprivate func processServerDirectoryData(_ data: Result<Data>, completion: ((Result<Void>) -> Void)?) {
+    fileprivate func processServerDirectoryData(_ data: Result<Data, AnyError>, completion: ((Result<Void, AnyError>) -> Void)?) {
         switch data {
         case .success(let data):
             do {
                 try processServerDirectoryData(data)
                 completion?(.success())
             } catch {
-                completion?(.error(error))
+                completion?(.failure(AnyError(error)))
             }
-        case .error(let error):
-            completion?(.error(error))
+        case .failure(let error):
+            completion?(.failure(error))
         }
     }
 }
 
 extension URLSession {
-    fileprivate func downloadROSFileTree(completionHandler: ((Result<Data>) -> Void)?) {
+    fileprivate func downloadROSFileTree(completionHandler: ((Result<Data, AnyError>) -> Void)?) {
         let url = WaterMeData.PrivateKeys.kRealmServer.appendingPathComponent("realmsec/list")
         var request = URLRequest(url: url)
         request.setValue("sharedSecret=\(PrivateKeys.kRequestSharedSecret)", forHTTPHeaderField: "Cookie")
@@ -120,11 +121,11 @@ extension URLSession {
                 let _response = __response as? HTTPURLResponse
                 let _sharedSecret = (_response?.allHeaderFields["Shared-Secret"] ?? _response?.allHeaderFields["shared-secret"]) as? String
                 guard let data = _data, let response = _response, response.statusCode == 200 else {
-                    completionHandler?(.error(__response?.debugDescription ?? error!))
+                    completionHandler?(.failure(AnyError(__response?.debugDescription ?? error!)))
                     return
                 }
                 guard let sharedSecret = _sharedSecret, sharedSecret == PrivateKeys.kResponseSharedSecret else {
-                    completionHandler?(.error("SharedSecret does not match."))
+                    completionHandler?(.failure(AnyError("SharedSecret does not match.")))
                     return
                 }
                 completionHandler?(.success(data))

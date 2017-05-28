@@ -18,6 +18,7 @@ target 'AdminConsole' do
 	pod 'RealmSwift'
 	pod 'XCGLogger', '~> 5.0.1'
 	pod 'WaterMeData', :path => 'WaterMeData'
+    pod 'WaterMeStore', :path => 'WaterMeStore'
 end
 
 target 'NoDeviceTests' do
