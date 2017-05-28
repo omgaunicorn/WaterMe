@@ -33,66 +33,50 @@ class SubscriptionTests: XCTestCase {
                                     priceLocale: Locale(identifier: "en-US"))
         
         let output = UnpurchasedSubscription.subscriptions(from: [fakePro, fakeBasic])
-        XCTAssert(output.count == 3)
-    }
-    
-    func testNILLevelInit() {
-        let freeLevel = Level(productIdentifier: nil)
-        XCTAssert(freeLevel != nil)
-        switch freeLevel! {
-        case .free:
-            XCTAssert(true)
-        default:
-            XCTAssert(false, "Init with NIL should have returned a free subscription level. Not: \(freeLevel!)")
-        }
+        let oFakePro = output[0]
+        XCTAssert(oFakePro.level == .pro)
+        XCTAssert(oFakePro.localizedDescription == "THIS-FOR-PROS")
+        XCTAssert(oFakePro.localizedTitle == "PRO-BRO")
+        XCTAssert(oFakePro.period == .month)
+        XCTAssert(oFakePro.price == 1000.99)
+        XCTAssert(oFakePro.priceLocale.identifier == "en-US")
+        let oFakeBasic = output[1]
+        XCTAssert(oFakeBasic.level == .basic)
+        XCTAssert(oFakeBasic.localizedDescription == "BASIC-ONLY")
+        XCTAssert(oFakeBasic.localizedTitle == "BASIC-BRP")
+        XCTAssert(oFakeBasic.period == .month)
+        XCTAssert(oFakeBasic.price == 10.99)
+        XCTAssert(oFakeBasic.priceLocale.identifier == "en-US")
+        XCTAssert(output.count == 2)
     }
     
     func testValidLevelInit() {
-        let proMonth = Level(productIdentifier: PrivateKeys.kSubscriptionProMonthly)
-        let proYear = Level(productIdentifier: PrivateKeys.kSubscriptionProYearly)
-        let basicMonth = Level(productIdentifier: PrivateKeys.kSubscriptionBasicMonthly)
-        let basicYear = Level(productIdentifier: PrivateKeys.kSubscriptionBasicYearly)
+        let proMonth = Level(productID: PrivateKeys.kSubscriptionProMonthly)
+        let proYear = Level(productID: PrivateKeys.kSubscriptionProYearly)
+        let basicMonth = Level(productID: PrivateKeys.kSubscriptionBasicMonthly)
+        let basicYear = Level(productID: PrivateKeys.kSubscriptionBasicYearly)
         
         XCTAssert(proMonth != nil)
         XCTAssert(proYear != nil)
         XCTAssert(basicMonth != nil)
         XCTAssert(basicYear != nil)
 
-        if case .pro(let id) = proMonth! {
-            XCTAssert(id == PrivateKeys.kSubscriptionProMonthly)
-        } else {
-            XCTAssert(false)
-        }
-        
-        if case .pro(let id) = proYear! {
-            XCTAssert(id == PrivateKeys.kSubscriptionProYearly)
-        } else {
-            XCTAssert(false)
-        }
-        
-        if case .basic(let id) = basicMonth! {
-            XCTAssert(id == PrivateKeys.kSubscriptionBasicMonthly)
-        } else {
-            XCTAssert(false)
-        }
-        
-        if case .basic(let id) = basicYear! {
-            XCTAssert(id == PrivateKeys.kSubscriptionBasicYearly)
-        } else {
-            XCTAssert(false)
-        }
+        XCTAssert(proMonth == .pro)
+        XCTAssert(proYear == .pro)
+        XCTAssert(basicMonth == .basic)
+        XCTAssert(basicYear == .basic)
     }
     
     func testInvalidLevelInit() {
-        let wrong = Level(productIdentifier: "GARBAGE DATA")
+        let wrong = Level(productID: "GARBAGE DATA")
         XCTAssert(wrong == nil)
     }
     
     func testValidPeriodInit() {
-        let proMonth = Period(productIdentifier: PrivateKeys.kSubscriptionProMonthly)
-        let proYear = Period(productIdentifier: PrivateKeys.kSubscriptionProYearly)
-        let basicMonth = Period(productIdentifier: PrivateKeys.kSubscriptionBasicMonthly)
-        let basicYear = Period(productIdentifier: PrivateKeys.kSubscriptionBasicYearly)
+        let proMonth = Period(productID: PrivateKeys.kSubscriptionProMonthly)
+        let proYear = Period(productID: PrivateKeys.kSubscriptionProYearly)
+        let basicMonth = Period(productID: PrivateKeys.kSubscriptionBasicMonthly)
+        let basicYear = Period(productID: PrivateKeys.kSubscriptionBasicYearly)
         
         XCTAssert(proMonth != nil)
         XCTAssert(proYear != nil)
@@ -106,237 +90,7 @@ class SubscriptionTests: XCTestCase {
     }
     
     func testInvalidPeriodInit() {
-        let wrong = Period(productIdentifier: "GARBAGE DATA")
+        let wrong = Period(productID: "GARBAGE DATA")
         XCTAssert(wrong == nil)
     }
-    
-    func testPriceEquality() {
-        let free1 = Price.free
-        let free2 = Price.free
-        let paid1 = Price.paid(price: 1.0, locale: Locale(identifier: "en-US"))
-        let paid2 = Price.paid(price: 1.0, locale: Locale(identifier: "ru-RU"))
-        let paid3 = Price.paid(price: 2.0, locale: Locale(identifier: "es-ES"))
-        let paid4 = Price.paid(price: 3.0, locale: Locale(identifier: "en-UK"))
-        
-        XCTAssert(free1 == free1)
-        XCTAssert(free1 == free2)
-        XCTAssert(free1 != paid1)
-        XCTAssert(free1 != paid2)
-        XCTAssert(free1 != paid3)
-        XCTAssert(free1 != paid4)
-        
-        XCTAssert(free2 == free1)
-        XCTAssert(free2 == free2)
-        XCTAssert(free2 != paid1)
-        XCTAssert(free2 != paid2)
-        XCTAssert(free2 != paid3)
-        XCTAssert(free2 != paid4)
-        
-        XCTAssert(paid1 != free1)
-        XCTAssert(paid1 != free2)
-        XCTAssert(paid1 == paid1)
-        XCTAssert(paid1 == paid2)
-        XCTAssert(paid1 != paid3)
-        XCTAssert(paid1 != paid4)
-        
-        XCTAssert(paid2 != free1)
-        XCTAssert(paid2 != free2)
-        XCTAssert(paid2 == paid1)
-        XCTAssert(paid2 == paid2)
-        XCTAssert(paid2 != paid3)
-        XCTAssert(paid2 != paid4)
-        
-        XCTAssert(paid3 != free1)
-        XCTAssert(paid3 != free2)
-        XCTAssert(paid3 != paid1)
-        XCTAssert(paid3 != paid2)
-        XCTAssert(paid3 == paid3)
-        XCTAssert(paid3 != paid4)
-        
-        XCTAssert(paid4 != free1)
-        XCTAssert(paid4 != free2)
-        XCTAssert(paid4 != paid1)
-        XCTAssert(paid4 != paid2)
-        XCTAssert(paid4 != paid3)
-        XCTAssert(paid4 == paid4)
-    }
-    
-    func testPriceComparability() {
-        
-        let free1 = Price.free
-        let free2 = Price.free
-        let paid1 = Price.paid(price: 1.0, locale: Locale(identifier: "en-US"))
-        let paid2 = Price.paid(price: 1.0, locale: Locale(identifier: "ru-RU"))
-        let paid3 = Price.paid(price: 2.0, locale: Locale(identifier: "es-ES"))
-        let paid4 = Price.paid(price: 3.0, locale: Locale(identifier: "en-UK"))
-        
-        XCTAssertFalse(free1 > free1)
-        XCTAssertFalse(free1 > free2)
-        XCTAssertFalse(free1 > paid1)
-        XCTAssertFalse(free1 > paid2)
-        XCTAssertFalse(free1 > paid3)
-        XCTAssertFalse(free1 > paid4)
-        
-        XCTAssert(free1 >= free1)
-        XCTAssert(free1 >= free2)
-        XCTAssertFalse(free1 >= paid1)
-        XCTAssertFalse(free1 >= paid2)
-        XCTAssertFalse(free1 >= paid3)
-        XCTAssertFalse(free1 >= paid4)
-        
-        XCTAssertFalse(free1 < free1)
-        XCTAssertFalse(free1 < free2)
-        XCTAssert(free1 < paid1)
-        XCTAssert(free1 < paid2)
-        XCTAssert(free1 < paid3)
-        XCTAssert(free1 < paid4)
-        
-        XCTAssert(free1 <= free1)
-        XCTAssert(free1 <= free2)
-        XCTAssert(free1 <= paid1)
-        XCTAssert(free1 <= paid2)
-        XCTAssert(free1 <= paid3)
-        XCTAssert(free1 <= paid4)
-        
-        XCTAssertFalse(free2 < free1)
-        XCTAssertFalse(free2 < free2)
-        XCTAssert(free2 < paid1)
-        XCTAssert(free2 < paid2)
-        XCTAssert(free2 < paid3)
-        XCTAssert(free2 < paid4)
-        
-        XCTAssert(free2 <= free1)
-        XCTAssert(free2 <= free2)
-        XCTAssert(free2 <= paid1)
-        XCTAssert(free2 <= paid2)
-        XCTAssert(free2 <= paid3)
-        XCTAssert(free2 <= paid4)
-        
-        XCTAssertFalse(free2 > free1)
-        XCTAssertFalse(free2 > free2)
-        XCTAssertFalse(free2 > paid1)
-        XCTAssertFalse(free2 > paid2)
-        XCTAssertFalse(free2 > paid3)
-        XCTAssertFalse(free2 > paid4)
-        
-        XCTAssert(free2 >= free1)
-        XCTAssert(free2 >= free2)
-        XCTAssertFalse(free2 >= paid1)
-        XCTAssertFalse(free2 >= paid2)
-        XCTAssertFalse(free2 >= paid3)
-        XCTAssertFalse(free2 >= paid4)
-        
-        XCTAssertFalse(paid1 < free1)
-        XCTAssertFalse(paid1 < free2)
-        XCTAssertFalse(paid1 < paid1)
-        XCTAssertFalse(paid1 < paid2)
-        XCTAssert(paid1 < paid3)
-        XCTAssert(paid1 < paid4)
-        
-        XCTAssertFalse(paid1 <= free1)
-        XCTAssertFalse(paid1 <= free2)
-        XCTAssert(paid1 <= paid1)
-        XCTAssert(paid1 <= paid2)
-        XCTAssert(paid1 <= paid3)
-        XCTAssert(paid1 <= paid4)
-        
-        XCTAssert(paid1 > free1)
-        XCTAssert(paid1 > free2)
-        XCTAssertFalse(paid1 > paid1)
-        XCTAssertFalse(paid1 > paid2)
-        XCTAssertFalse(paid1 > paid3)
-        XCTAssertFalse(paid1 > paid4)
-        
-        XCTAssert(paid1 >= free1)
-        XCTAssert(paid1 >= free2)
-        XCTAssert(paid1 >= paid1)
-        XCTAssert(paid1 >= paid2)
-        XCTAssertFalse(paid1 >= paid3)
-        XCTAssertFalse(paid1 >= paid4)
-        
-        XCTAssertFalse(paid2 < free1)
-        XCTAssertFalse(paid2 < free2)
-        XCTAssertFalse(paid2 < paid1)
-        XCTAssertFalse(paid2 < paid2)
-        XCTAssert(paid2 < paid3)
-        XCTAssert(paid2 < paid4)
-        
-        XCTAssertFalse(paid2 <= free1)
-        XCTAssertFalse(paid2 <= free2)
-        XCTAssert(paid2 <= paid1)
-        XCTAssert(paid2 <= paid2)
-        XCTAssert(paid2 <= paid3)
-        XCTAssert(paid2 <= paid4)
-        
-        XCTAssert(paid2 > free1)
-        XCTAssert(paid2 > free2)
-        XCTAssertFalse(paid2 > paid1)
-        XCTAssertFalse(paid2 > paid2)
-        XCTAssertFalse(paid2 > paid3)
-        XCTAssertFalse(paid2 > paid4)
-        
-        XCTAssert(paid2 >= free1)
-        XCTAssert(paid2 >= free2)
-        XCTAssert(paid2 >= paid1)
-        XCTAssert(paid2 >= paid2)
-        XCTAssertFalse(paid2 >= paid3)
-        XCTAssertFalse(paid2 >= paid4)
-        
-        XCTAssertFalse(paid3 < free1)
-        XCTAssertFalse(paid3 < free2)
-        XCTAssertFalse(paid3 < paid1)
-        XCTAssertFalse(paid3 < paid2)
-        XCTAssertFalse(paid3 < paid3)
-        XCTAssert(paid3 < paid4)
-        
-        XCTAssertFalse(paid3 <= free1)
-        XCTAssertFalse(paid3 <= free2)
-        XCTAssertFalse(paid3 <= paid1)
-        XCTAssertFalse(paid3 <= paid2)
-        XCTAssert(paid3 <= paid3)
-        XCTAssert(paid3 <= paid4)
-        
-        XCTAssert(paid3 > free1)
-        XCTAssert(paid3 > free2)
-        XCTAssert(paid3 > paid1)
-        XCTAssert(paid3 > paid2)
-        XCTAssertFalse(paid3 > paid3)
-        XCTAssertFalse(paid3 > paid4)
-        
-        XCTAssert(paid3 >= free1)
-        XCTAssert(paid3 >= free2)
-        XCTAssert(paid3 >= paid1)
-        XCTAssert(paid3 >= paid2)
-        XCTAssert(paid3 >= paid3)
-        XCTAssertFalse(paid3 >= paid4)
-        
-        XCTAssertFalse(paid4 < free1)
-        XCTAssertFalse(paid4 < free2)
-        XCTAssertFalse(paid4 < paid1)
-        XCTAssertFalse(paid4 < paid2)
-        XCTAssertFalse(paid4 < paid3)
-        XCTAssertFalse(paid4 < paid4)
-        
-        XCTAssertFalse(paid4 <= free1)
-        XCTAssertFalse(paid4 <= free2)
-        XCTAssertFalse(paid4 <= paid1)
-        XCTAssertFalse(paid4 <= paid2)
-        XCTAssertFalse(paid4 <= paid3)
-        XCTAssert(paid4 <= paid4)
-        
-        XCTAssert(paid4 > free1)
-        XCTAssert(paid4 > free2)
-        XCTAssert(paid4 > paid1)
-        XCTAssert(paid4 > paid2)
-        XCTAssert(paid4 > paid3)
-        XCTAssertFalse(paid4 > paid4)
-        
-        XCTAssert(paid4 >= free1)
-        XCTAssert(paid4 >= free2)
-        XCTAssert(paid4 >= paid1)
-        XCTAssert(paid4 >= paid2)
-        XCTAssert(paid4 >= paid3)
-        XCTAssert(paid4 >= paid4)
-    }
-    
 }
