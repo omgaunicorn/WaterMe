@@ -27,6 +27,8 @@
 		504A8D511ED6A04F002D928D /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D501ED6A04F002D928D /* UserTableViewCell.swift */; };
 		504A8D5B1EDA8C76002D928D /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5A1EDA8C76002D928D /* LoadingViewController.swift */; };
 		504A8D5D1EDA8D41002D928D /* ReceiptVerifyingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */; };
+		504A8D5F1EDB56AC002D928D /* ErrorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */; };
+		504A8D611EDB5A46002D928D /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */; };
 		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
 		50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */; };
 		50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */; };
@@ -83,6 +85,8 @@
 		504A8D501ED6A04F002D928D /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		504A8D5A1EDA8C76002D928D /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptVerifyingViewController.swift; sourceTree = "<group>"; };
+		504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewController.swift; sourceTree = "<group>"; };
+		504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
 		505086AE1ECBD43200745012 /* RealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
 		50BB0F501EBFCDE500850FF4 /* WaterMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaterMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +168,8 @@
 			children = (
 				501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */,
 				50DFA8B41ED7A352000D2956 /* FrameworkExtensions.swift */,
+				504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */,
+				504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */,
 				501C0E8C1ECE5EFF00D4EE7C /* UserTableViewController.swift */,
 				504A8D501ED6A04F002D928D /* UserTableViewCell.swift */,
 				503F74481ED3BB64005EF5F2 /* UserSummaryViewController.swift */,
@@ -603,12 +609,14 @@
 				50DFA8B71ED7B27F000D2956 /* SynchronizingViewController.swift in Sources */,
 				501C0E8B1ECE5EFF00D4EE7C /* AppDelegate.swift in Sources */,
 				50DFA8B51ED7A352000D2956 /* FrameworkExtensions.swift in Sources */,
+				504A8D611EDB5A46002D928D /* ErrorTableViewCell.swift in Sources */,
 				50DFA8B31ED7A08E000D2956 /* ControlPanelViewController.swift in Sources */,
 				504A8D5D1EDA8D41002D928D /* ReceiptVerifyingViewController.swift in Sources */,
 				50DFA8B91ED7BCE0000D2956 /* ReceiptWatcher.swift in Sources */,
 				501C0E9B1ECE602400D4EE7C /* PrivateKeys.swift in Sources */,
 				50C1AA971ED006B300E3BF0A /* AdminRealmController.swift in Sources */,
 				504A8D5B1EDA8C76002D928D /* LoadingViewController.swift in Sources */,
+				504A8D5F1EDB56AC002D928D /* ErrorTableViewController.swift in Sources */,
 				504A8D511ED6A04F002D928D /* UserTableViewCell.swift in Sources */,
 				503F74491ED3BB64005EF5F2 /* UserSummaryViewController.swift in Sources */,
 			);

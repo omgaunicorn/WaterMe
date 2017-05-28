@@ -37,6 +37,7 @@ enum DataPresent: String {
 }
 
 class ConsoleError: Object {
+    dynamic var date = Date()
     dynamic var code = 0
     dynamic var file = ""
     dynamic var line = 0
@@ -80,7 +81,7 @@ class AdminRealmController {
     
     private let config: Realm.Configuration = {
         var c = Realm.Configuration()
-        c.schemaVersion = 8
+        c.schemaVersion = 9
         c.objectTypes = [RealmUser.self, RealmFile.self, Receipt.self, ConsoleError.self]
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         c.fileURL = url.appendingPathComponent("AdminConsole.realm", isDirectory: false)
@@ -103,7 +104,7 @@ class AdminRealmController {
     }
     
     func allErrors() -> AnyRealmCollection<ConsoleError> {
-        let collection = self.realm.objects(ConsoleError.self)
+        let collection = self.realm.objects(ConsoleError.self).sorted(byKeyPath: #keyPath(ConsoleError.date))
         return AnyRealmCollection(collection)
     }
     
