@@ -39,7 +39,15 @@ class ReceiptWatcher {
         let receiptController = ReceiptController(user: user, overrideUserPath: owningUserID)
         self.receiptControllers[owningUserID] = receiptController
         receiptController.receiptChanged = { receipt, controller in
-            guard let receiptData = receipt.pkcs7Data else { return }
+            let lastCheckedInterval = receipt.server_lastVerifyDate.timeIntervalSinceNow
+            guard lastCheckedInterval <= -60 else {
+                print("Not enough time has passed since last verification")
+                return
+            }
+            guard let receiptData = receipt.pkcs7Data else {
+                print("No receipt data found. Can't check receipt")
+                return
+            }
             URLSession.shared.validate(receiptData: receiptData) { result in
                 switch result {
                 case .success(let receiptStatus, let subscription):

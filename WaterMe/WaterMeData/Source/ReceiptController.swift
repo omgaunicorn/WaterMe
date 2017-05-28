@@ -50,6 +50,7 @@ public class ReceiptController {
         receipt.server_productID = productID
         receipt.server_purchaseDate = purchaseDate
         receipt.server_expirationDate = expirationDate
+        receipt.server_lastVerifyDate = Date()
         try! realm.commitWrite()
     }
     

@@ -11,6 +11,8 @@ import RealmSwift
 public class Receipt: Object {
     
     internal(set) public dynamic var pkcs7Data: Data?
+    
+    internal(set) public dynamic var server_lastVerifyDate = Date()
     internal(set) public dynamic var server_appleStatusCode: Int = -1
     internal(set) public dynamic var server_productID: String?
     internal(set) public dynamic var server_purchaseDate: Date?
