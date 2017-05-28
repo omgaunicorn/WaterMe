@@ -15,7 +15,6 @@ extension UserDefaults {
         static let kFirstRun = "FIRST_RUN"
         static let kReminderHour = "REMINDER_HOUR"
         static let kNumberOfReminderDays = "NUMBER_OF_REMINDER_DAYS"
-        static let kSubscriptionProductIdentifierKey = "kSubscriptionProductIdentifierKey"
     }
     
     var isFirstRun: Bool {
@@ -48,22 +47,6 @@ extension UserDefaults {
         }
         set {
             self.set(NSNumber(value: newValue), forKey: Constants.kNumberOfReminderDays)
-        }
-    }
-    
-    var subscriptionLevel: Level {
-        get {
-            let productID = self.object(forKey: Constants.kSubscriptionProductIdentifierKey) as? String
-            let level = Level(productIdentifier: productID)
-            return level ?? .free
-        }
-        set {
-            switch newValue {
-            case .free:
-                self.removeObject(forKey: Constants.kSubscriptionProductIdentifierKey)
-            case .basic(let id), .pro(let id):
-                self.set(id, forKey: Constants.kSubscriptionProductIdentifierKey)
-            }
         }
     }
     

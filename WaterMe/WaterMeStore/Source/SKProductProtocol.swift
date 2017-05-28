@@ -23,18 +23,19 @@ internal extension UnpurchasedSubscription {
         let subscriptions = products.flatMap() { product -> UnpurchasedSubscription? in
             return UnpurchasedSubscription(product: product)
         }
-        return subscriptions + [UnpurchasedSubscription.free()]
+        return subscriptions
     }
     internal init?(product: SKProductProtocol) {
         guard
-            let level = Level(productIdentifier: product.productIdentifier),
-            let period = Period(productIdentifier: product.productIdentifier)
+            let level = Level(productID: product.productIdentifier),
+            let period = Period(productID: product.productIdentifier)
         else { return nil }
         self.period = period
         self.level = level
         self.localizedTitle = product.localizedTitle
         self.localizedDescription = product.localizedDescription
-        self.price = .paid(price: product.price.doubleValue, locale: product.priceLocale)
-        self.product = product as? SKProduct
+        self.price = product.price.doubleValue
+        self.priceLocale = product.priceLocale
+        self.product = product
     }
 }

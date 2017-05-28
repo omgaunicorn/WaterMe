@@ -18,34 +18,37 @@ class ReceiptMonitor: NSObject, SKPaymentTransactionObserver {
         self.updateReceipt()
     }
     
-    private(set) var purchased: (level: Level, expirationDate: Date) = (.free, Date())
+    private(set) var purchased: (level: Level, expirationDate: Date)?
     private(set) var receiptData: Data?
     private(set) var receiptChanged: Bool = false
     
     func updateReceipt() {
-        let newReceipt = type(of: self).parseReceipt()
-        self.receiptData = newReceipt.receiptData
-        self.purchased = (newReceipt.level, newReceipt.expirationDate)
+        if let newReceipt = type(of: self).parseReceipt() {
+            self.receiptData = newReceipt.receiptData
+            self.purchased = (newReceipt.level, newReceipt.expirationDate)
+        } else {
+            self.receiptData = nil
+            self.purchased = nil
+        }
         self.receiptChanged = false
     }
     
     private func needsToUpdateReceipt() -> Bool {
-        let newReceipt = type(of: self).parseReceipt()
-        let comparison = type(of: self).compare(oldReceipt: self.purchased, newReceipt: (newReceipt.level, newReceipt.expirationDate))
+        guard let newReceipt = type(of: self).parseReceipt() else { return false }
+        guard let oldReceipt = self.purchased else { return true }
+        let comparison = type(of: self).compare(oldReceipt: oldReceipt, newReceipt: (newReceipt.level, newReceipt.expirationDate))
         return comparison
     }
     
     private static func compare(oldReceipt: (level: Level, expirationDate: Date), newReceipt: (level: Level, expirationDate: Date)) -> Bool {
         // make sure the levels match
         guard oldReceipt.level == newReceipt.level else { return false }
-        // make sure we don't compare dates if the level is free since those dates aren't real
-        guard newReceipt.level != .free else { return true }
         // then compare expirationDates as the last straw
         return oldReceipt.expirationDate == newReceipt.expirationDate
     }
     
-    private class func parseReceipt() -> (receiptData: Data?, level: Level, expirationDate: Date) {
-        let data = try? InAppReceiptManager.shared.receiptData()
+    private class func parseReceipt() -> (receiptData: Data, level: Level, expirationDate: Date)? {
+        guard let data = try? InAppReceiptManager.shared.receiptData() else { return nil }
         let receipt = try? InAppReceiptManager.shared.receipt()
         
         let date = Date()
@@ -56,21 +59,20 @@ class ReceiptMonitor: NSObject, SKPaymentTransactionObserver {
         
         let level: Level
         let expirationDate: Date
-        if let purchase = proYearly, let _level = Level(productIdentifier: purchase.productIdentifier) {
+        if let purchase = proYearly, let _level = Level(productID: purchase.productIdentifier) {
             level = _level
             expirationDate = purchase.subscriptionExpirationDate
-        } else if let purchase = proMonthly, let _level = Level(productIdentifier: purchase.productIdentifier) {
+        } else if let purchase = proMonthly, let _level = Level(productID: purchase.productIdentifier) {
             level = _level
             expirationDate = purchase.subscriptionExpirationDate
-        } else if let purchase = basicYearly, let _level = Level(productIdentifier: purchase.productIdentifier) {
+        } else if let purchase = basicYearly, let _level = Level(productID: purchase.productIdentifier) {
             level = _level
             expirationDate = purchase.subscriptionExpirationDate
-        } else if let purchase = basicMonthly, let _level = Level(productIdentifier: purchase.productIdentifier) {
+        } else if let purchase = basicMonthly, let _level = Level(productID: purchase.productIdentifier) {
             level = _level
             expirationDate = purchase.subscriptionExpirationDate
         } else {
-            level = .free
-            expirationDate = date
+            return nil
         }
         return (receiptData: data, level: level, expirationDate: expirationDate)
     }

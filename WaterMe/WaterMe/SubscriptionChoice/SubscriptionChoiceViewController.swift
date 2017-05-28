@@ -39,7 +39,7 @@ class SubscriptionChoiceViewController: UIViewController, HasUnpurchasedSubscrip
         
         // register for events from the collection view controller
         self.collectionViewController?.subscriptionSelected = { [weak self] subscription in
-            let purchaser = UnpurchasedSubscriptionPurchaser(itemToPurchase: subscription)!
+            let purchaser = UnpurchasedSubscriptionPurchaser(itemToPurchase: subscription)
             let vc = SubscriptionMigrationViewController.newVC(subscriptionPurchaser: purchaser)
             self?.show(vc, sender: self)
         }

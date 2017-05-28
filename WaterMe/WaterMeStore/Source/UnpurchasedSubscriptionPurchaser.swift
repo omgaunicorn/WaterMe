@@ -38,9 +38,8 @@ public class UnpurchasedSubscriptionPurchaser: NSObject, UnpurchasedSubscription
     private let productToPurchase: SKProduct
     private var completionHandler: ((PurchaseResult) -> Void)? // if nil we have not started yet
     
-    public required init?(itemToPurchase: UnpurchasedSubscription) {
-        guard let productToPurchase = itemToPurchase.product else { return nil }
-        self.productToPurchase = productToPurchase
+    public required init(itemToPurchase: UnpurchasedSubscription) {
+        self.productToPurchase = itemToPurchase.product as! SKProduct
         self.subscription = itemToPurchase
         super.init()
         SKPaymentQueue.default().add(self) // add queue now to allow unwanted transactions to flow through. hacky, but needed for now

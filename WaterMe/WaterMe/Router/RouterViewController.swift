@@ -36,17 +36,17 @@ class RouterViewController: UIViewController {
     
     @objc private func timerFired(_ timer: NSObject?) {
         let appD = UIApplication.shared.delegate as! AppDelegate
-        let mon = appD.receiptMonitor
-        if mon.receiptChanged == true {
-            mon.updateReceipt()
-        }
-        
-        let pID = mon.purchased.level.rawValue
-        let expDate = mon.purchased.expirationDate
-        let data = mon.receiptData!
-        
-        self.receipt!.updateReceipt(data: data)
-        print(self.receipt!.receipt)
+//        let mon = appD.receiptMonitor
+//        if mon.receiptChanged == true {
+//            mon.updateReceipt()
+//        }
+//        
+////        let pID = mon.purchased.level.rawValue
+//        let expDate = mon.purchased.expirationDate
+//        let data = mon.receiptData!
+//        
+//        self.receipt!.updateReceipt(data: data)
+//        print(self.receipt!.receipt)
     }
     
     private func startBootSequence() {
@@ -77,36 +77,43 @@ class RouterViewController: UIViewController {
         
         if let user = SyncUser.current {
             let receiptRC = ReceiptController(user: user)
-            let basicRC = BasicController(kind: .sync(user))
             self.receipt = receiptRC
-            self.basic = basicRC
-            if let level = Level(productIdentifier: receiptRC.receipt.productIdentifier), case .pro = level {
+            let receipt = receiptRC.receipt
+            let productID = receipt.server_productID ?? receipt.client_productID ?? "NaN"
+            guard let level = Level(productID: productID) else { return }
+            switch level {
+            case .pro:
                 let proRC = ProController(user: user)
                 self.pro = proRC
+                fallthrough
+            case .basic:
+                let basicRC = BasicController(kind: .sync(user))
+                self.basic = basicRC
             }
+
         } else if BasicController.localRealmExists == true {
             let freeRC = BasicController(kind: .local)
             self.basic = freeRC
             self.pro = nil
         } else {
             // check receipt
-            let appD = UIApplication.shared.delegate as! AppDelegate
-            let mon = appD.receiptMonitor
-            if mon.receiptChanged == true {
-                mon.updateReceipt()
-            }
-            let level = mon.purchased.level
-            print(level)
-            switch level {
-            case .free:
-                // auto-configure free account
-//                let freeRC = RealmController(kind: .local)
-//                self.configure(withBasic: freeRC, andPro: nil)
-                break
-            case .basic, .pro:
-                // present login / migration screen
-                break
-            }
+//            let appD = UIApplication.shared.delegate as! AppDelegate
+//            let mon = appD.receiptMonitor
+//            if mon.receiptChanged == true {
+//                mon.updateReceipt()
+//            }
+//            let level = mon.purchased.level
+//            print(level)
+//            switch level {
+//            case .free:
+//                // auto-configure free account
+////                let freeRC = RealmController(kind: .local)
+////                self.configure(withBasic: freeRC, andPro: nil)
+//                break
+//            case .basic, .pro:
+//                // present login / migration screen
+//                break
+//            }
         }
     }
     

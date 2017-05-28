@@ -38,14 +38,9 @@ class SubscriptionChoiceCollectionViewCell: UICollectionViewCell {
     var model: UnpurchasedSubscription? {
         didSet {
             guard let model = self.model else { self.recycle(); return; }
-            switch model.price {
-            case .free:
-                self.priceLabel?.text = "Free"
-            case let .paid(price, locale):
-                self.numberFormatter.locale = locale
-                let priceString = self.numberFormatter.string(from: NSNumber(value: price)) ?? ""
-                self.priceLabel?.text = priceString + " " + model.period.localizedString
-            }
+            self.numberFormatter.locale = model.priceLocale
+            let priceString = self.numberFormatter.string(from: NSNumber(value: model.price)) ?? ""
+            self.priceLabel?.text = priceString + " " + model.period.localizedString
             self.titleLabel?.text = model.localizedTitle
             self.descriptionLabel?.text = model.localizedDescription
         }
@@ -77,8 +72,6 @@ fileprivate extension Period {
             return "per Month"
         case .year:
             return "per Year"
-        case .none:
-            return ""
         }
     }
 }
