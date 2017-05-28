@@ -32,12 +32,12 @@ class SubscriptionTests: XCTestCase {
                                     price: NSDecimalNumber(value: 10.99),
                                     priceLocale: Locale(identifier: "en-US"))
         
-        let output = Subscription.subscriptions(from: [fakePro, fakeBasic])
+        let output = UnpurchasedSubscription.subscriptions(from: [fakePro, fakeBasic])
         XCTAssert(output.count == 3)
     }
     
     func testNILLevelInit() {
-        let freeLevel = Subscription.Level(productIdentifier: nil)
+        let freeLevel = UnpurchasedSubscription.Level(productIdentifier: nil)
         XCTAssert(freeLevel != nil)
         switch freeLevel! {
         case .free:
@@ -48,10 +48,10 @@ class SubscriptionTests: XCTestCase {
     }
     
     func testValidLevelInit() {
-        let proMonth = Subscription.Level(productIdentifier: PrivateKeys.kSubscriptionProMonthly)
-        let proYear = Subscription.Level(productIdentifier: PrivateKeys.kSubscriptionProYearly)
-        let basicMonth = Subscription.Level(productIdentifier: PrivateKeys.kSubscriptionBasicMonthly)
-        let basicYear = Subscription.Level(productIdentifier: PrivateKeys.kSubscriptionBasicYearly)
+        let proMonth = UnpurchasedSubscription.Level(productIdentifier: PrivateKeys.kSubscriptionProMonthly)
+        let proYear = UnpurchasedSubscription.Level(productIdentifier: PrivateKeys.kSubscriptionProYearly)
+        let basicMonth = UnpurchasedSubscription.Level(productIdentifier: PrivateKeys.kSubscriptionBasicMonthly)
+        let basicYear = UnpurchasedSubscription.Level(productIdentifier: PrivateKeys.kSubscriptionBasicYearly)
         
         XCTAssert(proMonth != nil)
         XCTAssert(proYear != nil)
@@ -84,15 +84,15 @@ class SubscriptionTests: XCTestCase {
     }
     
     func testInvalidLevelInit() {
-        let wrong = Subscription.Level(productIdentifier: "GARBAGE DATA")
+        let wrong = UnpurchasedSubscription.Level(productIdentifier: "GARBAGE DATA")
         XCTAssert(wrong == nil)
     }
     
     func testValidPeriodInit() {
-        let proMonth = Subscription.Period(productIdentifier: PrivateKeys.kSubscriptionProMonthly)
-        let proYear = Subscription.Period(productIdentifier: PrivateKeys.kSubscriptionProYearly)
-        let basicMonth = Subscription.Period(productIdentifier: PrivateKeys.kSubscriptionBasicMonthly)
-        let basicYear = Subscription.Period(productIdentifier: PrivateKeys.kSubscriptionBasicYearly)
+        let proMonth = UnpurchasedSubscription.Period(productIdentifier: PrivateKeys.kSubscriptionProMonthly)
+        let proYear = UnpurchasedSubscription.Period(productIdentifier: PrivateKeys.kSubscriptionProYearly)
+        let basicMonth = UnpurchasedSubscription.Period(productIdentifier: PrivateKeys.kSubscriptionBasicMonthly)
+        let basicYear = UnpurchasedSubscription.Period(productIdentifier: PrivateKeys.kSubscriptionBasicYearly)
         
         XCTAssert(proMonth != nil)
         XCTAssert(proYear != nil)
@@ -106,17 +106,17 @@ class SubscriptionTests: XCTestCase {
     }
     
     func testInvalidPeriodInit() {
-        let wrong = Subscription.Period(productIdentifier: "GARBAGE DATA")
+        let wrong = UnpurchasedSubscription.Period(productIdentifier: "GARBAGE DATA")
         XCTAssert(wrong == nil)
     }
     
     func testPriceEquality() {
-        let free1 = Subscription.Price.free
-        let free2 = Subscription.Price.free
-        let paid1 = Subscription.Price.paid(price: 1.0, locale: Locale(identifier: "en-US"))
-        let paid2 = Subscription.Price.paid(price: 1.0, locale: Locale(identifier: "ru-RU"))
-        let paid3 = Subscription.Price.paid(price: 2.0, locale: Locale(identifier: "es-ES"))
-        let paid4 = Subscription.Price.paid(price: 3.0, locale: Locale(identifier: "en-UK"))
+        let free1 = UnpurchasedSubscription.Price.free
+        let free2 = UnpurchasedSubscription.Price.free
+        let paid1 = UnpurchasedSubscription.Price.paid(price: 1.0, locale: Locale(identifier: "en-US"))
+        let paid2 = UnpurchasedSubscription.Price.paid(price: 1.0, locale: Locale(identifier: "ru-RU"))
+        let paid3 = UnpurchasedSubscription.Price.paid(price: 2.0, locale: Locale(identifier: "es-ES"))
+        let paid4 = UnpurchasedSubscription.Price.paid(price: 3.0, locale: Locale(identifier: "en-UK"))
         
         XCTAssert(free1 == free1)
         XCTAssert(free1 == free2)
@@ -163,12 +163,12 @@ class SubscriptionTests: XCTestCase {
     
     func testPriceComparability() {
         
-        let free1 = Subscription.Price.free
-        let free2 = Subscription.Price.free
-        let paid1 = Subscription.Price.paid(price: 1.0, locale: Locale(identifier: "en-US"))
-        let paid2 = Subscription.Price.paid(price: 1.0, locale: Locale(identifier: "ru-RU"))
-        let paid3 = Subscription.Price.paid(price: 2.0, locale: Locale(identifier: "es-ES"))
-        let paid4 = Subscription.Price.paid(price: 3.0, locale: Locale(identifier: "en-UK"))
+        let free1 = UnpurchasedSubscription.Price.free
+        let free2 = UnpurchasedSubscription.Price.free
+        let paid1 = UnpurchasedSubscription.Price.paid(price: 1.0, locale: Locale(identifier: "en-US"))
+        let paid2 = UnpurchasedSubscription.Price.paid(price: 1.0, locale: Locale(identifier: "ru-RU"))
+        let paid3 = UnpurchasedSubscription.Price.paid(price: 2.0, locale: Locale(identifier: "es-ES"))
+        let paid4 = UnpurchasedSubscription.Price.paid(price: 3.0, locale: Locale(identifier: "en-UK"))
         
         XCTAssertFalse(free1 > free1)
         XCTAssertFalse(free1 > free2)
