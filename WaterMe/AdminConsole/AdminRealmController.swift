@@ -107,7 +107,7 @@ class AdminRealmController {
         if let oldReceipt = user.latestReceipt {
             realm.delete(oldReceipt)
         }
-        let newReceipt = Receipt.__admin_console_only_newReceiptByCopyingReceipt(receipt)
+        let newReceipt = receipt.realmFreeCopy()
         user.latestReceipt = newReceipt
         try! realm.commitWrite()
     }

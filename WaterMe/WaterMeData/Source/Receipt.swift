@@ -23,21 +23,18 @@ public class Receipt: Object {
     internal(set) public dynamic var client_purchaseDate: Date?
     internal(set) public dynamic var client_expirationDate: Date?
     
-}
-
-public extension Receipt {
-    public class func __admin_console_only_newReceiptByCopyingReceipt(_ receipt: Receipt) -> Receipt {
+    public func realmFreeCopy() -> Receipt {
         let newReceipt = Receipt()
-        newReceipt.pkcs7Data = receipt.pkcs7Data
-        newReceipt.server_lastVerifyDate = receipt.server_lastVerifyDate
-        newReceipt.server_appleStatusCode = receipt.server_appleStatusCode
-        newReceipt.server_productID = receipt.server_productID
-        newReceipt.server_purchaseDate = receipt.server_purchaseDate
-        newReceipt.server_expirationDate = receipt.server_expirationDate
-        newReceipt.client_originalCreationDate = receipt.client_originalCreationDate
-        newReceipt.client_productID = receipt.client_productID
-        newReceipt.client_purchaseDate = receipt.client_purchaseDate
-        newReceipt.client_expirationDate = receipt.client_expirationDate
+        newReceipt.pkcs7Data = self.pkcs7Data
+        newReceipt.server_lastVerifyDate = self.server_lastVerifyDate
+        newReceipt.server_appleStatusCode = self.server_appleStatusCode
+        newReceipt.server_productID = self.server_productID
+        newReceipt.server_purchaseDate = self.server_purchaseDate
+        newReceipt.server_expirationDate = self.server_expirationDate
+        newReceipt.client_originalCreationDate = self.client_originalCreationDate
+        newReceipt.client_productID = self.client_productID
+        newReceipt.client_purchaseDate = self.client_purchaseDate
+        newReceipt.client_expirationDate = self.client_expirationDate
         return newReceipt
     }
 }
