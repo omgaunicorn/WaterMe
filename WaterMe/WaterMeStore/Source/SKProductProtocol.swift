@@ -26,8 +26,10 @@ internal extension UnpurchasedSubscription {
         return subscriptions + [UnpurchasedSubscription.free()]
     }
     internal init?(product: SKProductProtocol) {
-        guard let level = UnpurchasedSubscription.Level(productIdentifier: product.productIdentifier),
-            let period = UnpurchasedSubscription.Period(productIdentifier: product.productIdentifier) else { return nil }
+        guard
+            let level = Level(productIdentifier: product.productIdentifier),
+            let period = Period(productIdentifier: product.productIdentifier)
+        else { return nil }
         self.period = period
         self.level = level
         self.localizedTitle = product.localizedTitle

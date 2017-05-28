@@ -70,7 +70,7 @@ class SubscriptionChoiceCollectionViewCell: UICollectionViewCell {
     
 }
 
-fileprivate extension UnpurchasedSubscription.Period {
+fileprivate extension Period {
     fileprivate var localizedString: String {
         switch self {
         case .month:

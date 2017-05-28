@@ -80,7 +80,7 @@ class RouterViewController: UIViewController {
             let basicRC = BasicController(kind: .sync(user))
             self.receipt = receiptRC
             self.basic = basicRC
-            if let level = UnpurchasedSubscription.Level(productIdentifier: receiptRC.receipt.productIdentifier), case .pro = level {
+            if let level = Level(productIdentifier: receiptRC.receipt.productIdentifier), case .pro = level {
                 let proRC = ProController(user: user)
                 self.pro = proRC
             }
