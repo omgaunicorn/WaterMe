@@ -31,7 +31,7 @@ class RouterViewController: UIViewController {
         if self.basic == nil {
             self.startBootSequence()
         }
-        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
+//        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
     }
     
     @objc private func timerFired(_ timer: NSObject?) {
@@ -151,13 +151,13 @@ class RouterViewController: UIViewController {
             print("Getting CKToken")
             CKContainer.default().token() { result in
                 switch result {
-                case .error(let error):
+                case .failure(let error):
                     print("CloudKitError: \(error)")
                 case .success(let token):
                     print("Logging into Realm")
                     SyncUser.cloudKitUser(with: token) { result in
                         switch result {
-                        case .error(let error):
+                        case .failure(let error):
                             print("Realm Error: \(error)")
                         case .success(let user):
                             print("Logged In")

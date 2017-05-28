@@ -6,6 +6,7 @@
 //
 //
 
+import Result
 import RealmSwift
 import XCGLogger
 import CloudKit
@@ -13,10 +14,6 @@ import CloudKit
 internal let RealmSchemaVersion: UInt64 = 1
 
 internal let log = XCGLogger.default
-
-public enum Result<T> {
-    case error(Error), success(T)
-}
 
 internal extension URL {
     internal func realmURL(withAppName appName: String, userPath: String) -> URL {
@@ -44,23 +41,23 @@ internal extension URL {
 }
 
 public extension CKContainer {
-    public func token(completionHandler: ((Result<CKRecordID>) -> Void)?) {
+    public func token(completionHandler: ((Result<CKRecordID, AnyError>) -> Void)?) {
         self.fetchUserRecordID { id, error in
             if let id = id {
                 completionHandler?(.success(id))
             } else {
-                completionHandler?(.error(error!))
+                completionHandler?(.failure(AnyError(error!)))
             }
         }
     }
 }
 
 public extension SyncUser {
-    public static func cloudKitUser(with cloudKitID: CKRecordID, completionHandler: ((Result<SyncUser>) -> Void)?) {
+    public static func cloudKitUser(with cloudKitID: CKRecordID, completionHandler: ((Result<SyncUser, AnyError>) -> Void)?) {
         let server = PrivateKeys.kRealmServer
         let credential = SyncCredentials.cloudKit(token: cloudKitID.recordName)
         SyncUser.logIn(with: credential, server: server) { user, error in
-            guard let user = user else { completionHandler?(.error(error!)); return; }
+            guard let user = user else { completionHandler?(.failure(AnyError(error!))); return; }
             completionHandler?(.success(user))
         }
     }

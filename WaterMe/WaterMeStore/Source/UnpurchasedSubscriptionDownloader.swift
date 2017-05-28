@@ -64,7 +64,7 @@ public class UnpurchasedSubscriptionDownloader: NSObject, UnpurchasedSubscriptio
     }
     
     public func request(_ request: SKRequest, didFailWithError error: Error) {
-        let result = UnpurchasedSubscriptionDownloadResult.failure(error as! AnyError)
+        let result = UnpurchasedSubscriptionDownloadResult.failure(AnyError(error))
         self.results = result
         self.completion?(result)
         self.completion = nil

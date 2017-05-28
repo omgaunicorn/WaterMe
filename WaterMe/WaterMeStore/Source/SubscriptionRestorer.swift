@@ -58,7 +58,7 @@ public class SubscriptionRestorer: NSObject, SubscriptionRestoreType, SKPaymentT
             return
         }
         self.reset()
-        completionHandler(.failure(error as! AnyError))
+        completionHandler(.failure(AnyError(error)))
     }
     
     public func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
