@@ -59,6 +59,9 @@ class UserTableViewCell: UITableViewCell {
         }
         self.clientProductIDLabel?.text = sub.productID
         self.clientExpirationDateLabel?.text = self.dateFormatter.string(from: sub.expirationDate)
+        if sub.expirationDate.timeIntervalSinceNow < 0 {
+            self.clientExpirationDateLabel?.textColor = .red
+        }
     }
     
     private func configureServerReceiptLabels(with user: RealmUser) {
@@ -77,9 +80,12 @@ class UserTableViewCell: UITableViewCell {
         if statusCode != 0 {
             self.serverStatusCodeLabel?.textColor = .red
         }
-        self.serverStatusCodeLabel?.text = " Validation Code: \(statusCode)"
+        self.serverStatusCodeLabel?.text = String(statusCode)
         self.serverProductIDLabel?.text = sub.productID
         self.serverExpirationDateLabel?.text = self.dateFormatter.string(from: sub.expirationDate)
+        if sub.expirationDate.timeIntervalSinceNow < 0 {
+            self.serverExpirationDateLabel?.textColor = .red
+        }
     }
     
     private func configureSizeLabel(with user: RealmUser) {
@@ -105,6 +111,8 @@ class UserTableViewCell: UITableViewCell {
         self.sizeLabel?.textColor = .darkText
         self.dataPresentLabel?.textColor = .darkText
         self.serverStatusCodeLabel?.textColor = .darkText
+        self.clientExpirationDateLabel?.textColor = .darkText
+        self.serverExpirationDateLabel?.textColor = .darkText
         
         self.idLabel?.text = nil
         self.sizeLabel?.text = nil
