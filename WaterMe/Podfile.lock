@@ -7,11 +7,14 @@ PODS:
   - Realm/Headers (2.7.0)
   - RealmSwift (2.7.0):
     - Realm (= 2.7.0)
+  - Result (3.2.2)
   - TPInAppReceipt (1.1.4)
   - WaterMeData (1.0.0):
     - RealmSwift
+    - Result (~> 3.2.2)
     - XCGLogger (~> 5.0.1)
   - WaterMeStore (1.0.0):
+    - Result (~> 3.2.2)
     - XCGLogger (~> 5.0.1)
   - XCGLogger (5.0.1):
     - XCGLogger/Core (= 5.0.1)
@@ -20,6 +23,7 @@ PODS:
 
 DEPENDENCIES:
   - RealmSwift
+  - Result (~> 3.2.2)
   - TPInAppReceipt
   - WaterMeData (from `WaterMeData`)
   - WaterMeStore (from `WaterMeStore`)
@@ -35,11 +39,12 @@ SPEC CHECKSUMS:
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   Realm: 07e5d3a9e0e41d65fd5f9f05150ed6295d0f093b
   RealmSwift: 6d06425d3900c86473c4f323bf6949b43fca22bc
+  Result: 4edd39003fdccf281d418ee1b006571f70123250
   TPInAppReceipt: df20c542f4ecadd6b357185635b283ec03ff50b6
-  WaterMeData: 3221922e5397b2ebdca0386c537b9ad7ea546b14
-  WaterMeStore: ffc7e41a52946a21a49678a32c6e8c45d36bf0aa
+  WaterMeData: 611a676d812d920dcc1d6a1dd6a9993a71698735
+  WaterMeStore: a9f2d84844aecb6d02663e36bc479117bc212b02
   XCGLogger: 0b43697155d41e4a1b15fc776f319c2141646b09
 
-PODFILE CHECKSUM: e436f8f843fb34d27df8e554d41ac7db6a41f9ca
+PODFILE CHECKSUM: f4cdd6083bb96665e17ff155bb7d54fa29782958
 
 COCOAPODS: 1.2.1

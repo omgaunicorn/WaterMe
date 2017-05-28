@@ -8,7 +8,7 @@
 
 import StoreKit
 
-public struct Subscription {
+public struct UnpurchasedSubscription {
     
     public enum Level {
         case free, basic(productIdentifier: String), pro(productIdentifier: String)
@@ -31,17 +31,17 @@ public struct Subscription {
 }
 
 public protocol HasSubscriptionType {
-    var subscription: Subscription! { get set }
+    var subscription: UnpurchasedSubscription! { get set }
 }
 
 public extension HasSubscriptionType {
-    public mutating func configure(with subscription: Subscription) {
+    public mutating func configure(with subscription: UnpurchasedSubscription) {
         self.subscription = subscription
     }
 }
 
-extension Subscription.Level: Comparable {
-    public static func == (lhs: Subscription.Level, rhs: Subscription.Level) -> Bool {
+extension UnpurchasedSubscription.Level: Comparable {
+    public static func == (lhs: UnpurchasedSubscription.Level, rhs: UnpurchasedSubscription.Level) -> Bool {
         switch lhs {
         case .free:
             guard case .free = rhs else { return false }
@@ -54,7 +54,7 @@ extension Subscription.Level: Comparable {
             return lhsPID == rhsPID
         }
     }
-    public static func < (lhs: Subscription.Level, rhs:Subscription.Level) -> Bool {
+    public static func < (lhs: UnpurchasedSubscription.Level, rhs:UnpurchasedSubscription.Level) -> Bool {
         switch rhs {
         case .free:
             return false
@@ -71,7 +71,7 @@ extension Subscription.Level: Comparable {
     }
 }
 
-public extension Subscription.Level {
+public extension UnpurchasedSubscription.Level {
     public init?(productIdentifier: String?) {
         guard let id = productIdentifier else { self = .free; return; }
         switch id {
@@ -93,8 +93,8 @@ public extension Subscription.Level {
     }
 }
 
-extension Subscription.Price: Comparable {
-    public static func == (lhs: Subscription.Price, rhs: Subscription.Price) -> Bool {
+extension UnpurchasedSubscription.Price: Comparable {
+    public static func == (lhs: UnpurchasedSubscription.Price, rhs: UnpurchasedSubscription.Price) -> Bool {
         switch lhs {
         case .free:
             guard case .free = rhs else { return false }
@@ -104,7 +104,7 @@ extension Subscription.Price: Comparable {
             return lhsPrice == rhsPrice
         }
     }
-    public static func < (lhs: Subscription.Price, rhs:Subscription.Price) -> Bool {
+    public static func < (lhs: UnpurchasedSubscription.Price, rhs:UnpurchasedSubscription.Price) -> Bool {
         return lhs.doubleValue < rhs.doubleValue
     }
     private var doubleValue: Double {
@@ -117,7 +117,7 @@ extension Subscription.Price: Comparable {
     }
 }
 
-internal extension Subscription.Period {
+internal extension UnpurchasedSubscription.Period {
     internal init?(productIdentifier: String) {
         if productIdentifier.contains("monthly") {
             self = .month
@@ -129,9 +129,9 @@ internal extension Subscription.Period {
     }
 }
 
-public extension Subscription {
-    public static func free() -> Subscription {
-        return Subscription(
+public extension UnpurchasedSubscription {
+    public static func free() -> UnpurchasedSubscription {
+        return UnpurchasedSubscription(
             period: .none,
             level: .free,
             localizedTitle: "WaterMe Free",

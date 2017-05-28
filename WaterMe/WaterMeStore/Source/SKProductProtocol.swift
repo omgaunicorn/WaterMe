@@ -18,16 +18,16 @@ internal protocol SKProductProtocol {
 
 extension SKProduct: SKProductProtocol {}
 
-internal extension Subscription {
-    internal static func subscriptions(from products: [SKProductProtocol]) -> [Subscription] {
-        let subscriptions = products.flatMap() { product -> Subscription? in
-            return Subscription(product: product)
+internal extension UnpurchasedSubscription {
+    internal static func subscriptions(from products: [SKProductProtocol]) -> [UnpurchasedSubscription] {
+        let subscriptions = products.flatMap() { product -> UnpurchasedSubscription? in
+            return UnpurchasedSubscription(product: product)
         }
-        return subscriptions + [Subscription.free()]
+        return subscriptions + [UnpurchasedSubscription.free()]
     }
     internal init?(product: SKProductProtocol) {
-        guard let level = Subscription.Level(productIdentifier: product.productIdentifier),
-            let period = Subscription.Period(productIdentifier: product.productIdentifier) else { return nil }
+        guard let level = UnpurchasedSubscription.Level(productIdentifier: product.productIdentifier),
+            let period = UnpurchasedSubscription.Period(productIdentifier: product.productIdentifier) else { return nil }
         self.period = period
         self.level = level
         self.localizedTitle = product.localizedTitle

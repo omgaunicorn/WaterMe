@@ -6,10 +6,13 @@
 //
 //
 
+import Result
 import StoreKit
 
+public typealias SubscriptionRestoreResult = Result<Void, AnyError>
+
 public protocol SubscriptionRestoreType: Resettable {
-    @discardableResult func start(completionHandler: @escaping (Result<Void>) -> Void) -> Bool
+    @discardableResult func start(completionHandler: @escaping (SubscriptionRestoreResult) -> Void) -> Bool
 }
 
 public protocol HasSubscriptionRestoreType {
@@ -26,14 +29,14 @@ public extension HasSubscriptionRestoreType {
 
 public class SubscriptionRestorer: NSObject, SubscriptionRestoreType, SKPaymentTransactionObserver {
     
-    private var completionHandler: ((Result<Void>) -> Void)?
+    private var completionHandler: ((SubscriptionRestoreResult) -> Void)?
     
     public override init() {
         super.init()
         SKPaymentQueue.default().add(self) // add queue now to allow unwanted transactions to flow through. hacky, but needed for now
     }
     
-    public func start(completionHandler: @escaping (Result<Void>) -> Void) -> Bool {
+    public func start(completionHandler: @escaping (SubscriptionRestoreResult) -> Void) -> Bool {
         guard self.completionHandler == nil else { return false }
         log.debug("Started restoring purchases")
         self.completionHandler = completionHandler
@@ -55,7 +58,7 @@ public class SubscriptionRestorer: NSObject, SubscriptionRestoreType, SKPaymentT
             return
         }
         self.reset()
-        completionHandler(.error(error))
+        completionHandler(.failure(error as! AnyError))
     }
     
     public func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {

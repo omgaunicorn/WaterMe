@@ -2,6 +2,7 @@ target 'WaterMe' do
 	platform :ios, '10.3'
 	use_frameworks!
 	
+	pod 'Result', '~> 3.2.2'
 	pod 'RealmSwift'
 	pod 'XCGLogger', '~> 5.0.1'
 	pod 'TPInAppReceipt'
@@ -13,6 +14,7 @@ target 'AdminConsole' do
 	platform :ios, '10.3'
 	use_frameworks!
 	
+	pod 'Result', '~> 3.2.2'
 	pod 'RealmSwift'
 	pod 'XCGLogger', '~> 5.0.1'
 	pod 'WaterMeData', :path => 'WaterMeData'

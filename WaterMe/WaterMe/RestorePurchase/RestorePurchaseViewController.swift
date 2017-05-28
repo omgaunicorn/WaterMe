@@ -34,7 +34,7 @@ class RestorePurchaseViewController: UIViewController, HasSubscriptionRestoreTyp
             switch result {
             case .success:
                 self.tempLabel?.text = "Purchases Restored. Now need to analyze receipt"
-            case .error(let error):
+            case .failure(let error):
                 self.tempLabel?.text = error.localizedDescription
             }
         }

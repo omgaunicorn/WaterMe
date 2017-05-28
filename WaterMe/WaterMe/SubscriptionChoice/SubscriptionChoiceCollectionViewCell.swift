@@ -35,7 +35,7 @@ class SubscriptionChoiceCollectionViewCell: UICollectionViewCell {
         return nf
     }()
     
-    var model: Subscription? {
+    var model: UnpurchasedSubscription? {
         didSet {
             guard let model = self.model else { self.recycle(); return; }
             switch model.price {
@@ -70,7 +70,7 @@ class SubscriptionChoiceCollectionViewCell: UICollectionViewCell {
     
 }
 
-fileprivate extension Subscription.Period {
+fileprivate extension UnpurchasedSubscription.Period {
     fileprivate var localizedString: String {
         switch self {
         case .month:

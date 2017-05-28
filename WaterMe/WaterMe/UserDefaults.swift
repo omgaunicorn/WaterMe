@@ -51,10 +51,10 @@ extension UserDefaults {
         }
     }
     
-    var subscriptionLevel: Subscription.Level {
+    var subscriptionLevel: UnpurchasedSubscription.Level {
         get {
             let productID = self.object(forKey: Constants.kSubscriptionProductIdentifierKey) as? String
-            let level = Subscription.Level(productIdentifier: productID)
+            let level = UnpurchasedSubscription.Level(productIdentifier: productID)
             return level ?? .free
         }
         set {

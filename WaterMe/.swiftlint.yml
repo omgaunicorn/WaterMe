@@ -24,6 +24,9 @@ opt_in_rules:
 force_cast: warning
 force_try: warning
 
+large_tuple:
+    warning: 4
+    error: 10
 trailing_comma:
     mandatory_comma: false
 excluded:

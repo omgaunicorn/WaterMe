@@ -9,18 +9,18 @@
 import XCGLogger
 import StoreKit
 
-public protocol SubscriptionPurchaseType: Resettable {
-    var subscription: Subscription { get }
-    init?(itemToPurchase: Subscription)
+public protocol UnpurchasedSubscriptionPurchaseType: Resettable {
+    var subscription: UnpurchasedSubscription { get }
+    init?(itemToPurchase: UnpurchasedSubscription)
     @discardableResult func start(completionHandler: @escaping (PurchaseResult) -> Void) -> Bool
 }
 
-public protocol HasSubscriptionPurchaseType {
-    var subscriptionPurchaser: SubscriptionPurchaseType! { get set }
+public protocol HasUnpurchasedSubscriptionPurchaseType {
+    var subscriptionPurchaser: UnpurchasedSubscriptionPurchaseType! { get set }
 }
 
-public extension HasSubscriptionPurchaseType {
-    public mutating func configure(with subscriptionPurchaser: SubscriptionPurchaseType?) {
+public extension HasUnpurchasedSubscriptionPurchaseType {
+    public mutating func configure(with subscriptionPurchaser: UnpurchasedSubscriptionPurchaseType?) {
         if let subscriptionPurchaser = subscriptionPurchaser {
             self.subscriptionPurchaser = subscriptionPurchaser
         }
@@ -28,17 +28,17 @@ public extension HasSubscriptionPurchaseType {
 }
 
 public enum PurchaseResult {
-    case failed(Error, Subscription), deferred(Subscription), success(Subscription)
+    case failed(Error, UnpurchasedSubscription), deferred(UnpurchasedSubscription), success(UnpurchasedSubscription)
 }
 
-public class SubscriptionPurchaser: NSObject, SubscriptionPurchaseType, SKPaymentTransactionObserver {
+public class UnpurchasedSubscriptionPurchaser: NSObject, UnpurchasedSubscriptionPurchaseType, SKPaymentTransactionObserver {
     
-    public let subscription: Subscription
+    public let subscription: UnpurchasedSubscription
     
     private let productToPurchase: SKProduct
     private var completionHandler: ((PurchaseResult) -> Void)? // if nil we have not started yet
     
-    public required init?(itemToPurchase: Subscription) {
+    public required init?(itemToPurchase: UnpurchasedSubscription) {
         guard let productToPurchase = itemToPurchase.product else { return nil }
         self.productToPurchase = productToPurchase
         self.subscription = itemToPurchase

@@ -80,7 +80,7 @@ class RouterViewController: UIViewController {
             let basicRC = BasicController(kind: .sync(user))
             self.receipt = receiptRC
             self.basic = basicRC
-            if let level = Subscription.Level(productIdentifier: receiptRC.receipt.productIdentifier), case .pro = level {
+            if let level = UnpurchasedSubscription.Level(productIdentifier: receiptRC.receipt.productIdentifier), case .pro = level {
                 let proRC = ProController(user: user)
                 self.pro = proRC
             }
@@ -113,7 +113,7 @@ class RouterViewController: UIViewController {
     @IBAction private func premiumButtonTapped(_ sender: NSObject?) {
         let sender = sender as? UIControl
         sender?.isEnabled = false
-        let sl = SubscriptionLoader()
+        let sl = UnpurchasedSubscriptionDownloader()
         sl.start() { _ in
             sender?.isEnabled = true
             let vc = SubscriptionChoiceViewController.newVC(subscriptionLoader: sl)

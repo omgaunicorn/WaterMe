@@ -9,9 +9,9 @@
 import WaterMeStore
 import UIKit
 
-class SubscriptionChoiceViewController: UIViewController, HasSubscriptionLoaderType {
+class SubscriptionChoiceViewController: UIViewController, HasUnpurchasedSubscriptionDownloaderType {
     
-    class func newVC(subscriptionLoader: SubscriptionLoaderType? = nil) -> SubscriptionChoiceViewController {
+    class func newVC(subscriptionLoader: UnpurchasedSubscriptionDownloaderType? = nil) -> SubscriptionChoiceViewController {
         let sb = UIStoryboard(name: "SubscriptionChoice", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         var vc = sb.instantiateInitialViewController() as! SubscriptionChoiceViewController
@@ -26,7 +26,7 @@ class SubscriptionChoiceViewController: UIViewController, HasSubscriptionLoaderT
         }
     }
     
-    lazy var subscriptionLoader: SubscriptionLoaderType = SubscriptionLoader()
+    lazy var subscriptionLoader: UnpurchasedSubscriptionDownloaderType = UnpurchasedSubscriptionDownloader()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +39,7 @@ class SubscriptionChoiceViewController: UIViewController, HasSubscriptionLoaderT
         
         // register for events from the collection view controller
         self.collectionViewController?.subscriptionSelected = { [weak self] subscription in
-            let purchaser = SubscriptionPurchaser(itemToPurchase: subscription)!
+            let purchaser = UnpurchasedSubscriptionPurchaser(itemToPurchase: subscription)!
             let vc = SubscriptionMigrationViewController.newVC(subscriptionPurchaser: purchaser)
             self?.show(vc, sender: self)
         }
@@ -49,7 +49,7 @@ class SubscriptionChoiceViewController: UIViewController, HasSubscriptionLoaderT
             switch result {
             case .success(let results):
                 self.collectionViewController?.data = results
-            case .error:
+            case .failure:
                 self.collectionViewController?.data = []
             }
             self.collectionViewController?.reload()

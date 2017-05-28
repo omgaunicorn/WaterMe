@@ -11,9 +11,9 @@ import UIKit
 
 class SubscriptionChoiceCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    var data: [Subscription] = []
+    var data: [UnpurchasedSubscription] = []
     
-    var subscriptionSelected: ((Subscription) -> Void)?
+    var subscriptionSelected: ((UnpurchasedSubscription) -> Void)?
     
     func reload() {
         self.collectionView?.reloadData()

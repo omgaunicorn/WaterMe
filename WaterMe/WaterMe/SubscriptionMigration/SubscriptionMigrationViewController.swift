@@ -9,9 +9,9 @@
 import WaterMeStore
 import UIKit
 
-class SubscriptionMigrationViewController: UIViewController, HasSubscriptionPurchaseType {
+class SubscriptionMigrationViewController: UIViewController, HasUnpurchasedSubscriptionPurchaseType {
     
-    class func newVC(subscriptionPurchaser: SubscriptionPurchaseType) -> SubscriptionMigrationViewController {
+    class func newVC(subscriptionPurchaser: UnpurchasedSubscriptionPurchaseType) -> SubscriptionMigrationViewController {
         let sb = UIStoryboard(name: "SubscriptionMigration", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         var vc = sb.instantiateInitialViewController() as! SubscriptionMigrationViewController
@@ -21,7 +21,7 @@ class SubscriptionMigrationViewController: UIViewController, HasSubscriptionPurc
     
     @IBOutlet private weak var tempLabel: UILabel?
     
-    var subscriptionPurchaser: SubscriptionPurchaseType!
+    var subscriptionPurchaser: UnpurchasedSubscriptionPurchaseType!
     
     override func viewDidLoad() {
         super.viewDidLoad()

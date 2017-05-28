@@ -13,7 +13,3 @@ internal let log = XCGLogger.default
 public protocol Resettable {
     func reset()
 }
-
-public enum Result<T> {
-    case error(Error), success(T)
-}
