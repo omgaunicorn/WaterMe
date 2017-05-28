@@ -13,8 +13,15 @@ import RealmSwift
 
 class ReceiptWatcher {
     
+    var inProgressChanged: ((Int) -> Void)?
+    
     private let adminController = AdminRealmController()
     private var receiptControllers = [String : ReceiptController]()
+    private var tasksInProgress = [String : Void]() {
+        didSet {
+            self.inProgressChanged?(self.tasksInProgress.count)
+        }
+    }
     
     init() {
         let receipts = self.adminController.allReceiptFiles()
@@ -38,28 +45,34 @@ class ReceiptWatcher {
         guard self.receiptControllers[owningUserID] == nil else { return }
         let receiptController = ReceiptController(user: user, overrideUserPath: owningUserID)
         self.receiptControllers[owningUserID] = receiptController
-        receiptController.receiptChanged = { receipt, controller in
-            let lastCheckedInterval = receipt.server_lastVerifyDate.timeIntervalSinceNow
-            guard lastCheckedInterval <= -60 else {
-                print("Not enough time has passed since last verification")
-                return
+        receiptController.receiptChanged = { [weak self] receipt, controller in
+            self?.verify(receipt: receipt, from: controller)
+        }
+    }
+    
+    private func verify(receipt: Receipt, from controller: ReceiptController) {
+        let lastCheckedInterval = receipt.server_lastVerifyDate.timeIntervalSinceNow
+        guard lastCheckedInterval <= -60 else {
+            print("Not enough time has passed since last verification")
+            return
+        }
+        guard let receiptData = receipt.pkcs7Data else {
+            print("No receipt data found. Can't check receipt")
+            return
+        }
+        self.tasksInProgress[controller.overridenUserPath!] = ()
+        URLSession.shared.validate(receiptData: receiptData) { result in
+            switch result {
+            case .success(let receiptStatus, let subscription):
+                print("updating receipt in realm: \(receiptStatus) \(subscription)")
+                controller.__admin_console_only_UpdateReceipt(appleStatusCode: receiptStatus,
+                                                              productID: subscription?.productID,
+                                                              purchaseDate: subscription?.purchaseDate,
+                                                              expirationDate: subscription?.expirationDate)
+            case .failure(let error):
+                print(error)
             }
-            guard let receiptData = receipt.pkcs7Data else {
-                print("No receipt data found. Can't check receipt")
-                return
-            }
-            URLSession.shared.validate(receiptData: receiptData) { result in
-                switch result {
-                case .success(let receiptStatus, let subscription):
-                    print("updating receipt in realm: \(receiptStatus) \(subscription)")
-                    controller.__admin_console_only_UpdateReceipt(appleStatusCode: receiptStatus,
-                                                                  productID: subscription?.productID,
-                                                                  purchaseDate: subscription?.purchaseDate,
-                                                                  expirationDate: subscription?.expirationDate)
-                case .failure(let error):
-                    print(error)
-                }
-            }
+            self.tasksInProgress[controller.overridenUserPath!] = nil
         }
     }
     
@@ -108,15 +121,15 @@ fileprivate extension URLSession {
         request.httpBody = jsonData
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let response = response as? HTTPURLResponse else {
-                completionHandler?(.failure(AnyError(error!)))
+                DispatchQueue.main.async { completionHandler?(.failure(AnyError(error!))) }
                 return
             }
             guard response.statusCode == 200 else {
-                completionHandler?(.failure(AnyError("Unexpected HTTPResponse: \(response)")))
+                DispatchQueue.main.async { completionHandler?(.failure(AnyError("Unexpected HTTPResponse: \(response)"))) }
                 return
             }
             guard let data = data else {
-                completionHandler?(.failure(AnyError("No data received in response")))
+                DispatchQueue.main.async { completionHandler?(.failure(AnyError("No data received in response"))) }
                 return
             }
             guard
@@ -124,7 +137,7 @@ fileprivate extension URLSession {
                 let json = _json,
                 let status = json.value(forKeyPath: "status") as? Int
             else {
-                completionHandler?(.failure(AnyError("Unable to convert response data into JSON")))
+                DispatchQueue.main.async { completionHandler?(.failure(AnyError("Unable to convert response data into JSON"))) }
                 return
             }
             guard status != 21007 else {
@@ -134,7 +147,7 @@ fileprivate extension URLSession {
                 return
             }
             guard let purchasesArray = json.value(forKeyPath: "receipt.in_app") as? NSArray else {
-                completionHandler?(.failure(AnyError("Unable to convert response data into JSON")))
+                DispatchQueue.main.async { completionHandler?(.failure(AnyError("Unable to convert response data into JSON"))) }
                 return
             }
             let now = Date()
@@ -142,7 +155,7 @@ fileprivate extension URLSession {
                 .flatMap({ PurchasedSubscription(json: $0) })
                 .filter({ $0.expirationDate >= now })
                 .sorted(by: { $0.0.expirationDate > $0.1.expirationDate })
-            completionHandler?(.success(receiptStatus: status, currentSubscription: validPurchases.first))
+            DispatchQueue.main.async { completionHandler?(.success(receiptStatus: status, currentSubscription: validPurchases.first)) }
         }
         task.resume()
     }

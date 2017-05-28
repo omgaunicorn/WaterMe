@@ -163,6 +163,15 @@
                                             <segue destination="PXy-RK-EFa" kind="embed" id="Red-r5-46Q"/>
                                         </connections>
                                     </containerView>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gzO-m2-vwm">
+                                        <rect key="frame" x="387" y="58" width="250" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="Flk-U9-DVH"/>
+                                        </constraints>
+                                        <connections>
+                                            <segue destination="FRZ-KI-L97" kind="embed" id="69I-an-lcm"/>
+                                        </connections>
+                                    </containerView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="HKh-Mg-mp4">
                                         <rect key="frame" x="846" y="20" width="158" height="134"/>
                                         <subviews>
@@ -196,10 +205,13 @@
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
+                                    <constraint firstItem="gzO-m2-vwm" firstAttribute="centerX" secondItem="6xm-6Q-JiC" secondAttribute="centerX" id="50J-9N-Sqq"/>
                                     <constraint firstAttribute="bottom" secondItem="5iP-Pt-zXu" secondAttribute="bottom" constant="20" symbolic="YES" id="7bD-cy-khj"/>
                                     <constraint firstAttribute="trailing" secondItem="HKh-Mg-mp4" secondAttribute="trailing" constant="20" symbolic="YES" id="IGc-hf-Pmn"/>
                                     <constraint firstItem="5iP-Pt-zXu" firstAttribute="top" secondItem="rHX-Zf-tef" secondAttribute="top" constant="20" symbolic="YES" id="MhZ-WE-kfU"/>
                                     <constraint firstItem="6xm-6Q-JiC" firstAttribute="centerX" secondItem="rHX-Zf-tef" secondAttribute="centerX" id="PvE-Wl-LFu"/>
+                                    <constraint firstItem="gzO-m2-vwm" firstAttribute="top" secondItem="6xm-6Q-JiC" secondAttribute="bottom" constant="8" symbolic="YES" id="UiL-q4-fDb"/>
+                                    <constraint firstItem="gzO-m2-vwm" firstAttribute="height" secondItem="6xm-6Q-JiC" secondAttribute="height" id="VW4-97-Iqc"/>
                                     <constraint firstItem="HKh-Mg-mp4" firstAttribute="top" secondItem="rHX-Zf-tef" secondAttribute="top" constant="20" symbolic="YES" id="gHB-Yn-QSW"/>
                                     <constraint firstItem="5iP-Pt-zXu" firstAttribute="leading" secondItem="rHX-Zf-tef" secondAttribute="leading" constant="20" symbolic="YES" id="hfo-hU-Qkj"/>
                                     <constraint firstItem="6xm-6Q-JiC" firstAttribute="top" secondItem="rHX-Zf-tef" secondAttribute="top" constant="20" symbolic="YES" id="yet-cy-qXQ"/>
@@ -272,6 +284,10 @@
         <scene sceneID="ac3-xb-ToD">
             <objects>
                 <viewController id="gja-0Q-gL3" customClass="UserSummaryViewController" customModule="AdminConsole" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1My-9X-OTa"/>
+                        <viewControllerLayoutGuide type="bottom" id="On3-vz-6g1"/>
+                    </layoutGuides>
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="Yn7-Lw-5X4">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="180"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -429,21 +445,25 @@
         <scene sceneID="Vfr-sM-Yam">
             <objects>
                 <viewController id="PXy-RK-EFa" customClass="SynchronizingViewController" customModule="AdminConsole" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Nrw-un-zcf"/>
+                        <viewControllerLayoutGuide type="bottom" id="xK3-2C-Bs2"/>
+                    </layoutGuides>
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="kg9-qc-jNq">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="30"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VpL-2o-tab">
-                                <rect key="frame" x="14.5" y="0.0" width="171.5" height="20"/>
+                                <rect key="frame" x="14.5" y="0.0" width="171.5" height="30"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kwm-M1-g9Q">
-                                        <rect key="frame" x="0.0" y="0.0" width="171.5" height="20"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="171.5" height="30"/>
                                         <subviews>
                                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Pqx-dC-SSn">
-                                                <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="20" height="30"/>
                                             </activityIndicatorView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Synchronizing..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vje-E8-SyW">
-                                                <rect key="frame" x="28" y="0.0" width="143.5" height="20"/>
+                                                <rect key="frame" x="28" y="0.0" width="143.5" height="30"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -456,15 +476,15 @@
                                     <constraint firstAttribute="bottom" secondItem="kwm-M1-g9Q" secondAttribute="bottom" id="5mh-pj-Sga"/>
                                     <constraint firstItem="kwm-M1-g9Q" firstAttribute="top" secondItem="VpL-2o-tab" secondAttribute="top" id="8Ym-XC-Adh"/>
                                     <constraint firstAttribute="trailing" secondItem="kwm-M1-g9Q" secondAttribute="trailing" id="Lru-Pm-5hA"/>
-                                    <constraint firstAttribute="height" constant="20" placeholder="YES" id="R5D-Dc-Skv"/>
                                     <constraint firstItem="kwm-M1-g9Q" firstAttribute="leading" secondItem="VpL-2o-tab" secondAttribute="leading" id="vN5-V1-Zcs"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="VpL-2o-tab" firstAttribute="centerX" secondItem="kg9-qc-jNq" secondAttribute="centerX" id="SX8-3c-HMd"/>
-                            <constraint firstItem="VpL-2o-tab" firstAttribute="top" secondItem="kg9-qc-jNq" secondAttribute="topMargin" id="e4m-yF-48D"/>
+                            <constraint firstItem="VpL-2o-tab" firstAttribute="centerY" secondItem="kg9-qc-jNq" secondAttribute="centerY" id="6AC-sq-Zx2"/>
+                            <constraint firstItem="VpL-2o-tab" firstAttribute="height" secondItem="kg9-qc-jNq" secondAttribute="height" id="um8-eO-Bcv"/>
+                            <constraint firstItem="VpL-2o-tab" firstAttribute="centerX" secondItem="kg9-qc-jNq" secondAttribute="centerX" id="xym-DJ-g13"/>
                         </constraints>
                     </view>
                     <connections>
@@ -475,6 +495,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bPs-Ou-QUl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1322" y="-120"/>
+        </scene>
+        <!--Receipt Verifying View Controller-->
+        <scene sceneID="rq3-lA-FvU">
+            <objects>
+                <viewController id="FRZ-KI-L97" customClass="ReceiptVerifyingViewController" customModule="AdminConsole" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="uBt-4u-Vwa">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="30"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3g0-jv-b3x">
+                                <rect key="frame" x="22" y="0.0" width="206" height="30"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="rHR-Ay-bCM">
+                                        <rect key="frame" x="0.0" y="0.0" width="206" height="30"/>
+                                        <subviews>
+                                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="UIn-LF-tQc">
+                                                <rect key="frame" x="0.0" y="0.0" width="20" height="30"/>
+                                            </activityIndicatorView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verifying Receipts..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DDB-ja-qKl">
+                                                <rect key="frame" x="28" y="0.0" width="178" height="30"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="rHR-Ay-bCM" firstAttribute="top" secondItem="3g0-jv-b3x" secondAttribute="top" id="8WU-PC-odV"/>
+                                    <constraint firstAttribute="bottom" secondItem="rHR-Ay-bCM" secondAttribute="bottom" id="hUi-tZ-mIu"/>
+                                    <constraint firstAttribute="trailing" secondItem="rHR-Ay-bCM" secondAttribute="trailing" id="qhN-LW-GpZ"/>
+                                    <constraint firstItem="rHR-Ay-bCM" firstAttribute="leading" secondItem="3g0-jv-b3x" secondAttribute="leading" id="tWB-0B-W6Y"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3g0-jv-b3x" firstAttribute="height" secondItem="uBt-4u-Vwa" secondAttribute="height" id="3aH-4G-m0Z"/>
+                            <constraint firstItem="3g0-jv-b3x" firstAttribute="centerY" secondItem="uBt-4u-Vwa" secondAttribute="centerY" id="IFN-Df-rJC"/>
+                            <constraint firstItem="3g0-jv-b3x" firstAttribute="centerX" secondItem="uBt-4u-Vwa" secondAttribute="centerX" id="wzd-ka-ALU"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="label" destination="DDB-ja-qKl" id="jtS-4i-oIc"/>
+                        <outlet property="spinner" destination="UIn-LF-tQc" id="cUe-Ib-Gop"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jWB-OG-Lst" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1481" y="-120"/>
         </scene>
     </scenes>
 </document>

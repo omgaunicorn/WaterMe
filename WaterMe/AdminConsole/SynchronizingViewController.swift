@@ -9,10 +9,7 @@
 import RealmSwift
 import UIKit
 
-class SynchronizingViewController: UIViewController {
-    
-    @IBOutlet private weak var spinner: UIActivityIndicatorView?
-    @IBOutlet private weak var label: UILabel?
+class SynchronizingViewController: LoadingViewController {
     
     private let adminController = AdminRealmController()
     
@@ -47,13 +44,13 @@ class SynchronizingViewController: UIViewController {
         }
     }
     
-    private func start() {
-        self.spinner?.startAnimating()
+    override func start() {
+        super.start()
         self.label?.text = "Synchronizing..."
     }
     
-    private func stop() {
-        self.spinner?.stopAnimating()
+    override func stop() {
+        super.stop()
         self.label?.text = "Synchronized"
     }
     
