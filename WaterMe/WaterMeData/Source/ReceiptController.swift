@@ -70,13 +70,16 @@ public class ReceiptController {
         return receipt
     }
     
-    public func updateReceipt(productID: String?, purchaseDate: Date?, expirationDate: Date?) {
+    public func updateReceipt(pkcs7Data: Data, productID: String?, purchaseDate: Date?, expirationDate: Date?) {
         let receipt = self.createReceiptIfNeeded()
         let realm = self.realm
+        guard realm.isInWriteTransaction == false else { return }
         realm.beginWrite()
-        receipt.server_productID = productID
-        receipt.server_purchaseDate = purchaseDate
-        receipt.server_expirationDate = expirationDate
+        receipt.pkcs7Data = pkcs7Data
+        receipt.client_productID = productID
+        receipt.client_purchaseDate = purchaseDate
+        receipt.client_expirationDate = expirationDate
+        receipt.client_lastVerifyDate = Date()
         try! realm.commitWrite()
     }
     

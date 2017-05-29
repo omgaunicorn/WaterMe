@@ -34,6 +34,7 @@ public class Receipt: Object {
     internal(set) public dynamic var server_expirationDate: Date?
     
     fileprivate(set) public dynamic var client_originalCreationDate = Date()
+    internal(set) public dynamic var client_lastVerifyDate = Date()
     internal(set) public dynamic var client_productID: String?
     internal(set) public dynamic var client_purchaseDate: Date?
     internal(set) public dynamic var client_expirationDate: Date?
