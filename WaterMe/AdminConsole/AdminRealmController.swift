@@ -98,7 +98,7 @@ class AdminRealmController {
     
     private let config: Realm.Configuration = {
         var c = Realm.Configuration()
-        c.schemaVersion = 9
+        c.schemaVersion = 10
         c.objectTypes = [RealmUser.self, RealmFile.self, Receipt.self, ConsoleError.self]
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         c.fileURL = url.appendingPathComponent("AdminConsole.realm", isDirectory: false)

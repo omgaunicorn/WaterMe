@@ -30,7 +30,6 @@ let log = XCGLogger.default
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
-    let receiptMonitor = ReceiptMonitor()
     let receiptWatcher = ReceiptWatcher()
         
     override init() {

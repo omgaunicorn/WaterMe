@@ -29,39 +29,27 @@ import Foundation
 
 class ReceiptWatcher {
     
+    enum Result {
+        case both(server: PurchasedSubscription, local: PurchasedSubscription), local(PurchasedSubscription), none
+    }
+    
     private var receiptController: ReceiptController?
-    var currentSubscription: PurchasedSubscription? {
-        guard let controller = self.receiptController else { return nil }
-        let receipt = controller.receipt
-        var serverPurchase: PurchasedSubscription?
-        if let pID = receipt.server_productID, let exp = receipt.server_expirationDate, let pur = receipt.server_purchaseDate {
-            serverPurchase = PurchasedSubscription(productID: pID, purchaseDate: pur, expirationDate: exp)
-        }
-        var clientPurchase: PurchasedSubscription?
-        if let pID = receipt.client_productID, let exp = receipt.client_expirationDate, let pur = receipt.client_purchaseDate {
-            clientPurchase = PurchasedSubscription(productID: pID, purchaseDate: pur, expirationDate: exp)
-        }
-        if let clientPurchase = clientPurchase, let serverPurchase = serverPurchase {
-            // if both subscriptions exist, return the one with the longest expiration date
-            if serverPurchase.expirationDate > clientPurchase.expirationDate {
-                return serverPurchase
-            } else {
-                return clientPurchase
-            }
-        } else if let clientPurchase = clientPurchase {
-            // if only the client exists, return the client
-            return clientPurchase
-        } else if let serverPurchase = serverPurchase {
-            // if only the server exists, return the server
-            return serverPurchase
+    
+    var currentSubscription: Result {
+        let receipt = self.receiptController?.receipt
+        let serverPurchase = receipt?.serverPurchasedSubscription
+        let localPurchase = type(of: self).parseReceiptFromDisk()?.1
+        if let localPurchase = localPurchase, let serverPurchase = serverPurchase {
+            return .both(server: serverPurchase, local: localPurchase)
+        } else if let localPurchase = localPurchase {
+            return .local(localPurchase)
         } else {
-            // if neither exist, return NIL
-            return nil
+            return .none
         }
     }
     
     init() {
-        Timer.scheduledTimer(withTimeInterval: 60, repeats: true) { _ in
+        Timer.scheduledTimer(withTimeInterval: 300, repeats: true) { _ in
             self.configureReceiptControllerIfNeeded()
             self.updateRealmReceiptIfNeeded()
         }.fire()
@@ -78,16 +66,24 @@ class ReceiptWatcher {
         }
     }
     
-    private func updateRealmReceiptIfNeeded() {
+    func updateRealmReceiptIfNeeded() {
         guard
             let controller = self.receiptController,
-            controller.receipt.client_lastVerifyDate.timeIntervalSinceNow < -60,
-            let (data, sub) = self.parseReceiptFromDisk()
+            controller.receipt.client_lastVerifyDate.timeIntervalSinceNow < -280,
+            let (data, sub) = type(of: self).parseReceiptFromDisk()
         else { return }
         controller.updateReceipt(pkcs7Data: data, productID: sub.productID, purchaseDate: sub.purchaseDate, expirationDate: sub.expirationDate)
     }
     
-    private func parseReceiptFromDisk() -> (Data, PurchasedSubscription)? {
+    func updateRealmReceipIfPossible() {
+        guard
+            let controller = self.receiptController,
+            let (data, sub) = type(of: self).parseReceiptFromDisk()
+        else { return }
+        controller.updateReceipt(pkcs7Data: data, productID: sub.productID, purchaseDate: sub.purchaseDate, expirationDate: sub.expirationDate)
+    }
+    
+    class func parseReceiptFromDisk() -> (Data, PurchasedSubscription)? {
         guard
             let data = try? InAppReceiptManager.shared.receiptData(),
             let receipt = try? InAppReceiptManager.shared.receipt(),

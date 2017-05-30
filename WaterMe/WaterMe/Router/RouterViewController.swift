@@ -46,22 +46,15 @@ class RouterViewController: UIViewController {
         if self.basic == nil {
             self.startBootSequence()
         }
-//        Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
+        Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: true)
     }
     
     @objc private func timerFired(_ timer: NSObject?) {
-        let appD = UIApplication.shared.delegate as! AppDelegate
-//        let mon = appD.receiptMonitor
-//        if mon.receiptChanged == true {
-//            mon.updateReceipt()
-//        }
-//        
-////        let pID = mon.purchased.level.rawValue
-//        let expDate = mon.purchased.expirationDate
-//        let data = mon.receiptData!
-//        
-//        self.receipt!.updateReceipt(data: data)
-//        print(self.receipt!.receipt)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let receiptWatcher = appDelegate.receiptWatcher
+        
+        let result = receiptWatcher.currentSubscription
+        print(result)
     }
     
     private func startBootSequence() {

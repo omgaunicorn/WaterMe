@@ -49,6 +49,7 @@ class UserTableViewCell: UITableViewCell {
     private let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateStyle = .medium
+        df.timeStyle = .medium
         return df
     }()
     

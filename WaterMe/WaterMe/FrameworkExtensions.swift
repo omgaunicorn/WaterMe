@@ -21,6 +21,8 @@
 //  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import WaterMeStore
+import WaterMeData
 import UIKit
 
 extension Sequence {
@@ -33,5 +35,17 @@ extension UICollectionView {
     func deselectAllItems(animated: Bool) {
         let indexPaths = self.indexPathsForSelectedItems
         indexPaths?.forEach({ self.deselectItem(at: $0, animated: animated) })
+    }
+}
+
+extension Receipt {
+    var serverPurchasedSubscription: PurchasedSubscription? {
+        guard let pID = self.server_productID, let exp = self.server_expirationDate, let pur = self.server_purchaseDate else { return nil }
+        return PurchasedSubscription(productID: pID, purchaseDate: pur, expirationDate: exp)
+    }
+    
+    var clientPurchasedSubscription: PurchasedSubscription? {
+        guard let pID = self.client_productID, let exp = self.client_expirationDate, let pur = self.client_purchaseDate else { return nil }
+        return PurchasedSubscription(productID: pID, purchaseDate: pur, expirationDate: exp)
     }
 }
