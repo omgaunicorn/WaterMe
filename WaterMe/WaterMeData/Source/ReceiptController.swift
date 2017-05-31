@@ -76,10 +76,6 @@ public class ReceiptController {
         guard realm.isInWriteTransaction == false else { return }
         realm.beginWrite()
         receipt.pkcs7Data = pkcs7Data
-        receipt.server_productID = nil
-        receipt.server_expirationDate = nil
-        receipt.server_purchaseDate = nil
-        receipt.server_appleStatusCode = -1
         receipt.client_productID = productID
         receipt.client_purchaseDate = purchaseDate
         receipt.client_expirationDate = expirationDate

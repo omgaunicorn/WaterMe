@@ -21,6 +21,7 @@
 //  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Result
 import TPInAppReceipt
 import RealmSwift
 import WaterMeData
@@ -29,22 +30,28 @@ import Foundation
 
 class ReceiptWatcher {
     
-    enum Result {
-        case both(server: PurchasedSubscription, local: PurchasedSubscription), local(PurchasedSubscription), none
+    enum ReceiptSource {
+        case both(server: PurchasedSubscription, local: PurchasedSubscription), local(PurchasedSubscription)
+    }
+    
+    enum ReceiptError: Error {
+        case noReceiptData, noReceiptObject, noSubscriptionFound
     }
     
     private var receiptController: ReceiptController?
     
-    var currentSubscription: Result {
+    var currentSubscription: Result<ReceiptSource, ReceiptError> {
         let receipt = self.receiptController?.receipt
-        let serverPurchase = receipt?.serverPurchasedSubscription
-        let localPurchase = type(of: self).parseReceiptFromDisk()?.1
-        if let localPurchase = localPurchase, let serverPurchase = serverPurchase {
-            return .both(server: serverPurchase, local: localPurchase)
-        } else if let localPurchase = localPurchase {
-            return .local(localPurchase)
-        } else {
-            return .none
+        let localResult = type(of: self).parseReceiptFromDisk()
+        switch localResult {
+        case .success(_, let localPurchase):
+            if let serverPurchase = receipt?.serverPurchasedSubscription {
+                return .success(.both(server: serverPurchase, local: localPurchase))
+            } else {
+                return .success(.local(localPurchase))
+            }
+        case .failure(let error):
+            return .failure(error)
         }
     }
     
@@ -70,7 +77,7 @@ class ReceiptWatcher {
         guard
             let controller = self.receiptController,
             controller.receipt.client_lastVerifyDate.timeIntervalSinceNow < -280,
-            let (data, sub) = type(of: self).parseReceiptFromDisk()
+            let (data, sub) = type(of: self).parseReceiptFromDisk().value
         else { return }
         controller.updateReceipt(pkcs7Data: data, productID: sub.productID, purchaseDate: sub.purchaseDate, expirationDate: sub.expirationDate)
     }
@@ -78,18 +85,27 @@ class ReceiptWatcher {
     func updateRealmReceipIfPossible() {
         guard
             let controller = self.receiptController,
-            let (data, sub) = type(of: self).parseReceiptFromDisk()
+            let (data, sub) = type(of: self).parseReceiptFromDisk().value
         else { return }
         controller.updateReceipt(pkcs7Data: data, productID: sub.productID, purchaseDate: sub.purchaseDate, expirationDate: sub.expirationDate)
     }
     
-    class func parseReceiptFromDisk() -> (Data, PurchasedSubscription)? {
+    class func parseReceiptFromDisk() -> Result<(Data, PurchasedSubscription), ReceiptError> {
+        guard let data = try? InAppReceiptManager.shared.receiptData() else { return .failure(.noReceiptData) }
+        guard let receipt = try? InAppReceiptManager.shared.receipt() else { return .failure(.noReceiptObject) }
+        let filtered = receipt.purchases.filter() {
+            $0.productIdentifier == WaterMeStore.PrivateKeys.kSubscriptionBasicMonthly ||
+            $0.productIdentifier == WaterMeStore.PrivateKeys.kSubscriptionBasicYearly ||
+            $0.productIdentifier == WaterMeStore.PrivateKeys.kSubscriptionProMonthly ||
+            $0.productIdentifier == WaterMeStore.PrivateKeys.kSubscriptionProYearly
+        }
+        let sorted = filtered.sorted(by: { $0.0.subscriptionExpirationDate >= $0.1.subscriptionExpirationDate })
         guard
-            let data = try? InAppReceiptManager.shared.receiptData(),
-            let receipt = try? InAppReceiptManager.shared.receipt(),
-            let newest = receipt.purchases.sorted(by: { $0.0.subscriptionExpirationDate >= $0.1.subscriptionExpirationDate }).first,
-            let sub = PurchasedSubscription(productID: newest.productIdentifier, purchaseDate: newest.purchaseDate, expirationDate: newest.subscriptionExpirationDate)
-        else { return nil }
-        return (data, sub)
+            let newest = sorted.first,
+            let sub = PurchasedSubscription(productID: newest.productIdentifier,
+                                            purchaseDate: newest.purchaseDate,
+                                            expirationDate: newest.subscriptionExpirationDate)
+        else { return .failure(.noSubscriptionFound) }
+        return .success(data, sub)
     }
 }
