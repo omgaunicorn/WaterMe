@@ -35,14 +35,14 @@ public extension HasBasicController {
 
 public class BasicController {
     
+    // MARK: Initialization
+    
     public class var localRealmExists: Bool {
         let fm = FileManager.default
         let exists = fm.fileExists(atPath: self.localRealmFile.path)
         return exists
     }
-    
-    private static let objectTypes: [Object.Type] = []
-    
+
     public enum Kind {
         case local, sync(SyncUser)
     }
@@ -56,6 +56,8 @@ public class BasicController {
     public init(kind: Kind) {
         self.kind = kind
         var realmConfig = Realm.Configuration()
+        realmConfig.schemaVersion = 4
+        realmConfig.objectTypes = [ReminderVessel.self]
         switch kind {
         case .local:
             try! type(of: self).createLocalRealmDirectoryIfNeeded()
@@ -64,8 +66,6 @@ public class BasicController {
             let url = user.realmURL(withAppName: "WaterMeBasic")
             realmConfig.syncConfiguration = SyncConfiguration(user: user, realmURL: url, enableSSLValidation: true)
         }
-        realmConfig.schemaVersion = RealmSchemaVersion
-        realmConfig.objectTypes = type(of: self).objectTypes
         self.config = realmConfig
     }
     
@@ -83,5 +83,13 @@ public class BasicController {
         if self.localRealmExists == false {
             try FileManager.default.createDirectory(at: self.localRealmDirectory, withIntermediateDirectories: true, attributes: nil)
         }
+    }
+    
+    // MARK: WaterMeClient API
+    
+    public func allVessels() -> AnyRealmCollection<ReminderVessel> {
+        let realm = self.realm
+        let vessels = realm.objects(ReminderVessel.self).sorted(byKeyPath: #keyPath(ReminderVessel.displayName))
+        return AnyRealmCollection(vessels)
     }
 }

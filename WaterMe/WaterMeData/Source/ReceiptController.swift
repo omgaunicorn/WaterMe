@@ -25,8 +25,6 @@ import RealmSwift
 
 public class ReceiptController {
     
-    private static let objectTypes: [Object.Type] = [Receipt.self]
-    
     public let user: SyncUser
     public let overridenUserPath: String?
     public let config: Realm.Configuration
@@ -37,10 +35,10 @@ public class ReceiptController {
     public init(user: SyncUser, overrideUserPath: String? = nil) {
         self.user = user
         var realmConfig = Realm.Configuration()
+        realmConfig.schemaVersion = 4
+        realmConfig.objectTypes = [Receipt.self]
         let url = user.realmURL(withAppName: "WaterMeReceipt", userPath: overrideUserPath)
         realmConfig.syncConfiguration = SyncConfiguration(user: user, realmURL: url, enableSSLValidation: true)
-        realmConfig.schemaVersion = RealmSchemaVersion
-        realmConfig.objectTypes = type(of: self).objectTypes
         self.overridenUserPath = overrideUserPath
         self.config = realmConfig
     }

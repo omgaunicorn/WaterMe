@@ -36,8 +36,6 @@ public extension HasProController {
 
 public class ProController {
     
-    private static let objectTypes: [Object.Type] = []
-    
     public let config: Realm.Configuration
     public var realm: Realm {
         return try! Realm(configuration: self.config)
@@ -45,10 +43,10 @@ public class ProController {
     
     public init(user: SyncUser) {
         var realmConfig = Realm.Configuration()
+        realmConfig.schemaVersion = 4
+        realmConfig.objectTypes = []
         let url = user.realmURL(withAppName: "WaterMePro")
         realmConfig.syncConfiguration = SyncConfiguration(user: user, realmURL: url, enableSSLValidation: true)
-        realmConfig.schemaVersion = RealmSchemaVersion
-        realmConfig.objectTypes = type(of: self).objectTypes
         self.config = realmConfig
     }
 }

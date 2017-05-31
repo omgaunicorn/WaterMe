@@ -26,8 +26,6 @@ import RealmSwift
 import XCGLogger
 import CloudKit
 
-internal let RealmSchemaVersion: UInt64 = 3
-
 internal let log = XCGLogger.default
 
 internal extension URL {

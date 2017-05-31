@@ -43,6 +43,9 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "WaterMe"
+        
+        let vessels = self.basicRC.allVessels()
+        print(vessels)
     }
     
 }
