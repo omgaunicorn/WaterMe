@@ -37,15 +37,19 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
         return navVC
     }
     
-    var basicRC: BasicController!
+    /*@IBOutlet*/ private weak var collectionVC: ReminderVesselCollectionViewController!
+    
+    var basicRC: BasicController?
     var proRC: ProController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "WaterMe"
+        log.debug("")
         
-        let vessels = self.basicRC.allVessels()
-        print(vessels)
+        self.collectionVC = self.childViewControllers.first()!
+        self.collectionVC.configure(with: self.basicRC)
+        
+        self.title = "WaterMe"
     }
     
 }

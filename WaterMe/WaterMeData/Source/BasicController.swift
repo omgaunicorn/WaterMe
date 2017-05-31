@@ -24,11 +24,12 @@
 import RealmSwift
 
 public protocol HasBasicController {
-    var basicRC: BasicController! { get set }
+    var basicRC: BasicController? { get set }
 }
 
 public extension HasBasicController {
-    public mutating func configure(with basicRC: BasicController) {
+    public mutating func configure(with basicRC: BasicController?) {
+        guard let basicRC = basicRC else { return }
         self.basicRC = basicRC
     }
 }

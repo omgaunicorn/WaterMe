@@ -51,6 +51,9 @@
 		50DFA8B91ED7BCE0000D2956 /* ReceiptWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B81ED7BCE0000D2956 /* ReceiptWatcher.swift */; };
 		50E8B1D51EDF79E700ACCDAF /* ReminderVesselMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E8B1D31EDF79E700ACCDAF /* ReminderVesselMain.storyboard */; };
 		50E8B1D61EDF79E700ACCDAF /* ReminderVesselMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1D41EDF79E700ACCDAF /* ReminderVesselMainViewController.swift */; };
+		50E8B1DF1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1DD1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift */; };
+		50E8B1E01EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E8B1DE1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib */; };
+		50E8B1E21EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E11EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift */; };
 		E40A96204E3937C8C544656A /* Pods_AdminConsole.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C8D0FAA9D43EF574E48EBC0 /* Pods_AdminConsole.framework */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +119,9 @@
 		50DFA8B81ED7BCE0000D2956 /* ReceiptWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptWatcher.swift; sourceTree = "<group>"; };
 		50E8B1D31EDF79E700ACCDAF /* ReminderVesselMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReminderVesselMain.storyboard; sourceTree = "<group>"; };
 		50E8B1D41EDF79E700ACCDAF /* ReminderVesselMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselMainViewController.swift; sourceTree = "<group>"; };
+		50E8B1DD1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselCollectionViewCell.swift; sourceTree = "<group>"; };
+		50E8B1DE1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderVesselCollectionViewCell.xib; sourceTree = "<group>"; };
+		50E8B1E11EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselCollectionViewController.swift; sourceTree = "<group>"; };
 		5377468C8F6F58D092A55320 /* Pods-NoDeviceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.release.xcconfig"; sourceTree = "<group>"; };
 		5A571169F1239C7A1A64F8B7 /* Pods-AdminConsole.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdminConsole.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole.debug.xcconfig"; sourceTree = "<group>"; };
 		8ECA152863ABAF082087BBC8 /* Pods_NoDeviceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoDeviceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -291,6 +297,9 @@
 			children = (
 				50E8B1D31EDF79E700ACCDAF /* ReminderVesselMain.storyboard */,
 				50E8B1D41EDF79E700ACCDAF /* ReminderVesselMainViewController.swift */,
+				50E8B1E11EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift */,
+				50E8B1DD1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift */,
+				50E8B1DE1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib */,
 			);
 			path = ReminderVesselMain;
 			sourceTree = "<group>";
@@ -443,6 +452,7 @@
 			files = (
 				50BB0F691EC0011800850FF4 /* LaunchScreen.storyboard in Resources */,
 				501F92221EC55DF50014939D /* Router.storyboard in Resources */,
+				50E8B1E01EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib in Resources */,
 				50D3A08A1EC76DD3001B4A7D /* RestorePurchase.storyboard in Resources */,
 				50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */,
 				501F92281EC55E080014939D /* SubscriptionChoice.storyboard in Resources */,
@@ -641,6 +651,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50E8B1E21EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift in Sources */,
 				50D3A08C1EC76DE5001B4A7D /* RestorePurchaseViewController.swift in Sources */,
 				501F922C1EC55E080014939D /* SubscriptionChoiceViewController.swift in Sources */,
 				501F92291EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift in Sources */,
@@ -650,6 +661,7 @@
 				50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */,
 				50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */,
 				50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */,
+				50E8B1DF1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift in Sources */,
 				501F92211EC55DF50014939D /* RouterViewController.swift in Sources */,
 				50A004CA1EDC8E7A00DD1546 /* ReceiptWatcher.swift in Sources */,
 				50D3A0831EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift in Sources */,
