@@ -23,6 +23,17 @@
 
 import RealmSwift
 
+public protocol HasProController {
+    var proRC: ProController? { get set }
+}
+
+public extension HasProController {
+    public mutating func configure(with proRC: ProController?) {
+        guard let proRC = proRC else { return }
+        self.proRC = proRC
+    }
+}
+
 public class ProController {
     
     private static let objectTypes: [Object.Type] = []

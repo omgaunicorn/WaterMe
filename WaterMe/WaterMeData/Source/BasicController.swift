@@ -23,6 +23,16 @@
 
 import RealmSwift
 
+public protocol HasBasicController {
+    var basicRC: BasicController! { get set }
+}
+
+public extension HasBasicController {
+    public mutating func configure(with basicRC: BasicController) {
+        self.basicRC = basicRC
+    }
+}
+
 public class BasicController {
     
     public class var localRealmExists: Bool {

@@ -37,22 +37,11 @@ class RouterViewController: UIViewController {
         return vc
     }
     
-    var basic: BasicController? {
-        didSet {
-            print("Basic Set: \(self.basic!.kind)")
-        }
-    }
-    var pro: ProController? {
-        didSet {
-            print("Pro Set: \(self.pro!.config.syncConfiguration!.user)")
-        }
-    }
+    private var doOnViewDidAppear = [() -> Void]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if self.basic == nil {
-            self.startBootSequence()
-        }
+        self.startBootSequence()
     }
     
     private func startBootSequence() {
@@ -85,23 +74,27 @@ class RouterViewController: UIViewController {
             switch subscription.level {
             case .pro:
                 let proRC = ProController(user: user)
-                self.pro = proRC
                 fallthrough
             case .basic:
                 let basicRC = BasicController(kind: .sync(user))
-                self.basic = basicRC
             }
         } else if BasicController.localRealmExists == true {
             let freeRC = BasicController(kind: .local)
-            self.basic = freeRC
-            self.pro = nil
+            let vc = ReminderVesselMainViewController.newVC(basicController: freeRC, proController: nil)
+            self.doOnViewDidAppear.append({ self.presentOnTop(vc, animated: true, completion: nil) })
         } else {
             log.severe("We're in a first run experience here")
             log.severe("for now we're setting up a local basic experience")
             let freeRC = BasicController(kind: .local)
-            self.basic = freeRC
-            self.pro = nil
+            let vc = ReminderVesselMainViewController.newVC(basicController: freeRC, proController: nil)
+            self.doOnViewDidAppear.append({ self.presentOnTop(vc, animated: true, completion: nil) })
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.doOnViewDidAppear.forEach({ $0() })
+        self.doOnViewDidAppear = []
     }
     
     @IBAction private func premiumButtonTapped(_ sender: NSObject?) {
