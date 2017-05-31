@@ -7,7 +7,7 @@ PODS:
   - Realm/Headers (2.7.0)
   - RealmSwift (2.7.0):
     - Realm (= 2.7.0)
-  - Result (3.2.2)
+  - Result (3.2.3)
   - TPInAppReceipt (1.1.4)
   - WaterMeData (1.0.0):
     - RealmSwift
@@ -39,7 +39,7 @@ SPEC CHECKSUMS:
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   Realm: 07e5d3a9e0e41d65fd5f9f05150ed6295d0f093b
   RealmSwift: 6d06425d3900c86473c4f323bf6949b43fca22bc
-  Result: 4edd39003fdccf281d418ee1b006571f70123250
+  Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
   TPInAppReceipt: df20c542f4ecadd6b357185635b283ec03ff50b6
   WaterMeData: 611a676d812d920dcc1d6a1dd6a9993a71698735
   WaterMeStore: a9f2d84844aecb6d02663e36bc479117bc212b02
