@@ -22,18 +22,28 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="lJo-t2-u1C">
-                                <rect key="frame" x="112.5" y="267.5" width="150" height="132"/>
+                                <rect key="frame" x="112.5" y="219.5" width="150" height="228"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1HS-XH-FYD">
                                         <rect key="frame" x="0.0" y="0.0" width="150" height="36"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <state key="normal" title="Plants"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n8W-5d-wgt">
+                                        <rect key="frame" x="0.0" y="48" width="150" height="36"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <state key="normal" title="Print Receipt"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OV0-bx-pqA">
+                                        <rect key="frame" x="0.0" y="96" width="150" height="36"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <state key="normal" title="In-App Purchase"/>
                                         <connections>
-                                            <action selector="premiumButtonTapped:" destination="1Hs-jg-GYh" eventType="touchUpInside" id="a08-Gv-Ww2"/>
+                                            <action selector="premiumButtonTapped:" destination="1Hs-jg-GYh" eventType="touchUpInside" id="Jvc-Yf-97f"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t2k-Aw-y9T">
-                                        <rect key="frame" x="0.0" y="48" width="150" height="36"/>
+                                        <rect key="frame" x="0.0" y="144" width="150" height="36"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <state key="normal" title="Local Realm"/>
                                         <connections>
@@ -41,7 +51,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CKI-Gs-Uif">
-                                        <rect key="frame" x="0.0" y="96" width="150" height="36"/>
+                                        <rect key="frame" x="0.0" y="192" width="150" height="36"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <state key="normal" title="Sync Realm"/>
                                         <connections>

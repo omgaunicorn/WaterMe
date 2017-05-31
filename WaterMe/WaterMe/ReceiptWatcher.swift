@@ -31,7 +31,13 @@ import Foundation
 class ReceiptWatcher {
     
     enum ReceiptSource {
-        case both(server: PurchasedSubscription, local: PurchasedSubscription), local(PurchasedSubscription)
+        case serverNewest(PurchasedSubscription), localNewest(PurchasedSubscription), localOnly(PurchasedSubscription)
+        var value: PurchasedSubscription {
+            switch self {
+            case .localNewest(let item), .serverNewest(let item), .localOnly(let item):
+                return item
+            }
+        }
     }
     
     enum ReceiptError: Error {
@@ -40,15 +46,20 @@ class ReceiptWatcher {
     
     private var receiptController: ReceiptController?
     
-    var currentSubscription: Result<ReceiptSource, ReceiptError> {
+    var effectiveSubscription: PurchasedSubscription? {
+        return self.analyzeSubscription.value?.value
+    }
+    
+    var analyzeSubscription: Result<ReceiptSource, ReceiptError> {
         let receipt = self.receiptController?.receipt
         let localResult = type(of: self).parseReceiptFromDisk()
         switch localResult {
         case .success(_, let localPurchase):
-            if let serverPurchase = receipt?.serverPurchasedSubscription {
-                return .success(.both(server: serverPurchase, local: localPurchase))
+            guard let serverPurchase = receipt?.serverPurchasedSubscription else { return .success(.localOnly(localPurchase)) }
+            if serverPurchase.expirationDate > localPurchase.expirationDate {
+                return .success(.serverNewest(serverPurchase))
             } else {
-                return .success(.local(localPurchase))
+                return .success(.localNewest(localPurchase))
             }
         case .failure(let error):
             return .failure(error)

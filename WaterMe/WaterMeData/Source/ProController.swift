@@ -27,7 +27,7 @@ public class ProController {
     
     private static let objectTypes: [Object.Type] = []
     
-    private let config: Realm.Configuration
+    public let config: Realm.Configuration
     public var realm: Realm {
         return try! Realm(configuration: self.config)
     }
