@@ -37,7 +37,7 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
         return navVC
     }
     
-    /*@IBOutlet*/ private weak var collectionVC: ReminderVesselCollectionViewController!
+    /*@IBOutlet*/ private weak var collectionVC: ReminderVesselCollectionViewController?
     
     var basicRC: BasicController?
     var proRC: ProController?
@@ -46,10 +46,16 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
         super.viewDidLoad()
         log.debug("")
         
-        self.collectionVC = self.childViewControllers.first()!
-        self.collectionVC.configure(with: self.basicRC)
+        self.automaticallyAdjustsScrollViewInsets = false
+        self.collectionVC = self.childViewControllers.first()
+        self.collectionVC?.configure(with: self.basicRC)
         
         self.title = "WaterMe"
+    }
+    
+    @IBAction private func addReminderVesselButtonTapped(_ sender: NSObject?) {
+        let number = Int(arc4random_uniform(100))
+        self.basicRC?.newReminderVessel(displayName: "Unt: \(number)")
     }
     
 }

@@ -25,7 +25,7 @@
             </objects>
             <point key="canvasLocation" x="-543" y="142"/>
         </scene>
-        <!--Reminder Vessel Main View Controller-->
+        <!--WaterMe-->
         <scene sceneID="PPX-eb-O8u">
             <objects>
                 <viewController id="CBd-BS-reS" customClass="ReminderVesselMainViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -52,7 +52,13 @@
                             <constraint firstItem="JRu-LM-rcj" firstAttribute="centerX" secondItem="Mny-NS-8h4" secondAttribute="centerX" id="oAO-cW-QIi"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="PVD-j4-HSM"/>
+                    <navigationItem key="navigationItem" title="WaterMe" id="PVD-j4-HSM">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="DIA-zQ-5My">
+                            <connections>
+                                <action selector="addReminderVesselButtonTapped:" destination="CBd-BS-reS" id="6WQ-Gn-6Fu"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WcX-AE-OXu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -62,7 +68,7 @@
         <scene sceneID="aCx-no-gal">
             <objects>
                 <collectionViewController id="xXJ-ox-gNm" customClass="ReminderVesselCollectionViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="SEW-wG-Tax">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" id="SEW-wG-Tax">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

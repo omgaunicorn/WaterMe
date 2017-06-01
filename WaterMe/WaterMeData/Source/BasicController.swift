@@ -93,4 +93,14 @@ public class BasicController {
         let vessels = realm.objects(ReminderVessel.self).sorted(byKeyPath: #keyPath(ReminderVessel.displayName))
         return AnyRealmCollection(vessels)
     }
+    
+    public func newReminderVessel(displayName: String, kind: ReminderVessel.Kind = .plant) {
+        let realm = self.realm
+        let vessel = ReminderVessel()
+        vessel.displayName = displayName
+        vessel.kind = kind
+        realm.beginWrite()
+        realm.add(vessel)
+        try! realm.commitWrite()
+    }
 }
