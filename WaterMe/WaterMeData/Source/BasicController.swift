@@ -103,4 +103,12 @@ public class BasicController {
         realm.add(vessel)
         try! realm.commitWrite()
     }
+    
+    public func delete(vessel: ReminderVessel) {
+        guard vessel.isInvalidated == false else { return }
+        let realm = self.realm
+        realm.beginWrite()
+        realm.delete(vessel)
+        try! realm.commitWrite()
+    }
 }
