@@ -1,8 +1,8 @@
 //
-//  ReminderVesselCollectionViewCell.swift
+//  TextFieldTableViewCell.swift
 //  WaterMe
 //
-//  Created by Jeffrey Bergier on 5/31/17.
+//  Created by Jeffrey Bergier on 6/2/17.
 //  Copyright © 2017 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
@@ -21,34 +21,30 @@
 //  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import WaterMeData
 import UIKit
 
-class ReminderVesselCollectionViewCell: UICollectionViewCell {
+class TextFieldTableViewCell: UITableViewCell {
     
-    static let reuseID = "ReminderVesselCollectionViewCell"
-    class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
+    static let reuseID = "TextFieldTableViewCell"
     
-    @IBOutlet private weak var nameLabel: UILabel?
-    @IBOutlet private weak var iconButton: UIButton?
-
+    @IBOutlet private weak var textField: UITextField?
+    
+    var textChanged: ((String) -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.iconButton?.style_reminderVesselIconButton()
-        self.nameLabel?.style_reminderVesselNameLabel()
-        self.prepareForReuse()
+        self.textField?.style_bodyFontTextField()
+        log.debug()
     }
     
-    func configure(with vessel: ReminderVessel) {
-        self.nameLabel?.text = vessel.displayName
-        self.iconButton?.setIcon(vessel.icon)
+    @IBAction private func textChanged(_ sender: NSObject) {
+        let newValue = self.textField?.text ?? ""
+        self.textChanged?(newValue)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.nameLabel?.text = nil
-        self.iconButton?.setImage(nil, for: .normal)
-        self.iconButton?.setTitle(nil, for: .normal)
+        self.textField?.text = nil
+        self.textChanged = nil
     }
-
 }

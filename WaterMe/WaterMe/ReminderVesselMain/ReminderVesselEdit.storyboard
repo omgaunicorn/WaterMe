@@ -21,13 +21,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderVesselIconTableViewCell" rowHeight="166" id="gC9-Lk-0nU" customClass="ReminderVesselIconTableViewCell" customModule="WaterMe" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderVesselIconTableViewCell" rowHeight="166" id="gC9-Lk-0nU" customClass="ReminderVesselIconTableViewCell" customModule="WaterMe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="166"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gC9-Lk-0nU" id="v9u-Mt-wCC">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="165.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o3q-JB-Mxf">
+                                            <rect key="frame" x="125.5" y="20" width="125" height="125"/>
+                                            <state key="normal" title="Photo"/>
+                                            <connections>
+                                                <action selector="iconButtonTapped:" destination="gC9-Lk-0nU" eventType="touchUpInside" id="dsU-aw-6Tg"/>
+                                            </connections>
+                                        </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PBB-NE-iux">
                                             <rect key="frame" x="125.5" y="20.5" width="125" height="125"/>
                                             <constraints>
@@ -38,11 +45,46 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="PBB-NE-iux" firstAttribute="top" secondItem="v9u-Mt-wCC" secondAttribute="topMargin" constant="12" id="M2I-o1-eij"/>
+                                        <constraint firstItem="o3q-JB-Mxf" firstAttribute="height" secondItem="PBB-NE-iux" secondAttribute="height" id="VMY-x9-oWd"/>
                                         <constraint firstItem="PBB-NE-iux" firstAttribute="centerX" secondItem="v9u-Mt-wCC" secondAttribute="centerX" id="VSv-1l-lZ3"/>
                                         <constraint firstItem="PBB-NE-iux" firstAttribute="width" secondItem="v9u-Mt-wCC" secondAttribute="width" multiplier="1/3" id="bof-SE-0sV"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="PBB-NE-iux" secondAttribute="bottom" constant="12" id="cCo-Zu-CqH"/>
+                                        <constraint firstItem="o3q-JB-Mxf" firstAttribute="centerY" secondItem="PBB-NE-iux" secondAttribute="centerY" id="dg4-T7-uCW"/>
+                                        <constraint firstItem="o3q-JB-Mxf" firstAttribute="width" secondItem="PBB-NE-iux" secondAttribute="width" id="per-tq-nUs"/>
+                                        <constraint firstItem="o3q-JB-Mxf" firstAttribute="centerX" secondItem="PBB-NE-iux" secondAttribute="centerX" id="qo6-RX-EEq"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="iconButton" destination="PBB-NE-iux" id="kTT-Bh-eC9"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TextFieldTableViewCell" rowHeight="47" id="aDH-Wb-FtA" customClass="TextFieldTableViewCell" customModule="WaterMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="221.5" width="375" height="47"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aDH-Wb-FtA" id="0qq-Fs-gcF">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="46.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Plant Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AMv-Yu-CvG">
+                                            <rect key="frame" x="8" y="8" width="359" height="30"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                            <connections>
+                                                <action selector="textChanged:" destination="aDH-Wb-FtA" eventType="editingChanged" id="GgY-f7-x85"/>
+                                            </connections>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="AMv-Yu-CvG" firstAttribute="top" secondItem="0qq-Fs-gcF" secondAttribute="topMargin" id="DoC-aD-BIA"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="AMv-Yu-CvG" secondAttribute="bottom" id="IMo-gO-qFe"/>
+                                        <constraint firstItem="AMv-Yu-CvG" firstAttribute="leading" secondItem="0qq-Fs-gcF" secondAttribute="leadingMargin" id="gz0-wE-T6F"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="AMv-Yu-CvG" secondAttribute="trailing" id="kgt-Y4-hle"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textField" destination="AMv-Yu-CvG" id="Cgw-bc-CiA"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

@@ -25,11 +25,25 @@ import UIKit
 
 class ReminderVesselIconTableViewCell: UITableViewCell {
     
+    static let reuseID = "ReminderVesselIconTableViewCell"
+    
     @IBOutlet private weak var iconButton: UIButton?
+    
+    var iconButtonTapped: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.iconButton?.style_reminderVesselIconButton()
         log.debug()
+    }
+    
+    @IBAction private func iconButtonTapped(_ sender: NSObject?) {
+        self.iconButtonTapped?()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.iconButton?.setTitle(nil, for: .normal)
+        self.iconButtonTapped = nil
     }
 }

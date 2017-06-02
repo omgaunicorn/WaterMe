@@ -36,7 +36,7 @@ class ReminderVesselEditViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        log.debug()
+        self.title = "New Plant"
     }
     
     @IBAction private func cancelButtonTapped(_ sender: NSObject?) {
