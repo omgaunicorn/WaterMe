@@ -39,18 +39,23 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     
     /*@IBOutlet*/ private weak var collectionVC: ReminderVesselCollectionViewController?
     
-    var basicRC: BasicController?
+    var basicRC: BasicController? {
+        didSet {
+            self.collectionVC?.configure(with: self.basicRC)
+        }
+    }
     var proRC: ProController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        log.debug("")
-        
         self.automaticallyAdjustsScrollViewInsets = false
         self.collectionVC = self.childViewControllers.first()
-        self.collectionVC?.configure(with: self.basicRC)
-        
         self.title = "WaterMe"
+        
+        self.collectionVC?.vesselChosen = { [weak self] vessel in
+            self?.basicRC?.delete(vessel: vessel)
+        }
+        self.collectionVC?.configure(with: self.basicRC)
     }
     
     @IBAction private func addReminderVesselButtonTapped(_ sender: NSObject?) {

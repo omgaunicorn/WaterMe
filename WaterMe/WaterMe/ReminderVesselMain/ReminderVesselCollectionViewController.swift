@@ -26,6 +26,8 @@ import RealmSwift
 import UIKit
 
 class ReminderVesselCollectionViewController: UICollectionViewController, HasBasicController {
+    
+    var vesselChosen: ((ReminderVessel) -> Void)?
         
     var basicRC: BasicController? {
         didSet {
@@ -84,7 +86,7 @@ class ReminderVesselCollectionViewController: UICollectionViewController, HasBas
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let vessel = self.data?[indexPath.row] else { return }
-        self.basicRC?.delete(vessel: vessel)
+        self.vesselChosen?(vessel)
     }
     
     override func viewDidLayoutSubviews() {
