@@ -37,6 +37,10 @@ class TextFieldTableViewCell: UITableViewCell {
         log.debug()
     }
     
+    func setTextField(text: String?) {
+        self.textField?.text = text ?? ""
+    }
+    
     @IBAction private func textChanged(_ sender: NSObject) {
         let newValue = self.textField?.text ?? ""
         self.textChanged?(newValue)

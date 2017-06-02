@@ -25,6 +25,12 @@ import RealmSwift
 
 public class ReminderVessel: Object {
     
+    public struct Editable {
+        public var displayName: String?
+        public var icon: Icon?
+        public init() {}
+    }
+    
     public enum Kind: String {
         case plant
     }
@@ -67,6 +73,13 @@ public class ReminderVessel: Object {
         set {
             self.kindString = newValue.rawValue
         }
+    }
+    
+    func editable() -> Editable {
+        var e = Editable()
+        e.displayName = self.displayName
+        e.icon = self.icon
+        return e
     }
     
 }

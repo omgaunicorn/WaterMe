@@ -34,9 +34,19 @@ class ReminderVesselEditViewController: UIViewController {
         return navVC
     }
     
+    /*@IBOutlet*/ private weak var tableViewController: ReminderVesselEditTableViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "New Plant"
+        
+        self.tableViewController = self.childViewControllers.first()
+        self.tableViewController?.choosePhotoTapped = { [weak self] in
+            log.debug("Load Photo picker")
+        }
+        self.tableViewController?.displayNameChanged = { [weak self] newValue in
+            log.debug(newValue)
+        }
     }
     
     @IBAction private func cancelButtonTapped(_ sender: NSObject?) {

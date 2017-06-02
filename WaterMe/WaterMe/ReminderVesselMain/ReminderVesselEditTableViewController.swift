@@ -26,11 +26,6 @@ import UIKit
 
 class ReminderVesselEditTableViewController: UITableViewController {
     
-    struct UIState {
-        var displayName: String?
-        var icon: ReminderVessel.Icon?
-    }
-    
     private enum Section: Int {
         case photo = 0, name
         static let count = 2
@@ -44,7 +39,21 @@ class ReminderVesselEditTableViewController: UITableViewController {
         }
     }
     
-    var uiState = UIState()
+    var editable: ReminderVessel.Editable?
+    var choosePhotoTapped: (() -> Void)? {
+        didSet {
+            // if this is changed, we need to make sure the cell gets the new closure
+            guard self.isViewLoaded else { return }
+            self.tableView.reloadData()
+        }
+    }
+    var displayNameChanged: ((String) -> Void)? {
+        didSet {
+            // if this is changed, we need to make sure the cell gets the new closure
+            guard self.isViewLoaded else { return }
+            self.tableView.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,17 +82,15 @@ class ReminderVesselEditTableViewController: UITableViewController {
             let id = TextFieldTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? TextFieldTableViewCell
-            cell?.textChanged = { newValue in
-                log.debug(newValue)
-            }
+            cell?.setTextField(text: self.editable?.displayName)
+            cell?.textChanged = self.displayNameChanged
             return _cell
         case .photo:
             let id = ReminderVesselIconTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? ReminderVesselIconTableViewCell
-            cell?.iconButtonTapped = {
-                log.debug()
-            }
+            cell?.configure(with: self.editable?.icon)
+            cell?.iconButtonTapped = self.choosePhotoTapped
             return _cell
         }
     }

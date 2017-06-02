@@ -21,6 +21,7 @@
 //  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import WaterMeData
 import UIKit
 
 class ReminderVesselIconTableViewCell: UITableViewCell {
@@ -35,6 +36,10 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.iconButton?.style_reminderVesselIconButton()
         log.debug()
+    }
+    
+    func configure(with icon: ReminderVessel.Icon?) {
+        self.iconButton?.setIcon(icon)
     }
     
     @IBAction private func iconButtonTapped(_ sender: NSObject?) {

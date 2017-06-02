@@ -56,7 +56,13 @@ extension UIButton {
         self.setTitle(nil, for: .normal)
         self.isUserInteractionEnabled = false
     }
-    func setIcon(_ icon: ReminderVessel.Icon, for controlState: UIControlState = .normal) {
+    func setIcon(_ icon: ReminderVessel.Icon?, for controlState: UIControlState = .normal) {
+        guard let icon = icon else {
+            self.setTitle(nil, for: .normal)
+            self.setImage(nil, for: .normal)
+            return
+        }
+        
         switch icon {
         case .emoji(let string):
             self.setTitle(string, for: controlState)
