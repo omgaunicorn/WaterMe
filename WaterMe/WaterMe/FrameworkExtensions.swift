@@ -51,7 +51,7 @@ extension Receipt {
 }
 
 extension UIButton {
-    func iconButtonConfig() {
+    func style_reminderVesselIconButton() {
         self.titleLabel?.font = UIFont.systemFont(ofSize: 50)
         self.isUserInteractionEnabled = false
     }

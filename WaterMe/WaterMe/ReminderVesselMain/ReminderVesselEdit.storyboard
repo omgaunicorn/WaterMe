@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="g5Q-Rb-Z4g">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Root View Controller-->
+        <scene sceneID="rL3-Xc-Ieq">
+            <objects>
+                <tableViewController id="VdB-w4-RH3" customClass="ReminderVesselEditTableViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="213" sectionHeaderHeight="18" sectionFooterHeight="18" id="2lB-aP-URI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderVesselIconTableViewCell" rowHeight="166" id="gC9-Lk-0nU" customClass="ReminderVesselIconTableViewCell" customModule="WaterMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="166"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gC9-Lk-0nU" id="v9u-Mt-wCC">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="165.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PBB-NE-iux">
+                                            <rect key="frame" x="125.5" y="20.5" width="125" height="125"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="PBB-NE-iux" secondAttribute="height" multiplier="1:1" id="bxX-9T-Ydq"/>
+                                            </constraints>
+                                            <state key="normal" title="Button"/>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="PBB-NE-iux" firstAttribute="top" secondItem="v9u-Mt-wCC" secondAttribute="topMargin" constant="12" id="M2I-o1-eij"/>
+                                        <constraint firstItem="PBB-NE-iux" firstAttribute="centerX" secondItem="v9u-Mt-wCC" secondAttribute="centerX" id="VSv-1l-lZ3"/>
+                                        <constraint firstItem="PBB-NE-iux" firstAttribute="width" secondItem="v9u-Mt-wCC" secondAttribute="width" multiplier="1/3" id="bof-SE-0sV"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="PBB-NE-iux" secondAttribute="bottom" constant="12" id="cCo-Zu-CqH"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="VdB-w4-RH3" id="XoH-nX-Zpo"/>
+                            <outlet property="delegate" destination="VdB-w4-RH3" id="46f-HF-8xj"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Root View Controller" id="uvA-e1-fcp"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ToW-kM-yUd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="941.60000000000002" y="113.79310344827587"/>
+        </scene>
+        <!--Edit Vessel-->
+        <scene sceneID="6V6-7E-D6Z">
+            <objects>
+                <viewController id="hwy-bV-hUN" customClass="ReminderVesselEditViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="6Cx-RF-Xm6"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vnl-NY-P1W"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="rlg-JY-Gc1">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6BV-F7-HAz">
+                                <rect key="frame" x="-0.5" y="0.0" width="375" height="667"/>
+                                <connections>
+                                    <segue destination="VdB-w4-RH3" kind="embed" id="TxS-H2-F5x"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6BV-F7-HAz" firstAttribute="width" secondItem="rlg-JY-Gc1" secondAttribute="width" id="HKX-eL-F9t"/>
+                            <constraint firstItem="6BV-F7-HAz" firstAttribute="height" secondItem="rlg-JY-Gc1" secondAttribute="height" id="pbe-Vi-uQ4"/>
+                            <constraint firstItem="6BV-F7-HAz" firstAttribute="centerY" secondItem="rlg-JY-Gc1" secondAttribute="centerY" id="qTM-Z3-ehw"/>
+                            <constraint firstItem="6BV-F7-HAz" firstAttribute="centerX" secondItem="rlg-JY-Gc1" secondAttribute="centerX" id="ykD-Dt-fa2"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Edit Vessel" id="I5b-Wd-mrD">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="X7y-Wp-f4s">
+                            <connections>
+                                <action selector="cancelButtonTapped:" destination="hwy-bV-hUN" id="RPC-0i-QGr"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="mzj-1R-Z4H">
+                            <connections>
+                                <action selector="saveButtonTapped:" destination="hwy-bV-hUN" id="9Mv-Fl-yQP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jX6-mk-C8X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="95" y="114"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="IgH-pZ-voN">
+            <objects>
+                <navigationController modalPresentationStyle="formSheet" id="g5Q-Rb-Z4g" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="CBl-W2-mWD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="hwy-bV-hUN" kind="relationship" relationship="rootViewController" id="gob-Pf-Vn7"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OFS-Ei-Ypp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-719" y="114"/>
+        </scene>
+    </scenes>
+</document>

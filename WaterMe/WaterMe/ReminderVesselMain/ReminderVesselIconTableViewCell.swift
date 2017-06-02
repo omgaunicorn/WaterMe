@@ -1,8 +1,8 @@
 //
-//  ReminderVesselCollectionViewCell.swift
+//  ReminderVesselIconTableViewCell.swift
 //  WaterMe
 //
-//  Created by Jeffrey Bergier on 5/31/17.
+//  Created by Jeffrey Bergier on 6/2/17.
 //  Copyright © 2017 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
@@ -21,33 +21,15 @@
 //  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import WaterMeData
 import UIKit
 
-class ReminderVesselCollectionViewCell: UICollectionViewCell {
+class ReminderVesselIconTableViewCell: UITableViewCell {
     
-    static let reuseID = "ReminderVesselCollectionViewCell"
-    class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
-    
-    @IBOutlet private weak var nameLabel: UILabel?
     @IBOutlet private weak var iconButton: UIButton?
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         self.iconButton?.style_reminderVesselIconButton()
-        self.prepareForReuse()
+        log.debug()
     }
-    
-    func configure(with vessel: ReminderVessel) {
-        self.nameLabel?.text = vessel.displayName
-        self.iconButton?.setIcon(vessel.icon)
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.nameLabel?.text = nil
-        self.iconButton?.setImage(nil, for: .normal)
-        self.iconButton?.setTitle(nil, for: .normal)
-    }
-
 }
