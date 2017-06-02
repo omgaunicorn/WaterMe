@@ -60,7 +60,7 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     
     @IBAction private func addReminderVesselButtonTapped(_ sender: NSObject?) {
         let number = Int(arc4random_uniform(100))
-        self.basicRC?.newReminderVessel(displayName: "Unt: \(number)")
+        self.basicRC?.newReminderVessel(displayName: "Unt: \(number)", icon: .emoji("🌺"))
     }
     
 }

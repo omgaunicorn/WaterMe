@@ -57,7 +57,7 @@ public class BasicController {
     public init(kind: Kind) {
         self.kind = kind
         var realmConfig = Realm.Configuration()
-        realmConfig.schemaVersion = 4
+        realmConfig.schemaVersion = 5
         realmConfig.objectTypes = [ReminderVessel.self]
         switch kind {
         case .local:
@@ -94,11 +94,12 @@ public class BasicController {
         return AnyRealmCollection(vessels)
     }
     
-    public func newReminderVessel(displayName: String, kind: ReminderVessel.Kind = .plant) {
+    public func newReminderVessel(displayName: String, icon: ReminderVessel.Icon, kind: ReminderVessel.Kind = .plant) {
         let realm = self.realm
         let vessel = ReminderVessel()
         vessel.displayName = displayName
         vessel.kind = kind
+        vessel.icon = icon
         realm.beginWrite()
         realm.add(vessel)
         try! realm.commitWrite()

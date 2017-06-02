@@ -29,7 +29,36 @@ public class ReminderVessel: Object {
         case plant
     }
     
+    public enum Icon {
+        case emoji(String), image(Data)
+    }
+    
     public internal(set) dynamic var displayName = "Untitled"
+    
+    private dynamic var iconImageData: Data?
+    private dynamic var iconEmojiString: String?
+    public internal(set) var icon: Icon {
+        get {
+            if let image = self.iconImageData {
+                return .image(image)
+            } else if let string = self.iconEmojiString {
+                return .emoji(string)
+            } else {
+                return .emoji("💀")
+            }
+        }
+        set {
+            switch newValue {
+            case .emoji(let string):
+                self.iconImageData = nil
+                self.iconEmojiString = string
+            case .image(let data):
+                self.iconImageData = data
+                self.iconEmojiString = nil
+            }
+        }
+    }
+    
     private dynamic var kindString = Kind.plant.rawValue
     public internal(set) var kind: Kind {
         get {
