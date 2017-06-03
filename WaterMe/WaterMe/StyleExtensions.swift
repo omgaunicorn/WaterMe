@@ -37,7 +37,9 @@ extension UILabel {
         self.font = UIFont.preferredFont(forTextStyle: .title3)
     }
     func style_emojiDisplayLabel() {
-        self.font = UIFont.systemFont(ofSize: 80)
+        self.font = UIFont.systemFont(ofSize: 60)
+        self.lineBreakMode = .byClipping
+        self.clipsToBounds = true
     }
 }
 

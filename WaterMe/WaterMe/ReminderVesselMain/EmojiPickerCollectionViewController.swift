@@ -20,7 +20,7 @@ class EmojiPickerViewController: UICollectionViewController {
     }
     
     var emojiChosen: ((String?, UIViewController) -> Void)?
-    private let data = ["🌺", "🐲", "🌺", "🐲", "🌺", "🐲", "🌺", "🐲", "🌺", "🐲", "🌺", "🐲", "🌺", "🐲"]
+    private let data = ["💐", "🌷", "🌹", "🥀", "🌻", "🌼", "🌸", "🌺", "🍏", "🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🍈", "🍒", "🍑", "🍍", "🥝", "🥑", "🍅", "🍆", "🥒", "🥕", "🌽", "🌶", "🥔", "🍠", "🌰", "🥜", "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🎍", "🎋", "🍃", "🍂", "🍁", "🍄", "🌾", "🥚", "🍳", "🐔", "🐧", "🐤", "🐣", "🐥", "🐓", "🦆", "🦃", "🐇", "🦀", "🦑", "🐙", "🦐", "🍤", "🐠", "🐟", "🐢", "🐍", "🦎", "🐝", "🍯", "🥐", "🍞", "🥖", "🧀", "🥗", "🍣", "🍱", "🍛", "🍚", "☕️", "🍵", "🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🥛", "🐷", "🐽", "🐸", "🐒", "🦅", "🦉", "🦇", "🐺", "🐗", "🐴", "🦄", "🐛", "🦋", "🐌", "🐚", "🐞", "🐜", "🕷", "🦂", "🐡", "🐬", "🦈", "🐳", "🐋", "🐊", "🐆", "🐅", "🐃", "🐂", "🐄", "🦌", "🐪", "🐫", "🐘", "🦏", "🦍", "🐎", "🐖", "🐐", "🐏", "🐑", "🐕", "🐩", "🐈", "🕊", "🐁", "🐀", "🐿", "🐉", "🐲"]
     private var flow: UICollectionViewFlowLayout? {
         return self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
@@ -60,7 +60,7 @@ class EmojiPickerViewController: UICollectionViewController {
         super.viewDidLayoutSubviews()
         
         let collectionWidth = self.collectionView?.bounds.width ?? 0
-        let cellWidth = floor(collectionWidth / 4.0)
+        let cellWidth = floor(collectionWidth / 5.0)
         
         self.flow?.itemSize = CGSize(width: cellWidth, height: cellWidth)
         self.flow?.minimumInteritemSpacing = 0
