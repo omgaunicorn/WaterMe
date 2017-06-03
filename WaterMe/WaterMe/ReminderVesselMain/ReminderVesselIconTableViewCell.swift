@@ -35,7 +35,6 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.iconButton?.style_reminderVesselIconButton()
-        log.debug()
     }
     
     func configure(with icon: ReminderVessel.Icon?) {

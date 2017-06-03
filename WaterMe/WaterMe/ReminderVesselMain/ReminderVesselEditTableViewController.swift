@@ -39,7 +39,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
         }
     }
     
-    var editable: ReminderVessel.Editable?
+    var editable = ReminderVessel.Editable()
     var choosePhotoTapped: (() -> Void)? {
         didSet {
             // if this is changed, we need to make sure the cell gets the new closure
@@ -82,14 +82,14 @@ class ReminderVesselEditTableViewController: UITableViewController {
             let id = TextFieldTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? TextFieldTableViewCell
-            cell?.setTextField(text: self.editable?.displayName)
+            cell?.setTextField(text: self.editable.displayName)
             cell?.textChanged = self.displayNameChanged
             return _cell
         case .photo:
             let id = ReminderVesselIconTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? ReminderVesselIconTableViewCell
-            cell?.configure(with: self.editable?.icon)
+            cell?.configure(with: self.editable.icon)
             cell?.iconButtonTapped = self.choosePhotoTapped
             return _cell
         }

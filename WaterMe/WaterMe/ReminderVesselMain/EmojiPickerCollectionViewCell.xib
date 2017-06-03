@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="EmojiPickerCollectionViewCell" customModule="WaterMe" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kbr-sk-nZf" userLabel="BackgroundView">
+                        <rect key="frame" x="-50" y="-50" width="250" height="250"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tfu-uO-7eG" userLabel="SelectedView">
+                        <rect key="frame" x="-50" y="-50" width="250" height="250"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🌺" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BM2-RN-Kst">
+                        <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="BM2-RN-Kst" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="87s-EV-yS8"/>
+                <constraint firstItem="BM2-RN-Kst" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="JzX-dc-6U1"/>
+                <constraint firstAttribute="bottom" secondItem="BM2-RN-Kst" secondAttribute="bottom" id="TkX-im-nBJ"/>
+                <constraint firstAttribute="trailing" secondItem="BM2-RN-Kst" secondAttribute="trailing" id="weW-eY-Iiv"/>
+            </constraints>
+            <size key="customSize" width="152" height="165"/>
+            <connections>
+                <outlet property="backgroundView" destination="kbr-sk-nZf" id="Qag-8S-YC8"/>
+                <outlet property="emojiLabel" destination="BM2-RN-Kst" id="dDF-qj-DWH"/>
+                <outlet property="selectedBackgroundView" destination="Tfu-uO-7eG" id="1Eh-XK-VH3"/>
+            </connections>
+            <point key="canvasLocation" x="85" y="111.5"/>
+        </collectionViewCell>
+    </objects>
+</document>

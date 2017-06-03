@@ -41,10 +41,16 @@ class ReminderVesselEditViewController: UIViewController {
         self.title = "New Plant"
         
         self.tableViewController = self.childViewControllers.first()
-        self.tableViewController?.choosePhotoTapped = { [weak self] in
-            log.debug("Load Photo picker")
+        self.tableViewController?.choosePhotoTapped = { [unowned self] in
+            let vc = EmojiPickerViewController.newVC() { emoji, vc in
+                vc.dismiss(animated: true, completion: nil)
+                guard let emoji = emoji else { return }
+                self.tableViewController?.editable.icon = .emoji(emoji)
+                self.tableViewController?.tableView.reloadData()
+            }
+            self.present(vc, animated: true, completion: nil)
         }
-        self.tableViewController?.displayNameChanged = { [weak self] newValue in
+        self.tableViewController?.displayNameChanged = { [unowned self] newValue in
             log.debug(newValue)
         }
     }
