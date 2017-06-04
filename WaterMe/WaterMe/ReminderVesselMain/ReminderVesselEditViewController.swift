@@ -81,6 +81,30 @@ class ReminderVesselEditViewController: UIViewController {
     }
 }
 
+import Photos
+
+extension UIImagePickerController {
+    class var photosLocalizedString: String {
+        switch PHPhotoLibrary.authorizationStatus() {
+        case .authorized, .notDetermined:
+            return "Photos"
+        case .denied, .restricted:
+            return "Photos 🔒"
+        }
+    }
+    
+    class var cameraLocalizedString: String {
+        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+        case .authorized, .notDetermined:
+            return "Camera"
+        case .denied, .restricted:
+            return "Camera 🔒"
+        }
+    }
+    
+    
+}
+
 extension UIAlertController {
     
     enum EmojiPhotoChoice {
@@ -90,8 +114,8 @@ extension UIAlertController {
     class func emojiPhotoActionSheet(completionHandler: @escaping (EmojiPhotoChoice) -> Void) -> UIAlertController {
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let emoji = UIAlertAction(title: "Emoji", style: .default) { _ in completionHandler(.emoji) }
-        let photo = UIAlertAction(title: "Photos", style: .default) { _ in completionHandler(.photos) }
-        let camera = UIAlertAction(title: "Camera", style: .default) { _ in completionHandler(.camera) }
+        let photo = UIAlertAction(title: UIImagePickerController.photosLocalizedString, style: .default) { _ in completionHandler(.photos) }
+        let camera = UIAlertAction(title: UIImagePickerController.cameraLocalizedString, style: .default) { _ in completionHandler(.camera) }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alertVC.addAction(emoji)
         alertVC.addAction(photo)

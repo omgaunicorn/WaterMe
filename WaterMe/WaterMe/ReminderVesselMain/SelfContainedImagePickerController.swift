@@ -1,5 +1,5 @@
 //
-//  EmojiPickerCollectionViewCell.swift
+//  SelfContainedImagePickerController.swift
 //  WaterMe
 //
 //  Created by Jeffrey Bergier on 6/3/17.
@@ -23,26 +23,6 @@
 
 import UIKit
 
-class EmojiPickerCollectionViewCell: UICollectionViewCell {
+class SelfContainedImagePickerController: UIImagePickerController {
     
-    static let reuseID = "EmojiPickerCollectionViewCell"
-    class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
-    
-    @IBOutlet private weak var emojiLabel: UILabel?
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.emojiLabel?.style_emojiDisplayLabel()
-        self.prepareForReuse()
-    }
-    
-    func configure(withEmojiString emojiString: String) {
-        self.emojiLabel?.text = emojiString
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.emojiLabel?.text = nil
-    }
-
 }
