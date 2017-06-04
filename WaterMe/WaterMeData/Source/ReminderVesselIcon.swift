@@ -29,7 +29,7 @@ public extension ReminderVessel {
         case emoji(String), image(UIImage)
         
         public init(rawImage: UIImage) {
-            let size = CGSize(width: 640, height: 640)
+            let size = rawImage.maxSize
             let cropped = rawImage.cropping(to: size)
             self = .image(cropped)
         }
@@ -71,6 +71,21 @@ internal extension ReminderVessel.Icon {
 }
 
 fileprivate extension UIImage {
+    
+    fileprivate var maxSize: CGSize {
+        let max: CGFloat = 640
+        let widthLess = self.size.width < max
+        let heightLess = self.size.height < max
+        if widthLess || heightLess {
+            if self.size.width < self.size.height {
+                return CGSize(width: self.size.width, height: self.size.width)
+            } else {
+                return CGSize(width: self.size.height, height: self.size.height)
+            }
+        } else {
+            return CGSize(width: max, height: max)
+        }
+    }
     
     fileprivate func cropping(to size: CGSize) -> UIImage {
         var size = size
