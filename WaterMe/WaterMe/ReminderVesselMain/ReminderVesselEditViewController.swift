@@ -41,15 +41,7 @@ class ReminderVesselEditViewController: UIViewController {
         self.title = "New Plant"
         
         self.tableViewController = self.childViewControllers.first()
-        self.tableViewController?.choosePhotoTapped = { [unowned self] in
-            let vc = EmojiPickerViewController.newVC() { emoji, vc in
-                vc.dismiss(animated: true, completion: nil)
-                guard let emoji = emoji else { return }
-                self.tableViewController?.editable.icon = .emoji(emoji)
-                self.tableViewController?.tableView.reloadData()
-            }
-            self.present(vc, animated: true, completion: nil)
-        }
+        self.tableViewController?.choosePhotoTapped = { [weak self] in self?.presentEmojiPhotoActionSheet() }
         self.tableViewController?.displayNameChanged = { [unowned self] newValue in
             log.debug(newValue)
         }
@@ -63,7 +55,48 @@ class ReminderVesselEditViewController: UIViewController {
         log.debug()
     }
     
+    private func presentEmojiPhotoActionSheet() {
+        let vc = UIAlertController.emojiPhotoActionSheet() { choice in
+            switch choice {
+            case .camera:
+                break
+            case .photos:
+                let vc = UIImagePickerController()
+                self.present(vc, animated: true, completion: nil)
+            case .emoji:
+                let vc = EmojiPickerViewController.newVC() { emoji, vc in
+                    vc.dismiss(animated: true, completion: nil)
+                    guard let emoji = emoji else { return }
+                    self.tableViewController?.editable.icon = .emoji(emoji)
+                    self.tableViewController?.tableView.reloadData()
+                }
+                self.present(vc, animated: true, completion: nil)
+            }
+        }
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     deinit {
         log.debug()
+    }
+}
+
+extension UIAlertController {
+    
+    enum EmojiPhotoChoice {
+        case photos, camera, emoji
+    }
+    
+    class func emojiPhotoActionSheet(completionHandler: @escaping (EmojiPhotoChoice) -> Void) -> UIAlertController {
+        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let emoji = UIAlertAction(title: "Emoji", style: .default) { _ in completionHandler(.emoji) }
+        let photo = UIAlertAction(title: "Photos", style: .default) { _ in completionHandler(.photos) }
+        let camera = UIAlertAction(title: "Camera", style: .default) { _ in completionHandler(.camera) }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(emoji)
+        alertVC.addAction(photo)
+        alertVC.addAction(camera)
+        alertVC.addAction(cancel)
+        return alertVC
     }
 }
