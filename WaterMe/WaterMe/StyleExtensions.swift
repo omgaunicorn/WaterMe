@@ -27,7 +27,9 @@ import UIKit
 extension UIButton {
     func style_reminderVesselIconButton() {
         self.titleLabel?.style_emojiDisplayLabel()
+        self.imageView?.contentMode = .scaleAspectFit
         self.setTitle(nil, for: .normal)
+        self.setImage(nil, for: .normal)
         self.isUserInteractionEnabled = false
     }
 }

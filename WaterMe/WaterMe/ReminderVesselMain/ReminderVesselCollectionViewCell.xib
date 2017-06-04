@@ -33,12 +33,12 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="hgV-dD-EUV">
                         <rect key="frame" x="8" y="8" width="234" height="149.5"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sVt-zq-s4U">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sVt-zq-s4U">
                                 <rect key="frame" x="58.5" y="0.0" width="117" height="117"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="sVt-zq-s4U" secondAttribute="height" multiplier="1:1" id="czL-CV-nwW"/>
                                 </constraints>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="🌺"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Cool Plant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rzm-Lk-YCJ">
                                 <rect key="frame" x="64" y="129" width="106" height="20.5"/>
