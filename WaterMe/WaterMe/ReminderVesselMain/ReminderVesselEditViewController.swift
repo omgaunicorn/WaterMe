@@ -37,15 +37,28 @@ class ReminderVesselEditViewController: UIViewController {
     
     /*@IBOutlet*/ private weak var tableViewController: ReminderVesselEditTableViewController?
     
+    private var editable = ReminderVessel.Editable()
+    
+    private func updateIcon(_ icon: ReminderVessel.Icon, andReloadTable reload: Bool = true) {
+        self.editable.icon = icon
+        guard reload else { return }
+        self.tableViewController?.tableView.reloadData()
+    }
+    
+    private func updateDisplayName(_ name: String, andReloadTable reload: Bool = false) {
+        self.editable.displayName = name
+        guard reload else { return }
+        self.tableViewController?.tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "New Plant"
         
         self.tableViewController = self.childViewControllers.first()
-        self.tableViewController?.choosePhotoTapped = { [weak self] in self?.presentEmojiPhotoActionSheet() }
-        self.tableViewController?.displayNameChanged = { [unowned self] newValue in
-            log.debug(newValue)
-        }
+        self.tableViewController?.editableFromDataSource = { [unowned self] in return self.editable }
+        self.tableViewController?.choosePhotoTapped = { [unowned self] in self.presentEmojiPhotoActionSheet() }
+        self.tableViewController?.displayNameChanged = { [unowned self] newValue in self.updateDisplayName(newValue) }
     }
     
     @IBAction private func cancelButtonTapped(_ sender: NSObject?) {
@@ -85,11 +98,6 @@ class ReminderVesselEditViewController: UIViewController {
             }
         }
         self.present(vc, animated: true, completion: nil)
-    }
-    
-    private func updateIcon(_ icon: ReminderVessel.Icon) {
-        self.tableViewController?.editable.icon = icon
-        self.tableViewController?.tableView.reloadData()
     }
     
     deinit {
