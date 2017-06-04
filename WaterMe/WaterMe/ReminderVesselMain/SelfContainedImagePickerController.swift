@@ -21,8 +21,32 @@
 //  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import MobileCoreServices
+import Photos
 import UIKit
 
-class SelfContainedImagePickerController: UIImagePickerController {
+class SelfContainedImagePickerController: UIImagePickerController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    class func newPhotosVC(completionHandler: @escaping (UIImage?, UIViewController) -> Void) -> UIViewController {
+        let vc = SelfContainedImagePickerController()
+        vc.completionHandler = completionHandler
+        vc.modalPresentationStyle = .pageSheet
+        vc.delegate = vc
+        vc.allowsEditing = false
+        vc.sourceType = .photoLibrary
+        vc.mediaTypes = [kUTTypeImage as String]
+        return vc
+    }
+    
+    var completionHandler: ((UIImage?, UIViewController) -> Void)?
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        self.completionHandler?(image, self)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.completionHandler?(nil, self)
+    }
     
 }

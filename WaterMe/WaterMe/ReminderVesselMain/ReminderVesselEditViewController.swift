@@ -61,7 +61,12 @@ class ReminderVesselEditViewController: UIViewController {
             case .camera:
                 break
             case .photos:
-                let vc = UIImagePickerController()
+                let vc = SelfContainedImagePickerController.newPhotosVC() { image, vc in
+                    vc.dismiss(animated: true, completion: nil)
+                    guard let image = image else { return }
+                    self.tableViewController?.editable.icon = .image(image)
+                    self.tableViewController?.tableView.reloadData()
+                }
                 self.present(vc, animated: true, completion: nil)
             case .emoji:
                 let vc = EmojiPickerViewController.newVC() { emoji, vc in
@@ -78,49 +83,5 @@ class ReminderVesselEditViewController: UIViewController {
     
     deinit {
         log.debug()
-    }
-}
-
-import Photos
-
-extension UIImagePickerController {
-    class var photosLocalizedString: String {
-        switch PHPhotoLibrary.authorizationStatus() {
-        case .authorized, .notDetermined:
-            return "Photos"
-        case .denied, .restricted:
-            return "Photos 🔒"
-        }
-    }
-    
-    class var cameraLocalizedString: String {
-        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
-        case .authorized, .notDetermined:
-            return "Camera"
-        case .denied, .restricted:
-            return "Camera 🔒"
-        }
-    }
-    
-    
-}
-
-extension UIAlertController {
-    
-    enum EmojiPhotoChoice {
-        case photos, camera, emoji
-    }
-    
-    class func emojiPhotoActionSheet(completionHandler: @escaping (EmojiPhotoChoice) -> Void) -> UIAlertController {
-        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let emoji = UIAlertAction(title: "Emoji", style: .default) { _ in completionHandler(.emoji) }
-        let photo = UIAlertAction(title: UIImagePickerController.photosLocalizedString, style: .default) { _ in completionHandler(.photos) }
-        let camera = UIAlertAction(title: UIImagePickerController.cameraLocalizedString, style: .default) { _ in completionHandler(.camera) }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alertVC.addAction(emoji)
-        alertVC.addAction(photo)
-        alertVC.addAction(camera)
-        alertVC.addAction(cancel)
-        return alertVC
     }
 }
