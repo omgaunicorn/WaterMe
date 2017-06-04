@@ -63,24 +63,21 @@ class ReminderVesselEditViewController: UIViewController {
                 let vc = SelfContainedImagePickerController.newCameraVC() { image, vc in
                     vc.dismiss(animated: true, completion: nil)
                     guard let image = image else { return }
-                    self.tableViewController?.editable.icon = .image(image)
-                    self.tableViewController?.tableView.reloadData()
+                    self.updateIcon(ReminderVessel.Icon(rawImage: image))
                 }
                 self.present(vc, animated: true, completion: nil)
             case .photos:
                 let vc = SelfContainedImagePickerController.newPhotosVC() { image, vc in
                     vc.dismiss(animated: true, completion: nil)
                     guard let image = image else { return }
-                    self.tableViewController?.editable.icon = ReminderVessel.Icon(rawImage: image)
-                    self.tableViewController?.tableView.reloadData()
+                    self.updateIcon(ReminderVessel.Icon(rawImage: image))
                 }
                 self.present(vc, animated: true, completion: nil)
             case .emoji:
                 let vc = EmojiPickerViewController.newVC() { emoji, vc in
                     vc.dismiss(animated: true, completion: nil)
                     guard let emoji = emoji else { return }
-                    self.tableViewController?.editable.icon = .emoji(emoji)
-                    self.tableViewController?.tableView.reloadData()
+                    self.updateIcon(.emoji(emoji))
                 }
                 self.present(vc, animated: true, completion: nil)
             case .error(let errorVC):
@@ -88,6 +85,11 @@ class ReminderVesselEditViewController: UIViewController {
             }
         }
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    private func updateIcon(_ icon: ReminderVessel.Icon) {
+        self.tableViewController?.editable.icon = icon
+        self.tableViewController?.tableView.reloadData()
     }
     
     deinit {

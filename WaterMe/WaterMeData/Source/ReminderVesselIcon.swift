@@ -23,32 +23,10 @@
 
 import UIKit
 
-fileprivate extension UIImage {
-    fileprivate func cropping(to size: CGSize) -> UIImage {
-        var size = size
-        size.width *= self.scale
-        size.height *= self.scale
-        
-        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        
-        let imageRef = self.cgImage!.cropping(to: rect)
-        let image = UIImage(cgImage: imageRef!, scale: self.scale, orientation: self.imageOrientation)
-        return image
-    }
-    
-    fileprivate func dataNoLarger(than max: Int) {
-        
-    }
-}
-
 public extension ReminderVessel {
     
     public enum Icon {
         case emoji(String), image(UIImage)
-        
-        public init(emojiString: String) {
-            self = .emoji(emojiString)
-        }
         
         public init(rawImage: UIImage) {
             let size = CGSize(width: 640, height: 640)
@@ -62,7 +40,13 @@ public extension ReminderVessel {
 internal extension ReminderVessel.Icon {
     
     internal init(rawImageData: Data?, emojiString: String?) {
-        self = .emoji("X")
+        if let data = rawImageData, let image = UIImage(data: data) {
+            self = .image(image)
+        } else if let emojiString = emojiString {
+            self = .emoji(emojiString)
+        } else {
+            self = .emoji("☠")
+        }
     }
     
     internal var dataValue: Data? {
@@ -70,7 +54,8 @@ internal extension ReminderVessel.Icon {
         case .emoji:
             return nil
         case .image(let image):
-            return nil
+            let data = image.dataNoLarger(than: 40000)
+            return data
         }
     }
     
@@ -83,4 +68,31 @@ internal extension ReminderVessel.Icon {
         }
     }
     
+}
+
+fileprivate extension UIImage {
+    
+    fileprivate func cropping(to size: CGSize) -> UIImage {
+        var size = size
+        size.width *= self.scale
+        size.height *= self.scale
+        
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        
+        let imageRef = self.cgImage!.cropping(to: rect)
+        let image = UIImage(cgImage: imageRef!, scale: self.scale, orientation: self.imageOrientation)
+        return image
+    }
+    
+    fileprivate func dataNoLarger(than max: Int) -> Data? {
+        var compression: CGFloat = 0.5
+        var compressedData: Data?
+        while compressedData == nil && compression >= 0 {
+            let _data = UIImageJPEGRepresentation(self, compression)
+            compression -= 0.1
+            guard let data = _data, data.count < max else { continue }
+            compressedData = data
+        }
+        return compressedData
+    }
 }
