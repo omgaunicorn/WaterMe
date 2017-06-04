@@ -38,7 +38,7 @@ class SelfContainedImagePickerController: UIImagePickerController, UIImagePicker
     private class func newVC(completionHandler: @escaping (UIImage?, UIViewController) -> Void) -> SelfContainedImagePickerController {
         let vc = SelfContainedImagePickerController()
         vc.completionHandler = completionHandler
-        vc.modalPresentationStyle = .pageSheet
+        vc.modalPresentationStyle = .formSheet
         vc.delegate = vc
         vc.allowsEditing = true
         vc.mediaTypes = [kUTTypeImage as String]
@@ -105,8 +105,9 @@ class SelfContainedImagePickerController: UIImagePickerController, UIImagePicker
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        self.completionHandler?(image, self)
+        let original = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let edited = info[UIImagePickerControllerEditedImage] as? UIImage
+        self.completionHandler?(edited ?? original, self)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
