@@ -59,7 +59,13 @@ class ReminderVesselEditViewController: UIViewController {
         let vc = UIAlertController.emojiPhotoActionSheet() { choice in
             switch choice {
             case .camera:
-                break
+                let vc = SelfContainedImagePickerController.newCameraVC() { image, vc in
+                    vc.dismiss(animated: true, completion: nil)
+                    guard let image = image else { return }
+                    self.tableViewController?.editable.icon = .image(image)
+                    self.tableViewController?.tableView.reloadData()
+                }
+                self.present(vc, animated: true, completion: nil)
             case .photos:
                 let vc = SelfContainedImagePickerController.newPhotosVC() { image, vc in
                     vc.dismiss(animated: true, completion: nil)
@@ -76,6 +82,8 @@ class ReminderVesselEditViewController: UIViewController {
                     self.tableViewController?.tableView.reloadData()
                 }
                 self.present(vc, animated: true, completion: nil)
+            case .error(let errorVC):
+                self.present(errorVC, animated: true, completion: nil)
             }
         }
         self.present(vc, animated: true, completion: nil)

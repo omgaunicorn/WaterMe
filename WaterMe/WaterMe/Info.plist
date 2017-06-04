@@ -36,6 +36,8 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Assign photos of your plants</string>
+	<string>Assign photos to your plants.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Assign photos to your plants.</string>
 </dict>
 </plist>

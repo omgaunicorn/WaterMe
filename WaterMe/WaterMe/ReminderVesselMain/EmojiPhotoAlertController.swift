@@ -27,13 +27,13 @@ import UIKit
 extension UIAlertController {
     
     enum EmojiPhotoChoice {
-        case photos, camera, emoji
+        case photos, camera, emoji, error(UIViewController)
     }
     
     static let emojiLocalizedString = "Emoji"
     
     class var photosLocalizedString: String {
-        switch PHPhotoLibrary.authorizationStatus() {
+        switch SelfContainedImagePickerController.photosPermission {
         case .authorized, .notDetermined:
             return "Photos"
         case .denied, .restricted:
@@ -42,7 +42,7 @@ extension UIAlertController {
     }
     
     class var cameraLocalizedString: String {
-        switch AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) {
+        switch SelfContainedImagePickerController.cameraPermission {
         case .authorized, .notDetermined:
             return "Camera"
         case .denied, .restricted:
@@ -53,12 +53,77 @@ extension UIAlertController {
     class func emojiPhotoActionSheet(completionHandler: @escaping (EmojiPhotoChoice) -> Void) -> UIAlertController {
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let emoji = UIAlertAction(title: self.emojiLocalizedString, style: .default) { _ in completionHandler(.emoji) }
-        let photo = UIAlertAction(title: self.photosLocalizedString, style: .default) { _ in completionHandler(.photos) }
-        let camera = UIAlertAction(title: self.cameraLocalizedString, style: .default) { _ in completionHandler(.camera) }
+        let photo = UIAlertAction(title: self.photosLocalizedString, style: .default) { _ in
+            switch SelfContainedImagePickerController.photosPermission {
+            case .authorized, .notDetermined:
+                completionHandler(.photos)
+            case .restricted:
+                let errorVC = self.photosRestrictedAlert()
+                completionHandler(.error(errorVC))
+            case .denied:
+                let errorVC = self.photosDeniedAlert()
+                completionHandler(.error(errorVC))
+            }
+        }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
         alertVC.addAction(emoji)
+        let front = UIImagePickerController.isCameraDeviceAvailable(.front)
+        let rear = UIImagePickerController.isCameraDeviceAvailable(.rear)
+        if front || rear {
+            let camera = UIAlertAction(title: self.cameraLocalizedString, style: .default) { _ in
+                switch SelfContainedImagePickerController.cameraPermission {
+                case .authorized, .notDetermined:
+                    completionHandler(.camera)
+                case .restricted:
+                    let errorVC = self.cameraRestrictedAlert()
+                    completionHandler(.error(errorVC))
+                case .denied:
+                    let errorVC = self.cameraDeniedAlert()
+                    completionHandler(.error(errorVC))
+                }
+            }
+            alertVC.addAction(camera)
+        }
         alertVC.addAction(photo)
-        alertVC.addAction(camera)
+        alertVC.addAction(cancel)
+        return alertVC
+    }
+    
+    class func photosRestrictedAlert() -> UIAlertController {
+        let alertVC = UIAlertController(title: "Photos Restricted", message: "WaterMe cannot access your photos. This feature has been restricted by this device's administrator.", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(cancel)
+        return alertVC
+    }
+    
+    class func photosDeniedAlert() -> UIAlertController {
+        let alertVC = UIAlertController(title: "Permission Denied", message: "WaterMe cannot access your photos. You can grant access in Settings", preferredStyle: .alert)
+        let settings = UIAlertAction(title: "Settings", style: .default) { _ in
+            let url = URL(string: UIApplicationOpenSettingsURLString)!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(settings)
+        alertVC.addAction(cancel)
+        return alertVC
+    }
+    
+    class func cameraRestrictedAlert() -> UIAlertController {
+        let alertVC = UIAlertController(title: "Camera Restricted", message: "WaterMe cannot access your camera. This feature has been restricted by this device's administrator.", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(cancel)
+        return alertVC
+    }
+    
+    class func cameraDeniedAlert() -> UIAlertController {
+        let alertVC = UIAlertController(title: "Permission Denied", message: "WaterMe cannot access your camera. You can grant access in Settings", preferredStyle: .alert)
+        let settings = UIAlertAction(title: "Settings", style: .default) { _ in
+            let url = URL(string: UIApplicationOpenSettingsURLString)!
+            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alertVC.addAction(settings)
         alertVC.addAction(cancel)
         return alertVC
     }
