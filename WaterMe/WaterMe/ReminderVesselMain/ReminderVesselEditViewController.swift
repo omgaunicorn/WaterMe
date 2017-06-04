@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import WaterMeData
 import UIKit
 
 class ReminderVesselEditViewController: UIViewController {
@@ -70,7 +71,7 @@ class ReminderVesselEditViewController: UIViewController {
                 let vc = SelfContainedImagePickerController.newPhotosVC() { image, vc in
                     vc.dismiss(animated: true, completion: nil)
                     guard let image = image else { return }
-                    self.tableViewController?.editable.icon = .image(image)
+                    self.tableViewController?.editable.icon = ReminderVessel.Icon(rawImage: image)
                     self.tableViewController?.tableView.reloadData()
                 }
                 self.present(vc, animated: true, completion: nil)

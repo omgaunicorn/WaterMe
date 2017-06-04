@@ -18,9 +18,10 @@
 //  GNU General Public License for more details.
 //
 //  You should have received a copy of the GNU General Public License
-//  along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+//  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import UIKit
 import RealmSwift
 
 public class ReminderVessel: Object {
@@ -35,33 +36,18 @@ public class ReminderVessel: Object {
         case plant
     }
     
-    public enum Icon {
-        case emoji(String), image(Data)
-    }
-    
     public internal(set) dynamic var displayName = "Untitled"
     
     private dynamic var iconImageData: Data?
     private dynamic var iconEmojiString: String?
     public internal(set) var icon: Icon {
         get {
-            if let image = self.iconImageData {
-                return .image(image)
-            } else if let string = self.iconEmojiString {
-                return .emoji(string)
-            } else {
-                return .emoji("💀")
-            }
+            let icon = Icon(rawImageData: self.iconImageData, emojiString: self.iconEmojiString)
+            return icon
         }
         set {
-            switch newValue {
-            case .emoji(let string):
-                self.iconImageData = nil
-                self.iconEmojiString = string
-            case .image(let data):
-                self.iconImageData = data
-                self.iconEmojiString = nil
-            }
+            self.iconImageData = newValue.dataValue
+            self.iconEmojiString = newValue.stringValue
         }
     }
     
