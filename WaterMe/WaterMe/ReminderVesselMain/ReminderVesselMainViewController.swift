@@ -53,7 +53,8 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
         self.title = "WaterMe"
         
         self.collectionVC?.vesselChosen = { [weak self] vessel in
-            self?.basicRC?.delete(vessel: vessel)
+            let editVC = ReminderVesselEditViewController.newVC(basicRC: self?.basicRC, editVessel: vessel)
+            self?.present(editVC, animated: true, completion: nil)
         }
         self.collectionVC?.configure(with: self.basicRC)
     }

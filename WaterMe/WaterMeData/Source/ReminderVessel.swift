@@ -31,7 +31,7 @@ public class ReminderVessel: Object {
     }
     
     public struct Editable {
-        internal var uuid: String?
+        public internal(set) var uuid: String?
         public var displayName: String?
         public var icon: Icon?
         public init() {}
@@ -40,7 +40,8 @@ public class ReminderVessel: Object {
     public enum Kind: String {
         case plant
     }
-    internal var uuid = UUID().uuidString
+    
+    public internal(set) dynamic var uuid = UUID().uuidString
     public internal(set) dynamic var displayName = "Untitled"
     
     private dynamic var iconImageData: Data?
@@ -66,7 +67,7 @@ public class ReminderVessel: Object {
         }
     }
     
-    func editable() -> Editable {
+    public func editable() -> Editable {
         var e = Editable()
         e.uuid = self.uuid
         e.displayName = self.displayName

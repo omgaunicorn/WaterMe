@@ -21,25 +21,40 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import RealmSwift
 import WaterMeData
 import UIKit
 
 class ReminderVesselEditViewController: UIViewController, HasBasicController {
     
-    class func newVC(basicRC: BasicController?) -> UIViewController {
+    class func newVC(basicRC: BasicController?, editVessel vessel: ReminderVessel? = nil) -> UIViewController {
         let sb = UIStoryboard(name: "ReminderVesselEdit", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderVesselEditViewController
         vc.configure(with: basicRC)
+        if let vessel = vessel {
+            vc.editable = vessel.editable()
+            vc.notificationToken = vessel.addNotificationBlock({ vc.vesselChanged($0, vessel) })
+        }
         return navVC
     }
     
     /*@IBOutlet*/ private weak var tableViewController: ReminderVesselEditTableViewController?
     
     var basicRC: BasicController?
-    private var editable = ReminderVessel.Editable()
+    var editable = ReminderVessel.Editable()
+    
+    private func vesselChanged(_ changes: ObjectChange, _ vessel: ReminderVessel) {
+        switch changes {
+        case .change:
+            self.editable = vessel.editable()
+            self.tableViewController?.tableView.reloadData()
+        case .deleted, .error:
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
     
     private func updateIcon(_ icon: ReminderVessel.Icon, andReloadTable reload: Bool = true) {
         self.editable.icon = icon
@@ -72,6 +87,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
         let result = basicRC.updateReminderVessel(with: self.editable)
         switch result {
         case .success:
+            self.notificationToken?.stop()
             self.dismiss(animated: true, completion: nil)
         case .failure(let error):
             log.error(error)
@@ -109,7 +125,10 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
         self.present(vc, animated: true, completion: nil)
     }
     
+    private var notificationToken: NotificationToken?
+    
     deinit {
+        self.notificationToken?.stop()
         log.debug()
     }
 }
