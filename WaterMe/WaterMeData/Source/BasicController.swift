@@ -22,6 +22,7 @@
 //
 
 import RealmSwift
+import Result
 
 public protocol HasBasicController {
     var basicRC: BasicController? { get set }
@@ -57,7 +58,7 @@ public class BasicController {
     public init(kind: Kind) {
         self.kind = kind
         var realmConfig = Realm.Configuration()
-        realmConfig.schemaVersion = 5
+        realmConfig.schemaVersion = 6
         realmConfig.objectTypes = [ReminderVessel.self]
         switch kind {
         case .local:
@@ -94,15 +95,29 @@ public class BasicController {
         return AnyRealmCollection(vessels)
     }
     
-    public func newReminderVessel(displayName: String, icon: ReminderVessel.Icon, kind: ReminderVessel.Kind = .plant) {
+    public func updateReminderVessel(with editable: ReminderVessel.Editable) -> Result<Void, ReminderVessel.UpdateError> {
+        guard let icon = editable.icon else { return .failure(.missingIcon) }
+        guard let displayName = editable.displayName, displayName.isEmpty == false else { return .failure(.missingDisplayName) }
+        
         let realm = self.realm
-        let vessel = ReminderVessel()
-        vessel.displayName = displayName
-        vessel.kind = kind
-        vessel.icon = icon
+        let vessel: ReminderVessel
+        let needToAddToRealm: Bool
+        if let uuid = editable.uuid, let _vessel = realm.object(ofType: ReminderVessel.self, forPrimaryKey: uuid) {
+            vessel = _vessel
+            needToAddToRealm = false
+        } else {
+            vessel = ReminderVessel()
+            needToAddToRealm = true
+        }
         realm.beginWrite()
-        realm.add(vessel)
+        if needToAddToRealm {
+            realm.add(vessel)
+        }
+        vessel.displayName = displayName
+        vessel.icon = icon
         try! realm.commitWrite()
+        
+        return .success()
     }
     
     public func delete(vessel: ReminderVessel) {

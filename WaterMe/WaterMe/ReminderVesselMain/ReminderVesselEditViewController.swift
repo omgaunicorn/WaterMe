@@ -24,19 +24,21 @@
 import WaterMeData
 import UIKit
 
-class ReminderVesselEditViewController: UIViewController {
+class ReminderVesselEditViewController: UIViewController, HasBasicController {
     
-    class func newVC() -> UIViewController {
+    class func newVC(basicRC: BasicController?) -> UIViewController {
         let sb = UIStoryboard(name: "ReminderVesselEdit", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
-        _ = navVC.viewControllers.first as! ReminderVesselEditViewController
+        var vc = navVC.viewControllers.first as! ReminderVesselEditViewController
+        vc.configure(with: basicRC)
         return navVC
     }
     
     /*@IBOutlet*/ private weak var tableViewController: ReminderVesselEditTableViewController?
     
+    var basicRC: BasicController?
     private var editable = ReminderVessel.Editable()
     
     private func updateIcon(_ icon: ReminderVessel.Icon, andReloadTable reload: Bool = true) {
@@ -66,7 +68,14 @@ class ReminderVesselEditViewController: UIViewController {
     }
     
     @IBAction private func saveButtonTapped(_ sender: NSObject?) {
-        log.debug()
+        guard let basicRC = self.basicRC else { return }
+        let result = basicRC.updateReminderVessel(with: self.editable)
+        switch result {
+        case .success:
+            self.dismiss(animated: true, completion: nil)
+        case .failure(let error):
+            log.error(error)
+        }
     }
     
     private func presentEmojiPhotoActionSheet() {

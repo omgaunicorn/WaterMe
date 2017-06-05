@@ -59,7 +59,7 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     }
     
     @IBAction private func addReminderVesselButtonTapped(_ sender: NSObject?) {
-        let editVC = ReminderVesselEditViewController.newVC()
+        let editVC = ReminderVesselEditViewController.newVC(basicRC: self.basicRC)
         self.present(editVC, animated: true, completion: nil)
     }
     
