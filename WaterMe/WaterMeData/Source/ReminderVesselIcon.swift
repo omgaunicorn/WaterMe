@@ -70,21 +70,28 @@ internal extension ReminderVessel.Icon {
     
 }
 
-fileprivate extension UIImage {
-    
-    fileprivate var maxSize: CGSize {
-        let max: CGFloat = 640
-        let widthLess = self.size.width < max
-        let heightLess = self.size.height < max
+internal extension CGSize {
+    /*@testable*/ internal func squareSize(withMaxEdge max: CGFloat) -> CGSize {
+        let widthLess = self.width < max
+        let heightLess = self.height < max
         if widthLess || heightLess {
-            if self.size.width < self.size.height {
-                return CGSize(width: self.size.width, height: self.size.width)
+            if self.width < self.height {
+                return CGSize(width: self.width, height: self.width)
             } else {
-                return CGSize(width: self.size.height, height: self.size.height)
+                return CGSize(width: self.height, height: self.height)
             }
         } else {
             return CGSize(width: max, height: max)
         }
+    }
+}
+
+fileprivate extension UIImage {
+    
+    fileprivate var maxSize: CGSize {
+        let max: CGFloat = 640
+        let size = self.size.squareSize(withMaxEdge: max)
+        return size
     }
     
     fileprivate func cropping(to size: CGSize) -> UIImage {
