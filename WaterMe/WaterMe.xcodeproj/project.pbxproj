@@ -34,6 +34,7 @@
 		5087A9231EE3A6B00046E687 /* SelfContainedImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9221EE3A6B00046E687 /* SelfContainedImagePickerController.swift */; };
 		5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */; };
 		5087A9291EE50C670046E687 /* ImageProcessingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9281EE50C670046E687 /* ImageProcessingTests.swift */; };
+		5087A92B1EE683970046E687 /* ReminderVesselIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A92A1EE683970046E687 /* ReminderVesselIconButton.swift */; };
 		50A004CA1EDC8E7A00DD1546 /* ReceiptWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A004C91EDC8E7A00DD1546 /* ReceiptWatcher.swift */; };
 		50A3DF971EE3331D00F0B966 /* StyleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */; };
 		50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */; };
@@ -109,6 +110,7 @@
 		5087A9221EE3A6B00046E687 /* SelfContainedImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfContainedImagePickerController.swift; sourceTree = "<group>"; };
 		5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPhotoAlertController.swift; sourceTree = "<group>"; };
 		5087A9281EE50C670046E687 /* ImageProcessingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingTests.swift; sourceTree = "<group>"; };
+		5087A92A1EE683970046E687 /* ReminderVesselIconButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselIconButton.swift; sourceTree = "<group>"; };
 		50A004C91EDC8E7A00DD1546 /* ReceiptWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptWatcher.swift; sourceTree = "<group>"; };
 		50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleExtensions.swift; sourceTree = "<group>"; };
 		50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPickerCollectionViewController.swift; sourceTree = "<group>"; };
@@ -336,6 +338,7 @@
 				5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */,
 				5087A9221EE3A6B00046E687 /* SelfContainedImagePickerController.swift */,
 				5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */,
+				5087A92A1EE683970046E687 /* ReminderVesselIconButton.swift */,
 			);
 			path = ReminderVesselMain;
 			sourceTree = "<group>";
@@ -703,6 +706,7 @@
 				5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */,
 				50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */,
 				50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */,
+				5087A92B1EE683970046E687 /* ReminderVesselIconButton.swift in Sources */,
 				50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */,
 				50E8B1DF1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift in Sources */,
 				50A3DF971EE3331D00F0B966 /* StyleExtensions.swift in Sources */,

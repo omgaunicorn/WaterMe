@@ -49,22 +49,3 @@ extension Receipt {
         return PurchasedSubscription(productID: pID, purchaseDate: pur, expirationDate: exp)
     }
 }
-
-extension UIButton {
-    func setIcon(_ icon: ReminderVessel.Icon?, for controlState: UIControlState = .normal) {
-        guard let icon = icon else {
-            self.setTitle(nil, for: .normal)
-            self.setImage(nil, for: .normal)
-            return
-        }
-        
-        switch icon {
-        case .emoji(let string):
-            self.setImage(nil, for: controlState)
-            self.setTitle(string, for: controlState)
-        case .image(let image):
-            self.setTitle(nil, for: controlState)
-            self.setImage(image, for: controlState)
-        }
-    }
-}

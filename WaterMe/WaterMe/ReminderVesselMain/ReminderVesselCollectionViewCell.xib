@@ -31,17 +31,18 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="hgV-dD-EUV">
-                        <rect key="frame" x="8" y="8" width="234" height="149.5"/>
+                        <rect key="frame" x="40" y="66.5" width="170" height="117.5"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sVt-zq-s4U">
-                                <rect key="frame" x="58.5" y="0.0" width="117" height="117"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sVt-zq-s4U" customClass="ReminderVesselIconButton" customModule="WaterMe" customModuleProvider="target">
+                                <rect key="frame" x="42.5" y="0.0" width="85" height="85"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="sVt-zq-s4U" secondAttribute="height" multiplier="1:1" id="czL-CV-nwW"/>
+                                    <constraint firstAttribute="width" constant="85" id="gN4-H6-D4Q"/>
                                 </constraints>
                                 <state key="normal" title="🌺"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Cool Plant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rzm-Lk-YCJ">
-                                <rect key="frame" x="64" y="129" width="106" height="20.5"/>
+                                <rect key="frame" x="32" y="97" width="106" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -54,9 +55,12 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="hgV-dD-EUV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="TnU-uo-K26"/>
-                <constraint firstAttribute="trailing" secondItem="hgV-dD-EUV" secondAttribute="trailing" constant="8" id="WWq-13-fDF"/>
-                <constraint firstItem="hgV-dD-EUV" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="hW0-Du-j0n"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hgV-dD-EUV" secondAttribute="bottom" constant="8" id="P07-sP-fZB"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hgV-dD-EUV" secondAttribute="trailing" constant="8" id="ceK-Oy-9ud"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="gVl-W3-lmX"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="ogD-zr-NZe"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="yUs-5l-y7a"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="z2D-rG-Gx3"/>
             </constraints>
             <size key="customSize" width="221" height="192"/>
             <connections>

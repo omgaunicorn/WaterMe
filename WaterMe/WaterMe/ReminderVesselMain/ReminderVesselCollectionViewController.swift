@@ -44,7 +44,6 @@ class ReminderVesselCollectionViewController: UICollectionViewController, HasBas
         super.viewDidLoad()
         self.collectionView?.register(ReminderVesselCollectionViewCell.nib, forCellWithReuseIdentifier: ReminderVesselCollectionViewCell.reuseID)
         self.flow?.minimumInteritemSpacing = 0
-        log.debug("")
     }
     
     private func hardReloadData() {
@@ -92,8 +91,9 @@ class ReminderVesselCollectionViewController: UICollectionViewController, HasBas
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let halfWidth: CGFloat = floor((self.collectionView?.bounds.width ?? 0) / 2)
-        self.flow?.itemSize = CGSize(width: halfWidth, height: 150)
+        let numberOfItemsPerRow: CGFloat = self.view.traitCollection.horizontalSizeClass == .regular ? 4 : 2
+        let width: CGFloat = floor((self.collectionView?.bounds.width ?? 0) / numberOfItemsPerRow)
+        self.flow?.itemSize = CGSize(width: width, height: width)
 
         let top = self.topParent.topLayoutGuide.length
         let bottom = self.topParent.bottomLayoutGuide.length

@@ -30,11 +30,10 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
     class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
     
     @IBOutlet private weak var nameLabel: UILabel?
-    @IBOutlet private weak var iconButton: UIButton?
+    @IBOutlet private weak var iconButton: ReminderVesselIconButton?
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.iconButton?.style_reminderVesselIconButton()
         self.nameLabel?.style_reminderVesselNameLabel()
         self.prepareForReuse()
     }
