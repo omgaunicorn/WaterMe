@@ -94,14 +94,6 @@ class ReminderVesselCollectionViewController: UICollectionViewController, HasBas
         let numberOfItemsPerRow: CGFloat = self.view.traitCollection.horizontalSizeClass == .regular ? 4 : 2
         let width: CGFloat = floor((self.collectionView?.bounds.width ?? 0) / numberOfItemsPerRow)
         self.flow?.itemSize = CGSize(width: width, height: width)
-
-        let top = self.topParent.topLayoutGuide.length
-        let bottom = self.topParent.bottomLayoutGuide.length
-        
-        self.collectionView?.contentInset.top = top
-        self.collectionView?.scrollIndicatorInsets.top = top
-        self.collectionView?.contentInset.bottom = bottom
-        self.collectionView?.scrollIndicatorInsets.bottom = bottom
     }
     
     private var notificationToken: NotificationToken?

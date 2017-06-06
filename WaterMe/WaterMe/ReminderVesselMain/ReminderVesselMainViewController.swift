@@ -44,7 +44,6 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.automaticallyAdjustsScrollViewInsets = false
         self.collectionVC = self.childViewControllers.first()
         self.title = "WaterMe"
         
