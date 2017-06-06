@@ -39,11 +39,7 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     
     /*@IBOutlet*/ private weak var collectionVC: ReminderVesselCollectionViewController?
     
-    var basicRC: BasicController? {
-        didSet {
-            self.collectionVC?.configure(with: self.basicRC)
-        }
-    }
+    var basicRC: BasicController?
     var proRC: ProController?
     
     override func viewDidLoad() {
@@ -52,15 +48,16 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
         self.collectionVC = self.childViewControllers.first()
         self.title = "WaterMe"
         
-        self.collectionVC?.vesselChosen = { [weak self] vessel in
-            let editVC = ReminderVesselEditViewController.newVC(basicRC: self?.basicRC, editVessel: vessel)
-            self?.present(editVC, animated: true, completion: nil)
-        }
+        self.collectionVC?.vesselChosen = { [unowned self] in self.editReminderVessel($0) }
         self.collectionVC?.configure(with: self.basicRC)
     }
     
     @IBAction private func addReminderVesselButtonTapped(_ sender: NSObject?) {
-        let editVC = ReminderVesselEditViewController.newVC(basicRC: self.basicRC)
+        self.editReminderVessel(nil)
+    }
+    
+    private func editReminderVessel(_ vessel: ReminderVessel?) {
+        let editVC = ReminderVesselEditViewController.newVC(basicRC: self.basicRC, editVessel: vessel)
         self.present(editVC, animated: true, completion: nil)
     }
     
