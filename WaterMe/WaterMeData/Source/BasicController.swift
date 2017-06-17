@@ -58,8 +58,8 @@ public class BasicController {
     public init(kind: Kind) {
         self.kind = kind
         var realmConfig = Realm.Configuration()
-        realmConfig.schemaVersion = 6
-        realmConfig.objectTypes = [ReminderVessel.self]
+        realmConfig.schemaVersion = 7
+        realmConfig.objectTypes = [ReminderVessel.self, Reminder.self, ReminderPerform.self, ReminderKind.self]
         switch kind {
         case .local:
             try! type(of: self).createLocalRealmDirectoryIfNeeded()

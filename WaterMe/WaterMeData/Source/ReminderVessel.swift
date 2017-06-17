@@ -43,6 +43,7 @@ public class ReminderVessel: Object {
     
     public internal(set) dynamic var uuid = UUID().uuidString
     public internal(set) dynamic var displayName = "Untitled"
+    public let reminders = List<Reminder>()
     
     private dynamic var iconImageData: Data?
     private dynamic var iconEmojiString: String?
