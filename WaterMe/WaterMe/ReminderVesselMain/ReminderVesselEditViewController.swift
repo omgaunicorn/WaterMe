@@ -27,13 +27,21 @@ import UIKit
 
 class ReminderVesselEditViewController: UIViewController, HasBasicController {
     
-    class func newVC(basicRC: BasicController?, editVessel vessel: ReminderVessel? = nil) -> UIViewController {
+    typealias CompletionHandler = (UIViewController) -> Void
+    
+    class func newVC(
+        basicRC: BasicController?,
+        editVessel vessel: ReminderVessel? = nil,
+        completionHandler: @escaping CompletionHandler
+        ) -> UIViewController
+    {
         let sb = UIStoryboard(name: "ReminderVesselEdit", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderVesselEditViewController
         vc.configure(with: basicRC)
+        vc.completionHandler = completionHandler
         if let vessel = vessel {
             vc.editable = vessel.editable()
             vc.notificationToken = vessel.addNotificationBlock({ vc.vesselChanged($0, vessel) })
@@ -45,6 +53,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
     
     var basicRC: BasicController?
     var editable = ReminderVessel.Editable()
+    var completionHandler: CompletionHandler?
     
     private func vesselChanged(_ changes: ObjectChange, _ vessel: ReminderVessel) {
         switch changes {
@@ -79,7 +88,8 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
     }
     
     @IBAction private func cancelButtonTapped(_ sender: NSObject?) {
-        self.dismiss(animated: true, completion: nil)
+        self.notificationToken?.stop()
+        self.completionHandler?(self)
     }
     
     @IBAction private func saveButtonTapped(_ sender: NSObject?) {
@@ -88,7 +98,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
         switch result {
         case .success:
             self.notificationToken?.stop()
-            self.dismiss(animated: true, completion: nil)
+            self.completionHandler?(self)
         case .failure(let error):
             log.error(error)
         }
