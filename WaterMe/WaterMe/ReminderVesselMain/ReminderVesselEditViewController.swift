@@ -42,7 +42,6 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
         vc.completionHandler = completionHandler
         let vessel = vessel ?? basicRC.newReminderVessel()
         vc.vessel = vessel
-        vc.notificationToken = vessel.addNotificationBlock({ vc.vesselChanged($0, vessel) })
         return navVC
     }
     
@@ -53,24 +52,25 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
     var vessel: ReminderVessel!
     var completionHandler: CompletionHandler!
     
-    private func vesselChanged(_ changes: ObjectChange, _ vessel: ReminderVessel) {
+    private func vesselChanged(_ changes: ObjectChange) {
         switch changes {
         case .change:
-            self.vessel = vessel
             self.tableViewController?.tableView.reloadData()
         case .deleted, .error:
-            self.notificationToken?.stop()
             self.completionHandler?(self)
         }
     }
     
     private func updateIcon(_ icon: ReminderVessel.Icon, andReloadTable reload: Bool = true) {
+        self.notificationToken?.stop() // stop the update notifications from causing the tableview to reload
         self.basicRC?.update(icon: icon, in: self.vessel)
+        self.startNotifications()
         guard reload else { return }
         self.tableViewController?.tableView.reloadData()
     }
     
     private func updateDisplayName(_ name: String, andReloadTable reload: Bool = false) {
+        self.notificationToken?.stop() // stop the update notifications from causing the tableview to reload
         self.basicRC?.update(displayName: name, in: self.vessel)
         guard reload else { return }
         self.tableViewController?.tableView.reloadData()
@@ -78,6 +78,9 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.startNotifications()
+        
         self.deleteButton?.title = "Delete"
         self.title = "New Plant"
         
@@ -93,15 +96,13 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
     }
     
     @IBAction private func doneButtonTapped(_ sender: Any) {
-        guard let basicRC = self.basicRC else { return }
-//        let result = basicRC.updateReminderVessel(with: self.vessel)
-//        switch result {
-//        case .success:
-//            self.notificationToken?.stop()
-//            self.completionHandler?(self)
-//        case .failure(let error):
-//            log.error(error)
-//        }
+        let result = self.vessel.isUIComplete
+        switch result {
+        case .success:
+            self.completionHandler?(self)
+        case .failure(let error):
+            log.error(error)
+        }
     }
     
     private func presentEmojiPhotoActionSheet() {
@@ -133,6 +134,10 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
             }
         }
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    private func startNotifications() {
+        self.notificationToken = self.vessel.addNotificationBlock({ [weak self] in self?.vesselChanged($0) })
     }
     
     private var notificationToken: NotificationToken?

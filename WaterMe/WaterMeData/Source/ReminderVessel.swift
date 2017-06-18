@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Result
 import UIKit
 import RealmSwift
 
@@ -36,11 +37,11 @@ public class ReminderVessel: Object {
     
     private dynamic var iconImageData: Data?
     private dynamic var iconEmojiString: String?
-    public internal(set) var icon: Icon {
+    public internal(set) var icon: Icon? {
         get { return Icon(rawImageData: self.iconImageData, emojiString: self.iconEmojiString) }
         set {
-            self.iconImageData = newValue.dataValue
-            self.iconEmojiString = newValue.stringValue
+            self.iconImageData = newValue?.dataValue
+            self.iconEmojiString = newValue?.stringValue
         }
     }
     
@@ -52,6 +53,20 @@ public class ReminderVessel: Object {
     
     override public class func primaryKey() -> String {
         return #keyPath(ReminderVessel.uuid)
+    }
+    
+    public enum Error: Swift.Error {
+        case missingIcon, missingName
+    }
+    
+    public var isUIComplete: Result<Void, Error> {
+        guard self.displayName != nil else {
+            return .failure(.missingName)
+        }
+        guard self.icon != nil else {
+            return .failure(.missingIcon)
+        }
+        return .success()
     }
     
 }

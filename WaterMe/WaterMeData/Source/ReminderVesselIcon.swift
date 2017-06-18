@@ -39,13 +39,13 @@ public extension ReminderVessel {
 
 internal extension ReminderVessel.Icon {
     
-    internal init(rawImageData: Data?, emojiString: String?) {
+    internal init?(rawImageData: Data?, emojiString: String?) {
         if let data = rawImageData, let image = UIImage(data: data) {
             self = .image(image)
         } else if let emojiString = emojiString {
             self = .emoji(emojiString)
         } else {
-            self = .emoji("☠")
+            return nil
         }
     }
     

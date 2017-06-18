@@ -125,7 +125,7 @@ public class BasicController {
         }
         try! realm.commitWrite()
     }
-    
+        
     public func delete(vessel: ReminderVessel) {
         let realm = self.realm
         realm.beginWrite()
