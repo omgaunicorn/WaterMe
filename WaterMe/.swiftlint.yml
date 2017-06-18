@@ -1,4 +1,5 @@
 disabled_rules:
+    - opening_brace
     - colon
     - trailing_whitespace
     - empty_parentheses_with_trailing_closure

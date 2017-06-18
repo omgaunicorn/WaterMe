@@ -49,8 +49,8 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
     @IBOutlet private weak var deleteButton: UIBarButtonItem?
     
     var basicRC: BasicController?
-    var vessel: ReminderVessel!
-    var completionHandler: CompletionHandler!
+    private var vessel: ReminderVessel!
+    private var completionHandler: CompletionHandler!
     
     private func vesselChanged(_ changes: ObjectChange) {
         switch changes {
