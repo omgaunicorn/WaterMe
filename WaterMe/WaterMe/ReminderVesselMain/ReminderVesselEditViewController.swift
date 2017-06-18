@@ -29,11 +29,9 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
     
     typealias CompletionHandler = (UIViewController) -> Void
     
-    class func newVC(
-        basicRC: BasicController?,
-        editVessel vessel: ReminderVessel? = nil,
-        completionHandler: @escaping CompletionHandler
-        ) -> UIViewController
+    class func newVC(basicRC: BasicController,
+                     editVessel vessel: ReminderVessel? = nil,
+                     completionHandler: @escaping CompletionHandler) -> UIViewController
     {
         let sb = UIStoryboard(name: "ReminderVesselEdit", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
@@ -42,66 +40,68 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
         var vc = navVC.viewControllers.first as! ReminderVesselEditViewController
         vc.configure(with: basicRC)
         vc.completionHandler = completionHandler
-        if let vessel = vessel {
-            vc.editable = vessel.editable()
-            vc.notificationToken = vessel.addNotificationBlock({ vc.vesselChanged($0, vessel) })
-        }
+        let vessel = vessel ?? basicRC.newReminderVessel()
+        vc.vessel = vessel
+        vc.notificationToken = vessel.addNotificationBlock({ vc.vesselChanged($0, vessel) })
         return navVC
     }
     
     /*@IBOutlet*/ private weak var tableViewController: ReminderVesselEditTableViewController?
+    @IBOutlet private weak var deleteButton: UIBarButtonItem?
     
     var basicRC: BasicController?
-    var editable = ReminderVessel.Editable()
-    var completionHandler: CompletionHandler?
+    var vessel: ReminderVessel!
+    var completionHandler: CompletionHandler!
     
     private func vesselChanged(_ changes: ObjectChange, _ vessel: ReminderVessel) {
         switch changes {
         case .change:
-            self.editable = vessel.editable()
+            self.vessel = vessel
             self.tableViewController?.tableView.reloadData()
         case .deleted, .error:
-            self.dismiss(animated: true, completion: nil)
+            self.notificationToken?.stop()
+            self.completionHandler?(self)
         }
     }
     
     private func updateIcon(_ icon: ReminderVessel.Icon, andReloadTable reload: Bool = true) {
-        self.editable.icon = icon
+        self.basicRC?.update(icon: icon, in: self.vessel)
         guard reload else { return }
         self.tableViewController?.tableView.reloadData()
     }
     
     private func updateDisplayName(_ name: String, andReloadTable reload: Bool = false) {
-        self.editable.displayName = name
+        self.basicRC?.update(displayName: name, in: self.vessel)
         guard reload else { return }
         self.tableViewController?.tableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.deleteButton?.title = "Delete"
         self.title = "New Plant"
         
         self.tableViewController = self.childViewControllers.first()
-        self.tableViewController?.editableFromDataSource = { [unowned self] in return self.editable }
+        self.tableViewController?.editableFromDataSource = { [unowned self] in return self.vessel }
         self.tableViewController?.choosePhotoTapped = { [unowned self] in self.presentEmojiPhotoActionSheet() }
         self.tableViewController?.displayNameChanged = { [unowned self] newValue in self.updateDisplayName(newValue) }
     }
     
-    @IBAction private func cancelButtonTapped(_ sender: NSObject?) {
-        self.notificationToken?.stop()
+    @IBAction private func deleteButtonTapped(_ sender: Any) {
+        self.basicRC?.delete(vessel: self.vessel)
         self.completionHandler?(self)
     }
     
-    @IBAction private func saveButtonTapped(_ sender: NSObject?) {
+    @IBAction private func doneButtonTapped(_ sender: Any) {
         guard let basicRC = self.basicRC else { return }
-        let result = basicRC.updateReminderVessel(with: self.editable)
-        switch result {
-        case .success:
-            self.notificationToken?.stop()
-            self.completionHandler?(self)
-        case .failure(let error):
-            log.error(error)
-        }
+//        let result = basicRC.updateReminderVessel(with: self.vessel)
+//        switch result {
+//        case .success:
+//            self.notificationToken?.stop()
+//            self.completionHandler?(self)
+//        case .failure(let error):
+//            log.error(error)
+//        }
     }
     
     private func presentEmojiPhotoActionSheet() {

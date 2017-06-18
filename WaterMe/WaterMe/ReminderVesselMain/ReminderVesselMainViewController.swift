@@ -56,8 +56,9 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     }
     
     private func editReminderVessel(_ vessel: ReminderVessel?) {
+        guard let basicRC = self.basicRC else { return }
         let deselectAction: (() -> Void)? = vessel == nil ? nil : { self.collectionVC?.collectionView?.deselectAllItems(animated: true) }
-        let editVC = ReminderVesselEditViewController.newVC(basicRC: self.basicRC, editVessel: vessel) { vc in
+        let editVC = ReminderVesselEditViewController.newVC(basicRC: basicRC, editVessel: vessel) { vc in
             vc.dismiss(animated: true, completion: deselectAction)
         }
         self.present(editVC, animated: true, completion: nil)

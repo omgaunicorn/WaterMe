@@ -95,36 +95,62 @@ public class BasicController {
         return AnyRealmCollection(vessels)
     }
     
-    public func updateReminderVessel(with editable: ReminderVessel.Editable) -> Result<Void, ReminderVessel.UpdateError> {
-        guard let icon = editable.icon else { return .failure(.missingIcon) }
-        guard let displayName = editable.displayName, displayName.isEmpty == false else { return .failure(.missingDisplayName) }
-        
+    public func newReminderVessel(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, reminders: [Reminder]? = nil) -> ReminderVessel {
         let realm = self.realm
-        let vessel: ReminderVessel
-        let needToAddToRealm: Bool
-        if let uuid = editable.uuid, let _vessel = realm.object(ofType: ReminderVessel.self, forPrimaryKey: uuid) {
-            vessel = _vessel
-            needToAddToRealm = false
-        } else {
-            vessel = ReminderVessel()
-            needToAddToRealm = true
+        let v = ReminderVessel()
+        if let displayName = displayName {
+            v.displayName = displayName
+        }
+        if let icon = icon {
+            v.icon = icon
+        }
+        if let reminders = reminders {
+            v.reminders.append(objectsIn: reminders)
         }
         realm.beginWrite()
-        if needToAddToRealm {
-            realm.add(vessel)
-        }
-        vessel.displayName = displayName
-        vessel.icon = icon
+        realm.add(v)
         try! realm.commitWrite()
-        
-        return .success()
+        return v
     }
     
-    public func delete(vessel: ReminderVessel) {
+    public func update(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, in vessel: ReminderVessel) {
         guard vessel.isInvalidated == false else { return }
         let realm = self.realm
         realm.beginWrite()
-        realm.delete(vessel)
+        if let displayName = displayName {
+            vessel.displayName = displayName
+        }
+        if let icon = icon {
+            vessel.icon = icon
+        }
         try! realm.commitWrite()
+    }
+    
+    public func delete(vessel: ReminderVessel) {
+        let realm = self.realm
+        realm.beginWrite()
+        self.delete(vessel: vessel, inOpenRealm: realm)
+        try! realm.commitWrite()
+    }
+    
+    private func delete(vessel: ReminderVessel, inOpenRealm realm: Realm) {
+        for reminder in vessel.reminders {
+            self.delete(reminder: reminder, inOpenRealm: realm)
+        }
+        realm.delete(vessel)
+    }
+    
+    public func delete(reminder: Reminder) {
+        let realm = self.realm
+        realm.beginWrite()
+        self.delete(reminder: reminder, inOpenRealm: realm)
+        try! realm.commitWrite()
+    }
+    
+    private func delete(reminder: Reminder, inOpenRealm realm: Realm) {
+        for perform in reminder.performed {
+            realm.delete(perform)
+        }
+        realm.delete(reminder)
     }
 }

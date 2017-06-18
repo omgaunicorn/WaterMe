@@ -39,7 +39,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
         }
     }
     
-    var editableFromDataSource: (() -> ReminderVessel.Editable)?
+    var editableFromDataSource: (() -> ReminderVessel)?
     var choosePhotoTapped: (() -> Void)? {
         didSet {
             // if this is changed, we need to make sure the cell gets the new closure

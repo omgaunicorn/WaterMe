@@ -26,32 +26,18 @@ import RealmSwift
 
 public class ReminderVessel: Object {
     
-    public enum UpdateError: Error {
-        case missingDisplayName, missingIcon
-    }
-    
-    public struct Editable {
-        public internal(set) var uuid: String?
-        public var displayName: String?
-        public var icon: Icon?
-        public init() {}
-    }
-    
     public enum Kind: String {
         case plant
     }
     
     public internal(set) dynamic var uuid = UUID().uuidString
-    public internal(set) dynamic var displayName = "Untitled"
+    public internal(set) dynamic var displayName: String?
     public let reminders = List<Reminder>()
     
     private dynamic var iconImageData: Data?
     private dynamic var iconEmojiString: String?
     public internal(set) var icon: Icon {
-        get {
-            let icon = Icon(rawImageData: self.iconImageData, emojiString: self.iconEmojiString)
-            return icon
-        }
+        get { return Icon(rawImageData: self.iconImageData, emojiString: self.iconEmojiString) }
         set {
             self.iconImageData = newValue.dataValue
             self.iconEmojiString = newValue.stringValue
@@ -60,20 +46,8 @@ public class ReminderVessel: Object {
     
     private dynamic var kindString = Kind.plant.rawValue
     public internal(set) var kind: Kind {
-        get {
-            return Kind(rawValue: self.kindString) ?? .plant
-        }
-        set {
-            self.kindString = newValue.rawValue
-        }
-    }
-    
-    public func editable() -> Editable {
-        var e = Editable()
-        e.uuid = self.uuid
-        e.displayName = self.displayName
-        e.icon = self.icon
-        return e
+        get { return Kind(rawValue: self.kindString) ?? .plant }
+        set { self.kindString = newValue.rawValue }
     }
     
     override public class func primaryKey() -> String {
