@@ -27,14 +27,16 @@ import UIKit
 class ReminderVesselEditTableViewController: UITableViewController {
     
     private enum Section: Int {
-        case photo = 0, name
-        static let count = 2
+        case photo = 0, name, reminders
+        static let count = 3
         var localizedTitle: String {
             switch self {
             case .photo:
                 return "Photo"
             case .name:
                 return "Name"
+            case .reminders:
+                return "Reminders"
             }
         }
     }
@@ -57,6 +59,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.register(OptionalAddButtonTableViewHeaderFooterView.nib, forHeaderFooterViewReuseIdentifier: OptionalAddButtonTableViewHeaderFooterView.reuseID)
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 100
     }
@@ -66,17 +69,19 @@ class ReminderVesselEditTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let section = Section(rawValue: section) else { assert(false); return 0; }
+        guard let section = Section(rawValue: section) else { assertionFailure("Unknown Section"); return 0; }
         switch section {
         case .name:
             return 1
         case .photo:
             return 1
+        case .reminders:
+            return 4
         }
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let section = Section(rawValue: indexPath.section) else { assert(false); return UITableViewCell(); }
+        guard let section = Section(rawValue: indexPath.section) else { assertionFailure("Unknown Section"); return UITableViewCell(); }
         switch section {
         case .name:
             let id = TextFieldTableViewCell.reuseID
@@ -92,11 +97,21 @@ class ReminderVesselEditTableViewController: UITableViewController {
             cell?.configure(with: self.editableFromDataSource?().icon)
             cell?.iconButtonTapped = self.choosePhotoTapped
             return _cell
+        case .reminders:
+            let id = "ReminderTableViewCell"
+            let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
+            return _cell
         }
     }
     
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let section = Section(rawValue: section) else { assertionFailure("Unknown Section"); return nil; }
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: OptionalAddButtonTableViewHeaderFooterView.reuseID)
+        return view
+    }
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let section = Section(rawValue: section) else { assert(false); return nil; }
+        guard let section = Section(rawValue: section) else { assertionFailure("Unknown Section"); return nil; }
         return section.localizedTitle
     }
     

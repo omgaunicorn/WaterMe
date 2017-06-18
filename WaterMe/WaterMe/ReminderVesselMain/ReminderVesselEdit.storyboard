@@ -85,6 +85,29 @@
                                     <outlet property="textField" destination="AMv-Yu-CvG" id="Cgw-bc-CiA"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderTableViewCell" rowHeight="67" id="ynF-X0-tVd">
+                                <rect key="frame" x="0.0" y="268.5" width="375" height="67"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ynF-X0-tVd" id="ur4-eJ-G9m">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="66.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ifj-Vy-dgI">
+                                            <rect key="frame" x="8" y="8" width="359" height="50.5"/>
+                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="UHh-es-hp6"/>
+                                            </constraints>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="ifj-Vy-dgI" firstAttribute="leading" secondItem="ur4-eJ-G9m" secondAttribute="leadingMargin" id="0nE-e5-BvZ"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="ifj-Vy-dgI" secondAttribute="trailing" id="dof-rF-30A"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ifj-Vy-dgI" secondAttribute="bottom" id="uXN-W1-pl9"/>
+                                        <constraint firstItem="ifj-Vy-dgI" firstAttribute="top" secondItem="ur4-eJ-G9m" secondAttribute="topMargin" id="wYm-59-MEA"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="VdB-w4-RH3" id="XoH-nX-Zpo"/>
