@@ -48,6 +48,7 @@
 		50BB0F711EC00E9500850FF4 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BB0F701EC00E9500850FF4 /* CloudKit.framework */; };
 		50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */; };
 		50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */; };
+		50BB816A1EF7731E0030F5BA /* ReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */; };
 		50C1AA971ED006B300E3BF0A /* AdminRealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C1AA961ED006B300E3BF0A /* AdminRealmController.swift */; };
 		50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */; };
 		50C96A3A1EC2CFE8002802C1 /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */; };
@@ -129,6 +130,7 @@
 		50BB0F701EC00E9500850FF4 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
+		50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTableViewCell.swift; sourceTree = "<group>"; };
 		50C1AA961ED006B300E3BF0A /* AdminRealmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminRealmController.swift; sourceTree = "<group>"; };
 		50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkExtensions.swift; sourceTree = "<group>"; };
 		50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoDeviceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -337,6 +339,7 @@
 				50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */,
 				50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */,
 				50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */,
+				50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */,
 				508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */,
 				508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */,
 				50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */,
@@ -714,6 +717,7 @@
 				50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */,
 				50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */,
 				508FFCAF1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift in Sources */,
+				50BB816A1EF7731E0030F5BA /* ReminderTableViewCell.swift in Sources */,
 				5087A92B1EE683970046E687 /* ReminderVesselIconButton.swift in Sources */,
 				50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */,
 				50E8B1DF1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift in Sources */,

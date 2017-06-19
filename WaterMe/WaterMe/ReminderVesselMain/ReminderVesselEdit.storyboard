@@ -85,7 +85,7 @@
                                     <outlet property="textField" destination="AMv-Yu-CvG" id="Cgw-bc-CiA"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderTableViewCell" rowHeight="67" id="ynF-X0-tVd">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderTableViewCell" rowHeight="67" id="ynF-X0-tVd" customClass="ReminderTableViewCell" customModule="WaterMe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="268.5" width="375" height="67"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ynF-X0-tVd" id="ur4-eJ-G9m">
@@ -94,7 +94,6 @@
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ifj-Vy-dgI">
                                             <rect key="frame" x="8" y="8" width="359" height="50.5"/>
-                                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="UHh-es-hp6"/>
                                             </constraints>

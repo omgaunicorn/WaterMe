@@ -41,7 +41,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
         }
     }
     
-    var editableFromDataSource: (() -> ReminderVessel)?
+    var vesselFromDataSource: (() -> ReminderVessel)?
     var choosePhotoTapped: (() -> Void)? {
         didSet {
             // if this is changed, we need to make sure the cell gets the new closure
@@ -52,6 +52,12 @@ class ReminderVesselEditTableViewController: UITableViewController {
     var displayNameChanged: ((String) -> Void)? {
         didSet {
             // if this is changed, we need to make sure the cell gets the new closure
+            guard self.isViewLoaded else { return }
+            self.tableView.reloadData()
+        }
+    }
+    var addReminderButtonTapped: (() -> Void)? {
+        didSet {
             guard self.isViewLoaded else { return }
             self.tableView.reloadData()
         }
@@ -76,7 +82,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
         case .photo:
             return 1
         case .reminders:
-            return 4
+            return self.vesselFromDataSource?().reminders.count ?? 0
         }
     }
     
@@ -87,26 +93,36 @@ class ReminderVesselEditTableViewController: UITableViewController {
             let id = TextFieldTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? TextFieldTableViewCell
-            cell?.setTextField(text: self.editableFromDataSource?().displayName)
+            cell?.setTextField(text: self.vesselFromDataSource?().displayName)
             cell?.textChanged = self.displayNameChanged
             return _cell
         case .photo:
             let id = ReminderVesselIconTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? ReminderVesselIconTableViewCell
-            cell?.configure(with: self.editableFromDataSource?().icon)
+            cell?.configure(with: self.vesselFromDataSource?().icon)
             cell?.iconButtonTapped = self.choosePhotoTapped
             return _cell
         case .reminders:
-            let id = "ReminderTableViewCell"
+            let id = ReminderTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
+            let cell = _cell as? ReminderTableViewCell
             return _cell
         }
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let section = Section(rawValue: section) else { assertionFailure("Unknown Section"); return nil; }
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: OptionalAddButtonTableViewHeaderFooterView.reuseID)
+        let id = OptionalAddButtonTableViewHeaderFooterView.reuseID
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: id) as? OptionalAddButtonTableViewHeaderFooterView
+        switch section {
+        case .name, .photo:
+            view?.isAddButtonHidden = true
+            view?.addButtonTapped = nil
+        case .reminders:
+            view?.isAddButtonHidden = false
+            view?.addButtonTapped = self.addReminderButtonTapped
+        }
         return view
     }
     

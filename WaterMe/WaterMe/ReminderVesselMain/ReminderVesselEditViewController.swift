@@ -85,9 +85,10 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
         self.title = "New Plant"
         
         self.tableViewController = self.childViewControllers.first()
-        self.tableViewController?.editableFromDataSource = { [unowned self] in return self.vessel }
+        self.tableViewController?.vesselFromDataSource = { [unowned self] in return self.vessel }
         self.tableViewController?.choosePhotoTapped = { [unowned self] in self.presentEmojiPhotoActionSheet() }
         self.tableViewController?.displayNameChanged = { [unowned self] newValue in self.updateDisplayName(newValue) }
+        self.tableViewController?.addReminderButtonTapped = { [unowned self] in self.addReminderButtonTapped() }
     }
     
     @IBAction private func deleteButtonTapped(_ sender: Any) {
@@ -103,6 +104,10 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
         case .failure(let error):
             log.error(error)
         }
+    }
+    
+    private func addReminderButtonTapped() {
+        print("Add Button Tapped")
     }
     
     private func presentEmojiPhotoActionSheet() {
