@@ -85,25 +85,46 @@
                                     <outlet property="textField" destination="AMv-Yu-CvG" id="Cgw-bc-CiA"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderTableViewCell" rowHeight="67" id="ynF-X0-tVd" customClass="ReminderTableViewCell" customModule="WaterMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="268.5" width="375" height="67"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderTableViewCell" rowHeight="83" id="ynF-X0-tVd" customClass="ReminderTableViewCell" customModule="WaterMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="268.5" width="375" height="83"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ynF-X0-tVd" id="ur4-eJ-G9m">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="66.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="82.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ifj-Vy-dgI">
-                                            <rect key="frame" x="8" y="8" width="359" height="50.5"/>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ThS-TR-nka">
+                                            <rect key="frame" x="8" y="8" width="66.5" height="66.5"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="50" id="UHh-es-hp6"/>
+                                                <constraint firstAttribute="width" secondItem="ThS-TR-nka" secondAttribute="height" multiplier="1:1" id="7hZ-Be-gpo"/>
                                             </constraints>
-                                        </view>
+                                            <state key="normal" title="Wa"/>
+                                        </button>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8Gr-Yc-Adr">
+                                            <rect key="frame" x="82.5" y="12" width="284.5" height="58.5"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" text="Water Plant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOJ-ON-Np4">
+                                                    <rect key="frame" x="0.0" y="0.0" width="284.5" height="32.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" ambiguous="YES" text="Every 4 Days" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W7T-j1-yfN">
+                                                    <rect key="frame" x="0.0" y="40.5" width="284.5" height="18"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="ifj-Vy-dgI" firstAttribute="leading" secondItem="ur4-eJ-G9m" secondAttribute="leadingMargin" id="0nE-e5-BvZ"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="ifj-Vy-dgI" secondAttribute="trailing" id="dof-rF-30A"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="ifj-Vy-dgI" secondAttribute="bottom" id="uXN-W1-pl9"/>
-                                        <constraint firstItem="ifj-Vy-dgI" firstAttribute="top" secondItem="ur4-eJ-G9m" secondAttribute="topMargin" id="wYm-59-MEA"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="ThS-TR-nka" secondAttribute="bottom" id="EZn-SK-aRo"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="8Gr-Yc-Adr" secondAttribute="trailing" id="Oq9-TG-1zW"/>
+                                        <constraint firstItem="ThS-TR-nka" firstAttribute="leading" secondItem="ur4-eJ-G9m" secondAttribute="leadingMargin" id="Rdf-XT-z9R"/>
+                                        <constraint firstItem="8Gr-Yc-Adr" firstAttribute="leading" secondItem="ThS-TR-nka" secondAttribute="trailing" constant="8" symbolic="YES" id="hBr-dm-GWm"/>
+                                        <constraint firstItem="ThS-TR-nka" firstAttribute="top" secondItem="ur4-eJ-G9m" secondAttribute="topMargin" id="k69-Fz-5VB"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="8Gr-Yc-Adr" secondAttribute="bottom" constant="4" id="lFW-3g-U6H"/>
+                                        <constraint firstItem="8Gr-Yc-Adr" firstAttribute="top" secondItem="ur4-eJ-G9m" secondAttribute="topMargin" constant="4" id="vB5-e1-ud9"/>
                                     </constraints>
                                 </tableViewCellContentView>
                             </tableViewCell>

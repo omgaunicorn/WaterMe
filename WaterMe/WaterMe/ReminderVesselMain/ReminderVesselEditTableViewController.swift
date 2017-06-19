@@ -82,7 +82,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
         case .photo:
             return 1
         case .reminders:
-            return self.vesselFromDataSource?().reminders.count ?? 0
+            return 3//self.vesselFromDataSource?().reminders.count ?? 0
         }
     }
     

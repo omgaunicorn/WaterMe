@@ -36,7 +36,6 @@ public class Reminder: Object {
     public internal(set) dynamic var interval: Int = 4
     public let performed = List<ReminderPerform>()
     internal let vessels = LinkingObjects(fromType: ReminderVessel.self, property: "reminders") //#keyPath(ReminderVessel.reminders)
-    
     public var vessel: ReminderVessel? { return self.vessels.first }
 }
 
