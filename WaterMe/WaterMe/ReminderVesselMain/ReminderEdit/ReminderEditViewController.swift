@@ -1,8 +1,8 @@
 //
-//  OptionalAddButtonTableViewHeaderFooterView.swift
+//  ReminderEditViewController.swift
 //  WaterMe
 //
-//  Created by Jeffrey Bergier on 6/17/17.
+//  Created by Jeffrey Bergier on 6/22/17.
 //  Copyright © 2017 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
@@ -21,24 +21,4 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import UIKit
-
-class OptionalAddButtonTableViewHeaderFooterView: UITableViewHeaderFooterView {
-    
-    static let reuseID = "OptionalAddButtonTableViewHeaderFooterView"
-    class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
-    
-    @IBOutlet private weak var addButton: UIButton?
-    
-    var isAddButtonHidden: Bool {
-        get { return self.addButton?.isHidden ?? true }
-        set { self.addButton?.isHidden = newValue }
-    }
-    
-    var addButtonTapped: (() -> Void)?
-    
-    @IBAction private func addButtonTapped(_ sender: Any) {
-        self.addButtonTapped?()
-    }
-    
-}
+import Foundation

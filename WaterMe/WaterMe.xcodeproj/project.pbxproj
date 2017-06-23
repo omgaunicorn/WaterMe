@@ -24,6 +24,8 @@
 		501F922C1EC55E080014939D /* SubscriptionChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */; };
 		503F74491ED3BB64005EF5F2 /* UserSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503F74481ED3BB64005EF5F2 /* UserSummaryViewController.swift */; };
 		5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */; };
+		5045CBAB1EFCCB50008E6D6A /* ReminderEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */; };
+		5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5045CBAC1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift */; };
 		504A8D511ED6A04F002D928D /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D501ED6A04F002D928D /* UserTableViewCell.swift */; };
 		504A8D5B1EDA8C76002D928D /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5A1EDA8C76002D928D /* LoadingViewController.swift */; };
 		504A8D5D1EDA8D41002D928D /* ReceiptVerifyingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */; };
@@ -104,6 +106,8 @@
 		501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceViewController.swift; sourceTree = "<group>"; };
 		503F74481ED3BB64005EF5F2 /* UserSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSummaryViewController.swift; sourceTree = "<group>"; };
 		5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReminderEdit.storyboard; sourceTree = "<group>"; };
+		5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditViewController.swift; sourceTree = "<group>"; };
+		5045CBAC1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditTableViewController.swift; sourceTree = "<group>"; };
 		504A8D501ED6A04F002D928D /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		504A8D5A1EDA8C76002D928D /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptVerifyingViewController.swift; sourceTree = "<group>"; };
@@ -257,6 +261,8 @@
 			isa = PBXGroup;
 			children = (
 				5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */,
+				5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */,
+				5045CBAC1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift */,
 			);
 			path = ReminderEdit;
 			sourceTree = "<group>";
@@ -737,11 +743,13 @@
 				50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */,
 				50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */,
 				5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */,
+				5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */,
 				501F92291EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift in Sources */,
 				50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */,
 				501F922B1EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift in Sources */,
 				50E8B1D61EDF79E700ACCDAF /* ReminderVesselMainViewController.swift in Sources */,
 				5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */,
+				5045CBAB1EFCCB50008E6D6A /* ReminderEditViewController.swift in Sources */,
 				50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */,
 				50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */,
 				508FFCAF1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift in Sources */,
