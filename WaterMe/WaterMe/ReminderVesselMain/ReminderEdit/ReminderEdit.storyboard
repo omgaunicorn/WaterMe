@@ -1,11 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16F2073" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.17" systemVersion="16F2073" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Euq-e7-F8U">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.14"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="UED-af-vDa">
+            <objects>
+                <navigationController modalPresentationStyle="formSheet" id="Euq-e7-F8U" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="SvS-m1-hNy">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="EzP-gR-dN4" kind="relationship" relationship="rootViewController" id="W0h-fW-xJW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mQ3-ar-QoR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1143" y="114"/>
+        </scene>
+        <!--Edit Reminder-->
+        <scene sceneID="rPd-gj-6xU">
+            <objects>
+                <viewController id="EzP-gR-dN4" customClass="ReminderEditViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="iun-Sb-aHr"/>
+                        <viewControllerLayoutGuide type="bottom" id="DCL-9N-aVJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="MWU-KS-gJQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CQB-gW-brA">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <connections>
+                                    <segue destination="5eK-u9-Wjy" kind="embed" id="0eo-8h-fac"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="CQB-gW-brA" firstAttribute="width" secondItem="MWU-KS-gJQ" secondAttribute="width" id="5Op-og-ITM"/>
+                            <constraint firstItem="CQB-gW-brA" firstAttribute="height" secondItem="MWU-KS-gJQ" secondAttribute="height" id="D4A-Ob-675"/>
+                            <constraint firstItem="CQB-gW-brA" firstAttribute="centerX" secondItem="MWU-KS-gJQ" secondAttribute="centerX" id="UkR-mC-mMW"/>
+                            <constraint firstItem="CQB-gW-brA" firstAttribute="centerY" secondItem="MWU-KS-gJQ" secondAttribute="centerY" id="nj7-uq-suA"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Edit Reminder" id="Z5c-bL-Vpf">
+                        <barButtonItem key="leftBarButtonItem" title="Delete" id="btZ-gf-j8a">
+                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="dbJ-qI-y1p"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="deleteButton" destination="btZ-gf-j8a" id="zgv-V9-cvT"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fS0-h6-ZtP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-322" y="114"/>
+        </scene>
+        <!--Reminder Edit Table View Controller-->
+        <scene sceneID="Eil-Oa-EZ0">
+            <objects>
+                <tableViewController id="5eK-u9-Wjy" customClass="ReminderEditTableViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="uaR-V7-Ewe">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="F8L-Un-NJK">
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="F8L-Un-NJK" id="PPL-8j-6EU">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="5eK-u9-Wjy" id="T3N-HY-m7g"/>
+                            <outlet property="delegate" destination="5eK-u9-Wjy" id="t84-6G-byD"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ygm-Ya-nVa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="452" y="114"/>
+        </scene>
+    </scenes>
 </document>

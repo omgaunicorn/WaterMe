@@ -133,7 +133,8 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     }
     
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController) {
-        print("Add Button Tapped")
+        let addReminderVC = ReminderEditViewController.newVC()
+        self.present(addReminderVC, animated: true, completion: nil)
     }
     
     func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController) {

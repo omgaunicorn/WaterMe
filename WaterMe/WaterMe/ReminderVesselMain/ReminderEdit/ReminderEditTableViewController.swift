@@ -21,4 +21,8 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Foundation
+import UIKit
+
+class ReminderEditTableViewController: UITableViewController {
+    
+}

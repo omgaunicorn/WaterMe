@@ -21,4 +21,24 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Foundation
+import UIKit
+
+class ReminderEditViewController: UIViewController {
+    
+    class func newVC() -> UIViewController {
+        let sb = UIStoryboard(name: "ReminderEdit", bundle: Bundle(for: self))
+        let navVC = sb.instantiateInitialViewController()!
+        return navVC
+    }
+    
+    @IBOutlet private weak var deleteButton: UIBarButtonItem?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.deleteButton?.title = "Delete"
+        
+        log.debug()
+    }
+    
+}
