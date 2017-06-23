@@ -21,24 +21,55 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import WaterMeData
 import UIKit
 
-class ReminderEditViewController: UIViewController {
+class ReminderEditViewController: UIViewController, HasBasicController {
     
-    class func newVC() -> UIViewController {
+    enum Purpose {
+        case new(ReminderVessel), existing(Reminder)
+    }
+    typealias CompletionHandler = (UIViewController) -> Void
+    
+    class func newVC(basicRC: BasicController,
+                     purpose: Purpose,
+                     completionHandler: @escaping CompletionHandler) -> UIViewController
+    {
         let sb = UIStoryboard(name: "ReminderEdit", bundle: Bundle(for: self))
-        let navVC = sb.instantiateInitialViewController()!
+        // swiftlint:disable:next force_cast
+        let navVC = sb.instantiateInitialViewController() as! UINavigationController
+        // swiftlint:disable:next force_cast
+        let vc = navVC.viewControllers.first as! ReminderEditViewController
+        vc.completionHandler = completionHandler
+        vc.basicRC = basicRC
+        switch purpose {
+        case .new(let vessel):
+            break // create a new reminder for this vessel, then configure notifications for the vc
+        case .existing(let reminder):
+            break // configure the vc to get notifications about this reminder
+        }
         return navVC
     }
     
     @IBOutlet private weak var deleteButton: UIBarButtonItem?
     
+    var basicRC: BasicController?
+    private var completionHandler: CompletionHandler?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.deleteButton?.title = "Delete"
-        
-        log.debug()
+    }
+    
+    @IBAction private func deleteButtonTapped(_ sender: Any) {
+        // delete the object
+        self.completionHandler?(self)
+    }
+    
+    @IBAction private func doneButtonTapped(_ sender: Any) {
+        // check if the necessary fields are filled in 'isUIComplete'
+        self.completionHandler?(self)
     }
     
 }
