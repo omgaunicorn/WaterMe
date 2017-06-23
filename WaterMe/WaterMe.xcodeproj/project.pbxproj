@@ -23,6 +23,7 @@
 		501F922B1EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */; };
 		501F922C1EC55E080014939D /* SubscriptionChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */; };
 		503F74491ED3BB64005EF5F2 /* UserSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503F74481ED3BB64005EF5F2 /* UserSummaryViewController.swift */; };
+		5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */; };
 		504A8D511ED6A04F002D928D /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D501ED6A04F002D928D /* UserTableViewCell.swift */; };
 		504A8D5B1EDA8C76002D928D /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5A1EDA8C76002D928D /* LoadingViewController.swift */; };
 		504A8D5D1EDA8D41002D928D /* ReceiptVerifyingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */; };
@@ -102,6 +103,7 @@
 		501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewController.swift; sourceTree = "<group>"; };
 		501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceViewController.swift; sourceTree = "<group>"; };
 		503F74481ED3BB64005EF5F2 /* UserSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSummaryViewController.swift; sourceTree = "<group>"; };
+		5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReminderEdit.storyboard; sourceTree = "<group>"; };
 		504A8D501ED6A04F002D928D /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		504A8D5A1EDA8C76002D928D /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptVerifyingViewController.swift; sourceTree = "<group>"; };
@@ -251,6 +253,41 @@
 			path = Router;
 			sourceTree = "<group>";
 		};
+		5045CBA51EFCC810008E6D6A /* ReminderEdit */ = {
+			isa = PBXGroup;
+			children = (
+				5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */,
+			);
+			path = ReminderEdit;
+			sourceTree = "<group>";
+		};
+		5045CBA61EFCC833008E6D6A /* PhotoEmojiPicker */ = {
+			isa = PBXGroup;
+			children = (
+				50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */,
+				5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */,
+				5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */,
+				5087A9221EE3A6B00046E687 /* SelfContainedImagePickerController.swift */,
+				5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */,
+			);
+			path = PhotoEmojiPicker;
+			sourceTree = "<group>";
+		};
+		5045CBA71EFCC8B6008E6D6A /* ReminderVesselEdit */ = {
+			isa = PBXGroup;
+			children = (
+				50E8B1E31EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard */,
+				50E8B1E51EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift */,
+				50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */,
+				50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */,
+				50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */,
+				50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */,
+				508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */,
+				508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */,
+			);
+			path = ReminderVesselEdit;
+			sourceTree = "<group>";
+		};
 		50BB0F471EBFCDE500850FF4 = {
 			isa = PBXGroup;
 			children = (
@@ -334,20 +371,10 @@
 				50E8B1E11EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift */,
 				50E8B1DE1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib */,
 				50E8B1DD1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift */,
-				50E8B1E31EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard */,
-				50E8B1E51EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift */,
-				50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */,
-				50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */,
-				50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */,
-				50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */,
-				508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */,
-				508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */,
-				50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */,
-				5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */,
-				5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */,
-				5087A9221EE3A6B00046E687 /* SelfContainedImagePickerController.swift */,
-				5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */,
 				5087A92A1EE683970046E687 /* ReminderVesselIconButton.swift */,
+				5045CBA71EFCC8B6008E6D6A /* ReminderVesselEdit */,
+				5045CBA61EFCC833008E6D6A /* PhotoEmojiPicker */,
+				5045CBA51EFCC810008E6D6A /* ReminderEdit */,
 			);
 			path = ReminderVesselMain;
 			sourceTree = "<group>";
@@ -503,6 +530,7 @@
 				501F92221EC55DF50014939D /* Router.storyboard in Resources */,
 				50E8B1E41EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard in Resources */,
 				50E8B1E01EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib in Resources */,
+				5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */,
 				50D3A08A1EC76DD3001B4A7D /* RestorePurchase.storyboard in Resources */,
 				50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */,
 				5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */,
