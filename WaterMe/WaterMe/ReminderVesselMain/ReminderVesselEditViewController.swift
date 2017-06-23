@@ -25,7 +25,7 @@ import RealmSwift
 import WaterMeData
 import UIKit
 
-class ReminderVesselEditViewController: UIViewController, HasBasicController {
+class ReminderVesselEditViewController: UIViewController, HasBasicController, ReminderVesselEditTableViewControllerDelegate {
     
     typealias CompletionHandler = (UIViewController) -> Void
     
@@ -49,7 +49,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
     @IBOutlet private weak var deleteButton: UIBarButtonItem?
     
     var basicRC: BasicController?
-    private var vessel: ReminderVessel!
+    var vessel: ReminderVessel!
     private var completionHandler: CompletionHandler!
     
     private func vesselChanged(_ changes: ObjectChange) {
@@ -61,21 +61,6 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
         }
     }
     
-    private func updateIcon(_ icon: ReminderVessel.Icon, andReloadTable reload: Bool = true) {
-        self.notificationToken?.stop() // stop the update notifications from causing the tableview to reload
-        self.basicRC?.update(icon: icon, in: self.vessel)
-        self.startNotifications()
-        guard reload else { return }
-        self.tableViewController?.tableView.reloadData()
-    }
-    
-    private func updateDisplayName(_ name: String, andReloadTable reload: Bool = false) {
-        self.notificationToken?.stop() // stop the update notifications from causing the tableview to reload
-        self.basicRC?.update(displayName: name, in: self.vessel)
-        guard reload else { return }
-        self.tableViewController?.tableView.reloadData()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -85,10 +70,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
         self.title = "New Plant"
         
         self.tableViewController = self.childViewControllers.first()
-        self.tableViewController?.vesselFromDataSource = { [unowned self] in return self.vessel }
-        self.tableViewController?.choosePhotoTapped = { [unowned self] in self.presentEmojiPhotoActionSheet() }
-        self.tableViewController?.displayNameChanged = { [unowned self] newValue in self.updateDisplayName(newValue) }
-        self.tableViewController?.addReminderButtonTapped = { [unowned self] in self.addReminderButtonTapped() }
+        self.tableViewController?.delegate = self
     }
     
     @IBAction private func deleteButtonTapped(_ sender: Any) {
@@ -106,11 +88,15 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
         }
     }
     
-    private func addReminderButtonTapped() {
-        print("Add Button Tapped")
+    private func updateIcon(_ icon: ReminderVessel.Icon, andReloadTable reload: Bool = true) {
+        self.notificationToken?.stop() // stop the update notifications from causing the tableview to reload
+        self.basicRC?.update(icon: icon, in: self.vessel)
+        self.startNotifications()
+        guard reload else { return }
+        self.tableViewController?.tableView.reloadData()
     }
     
-    private func presentEmojiPhotoActionSheet() {
+    func userChosePhotoChange(controller: ReminderVesselEditTableViewController) {
         let vc = UIAlertController.emojiPhotoActionSheet() { choice in
             switch choice {
             case .camera:
@@ -139,6 +125,19 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController {
             }
         }
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    func userChangedName(to newName: String, controller: ReminderVesselEditTableViewController) {
+        self.notificationToken?.stop() // stop the update notifications from causing the tableview to reload
+        self.basicRC?.update(displayName: newName, in: self.vessel)
+    }
+    
+    func userChoseAddReminder(controller: ReminderVesselEditTableViewController) {
+        print("Add Button Tapped")
+    }
+    
+    func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController) {
+        
     }
     
     private func startNotifications() {

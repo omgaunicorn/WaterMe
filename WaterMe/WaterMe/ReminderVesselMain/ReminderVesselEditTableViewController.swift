@@ -24,6 +24,14 @@
 import WaterMeData
 import UIKit
 
+protocol ReminderVesselEditTableViewControllerDelegate: class {
+    var vessel: ReminderVessel! { get }
+    func userChosePhotoChange(controller: ReminderVesselEditTableViewController)
+    func userChangedName(to newName: String, controller: ReminderVesselEditTableViewController)
+    func userChoseAddReminder(controller: ReminderVesselEditTableViewController)
+    func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController)
+}
+
 class ReminderVesselEditTableViewController: UITableViewController {
     
     private enum Section: Int {
@@ -41,27 +49,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
         }
     }
     
-    var vesselFromDataSource: (() -> ReminderVessel)?
-    var choosePhotoTapped: (() -> Void)? {
-        didSet {
-            // if this is changed, we need to make sure the cell gets the new closure
-            guard self.isViewLoaded else { return }
-            self.tableView.reloadData()
-        }
-    }
-    var displayNameChanged: ((String) -> Void)? {
-        didSet {
-            // if this is changed, we need to make sure the cell gets the new closure
-            guard self.isViewLoaded else { return }
-            self.tableView.reloadData()
-        }
-    }
-    var addReminderButtonTapped: (() -> Void)? {
-        didSet {
-            guard self.isViewLoaded else { return }
-            self.tableView.reloadData()
-        }
-    }
+    weak var delegate: ReminderVesselEditTableViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +70,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
         case .photo:
             return 1
         case .reminders:
-            return 3//self.vesselFromDataSource?().reminders.count ?? 0
+            return self.delegate?.vessel.reminders.count ?? 0
         }
     }
     
@@ -93,21 +81,35 @@ class ReminderVesselEditTableViewController: UITableViewController {
             let id = TextFieldTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? TextFieldTableViewCell
-            cell?.setTextField(text: self.vesselFromDataSource?().displayName)
-            cell?.textChanged = self.displayNameChanged
+            cell?.setTextField(text: self.delegate?.vessel.displayName)
+            cell?.textChanged = { [unowned self] newName in
+                self.delegate?.userChangedName(to: newName, controller: self)
+            }
             return _cell
         case .photo:
             let id = ReminderVesselIconTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? ReminderVesselIconTableViewCell
-            cell?.configure(with: self.vesselFromDataSource?().icon)
-            cell?.iconButtonTapped = self.choosePhotoTapped
+            cell?.configure(with: self.delegate?.vessel.icon)
+            cell?.iconButtonTapped = { [unowned self] in self.delegate?.userChosePhotoChange(controller: self) }
             return _cell
         case .reminders:
             let id = ReminderTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? ReminderTableViewCell
+            cell?.configure(with: self.delegate?.vessel.reminders[indexPath.row])
             return _cell
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let section = Section(rawValue: indexPath.section) else { assertionFailure("Unknown Section"); return; }
+        switch section {
+        case .name, .photo:
+            break // ignore
+        case .reminders:
+            guard let vessel = self.delegate?.vessel.reminders[indexPath.row] else { return }
+            self.delegate?.userChose(reminder: vessel, controller: self)
         }
     }
     
@@ -121,7 +123,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
             view?.addButtonTapped = nil
         case .reminders:
             view?.isAddButtonHidden = false
-            view?.addButtonTapped = self.addReminderButtonTapped
+            view?.addButtonTapped = { [unowned self] in self.delegate?.userChoseAddReminder(controller: self) }
         }
         return view
     }
