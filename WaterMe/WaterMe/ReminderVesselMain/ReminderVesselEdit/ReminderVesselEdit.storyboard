@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2073" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="g5Q-Rb-Z4g">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" systemVersion="16F2073" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="g5Q-Rb-Z4g">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -57,36 +57,8 @@
                                     <outlet property="iconButton" destination="PBB-NE-iux" id="kTT-Bh-eC9"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="TextFieldTableViewCell" rowHeight="47" id="aDH-Wb-FtA" customClass="TextFieldTableViewCell" customModule="WaterMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="221.5" width="375" height="47"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aDH-Wb-FtA" id="0qq-Fs-gcF">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="46.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Plant Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AMv-Yu-CvG">
-                                            <rect key="frame" x="8" y="8" width="359" height="30"/>
-                                            <nil key="textColor"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                            <connections>
-                                                <action selector="textChanged:" destination="aDH-Wb-FtA" eventType="editingChanged" id="GgY-f7-x85"/>
-                                            </connections>
-                                        </textField>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="AMv-Yu-CvG" firstAttribute="top" secondItem="0qq-Fs-gcF" secondAttribute="topMargin" id="DoC-aD-BIA"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="AMv-Yu-CvG" secondAttribute="bottom" id="IMo-gO-qFe"/>
-                                        <constraint firstItem="AMv-Yu-CvG" firstAttribute="leading" secondItem="0qq-Fs-gcF" secondAttribute="leadingMargin" id="gz0-wE-T6F"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="AMv-Yu-CvG" secondAttribute="trailing" id="kgt-Y4-hle"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="textField" destination="AMv-Yu-CvG" id="Cgw-bc-CiA"/>
-                                </connections>
-                            </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ReminderTableViewCell" rowHeight="70" id="ynF-X0-tVd" customClass="ReminderTableViewCell" customModule="WaterMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="268.5" width="375" height="70"/>
+                                <rect key="frame" x="0.0" y="221.5" width="375" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ynF-X0-tVd" id="ur4-eJ-G9m">
                                     <rect key="frame" x="0.0" y="0.0" width="342" height="69.5"/>

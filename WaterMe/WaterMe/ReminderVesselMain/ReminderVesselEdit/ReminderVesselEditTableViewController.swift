@@ -53,9 +53,10 @@ class ReminderVesselEditTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.register(TextFieldTableViewCell.nib, forCellReuseIdentifier: TextFieldTableViewCell.reuseID)
         self.tableView.register(OptionalAddButtonTableViewHeaderFooterView.nib, forHeaderFooterViewReuseIdentifier: OptionalAddButtonTableViewHeaderFooterView.reuseID)
         self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 100
+        self.tableView.estimatedRowHeight = 40
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -82,6 +83,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? TextFieldTableViewCell
             cell?.setTextField(text: self.delegate?.vessel.displayName)
+            cell?.setPlaceHolderText("Plant Name")
             cell?.textChanged = { [unowned self] newName in
                 self.delegate?.userChangedName(to: newName, controller: self)
             }

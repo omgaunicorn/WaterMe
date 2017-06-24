@@ -26,6 +26,7 @@ import UIKit
 class TextFieldTableViewCell: UITableViewCell {
     
     static let reuseID = "TextFieldTableViewCell"
+    class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
     
     @IBOutlet private weak var textField: UITextField?
     
@@ -39,6 +40,10 @@ class TextFieldTableViewCell: UITableViewCell {
     
     func setTextField(text: String?) {
         self.textField?.text = text ?? ""
+    }
+    
+    func setPlaceHolderText(_ text: String?) {
+        self.textField?.placeholder = text ?? ""
     }
     
     @IBAction private func textChanged(_ sender: Any) {
