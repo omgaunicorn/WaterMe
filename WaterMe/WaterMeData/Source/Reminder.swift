@@ -27,11 +27,14 @@ import Foundation
 public class Reminder: Object {
     public enum Kind {
         case water, fertilize, move(location: String?), other(title: String?, description: String?)
+        public static let count = 4
     }
-    internal dynamic var kindObject: ReminderKind! = ReminderKind()
+    internal dynamic var kindString: String = Reminder.kCaseWaterValue
+    internal dynamic var titleString: String?
+    internal dynamic var descriptionString: String?
     public var kind: Kind {
-        get { return self.kindObject.kindValue ?? .fertilize }
-        set { self.kindObject.update(with: newValue) }
+        get { return self.kindValue }
+        set { self.update(with: newValue) }
     }
     public internal(set) dynamic var interval: Int = 4
     public let performed = List<ReminderPerform>()
@@ -43,16 +46,12 @@ public class ReminderPerform: Object {
     public internal(set) var date = Date()
 }
 
-internal class ReminderKind: Object {
+fileprivate extension Reminder {
     
-    private static let kCaseWaterValue = "kReminderKindCaseWaterValue"
-    private static let kCaseFertilizeValue = "kReminderKindCaseFertilizeValue"
-    private static let kCaseMoveValue = "kReminderKindCaseMoveValue"
-    private static let kCaseOtherValue = "kReminderKindCaseOtherValue"
-    
-    internal dynamic var kindString: String?
-    internal dynamic var titleString: String?
-    internal dynamic var descriptionString: String?
+    fileprivate static let kCaseWaterValue = "kReminderKindCaseWaterValue"
+    fileprivate static let kCaseFertilizeValue = "kReminderKindCaseFertilizeValue"
+    fileprivate static let kCaseMoveValue = "kReminderKindCaseMoveValue"
+    fileprivate static let kCaseOtherValue = "kReminderKindCaseOtherValue"
     
     internal func update(with kind: Reminder.Kind) {
         switch kind {
@@ -75,9 +74,8 @@ internal class ReminderKind: Object {
         }
     }
     
-    var kindValue: Reminder.Kind? {
-        guard let kindString = self.kindString else { return nil }
-        switch kindString {
+    var kindValue: Reminder.Kind {
+        switch self.kindString {
         case type(of: self).kCaseWaterValue:
             return .water
         case type(of: self).kCaseFertilizeValue:
@@ -90,8 +88,7 @@ internal class ReminderKind: Object {
             let description = self.descriptionString
             return .other(title: title, description: description)
         default:
-            assertionFailure("Reminder.Kind: Invalid Case String Key")
-            return nil
+            fatalError("Reminder.Kind: Invalid Case String Key")
         }
     }
 }

@@ -59,7 +59,7 @@ public class BasicController {
         self.kind = kind
         var realmConfig = Realm.Configuration()
         realmConfig.schemaVersion = 7
-        realmConfig.objectTypes = [ReminderVessel.self, Reminder.self, ReminderPerform.self, ReminderKind.self]
+        realmConfig.objectTypes = [ReminderVessel.self, Reminder.self, ReminderPerform.self]
         switch kind {
         case .local:
             try! type(of: self).createLocalRealmDirectoryIfNeeded()
@@ -132,6 +132,15 @@ public class BasicController {
         }
         if let icon = icon {
             vessel.icon = icon
+        }
+        try! realm.commitWrite()
+    }
+    
+    public func update(kind: Reminder.Kind? = nil, in reminder: Reminder) {
+        let realm = self.realm
+        realm.beginWrite()
+        if let kind = kind {
+            reminder.kind = kind
         }
         try! realm.commitWrite()
     }

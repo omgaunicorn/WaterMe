@@ -65,6 +65,8 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         self.deleteButton?.title = "Delete"
         
         self.tableViewController = self.childViewControllers.first()
+        self.tableViewController?.reminder = { [unowned self] in return self.reminder }
+        self.tableViewController?.kindChanged = { [unowned self] in self.kindChanged($0) }
         self.startNotifications()
     }
     
@@ -75,6 +77,10 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         case .deleted, .error:
             self.completionHandler?(self)
         }
+    }
+    
+    private func kindChanged(_ new: Reminder.Kind) {
+        self.basicRC?.update(kind: new, in: self.reminder)
     }
     
     @IBAction private func deleteButtonTapped(_ sender: Any) {
