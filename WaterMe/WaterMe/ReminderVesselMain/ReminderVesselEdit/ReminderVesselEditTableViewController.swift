@@ -83,7 +83,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? TextFieldTableViewCell
             cell?.setTextField(text: self.delegate?.vessel.displayName)
-            cell?.setPlaceHolderText("Plant Name")
+            cell?.setPlaceHolder(label: nil, textField: "Plant Name")
             cell?.textChanged = { [unowned self] newName in
                 self.delegate?.userChangedName(to: newName, controller: self)
             }

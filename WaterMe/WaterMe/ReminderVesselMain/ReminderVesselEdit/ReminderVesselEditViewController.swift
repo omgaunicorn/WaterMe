@@ -134,18 +134,23 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController) {
         guard let basicRC = self.basicRC else { return }
-        let addReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .new(self.vessel)) { vc in
-            vc.dismiss(animated: true, completion: nil)
+        let addReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .new(self.vessel)) { [unowned self] vc in
+            self.refresh(andDismiss: vc)
         }
         self.present(addReminderVC, animated: true, completion: nil)
     }
     
     func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController) {
         guard let basicRC = self.basicRC else { return }
-        let addReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .existing(reminder)) { vc in
-            vc.dismiss(animated: true, completion: nil)
+        let addReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .existing(reminder)) { [unowned self] vc in
+            self.refresh(andDismiss: vc)
         }
         self.present(addReminderVC, animated: true, completion: nil)
+    }
+    
+    private func refresh(andDismiss viewController: UIViewController) {
+        self.tableViewController?.tableView.reloadData()
+        viewController.dismiss(animated: true, completion: nil)
     }
     
     private func startNotifications() {

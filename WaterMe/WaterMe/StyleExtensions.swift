@@ -42,3 +42,10 @@ extension UITextField {
         self.font = UIFont.preferredFont(forTextStyle: .body)
     }
 }
+
+extension UILabel {
+    func style_calloutFontLabel() {
+        self.adjustsFontForContentSizeCategory = true
+        self.font = UIFont.preferredFont(forTextStyle: .callout)
+    }
+}

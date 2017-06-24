@@ -66,7 +66,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         
         self.tableViewController = self.childViewControllers.first()
         self.tableViewController?.reminder = { [unowned self] in return self.reminder }
-        self.tableViewController?.kindChanged = { [unowned self] in self.kindChanged($0) }
+        self.tableViewController?.kindChanged = { [unowned self] in self.kindChanged($0.0, fromKeyboard: $0.1) }
         self.startNotifications()
     }
     
@@ -79,8 +79,14 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         }
     }
     
-    private func kindChanged(_ new: Reminder.Kind) {
+    private func kindChanged(_ new: Reminder.Kind, fromKeyboard: Bool) {
+        if fromKeyboard == true {
+            self.notificationToken?.stop()
+        }
         self.basicRC?.update(kind: new, in: self.reminder)
+        if fromKeyboard == true {
+            self.startNotifications()
+        }
     }
     
     @IBAction private func deleteButtonTapped(_ sender: Any) {

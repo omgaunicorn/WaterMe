@@ -52,7 +52,12 @@ class ReminderTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("Awake")
+        self.prepareForReuse()
+    }
+    
+    override func prepareForReuse() {
+        self.titleLabel?.text = nil
+        self.descriptionLabel?.text = nil
     }
 
 }

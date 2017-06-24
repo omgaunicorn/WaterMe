@@ -29,21 +29,30 @@ class TextFieldTableViewCell: UITableViewCell {
     class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
     
     @IBOutlet private weak var textField: UITextField?
+    @IBOutlet private weak var label: UILabel?
     
     var textChanged: ((String) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         self.textField?.style_bodyFontTextField()
-        log.debug()
+        self.label?.style_calloutFontLabel()
+        self.prepareForReuse()
     }
     
     func setTextField(text: String?) {
         self.textField?.text = text ?? ""
     }
     
-    func setPlaceHolderText(_ text: String?) {
-        self.textField?.placeholder = text ?? ""
+    func setPlaceHolder(label: String?, textField: String?) {
+        self.textField?.placeholder = textField ?? ""
+        if let label = label {
+            self.label?.isHidden = false
+            self.label?.text = label
+        } else {
+            self.label?.isHidden = true
+            self.label?.text = ""
+        }
     }
     
     @IBAction private func textChanged(_ sender: Any) {
@@ -54,6 +63,10 @@ class TextFieldTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.textField?.text = nil
+        self.textField?.placeholder = nil
+        self.label?.text = nil
         self.textChanged = nil
+        self.label?.isHighlighted = true
+        
     }
 }
