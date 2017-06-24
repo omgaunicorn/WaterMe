@@ -38,7 +38,8 @@ class ReminderEditTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let section = Section(rawValue: indexPath.section) else { assertionFailure("Unknown Section"); return; }
+        guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return; }
+        let section = Section(section: indexPath.section, for: reminder.kind)
         switch section {
         case .kind:
             self.tableView.deselectRow(at: indexPath, animated: true)
@@ -53,11 +54,13 @@ class ReminderEditTableViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return Section.count
+        guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return 0; }
+        return Section.count(for: reminder.kind)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let section = Section(rawValue: section) else { assertionFailure("Unknown Section"); return 0; }
+        guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return 0; }
+        let section = Section(section: section, for: reminder.kind)
         switch section {
         case .kind:
             return Reminder.Kind.count
@@ -71,7 +74,8 @@ class ReminderEditTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let section = Section(rawValue: indexPath.section) else { assertionFailure("Unknown Section"); return UITableViewCell(); }
+        guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return UITableViewCell(); }
+        let section = Section(section: indexPath.section, for: reminder.kind)
         switch section {
         case .kind:
             let id = "ReminderKindTableViewCell"
@@ -89,13 +93,50 @@ class ReminderEditTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let section = Section(rawValue: section) else { assertionFailure("Unknown Section"); return nil; }
+        guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return nil; }
+        let section = Section(section: section, for: reminder.kind)
         return section.localizedString
     }
     
-    private enum Section: Int {
+    private enum Section {
         case kind, details, interval, performed
-        static let count = 4
+        static func count(for kind: Reminder.Kind) -> Int {
+            switch kind {
+            case .fertilize, .water:
+                return 3
+            case .other, .move:
+                return 4
+            }
+        }
+        // swiftlint:disable:next cyclomatic_complexity
+        init(section: Int, for kind: Reminder.Kind) {
+            switch kind {
+            case .fertilize, .water:
+                switch section {
+                case 0:
+                    self = .kind
+                case 1:
+                    self = .interval
+                case 2:
+                    self = .performed
+                default:
+                    fatalError("Invalid Section")
+                }
+            case .other, .move:
+                switch section {
+                case 0:
+                    self = .kind
+                case 1:
+                    self = .details
+                case 2:
+                    self = .interval
+                case 3:
+                    self = .performed
+                default:
+                    fatalError("Invalid Section")
+                }
+            }
+        }
         var localizedString: String {
             switch self {
             case .kind:
@@ -109,5 +150,4 @@ class ReminderEditTableViewController: UITableViewController {
             }
         }
     }
-    
 }
