@@ -61,16 +61,7 @@ class ReminderEditTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return 0; }
         let section = Section(section: section, for: reminder.kind)
-        switch section {
-        case .kind:
-            return Reminder.Kind.count
-        case .details:
-            return 0
-        case .interval:
-            return 0
-        case .performed:
-            return 0
-        }
+        return section.numberOfRows(for: reminder.kind)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -78,17 +69,17 @@ class ReminderEditTableViewController: UITableViewController {
         let section = Section(section: indexPath.section, for: reminder.kind)
         switch section {
         case .kind:
-            let id = "ReminderKindTableViewCell"
+            let id = ReminderKindTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? ReminderKindTableViewCell
-            cell?.configure(rowNumber: indexPath.row, compareWith: self.reminder?().kind)
+            cell?.configure(rowNumber: indexPath.row, compareWith: reminder.kind)
             return _cell
         case .details:
-            fatalError()
+            return UITableViewCell()
         case .interval:
-            fatalError()
+            return UITableViewCell()
         case .performed:
-            fatalError()
+            return UITableViewCell()
         }
     }
     
@@ -147,6 +138,23 @@ class ReminderEditTableViewController: UITableViewController {
                 return "Remind Every"
             case .performed:
                 return "Last Performed"
+            }
+        }
+        func numberOfRows(for kind: Reminder.Kind) -> Int {
+            switch self {
+            case .kind:
+                return type(of: kind).count
+            case .details:
+                switch kind {
+                case .fertilize, .water:
+                    fatalError("Invalid Section")
+                case .move:
+                    return 1
+                case .other:
+                    return 2
+                }
+            case .performed, .interval:
+                return 1
             }
         }
     }

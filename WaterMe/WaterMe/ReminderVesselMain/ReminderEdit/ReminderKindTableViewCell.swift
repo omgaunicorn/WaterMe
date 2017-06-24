@@ -11,7 +11,9 @@ import UIKit
 
 class ReminderKindTableViewCell: UITableViewCell {
     
-    func configure(rowNumber: Int, compareWith compare: Reminder.Kind?) {
+    static let reuseID = "ReminderKindTableViewCell"
+    
+    func configure(rowNumber: Int, compareWith compare: Reminder.Kind) {
         let id = Reminder.Kind(row: rowNumber)
         self.textLabel?.text = id.localizedString
         self.accessoryType = id.isSameKind(as: compare) ? .checkmark : .none
@@ -32,9 +34,7 @@ extension Reminder.Kind {
             return "Other"
         }
     }
-    
-    fileprivate func isSameKind(as other: Reminder.Kind?) -> Bool {
-        guard let other = other else { return false }
+    fileprivate func isSameKind(as other: Reminder.Kind) -> Bool {
         switch self {
         case .water:
             guard case .water = other else { return false }
@@ -50,7 +50,6 @@ extension Reminder.Kind {
             return true
         }
     }
-    
     init(row: Int) {
         switch row {
         case 0:
