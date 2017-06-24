@@ -26,7 +26,7 @@ import Foundation
 
 public class Reminder: Object {
     public enum Kind {
-        case water, fertilize, move(location: String?), other(title: String, description: String?)
+        case water, fertilize, move(location: String?), other(title: String?, description: String?)
     }
     internal dynamic var kindObject: ReminderKind! = ReminderKind()
     public var kind: Kind {
@@ -76,10 +76,7 @@ internal class ReminderKind: Object {
     }
     
     var kindValue: Reminder.Kind? {
-        guard let kindString = self.kindString else {
-            assertionFailure("Reminder.Kind: Kind String was NIL")
-            return nil
-        }
+        guard let kindString = self.kindString else { return nil }
         switch kindString {
         case type(of: self).kCaseWaterValue:
             return .water
@@ -89,10 +86,7 @@ internal class ReminderKind: Object {
             let description = self.descriptionString
             return .move(location: description)
         case type(of: self).kCaseOtherValue:
-            guard let title = self.titleString else {
-                assertionFailure("Reminder.Kind.other: Missing Title")
-                return nil
-            }
+            let title = self.titleString
             let description = self.descriptionString
             return .other(title: title, description: description)
         default:

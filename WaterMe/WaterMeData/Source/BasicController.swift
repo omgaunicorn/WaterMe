@@ -95,6 +95,16 @@ public class BasicController {
         return AnyRealmCollection(vessels)
     }
     
+    public func newReminder(for vessel: ReminderVessel) -> Reminder {
+        let realm = self.realm
+        let reminder = Reminder()
+        realm.beginWrite()
+        realm.add(reminder)
+        vessel.reminders.append(reminder)
+        try! realm.commitWrite()
+        return reminder
+    }
+    
     public func newReminderVessel(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, reminders: [Reminder]? = nil) -> ReminderVessel {
         let realm = self.realm
         let v = ReminderVessel()
@@ -139,7 +149,7 @@ public class BasicController {
         }
         realm.delete(vessel)
     }
-    
+        
     public func delete(reminder: Reminder) {
         let realm = self.realm
         realm.beginWrite()
