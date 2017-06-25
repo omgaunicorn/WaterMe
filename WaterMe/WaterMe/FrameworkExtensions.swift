@@ -49,3 +49,12 @@ extension Receipt {
         return PurchasedSubscription(productID: pID, purchaseDate: pur, expirationDate: exp)
     }
 }
+
+extension DateComponentsFormatter {
+    class var newReminderIntervalFormatter: DateComponentsFormatter {
+        let f = DateComponentsFormatter()
+        f.allowedUnits = [.month, .weekOfMonth, .day]
+        f.unitsStyle = .full
+        return f
+    }
+}

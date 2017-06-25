@@ -87,7 +87,11 @@ class ReminderEditTableViewController: UITableViewController {
             }
             return _cell
         case .interval:
-            return UITableViewCell()
+            let id = ReminderIntervalTableViewCell.reuseID
+            let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
+            let cell = _cell as? ReminderIntervalTableViewCell
+            cell?.configure(with: reminder.interval)
+            return _cell
         case .performed:
             return UITableViewCell()
         }

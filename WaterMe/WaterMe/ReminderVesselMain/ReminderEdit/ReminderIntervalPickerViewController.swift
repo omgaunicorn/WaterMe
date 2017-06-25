@@ -45,12 +45,7 @@ class ReminderIntervalPickerViewController: UIViewController {
     
     fileprivate lazy var primaryFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
     fileprivate let data: [Int] = (Reminder.minimumInterval...Reminder.maximumInterval).map({ $0 })
-    fileprivate let formatter: DateComponentsFormatter = {
-        let f = DateComponentsFormatter()
-        f.allowedUnits = [.month, .weekOfMonth, .day]
-        f.unitsStyle = .full
-        return f
-    }()
+    fileprivate let formatter = DateComponentsFormatter.newReminderIntervalFormatter
     
     override func viewDidLoad() {
         super.viewDidLoad()
