@@ -26,6 +26,10 @@ import Foundation
 
 public class Reminder: Object {
     
+    public static let minimumInterval: Int = 1
+    public static let maximumInterval: Int = 180
+    public static let defaultInterval: Int = 7
+    
     public enum Kind {
         case water, fertilize, move(location: String?), other(title: String?, description: String?)
         public static let count = 4
@@ -36,7 +40,7 @@ public class Reminder: Object {
         get { return self.kindValue }
         set { self.update(with: newValue) }
     }
-    public internal(set) dynamic var interval: Int = 4
+    public internal(set) dynamic var interval: Int = Reminder.defaultInterval
     public let performed = List<ReminderPerform>()
     public var vessel: ReminderVessel? { return self.vessels.first }
     
