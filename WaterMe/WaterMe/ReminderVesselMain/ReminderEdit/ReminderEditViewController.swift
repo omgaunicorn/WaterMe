@@ -93,8 +93,9 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     private func intervalChosen() {
         let existingValue = self.reminder.interval
         let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard, existingValue: existingValue) { vc, newValue in
-            print(newValue)
             vc.dismiss(animated: true, completion: nil)
+            guard let newValue = newValue else { return }
+            self.basicRC?.update(interval: newValue, in: self.reminder)
         }
         self.present(vc, animated: true, completion: nil)
     }

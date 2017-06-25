@@ -136,11 +136,14 @@ public class BasicController {
         try! realm.commitWrite()
     }
     
-    public func update(kind: Reminder.Kind? = nil, in reminder: Reminder) {
+    public func update(kind: Reminder.Kind? = nil, interval: Int? = nil, in reminder: Reminder) {
         let realm = self.realm
         realm.beginWrite()
         if let kind = kind {
             reminder.kind = kind
+        }
+        if let interval = interval {
+            reminder.interval = interval
         }
         try! realm.commitWrite()
     }
