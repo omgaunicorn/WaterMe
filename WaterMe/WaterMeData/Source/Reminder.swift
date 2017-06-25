@@ -25,21 +25,26 @@ import RealmSwift
 import Foundation
 
 public class Reminder: Object {
+    
     public enum Kind {
         case water, fertilize, move(location: String?), other(title: String?, description: String?)
         public static let count = 4
     }
-    internal dynamic var kindString: String = Reminder.kCaseWaterValue
-    internal dynamic var titleString: String?
-    internal dynamic var descriptionString: String?
+    
+    // MARK: Public Interface
     public var kind: Kind {
         get { return self.kindValue }
         set { self.update(with: newValue) }
     }
     public internal(set) dynamic var interval: Int = 4
     public let performed = List<ReminderPerform>()
-    internal let vessels = LinkingObjects(fromType: ReminderVessel.self, property: "reminders") //#keyPath(ReminderVessel.reminders)
     public var vessel: ReminderVessel? { return self.vessels.first }
+    
+    // MARK: Implementation Details
+    internal dynamic var kindString: String = Reminder.kCaseWaterValue
+    internal dynamic var titleString: String?
+    internal dynamic var descriptionString: String?
+    internal let vessels = LinkingObjects(fromType: ReminderVessel.self, property: "reminders") //#keyPath(ReminderVessel.reminders)
 }
 
 public class ReminderPerform: Object {

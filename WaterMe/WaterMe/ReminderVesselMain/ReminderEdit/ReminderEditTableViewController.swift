@@ -28,6 +28,7 @@ class ReminderEditTableViewController: UITableViewController {
     
     var reminder: (() -> Reminder)?
     var kindChanged: ((Reminder.Kind, Bool) -> Void)?
+    var intervalChosen: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +49,8 @@ class ReminderEditTableViewController: UITableViewController {
                 let new = Reminder.Kind(row: indexPath.row)
                 self.kindChanged?(new, false)
             }
+        case .interval:
+            self.intervalChosen?()
         default:
             break // ignore
         }

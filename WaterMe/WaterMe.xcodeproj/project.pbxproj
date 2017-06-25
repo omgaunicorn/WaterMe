@@ -55,6 +55,7 @@
 		50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */; };
 		50BB816A1EF7731E0030F5BA /* ReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */; };
 		50C1AA971ED006B300E3BF0A /* AdminRealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C1AA961ED006B300E3BF0A /* AdminRealmController.swift */; };
+		50C30E541EFF490D006003A1 /* ReminderIntervalPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */; };
 		50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */; };
 		50C96A3A1EC2CFE8002802C1 /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */; };
 		50D3A0811EC57F68001B4A7D /* SubscriptionMigration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50D3A0801EC57F68001B4A7D /* SubscriptionMigration.storyboard */; };
@@ -142,6 +143,7 @@
 		50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTableViewCell.swift; sourceTree = "<group>"; };
 		50C1AA961ED006B300E3BF0A /* AdminRealmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminRealmController.swift; sourceTree = "<group>"; };
+		50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderIntervalPickerViewController.swift; sourceTree = "<group>"; };
 		50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkExtensions.swift; sourceTree = "<group>"; };
 		50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoDeviceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */,
 				5045CBAC1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift */,
 				50B511A61EFE144700ED1DF4 /* ReminderKindTableViewCell.swift */,
+				50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */,
 			);
 			path = ReminderEdit;
 			sourceTree = "<group>";
@@ -752,6 +755,7 @@
 				5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */,
 				5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */,
 				501F92291EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift in Sources */,
+				50C30E541EFF490D006003A1 /* ReminderIntervalPickerViewController.swift in Sources */,
 				50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */,
 				501F922B1EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift in Sources */,
 				50E8B1D61EDF79E700ACCDAF /* ReminderVesselMainViewController.swift in Sources */,

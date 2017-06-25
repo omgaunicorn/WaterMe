@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -109,6 +110,83 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ygm-Ya-nVa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="452" y="114"/>
+        </scene>
+        <!--Reminder Interval Picker View Controller-->
+        <scene sceneID="kEj-Jg-ZBR">
+            <objects>
+                <viewController storyboardIdentifier="ReminderIntervalPickerViewController" modalPresentationStyle="overCurrentContext" id="NwA-e7-GPw" customClass="ReminderIntervalPickerViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Xru-UT-b1D"/>
+                        <viewControllerLayoutGuide type="bottom" id="fML-5t-PxN"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="IyY-zF-d0S">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tMR-Dp-DGg">
+                                <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gke-to-w7O">
+                                        <rect key="frame" x="-0.5" y="400.5" width="375" height="266.5"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yza-fM-hD0">
+                                        <rect key="frame" x="-0.5" y="444.5" width="375" height="222.5"/>
+                                        <connections>
+                                            <outlet property="dataSource" destination="NwA-e7-GPw" id="EeP-Zg-sUh"/>
+                                            <outlet property="delegate" destination="NwA-e7-GPw" id="PQR-Hu-kPB"/>
+                                        </connections>
+                                    </pickerView>
+                                    <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEC-Bj-meU">
+                                        <rect key="frame" x="-0.5" y="400.5" width="375" height="44"/>
+                                        <items>
+                                            <navigationItem title="Reminder Interval" id="x6Z-XC-Cmp">
+                                                <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="nAu-GD-Zhk">
+                                                    <connections>
+                                                        <action selector="cancelButtonTapped:" destination="NwA-e7-GPw" id="iQp-EN-hNG"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                                <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="byj-Zd-xVW">
+                                                    <connections>
+                                                        <action selector="doneButtonTapped:" destination="NwA-e7-GPw" id="GvM-8w-FKi"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="gke-to-w7O" firstAttribute="top" secondItem="gEC-Bj-meU" secondAttribute="top" id="8Fo-GP-1lo"/>
+                                    <constraint firstItem="Yza-fM-hD0" firstAttribute="trailing" secondItem="gEC-Bj-meU" secondAttribute="trailing" id="H5O-OQ-ort"/>
+                                    <constraint firstAttribute="bottom" secondItem="Yza-fM-hD0" secondAttribute="bottom" id="Hzc-dj-y7I"/>
+                                    <constraint firstAttribute="trailing" secondItem="Yza-fM-hD0" secondAttribute="trailing" id="Kjh-Ly-ga7"/>
+                                    <constraint firstItem="Yza-fM-hD0" firstAttribute="top" secondItem="gEC-Bj-meU" secondAttribute="bottom" id="QJK-YT-EpQ"/>
+                                    <constraint firstItem="gke-to-w7O" firstAttribute="trailing" secondItem="Yza-fM-hD0" secondAttribute="trailing" id="RWm-C2-TuF"/>
+                                    <constraint firstItem="gke-to-w7O" firstAttribute="leading" secondItem="Yza-fM-hD0" secondAttribute="leading" id="lYa-v6-u8N"/>
+                                    <constraint firstItem="Yza-fM-hD0" firstAttribute="leading" secondItem="gEC-Bj-meU" secondAttribute="leading" id="qQX-OR-OyB"/>
+                                    <constraint firstItem="Yza-fM-hD0" firstAttribute="height" secondItem="tMR-Dp-DGg" secondAttribute="height" multiplier="1/3" id="vZP-9y-ew8"/>
+                                    <constraint firstItem="Yza-fM-hD0" firstAttribute="leading" secondItem="tMR-Dp-DGg" secondAttribute="leading" id="wxD-ZV-SEz"/>
+                                    <constraint firstItem="gke-to-w7O" firstAttribute="bottom" secondItem="Yza-fM-hD0" secondAttribute="bottom" id="z1L-IU-mSD"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tMR-Dp-DGg" firstAttribute="width" secondItem="IyY-zF-d0S" secondAttribute="width" id="4Eh-Vv-oNx"/>
+                            <constraint firstItem="tMR-Dp-DGg" firstAttribute="centerX" secondItem="IyY-zF-d0S" secondAttribute="centerX" id="K80-HX-zWf"/>
+                            <constraint firstItem="tMR-Dp-DGg" firstAttribute="centerY" secondItem="IyY-zF-d0S" secondAttribute="centerY" id="Mhv-t5-pFo"/>
+                            <constraint firstItem="tMR-Dp-DGg" firstAttribute="height" secondItem="IyY-zF-d0S" secondAttribute="height" id="r8y-hZ-Ba4"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pickerView" destination="Yza-fM-hD0" id="vhf-5D-5Oz"/>
+                        <outlet property="titleItem" destination="x6Z-XC-Cmp" id="CHy-2G-BFY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T5y-CN-gip" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1398" y="114"/>
         </scene>
     </scenes>
 </document>

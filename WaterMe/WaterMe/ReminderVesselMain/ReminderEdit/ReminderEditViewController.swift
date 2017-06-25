@@ -67,6 +67,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         self.tableViewController = self.childViewControllers.first()
         self.tableViewController?.reminder = { [unowned self] in return self.reminder }
         self.tableViewController?.kindChanged = { [unowned self] in self.kindChanged($0.0, fromKeyboard: $0.1) }
+        self.tableViewController?.intervalChosen = { [unowned self] in self.intervalChosen() }
         self.startNotifications()
     }
     
@@ -87,6 +88,15 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         if fromKeyboard == true {
             self.startNotifications()
         }
+    }
+    
+    private func intervalChosen() {
+        let existingValue = self.reminder.interval
+        let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard, existingValue: existingValue) { vc, newValue in
+            print(newValue)
+            vc.dismiss(animated: true, completion: nil)
+        }
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction private func deleteButtonTapped(_ sender: Any) {
