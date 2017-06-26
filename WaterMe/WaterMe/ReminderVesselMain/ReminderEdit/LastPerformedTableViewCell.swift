@@ -1,8 +1,8 @@
 //
-//  ReminderIntervalTableViewCell.swift
+//  LastPerformedTableViewCell.swift
 //  WaterMe
 //
-//  Created by Jeffrey Bergier on 6/24/17.
+//  Created by Jeffrey Bergier on 6/25/17.
 //  Copyright © 2017 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
@@ -23,22 +23,25 @@
 
 import UIKit
 
-class ReminderIntervalTableViewCell: SimpleLabelTableViewCell {
+class LastPerformedTableViewCell: SimpleLabelTableViewCell {
     
-    static let reuseID = "ReminderIntervalTableViewCell"
+    static let reuseID = "LastPerformedTableViewCell"
     
-    fileprivate let formatter = DateComponentsFormatter.newReminderIntervalFormatter
+    private let formatter = Formatter.newTimeAgoFormatter
     
     override func setup() {
         super.setup()
-        self.label.style_selectableTableViewCell()
-        self.accessoryType = .disclosureIndicator
+        self.label.style_readOnlyTableViewCell()
         self.prepareForReuse()
     }
     
-    func configure(with interval: Int) {
-        let time = TimeInterval(interval) * (60 * 60 * 24)
-        let string = self.formatter.string(from: time) ?? "–"
+    func configureWith(lastPerformedDate: Date?) {
+        let string: String
+        if let lastPerformedDate = lastPerformedDate {
+            string = self.formatter.string(from: lastPerformedDate, to: Date()) ?? "–"
+        } else {
+            string = "Never"
+        }
         self.label.text = string
     }
     
@@ -46,5 +49,4 @@ class ReminderIntervalTableViewCell: SimpleLabelTableViewCell {
         super.prepareForReuse()
         self.label.text = nil
     }
-    
 }

@@ -24,14 +24,25 @@
 import WaterMeData
 import UIKit
 
-class ReminderKindTableViewCell: UITableViewCell {
+class ReminderKindTableViewCell: SimpleLabelTableViewCell {
     
     static let reuseID = "ReminderKindTableViewCell"
     
+    override func setup() {
+        super.setup()
+        self.label.style_selectableTableViewCell()
+        self.prepareForReuse()
+    }
+    
     func configure(rowNumber: Int, compareWith compare: Reminder.Kind) {
         let id = Reminder.Kind(row: rowNumber)
-        self.textLabel?.text = id.localizedString
+        self.label.text = id.localizedString
         self.accessoryType = id.isSameKind(as: compare) ? .checkmark : .none
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.label.text = nil
     }
     
 }

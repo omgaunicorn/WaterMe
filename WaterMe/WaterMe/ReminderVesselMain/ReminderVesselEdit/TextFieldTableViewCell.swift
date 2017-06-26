@@ -30,13 +30,21 @@ class TextFieldTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var textField: UITextField?
     @IBOutlet private weak var label: UILabel?
+    @IBOutlet private weak var topConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var bottomConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var leadingConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var trailingConstraint: NSLayoutConstraint?
     
     var textChanged: ((String) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.textField?.style_bodyFontTextField()
-        self.label?.style_calloutFontLabel()
+        self.topConstraint?.constant = UITableViewCell.style_textFieldCellTopPadding
+        self.bottomConstraint?.constant = UITableViewCell.style_textFieldCellBottomPadding
+        self.leadingConstraint?.constant = UITableViewCell.style_textFieldCellLeadingPadding
+        self.trailingConstraint?.constant = UITableViewCell.style_textFieldCellTrailingPadding
+        self.textField?.style_tableViewCellTextInput()
+        self.label?.style_readOnlyTableViewCell()
         self.prepareForReuse()
     }
     

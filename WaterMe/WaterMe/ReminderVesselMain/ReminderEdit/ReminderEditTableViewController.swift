@@ -34,6 +34,9 @@ class ReminderEditTableViewController: UITableViewController {
         super.viewDidLoad()
         
         self.tableView.register(TextFieldTableViewCell.nib, forCellReuseIdentifier: TextFieldTableViewCell.reuseID)
+        self.tableView.register(ReminderKindTableViewCell.self, forCellReuseIdentifier: ReminderKindTableViewCell.reuseID)
+        self.tableView.register(ReminderIntervalTableViewCell.self, forCellReuseIdentifier: ReminderIntervalTableViewCell.reuseID)
+        self.tableView.register(LastPerformedTableViewCell.self, forCellReuseIdentifier: LastPerformedTableViewCell.reuseID)
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 40
     }
@@ -93,7 +96,11 @@ class ReminderEditTableViewController: UITableViewController {
             cell?.configure(with: reminder.interval)
             return _cell
         case .performed:
-            return UITableViewCell()
+            let id = LastPerformedTableViewCell.reuseID
+            let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
+            let cell = _cell as? LastPerformedTableViewCell
+            cell?.configureWith(lastPerformedDate: reminder.performed.last?.date)
+            return _cell
         }
     }
     

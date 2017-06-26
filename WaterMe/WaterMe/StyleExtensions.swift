@@ -24,6 +24,18 @@
 import WaterMeData
 import UIKit
 
+extension UITableViewCell {
+    static let style_labelCellTopPadding: CGFloat = 12
+    static let style_labelCellBottomPadding: CGFloat = 10
+    static let style_labelCellLeadingPadding: CGFloat = 20
+    static let style_labelCellTrailingPadding: CGFloat = 20
+    
+    static let style_textFieldCellTopPadding: CGFloat = 8
+    static let style_textFieldCellBottomPadding: CGFloat = 6
+    static let style_textFieldCellLeadingPadding: CGFloat = 20
+    static let style_textFieldCellTrailingPadding: CGFloat = 20
+}
+
 extension UILabel {
     func style_reminderVesselNameLabel() {
         self.adjustsFontForContentSizeCategory = true
@@ -37,15 +49,22 @@ extension UILabel {
 }
 
 extension UITextField {
-    func style_bodyFontTextField() {
+    func style_tableViewCellTextInput() {
         self.adjustsFontForContentSizeCategory = true
         self.font = UIFont.preferredFont(forTextStyle: .body)
+        self.textColor = .black
     }
 }
 
 extension UILabel {
-    func style_calloutFontLabel() {
+    func style_selectableTableViewCell() {
         self.adjustsFontForContentSizeCategory = true
         self.font = UIFont.preferredFont(forTextStyle: .callout)
+        self.textColor = .black
+    }
+    func style_readOnlyTableViewCell() {
+        self.adjustsFontForContentSizeCategory = true
+        self.font = UIFont.preferredFont(forTextStyle: .callout)
+        self.textColor = .gray
     }
 }

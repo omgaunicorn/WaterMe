@@ -47,8 +47,12 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="bottomConstraint" destination="hbZ-UK-FfR" id="stb-iQ-QYs"/>
                 <outlet property="label" destination="URK-GX-X1a" id="pMO-fv-xRo"/>
+                <outlet property="leadingConstraint" destination="alA-Yx-lDS" id="P13-9E-MTc"/>
                 <outlet property="textField" destination="Fgl-BH-dyl" id="bwe-cR-T9y"/>
+                <outlet property="topConstraint" destination="ifd-8Z-kpT" id="YYo-Y6-Kaf"/>
+                <outlet property="trailingConstraint" destination="LuL-RQ-VIO" id="c5Y-MJ-eKF"/>
             </connections>
             <point key="canvasLocation" x="114.5" y="-158"/>
         </tableViewCell>

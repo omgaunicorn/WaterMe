@@ -50,11 +50,19 @@ extension Receipt {
     }
 }
 
-extension DateComponentsFormatter {
+extension Formatter {
     class var newReminderIntervalFormatter: DateComponentsFormatter {
         let f = DateComponentsFormatter()
         f.allowedUnits = [.month, .weekOfMonth, .day]
         f.unitsStyle = .full
         return f
     }
+    class var newTimeAgoFormatter: DateComponentsFormatter {
+        let f = DateComponentsFormatter()
+        f.includesApproximationPhrase = true
+        f.includesTimeRemainingPhrase = true
+        return f
+    }
 }
+
+
