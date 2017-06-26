@@ -59,8 +59,8 @@ extension Formatter {
     }
     class var newTimeAgoFormatter: DateComponentsFormatter {
         let f = DateComponentsFormatter()
-        f.includesApproximationPhrase = true
-        f.includesTimeRemainingPhrase = true
+        f.allowedUnits = [.month, .weekOfMonth, .day]
+        f.unitsStyle = .full
         return f
     }
 }
