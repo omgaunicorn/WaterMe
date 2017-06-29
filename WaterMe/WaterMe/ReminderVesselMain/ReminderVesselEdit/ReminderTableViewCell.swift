@@ -26,27 +26,33 @@ import UIKit
 
 class ReminderTableViewCell: UITableViewCell {
     
+    class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
     static let reuseID = "ReminderTableViewCell"
     
-    @IBOutlet private weak var titleLabel: UILabel?
-    @IBOutlet private weak var descriptionLabel: UILabel?
+    @IBOutlet private weak var topLabel: UILabel?
+    @IBOutlet private weak var middleLabel: UILabel?
+    @IBOutlet private weak var bottomLabel: UILabel?
     @IBOutlet private weak var iconButton: UIButton?
     
     func configure(with reminder: Reminder?) {
         guard let reminder = reminder else { return }
         switch reminder.kind {
         case .water:
-            self.titleLabel?.text = "Water Plant"
-            self.descriptionLabel?.text = "Every \(reminder.interval) day(s)."
+            self.topLabel?.text = "Water Plant"
+            self.middleLabel?.isHidden = true
+            self.bottomLabel?.text = "Every \(reminder.interval) day(s)."
         case .fertilize:
-            self.titleLabel?.text = "Fertilize Soil"
-            self.descriptionLabel?.text = "Every \(reminder.interval) day(s)."
+            self.topLabel?.text = "Fertilize Soil"
+            self.middleLabel?.isHidden = true
+            self.bottomLabel?.text = "Every \(reminder.interval) day(s)."
         case .move(let location):
-            self.titleLabel?.text = "Move Plant to \(location)"
-            self.descriptionLabel?.text = "Every \(reminder.interval) day(s)."
+            self.topLabel?.text = "Move Plant"
+            self.middleLabel?.text = location ?? "No location configured"
+            self.bottomLabel?.text = String(reminder.interval)
         case .other(let title, let description):
-            self.titleLabel?.text = title
-            self.descriptionLabel?.text = "Every \(reminder.interval) day(s)."
+            self.topLabel?.text = title
+            self.middleLabel?.text = description ?? "No description"
+            self.bottomLabel?.text = String(reminder.interval)
         }
     }
 
@@ -56,8 +62,10 @@ class ReminderTableViewCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        self.titleLabel?.text = nil
-        self.descriptionLabel?.text = nil
+        self.topLabel?.text = nil
+        self.middleLabel?.text = nil
+        self.bottomLabel?.text = nil
+        self.middleLabel?.isHidden = false
     }
 
 }

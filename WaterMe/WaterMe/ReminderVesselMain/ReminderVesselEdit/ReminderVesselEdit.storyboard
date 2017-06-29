@@ -57,54 +57,6 @@
                                     <outlet property="iconButton" destination="PBB-NE-iux" id="kTT-Bh-eC9"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="ReminderTableViewCell" rowHeight="70" id="ynF-X0-tVd" customClass="ReminderTableViewCell" customModule="WaterMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="221.5" width="375" height="70"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ynF-X0-tVd" id="ur4-eJ-G9m">
-                                    <rect key="frame" x="0.0" y="0.0" width="342" height="69.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ThS-TR-nka">
-                                            <rect key="frame" x="8" y="8" width="53.5" height="53.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="ThS-TR-nka" secondAttribute="height" multiplier="1:1" id="7hZ-Be-gpo"/>
-                                            </constraints>
-                                            <state key="normal" title="Wa"/>
-                                        </button>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8Gr-Yc-Adr">
-                                            <rect key="frame" x="69.5" y="12" width="264.5" height="45.5"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Water Plant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LOJ-ON-Np4">
-                                                    <rect key="frame" x="0.0" y="0.0" width="264.5" height="19.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Every 4 Days" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W7T-j1-yfN">
-                                                    <rect key="frame" x="0.0" y="27.5" width="264.5" height="18"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="bottomMargin" secondItem="ThS-TR-nka" secondAttribute="bottom" id="EZn-SK-aRo"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="8Gr-Yc-Adr" secondAttribute="trailing" id="Oq9-TG-1zW"/>
-                                        <constraint firstItem="ThS-TR-nka" firstAttribute="leading" secondItem="ur4-eJ-G9m" secondAttribute="leadingMargin" id="Rdf-XT-z9R"/>
-                                        <constraint firstItem="8Gr-Yc-Adr" firstAttribute="leading" secondItem="ThS-TR-nka" secondAttribute="trailing" constant="8" symbolic="YES" id="hBr-dm-GWm"/>
-                                        <constraint firstItem="ThS-TR-nka" firstAttribute="top" secondItem="ur4-eJ-G9m" secondAttribute="topMargin" id="k69-Fz-5VB"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="8Gr-Yc-Adr" secondAttribute="bottom" constant="4" id="lFW-3g-U6H"/>
-                                        <constraint firstItem="8Gr-Yc-Adr" firstAttribute="top" secondItem="ur4-eJ-G9m" secondAttribute="topMargin" constant="4" id="vB5-e1-ud9"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <connections>
-                                    <outlet property="descriptionLabel" destination="W7T-j1-yfN" id="zvV-XN-uuX"/>
-                                    <outlet property="iconButton" destination="ThS-TR-nka" id="eeP-KH-BR0"/>
-                                    <outlet property="titleLabel" destination="LOJ-ON-Np4" id="UDK-aF-M5j"/>
-                                </connections>
-                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="VdB-w4-RH3" id="XoH-nX-Zpo"/>

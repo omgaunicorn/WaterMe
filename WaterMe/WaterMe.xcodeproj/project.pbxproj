@@ -32,6 +32,7 @@
 		504A8D5F1EDB56AC002D928D /* ErrorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */; };
 		504A8D611EDB5A46002D928D /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */; };
 		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
+		507A64581F049CCA004E18C5 /* ReminderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */; };
 		5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */; };
 		5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */; };
 		5087A9231EE3A6B00046E687 /* SelfContainedImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9221EE3A6B00046E687 /* SelfContainedImagePickerController.swift */; };
@@ -120,6 +121,7 @@
 		504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewController.swift; sourceTree = "<group>"; };
 		504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
 		505086AE1ECBD43200745012 /* RealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
+		507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderTableViewCell.xib; sourceTree = "<group>"; };
 		5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPickerCollectionViewCell.swift; sourceTree = "<group>"; };
 		5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmojiPickerCollectionViewCell.xib; sourceTree = "<group>"; };
 		5087A9221EE3A6B00046E687 /* SelfContainedImagePickerController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelfContainedImagePickerController.swift; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 				50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */,
 				50B511A41EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib */,
 				50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */,
+				507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */,
 				508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */,
 				508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */,
 			);
@@ -551,6 +554,7 @@
 			files = (
 				508FFCB01EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib in Resources */,
 				50BB0F691EC0011800850FF4 /* LaunchScreen.storyboard in Resources */,
+				507A64581F049CCA004E18C5 /* ReminderTableViewCell.xib in Resources */,
 				501F92221EC55DF50014939D /* Router.storyboard in Resources */,
 				50E8B1E41EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard in Resources */,
 				50E8B1E01EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib in Resources */,
