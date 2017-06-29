@@ -59,12 +59,47 @@ extension UITextField {
 extension UILabel {
     func style_selectableTableViewCell() {
         self.adjustsFontForContentSizeCategory = true
-        self.font = UIFont.preferredFont(forTextStyle: .callout)
-        self.textColor = .black
+        self.font = style_tableViewCellFont
+        self.textColor = style_selectableTableViewCellColor
     }
     func style_readOnlyTableViewCell() {
         self.adjustsFontForContentSizeCategory = true
-        self.font = UIFont.preferredFont(forTextStyle: .callout)
-        self.textColor = .gray
+        self.font = style_tableViewCellFont
+        self.textColor = style_readOnlyTableViewCellColor
+    }
+}
+
+fileprivate var style_tableViewCellFont: UIFont {
+    return UIFont.preferredFont(forTextStyle: .callout)
+}
+
+fileprivate var style_readOnlyTableViewCellColor: UIColor {
+    return .gray
+}
+
+fileprivate var style_selectableTableViewCellColor: UIColor {
+    return .black
+}
+
+extension NSAttributedString {
+    enum Style {
+        case selectableTableViewCell, readOnlyTableViewCell
+    }
+    
+    convenience init(string: String, style: Style) {
+        let attributes: [String : Any]
+        switch style {
+        case .readOnlyTableViewCell:
+            attributes = [
+                NSFontAttributeName : style_tableViewCellFont,
+                NSForegroundColorAttributeName : style_readOnlyTableViewCellColor
+            ]
+        case .selectableTableViewCell:
+            attributes = [
+                NSFontAttributeName : style_tableViewCellFont,
+                NSForegroundColorAttributeName : style_selectableTableViewCellColor
+            ]
+        }
+        self.init(string: string, attributes: attributes)
     }
 }
