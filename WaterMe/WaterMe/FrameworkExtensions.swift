@@ -23,6 +23,7 @@
 
 import WaterMeStore
 import WaterMeData
+import FormatterKit
 import UIKit
 
 extension Sequence {
@@ -57,12 +58,10 @@ extension Formatter {
         f.unitsStyle = .full
         return f
     }
-    class var newTimeAgoFormatter: DateComponentsFormatter {
-        let f = DateComponentsFormatter()
-        f.allowedUnits = [.month, .weekOfMonth, .day]
-        f.unitsStyle = .full
+    class var newTimeAgoFormatter: TTTTimeIntervalFormatter {
+        let f = TTTTimeIntervalFormatter()
+        f.usesApproximateQualifier = true
+        f.usesIdiomaticDeicticExpressions = true
         return f
     }
 }
-
-

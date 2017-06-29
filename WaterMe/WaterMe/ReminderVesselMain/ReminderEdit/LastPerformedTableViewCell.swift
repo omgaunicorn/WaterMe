@@ -38,7 +38,8 @@ class LastPerformedTableViewCell: SimpleLabelTableViewCell {
     func configureWith(lastPerformedDate: Date?) {
         let string: String
         if let lastPerformedDate = lastPerformedDate {
-            string = (self.formatter.string(from: lastPerformedDate, to: Date()) ?? "–") + " ago"
+            let interval = lastPerformedDate.timeIntervalSinceNow
+            string = self.formatter.string(forTimeInterval: interval) ?? "–"
         } else {
             string = "Never"
         }

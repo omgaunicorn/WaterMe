@@ -2,6 +2,7 @@ target 'WaterMe' do
 	platform :ios, '10.3'
 	use_frameworks!
 	
+	pod 'FormatterKit', '~> 1.8.2'
 	pod 'Result', '~> 3.2.2'
 	pod 'RealmSwift'
 	pod 'XCGLogger', '~> 5.0.1'
