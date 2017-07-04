@@ -65,3 +65,12 @@ extension Formatter {
         return f
     }
 }
+
+extension TTTTimeIntervalFormatter {
+    func timeAgoString(for interval: TimeInterval?) -> String {
+        guard let interval = interval else { return "Never" }
+        let intervalString = self.string(forTimeInterval: interval)
+        assert(intervalString != nil, "Time Ago Formatter Returned NIL for Interval: \(interval)")
+        return intervalString ?? "–"
+    }
+}

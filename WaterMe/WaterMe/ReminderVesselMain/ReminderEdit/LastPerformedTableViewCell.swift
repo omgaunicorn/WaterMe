@@ -32,18 +32,13 @@ class LastPerformedTableViewCell: SimpleLabelTableViewCell {
     override func setup() {
         super.setup()
         self.label.style_readOnlyTableViewCell()
+        self.selectionStyle = .none
         self.prepareForReuse()
     }
     
     func configureWith(lastPerformedDate: Date?) {
-        let string: String
-        if let lastPerformedDate = lastPerformedDate {
-            let interval = lastPerformedDate.timeIntervalSinceNow
-            string = self.formatter.string(forTimeInterval: interval) ?? "–"
-        } else {
-            string = "Never"
-        }
-        self.label.text = string
+        let interval = lastPerformedDate?.timeIntervalSinceNow
+        self.label.text = self.formatter.timeAgoString(for: interval)
     }
     
     override func prepareForReuse() {
