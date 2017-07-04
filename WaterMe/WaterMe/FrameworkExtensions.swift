@@ -74,3 +74,12 @@ extension TTTTimeIntervalFormatter {
         return intervalString ?? "–"
     }
 }
+
+extension DateComponentsFormatter {
+    func string(forDayInterval interval: Int) -> String {
+        let time = TimeInterval(interval) * (60 * 60 * 24)
+        let string = self.string(from: time)
+        assert(string != nil, "Time Interval Formatter Returned NIL for Interval: \(interval)")
+        return string ?? "–"
+    }
+}

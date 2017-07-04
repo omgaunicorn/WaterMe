@@ -37,9 +37,7 @@ class ReminderIntervalTableViewCell: SimpleLabelTableViewCell {
     }
     
     func configure(with interval: Int) {
-        let time = TimeInterval(interval) * (60 * 60 * 24)
-        let string = self.formatter.string(from: time) ?? "–"
-        self.label.text = string
+        self.label.text = self.formatter.string(forDayInterval: interval)
     }
     
     override func prepareForReuse() {

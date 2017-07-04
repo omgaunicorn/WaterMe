@@ -34,17 +34,22 @@ class ReminderTableViewCell: UITableViewCell {
     @IBOutlet private weak var bottomLabel: UILabel?
     @IBOutlet private weak var iconButton: UIButton?
     
+    fileprivate let formatter = DateComponentsFormatter.newReminderIntervalFormatter
+    
     func configure(with reminder: Reminder?) {
         guard let reminder = reminder else { return }
+        
+        // do stuff that is the same for all cases
+        self.bottomLabel?.attributedText = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval), style: .readOnlyTableViewCell)
+        
+        // do stuff that is case specific
         switch reminder.kind {
         case .water:
             self.topLabel?.attributedText = NSAttributedString(string: "Water Plant", style: .selectableTableViewCell)
             self.middleLabel?.isHidden = true
-            self.bottomLabel?.attributedText = NSAttributedString(string: String(reminder.interval), style: .readOnlyTableViewCell)
         case .fertilize:
             self.topLabel?.attributedText = NSAttributedString(string: "Fertilize Soil", style: .selectableTableViewCell)
             self.middleLabel?.isHidden = true
-            self.bottomLabel?.attributedText = NSAttributedString(string: String(reminder.interval), style: .readOnlyTableViewCell)
         case .move(let location):
             self.topLabel?.attributedText = NSAttributedString(string: "Move Plant", style: .selectableTableViewCell)
             if let location = location {
@@ -52,7 +57,6 @@ class ReminderTableViewCell: UITableViewCell {
             } else {
                 self.middleLabel?.isHidden = true
             }
-            self.bottomLabel?.attributedText = NSAttributedString(string: String(reminder.interval), style: .readOnlyTableViewCell)
         case .other(let title, let description):
             self.topLabel?.attributedText = NSAttributedString(string: title ?? "Other", style: .selectableTableViewCell)
             if let description = description {
@@ -60,7 +64,6 @@ class ReminderTableViewCell: UITableViewCell {
             } else {
                 self.middleLabel?.isHidden = true
             }
-            self.bottomLabel?.attributedText = NSAttributedString(string: String(reminder.interval), style: .readOnlyTableViewCell)
         }
     }
 
