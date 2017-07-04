@@ -32,7 +32,7 @@ class EmojiPickerCollectionViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.emojiLabel?.style_emojiDisplayLabel()
+        self.emojiLabel?.style_emojiLargeDisplayLabel()
         self.prepareForReuse()
     }
     

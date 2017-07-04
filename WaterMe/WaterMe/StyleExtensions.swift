@@ -41,8 +41,13 @@ extension UILabel {
         self.adjustsFontForContentSizeCategory = true
         self.font = UIFont.preferredFont(forTextStyle: .title3)
     }
-    func style_emojiDisplayLabel() {
+    func style_emojiLargeDisplayLabel() {
         self.font = UIFont.systemFont(ofSize: 60)
+        self.lineBreakMode = .byClipping
+        self.clipsToBounds = true
+    }
+    func style_emojiSmallDisplayLabel() {
+        self.font = UIFont.systemFont(ofSize: 32)
         self.lineBreakMode = .byClipping
         self.clipsToBounds = true
     }
