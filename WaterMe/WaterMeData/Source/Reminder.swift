@@ -40,7 +40,7 @@ public class Reminder: Object {
         get { return self.kindValue }
         set { self.update(with: newValue) }
     }
-    public internal(set) dynamic var interval: Int = Reminder.defaultInterval
+    public internal(set) dynamic var interval = Reminder.defaultInterval
     public let performed = List<ReminderPerform>()
     public var vessel: ReminderVessel? { return self.vessels.first }
     
@@ -62,28 +62,31 @@ fileprivate extension Reminder {
     fileprivate static let kCaseMoveValue = "kReminderKindCaseMoveValue"
     fileprivate static let kCaseOtherValue = "kReminderKindCaseOtherValue"
     
-    internal func update(with kind: Reminder.Kind) {
+    fileprivate func update(with kind: Reminder.Kind) {
         switch kind {
         case .water:
             self.kindString = type(of: self).kCaseWaterValue
-            self.titleString = nil
-            self.descriptionString = nil
         case .fertilize:
             self.kindString = type(of: self).kCaseFertilizeValue
-            self.titleString = nil
-            self.descriptionString = nil
         case .move(let location):
             self.kindString = type(of: self).kCaseMoveValue
-            self.titleString = nil
-            self.descriptionString = location
+            // check for new values to prevent being destructive
+            if let location = location {
+                self.descriptionString = location
+            }
         case .other(let title, let description):
             self.kindString = type(of: self).kCaseOtherValue
-            self.titleString = title
-            self.descriptionString = description
+            // check for new values to prevent being destructive
+            if let title = title {
+                self.titleString = title
+            }
+            if let description = description {
+                self.descriptionString = description
+            }
         }
     }
     
-    var kindValue: Reminder.Kind {
+    fileprivate var kindValue: Reminder.Kind {
         switch self.kindString {
         case type(of: self).kCaseWaterValue:
             return .water
