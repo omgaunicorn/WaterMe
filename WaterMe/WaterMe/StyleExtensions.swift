@@ -61,6 +61,14 @@ extension UITextField {
     }
 }
 
+extension UITextView {
+    func style_tableViewCellTextInput() {
+        self.adjustsFontForContentSizeCategory = true
+        self.font = UIFont.preferredFont(forTextStyle: .body)
+        self.textColor = .black
+    }
+}
+
 extension UILabel {
     func style_selectableTableViewCell() {
         self.adjustsFontForContentSizeCategory = true

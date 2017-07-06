@@ -32,6 +32,8 @@
 		504A8D5F1EDB56AC002D928D /* ErrorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */; };
 		504A8D611EDB5A46002D928D /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */; };
 		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
+		50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */; };
+		50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */; };
 		507A64581F049CCA004E18C5 /* ReminderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */; };
 		5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */; };
 		5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */; };
@@ -121,6 +123,8 @@
 		504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewController.swift; sourceTree = "<group>"; };
 		504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
 		505086AE1ECBD43200745012 /* RealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
+		50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewTableViewCell.swift; sourceTree = "<group>"; };
+		50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewTableViewCell.xib; sourceTree = "<group>"; };
 		507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderTableViewCell.xib; sourceTree = "<group>"; };
 		5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPickerCollectionViewCell.swift; sourceTree = "<group>"; };
 		5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmojiPickerCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -307,6 +311,8 @@
 				50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */,
 				50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */,
 				50B511A41EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib */,
+				50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */,
+				50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */,
 				50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */,
 				507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */,
 				508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */,
@@ -565,6 +571,7 @@
 				5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */,
 				501F92281EC55E080014939D /* SubscriptionChoice.storyboard in Resources */,
 				50E8B1D51EDF79E700ACCDAF /* ReminderVesselMain.storyboard in Resources */,
+				50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */,
 				50D3A0811EC57F68001B4A7D /* SubscriptionMigration.storyboard in Resources */,
 				50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */,
 				501F922A1EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib in Resources */,
@@ -792,6 +799,7 @@
 				50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */,
 				50A004CA1EDC8E7A00DD1546 /* ReceiptWatcher.swift in Sources */,
 				50D3A0831EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift in Sources */,
+				50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

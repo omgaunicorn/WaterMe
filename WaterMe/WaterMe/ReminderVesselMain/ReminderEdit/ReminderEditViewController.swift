@@ -66,7 +66,8 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         
         self.tableViewController = self.childViewControllers.first()
         self.tableViewController?.reminder = { [unowned self] in return self.reminder }
-        self.tableViewController?.kindChanged = { [unowned self] in self.kindChanged($0.0, fromKeyboard: $0.1) }
+        self.tableViewController?.kindChanged = { [unowned self] in self.update(kind: $0.0, fromKeyboard: $0.1) }
+        self.tableViewController?.noteChanged = { [unowned self] in self.update(note: $0, fromKeyboard: true) }
         self.tableViewController?.intervalChosen = { [unowned self] in self.intervalChosen() }
         self.startNotifications()
     }
@@ -80,11 +81,11 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         }
     }
     
-    private func kindChanged(_ new: Reminder.Kind, fromKeyboard: Bool) {
+    private func update(kind: Reminder.Kind? = nil, interval: Int? = nil, note: String? = nil, fromKeyboard: Bool = false) {
         if fromKeyboard == true {
             self.notificationToken?.stop()
         }
-        self.basicRC?.update(kind: new, in: self.reminder)
+        self.basicRC?.update(kind: kind, interval: interval, note: note, in: self.reminder)
         if fromKeyboard == true {
             self.startNotifications()
         }
@@ -95,7 +96,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard, existingValue: existingValue) { vc, newValue in
             vc.dismiss(animated: true, completion: nil)
             guard let newValue = newValue else { return }
-            self.basicRC?.update(interval: newValue, in: self.reminder)
+            self.update(interval: newValue)
         }
         self.present(vc, animated: true, completion: nil)
     }

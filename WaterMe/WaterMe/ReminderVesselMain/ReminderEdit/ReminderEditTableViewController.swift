@@ -29,10 +29,12 @@ class ReminderEditTableViewController: UITableViewController {
     var reminder: (() -> Reminder)?
     var kindChanged: ((Reminder.Kind, Bool) -> Void)?
     var intervalChosen: (() -> Void)?
+    var noteChanged: ((String) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.register(TextViewTableViewCell.nib, forCellReuseIdentifier: TextViewTableViewCell.reuseID)
         self.tableView.register(TextFieldTableViewCell.nib, forCellReuseIdentifier: TextFieldTableViewCell.reuseID)
         self.tableView.register(ReminderKindTableViewCell.self, forCellReuseIdentifier: ReminderKindTableViewCell.reuseID)
         self.tableView.register(ReminderIntervalTableViewCell.self, forCellReuseIdentifier: ReminderIntervalTableViewCell.reuseID)
@@ -95,6 +97,15 @@ class ReminderEditTableViewController: UITableViewController {
             let cell = _cell as? ReminderIntervalTableViewCell
             cell?.configure(with: reminder.interval)
             return _cell
+        case .notes:
+            let id = TextViewTableViewCell.reuseID
+            let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
+            let cell = _cell as? TextViewTableViewCell
+            cell?.configure(with: reminder.note)
+            cell?.textChanged = { [unowned self] newText in
+                self.noteChanged?(newText)
+            }
+            return _cell
         case .performed:
             let id = LastPerformedTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
@@ -127,13 +138,13 @@ class ReminderEditTableViewController: UITableViewController {
     }
     
     private enum Section {
-        case kind, details, interval, performed
+        case kind, details, interval, notes, performed
         static func count(for kind: Reminder.Kind) -> Int {
             switch kind {
             case .fertilize, .water:
-                return 3
-            case .other, .move:
                 return 4
+            case .other, .move:
+                return 5
             }
         }
         // swiftlint:disable:next cyclomatic_complexity
@@ -146,6 +157,8 @@ class ReminderEditTableViewController: UITableViewController {
                 case 1:
                     self = .interval
                 case 2:
+                    self = .notes
+                case 3:
                     self = .performed
                 default:
                     fatalError("Invalid Section")
@@ -159,6 +172,8 @@ class ReminderEditTableViewController: UITableViewController {
                 case 2:
                     self = .interval
                 case 3:
+                    self = .notes
+                case 4:
                     self = .performed
                 default:
                     fatalError("Invalid Section")
@@ -173,6 +188,8 @@ class ReminderEditTableViewController: UITableViewController {
                 return "Details"
             case .interval:
                 return "Remind Every"
+            case .notes:
+                return "Notes"
             case .performed:
                 return "Last Performed"
             }
@@ -181,7 +198,7 @@ class ReminderEditTableViewController: UITableViewController {
             switch self {
             case .kind:
                 return type(of: kind).count
-            case .details, .performed, .interval:
+            case .details, .performed, .interval, .notes:
                 return 1
             }
         }
