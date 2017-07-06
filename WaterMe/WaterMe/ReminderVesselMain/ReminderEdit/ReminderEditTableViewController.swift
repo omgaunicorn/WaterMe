@@ -84,9 +84,9 @@ class ReminderEditTableViewController: UITableViewController {
             let id = TextFieldTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? TextFieldTableViewCell
-            cell?.configure(row: indexPath.row, with: reminder.kind)
+            cell?.configure(with: reminder.kind)
             cell?.textChanged = { [unowned self] newText in
-                self.updated(text: newText, for: reminder.kind, within: indexPath.row)
+                self.updated(text: newText, for: reminder.kind)
             }
             return _cell
         case .interval:
@@ -104,7 +104,7 @@ class ReminderEditTableViewController: UITableViewController {
         }
     }
     
-    private func updated(text newText: String, for oldKind: Reminder.Kind, within row: Int) {
+    private func updated(text newText: String, for oldKind: Reminder.Kind) {
         guard newText.isEmpty == false else { return }
         let newKind: Reminder.Kind
         defer {
@@ -113,15 +113,8 @@ class ReminderEditTableViewController: UITableViewController {
         switch oldKind {
         case .move:
             newKind = Reminder.Kind.move(location: newText)
-        case .other(let oldTitle, description: let oldDescription):
-            switch row {
-            case 0:
-                newKind = Reminder.Kind.other(title: newText, description: oldDescription)
-            case 1:
-                newKind = Reminder.Kind.other(title: oldTitle, description: newText)
-            default:
-                fatalError("Wrong Row Encountered")
-            }
+        case .other:
+            newKind = Reminder.Kind.other(description: newText)
         default:
             fatalError("Wrong Kind Encountered")
         }
@@ -188,16 +181,7 @@ class ReminderEditTableViewController: UITableViewController {
             switch self {
             case .kind:
                 return type(of: kind).count
-            case .details:
-                switch kind {
-                case .fertilize, .water:
-                    fatalError("Invalid Section")
-                case .move:
-                    return 1
-                case .other:
-                    return 2
-                }
-            case .performed, .interval:
+            case .details, .performed, .interval:
                 return 1
             }
         }
@@ -205,22 +189,14 @@ class ReminderEditTableViewController: UITableViewController {
 }
 
 fileprivate extension TextFieldTableViewCell {
-    func configure(row: Int, with kind: Reminder.Kind) {
+    func configure(with kind: Reminder.Kind) {
         switch kind {
         case .move(let location):
             self.setPlaceHolder(label: "Move to", textField: "Other side of yard.")
             self.setTextField(text: location)
-        case .other(let title, let description):
-            switch row {
-            case 0:
-                self.setPlaceHolder(label: "Title", textField: "Trim Leaves")
-                self.setTextField(text: title)
-            case 1:
-                self.setPlaceHolder(label: "Description", textField: "Trim the leaves and throw out the clippings.")
-                self.setTextField(text: description)
-            default:
-                assertionFailure("Wrong Row being passed in")
-            }
+        case .other(let description):
+            self.setPlaceHolder(label: "Description", textField: "Trim the leaves and throw out the clippings.")
+            self.setTextField(text: description)
         default:
             assertionFailure("Wrong Kind being passed in")
         }

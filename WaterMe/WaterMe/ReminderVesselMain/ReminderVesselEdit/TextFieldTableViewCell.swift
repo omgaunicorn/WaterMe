@@ -75,6 +75,5 @@ class TextFieldTableViewCell: UITableViewCell {
         self.label?.text = nil
         self.textChanged = nil
         self.label?.isHighlighted = true
-        
     }
 }

@@ -31,7 +31,7 @@ public class Reminder: Object {
     public static let defaultInterval: Int = 7
     
     public enum Kind {
-        case water, fertilize, move(location: String?), other(title: String?, description: String?)
+        case water, fertilize, move(location: String?), other(description: String?)
         public static let count = 4
     }
     
@@ -46,7 +46,6 @@ public class Reminder: Object {
     
     // MARK: Implementation Details
     internal dynamic var kindString: String = Reminder.kCaseWaterValue
-    internal dynamic var titleString: String?
     internal dynamic var descriptionString: String?
     internal let vessels = LinkingObjects(fromType: ReminderVessel.self, property: "reminders") //#keyPath(ReminderVessel.reminders)
 }
@@ -74,12 +73,9 @@ fileprivate extension Reminder {
             if let location = location {
                 self.descriptionString = location
             }
-        case .other(let title, let description):
+        case .other(let description):
             self.kindString = type(of: self).kCaseOtherValue
             // check for new values to prevent being destructive
-            if let title = title {
-                self.titleString = title
-            }
             if let description = description {
                 self.descriptionString = description
             }
@@ -96,9 +92,8 @@ fileprivate extension Reminder {
             let description = self.descriptionString
             return .move(location: description)
         case type(of: self).kCaseOtherValue:
-            let title = self.titleString
             let description = self.descriptionString
-            return .other(title: title, description: description)
+            return .other(description: description)
         default:
             fatalError("Reminder.Kind: Invalid Case String Key")
         }

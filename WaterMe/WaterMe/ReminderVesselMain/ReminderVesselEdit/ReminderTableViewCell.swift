@@ -58,8 +58,8 @@ class ReminderTableViewCell: UITableViewCell {
             } else {
                 self.middleLabel?.isHidden = true
             }
-        case .other(let title, let description):
-            self.topLabel?.attributedText = NSAttributedString(string: title ?? "Other", style: .selectableTableViewCell)
+        case .other(let description):
+            self.topLabel?.attributedText = NSAttributedString(string: "Other", style: .selectableTableViewCell)
             if let description = description {
                 self.middleLabel?.attributedText = NSAttributedString(string: description, style: .selectableTableViewCell)
             } else {

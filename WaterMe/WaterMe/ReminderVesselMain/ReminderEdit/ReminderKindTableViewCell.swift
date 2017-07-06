@@ -85,7 +85,7 @@ extension Reminder.Kind {
         case 2:
             self = .move(location: nil)
         case 3:
-            self = .other(title: nil, description: nil)
+            self = .other(description: nil)
         default:
             fatalError("Too Many Rows in Section")
         }

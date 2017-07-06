@@ -58,7 +58,7 @@ public class BasicController {
     public init(kind: Kind) {
         self.kind = kind
         var realmConfig = Realm.Configuration()
-        realmConfig.schemaVersion = 7
+        realmConfig.schemaVersion = 8
         realmConfig.objectTypes = [ReminderVessel.self, Reminder.self, ReminderPerform.self]
         switch kind {
         case .local:
