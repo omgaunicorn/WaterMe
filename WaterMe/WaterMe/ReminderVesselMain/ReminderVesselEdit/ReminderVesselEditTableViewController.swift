@@ -22,12 +22,13 @@
 //
 
 import WaterMeData
+import RealmSwift
 import UIKit
 
 protocol ReminderVesselEditTableViewControllerDelegate: class {
     var vessel: ReminderVessel! { get }
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController)
-    func userChangedName(to newName: String, controller: ReminderVesselEditTableViewController)
+    func userChangedName(to: String, andDismissKeyboard: Bool, controller: ReminderVesselEditTableViewController)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController)
     func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController)
 }
@@ -51,13 +52,52 @@ class ReminderVesselEditTableViewController: UITableViewController {
     
     weak var delegate: ReminderVesselEditTableViewControllerDelegate?
     
+    func reloadPhotoAndName() {
+        self.tableView.reloadSections(IndexSet([Section.photo.rawValue, Section.name.rawValue]), with: .automatic)
+    }
+    
+    func reloadAll() {
+        self.notificationToken?.stop()
+        self.remindersData = nil
+        self.tableView.reloadData()
+        self.notificationToken = self.delegate?.vessel.reminders.addNotificationBlock({ [weak self] in self?.remindersChanged($0) })
+    }
+    
+    func reloadReminders() {
+        self.notificationToken?.stop()
+        self.remindersData = nil
+        self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
+        self.notificationToken = self.delegate?.vessel.reminders.addNotificationBlock({ [weak self] in self?.remindersChanged($0) })
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.tableView.register(ReminderTableViewCell.nib, forCellReuseIdentifier: ReminderTableViewCell.reuseID)
         self.tableView.register(TextFieldTableViewCell.nib, forCellReuseIdentifier: TextFieldTableViewCell.reuseID)
         self.tableView.register(OptionalAddButtonTableViewHeaderFooterView.nib, forHeaderFooterViewReuseIdentifier: OptionalAddButtonTableViewHeaderFooterView.reuseID)
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 40
+        self.reloadAll()
+    }
+    
+    private var remindersData: List<Reminder>?
+    
+    private func remindersChanged(_ changes: RealmCollectionChange<List<Reminder>>) {
+        switch changes {
+        case .initial(let data):
+            self.remindersData = data
+            self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
+        case .update(_, let deletions, let insertions, let modifications):
+            self.tableView.beginUpdates()
+            self.tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: Section.reminders.rawValue) }), with: .automatic)
+            self.tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: Section.reminders.rawValue)}), with: .automatic)
+            self.tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: Section.reminders.rawValue) }), with: .automatic)
+            self.tableView.endUpdates()
+        case .error:
+            self.remindersData = nil
+            self.tableView.reloadData()
+        }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -72,7 +112,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
         case .photo:
             return 1
         case .reminders:
-            return self.delegate?.vessel.reminders.count ?? 0
+            return self.remindersData?.count ?? 0
         }
     }
     
@@ -86,7 +126,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
             cell?.setTextField(text: self.delegate?.vessel.displayName)
             cell?.setPlaceHolder(label: nil, textField: "Plant Name")
             cell?.textChanged = { [unowned self] newName in
-                self.delegate?.userChangedName(to: newName, controller: self)
+                self.delegate?.userChangedName(to: newName, andDismissKeyboard: false, controller: self)
             }
             return _cell
         case .photo:
@@ -100,7 +140,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
             let id = ReminderTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? ReminderTableViewCell
-            cell?.configure(with: self.delegate?.vessel.reminders[indexPath.row])
+            cell?.configure(with: self.remindersData?[indexPath.row])
             return _cell
         }
     }
@@ -111,8 +151,8 @@ class ReminderVesselEditTableViewController: UITableViewController {
         case .name, .photo:
             break // ignore
         case .reminders:
-            guard let vessel = self.delegate?.vessel.reminders[indexPath.row] else { return }
-            self.delegate?.userChose(reminder: vessel, controller: self)
+            guard let reminder = self.remindersData?[indexPath.row] else { return }
+            self.delegate?.userChose(reminder: reminder, controller: self)
         }
     }
     
@@ -140,7 +180,10 @@ class ReminderVesselEditTableViewController: UITableViewController {
         return UITableViewAutomaticDimension
     }
     
+    private var notificationToken: NotificationToken?
+    
     deinit {
+        self.notificationToken?.stop()
         log.debug()
     }
 }

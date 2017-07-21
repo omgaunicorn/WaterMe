@@ -26,6 +26,15 @@ import WaterMeData
 import FormatterKit
 import UIKit
 
+extension UITableView {
+    func deselectSelectedRows(animated: Bool) {
+        let selectedIndexPaths = self.indexPathsForSelectedRows ?? []
+        selectedIndexPaths.forEach() { indexPath in
+            self.deselectRow(at: indexPath, animated: animated)
+        }
+    }
+}
+
 extension Sequence {
     func first<T>(of type: T.Type? = nil) -> T? {
         return self.first(where: { $0 is T }) as? T

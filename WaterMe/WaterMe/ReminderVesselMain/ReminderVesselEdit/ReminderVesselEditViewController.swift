@@ -55,7 +55,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     private func vesselChanged(_ changes: ObjectChange) {
         switch changes {
         case .change:
-            self.tableViewController?.tableView.reloadData()
+            self.tableViewController?.reloadPhotoAndName()
         case .deleted, .error:
             self.completionHandler?(self)
         }
@@ -68,8 +68,11 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         
         self.deleteButton?.title = "Delete"
         self.title = "New Plant"
-        
-        self.tableViewController = self.childViewControllers.first()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destVC = segue.destination as? ReminderVesselEditTableViewController else { return }
+        self.tableViewController = destVC
         self.tableViewController?.delegate = self
     }
     
@@ -88,12 +91,8 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         }
     }
     
-    private func updateIcon(_ icon: ReminderVessel.Icon, andReloadTable reload: Bool = true) {
-        self.notificationToken?.stop() // stop the update notifications from causing the tableview to reload
+    private func updateIcon(_ icon: ReminderVessel.Icon) {
         self.basicRC?.update(icon: icon, in: self.vessel)
-        self.startNotifications()
-        guard reload else { return }
-        self.tableViewController?.tableView.reloadData()
     }
     
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController) {
@@ -127,30 +126,28 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         self.present(vc, animated: true, completion: nil)
     }
     
-    func userChangedName(to newName: String, controller: ReminderVesselEditTableViewController) {
+    func userChangedName(to newName: String, andDismissKeyboard dismissKeyboard: Bool, controller: ReminderVesselEditTableViewController) {
         self.notificationToken?.stop() // stop the update notifications from causing the tableview to reload
         self.basicRC?.update(displayName: newName, in: self.vessel)
+        self.startNotifications()
+        guard dismissKeyboard else { return }
+        self.tableViewController?.reloadPhotoAndName()
     }
     
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController) {
         guard let basicRC = self.basicRC else { return }
-        let addReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .new(self.vessel)) { [unowned self] vc in
-            self.refresh(andDismiss: vc)
+        let addReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .new(self.vessel)) { vc in
+            vc.dismiss(animated: true, completion: nil)
         }
         self.present(addReminderVC, animated: true, completion: nil)
     }
     
     func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController) {
         guard let basicRC = self.basicRC else { return }
-        let addReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .existing(reminder)) { [unowned self] vc in
-            self.refresh(andDismiss: vc)
+        let editReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .existing(reminder)) { [weak self] vc in
+            vc.dismiss(animated: true, completion: { self?.tableViewController?.tableView.deselectSelectedRows(animated: true) })
         }
-        self.present(addReminderVC, animated: true, completion: nil)
-    }
-    
-    private func refresh(andDismiss viewController: UIViewController) {
-        self.tableViewController?.tableView.reloadData()
-        viewController.dismiss(animated: true, completion: nil)
+        self.present(editReminderVC, animated: true, completion: nil)
     }
     
     private func startNotifications() {
