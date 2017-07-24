@@ -66,7 +66,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         
         self.tableViewController = self.childViewControllers.first()
         self.tableViewController?.reminder = { [unowned self] in return self.reminder }
-        self.tableViewController?.kindChanged = { [unowned self] in self.update(kind: $0.0, fromKeyboard: $0.1) }
+        self.tableViewController?.kindChanged = { [unowned self] in self.update(kind: $0, fromKeyboard: $1) }
         self.tableViewController?.noteChanged = { [unowned self] in self.update(note: $0, fromKeyboard: true) }
         self.tableViewController?.intervalChosen = { [unowned self] in self.intervalChosen() }
         self.startNotifications()

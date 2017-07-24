@@ -43,37 +43,37 @@ enum Style {
     case emojiSmallDisplay
     case emojiLargeDisplay
     case reminderVesselCollectionViewCell
-    var attributes: [String : Any] {
+    var attributes: [NSAttributedStringKey : Any] {
         switch self {
         case .reminderVesselCollectionViewCell:
             return [
-                NSFontAttributeName : Font.bodyPlus,
-                NSForegroundColorAttributeName : Color.textPrimary
+                NSAttributedStringKey.font : Font.bodyPlus,
+                NSAttributedStringKey.foregroundColor : Color.textPrimary
             ]
         case .emojiSmallDisplay:
             return [
-                NSFontAttributeName : UIFont.systemFont(ofSize: 32),
-                NSForegroundColorAttributeName : Color.textPrimary
+                NSAttributedStringKey.font : UIFont.systemFont(ofSize: 32),
+                NSAttributedStringKey.foregroundColor : Color.textPrimary
             ]
         case .emojiLargeDisplay:
             return [
-                NSFontAttributeName : UIFont.systemFont(ofSize: 60),
-                NSForegroundColorAttributeName : Color.textPrimary
+                NSAttributedStringKey.font : UIFont.systemFont(ofSize: 60),
+                NSAttributedStringKey.foregroundColor : Color.textPrimary
             ]
         case .textInputTableViewCell:
             return [
-                NSFontAttributeName : Font.body,
-                NSForegroundColorAttributeName : Color.textPrimary
+                NSAttributedStringKey.font : Font.body,
+                NSAttributedStringKey.foregroundColor : Color.textPrimary
             ]
         case .readOnlyTableViewCell:
             return [
-                NSFontAttributeName : Font.bodyMinus,
-                NSForegroundColorAttributeName : Color.textSecondary
+                NSAttributedStringKey.font : Font.bodyMinus,
+                NSAttributedStringKey.foregroundColor : Color.textSecondary
             ]
         case .selectableTableViewCell:
             return [
-                NSFontAttributeName : Font.bodyMinus,
-                NSForegroundColorAttributeName : Color.textPrimary
+                NSAttributedStringKey.font : Font.bodyMinus,
+                NSAttributedStringKey.foregroundColor : Color.textPrimary
             ]
         }
     }

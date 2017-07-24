@@ -28,7 +28,7 @@ import UIKit
 class SelfContainedImagePickerController: UIImagePickerController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     class var cameraPermission: AVAuthorizationStatus {
-        return AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
+        return AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
     }
     
     class var photosPermission: PHAuthorizationStatus {

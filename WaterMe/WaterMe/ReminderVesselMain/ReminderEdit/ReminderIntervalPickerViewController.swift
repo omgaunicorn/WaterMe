@@ -75,9 +75,9 @@ extension ReminderIntervalPickerViewController: UIPickerViewDelegate {
         let days = self.data[row]
         let interval: TimeInterval = TimeInterval(days) * (24 * 60 * 60)
         let formattedString = self.formatter.string(from: interval) ?? "–"
-        let primary: [String : Any] = [
-            NSFontAttributeName : self.primaryFont,
-            NSForegroundColorAttributeName : UIColor.black
+        let primary: [NSAttributedStringKey : Any] = [
+            NSAttributedStringKey.font : self.primaryFont,
+            NSAttributedStringKey.foregroundColor : UIColor.black
         ]
         let string = NSAttributedString(string: formattedString, attributes: primary)
         return string

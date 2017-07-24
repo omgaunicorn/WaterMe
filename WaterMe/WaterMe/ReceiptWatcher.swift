@@ -110,13 +110,13 @@ class ReceiptWatcher {
             $0.productIdentifier == WaterMeStore.PrivateKeys.kSubscriptionProMonthly ||
             $0.productIdentifier == WaterMeStore.PrivateKeys.kSubscriptionProYearly
         }
-        let sorted = filtered.sorted(by: { $0.0.subscriptionExpirationDate >= $0.1.subscriptionExpirationDate })
+        let sorted = filtered.sorted(by: { $0.subscriptionExpirationDate >= $1.subscriptionExpirationDate })
         guard
             let newest = sorted.first,
             let sub = PurchasedSubscription(productID: newest.productIdentifier,
                                             purchaseDate: newest.purchaseDate,
                                             expirationDate: newest.subscriptionExpirationDate)
         else { return .failure(.noSubscriptionFound) }
-        return .success(data, sub)
+        return .success((data, sub))
     }
 }
