@@ -32,21 +32,20 @@ class TextViewTableViewCell: UITableViewCell, UITextViewDelegate {
     
     var textChanged: ((String) -> Void)?
     
-    func configure(with text: String) {
-        self.textView?.text = text
-        self.textView?.scrollRectToVisible(.zero, animated: false)
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.textView?.style_tableViewCellTextInput()
         self.textView?.contentInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         self.prepareForReuse()
     }
     
+    func configure(with text: String) {
+        self.textView?.attributedText = NSAttributedString(string: text, style: Style.textInputTableViewCell)
+        self.textView?.scrollRectToVisible(.zero, animated: false)
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.textView?.text = nil
+        self.textView?.attributedText = nil
     }
     
     func textViewDidChange(_ textView: UITextView) {

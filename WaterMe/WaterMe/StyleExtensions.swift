@@ -36,83 +36,73 @@ extension UITableViewCell {
     static let style_textFieldCellTrailingPadding: CGFloat = 20
 }
 
-extension UILabel {
-    func style_reminderVesselNameLabel() {
-        self.adjustsFontForContentSizeCategory = true
-        self.font = UIFont.preferredFont(forTextStyle: .title3)
+enum Style {
+    case selectableTableViewCell
+    case readOnlyTableViewCell
+    case textInputTableViewCell
+    case emojiSmallDisplay
+    case emojiLargeDisplay
+    case reminderVesselCollectionViewCell
+    var attributes: [String : Any] {
+        switch self {
+        case .reminderVesselCollectionViewCell:
+            return [
+                NSFontAttributeName : Font.bodyPlus,
+                NSForegroundColorAttributeName : Color.textPrimary
+            ]
+        case .emojiSmallDisplay:
+            return [
+                NSFontAttributeName : UIFont.systemFont(ofSize: 32),
+                NSForegroundColorAttributeName : Color.textPrimary
+            ]
+        case .emojiLargeDisplay:
+            return [
+                NSFontAttributeName : UIFont.systemFont(ofSize: 60),
+                NSForegroundColorAttributeName : Color.textPrimary
+            ]
+        case .textInputTableViewCell:
+            return [
+                NSFontAttributeName : Font.body,
+                NSForegroundColorAttributeName : Color.textPrimary
+            ]
+        case .readOnlyTableViewCell:
+            return [
+                NSFontAttributeName : Font.bodyMinus,
+                NSForegroundColorAttributeName : Color.textSecondary
+            ]
+        case .selectableTableViewCell:
+            return [
+                NSFontAttributeName : Font.bodyMinus,
+                NSForegroundColorAttributeName : Color.textPrimary
+            ]
+        }
     }
-    func style_emojiLargeDisplayLabel() {
-        self.font = UIFont.systemFont(ofSize: 60)
-        self.lineBreakMode = .byClipping
-        self.clipsToBounds = true
+    
+    private enum Font {
+        static var bodyPlus: UIFont {
+            return UIFont.preferredFont(forTextStyle: .title3)
+        }
+        static var body: UIFont {
+            return UIFont.preferredFont(forTextStyle: .body)
+        }
+        static var bodyMinus: UIFont {
+            return UIFont.preferredFont(forTextStyle: .callout)
+        }
     }
-    func style_emojiSmallDisplayLabel() {
-        self.font = UIFont.systemFont(ofSize: 32)
-        self.lineBreakMode = .byClipping
-        self.clipsToBounds = true
+    
+    private enum Color {
+        static var textSecondary: UIColor {
+            return .gray
+        }
+        static var textPrimary: UIColor {
+            return .black
+        }
     }
-}
-
-extension UITextField {
-    func style_tableViewCellTextInput() {
-        self.adjustsFontForContentSizeCategory = true
-        self.font = UIFont.preferredFont(forTextStyle: .body)
-        self.textColor = .black
-    }
-}
-
-extension UITextView {
-    func style_tableViewCellTextInput() {
-        self.adjustsFontForContentSizeCategory = true
-        self.font = UIFont.preferredFont(forTextStyle: .body)
-        self.textColor = .black
-    }
-}
-
-extension UILabel {
-    func style_selectableTableViewCell() {
-        self.adjustsFontForContentSizeCategory = true
-        self.font = style_tableViewCellFont
-        self.textColor = style_selectableTableViewCellColor
-    }
-    func style_readOnlyTableViewCell() {
-        self.adjustsFontForContentSizeCategory = true
-        self.font = style_tableViewCellFont
-        self.textColor = style_readOnlyTableViewCellColor
-    }
-}
-
-fileprivate var style_tableViewCellFont: UIFont {
-    return UIFont.preferredFont(forTextStyle: .callout)
-}
-
-fileprivate var style_readOnlyTableViewCellColor: UIColor {
-    return .gray
-}
-
-fileprivate var style_selectableTableViewCellColor: UIColor {
-    return .black
 }
 
 extension NSAttributedString {
-    enum Style {
-        case selectableTableViewCell, readOnlyTableViewCell
-    }
-    
     convenience init(string: String, style: Style) {
-        let attributes: [String : Any]
-        switch style {
-        case .readOnlyTableViewCell:
-            attributes = [
-                NSFontAttributeName : style_tableViewCellFont,
-                NSForegroundColorAttributeName : style_readOnlyTableViewCellColor
-            ]
-        case .selectableTableViewCell:
-            attributes = [
-                NSFontAttributeName : style_tableViewCellFont,
-                NSForegroundColorAttributeName : style_selectableTableViewCellColor
-            ]
-        }
+        let attributes = style.attributes
         self.init(string: string, attributes: attributes)
     }
 }

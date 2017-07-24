@@ -30,19 +30,18 @@ class ReminderKindTableViewCell: SimpleLabelTableViewCell {
     
     override func setup() {
         super.setup()
-        self.label.style_selectableTableViewCell()
         self.prepareForReuse()
     }
     
     func configure(rowNumber: Int, compareWith compare: Reminder.Kind) {
         let id = Reminder.Kind(row: rowNumber)
-        self.label.text = id.localizedString
+        self.label.attributedText = NSAttributedString(string: id.localizedString, style: Style.selectableTableViewCell)
         self.accessoryType = id.isSameKind(as: compare) ? .checkmark : .none
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.label.text = nil
+        self.label.attributedText = nil
     }
     
 }

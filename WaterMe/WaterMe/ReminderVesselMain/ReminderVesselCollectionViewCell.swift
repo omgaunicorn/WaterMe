@@ -34,18 +34,17 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.nameLabel?.style_reminderVesselNameLabel()
         self.prepareForReuse()
     }
     
     func configure(with vessel: ReminderVessel) {
-        self.nameLabel?.text = vessel.displayName
+        self.nameLabel?.attributedText = NSAttributedString(string: vessel.displayName ?? "", style: Style.reminderVesselCollectionViewCell)
         self.iconButton?.setIcon(vessel.icon)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.nameLabel?.text = nil
+        self.nameLabel?.attributedText = nil
         self.iconButton?.setImage(nil, for: .normal)
         self.iconButton?.setTitle(nil, for: .normal)
     }

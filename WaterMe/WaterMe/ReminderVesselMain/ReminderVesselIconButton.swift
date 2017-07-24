@@ -28,28 +28,25 @@ class ReminderVesselIconButton: UIButton {
     
     enum Size {
         case small, large
+        func attribute(_ string: String) -> NSAttributedString {
+            switch self {
+            case .small:
+                return NSAttributedString(string: string, style: Style.emojiSmallDisplay)
+            case .large:
+                return NSAttributedString(string: string, style: Style.emojiLargeDisplay)
+            }
+        }
     }
-    var size: Size = .large { didSet { self.updateSize() } }
+    var size: Size = .large
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.updateSize()
         self.imageView?.contentMode = .scaleAspectFit
-        self.setTitle(nil, for: .normal)
+        self.setAttributedTitle(nil, for: .normal)
         self.setImage(nil, for: .normal)
         self.isUserInteractionEnabled = false
         self.clipsToBounds = true
-    }
-    
-    private func updateSize() {
-        switch self.size {
-        case .small:
-            self.titleLabel?.style_emojiSmallDisplayLabel()
-        case .large:
-            self.titleLabel?.style_emojiLargeDisplayLabel()
-        }
-        self.setNeedsLayout()
     }
     
     override func layoutSubviews() {
@@ -69,7 +66,7 @@ class ReminderVesselIconButton: UIButton {
     
     func setIcon(_ icon: ReminderVessel.Icon?, for controlState: UIControlState = .normal) {
         guard let icon = icon else {
-            self.setTitle(nil, for: .normal)
+            self.setAttributedTitle(nil, for: .normal)
             self.setImage(nil, for: .normal)
             return
         }
@@ -77,28 +74,28 @@ class ReminderVesselIconButton: UIButton {
         switch icon {
         case .emoji(let string):
             self.setImage(nil, for: controlState)
-            self.setTitle(string, for: controlState)
+            self.setAttributedTitle(self.size.attribute(string), for: controlState)
         case .image(let image):
-            self.setTitle(nil, for: controlState)
             self.setImage(image, for: controlState)
+            self.setAttributedTitle(nil, for: controlState)
         }
     }
     
     func setKind(_ kind: Reminder.Kind?, for controlState: UIControlState = .normal) {
         guard let kind = kind else {
-            self.setTitle(nil, for: .normal)
+            self.setAttributedTitle(nil, for: .normal)
             self.setImage(nil, for: .normal)
             return
         }
         switch kind {
         case .water:
-            self.setTitle("💦", for: .normal)
+            self.setAttributedTitle(self.size.attribute("💦"), for: .normal)
         case .fertilize:
-            self.setTitle("🎩", for: .normal)
+            self.setAttributedTitle(self.size.attribute("🎩"), for: .normal)
         case .move:
-            self.setTitle("🔄", for: .normal)
+            self.setAttributedTitle(self.size.attribute("🔄"), for: .normal)
         case .other:
-            self.setTitle("❓", for: .normal)
+            self.setAttributedTitle(self.size.attribute("❓"), for: .normal)
         }
     }
     

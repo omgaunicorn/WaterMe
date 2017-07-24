@@ -31,18 +31,17 @@ class LastPerformedTableViewCell: SimpleLabelTableViewCell {
     
     override func setup() {
         super.setup()
-        self.label.style_readOnlyTableViewCell()
         self.selectionStyle = .none
         self.prepareForReuse()
     }
     
     func configureWith(lastPerformedDate: Date?) {
         let interval = lastPerformedDate?.timeIntervalSinceNow
-        self.label.text = self.formatter.timeAgoString(for: interval)
+        self.label.attributedText = NSAttributedString(string: self.formatter.timeAgoString(for: interval), style: Style.readOnlyTableViewCell)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.label.text = nil
+        self.label.attributedText = nil
     }
 }

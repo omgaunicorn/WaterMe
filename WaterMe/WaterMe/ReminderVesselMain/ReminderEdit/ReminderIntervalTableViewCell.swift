@@ -31,18 +31,17 @@ class ReminderIntervalTableViewCell: SimpleLabelTableViewCell {
     
     override func setup() {
         super.setup()
-        self.label.style_selectableTableViewCell()
         self.accessoryType = .disclosureIndicator
         self.prepareForReuse()
     }
     
     func configure(with interval: Int) {
-        self.label.text = self.formatter.string(forDayInterval: interval)
+        self.label.attributedText = NSAttributedString(string: self.formatter.string(forDayInterval: interval), style: Style.selectableTableViewCell)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.label.text = nil
+        self.label.attributedText = nil
     }
     
 }

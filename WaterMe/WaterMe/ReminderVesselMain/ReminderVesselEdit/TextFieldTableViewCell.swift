@@ -43,23 +43,21 @@ class TextFieldTableViewCell: UITableViewCell {
         self.bottomConstraint?.constant = UITableViewCell.style_textFieldCellBottomPadding
         self.leadingConstraint?.constant = UITableViewCell.style_textFieldCellLeadingPadding
         self.trailingConstraint?.constant = UITableViewCell.style_textFieldCellTrailingPadding
-        self.textField?.style_tableViewCellTextInput()
-        self.label?.style_readOnlyTableViewCell()
         self.prepareForReuse()
     }
     
     func setTextField(text: String?) {
-        self.textField?.text = text ?? ""
+        self.textField?.attributedText = NSAttributedString(string: text ?? "", style: Style.textInputTableViewCell)
     }
     
     func setPlaceHolder(label: String?, textField: String?) {
         self.textField?.placeholder = textField ?? ""
         if let label = label {
             self.label?.isHidden = false
-            self.label?.text = label
+            self.label?.attributedText = NSAttributedString(string: label, style: Style.readOnlyTableViewCell)
         } else {
             self.label?.isHidden = true
-            self.label?.text = ""
+            self.label?.attributedText = NSAttributedString(string: "", style: Style.readOnlyTableViewCell)
         }
     }
     
@@ -70,9 +68,9 @@ class TextFieldTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.textField?.text = nil
+        self.textField?.attributedText = nil
         self.textField?.placeholder = nil
-        self.label?.text = nil
+        self.label?.attributedText = nil
         self.textChanged = nil
         self.label?.isHighlighted = true
     }

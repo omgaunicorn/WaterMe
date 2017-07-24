@@ -32,17 +32,16 @@ class EmojiPickerCollectionViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.emojiLabel?.style_emojiLargeDisplayLabel()
         self.prepareForReuse()
     }
     
     func configure(withEmojiString emojiString: String) {
-        self.emojiLabel?.text = emojiString
+        self.emojiLabel?.attributedText = NSAttributedString(string: emojiString, style: Style.emojiLargeDisplay)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.emojiLabel?.text = nil
+        self.emojiLabel?.attributedText = nil
     }
 
 }
