@@ -29,10 +29,13 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
     static let reuseID = "ReminderVesselIconTableViewCell"
     
     @IBOutlet private weak var iconButton: ReminderVesselIconButton?
+    @IBOutlet private weak var cameraButton: UIButton?
     
     var iconButtonTapped: (() -> Void)?
     
     func configure(with icon: ReminderVessel.Icon?) {
+        let cameraString = NSAttributedString(string: "Photo", style: Style.reminderVesselCollectionViewCell, withTintColorFromView: self)
+        self.cameraButton?.setAttributedTitle(cameraString, for: .normal)
         self.iconButton?.setIcon(icon)
     }
     
@@ -42,6 +45,7 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.cameraButton?.setAttributedTitle(nil, for: .normal)
         self.iconButton?.setTitle(nil, for: .normal)
         self.iconButtonTapped = nil
     }

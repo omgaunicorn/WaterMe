@@ -101,8 +101,11 @@ enum Style {
 }
 
 extension NSAttributedString {
-    convenience init(string: String, style: Style) {
-        let attributes = style.attributes
+    convenience init(string: String, style: Style, withTintColorFromView view: UIView? = nil) {
+        var attributes = style.attributes
+        if let view = view {
+            attributes[NSAttributedStringKey.foregroundColor] = view.tintColor
+        }
         self.init(string: string, attributes: attributes)
     }
 }
