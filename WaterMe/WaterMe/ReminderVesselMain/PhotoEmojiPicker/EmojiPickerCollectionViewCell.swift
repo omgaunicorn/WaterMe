@@ -36,7 +36,8 @@ class EmojiPickerCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(withEmojiString emojiString: String) {
-        self.emojiLabel?.attributedText = NSAttributedString(string: emojiString, style: Style.emojiLargeDisplay)
+        let accessibility = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+        self.emojiLabel?.attributedText = NSAttributedString(string: emojiString, style: Style.emojiLargeDisplay(accessibilityFontSizeEnabled: accessibility))
     }
     
     override func prepareForReuse() {

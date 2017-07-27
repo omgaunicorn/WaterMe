@@ -209,10 +209,10 @@ fileprivate extension TextFieldTableViewCell {
     func configure(with kind: Reminder.Kind) {
         switch kind {
         case .move(let location):
-            self.setPlaceHolder(label: "Move to", textField: "Other side of yard.")
+            self.setLabelText("Move to", andTextFieldPlaceHolderText: "Other side of the yard.")
             self.setTextField(text: location)
         case .other(let description):
-            self.setPlaceHolder(label: "Description", textField: "Trim the leaves and throw out the clippings.")
+            self.setLabelText("Description", andTextFieldPlaceHolderText: "Trim the leaves and throw out the clippings.")
             self.setTextField(text: description)
         default:
             assertionFailure("Wrong Kind being passed in")

@@ -23,14 +23,20 @@
 
 import UIKit
 
-class TextViewTableViewCell: UITableViewCell, UITextViewDelegate {
+class TextViewTableViewCell: UITableViewCell {
     
     static let reuseID = "TextViewTableViewCell"
     class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
     
     @IBOutlet private weak var textView: UITextView?
+    @IBOutlet private weak var heightConstraint: NSLayoutConstraint?
     
     var textChanged: ((String) -> Void)?
+    
+    func configure(with text: String) {
+        self.textView?.attributedText = NSAttributedString(string: text, style: Style.textInputTableViewCell)
+        self.textView?.scrollRectToVisible(.zero, animated: false)
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,20 +44,24 @@ class TextViewTableViewCell: UITableViewCell, UITextViewDelegate {
         self.prepareForReuse()
     }
     
-    func configure(with text: String) {
-        self.textView?.attributedText = NSAttributedString(string: text, style: Style.textInputTableViewCell)
-        self.textView?.scrollRectToVisible(.zero, animated: false)
-    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         self.textView?.attributedText = nil
     }
     
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.heightConstraint?.constant =
+            self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory ?
+                type(of: self).style_cellHeightAccessibilityTextSizeEnabled :
+                type(of: self).style_cellHeightAccessibilityTextSizeDisabled
+    }
+}
+
+extension TextViewTableViewCell: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         assert(textView === self.textView, "Something is wrong with the textviews")
         let newText = self.textView?.text ?? ""
         self.textChanged?(newText)
     }
-    
 }

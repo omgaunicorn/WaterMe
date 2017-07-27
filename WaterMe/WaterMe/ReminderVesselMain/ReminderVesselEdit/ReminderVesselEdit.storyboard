@@ -55,6 +55,7 @@
                                 <connections>
                                     <outlet property="cameraButton" destination="o3q-JB-Mxf" id="4ev-mH-Gfq"/>
                                     <outlet property="iconButton" destination="PBB-NE-iux" id="kTT-Bh-eC9"/>
+                                    <outlet property="iconButtonHeightConstraint" destination="lTM-v5-Sqd" id="f2a-Dt-3Ig"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

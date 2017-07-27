@@ -37,24 +37,15 @@ class TextFieldTableViewCell: UITableViewCell {
     
     var textChanged: ((String) -> Void)?
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.topConstraint?.constant = UITableViewCell.style_textFieldCellTopPadding
-        self.bottomConstraint?.constant = UITableViewCell.style_textFieldCellBottomPadding
-        self.leadingConstraint?.constant = UITableViewCell.style_textFieldCellLeadingPadding
-        self.trailingConstraint?.constant = UITableViewCell.style_textFieldCellTrailingPadding
-        self.prepareForReuse()
-    }
-    
     func setTextField(text: String?) {
         self.textField?.attributedText = NSAttributedString(string: text ?? "", style: Style.textInputTableViewCell)
     }
     
-    func setPlaceHolder(label: String?, textField: String?) {
-        self.textField?.placeholder = textField ?? ""
-        if let label = label {
+    func setLabelText(_ labelText: String?, andTextFieldPlaceHolderText placeHolderText: String) {
+        self.textField?.attributedPlaceholder = NSAttributedString(string: placeHolderText, style: Style.readOnlyTableViewCell)
+        if let labelText = labelText {
             self.label?.isHidden = false
-            self.label?.attributedText = NSAttributedString(string: label, style: Style.readOnlyTableViewCell)
+            self.label?.attributedText = NSAttributedString(string: labelText, style: Style.readOnlyTableViewCell)
         } else {
             self.label?.isHidden = true
             self.label?.attributedText = NSAttributedString(string: "", style: Style.readOnlyTableViewCell)
@@ -66,10 +57,19 @@ class TextFieldTableViewCell: UITableViewCell {
         self.textChanged?(newValue)
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.topConstraint?.constant = UITableViewCell.style_textFieldCellTopPadding
+        self.bottomConstraint?.constant = UITableViewCell.style_textFieldCellBottomPadding
+        self.leadingConstraint?.constant = UITableViewCell.style_textFieldCellLeadingPadding
+        self.trailingConstraint?.constant = UITableViewCell.style_textFieldCellTrailingPadding
+        self.prepareForReuse()
+    }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         self.textField?.attributedText = nil
-        self.textField?.placeholder = nil
+        self.textField?.attributedPlaceholder = nil
         self.label?.attributedText = nil
         self.textChanged = nil
         self.label?.isHighlighted = true

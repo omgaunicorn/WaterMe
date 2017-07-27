@@ -36,12 +36,22 @@ extension UITableViewCell {
     static let style_textFieldCellTrailingPadding: CGFloat = 20
 }
 
+extension TextViewTableViewCell {
+    static let style_cellHeightAccessibilityTextSizeEnabled: CGFloat = 400
+    static let style_cellHeightAccessibilityTextSizeDisabled: CGFloat = 200
+}
+
+extension ReminderVesselIconTableViewCell {
+    static let style_iconButtonHeightAccessibilityTextSizeEnabled: CGFloat = 280
+    static let style_iconButtonHeightAccessibilityTextSizeDisabled: CGFloat = 140
+}
+
 enum Style {
     case selectableTableViewCell
     case readOnlyTableViewCell
     case textInputTableViewCell
-    case emojiSmallDisplay
-    case emojiLargeDisplay
+    case emojiSmallDisplay(accessibilityFontSizeEnabled: Bool)
+    case emojiLargeDisplay(accessibilityFontSizeEnabled: Bool)
     case reminderVesselCollectionViewCell
     var attributes: [NSAttributedStringKey : Any] {
         switch self {
@@ -50,14 +60,14 @@ enum Style {
                 NSAttributedStringKey.font : Font.bodyPlus,
                 NSAttributedStringKey.foregroundColor : Color.textPrimary
             ]
-        case .emojiSmallDisplay:
+        case .emojiSmallDisplay(let accessibilityFontSizeEnabled):
             return [
-                NSAttributedStringKey.font : UIFont.systemFont(ofSize: 32),
+                NSAttributedStringKey.font : UIFont.systemFont(ofSize: accessibilityFontSizeEnabled ? 50 : 36),
                 NSAttributedStringKey.foregroundColor : Color.textPrimary
             ]
-        case .emojiLargeDisplay:
+        case .emojiLargeDisplay(let accessibilityFontSizeEnabled):
             return [
-                NSAttributedStringKey.font : UIFont.systemFont(ofSize: 60),
+                NSAttributedStringKey.font : UIFont.systemFont(ofSize: accessibilityFontSizeEnabled ? 120 : 60),
                 NSAttributedStringKey.foregroundColor : Color.textPrimary
             ]
         case .textInputTableViewCell:
