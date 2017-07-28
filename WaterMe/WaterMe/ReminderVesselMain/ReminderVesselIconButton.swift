@@ -38,7 +38,6 @@ class ReminderVesselIconButton: UIButton {
         }
     }
     var size: Size = .large
-    private var currentIcon: ReminderVessel.Icon?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -51,14 +50,13 @@ class ReminderVesselIconButton: UIButton {
     }
     
     func setIcon(_ icon: ReminderVessel.Icon?, for controlState: UIControlState = .normal) {
-        self.currentIcon = icon
         guard let icon = icon else {
             self.setAttributedTitle(nil, for: .normal)
             self.setImage(nil, for: .normal)
             return
         }
         
-        let accessibility = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+        let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
         switch icon {
         case .emoji(let string):
             self.setImage(nil, for: controlState)
@@ -75,8 +73,7 @@ class ReminderVesselIconButton: UIButton {
             self.setImage(nil, for: .normal)
             return
         }
-        fatalError("TODO: Make this into two subclasses. 1 for reminderKind and 1 for icon")
-        let accessibility = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+        let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
         let string: NSAttributedString
         switch kind {
         case .water:
@@ -89,11 +86,6 @@ class ReminderVesselIconButton: UIButton {
             string = self.size.attributedString(with: "❓", accessibilityFontSizeEnabled: accessibility)
         }
         self.setAttributedTitle(string, for: .normal)
-    }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        self.setIcon(self.currentIcon)
     }
     
     override func layoutSubviews() {
