@@ -26,6 +26,23 @@ import WaterMeData
 import FormatterKit
 import UIKit
 
+class ContentSizeReloadCollectionViewController: UICollectionViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.contentSizeCategoryDidChange(_:)),
+                                               name: .UIContentSizeCategoryDidChange,
+                                               object: nil)
+    }
+    
+    @objc private func contentSizeCategoryDidChange(_ aNotification: Any) {
+        // TableViewControllers do this automatically
+        // Whenever the text size is changed by the user, just reload the collection view
+        // then all the cells get their attributed strings re-set
+        self.collectionView?.reloadData()
+    }
+}
+
 extension UITableView {
     func deselectSelectedRows(animated: Bool) {
         let selectedIndexPaths = self.indexPathsForSelectedRows ?? []

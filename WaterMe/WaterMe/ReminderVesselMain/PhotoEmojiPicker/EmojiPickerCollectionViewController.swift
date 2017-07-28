@@ -23,7 +23,7 @@
 
 import UIKit
 
-class EmojiPickerViewController: UICollectionViewController {
+class EmojiPickerViewController: ContentSizeReloadCollectionViewController {
     
     class func newVC(emojiChosen: @escaping (String?, UIViewController) -> Void) -> UIViewController {
         let layout = UICollectionViewFlowLayout()
@@ -48,6 +48,7 @@ class EmojiPickerViewController: UICollectionViewController {
         self.collectionView?.backgroundColor = .white
         self.collectionView?.alwaysBounceVertical = true
         self.collectionView?.register(EmojiPickerCollectionViewCell.nib, forCellWithReuseIdentifier: EmojiPickerCollectionViewCell.reuseID)
+        self.flow?.minimumInteritemSpacing = 0
     }
     
     @objc private func cancelButtonTapped(_ sender: NSObject?) {
@@ -73,11 +74,22 @@ class EmojiPickerViewController: UICollectionViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        let collectionWidth = self.collectionView?.bounds.width ?? 0
-        let cellWidth = floor(collectionWidth / 5.0)
-        
-        self.flow?.itemSize = CGSize(width: cellWidth, height: cellWidth)
-        self.flow?.minimumInteritemSpacing = 0
+        self.updateFlowItemSize()
+    }
+    
+    private func updateFlowItemSize() {
+        let numberOfItemsPerRow: CGFloat
+        let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+        switch (self.view.traitCollection.horizontalSizeClass, accessibility) {
+        case (.unspecified, _), (.regular, _):
+            assertionFailure("Hit a size class this VC was not expecting")
+            fallthrough
+        case (.compact, false):
+            numberOfItemsPerRow = 4
+        case (.compact, true):
+            numberOfItemsPerRow = 2
+        }
+        let width: CGFloat = floor((self.collectionView?.bounds.width ?? 0) / numberOfItemsPerRow)
+        self.flow?.itemSize = CGSize(width: width, height: width)
     }
 }

@@ -25,7 +25,7 @@ import WaterMeData
 import RealmSwift
 import UIKit
 
-class ReminderVesselCollectionViewController: UICollectionViewController, HasBasicController {
+class ReminderVesselCollectionViewController: ContentSizeReloadCollectionViewController, HasBasicController {
     
     var vesselChosen: ((ReminderVessel) -> Void)?
         
@@ -44,7 +44,6 @@ class ReminderVesselCollectionViewController: UICollectionViewController, HasBas
         super.viewDidLoad()
         self.collectionView?.register(ReminderVesselCollectionViewCell.nib, forCellWithReuseIdentifier: ReminderVesselCollectionViewCell.reuseID)
         self.flow?.minimumInteritemSpacing = 0
-        NotificationCenter.default.addObserver(self, selector: #selector(self.contentSizeCategoryDidChange(_:)), name: .UIContentSizeCategoryDidChange, object: nil)
     }
     
     private func hardReloadData() {
@@ -93,30 +92,22 @@ class ReminderVesselCollectionViewController: UICollectionViewController, HasBas
         super.viewDidLayoutSubviews()
         self.updateFlowItemSize()
     }
-    
-    @objc private func contentSizeCategoryDidChange(_ aNotification: Any) {
-        // TableViewControllers do this automatically
-        // Whenever the text size is changed by the user, just reload the collection view
-        // then all the cells get their attributed strings re-set
-        self.collectionView?.reloadData()
-    }
 
     private func updateFlowItemSize() {
         let numberOfItemsPerRow: CGFloat
         let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
         switch (self.view.traitCollection.horizontalSizeClass, accessibility) {
-        case (.regular, true):
-            numberOfItemsPerRow = 2
+        case (.unspecified, _):
+            assertionFailure("Hit a size class this VC was not expecting")
+            fallthrough
         case (.regular, false):
             numberOfItemsPerRow = 4
-        case (.compact, true):
-            numberOfItemsPerRow = 1
+        case (.regular, true):
+            numberOfItemsPerRow = 2
         case (.compact, false):
             numberOfItemsPerRow = 2
-        case (.unspecified, true):
+        case (.compact, true):
             numberOfItemsPerRow = 1
-        case (.unspecified, false):
-            numberOfItemsPerRow = 2
         }
         let width: CGFloat = floor((self.collectionView?.bounds.width ?? 0) / numberOfItemsPerRow)
         self.flow?.itemSize = CGSize(width: width, height: width)
