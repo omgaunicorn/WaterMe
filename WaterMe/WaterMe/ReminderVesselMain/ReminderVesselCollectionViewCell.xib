@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13147.4"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -31,18 +30,17 @@
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="hgV-dD-EUV">
-                        <rect key="frame" x="40" y="66.5" width="170" height="117.5"/>
+                        <rect key="frame" x="8" y="50.5" width="234" height="149.5"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sVt-zq-s4U" customClass="ReminderVesselIconButton" customModule="WaterMe" customModuleProvider="target">
-                                <rect key="frame" x="42.5" y="0.0" width="85" height="85"/>
+                                <rect key="frame" x="58.5" y="0.0" width="117" height="117"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="sVt-zq-s4U" secondAttribute="height" multiplier="1:1" id="czL-CV-nwW"/>
-                                    <constraint firstAttribute="width" constant="85" id="gN4-H6-D4Q"/>
                                 </constraints>
                                 <state key="normal" title="🌺"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Cool Plant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rzm-Lk-YCJ">
-                                <rect key="frame" x="32" y="97" width="106" height="20.5"/>
+                                <rect key="frame" x="64" y="129" width="106" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -55,12 +53,11 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hgV-dD-EUV" secondAttribute="bottom" constant="8" id="P07-sP-fZB"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hgV-dD-EUV" secondAttribute="trailing" constant="8" id="ceK-Oy-9ud"/>
-                <constraint firstItem="hgV-dD-EUV" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="gVl-W3-lmX"/>
-                <constraint firstItem="hgV-dD-EUV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="ogD-zr-NZe"/>
-                <constraint firstItem="hgV-dD-EUV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="yUs-5l-y7a"/>
-                <constraint firstItem="hgV-dD-EUV" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="z2D-rG-Gx3"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="RqO-F4-zYe"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hgV-dD-EUV" secondAttribute="bottom" constant="8" id="SQg-2s-SjW"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="czD-EK-bRo"/>
+                <constraint firstAttribute="trailing" secondItem="hgV-dD-EUV" secondAttribute="trailing" constant="8" id="jWX-3f-Mfp"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="oLd-6L-wyZ"/>
             </constraints>
             <size key="customSize" width="221" height="192"/>
             <connections>
