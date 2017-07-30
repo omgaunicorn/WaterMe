@@ -38,7 +38,11 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with vessel: ReminderVessel) {
-        self.nameLabel?.attributedText = NSAttributedString(string: vessel.displayName ?? "", style: Style.reminderVesselCollectionViewCell)
+        let vesselName = vessel.displayName?.nonEmptyString
+        let vesselNameStyle = vesselName != nil ?
+            Style.reminderVesselCollectionViewCell :
+            Style.reminderVesselCollectionViewCellDisabled
+        self.nameLabel?.attributedText = NSAttributedString(string: vesselName ?? "My Plant", style: vesselNameStyle)
         self.iconButton?.setIcon(vessel.icon)
     }
     

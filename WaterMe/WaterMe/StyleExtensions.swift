@@ -53,6 +53,7 @@ enum Style {
     case emojiSmall(accessibilityFontSizeEnabled: Bool)
     case emojiLarge(accessibilityFontSizeEnabled: Bool)
     case reminderVesselCollectionViewCell
+    case reminderVesselCollectionViewCellDisabled
     var attributes: [NSAttributedStringKey : Any] {
         switch self {
         case .reminderVesselCollectionViewCell:
@@ -60,6 +61,11 @@ enum Style {
                 .font : Font.bodyPlus,
                 .foregroundColor : Color.textPrimary
             ]
+        case .reminderVesselCollectionViewCellDisabled:
+            var attribs = Style.reminderVesselCollectionViewCell.attributes
+            let color = (attribs[.foregroundColor] as! UIColor).withAlphaComponent(0.4)
+            attribs[.foregroundColor] = color
+            return attribs
         case .emojiSmall(let accessibilityFontSizeEnabled):
             return [
                 .font : UIFont.systemFont(ofSize: accessibilityFontSizeEnabled ? 50 : 36)

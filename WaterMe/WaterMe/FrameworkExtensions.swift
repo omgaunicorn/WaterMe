@@ -26,6 +26,13 @@ import WaterMeData
 import FormatterKit
 import UIKit
 
+extension String {
+    var nonEmptyString: String? {
+        guard self.isEmpty == false else { return nil }
+        return self
+    }
+}
+
 class ContentSizeReloadCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
