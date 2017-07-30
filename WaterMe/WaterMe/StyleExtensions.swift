@@ -50,40 +50,38 @@ enum Style {
     case selectableTableViewCell
     case readOnlyTableViewCell
     case textInputTableViewCell
-    case emojiSmallDisplay(accessibilityFontSizeEnabled: Bool)
-    case emojiLargeDisplay(accessibilityFontSizeEnabled: Bool)
+    case emojiSmall(accessibilityFontSizeEnabled: Bool)
+    case emojiLarge(accessibilityFontSizeEnabled: Bool)
     case reminderVesselCollectionViewCell
     var attributes: [NSAttributedStringKey : Any] {
         switch self {
         case .reminderVesselCollectionViewCell:
             return [
-                NSAttributedStringKey.font : Font.bodyPlus,
-                NSAttributedStringKey.foregroundColor : Color.textPrimary
+                .font : Font.bodyPlus,
+                .foregroundColor : Color.textPrimary
             ]
-        case .emojiSmallDisplay(let accessibilityFontSizeEnabled):
+        case .emojiSmall(let accessibilityFontSizeEnabled):
             return [
-                NSAttributedStringKey.font : UIFont.systemFont(ofSize: accessibilityFontSizeEnabled ? 50 : 36),
-                NSAttributedStringKey.foregroundColor : Color.textPrimary
+                .font : UIFont.systemFont(ofSize: accessibilityFontSizeEnabled ? 50 : 36)
             ]
-        case .emojiLargeDisplay(let accessibilityFontSizeEnabled):
+        case .emojiLarge(let accessibilityFontSizeEnabled):
             return [
-                NSAttributedStringKey.font : UIFont.systemFont(ofSize: accessibilityFontSizeEnabled ? 120 : 60),
-                NSAttributedStringKey.foregroundColor : Color.textPrimary
+                .font : UIFont.systemFont(ofSize: accessibilityFontSizeEnabled ? 120 : 60)
             ]
         case .textInputTableViewCell:
             return [
-                NSAttributedStringKey.font : Font.body,
-                NSAttributedStringKey.foregroundColor : Color.textPrimary
+                .font : Font.body,
+                .foregroundColor : Color.textPrimary
             ]
         case .readOnlyTableViewCell:
             return [
-                NSAttributedStringKey.font : Font.bodyMinus,
-                NSAttributedStringKey.foregroundColor : Color.textSecondary
+                .font : Font.bodyMinus,
+                .foregroundColor : Color.textSecondary
             ]
         case .selectableTableViewCell:
             return [
-                NSAttributedStringKey.font : Font.bodyMinus,
-                NSAttributedStringKey.foregroundColor : Color.textPrimary
+                .font : Font.bodyMinus,
+                .foregroundColor : Color.textPrimary
             ]
         }
     }

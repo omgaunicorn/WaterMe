@@ -28,12 +28,15 @@ class ReminderVesselIconButton: UIButton {
     
     enum Size {
         case small, large
-        func attributedString(with string: String, accessibilityFontSizeEnabled: Bool) -> NSAttributedString {
+        func attributedString(with string: String) -> NSAttributedString {
+            let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
             switch self {
             case .small:
-                return NSAttributedString(string: string, style: Style.emojiSmallDisplay(accessibilityFontSizeEnabled: accessibilityFontSizeEnabled))
+                let style = Style.emojiSmall(accessibilityFontSizeEnabled: accessibility)
+                return NSAttributedString(string: string, style: style)
             case .large:
-                return NSAttributedString(string: string, style: Style.emojiLargeDisplay(accessibilityFontSizeEnabled: accessibilityFontSizeEnabled))
+                let style = Style.emojiLarge(accessibilityFontSizeEnabled: accessibility)
+                return NSAttributedString(string: string, style: style)
             }
         }
     }
@@ -51,16 +54,17 @@ class ReminderVesselIconButton: UIButton {
     
     func setIcon(_ icon: ReminderVessel.Icon?, for controlState: UIControlState = .normal) {
         guard let icon = icon else {
-            self.setAttributedTitle(nil, for: .normal)
+            self.setAttributedTitle(self.size.attributedString(with: "🌸"), for: controlState)
+            self.alpha = 0.4
             self.setImage(nil, for: .normal)
             return
         }
         
-        let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+        self.alpha = 1.0
         switch icon {
         case .emoji(let string):
             self.setImage(nil, for: controlState)
-            self.setAttributedTitle(self.size.attributedString(with: string, accessibilityFontSizeEnabled: accessibility), for: controlState)
+            self.setAttributedTitle(self.size.attributedString(with: string), for: controlState)
         case .image(let image):
             self.setImage(image, for: controlState)
             self.setAttributedTitle(nil, for: controlState)
@@ -73,17 +77,16 @@ class ReminderVesselIconButton: UIButton {
             self.setImage(nil, for: .normal)
             return
         }
-        let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
         let string: NSAttributedString
         switch kind {
         case .water:
-            string = self.size.attributedString(with: "💦", accessibilityFontSizeEnabled: accessibility)
+            string = self.size.attributedString(with: "💦")
         case .fertilize:
-            string = self.size.attributedString(with: "🎩", accessibilityFontSizeEnabled: accessibility)
+            string = self.size.attributedString(with: "🎩")
         case .move:
-            string = self.size.attributedString(with: "🔄", accessibilityFontSizeEnabled: accessibility)
+            string = self.size.attributedString(with: "🔄")
         case .other:
-            string = self.size.attributedString(with: "❓", accessibilityFontSizeEnabled: accessibility)
+            string = self.size.attributedString(with: "❓")
         }
         self.setAttributedTitle(string, for: .normal)
     }
