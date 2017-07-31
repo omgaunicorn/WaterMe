@@ -45,7 +45,6 @@ class ReminderVesselIconButton: UIButton {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        self.imageView?.contentMode = .scaleAspectFit
         self.setAttributedTitle(nil, for: .normal)
         self.setImage(nil, for: .normal)
         self.isUserInteractionEnabled = false
