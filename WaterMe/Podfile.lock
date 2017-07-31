@@ -32,11 +32,11 @@ PODS:
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
-  - Realm (2.8.3):
-    - Realm/Headers (= 2.8.3)
-  - Realm/Headers (2.8.3)
-  - RealmSwift (2.8.3):
-    - Realm (= 2.8.3)
+  - Realm (2.9.0):
+    - Realm/Headers (= 2.9.0)
+  - Realm/Headers (2.9.0)
+  - RealmSwift (2.9.0):
+    - Realm (= 2.9.0)
   - Result (3.2.3)
   - TPInAppReceipt (1.1.4)
   - WaterMeData (1.0.0):
@@ -69,8 +69,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   FormatterKit: 4b8f29acc9b872d5d12a63efb560661e8f2e1b98
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
-  Realm: 3601ef091c8c499a31101d8563b991e75546cdce
-  RealmSwift: 8183818515471b01a99abdd2970f8e4fd52b6f4a
+  Realm: f14ab1673502559cb16592ddb8f383c474c13e05
+  RealmSwift: 16ad2c187042c4934f49750375582fe508627dcb
   Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
   TPInAppReceipt: df20c542f4ecadd6b357185635b283ec03ff50b6
   WaterMeData: 611a676d812d920dcc1d6a1dd6a9993a71698735
@@ -79,4 +79,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 50efce21dee955bb63299e289b78f5f8c9301a3f
 
-COCOAPODS: 1.3.0.beta.3
+COCOAPODS: 1.3.0.rc.1
