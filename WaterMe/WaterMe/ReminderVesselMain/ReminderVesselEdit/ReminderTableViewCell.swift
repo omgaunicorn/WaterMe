@@ -32,7 +32,7 @@ class ReminderTableViewCell: UITableViewCell {
     @IBOutlet private weak var topLabel: UILabel?
     @IBOutlet private weak var middleLabel: UILabel?
     @IBOutlet private weak var bottomLabel: UILabel?
-    @IBOutlet private weak var iconButton: ReminderVesselIconButton?
+    @IBOutlet private weak var emojiImageView: EmojiImageView?
     
     fileprivate let formatter = DateComponentsFormatter.newReminderIntervalFormatter
     
@@ -41,7 +41,7 @@ class ReminderTableViewCell: UITableViewCell {
         
         // do stuff that is the same for all cases
         self.bottomLabel?.attributedText = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval), style: .readOnlyTableViewCell)
-        self.iconButton?.setKind(reminder.kind)
+        self.emojiImageView?.setKind(reminder.kind)
         
         // do stuff that is case specific
         switch reminder.kind {
@@ -70,7 +70,7 @@ class ReminderTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.iconButton?.size = .small
+        self.emojiImageView?.size = .small
         self.prepareForReuse()
     }
     
@@ -81,7 +81,7 @@ class ReminderTableViewCell: UITableViewCell {
         self.topLabel?.isHidden = false
         self.middleLabel?.isHidden = false
         self.bottomLabel?.isHidden = false
-        self.iconButton?.setKind(nil)
+        self.emojiImageView?.setKind(nil)
     }
 
 }

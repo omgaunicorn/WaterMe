@@ -30,7 +30,7 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
     class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
     
     @IBOutlet private weak var nameLabel: UILabel?
-    @IBOutlet private weak var iconButton: ReminderVesselIconButton?
+    @IBOutlet private weak var emojiImageView: EmojiImageView?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,14 +43,13 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
             Style.reminderVesselCollectionViewCell :
             Style.reminderVesselCollectionViewCellDisabled
         self.nameLabel?.attributedText = NSAttributedString(string: vesselName ?? "My Plant", style: vesselNameStyle)
-        self.iconButton?.setIcon(vessel.icon)
+        self.emojiImageView?.setIcon(vessel.icon)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
         self.nameLabel?.attributedText = nil
-        self.iconButton?.setImage(nil, for: .normal)
-        self.iconButton?.setTitle(nil, for: .normal)
+        self.emojiImageView?.setIcon(nil)
     }
 
 }

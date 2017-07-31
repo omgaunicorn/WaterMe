@@ -32,13 +32,13 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="hgV-dD-EUV">
                         <rect key="frame" x="8" y="50.5" width="234" height="149.5"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sVt-zq-s4U" customClass="ReminderVesselIconButton" customModule="WaterMe" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQM-GB-V7M" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
                                 <rect key="frame" x="58.5" y="0.0" width="117" height="117"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="sVt-zq-s4U" secondAttribute="height" multiplier="1:1" id="czL-CV-nwW"/>
+                                    <constraint firstAttribute="width" secondItem="yQM-GB-V7M" secondAttribute="height" multiplier="1:1" id="yS8-wF-d3S"/>
                                 </constraints>
-                                <state key="normal" title="🌺"/>
-                            </button>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Cool Plant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rzm-Lk-YCJ">
                                 <rect key="frame" x="64" y="129" width="106" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -47,7 +47,7 @@
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="sVt-zq-s4U" firstAttribute="width" secondItem="hgV-dD-EUV" secondAttribute="width" multiplier="1/2" id="wO5-aE-drc"/>
+                            <constraint firstItem="yQM-GB-V7M" firstAttribute="width" secondItem="hgV-dD-EUV" secondAttribute="width" multiplier="1/2" id="gpL-a3-3Lf"/>
                         </constraints>
                     </stackView>
                 </subviews>
@@ -62,7 +62,7 @@
             <size key="customSize" width="221" height="192"/>
             <connections>
                 <outlet property="backgroundView" destination="pNt-mf-2sp" id="usR-aj-t36"/>
-                <outlet property="iconButton" destination="sVt-zq-s4U" id="IGG-JZ-eq9"/>
+                <outlet property="emojiImageView" destination="yQM-GB-V7M" id="lIB-yP-il2"/>
                 <outlet property="nameLabel" destination="rzm-Lk-YCJ" id="PYG-IH-ILk"/>
                 <outlet property="selectedBackgroundView" destination="kvt-1g-Jjl" id="GVt-Ce-W0R"/>
             </connections>

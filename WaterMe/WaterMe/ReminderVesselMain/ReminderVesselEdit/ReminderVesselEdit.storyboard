@@ -22,19 +22,19 @@
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderVesselIconTableViewCell" rowHeight="166" id="gC9-Lk-0nU" customClass="ReminderVesselIconTableViewCell" customModule="WaterMe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="166"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gC9-Lk-0nU" id="v9u-Mt-wCC">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="gC9-Lk-0nU" id="v9u-Mt-wCC">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="165.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PBB-NE-iux" customClass="ReminderVesselIconButton" customModule="WaterMe" customModuleProvider="target">
-                                            <rect key="frame" x="125.5" y="20.5" width="125" height="125"/>
+                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcd-zd-Vwt" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
+                                            <rect key="frame" x="124.5" y="18.5" width="125" height="128"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" secondItem="PBB-NE-iux" secondAttribute="height" multiplier="1:1" id="bxX-9T-Ydq"/>
-                                                <constraint firstAttribute="height" constant="125" id="lTM-v5-Sqd"/>
+                                                <constraint firstAttribute="height" constant="125" id="oqe-y3-qA5"/>
+                                                <constraint firstAttribute="width" secondItem="fcd-zd-Vwt" secondAttribute="height" multiplier="1:1" id="r1s-vL-dWI"/>
                                             </constraints>
-                                            <state key="normal" title="Button"/>
-                                        </button>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o3q-JB-Mxf">
+                                        </view>
+                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o3q-JB-Mxf">
                                             <rect key="frame" x="125" y="20.5" width="125" height="125"/>
                                             <state key="normal" title="Photo"/>
                                             <connections>
@@ -43,19 +43,19 @@
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="PBB-NE-iux" firstAttribute="top" secondItem="v9u-Mt-wCC" secondAttribute="topMargin" constant="12" id="M2I-o1-eij"/>
-                                        <constraint firstItem="o3q-JB-Mxf" firstAttribute="height" secondItem="PBB-NE-iux" secondAttribute="height" id="VMY-x9-oWd"/>
-                                        <constraint firstItem="PBB-NE-iux" firstAttribute="centerX" secondItem="v9u-Mt-wCC" secondAttribute="centerX" id="VSv-1l-lZ3"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="PBB-NE-iux" secondAttribute="bottom" constant="12" id="cCo-Zu-CqH"/>
-                                        <constraint firstItem="o3q-JB-Mxf" firstAttribute="centerY" secondItem="PBB-NE-iux" secondAttribute="centerY" id="dg4-T7-uCW"/>
-                                        <constraint firstItem="o3q-JB-Mxf" firstAttribute="width" secondItem="PBB-NE-iux" secondAttribute="width" id="per-tq-nUs"/>
-                                        <constraint firstItem="o3q-JB-Mxf" firstAttribute="centerX" secondItem="PBB-NE-iux" secondAttribute="centerX" id="qo6-RX-EEq"/>
+                                        <constraint firstItem="fcd-zd-Vwt" firstAttribute="top" secondItem="v9u-Mt-wCC" secondAttribute="topMargin" constant="12" id="3pR-oS-MI2"/>
+                                        <constraint firstItem="o3q-JB-Mxf" firstAttribute="centerY" secondItem="fcd-zd-Vwt" secondAttribute="centerY" id="6af-FJ-8H0"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="fcd-zd-Vwt" secondAttribute="bottom" constant="12" id="HNI-zl-Ez6"/>
+                                        <constraint firstItem="fcd-zd-Vwt" firstAttribute="centerX" secondItem="v9u-Mt-wCC" secondAttribute="centerX" id="LiY-Yz-2jb"/>
+                                        <constraint firstItem="o3q-JB-Mxf" firstAttribute="centerX" secondItem="fcd-zd-Vwt" secondAttribute="centerX" id="azF-ct-Dcp"/>
+                                        <constraint firstItem="o3q-JB-Mxf" firstAttribute="width" secondItem="fcd-zd-Vwt" secondAttribute="width" id="mbZ-Os-Evx"/>
+                                        <constraint firstItem="o3q-JB-Mxf" firstAttribute="height" secondItem="fcd-zd-Vwt" secondAttribute="height" id="t0h-Uo-Fim"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="cameraButton" destination="o3q-JB-Mxf" id="4ev-mH-Gfq"/>
-                                    <outlet property="iconButton" destination="PBB-NE-iux" id="kTT-Bh-eC9"/>
-                                    <outlet property="iconButtonHeightConstraint" destination="lTM-v5-Sqd" id="f2a-Dt-3Ig"/>
+                                    <outlet property="emojiImageView" destination="fcd-zd-Vwt" id="84c-ol-FRF"/>
+                                    <outlet property="emojiImageViewHeightConstraint" destination="oqe-y3-qA5" id="NXI-U7-s46"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

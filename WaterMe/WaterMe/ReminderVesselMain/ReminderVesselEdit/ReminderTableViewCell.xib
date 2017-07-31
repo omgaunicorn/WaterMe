@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13122.19" systemVersion="16F2073" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13147.4"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,14 +18,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="119.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="751" verticalHuggingPriority="751" horizontalCompressionResistancePriority="249" verticalCompressionResistancePriority="249" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUR-5z-ICa" customClass="ReminderVesselIconButton" customModule="WaterMe" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="25" width="70" height="70"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqQ-mh-PX3" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="24" width="70" height="70"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="4MK-T3-UGq"/>
-                            <constraint firstAttribute="width" secondItem="SUR-5z-ICa" secondAttribute="height" multiplier="1:1" id="Ski-6b-QgR"/>
+                            <constraint firstAttribute="width" constant="70" id="3pn-tb-aR3"/>
+                            <constraint firstAttribute="width" secondItem="cqQ-mh-PX3" secondAttribute="height" multiplier="1:1" id="baG-hc-IXr"/>
                         </constraints>
-                        <state key="normal" title="Wa"/>
-                    </button>
+                    </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pJ1-Qa-CHB">
                         <rect key="frame" x="78" y="8" width="222" height="103.5"/>
                         <subviews>
@@ -52,17 +51,17 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="SUR-5z-ICa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="AW3-e4-Fg5"/>
+                    <constraint firstItem="pJ1-Qa-CHB" firstAttribute="leading" secondItem="cqQ-mh-PX3" secondAttribute="trailing" constant="8" symbolic="YES" id="GOh-yB-03Q"/>
                     <constraint firstItem="pJ1-Qa-CHB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Jjx-TH-D2S"/>
-                    <constraint firstItem="SUR-5z-ICa" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="lil-Eb-xUZ"/>
-                    <constraint firstItem="pJ1-Qa-CHB" firstAttribute="leading" secondItem="SUR-5z-ICa" secondAttribute="trailing" constant="8" symbolic="YES" id="oMR-bQ-Ich"/>
+                    <constraint firstItem="cqQ-mh-PX3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="T2m-Cr-x6t"/>
+                    <constraint firstItem="cqQ-mh-PX3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="XNp-4R-Tf3"/>
                     <constraint firstAttribute="bottom" secondItem="pJ1-Qa-CHB" secondAttribute="bottom" constant="8" id="p5M-wS-BZM"/>
                     <constraint firstAttribute="trailing" secondItem="pJ1-Qa-CHB" secondAttribute="trailing" constant="20" symbolic="YES" id="vux-3O-Ynd"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="bottomLabel" destination="hNE-8C-dC4" id="RIX-db-5cH"/>
-                <outlet property="iconButton" destination="SUR-5z-ICa" id="u8H-Eq-J3n"/>
+                <outlet property="emojiImageView" destination="cqQ-mh-PX3" id="myK-j7-8jj"/>
                 <outlet property="middleLabel" destination="XRB-j7-927" id="Tcd-A2-q8R"/>
                 <outlet property="topLabel" destination="Icd-mF-8hY" id="wwr-8S-cOk"/>
             </connections>

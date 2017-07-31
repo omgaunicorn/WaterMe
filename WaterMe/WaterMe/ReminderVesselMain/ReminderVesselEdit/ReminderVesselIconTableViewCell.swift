@@ -28,8 +28,8 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
     
     static let reuseID = "ReminderVesselIconTableViewCell"
     
-    @IBOutlet private weak var iconButton: ReminderVesselIconButton?
-    @IBOutlet private weak var iconButtonHeightConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var emojiImageView: EmojiImageView?
+    @IBOutlet private weak var emojiImageViewHeightConstraint: NSLayoutConstraint?
     @IBOutlet private weak var cameraButton: UIButton?
     
     var iconButtonTapped: (() -> Void)?
@@ -37,7 +37,7 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
     func configure(with icon: ReminderVessel.Icon?) {
         let cameraString = NSAttributedString(string: "Photo", style: Style.reminderVesselCollectionViewCell, withTintColorFromView: self)
         self.cameraButton?.setAttributedTitle(cameraString, for: .normal)
-        self.iconButton?.setIcon(icon)
+        self.emojiImageView?.setIcon(icon)
     }
     
     @IBAction private func iconButtonTapped(_ sender: NSObject?) {
@@ -52,13 +52,13 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.cameraButton?.setAttributedTitle(nil, for: .normal)
-        self.iconButton?.setIcon(nil)
+        self.emojiImageView?.setIcon(nil)
         self.iconButtonTapped = nil
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        self.iconButtonHeightConstraint?.constant =
+        self.emojiImageViewHeightConstraint?.constant =
             UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory ?
                 type(of: self).style_iconButtonHeightAccessibilityTextSizeEnabled :
                 type(of: self).style_iconButtonHeightAccessibilityTextSizeDisabled
