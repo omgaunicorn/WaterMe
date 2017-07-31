@@ -25,6 +25,15 @@ import Result
 import UIKit
 import RealmSwift
 
+public protocol UserFacingError: Swift.Error {
+    var localizedDescription: String { get }
+}
+
+public protocol UICompleteCheckable {
+    associatedtype E: UserFacingError
+    var isUIComplete: Result<Void, E> { get }
+}
+
 public class ReminderVessel: Object {
     
     public enum Kind: String {
@@ -54,19 +63,36 @@ public class ReminderVessel: Object {
     override public class func primaryKey() -> String {
         return #keyPath(ReminderVessel.uuid)
     }
+}
+
+extension ReminderVessel: UICompleteCheckable {
     
-    public enum Error: Swift.Error {
-        case missingIcon, missingName
+    public enum Error: UserFacingError {
+        case missingIcon, missingName, noReminders
+        public var localizedDescription: String {
+            switch self {
+            case .missingIcon:
+                return "Please choose a photo or an emoji for your plant."
+            case .missingName:
+                return "Please name your plant."
+            case .noReminders:
+                return "Each plant must have at least one reminder."
+            }
+        }
     }
     
+    public typealias E = Error
+    
     public var isUIComplete: Result<Void, Error> {
-        guard self.displayName != nil else {
-            return .failure(.missingName)
-        }
         guard self.icon != nil else {
             return .failure(.missingIcon)
         }
+        guard self.displayName != nil else {
+            return .failure(.missingName)
+        }
+        guard self.reminders.isEmpty == false else {
+            return .failure(.noReminders)
+        }
         return .success()
     }
-    
 }

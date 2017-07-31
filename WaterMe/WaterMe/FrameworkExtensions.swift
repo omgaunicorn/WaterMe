@@ -116,3 +116,11 @@ extension DateComponentsFormatter {
         return string ?? "–"
     }
 }
+
+extension UIAlertController {
+    convenience init(error: UserFacingError, completion: ((UIAlertAction) -> Void)?) {
+        self.init(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+        let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: completion)
+        self.addAction(dismissAction)
+    }
+}

@@ -88,6 +88,8 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
             self.completionHandler?(self)
         case .failure(let error):
             log.error(error)
+            let alertVC = UIAlertController(error: error, completion: nil)
+            self.present(alertVC, animated: true, completion: nil)
         }
     }
     
