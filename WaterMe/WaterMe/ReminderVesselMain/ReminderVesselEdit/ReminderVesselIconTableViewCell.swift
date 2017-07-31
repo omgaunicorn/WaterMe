@@ -55,12 +55,13 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
         self.iconButton?.setIcon(nil)
         self.iconButtonTapped = nil
     }
-    
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         self.iconButtonHeightConstraint?.constant =
-            self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory ?
+            UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory ?
                 type(of: self).style_iconButtonHeightAccessibilityTextSizeEnabled :
                 type(of: self).style_iconButtonHeightAccessibilityTextSizeDisabled
+        
     }
 }
