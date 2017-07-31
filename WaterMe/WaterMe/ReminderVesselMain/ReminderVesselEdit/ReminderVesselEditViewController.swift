@@ -152,6 +152,11 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         self.present(editReminderVC, animated: true, completion: nil)
     }
     
+    func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController) -> Bool {
+        self.basicRC?.delete(reminder: reminder)
+        return true
+    }
+    
     private func startNotifications() {
         self.notificationToken = self.vessel.addNotificationBlock({ [weak self] in self?.vesselChanged($0) })
     }

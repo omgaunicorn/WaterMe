@@ -31,6 +31,7 @@ protocol ReminderVesselEditTableViewControllerDelegate: class {
     func userChangedName(to: String, andDismissKeyboard: Bool, controller: ReminderVesselEditTableViewController)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController)
     func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController)
+    func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController) -> Bool
 }
 
 class ReminderVesselEditTableViewController: UITableViewController {
@@ -154,6 +155,18 @@ class ReminderVesselEditTableViewController: UITableViewController {
             guard let reminder = self.remindersData?[indexPath.row] else { return }
             self.delegate?.userChose(reminder: reminder, controller: self)
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [unowned self] _, _, successfullyDeleted in
+            guard let reminder = self.remindersData?[indexPath.row] else {
+                successfullyDeleted(false)
+                return
+            }
+            let deleted = self.delegate?.userDeleted(reminder: reminder, controller: self) ?? false
+            successfullyDeleted(deleted)
+        }
+        return UISwipeActionsConfiguration(actions: [deleteAction])
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
