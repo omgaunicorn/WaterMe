@@ -158,15 +158,24 @@ class ReminderVesselEditTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [unowned self] _, _, successfullyDeleted in
-            guard let reminder = self.remindersData?[indexPath.row] else {
-                successfullyDeleted(false)
-                return
-            }
-            let deleted = self.delegate?.userDeleted(reminder: reminder, controller: self) ?? false
-            successfullyDeleted(deleted)
+        guard let section = Section(rawValue: indexPath.section) else {
+            assertionFailure("Unknown Section")
+            return UISwipeActionsConfiguration(actions: [])
         }
-        return UISwipeActionsConfiguration(actions: [deleteAction])
+        switch section {
+        case .name, .photo:
+            return UISwipeActionsConfiguration(actions: [])
+        case .reminders:
+            let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [unowned self] _, _, successfullyDeleted in
+                guard let reminder = self.remindersData?[indexPath.row] else {
+                    successfullyDeleted(false)
+                    return
+                }
+                let deleted = self.delegate?.userDeleted(reminder: reminder, controller: self) ?? false
+                successfullyDeleted(deleted)
+            }
+            return UISwipeActionsConfiguration(actions: [deleteAction])
+        }
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
