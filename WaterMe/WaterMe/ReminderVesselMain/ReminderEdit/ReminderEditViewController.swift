@@ -108,8 +108,16 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     @IBAction private func doneButtonTapped(_ sender: Any) {
-        // check if the necessary fields are filled in 'isUIComplete'
-        self.completionHandler?(self)
+        let result = self.reminder.isUIComplete
+        switch result {
+        case .success:
+            self.completionHandler?(self)
+        case .failure(let error):
+            log.error(error)
+            let alertVC = UIAlertController(error: error, completion: nil)
+            alertVC.addSaveAnywayAction(with: { [unowned self] _ in self.completionHandler?(self) })
+            self.present(alertVC, animated: true, completion: nil)
+        }
     }
     
     private func startNotifications() {

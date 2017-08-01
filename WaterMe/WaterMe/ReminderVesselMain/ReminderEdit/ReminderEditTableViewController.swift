@@ -116,7 +116,6 @@ class ReminderEditTableViewController: UITableViewController {
     }
     
     private func updated(text newText: String, for oldKind: Reminder.Kind) {
-        guard newText.isEmpty == false else { return }
         let newKind: Reminder.Kind
         defer {
             self.kindChanged?(newKind, true)

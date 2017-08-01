@@ -89,6 +89,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         case .failure(let error):
             log.error(error)
             let alertVC = UIAlertController(error: error, completion: nil)
+            alertVC.addSaveAnywayAction(with: { [unowned self] _ in self.completionHandler?(self) })
             self.present(alertVC, animated: true, completion: nil)
         }
     }
