@@ -79,3 +79,10 @@ public extension SyncUser {
         return self.authenticationServer!.realmURL(withAppName: appName, userPath: userPath)
     }
 }
+
+public extension String {
+    public var nonEmptyString: String? {
+        guard self.isEmpty == false else { return nil }
+        return self
+    }
+}

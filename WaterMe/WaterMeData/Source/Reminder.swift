@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Result
 import RealmSwift
 import Foundation
 
@@ -97,6 +98,39 @@ fileprivate extension Reminder {
             return .other(description: description)
         default:
             fatalError("Reminder.Kind: Invalid Case String Key")
+        }
+    }
+}
+
+extension Reminder: UICompleteCheckable {
+    
+    public enum Error: UserFacingError {
+        case missingMoveLocation, missingOtherDescription
+        public var alertTitle: String? {
+            return nil
+        }
+        public var alertMessage: String? {
+            switch self {
+            case .missingMoveLocation:
+                return "Please type in locations that your plant needs to be moved to."
+            case .missingOtherDescription:
+                return "Please type in a description of what you would like to be reminded to do."
+            }
+        }
+    }
+    
+    public typealias E = Error
+    
+    public var isUIComplete: Result<Void, Error> {
+        switch self.kind {
+        case .fertilize, .water:
+            return .success()
+        case .move(let description):
+            guard description?.nonEmptyString == nil else { return .success() }
+            return .failure(.missingMoveLocation)
+        case .other(let description):
+            guard description?.nonEmptyString == nil else { return .success() }
+            return .failure(.missingOtherDescription)
         }
     }
 }

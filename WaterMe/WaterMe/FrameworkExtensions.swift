@@ -26,13 +26,6 @@ import WaterMeData
 import FormatterKit
 import UIKit
 
-extension String {
-    var nonEmptyString: String? {
-        guard self.isEmpty == false else { return nil }
-        return self
-    }
-}
-
 class ContentSizeReloadCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,8 +112,13 @@ extension DateComponentsFormatter {
 
 extension UIAlertController {
     convenience init(error: UserFacingError, completion: ((UIAlertAction) -> Void)?) {
-        self.init(title: nil, message: error.localizedDescription, preferredStyle: .alert)
+        self.init(title: error.alertTitle, message: error.alertMessage, preferredStyle: .alert)
         let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: completion)
         self.addAction(dismissAction)
+    }
+    
+    func addSaveAnywayAction(with completion: @escaping (UIAlertAction) -> Void) {
+        let action = UIAlertAction(title: "Save Anyway", style: .default, handler: completion)
+        self.addAction(action)
     }
 }

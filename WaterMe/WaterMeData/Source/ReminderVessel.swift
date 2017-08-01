@@ -26,7 +26,8 @@ import UIKit
 import RealmSwift
 
 public protocol UserFacingError: Swift.Error {
-    var localizedDescription: String { get }
+    var alertTitle: String? { get }
+    var alertMessage: String? { get }
 }
 
 public protocol UICompleteCheckable {
@@ -69,7 +70,10 @@ extension ReminderVessel: UICompleteCheckable {
     
     public enum Error: UserFacingError {
         case missingIcon, missingName, noReminders
-        public var localizedDescription: String {
+        public var alertTitle: String? {
+            return nil
+        }
+        public var alertMessage: String? {
             switch self {
             case .missingIcon:
                 return "Please choose a photo or an emoji for your plant."
