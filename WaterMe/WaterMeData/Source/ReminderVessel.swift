@@ -26,13 +26,13 @@ import UIKit
 import RealmSwift
 
 public protocol UserFacingError: Swift.Error {
-    var alertTitle: String? { get }
-    var alertMessage: String? { get }
+    var alertTitle: String { get }
+    var alertMessage: String { get }
 }
 
 public protocol UICompleteCheckable {
     associatedtype E: UserFacingError
-    var isUIComplete: Result<Void, E> { get }
+    var isUIComplete: [E] { get }
 }
 
 public class ReminderVessel: Object {
@@ -70,10 +70,17 @@ extension ReminderVessel: UICompleteCheckable {
     
     public enum Error: UserFacingError {
         case missingIcon, missingName, noReminders
-        public var alertTitle: String? {
-            return nil
+        public var alertTitle: String {
+            switch self {
+            case .missingIcon:
+                return "Missing Photo"
+            case .missingName:
+                return "Missing Name"
+            case .noReminders:
+                return "Missing Reminders"
+            }
         }
-        public var alertMessage: String? {
+        public var alertMessage: String {
             switch self {
             case .missingIcon:
                 return "Please choose a photo or an emoji for your plant."
@@ -87,16 +94,12 @@ extension ReminderVessel: UICompleteCheckable {
     
     public typealias E = Error
     
-    public var isUIComplete: Result<Void, Error> {
-        guard self.icon != nil else {
-            return .failure(.missingIcon)
-        }
-        guard self.displayName != nil else {
-            return .failure(.missingName)
-        }
-        guard self.reminders.isEmpty == false else {
-            return .failure(.noReminders)
-        }
-        return .success()
+    public var isUIComplete: [Error] {
+        let errors: [Error] = [
+            self.icon == nil ? .missingIcon : nil,
+            self.displayName == nil ? .missingName : nil,
+            self.reminders.isEmpty ? .noReminders : nil
+        ].flatMap({ $0 })
+        return errors
     }
 }

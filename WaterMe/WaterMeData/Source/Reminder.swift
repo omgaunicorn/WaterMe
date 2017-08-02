@@ -106,10 +106,15 @@ extension Reminder: UICompleteCheckable {
     
     public enum Error: UserFacingError {
         case missingMoveLocation, missingOtherDescription
-        public var alertTitle: String? {
-            return nil
+        public var alertTitle: String {
+            switch self {
+            case .missingMoveLocation:
+                return "Missing Location"
+            case .missingOtherDescription:
+                return "Missing Description"
+            }
         }
-        public var alertMessage: String? {
+        public var alertMessage: String {
             switch self {
             case .missingMoveLocation:
                 return "Please type in locations that your plant needs to be moved to."
@@ -121,16 +126,14 @@ extension Reminder: UICompleteCheckable {
     
     public typealias E = Error
     
-    public var isUIComplete: Result<Void, Error> {
+    public var isUIComplete: [Error] {
         switch self.kind {
         case .fertilize, .water:
-            return .success()
+            return []
         case .move(let description):
-            guard description?.nonEmptyString == nil else { return .success() }
-            return .failure(.missingMoveLocation)
+            return description?.nonEmptyString == nil ? [.missingMoveLocation] : []
         case .other(let description):
-            guard description?.nonEmptyString == nil else { return .success() }
-            return .failure(.missingOtherDescription)
+            return description?.nonEmptyString == nil ? [.missingOtherDescription] : []
         }
     }
 }

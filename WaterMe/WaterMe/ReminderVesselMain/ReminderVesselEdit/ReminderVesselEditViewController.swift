@@ -82,15 +82,15 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     }
     
     @IBAction private func doneButtonTapped(_ sender: Any) {
-        let result = self.vessel.isUIComplete
-        switch result {
-        case .success:
+        let errors = self.vessel.isUIComplete
+        switch errors.isEmpty {
+        case true:
             self.completionHandler?(self)
-        case .failure(let error):
-            log.error(error)
-            let alertVC = UIAlertController(error: error, completion: nil)
-            alertVC.addSaveAnywayAction(with: { [unowned self] _ in self.completionHandler?(self) })
-            self.present(alertVC, animated: true, completion: nil)
+        case false:
+            log.error(errors)
+//            let alertVC = UIAlertController(error: error, completion: nil)
+//            alertVC.addSaveAnywayAction(with: { [unowned self] _ in self.completionHandler?(self) })
+//            self.present(alertVC, animated: true, completion: nil)
         }
     }
     
