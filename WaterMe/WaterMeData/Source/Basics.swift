@@ -82,7 +82,8 @@ public extension SyncUser {
 
 public extension String {
     public var nonEmptyString: String? {
-        guard self.isEmpty == false else { return nil }
+        let stripped = self.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard stripped.isEmpty == false else { return nil }
         return self
     }
 }
