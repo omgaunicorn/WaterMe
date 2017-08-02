@@ -111,14 +111,43 @@ extension DateComponentsFormatter {
 }
 
 extension UIAlertController {
-    convenience init(error: UserFacingError, completion: ((UIAlertAction) -> Void)?) {
-        self.init(title: error.alertTitle, message: error.alertMessage, preferredStyle: .alert)
-        let dismissAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: completion)
-        self.addAction(dismissAction)
+    
+    enum Selection {
+        case cancel, saveAnyway, error(UserFacingError)
     }
     
-    func addSaveAnywayAction(with completion: @escaping (UIAlertAction) -> Void) {
-        let action = UIAlertAction(title: "Save Anyway", style: .default, handler: completion)
-        self.addAction(action)
+    private convenience init(error: UserFacingError, completion: @escaping (Selection) -> Void) {
+        self.init(title: error.alertTitle, message: error.alertMessage, preferredStyle: .alert)
+        let fix = UIAlertAction(title: "Fix Issue", style: .cancel, handler: { _ in completion(.error(error)) })
+        let save = UIAlertAction(title: "Save Anyway", style: .default, handler: { _ in completion(.saveAnyway) })
+        self.addAction(fix)
+        self.addAction(save)
+    }
+    
+    private convenience init(cancelSaveCompletion completion: @escaping (Selection) -> Void) {
+        self.init(title: nil, message: "There are some issues you might want to resolve.", preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: "Dismiss", style: .cancel, handler: { _ in completion(.cancel) })
+        let save = UIAlertAction(title: "Save Anyway", style: .destructive, handler: { _ in completion(.saveAnyway) })
+        self.addAction(cancel)
+        self.addAction(save)
+    }
+    
+    class func presentAlertVC(for errors: [UserFacingError],
+                              over presentingVC: UIViewController,
+                              from barButtonItem: UIBarButtonItem?,
+                              completionHandler completion: @escaping (Selection) -> Void)
+    {
+        assert(barButtonItem != nil, "Expected to be passed a UIBarButtonItem")
+        let actionSheet = UIAlertController(cancelSaveCompletion: completion)
+        actionSheet.popoverPresentationController?.barButtonItem = barButtonItem
+        let errorActions = errors.map() { error -> UIAlertAction in
+            let action = UIAlertAction(title: error.alertTitle, style: .default) { _ in
+                let errorAlert = UIAlertController(error: error, completion: completion)
+                presentingVC.present(errorAlert, animated: true, completion: nil)
+            }
+            return action
+        }
+        errorActions.forEach({ actionSheet.addAction($0) })
+        presentingVC.present(actionSheet, animated: true, completion: nil)
     }
 }
