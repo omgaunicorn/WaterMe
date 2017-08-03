@@ -72,10 +72,12 @@ class ReminderVesselEditTableViewController: UITableViewController {
     }
     
     func nameTextFieldBecomeFirstResponder() {
+        let indexPath = IndexPath(row: 0, section: Section.name.rawValue)
         UIView.animate(withDuration: 0.3, animations: {
-            self.tableView.scrollToRow(at: IndexPath(row: 0, section: Section.name.rawValue), at: .top, animated: false)
+            self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
         }, completion: { _ in
-            print("finished animation")
+            let cell = self.tableView.cellForRow(at: indexPath) as? TextFieldTableViewCell
+            cell?.textFieldBecomeFirstResponder()
         })
     }
     

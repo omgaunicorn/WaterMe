@@ -52,6 +52,10 @@ class TextFieldTableViewCell: UITableViewCell {
         }
     }
     
+    func textFieldBecomeFirstResponder() {
+        self.textField?.becomeFirstResponder()
+    }
+    
     @IBAction private func textChanged(_ sender: Any) {
         let newValue = self.textField?.text ?? ""
         self.textChanged?(newValue)
