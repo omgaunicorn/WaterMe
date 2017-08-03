@@ -114,13 +114,8 @@ extension Reminder: UICompleteCheckable {
                 return "Missing Description"
             }
         }
-        public var alertMessage: String {
-            switch self {
-            case .missingMoveLocation:
-                return "Please type in locations that your plant needs to be moved to."
-            case .missingOtherDescription:
-                return "Please type in a description of what you would like to be reminded to do."
-            }
+        public var alertMessage: String? {
+            return nil
         }
     }
     

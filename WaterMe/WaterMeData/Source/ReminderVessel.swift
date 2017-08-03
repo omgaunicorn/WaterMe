@@ -27,7 +27,7 @@ import RealmSwift
 
 public protocol UserFacingError: Swift.Error {
     var alertTitle: String { get }
-    var alertMessage: String { get }
+    var alertMessage: String? { get }
 }
 
 public protocol UICompleteCheckable {
@@ -80,12 +80,10 @@ extension ReminderVessel: UICompleteCheckable {
                 return "Missing Reminders"
             }
         }
-        public var alertMessage: String {
+        public var alertMessage: String? {
             switch self {
-            case .missingIcon:
-                return "Please choose a photo or an emoji for your plant."
-            case .missingName:
-                return "Please name your plant."
+            case .missingIcon, .missingName:
+                return nil
             case .noReminders:
                 return "Each plant must have at least one reminder."
             }

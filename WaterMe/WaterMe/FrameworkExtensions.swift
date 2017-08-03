@@ -119,15 +119,16 @@ extension UIAlertController {
     private convenience init(error: UserFacingError, completion: @escaping (Selection) -> Void) {
         self.init(title: error.alertTitle, message: error.alertMessage, preferredStyle: .alert)
         let fix = UIAlertAction(title: "Fix Issue", style: .cancel, handler: { _ in completion(.error(error)) })
-        let save = UIAlertAction(title: "Save Anyway", style: .default, handler: { _ in completion(.saveAnyway) })
+        let save = UIAlertAction(title: "Save Anyway", style: .destructive, handler: { _ in completion(.saveAnyway) })
         self.addAction(fix)
         self.addAction(save)
     }
     
-    private convenience init(cancelSaveCompletion completion: @escaping (Selection) -> Void) {
+    private convenience init(actionSheetWithActions actions: [UIAlertAction], cancelSaveCompletion completion: @escaping (Selection) -> Void) {
         self.init(title: nil, message: "There are some issues you might want to resolve.", preferredStyle: .actionSheet)
-        let cancel = UIAlertAction(title: "Dismiss", style: .cancel, handler: { _ in completion(.cancel) })
+        let cancel = UIAlertAction(title: "Fix Issues", style: .cancel, handler: { _ in completion(.cancel) })
         let save = UIAlertAction(title: "Save Anyway", style: .destructive, handler: { _ in completion(.saveAnyway) })
+        actions.forEach({ self.addAction($0) })
         self.addAction(cancel)
         self.addAction(save)
     }
@@ -137,17 +138,22 @@ extension UIAlertController {
                               from barButtonItem: UIBarButtonItem?,
                               completionHandler completion: @escaping (Selection) -> Void)
     {
-        assert(barButtonItem != nil, "Expected to be passed a UIBarButtonItem")
-        let actionSheet = UIAlertController(cancelSaveCompletion: completion)
-        actionSheet.popoverPresentationController?.barButtonItem = barButtonItem
         let errorActions = errors.map() { error -> UIAlertAction in
             let action = UIAlertAction(title: error.alertTitle, style: .default) { _ in
-                let errorAlert = UIAlertController(error: error, completion: completion)
-                presentingVC.present(errorAlert, animated: true, completion: nil)
+                if error.alertMessage == nil {
+                    // if the alertMessage is NIL, just call the completion handler
+                    completion(.error(error))
+                } else {
+                    // otherwise, make a new alert that gives the user more detailed information
+                    let errorAlert = UIAlertController(error: error, completion: completion)
+                    presentingVC.present(errorAlert, animated: true, completion: nil)
+                }
             }
             return action
         }
-        errorActions.forEach({ actionSheet.addAction($0) })
+        assert(barButtonItem != nil, "Expected to be passed a UIBarButtonItem")
+        let actionSheet = UIAlertController(actionSheetWithActions: errorActions, cancelSaveCompletion: completion)
+        actionSheet.popoverPresentationController?.barButtonItem = barButtonItem
         presentingVC.present(actionSheet, animated: true, completion: nil)
     }
 }
