@@ -89,14 +89,21 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         case true:
             self.completionHandler?(self)
         case false:
-            UIAlertController.presentAlertVC(for: errors, over: self, from: sender) { selection in
+            UIAlertController.presentAlertVC(for: errors, over: self, from: sender) { [unowned self] selection in
                 switch selection {
                 case .cancel:
-                    print("Selected Cancel")
+                    break
                 case .saveAnyway:
                     self.completionHandler?(self)
                 case .error(let error):
-                    print("Selected Error: \(error)")
+                    switch error {
+                    case .missingIcon:
+                        self.userChosePhotoChange(controller: self.tableViewController)
+                    case .missingName:
+                        self.tableViewController?.nameTextFieldBecomeFirstResponder()
+                    case .noReminders:
+                        self.userChoseAddReminder(controller: self.tableViewController)
+                    }
                 }
             }
         }
@@ -106,7 +113,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         self.basicRC?.update(icon: icon, in: self.vessel)
     }
     
-    func userChosePhotoChange(controller: ReminderVesselEditTableViewController) {
+    func userChosePhotoChange(controller: ReminderVesselEditTableViewController?) {
         let vc = UIAlertController.emojiPhotoActionSheet() { choice in
             switch choice {
             case .camera:
@@ -137,7 +144,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         self.present(vc, animated: true, completion: nil)
     }
     
-    func userChangedName(to newName: String, andDismissKeyboard dismissKeyboard: Bool, controller: ReminderVesselEditTableViewController) {
+    func userChangedName(to newName: String, andDismissKeyboard dismissKeyboard: Bool, controller: ReminderVesselEditTableViewController?) {
         self.notificationToken?.stop() // stop the update notifications from causing the tableview to reload
         self.basicRC?.update(displayName: newName, in: self.vessel)
         self.startNotifications()
@@ -145,7 +152,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         self.tableViewController?.reloadPhotoAndName()
     }
     
-    func userChoseAddReminder(controller: ReminderVesselEditTableViewController) {
+    func userChoseAddReminder(controller: ReminderVesselEditTableViewController?) {
         guard let basicRC = self.basicRC else { return }
         let addReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .new(self.vessel)) { vc in
             vc.dismiss(animated: true, completion: nil)
@@ -153,7 +160,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         self.present(addReminderVC, animated: true, completion: nil)
     }
     
-    func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController) {
+    func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController?) {
         guard let basicRC = self.basicRC else { return }
         let editReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .existing(reminder)) { [weak self] vc in
             vc.dismiss(animated: true, completion: { self?.tableViewController?.tableView.deselectSelectedRows(animated: true) })
@@ -161,7 +168,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         self.present(editReminderVC, animated: true, completion: nil)
     }
     
-    func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController) -> Bool {
+    func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController?) -> Bool {
         self.basicRC?.delete(reminder: reminder)
         return true
     }

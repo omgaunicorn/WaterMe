@@ -27,11 +27,11 @@ import UIKit
 
 protocol ReminderVesselEditTableViewControllerDelegate: class {
     var vessel: ReminderVessel! { get }
-    func userChosePhotoChange(controller: ReminderVesselEditTableViewController)
-    func userChangedName(to: String, andDismissKeyboard: Bool, controller: ReminderVesselEditTableViewController)
-    func userChoseAddReminder(controller: ReminderVesselEditTableViewController)
-    func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController)
-    func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController) -> Bool
+    func userChosePhotoChange(controller: ReminderVesselEditTableViewController?)
+    func userChangedName(to: String, andDismissKeyboard: Bool, controller: ReminderVesselEditTableViewController?)
+    func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
+    func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController?)
+    func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController?) -> Bool
 }
 
 class ReminderVesselEditTableViewController: UITableViewController {
@@ -69,6 +69,14 @@ class ReminderVesselEditTableViewController: UITableViewController {
         self.remindersData = nil
         self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
         self.notificationToken = self.delegate?.vessel.reminders.addNotificationBlock({ [weak self] in self?.remindersChanged($0) })
+    }
+    
+    func nameTextFieldBecomeFirstResponder() {
+        UIView.animate(withDuration: 0.3, animations: {
+            self.tableView.scrollToRow(at: IndexPath(row: 0, section: Section.name.rawValue), at: .top, animated: false)
+        }, completion: { _ in
+            print("finished animation")
+        })
     }
     
     override func viewDidLoad() {
