@@ -112,11 +112,11 @@ extension DateComponentsFormatter {
 
 extension UIAlertController {
     
-    enum Selection {
-        case cancel, saveAnyway, error(UserFacingError)
+    enum Selection<T: UserFacingError> {
+        case cancel, saveAnyway, error(T)
     }
     
-    private convenience init(error: UserFacingError, completion: @escaping (Selection) -> Void) {
+    private convenience init<T>(error: T, completion: @escaping (Selection<T>) -> Void) {
         self.init(title: error.alertTitle, message: error.alertMessage, preferredStyle: .alert)
         let fix = UIAlertAction(title: "Fix Issue", style: .cancel, handler: { _ in completion(.error(error)) })
         let save = UIAlertAction(title: "Save Anyway", style: .destructive, handler: { _ in completion(.saveAnyway) })
@@ -124,7 +124,7 @@ extension UIAlertController {
         self.addAction(save)
     }
     
-    private convenience init(actionSheetWithActions actions: [UIAlertAction], cancelSaveCompletion completion: @escaping (Selection) -> Void) {
+    private convenience init<T>(actionSheetWithActions actions: [UIAlertAction], cancelSaveCompletion completion: @escaping (Selection<T>) -> Void) {
         self.init(title: nil, message: "There are some issues you might want to resolve.", preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Fix Issues", style: .cancel, handler: { _ in completion(.cancel) })
         let save = UIAlertAction(title: "Save Anyway", style: .destructive, handler: { _ in completion(.saveAnyway) })
@@ -133,10 +133,10 @@ extension UIAlertController {
         self.addAction(save)
     }
     
-    class func presentAlertVC(for errors: [UserFacingError],
-                              over presentingVC: UIViewController,
-                              from barButtonItem: UIBarButtonItem?,
-                              completionHandler completion: @escaping (Selection) -> Void)
+    class func presentAlertVC<T>(for errors: [T],
+                                 over presentingVC: UIViewController,
+                                 from barButtonItem: UIBarButtonItem?,
+                                 completionHandler completion: @escaping (Selection<T>) -> Void)
     {
         let errorActions = errors.map() { error -> UIAlertAction in
             let action = UIAlertAction(title: error.alertTitle, style: .default) { _ in
