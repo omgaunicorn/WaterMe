@@ -203,6 +203,10 @@ class ReminderVesselEditTableViewController: UITableViewController {
         return view
     }
     
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.view.endEditing(false)
+    }
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         guard let section = Section(rawValue: section) else { assertionFailure("Unknown Section"); return nil; }
         return section.localizedTitle

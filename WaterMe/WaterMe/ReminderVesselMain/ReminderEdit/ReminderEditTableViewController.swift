@@ -115,6 +115,10 @@ class ReminderEditTableViewController: UITableViewController {
         }
     }
     
+    override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.view.endEditing(false)
+    }
+    
     private func updated(text newText: String, for oldKind: Reminder.Kind) {
         let newKind: Reminder.Kind
         defer {
