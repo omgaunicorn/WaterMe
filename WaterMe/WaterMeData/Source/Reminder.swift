@@ -106,7 +106,7 @@ extension Reminder: UICompleteCheckable {
     
     public enum Error: UserFacingError {
         case missingMoveLocation, missingOtherDescription
-        public var alertTitle: String {
+        public var title: String {
             switch self {
             case .missingMoveLocation:
                 return "Missing Location"
@@ -114,8 +114,16 @@ extension Reminder: UICompleteCheckable {
                 return "Missing Description"
             }
         }
-        public var alertMessage: String? {
+        public var details: String? {
             return nil
+        }
+        public var actionTitle: String {
+            switch self {
+            case .missingMoveLocation:
+                return "Enter Location"
+            case .missingOtherDescription:
+                return "Enter Description"
+            }
         }
     }
     

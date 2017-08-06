@@ -117,16 +117,18 @@ extension UIAlertController {
     }
     
     private convenience init<T>(error: T, completion: @escaping (Selection<T>) -> Void) {
-        self.init(title: error.alertTitle, message: error.alertMessage, preferredStyle: .alert)
-        let fix = UIAlertAction(title: "Fix Issue", style: .cancel, handler: { _ in completion(.error(error)) })
+        self.init(title: error.title, message: error.details, preferredStyle: .alert)
+        let fix = UIAlertAction(title: error.actionTitle, style: .default, handler: { _ in completion(.error(error)) })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in completion(.cancel) })
         let save = UIAlertAction(title: "Save Anyway", style: .destructive, handler: { _ in completion(.saveAnyway) })
+        self.addAction(cancel)
         self.addAction(fix)
         self.addAction(save)
     }
     
     private convenience init<T>(actionSheetWithActions actions: [UIAlertAction], cancelSaveCompletion completion: @escaping (Selection<T>) -> Void) {
         self.init(title: nil, message: "There are some issues you might want to resolve.", preferredStyle: .actionSheet)
-        let cancel = UIAlertAction(title: "Fix Issues", style: .cancel, handler: { _ in completion(.cancel) })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in completion(.cancel) })
         let save = UIAlertAction(title: "Save Anyway", style: .destructive, handler: { _ in completion(.saveAnyway) })
         actions.forEach({ self.addAction($0) })
         self.addAction(cancel)
@@ -139,8 +141,8 @@ extension UIAlertController {
                                  completionHandler completion: @escaping (Selection<T>) -> Void)
     {
         let errorActions = errors.map() { error -> UIAlertAction in
-            let action = UIAlertAction(title: error.alertTitle, style: .default) { _ in
-                if error.alertMessage == nil {
+            let action = UIAlertAction(title: error.title, style: .default) { _ in
+                if error.details == nil {
                     // if the alertMessage is NIL, just call the completion handler
                     completion(.error(error))
                 } else {

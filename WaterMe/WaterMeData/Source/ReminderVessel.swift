@@ -26,8 +26,9 @@ import UIKit
 import RealmSwift
 
 public protocol UserFacingError: Swift.Error {
-    var alertTitle: String { get }
-    var alertMessage: String? { get }
+    var title: String { get }
+    var details: String? { get }
+    var actionTitle: String { get }
 }
 
 public protocol UICompleteCheckable {
@@ -70,7 +71,7 @@ extension ReminderVessel: UICompleteCheckable {
     
     public enum Error: UserFacingError {
         case missingIcon, missingName, noReminders
-        public var alertTitle: String {
+        public var title: String {
             switch self {
             case .missingIcon:
                 return "Missing Photo"
@@ -80,12 +81,22 @@ extension ReminderVessel: UICompleteCheckable {
                 return "Missing Reminders"
             }
         }
-        public var alertMessage: String? {
+        public var details: String? {
             switch self {
             case .missingIcon, .missingName:
                 return nil
             case .noReminders:
-                return "Each plant must have at least one reminder."
+                return "Each plant can have many reminders. You may want one reminder to water your plant every 4 days. And a second reminder to fertilize your plant every 30 days."
+            }
+        }
+        public var actionTitle: String {
+            switch self {
+            case .missingIcon:
+                return "Choose Photo"
+            case .missingName:
+                return "Enter Name"
+            case .noReminders:
+                return "Add Reminder"
             }
         }
     }

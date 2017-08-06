@@ -108,15 +108,23 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     @IBAction private func doneButtonTapped(_ sender: Any) {
+        let sender = sender as? UIBarButtonItem
+        assert(sender != nil, "Expected UIBarButtonItem to call this method")
         let errors = self.reminder.isUIComplete
         switch errors.isEmpty {
         case true:
             self.completionHandler?(self)
         case false:
-            log.error(errors)
-//            let alertVC = UIAlertController(error: error, completion: nil)
-//            alertVC.addSaveAnywayAction(with: { [unowned self] _ in self.completionHandler?(self) })
-//            self.present(alertVC, animated: true, completion: nil)
+            UIAlertController.presentAlertVC(for: errors, over: self, from: sender) { selection in
+                switch selection {
+                case .cancel:
+                    break
+                case .error:
+                    self.tableViewController?.nameTextFieldBecomeFirstResponder()
+                case .saveAnyway:
+                    self.completionHandler?(self)
+                }
+            }
         }
     }
     
@@ -129,5 +137,4 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     deinit {
         self.notificationToken?.stop()
     }
-    
 }

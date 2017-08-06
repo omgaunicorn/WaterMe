@@ -115,6 +115,23 @@ class ReminderEditTableViewController: UITableViewController {
         }
     }
     
+    func nameTextFieldBecomeFirstResponder() {
+        guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return; }
+        let reminderKind = reminder.kind
+        switch reminderKind {
+        case .other, .move:
+            let indexPath = IndexPath(row: 0, section: 1)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+            }, completion: { _ in
+                let cell = self.tableView.cellForRow(at: indexPath) as? TextFieldTableViewCell
+                cell?.textFieldBecomeFirstResponder()
+            })
+        case .fertilize, .water:
+            assertionFailure("Water and Fertilize Reminders don't have a textfield to select")
+        }
+    }
+    
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.view.endEditing(false)
     }
