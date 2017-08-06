@@ -40,9 +40,9 @@ class ReminderTableViewCell: UITableViewCell {
         guard let reminder = reminder else { return }
         
         // do stuff that is the same for all cases
-        let intervalString = self.formatter.string(forDayInterval: reminder.interval)
-        let locIntervalString = "Every: \(intervalString)"
-        self.middleLabel?.attributedText = NSAttributedString(string: locIntervalString, style: .selectableTableViewCell)
+        let interval = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval), style: .selectableTableViewCell)
+        let helper = NSAttributedString(string: "Every: ", style: .selectableTableViewCellHelper)
+        self.middleLabel?.attributedText = helper + interval
         self.emojiImageView?.setKind(reminder.kind)
         
         // do stuff that is case specific
@@ -56,13 +56,15 @@ class ReminderTableViewCell: UITableViewCell {
         case .move(let location):
             self.topLabel?.attributedText = NSAttributedString(string: "Move Plant", style: .selectableTableViewCell)
             let style: Style = location != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
-            let location = location ?? "No Location Entered"
-            self.bottomLabel?.attributedText = NSAttributedString(string: location, style: style)
+            let helper = NSAttributedString(string: "Location: ", style: .selectableTableViewCellHelper)
+            let location = NSAttributedString(string: location ?? "No Location Entered", style: style)
+            self.bottomLabel?.attributedText = helper + location
         case .other(let description):
             self.topLabel?.attributedText = NSAttributedString(string: "Other", style: .selectableTableViewCell)
             let style: Style = description != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
-            let description = description ?? "No Description Entered"
-            self.bottomLabel?.attributedText = NSAttributedString(string: description, style: style)
+            let helper = NSAttributedString(string: "Description: ", style: .selectableTableViewCellHelper)
+            let description = NSAttributedString(string: description ?? "No Description Entered", style: style)
+            self.bottomLabel?.attributedText = helper + description
         }
     }
 

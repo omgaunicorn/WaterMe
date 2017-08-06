@@ -49,6 +49,7 @@ extension ReminderVesselIconTableViewCell {
 enum Style {
     case selectableTableViewCell
     case selectableTableViewCellDisabled
+    case selectableTableViewCellHelper
     case readOnlyTableViewCell
     case textInputTableViewCell
     case emojiSmall(accessibilityFontSizeEnabled: Bool)
@@ -95,6 +96,11 @@ enum Style {
                 .font : Font.bodyMinus,
                 .foregroundColor : Color.textSecondary
             ]
+        case .selectableTableViewCellHelper:
+            return [
+                .font : Font.bodyMinusBold,
+                .foregroundColor : Color.textSecondary
+            ]
         }
     }
     
@@ -107,6 +113,9 @@ enum Style {
         }
         static var bodyMinus: UIFont {
             return UIFont.preferredFont(forTextStyle: .callout)
+        }
+        static var bodyMinusBold: UIFont {
+            return UIFont.preferredFont(forTextStyle: .subheadline)
         }
     }
     
@@ -127,5 +136,13 @@ extension NSAttributedString {
             attributes[NSAttributedStringKey.foregroundColor] = view.tintColor
         }
         self.init(string: string, attributes: attributes)
+    }
+    
+    static func + (lhs: NSAttributedString, rhs: NSAttributedString) -> NSAttributedString {
+        // swiftlint:disable:next force_cast
+        let mutable = lhs.mutableCopy() as! NSMutableAttributedString
+        mutable.append(rhs)
+        // swiftlint:disable:next force_cast
+        return mutable.copy() as! NSAttributedString
     }
 }
