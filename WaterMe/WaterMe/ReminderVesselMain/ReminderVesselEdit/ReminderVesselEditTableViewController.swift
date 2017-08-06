@@ -220,6 +220,5 @@ class ReminderVesselEditTableViewController: UITableViewController {
     
     deinit {
         self.notificationToken?.stop()
-        log.debug()
     }
 }

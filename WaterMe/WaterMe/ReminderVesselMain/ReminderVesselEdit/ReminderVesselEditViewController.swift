@@ -181,6 +181,5 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     
     deinit {
         self.notificationToken?.stop()
-        log.debug()
     }
 }

@@ -62,5 +62,4 @@ class ErrorTableViewController: UITableViewController {
     deinit {
         self.notificationToken?.stop()
     }
-    
 }

@@ -77,4 +77,3 @@ class UserTableViewController: UITableViewController {
         self.notificationToken?.stop()
     }
 }
-

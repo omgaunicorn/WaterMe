@@ -117,5 +117,4 @@ class SelfContainedImagePickerController: UIImagePickerController, UIImagePicker
     deinit {
         self.permissionCheckTimer?.invalidate()
     }
-    
 }
