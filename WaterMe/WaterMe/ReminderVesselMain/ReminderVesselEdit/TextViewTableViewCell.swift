@@ -33,8 +33,8 @@ class TextViewTableViewCell: UITableViewCell {
     
     var textChanged: ((String) -> Void)?
     
-    func configure(with text: String) {
-        self.textView?.attributedText = NSAttributedString(string: text, style: Style.textInputTableViewCell)
+    func configure(with text: String?) {
+        self.textView?.attributedText = NSAttributedString(string: text ?? "", style: Style.textInputTableViewCell)
         self.textView?.scrollRectToVisible(.zero, animated: false)
     }
     

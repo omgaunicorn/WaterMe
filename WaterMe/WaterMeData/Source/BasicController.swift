@@ -58,7 +58,7 @@ public class BasicController {
     public init(kind: Kind) {
         self.kind = kind
         var realmConfig = Realm.Configuration()
-        realmConfig.schemaVersion = 9
+        realmConfig.schemaVersion = 10
         realmConfig.objectTypes = [ReminderVessel.self, Reminder.self, ReminderPerform.self]
         switch kind {
         case .local:
@@ -108,7 +108,7 @@ public class BasicController {
     public func newReminderVessel(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, reminders: [Reminder]? = nil) -> ReminderVessel {
         let realm = self.realm
         let v = ReminderVessel()
-        if let displayName = displayName {
+        if let displayName = displayName?.leadingTrailingWhiteSpaceTrimmedNonEmptyString { // make sure the string is not empty
             v.displayName = displayName
         }
         if let icon = icon {
@@ -128,7 +128,8 @@ public class BasicController {
         let realm = self.realm
         realm.beginWrite()
         if let displayName = displayName {
-            vessel.displayName = displayName
+            // make sure the string is not empty. If it is empty, set it to NIL
+            vessel.displayName = displayName.leadingTrailingWhiteSpaceTrimmedNonEmptyString
         }
         if let icon = icon {
             vessel.icon = icon
@@ -146,7 +147,8 @@ public class BasicController {
             reminder.interval = interval
         }
         if let note = note {
-            reminder.note = note
+            // make sure the string is not empty. If it is empty, set it to blank string
+            reminder.note = note.leadingTrailingWhiteSpaceTrimmedNonEmptyString
         }
         try! realm.commitWrite()
     }

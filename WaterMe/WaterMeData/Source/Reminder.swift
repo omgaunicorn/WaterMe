@@ -42,7 +42,7 @@ public class Reminder: Object {
         set { self.update(with: newValue) }
     }
     public internal(set) dynamic var interval = Reminder.defaultInterval
-    public internal(set) dynamic var note = ""
+    public internal(set) dynamic var note: String?
     public let performed = List<ReminderPerform>()
     public var vessel: ReminderVessel? { return self.vessels.first }
     
@@ -134,9 +134,9 @@ extension Reminder: UICompleteCheckable {
         case .fertilize, .water:
             return []
         case .move(let description):
-            return description?.nonEmptyString == nil ? [.missingMoveLocation] : []
+            return description?.leadingTrailingWhiteSpaceTrimmedNonEmptyString == nil ? [.missingMoveLocation] : []
         case .other(let description):
-            return description?.nonEmptyString == nil ? [.missingOtherDescription] : []
+            return description?.leadingTrailingWhiteSpaceTrimmedNonEmptyString == nil ? [.missingOtherDescription] : []
         }
     }
 }

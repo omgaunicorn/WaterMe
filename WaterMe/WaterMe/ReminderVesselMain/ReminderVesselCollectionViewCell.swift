@@ -38,7 +38,7 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with vessel: ReminderVessel) {
-        let vesselName = vessel.displayName?.nonEmptyString
+        let vesselName = vessel.displayName
         let vesselNameStyle = vesselName != nil ?
             Style.reminderVesselCollectionViewCell :
             Style.reminderVesselCollectionViewCellDisabled

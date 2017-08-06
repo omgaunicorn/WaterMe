@@ -81,9 +81,9 @@ public extension SyncUser {
 }
 
 public extension String {
-    public var nonEmptyString: String? {
+    public var leadingTrailingWhiteSpaceTrimmedNonEmptyString: String? {
         let stripped = self.trimmingCharacters(in: .whitespacesAndNewlines)
         guard stripped.isEmpty == false else { return nil }
-        return self
+        return stripped
     }
 }
