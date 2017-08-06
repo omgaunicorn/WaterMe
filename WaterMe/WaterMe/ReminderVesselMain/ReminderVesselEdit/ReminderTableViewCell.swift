@@ -40,31 +40,29 @@ class ReminderTableViewCell: UITableViewCell {
         guard let reminder = reminder else { return }
         
         // do stuff that is the same for all cases
-        self.bottomLabel?.attributedText = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval), style: .readOnlyTableViewCell)
+        let intervalString = self.formatter.string(forDayInterval: reminder.interval)
+        let locIntervalString = "Every: \(intervalString)"
+        self.middleLabel?.attributedText = NSAttributedString(string: locIntervalString, style: .selectableTableViewCell)
         self.emojiImageView?.setKind(reminder.kind)
         
         // do stuff that is case specific
         switch reminder.kind {
         case .water:
             self.topLabel?.attributedText = NSAttributedString(string: "Water Plant", style: .selectableTableViewCell)
-            self.middleLabel?.isHidden = true
+            self.bottomLabel?.isHidden = true
         case .fertilize:
             self.topLabel?.attributedText = NSAttributedString(string: "Fertilize Soil", style: .selectableTableViewCell)
-            self.middleLabel?.isHidden = true
+            self.bottomLabel?.isHidden = true
         case .move(let location):
             self.topLabel?.attributedText = NSAttributedString(string: "Move Plant", style: .selectableTableViewCell)
-            if let location = location {
-                self.middleLabel?.attributedText = NSAttributedString(string: location, style: .selectableTableViewCell)
-            } else {
-                self.middleLabel?.isHidden = true
-            }
+            let style: Style = location != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
+            let location = location ?? "No Location Entered"
+            self.bottomLabel?.attributedText = NSAttributedString(string: location, style: style)
         case .other(let description):
             self.topLabel?.attributedText = NSAttributedString(string: "Other", style: .selectableTableViewCell)
-            if let description = description {
-                self.middleLabel?.attributedText = NSAttributedString(string: description, style: .selectableTableViewCell)
-            } else {
-                self.middleLabel?.isHidden = true
-            }
+            let style: Style = description != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
+            let description = description ?? "No Description Entered"
+            self.bottomLabel?.attributedText = NSAttributedString(string: description, style: style)
         }
     }
 

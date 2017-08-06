@@ -48,6 +48,7 @@ extension ReminderVesselIconTableViewCell {
 
 enum Style {
     case selectableTableViewCell
+    case selectableTableViewCellDisabled
     case readOnlyTableViewCell
     case textInputTableViewCell
     case emojiSmall(accessibilityFontSizeEnabled: Bool)
@@ -62,10 +63,10 @@ enum Style {
                 .foregroundColor : Color.textPrimary
             ]
         case .reminderVesselCollectionViewCellDisabled:
-            var attribs = Style.reminderVesselCollectionViewCell.attributes
-            let color = (attribs[.foregroundColor] as! UIColor).withAlphaComponent(0.4)
-            attribs[.foregroundColor] = color
-            return attribs
+            return [
+                .font : Font.bodyPlus,
+                .foregroundColor : Color.textSecondary
+            ]
         case .emojiSmall(let accessibilityFontSizeEnabled):
             return [
                 .font : UIFont.systemFont(ofSize: accessibilityFontSizeEnabled ? 50 : 36)
@@ -88,6 +89,11 @@ enum Style {
             return [
                 .font : Font.bodyMinus,
                 .foregroundColor : Color.textPrimary
+            ]
+        case .selectableTableViewCellDisabled:
+            return [
+                .font : Font.bodyMinus,
+                .foregroundColor : Color.textSecondary
             ]
         }
     }

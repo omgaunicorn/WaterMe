@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13147.4"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,8 +27,8 @@
                             <constraint firstAttribute="width" secondItem="cqQ-mh-PX3" secondAttribute="height" multiplier="1:1" id="baG-hc-IXr"/>
                         </constraints>
                     </view>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="pJ1-Qa-CHB">
-                        <rect key="frame" x="78" y="8" width="222" height="103.5"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="pJ1-Qa-CHB">
+                        <rect key="frame" x="78" y="16" width="222" height="87.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" verticalCompressionResistancePriority="753" text="Top Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Icd-mF-8hY">
                                 <rect key="frame" x="0.0" y="0.0" width="222" height="19.5"/>
@@ -42,7 +43,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Bottom Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNE-8C-dC4">
-                                <rect key="frame" x="0.0" y="55" width="222" height="48.5"/>
+                                <rect key="frame" x="0.0" y="55" width="222" height="32.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -52,10 +53,10 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="pJ1-Qa-CHB" firstAttribute="leading" secondItem="cqQ-mh-PX3" secondAttribute="trailing" constant="8" symbolic="YES" id="GOh-yB-03Q"/>
-                    <constraint firstItem="pJ1-Qa-CHB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Jjx-TH-D2S"/>
+                    <constraint firstItem="pJ1-Qa-CHB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="Jjx-TH-D2S"/>
                     <constraint firstItem="cqQ-mh-PX3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="T2m-Cr-x6t"/>
                     <constraint firstItem="cqQ-mh-PX3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="XNp-4R-Tf3"/>
-                    <constraint firstAttribute="bottom" secondItem="pJ1-Qa-CHB" secondAttribute="bottom" constant="8" id="p5M-wS-BZM"/>
+                    <constraint firstAttribute="bottom" secondItem="pJ1-Qa-CHB" secondAttribute="bottom" constant="16" id="p5M-wS-BZM"/>
                     <constraint firstAttribute="trailing" secondItem="pJ1-Qa-CHB" secondAttribute="trailing" constant="20" symbolic="YES" id="vux-3O-Ynd"/>
                 </constraints>
             </tableViewCellContentView>
