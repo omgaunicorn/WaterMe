@@ -138,11 +138,14 @@ extension NSAttributedString {
         self.init(string: string, attributes: attributes)
     }
     
+    func appending(_ rhs: NSAttributedString) -> NSAttributedString {
+        let lhs = NSMutableAttributedString(attributedString: self)
+        lhs.append(rhs)
+        let appended = NSAttributedString(attributedString: lhs)
+        return appended
+    }
+    
     static func + (lhs: NSAttributedString, rhs: NSAttributedString) -> NSAttributedString {
-        // swiftlint:disable:next force_cast
-        let mutable = lhs.mutableCopy() as! NSMutableAttributedString
-        mutable.append(rhs)
-        // swiftlint:disable:next force_cast
-        return mutable.copy() as! NSAttributedString
+        return lhs.appending(rhs)
     }
 }
