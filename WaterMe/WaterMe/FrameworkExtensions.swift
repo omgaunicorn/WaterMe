@@ -110,6 +110,23 @@ extension DateComponentsFormatter {
     }
 }
 
+// Alerts for presenting realm errors
+extension UIAlertController {
+    
+    enum ErrorSelection {
+        case cancel, error(RealmError)
+    }
+    
+    convenience init(realmError error: RealmError, completion: @escaping (ErrorSelection) -> Void) {
+        self.init(title: error.title, message: error.details, preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: { _ in completion(.cancel) })
+        let errorAction = UIAlertAction(title: error.actionTitle, style: .default, handler: { _ in completion(.error(error)) })
+        self.addAction(cancelAction)
+        self.addAction(errorAction)
+    }
+}
+
+// Alerts for presenting User Input Validation Errors
 extension UIAlertController {
     
     enum Selection<T: UserFacingError> {

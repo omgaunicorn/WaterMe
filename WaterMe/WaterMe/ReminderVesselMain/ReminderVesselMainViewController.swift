@@ -44,11 +44,23 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionVC = self.childViewControllers.first()
         self.title = "WaterMe"
-        
-        self.collectionVC?.vesselChosen = { [unowned self] in self.editReminderVessel($0) }
-        self.collectionVC?.configure(with: self.basicRC)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if let data = self.collectionVC?.data, case .failure(let error) = data {
+            self.collectionVC?.data = nil
+            let alert = UIAlertController(realmError: error) { selection in
+                switch selection {
+                case .cancel:
+                    break // do nothing
+                case .error:
+                    print("link to settings")
+                }
+            }
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     @IBAction private func addReminderVesselButtonTapped(_ sender: NSObject?) {
@@ -62,6 +74,14 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
             vc.dismiss(animated: true, completion: deselectAction)
         }
         self.present(editVC, animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if var destVC = segue.destination as? ReminderVesselCollectionViewController {
+            self.collectionVC = destVC
+            destVC.vesselChosen = { [unowned self] in self.editReminderVessel($0) }
+            destVC.configure(with: self.basicRC)
+        }
     }
     
 }

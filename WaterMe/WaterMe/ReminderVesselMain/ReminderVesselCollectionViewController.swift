@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Result
 import WaterMeData
 import RealmSwift
 import UIKit
@@ -31,11 +32,12 @@ class ReminderVesselCollectionViewController: ContentSizeReloadCollectionViewCon
         
     var basicRC: BasicController? {
         didSet {
+            guard self.isViewLoaded else { return }
             self.hardReloadData()
         }
     }
     
-    private var data: AnyRealmCollection<ReminderVessel>?
+    internal var data: Result<AnyRealmCollection<ReminderVessel>, RealmError>?
     private var flow: UICollectionViewFlowLayout? {
         return self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
@@ -44,6 +46,7 @@ class ReminderVesselCollectionViewController: ContentSizeReloadCollectionViewCon
         super.viewDidLoad()
         self.collectionView?.register(ReminderVesselCollectionViewCell.nib, forCellWithReuseIdentifier: ReminderVesselCollectionViewCell.reuseID)
         self.flow?.minimumInteritemSpacing = 0
+        self.hardReloadData()
     }
     
     private func hardReloadData() {
@@ -51,14 +54,19 @@ class ReminderVesselCollectionViewController: ContentSizeReloadCollectionViewCon
         self.notificationToken = nil
         self.data = nil
         
-        let data = self.basicRC?.allVessels()
-        self.notificationToken = data?.addNotificationBlock({ [weak self] changes in self?.dataChanged(changes) })
+        guard let result = self.basicRC?.allVessels() else { return }
+        switch result {
+        case .failure:
+            self.data = result
+        case .success(let collection):
+            self.notificationToken = collection.addNotificationBlock({ [weak self] changes in self?.dataChanged(changes) })
+        }
     }
     
     private func dataChanged(_ changes: RealmCollectionChange<AnyRealmCollection<ReminderVessel>>) {
         switch changes {
         case .initial(let data):
-            self.data = data
+            self.data = .success(data)
             self.collectionView?.reloadData()
         case .update(_, deletions: let del, insertions: let ins, modifications: let mod):
             self.collectionView?.performBatchUpdates({
@@ -72,19 +80,19 @@ class ReminderVesselCollectionViewController: ContentSizeReloadCollectionViewCon
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.data?.count ?? 0
+        return self.data?.value?.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReminderVesselCollectionViewCell.reuseID, for: indexPath)
-        if let vessel = self.data?[indexPath.row], let cell = cell as? ReminderVesselCollectionViewCell {
+        if let vessel = self.data?.value?[indexPath.row], let cell = cell as? ReminderVesselCollectionViewCell {
             cell.configure(with: vessel)
         }
         return cell
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let vessel = self.data?[indexPath.row] else { return }
+        guard let vessel = self.data?.value?[indexPath.row] else { return }
         self.vesselChosen?(vessel)
     }
     

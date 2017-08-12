@@ -51,6 +51,14 @@ public class BasicController {
     
     public let kind: Kind
     private let config: Realm.Configuration
+    public var realm2: Result<Realm, RealmError> {
+        do {
+//            return .failure(RealmError(kind: .loadError, error: NSError()))
+            return try .success(Realm(configuration: self.config))
+        } catch {
+            return .failure(RealmError(kind: .loadError, error: error))
+        }
+    }
     public var realm: Realm {
         return try! Realm(configuration: self.config)
     }
@@ -89,10 +97,15 @@ public class BasicController {
     
     // MARK: WaterMeClient API
     
-    public func allVessels() -> AnyRealmCollection<ReminderVessel> {
-        let realm = self.realm
-        let vessels = realm.objects(ReminderVessel.self).sorted(byKeyPath: #keyPath(ReminderVessel.displayName))
-        return AnyRealmCollection(vessels)
+    public func allVessels() -> Result<AnyRealmCollection<ReminderVessel>, RealmError> {
+        let rr = self.realm2
+        switch rr {
+        case .success(let realm):
+            let vessels = realm.objects(ReminderVessel.self).sorted(byKeyPath: #keyPath(ReminderVessel.displayName))
+            return .success(AnyRealmCollection(vessels))
+        case .failure(let error):
+            return .failure(error)
+        }
     }
     
     public func newReminder(for vessel: ReminderVessel) -> Reminder {
