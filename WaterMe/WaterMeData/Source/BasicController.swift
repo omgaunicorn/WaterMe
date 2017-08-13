@@ -98,13 +98,10 @@ public class BasicController {
     // MARK: WaterMeClient API
     
     public func allVessels() -> Result<AnyRealmCollection<ReminderVessel>, RealmError> {
-        let rr = self.realm2
-        switch rr {
-        case .success(let realm):
-            let vessels = realm.objects(ReminderVessel.self).sorted(byKeyPath: #keyPath(ReminderVessel.displayName))
-            return .success(AnyRealmCollection(vessels))
-        case .failure(let error):
-            return .failure(error)
+        return self.realm2.map() { realm in
+            let kp = #keyPath(ReminderVessel.displayName)
+            let collection = realm.objects(ReminderVessel.self).sorted(byKeyPath: kp)
+            return AnyRealmCollection(collection)
         }
     }
     
