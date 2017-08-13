@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Result
 import WaterMeData
 import RealmSwift
 import UIKit
@@ -47,7 +48,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         case .new(let vessel):
             vc.reminder = basicRC.newReminder(for: vessel)
         case .existing(let reminder):
-            vc.reminder = reminder
+            vc.reminder = .success(reminder)
         }
         return navVC
     }
@@ -56,7 +57,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     @IBOutlet private weak var deleteButton: UIBarButtonItem?
     
     var basicRC: BasicController?
-    private var reminder: Reminder!
+    private var reminder: Result<Reminder, RealmError>?
     private var completionHandler: CompletionHandler?
     
     override func viewDidLoad() {
@@ -72,6 +73,18 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         self.startNotifications()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let result = self.reminder, case .failure(let error) = result {
+            self.reminder = nil
+            let alert = UIAlertController(realmError: error) { selection in
+                self.completionHandler?(self)
+            }
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     private func reminderChanged(_ changes: ObjectChange) {
         switch changes {
         case .change:
@@ -82,17 +95,18 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     private func update(kind: Reminder.Kind? = nil, interval: Int? = nil, note: String? = nil, fromKeyboard: Bool = false) {
+        guard let reminder = self.reminder?.value else { assertionFailure("No Reminder Object"); return; }
         if fromKeyboard == true {
             self.notificationToken?.stop()
         }
-        self.basicRC?.update(kind: kind, interval: interval, note: note, in: self.reminder)
+        self.basicRC?.update(kind: kind, interval: interval, note: note, in: reminder)
         if fromKeyboard == true {
             self.startNotifications()
         }
     }
     
     private func intervalChosen() {
-        let existingValue = self.reminder.interval
+        let existingValue = self.reminder!.value!.interval
         let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard, existingValue: existingValue) { vc, newValue in
             vc.dismiss(animated: true, completion: nil)
             guard let newValue = newValue else { return }
@@ -102,15 +116,17 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     @IBAction private func deleteButtonTapped(_ sender: Any) {
+        guard let reminder = self.reminder?.value else { self.completionHandler?(self); return; }
         // delete the object
-        self.basicRC?.delete(reminder: self.reminder)
+        self.basicRC?.delete(reminder: reminder)
         self.completionHandler?(self)
     }
     
     @IBAction private func doneButtonTapped(_ sender: Any) {
+        guard let reminder = self.reminder?.value else { self.completionHandler?(self); return; }
         let sender = sender as? UIBarButtonItem
         assert(sender != nil, "Expected UIBarButtonItem to call this method")
-        let errors = self.reminder.isUIComplete
+        let errors = reminder.isUIComplete
         switch errors.isEmpty {
         case true:
             self.completionHandler?(self)
@@ -129,7 +145,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     private func startNotifications() {
-        self.notificationToken = self.reminder.addNotificationBlock({ [weak self] in self?.reminderChanged($0) })
+        self.notificationToken = self.reminder?.value?.addNotificationBlock({ [weak self] in self?.reminderChanged($0) })
     }
     
     private var notificationToken: NotificationToken?

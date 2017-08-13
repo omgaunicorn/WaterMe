@@ -21,12 +21,13 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Result
 import WaterMeData
 import UIKit
 
 class ReminderEditTableViewController: UITableViewController {
     
-    var reminder: (() -> Reminder)?
+    var reminder: (() -> Result<Reminder, RealmError>?)?
     var kindChanged: ((Reminder.Kind, Bool) -> Void)?
     var intervalChosen: (() -> Void)?
     var noteChanged: ((String) -> Void)?
@@ -44,7 +45,7 @@ class ReminderEditTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return; }
+        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return; }
         let section = Section(section: indexPath.section, for: reminder.kind)
         switch section {
         case .kind:
@@ -62,18 +63,18 @@ class ReminderEditTableViewController: UITableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return 0; }
+        guard let reminder = self.reminder?()?.value else { return 0 }
         return Section.count(for: reminder.kind)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return 0; }
+        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return 0; }
         let section = Section(section: section, for: reminder.kind)
         return section.numberOfRows(for: reminder.kind)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return UITableViewCell(); }
+        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return UITableViewCell(); }
         let section = Section(section: indexPath.section, for: reminder.kind)
         switch section {
         case .kind:
@@ -116,7 +117,7 @@ class ReminderEditTableViewController: UITableViewController {
     }
     
     func nameTextFieldBecomeFirstResponder() {
-        guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return; }
+        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return; }
         let reminderKind = reminder.kind
         switch reminderKind {
         case .other, .move:
@@ -152,7 +153,7 @@ class ReminderEditTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let reminder = self.reminder?() else { assertionFailure("Missing Reminder Object"); return nil; }
+        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return nil; }
         let section = Section(section: section, for: reminder.kind)
         return section.localizedString
     }

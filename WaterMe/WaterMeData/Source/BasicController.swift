@@ -35,6 +35,17 @@ public extension HasBasicController {
     }
 }
 
+internal extension Realm {
+    internal func waterMe_commitWrite() -> Result<Void, RealmError> {
+        do {
+            try self.commitWrite()
+            return .success()
+        } catch {
+            return .failure(RealmError(kind: .writeError, error: error))
+        }
+    }
+}
+
 public class BasicController {
     
     // MARK: Initialization
@@ -105,14 +116,15 @@ public class BasicController {
         }
     }
     
-    public func newReminder(for vessel: ReminderVessel) -> Reminder {
-        let realm = self.realm
+    public func newReminder(for vessel: ReminderVessel) -> Result<Reminder, RealmError> {
+        let result = self.realm2
+        guard case .success(let realm) = result else { return .failure(result.error!) }
         let reminder = Reminder()
         realm.beginWrite()
         realm.add(reminder)
         vessel.reminders.append(reminder)
-        try! realm.commitWrite()
-        return reminder
+        let writeResult = realm.waterMe_commitWrite()
+        return writeResult.map({ reminder })
     }
     
     public func newReminderVessel(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, reminders: [Reminder]? = nil) -> ReminderVessel {
