@@ -31,14 +31,11 @@ class SelfContainedImagePickerController: UIImagePickerController, UIImagePicker
         return AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
     }
     
-    class var photosPermission: PHAuthorizationStatus {
-        return PHPhotoLibrary.authorizationStatus()
-    }
-    
     private class func newVC(completionHandler: @escaping (UIImage?, UIViewController) -> Void) -> SelfContainedImagePickerController {
         let vc = SelfContainedImagePickerController()
         vc.completionHandler = completionHandler
         vc.modalPresentationStyle = .formSheet
+        vc.imageExportPreset = .compatible
         vc.delegate = vc
         vc.allowsEditing = true
         vc.mediaTypes = [kUTTypeImage as String]
@@ -74,7 +71,7 @@ class SelfContainedImagePickerController: UIImagePickerController, UIImagePicker
         super.viewDidAppear(animated)
         guard self.permissionCheckTimer == nil else { return }
         self.permissionCheckTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            let invalidateTimer = {
+            func invalidateTimer() {
                 timer.invalidate()
                 self.permissionCheckTimer?.invalidate()
                 self.permissionCheckTimer = nil
@@ -91,15 +88,7 @@ class SelfContainedImagePickerController: UIImagePickerController, UIImagePicker
                     self.completionHandler?(nil, self)
                 }
             case .photoLibrary, .savedPhotosAlbum:
-                switch type(of: self).photosPermission {
-                case .notDetermined:
-                    break // do nothing. the user needs to pick
-                case .authorized:
-                    invalidateTimer()
-                case .restricted, .denied:
-                    invalidateTimer()
-                    self.completionHandler?(nil, self)
-                }
+                invalidateTimer() // iOS 11 makes photos permission no longer needed for UIImagePickerController
             }
         }
     }
