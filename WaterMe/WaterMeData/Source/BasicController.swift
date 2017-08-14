@@ -117,8 +117,8 @@ public class BasicController {
     }
     
     public func newReminder(for vessel: ReminderVessel) -> Result<Reminder, RealmError> {
-        let result = self.realm2
-        guard case .success(let realm) = result else { return .failure(result.error!) }
+        let realmResult = self.realm2
+        guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         let reminder = Reminder()
         realm.beginWrite()
         realm.add(reminder)
@@ -189,11 +189,13 @@ public class BasicController {
         realm.delete(vessel)
     }
         
-    public func delete(reminder: Reminder) {
-        let realm = self.realm
+    public func delete(reminder: Reminder) -> Result<Void, RealmError> {
+        let realmResult = self.realm2
+        guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         realm.beginWrite()
         self.delete(reminder: reminder, inOpenRealm: realm)
-        try! realm.commitWrite()
+        let writeResult = realm.waterMe_commitWrite()
+        return writeResult
     }
     
     private func delete(reminder: Reminder, inOpenRealm realm: Realm) {

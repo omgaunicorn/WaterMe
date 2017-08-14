@@ -169,8 +169,18 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     }
     
     func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController?) -> Bool {
-        self.basicRC?.delete(reminder: reminder)
-        return true
+        guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller."); return false; }
+        let deleteResult = basicRC.delete(reminder: reminder)
+        switch deleteResult {
+        case .success:
+            return true
+        case .failure(let error):
+            let alert = UIAlertController(realmError: error) { selection in
+                return
+            }
+            self.present(alert, animated: true, completion: nil)
+            return false
+        }
     }
     
     private func startNotifications() {
