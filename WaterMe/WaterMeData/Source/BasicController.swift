@@ -159,8 +159,9 @@ public class BasicController {
         try! realm.commitWrite()
     }
     
-    public func update(kind: Reminder.Kind? = nil, interval: Int? = nil, note: String? = nil, in reminder: Reminder) {
-        let realm = self.realm
+    public func update(kind: Reminder.Kind? = nil, interval: Int? = nil, note: String? = nil, in reminder: Reminder) -> Result<Void, RealmError> {
+        let realmResult = self.realm2
+        guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         realm.beginWrite()
         if let kind = kind {
             reminder.kind = kind
@@ -172,7 +173,8 @@ public class BasicController {
             // make sure the string is not empty. If it is empty, set it to blank string
             reminder.note = note.leadingTrailingWhiteSpaceTrimmedNonEmptyString
         }
-        try! realm.commitWrite()
+        let writeResult = realm.waterMe_commitWrite()
+        return writeResult
     }
         
     public func delete(vessel: ReminderVessel) {

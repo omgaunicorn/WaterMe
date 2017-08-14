@@ -95,14 +95,33 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     private func update(kind: Reminder.Kind? = nil, interval: Int? = nil, note: String? = nil, fromKeyboard: Bool = false) {
-        guard let reminder = self.reminder?.value else { assertionFailure("No Reminder Object"); return; }
+        // make sure we have the info we needed
+        guard let reminder = self.reminder?.value, let basicRC = self.basicRC
+            else { assertionFailure("Missing Reminder or Realm Controller"); return; }
+        
+        // if this came from the keyboard stop notifications
+        // so the keyboard doesn't get dismissed because of tableview reloads
         if fromKeyboard == true {
             self.notificationToken?.stop()
         }
-        self.basicRC?.update(kind: kind, interval: interval, note: note, in: reminder)
-        if fromKeyboard == true {
-            self.startNotifications()
+        
+        // after we exit this scope, we need to turn notifications back on
+        // again, only if the from keyboard variable is true
+        defer {
+            if fromKeyboard == true {
+                self.startNotifications()
+            }
         }
+        
+        // update the Reminder in Realm
+        let updateResult = basicRC.update(kind: kind, interval: interval, note: note, in: reminder)
+        
+        // show the user errors that may have ocurred
+        guard case .failure(let error) = updateResult else { return }
+        let alert = UIAlertController(realmError: error) { selection in
+            return
+        }
+        self.present(alert, animated: true, completion: nil)
     }
     
     private func intervalChosen() {
