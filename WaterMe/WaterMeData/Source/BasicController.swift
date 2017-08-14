@@ -127,8 +127,9 @@ public class BasicController {
         return writeResult.map({ reminder })
     }
     
-    public func newReminderVessel(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, reminders: [Reminder]? = nil) -> ReminderVessel {
-        let realm = self.realm
+    public func newReminderVessel(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, reminders: [Reminder]? = nil) -> Result<ReminderVessel, RealmError> {
+        let realmResult = self.realm2
+        guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         let v = ReminderVessel()
         if let displayName = displayName?.leadingTrailingWhiteSpaceTrimmedNonEmptyString { // make sure the string is not empty
             v.displayName = displayName
@@ -141,8 +142,8 @@ public class BasicController {
         }
         realm.beginWrite()
         realm.add(v)
-        try! realm.commitWrite()
-        return v
+        let writeResult = realm.waterMe_commitWrite()
+        return writeResult.map({ v })
     }
     
     public func update(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, in vessel: ReminderVessel) {

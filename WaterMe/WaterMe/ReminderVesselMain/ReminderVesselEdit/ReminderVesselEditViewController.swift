@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Result
 import RealmSwift
 import WaterMeData
 import UIKit
@@ -40,8 +41,11 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         var vc = navVC.viewControllers.first as! ReminderVesselEditViewController
         vc.configure(with: basicRC)
         vc.completionHandler = completionHandler
-        let vessel = vessel ?? basicRC.newReminderVessel()
-        vc.vessel = vessel
+        if let vessel = vessel {
+            vc.vessel = .success(vessel)
+        } else {
+            vc.vessel = basicRC.newReminderVessel()
+        }
         return navVC
     }
     
@@ -49,7 +53,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     @IBOutlet private weak var deleteButton: UIBarButtonItem?
     
     var basicRC: BasicController?
-    var vessel: ReminderVessel!
+    var vessel: Result<ReminderVessel, RealmError>?
     private var completionHandler: CompletionHandler!
     
     private func vesselChanged(_ changes: ObjectChange) {
@@ -70,6 +74,18 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         self.title = "New Plant"
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if let result = self.vessel, case .failure(let error) = result {
+            self.vessel = nil
+            let alert = UIAlertController(realmError: error) { selection in
+                self.completionHandler?(self)
+            }
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destVC = segue.destination as? ReminderVesselEditTableViewController else { return }
         self.tableViewController = destVC
@@ -77,14 +93,18 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     }
     
     @IBAction private func deleteButtonTapped(_ sender: Any) {
-        self.basicRC?.delete(vessel: self.vessel)
+        guard let vessel = self.vessel?.value, let basicRC = self.basicRC
+            else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
+        basicRC.delete(vessel: vessel)
         self.completionHandler?(self)
     }
     
     @IBAction private func doneButtonTapped(_ sender: Any) {
+        guard let vessel = self.vessel?.value else { assertionFailure("Missing ReminderVessel"); return; }
+        
         let sender = sender as? UIBarButtonItem
         assert(sender != nil, "Expected UIBarButtonItem to call this method")
-        let errors = self.vessel.isUIComplete
+        let errors = vessel.isUIComplete
         switch errors.isEmpty {
         case true:
             self.completionHandler?(self)
@@ -110,7 +130,9 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     }
     
     private func updateIcon(_ icon: ReminderVessel.Icon) {
-        self.basicRC?.update(icon: icon, in: self.vessel)
+        guard let vessel = self.vessel?.value, let basicRC = self.basicRC
+            else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
+        basicRC.update(icon: icon, in: vessel)
     }
     
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?) {
@@ -145,16 +167,19 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     }
     
     func userChangedName(to newName: String, andDismissKeyboard dismissKeyboard: Bool, controller: ReminderVesselEditTableViewController?) {
+        guard let vessel = self.vessel?.value, let basicRC = self.basicRC
+            else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
         self.notificationToken?.stop() // stop the update notifications from causing the tableview to reload
-        self.basicRC?.update(displayName: newName, in: self.vessel)
+        basicRC.update(displayName: newName, in: vessel)
         self.startNotifications()
         guard dismissKeyboard else { return }
         self.tableViewController?.reloadPhotoAndName()
     }
     
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?) {
-        guard let basicRC = self.basicRC else { return }
-        let addReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .new(self.vessel)) { vc in
+        guard let vessel = self.vessel?.value, let basicRC = self.basicRC
+            else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
+        let addReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .new(vessel)) { vc in
             vc.dismiss(animated: true, completion: nil)
         }
         self.present(addReminderVC, animated: true, completion: nil)
@@ -184,7 +209,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     }
     
     private func startNotifications() {
-        self.notificationToken = self.vessel.addNotificationBlock({ [weak self] in self?.vesselChanged($0) })
+        self.notificationToken = self.vessel?.value?.addNotificationBlock({ [weak self] in self?.vesselChanged($0) })
     }
     
     private var notificationToken: NotificationToken?
