@@ -95,8 +95,16 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     @IBAction private func deleteButtonTapped(_ sender: Any) {
         guard let vessel = self.vessel?.value, let basicRC = self.basicRC
             else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
-        basicRC.delete(vessel: vessel)
-        self.completionHandler?(self)
+        let deleteResult = basicRC.delete(vessel: vessel)
+        switch deleteResult {
+        case .success:
+            self.completionHandler?(self)
+        case .failure(let error):
+            let alert = UIAlertController(error: error) { _ in
+                self.completionHandler?(self)
+            }
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
     @IBAction private func doneButtonTapped(_ sender: Any) {

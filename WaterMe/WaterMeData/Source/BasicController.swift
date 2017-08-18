@@ -163,6 +163,7 @@ public class BasicController {
     }
     
     public func update(kind: Reminder.Kind? = nil, interval: Int? = nil, note: String? = nil, in reminder: Reminder) -> Result<Void, RealmError> {
+        guard reminder.isInvalidated == false else { return .failure(.objectDeleted) }
         let realmResult = self.realm2
         guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         realm.beginWrite()
@@ -180,11 +181,13 @@ public class BasicController {
         return writeResult
     }
         
-    public func delete(vessel: ReminderVessel) {
-        let realm = self.realm
+    public func delete(vessel: ReminderVessel) -> Result<Void, RealmError> {
+        let realmResult = self.realm2
+        guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         realm.beginWrite()
         self.delete(vessel: vessel, inOpenRealm: realm)
-        try! realm.commitWrite()
+        let writeResult = realm.waterMe_commitWrite()
+        return writeResult
     }
     
     private func delete(vessel: ReminderVessel, inOpenRealm realm: Realm) {
