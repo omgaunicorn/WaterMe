@@ -62,16 +62,12 @@ public class BasicController {
     
     public let kind: Kind
     private let config: Realm.Configuration
-    public var realm2: Result<Realm, RealmError> {
+    private var realm: Result<Realm, RealmError> {
         do {
-//            return .failure(RealmError(kind: .loadError, error: NSError()))
             return try .success(Realm(configuration: self.config))
         } catch {
             return .failure(.loadError)
         }
-    }
-    public var realm: Realm {
-        return try! Realm(configuration: self.config)
     }
     
     public init(kind: Kind) {
@@ -109,7 +105,7 @@ public class BasicController {
     // MARK: WaterMeClient API
     
     public func allVessels() -> Result<AnyRealmCollection<ReminderVessel>, RealmError> {
-        return self.realm2.map() { realm in
+        return self.realm.map() { realm in
             let kp = #keyPath(ReminderVessel.displayName)
             let collection = realm.objects(ReminderVessel.self).sorted(byKeyPath: kp)
             return AnyRealmCollection(collection)
@@ -117,7 +113,7 @@ public class BasicController {
     }
     
     public func newReminder(for vessel: ReminderVessel) -> Result<Reminder, RealmError> {
-        let realmResult = self.realm2
+        let realmResult = self.realm
         guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         let reminder = Reminder()
         realm.beginWrite()
@@ -128,7 +124,7 @@ public class BasicController {
     }
     
     public func newReminderVessel(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, reminders: [Reminder]? = nil) -> Result<ReminderVessel, RealmError> {
-        let realmResult = self.realm2
+        let realmResult = self.realm
         guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         let v = ReminderVessel()
         if let displayName = displayName?.leadingTrailingWhiteSpaceTrimmedNonEmptyString { // make sure the string is not empty
@@ -148,7 +144,7 @@ public class BasicController {
     
     public func update(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, in vessel: ReminderVessel) -> Result<Void, RealmError> {
         guard vessel.isInvalidated == false else { return .failure(.objectDeleted) }
-        let realmResult = self.realm2
+        let realmResult = self.realm
         guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         realm.beginWrite()
         if let displayName = displayName {
@@ -164,7 +160,7 @@ public class BasicController {
     
     public func update(kind: Reminder.Kind? = nil, interval: Int? = nil, note: String? = nil, in reminder: Reminder) -> Result<Void, RealmError> {
         guard reminder.isInvalidated == false else { return .failure(.objectDeleted) }
-        let realmResult = self.realm2
+        let realmResult = self.realm
         guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         realm.beginWrite()
         if let kind = kind {
@@ -182,7 +178,7 @@ public class BasicController {
     }
         
     public func delete(vessel: ReminderVessel) -> Result<Void, RealmError> {
-        let realmResult = self.realm2
+        let realmResult = self.realm
         guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         realm.beginWrite()
         self.delete(vessel: vessel, inOpenRealm: realm)
@@ -198,7 +194,7 @@ public class BasicController {
     }
         
     public func delete(reminder: Reminder) -> Result<Void, RealmError> {
-        let realmResult = self.realm2
+        let realmResult = self.realm
         guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         realm.beginWrite()
         self.delete(reminder: reminder, inOpenRealm: realm)
