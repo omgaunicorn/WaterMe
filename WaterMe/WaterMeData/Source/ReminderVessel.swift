@@ -28,7 +28,7 @@ import RealmSwift
 public protocol UserFacingError: Swift.Error {
     var title: String { get }
     var details: String? { get }
-    var actionTitle: String { get }
+    var actionTitle: String? { get }
 }
 
 public protocol UICompleteCheckable {
@@ -89,7 +89,7 @@ extension ReminderVessel: UICompleteCheckable {
                 return "Each plant can have many reminders. You may want one reminder to water your plant every 4 days. And a second reminder to fertilize your plant every 30 days."
             }
         }
-        public var actionTitle: String {
+        public var actionTitle: String? {
             switch self {
             case .missingIcon:
                 return "Choose Photo"

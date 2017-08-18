@@ -41,7 +41,7 @@ internal extension Realm {
             try self.commitWrite()
             return .success()
         } catch {
-            return .failure(RealmError(kind: .writeError, error: error))
+            return .failure(.writeError)
         }
     }
 }
@@ -67,7 +67,7 @@ public class BasicController {
 //            return .failure(RealmError(kind: .loadError, error: NSError()))
             return try .success(Realm(configuration: self.config))
         } catch {
-            return .failure(RealmError(kind: .loadError, error: error))
+            return .failure(.loadError)
         }
     }
     public var realm: Realm {
@@ -146,9 +146,10 @@ public class BasicController {
         return writeResult.map({ v })
     }
     
-    public func update(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, in vessel: ReminderVessel) {
-        guard vessel.isInvalidated == false else { return }
-        let realm = self.realm
+    public func update(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, in vessel: ReminderVessel) -> Result<Void, RealmError> {
+        guard vessel.isInvalidated == false else { return .failure(.objectDeleted) }
+        let realmResult = self.realm2
+        guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
         realm.beginWrite()
         if let displayName = displayName {
             // make sure the string is not empty. If it is empty, set it to NIL
@@ -157,7 +158,8 @@ public class BasicController {
         if let icon = icon {
             vessel.icon = icon
         }
-        try! realm.commitWrite()
+        let writeResult = realm.waterMe_commitWrite()
+        return writeResult
     }
     
     public func update(kind: Reminder.Kind? = nil, interval: Int? = nil, note: String? = nil, in reminder: Reminder) -> Result<Void, RealmError> {

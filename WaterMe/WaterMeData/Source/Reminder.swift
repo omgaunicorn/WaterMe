@@ -117,7 +117,7 @@ extension Reminder: UICompleteCheckable {
         public var details: String? {
             return nil
         }
-        public var actionTitle: String {
+        public var actionTitle: String? {
             switch self {
             case .missingMoveLocation:
                 return "Enter Location"

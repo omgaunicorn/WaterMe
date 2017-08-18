@@ -51,14 +51,7 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
         super.viewDidAppear(animated)
         if let data = self.collectionVC?.data, case .failure(let error) = data {
             self.collectionVC?.data = nil
-            let alert = UIAlertController(realmError: error) { selection in
-                switch selection {
-                case .cancel:
-                    break // do nothing
-                case .error:
-                    print("link to settings")
-                }
-            }
+            let alert = UIAlertController(error: error, completion: nil)
             self.present(alert, animated: true, completion: nil)
         }
     }

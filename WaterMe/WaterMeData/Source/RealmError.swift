@@ -7,24 +7,23 @@
 
 import Foundation
 
-public struct RealmError: Error {
-    public enum Kind {
-        case loadError, createError, writeError, readError
-    }
-    public var kind: Kind
-    public var error: Error
-    internal init(kind: Kind, error: Error) {
-        self.kind = kind
-        self.error = error
-    }
+public enum RealmError: Error {
+    case loadError, createError, writeError, readError, objectDeleted
 }
 
 extension RealmError: UserFacingError {
     public var title: String {
-        return "Error"
+        switch self {
+        case .loadError:
+            return "Error Loading"
+        default:
+            return "Error Saving"
+        }
     }
     public var details: String? {
-        switch self.kind {
+        switch self {
+        case .objectDeleted:
+            return "Unable to save changes because the item was deleted. Possibly from another device."
         case .createError:
             return "Error creating save file. Check to make sure there is free space available on this device."
         case .loadError:
@@ -35,7 +34,12 @@ extension RealmError: UserFacingError {
             return "Error saving changes. Check to make sure there is free space available on this device."
         }
     }
-    public var actionTitle: String {
-        return "Settings"
+    public var actionTitle: String? {
+        switch self {
+        case .objectDeleted:
+            return nil
+        default:
+            return "Manage Storage"
+        }
     }
 }

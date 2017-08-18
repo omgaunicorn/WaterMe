@@ -78,7 +78,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         
         if let result = self.reminder, case .failure(let error) = result {
             self.reminder = nil
-            let alert = UIAlertController(realmError: error) { selection in
+            let alert = UIAlertController(error: error) { selection in
                 self.completionHandler?(self)
             }
             self.present(alert, animated: true, completion: nil)
@@ -118,9 +118,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         
         // show the user errors that may have ocurred
         guard case .failure(let error) = updateResult else { return }
-        let alert = UIAlertController(realmError: error) { selection in
-            return
-        }
+        let alert = UIAlertController(error: error, completion: nil)
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -142,7 +140,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         case .success:
             self.completionHandler?(self)
         case .failure(let error):
-            let alert = UIAlertController(realmError: error) { selection in
+            let alert = UIAlertController(error: error) { selection in
                 self.completionHandler?(self)
             }
             self.present(alert, animated: true, completion: nil)

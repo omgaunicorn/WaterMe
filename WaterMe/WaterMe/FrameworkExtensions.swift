@@ -113,37 +113,41 @@ extension DateComponentsFormatter {
 // Alerts for presenting realm errors
 extension UIAlertController {
     
-    enum ErrorSelection {
-        case cancel, error(RealmError)
+    enum ErrorSelection<T: UserFacingError> {
+        case cancel, error(T)
     }
     
-    convenience init(realmError error: RealmError, completion: @escaping (ErrorSelection) -> Void) {
+    convenience init<T>(error: T, completion: ((ErrorSelection<T>) -> Void)?) {
         self.init(title: error.title, message: error.details, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: { _ in completion(.cancel) })
-        let errorAction = UIAlertAction(title: error.actionTitle, style: .default, handler: { _ in completion(.error(error)) })
+        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: { _ in completion?(.cancel) })
         self.addAction(cancelAction)
-        self.addAction(errorAction)
+        if let actionTitle = error.actionTitle {
+            let errorAction = UIAlertAction(title: actionTitle, style: .default, handler: { _ in completion?(.error(error)) })
+            self.addAction(errorAction)
+        }
     }
 }
 
 // Alerts for presenting User Input Validation Errors
 extension UIAlertController {
     
-    enum Selection<T: UserFacingError> {
+    enum SaveAnywayErrorSelection<T: UserFacingError> {
         case cancel, saveAnyway, error(T)
     }
     
-    private convenience init<T>(error: T, completion: @escaping (Selection<T>) -> Void) {
+    private convenience init<T>(saveAnywayError error: T, completion: @escaping (SaveAnywayErrorSelection<T>) -> Void) {
         self.init(title: error.title, message: error.details, preferredStyle: .alert)
-        let fix = UIAlertAction(title: error.actionTitle, style: .default, handler: { _ in completion(.error(error)) })
+        if let actionTitle = error.actionTitle {
+            let fix = UIAlertAction(title: actionTitle, style: .default, handler: { _ in completion(.error(error)) })
+            self.addAction(fix)
+        }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in completion(.cancel) })
         let save = UIAlertAction(title: "Save Anyway", style: .destructive, handler: { _ in completion(.saveAnyway) })
         self.addAction(cancel)
-        self.addAction(fix)
         self.addAction(save)
     }
     
-    private convenience init<T>(actionSheetWithActions actions: [UIAlertAction], cancelSaveCompletion completion: @escaping (Selection<T>) -> Void) {
+    private convenience init<T>(actionSheetWithActions actions: [UIAlertAction], cancelSaveCompletion completion: @escaping (SaveAnywayErrorSelection<T>) -> Void) {
         self.init(title: nil, message: "There are some issues you might want to resolve.", preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in completion(.cancel) })
         let save = UIAlertAction(title: "Save Anyway", style: .destructive, handler: { _ in completion(.saveAnyway) })
@@ -155,7 +159,7 @@ extension UIAlertController {
     class func presentAlertVC<T>(for errors: [T],
                                  over presentingVC: UIViewController,
                                  from barButtonItem: UIBarButtonItem?,
-                                 completionHandler completion: @escaping (Selection<T>) -> Void)
+                                 completionHandler completion: @escaping (SaveAnywayErrorSelection<T>) -> Void)
     {
         let errorActions = errors.map() { error -> UIAlertAction in
             let action = UIAlertAction(title: error.title, style: .default) { _ in
@@ -164,7 +168,7 @@ extension UIAlertController {
                     completion(.error(error))
                 } else {
                     // otherwise, make a new alert that gives the user more detailed information
-                    let errorAlert = UIAlertController(error: error, completion: completion)
+                    let errorAlert = UIAlertController(saveAnywayError: error, completion: completion)
                     presentingVC.present(errorAlert, animated: true, completion: nil)
                 }
             }

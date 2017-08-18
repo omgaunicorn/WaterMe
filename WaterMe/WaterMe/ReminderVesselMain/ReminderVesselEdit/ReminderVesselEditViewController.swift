@@ -79,7 +79,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         
         if let result = self.vessel, case .failure(let error) = result {
             self.vessel = nil
-            let alert = UIAlertController(realmError: error) { selection in
+            let alert = UIAlertController(error: error) { selection in
                 self.completionHandler?(self)
             }
             self.present(alert, animated: true, completion: nil)
@@ -132,7 +132,10 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     private func updateIcon(_ icon: ReminderVessel.Icon) {
         guard let vessel = self.vessel?.value, let basicRC = self.basicRC
             else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
-        basicRC.update(icon: icon, in: vessel)
+        let updateResult = basicRC.update(icon: icon, in: vessel)
+        guard case .failure(let error) = updateResult else { return }
+        let alert = UIAlertController(error: error, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?) {
@@ -170,7 +173,11 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         guard let vessel = self.vessel?.value, let basicRC = self.basicRC
             else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
         self.notificationToken?.stop() // stop the update notifications from causing the tableview to reload
-        basicRC.update(displayName: newName, in: vessel)
+        let updateResult = basicRC.update(displayName: newName, in: vessel)
+        if case .failure(let error) = updateResult {
+            let alert = UIAlertController(error: error, completion: nil)
+            self.present(alert, animated: true, completion: nil)
+        }
         self.startNotifications()
         guard dismissKeyboard else { return }
         self.tableViewController?.reloadPhotoAndName()
@@ -200,9 +207,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         case .success:
             return true
         case .failure(let error):
-            let alert = UIAlertController(realmError: error) { selection in
-                return
-            }
+            let alert = UIAlertController(error: error, completion: nil)
             self.present(alert, animated: true, completion: nil)
             return false
         }
