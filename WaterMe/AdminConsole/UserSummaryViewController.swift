@@ -62,7 +62,7 @@ class UserSummaryViewController: UIViewController {
     
     private func updateUI(with data: AnyRealmCollection<RealmUser>) {
         self.totalUsersLabel?.text = String(data.count)
-        self.totalSizeLabel?.text = self.sizeFormatter.string(fromByteCount: data.reduce(0, { $0.0 + Int64($0.1.size) }))
+        self.totalSizeLabel?.text = self.sizeFormatter.string(fromByteCount: data.reduce(0, { $0 + Int64($1.size) }))
         let (premium, pro, suspicious, empty) = self.sumSubscriptionTypes(with: data)
         self.totalPremUserCountLabel?.text = String(premium)
         self.totalProUserCountLabel?.text = String(pro)

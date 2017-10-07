@@ -186,10 +186,10 @@ fileprivate extension URLSession {
             }
             let validPurchases = purchasesArray
                 .flatMap({ PurchasedSubscription(json: $0) })
-                .sorted(by: { $0.0.expirationDate > $0.1.expirationDate })
+                .sorted(by: { $0.expirationDate > $1.expirationDate })
             DispatchQueue.main.async {
                 if purchasesArray.count == validPurchases.count {
-                    completionHandler?(.success(receiptStatus: status, currentSubscription: validPurchases.first))
+                    completionHandler?(.success((receiptStatus: status, currentSubscription: validPurchases.first)))
                 } else {
                     completionHandler?(.failure(.responseJSONPurchasesContainedUnexpectedData))
                 }

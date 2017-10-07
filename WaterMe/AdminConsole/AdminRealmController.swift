@@ -54,17 +54,17 @@ enum DataPresent: String {
 }
 
 class ConsoleError: Object {
-    dynamic var date = Date()
-    dynamic var code = 0
-    dynamic var file = ""
-    dynamic var line = 0
-    dynamic var function = ""
+    @objc dynamic var date = Date()
+    @objc dynamic var code = 0
+    @objc dynamic var file = ""
+    @objc dynamic var line = 0
+    @objc dynamic var function = ""
 }
 
 class RealmFile: Object {
-    fileprivate(set) dynamic var uuid = ""
-    fileprivate(set) dynamic var name = ""
-    fileprivate(set) dynamic var size = 0
+    @objc fileprivate(set) dynamic var uuid = ""
+    @objc fileprivate(set) dynamic var name = ""
+    @objc fileprivate(set) dynamic var size = 0
     let owners = LinkingObjects(fromType: RealmUser.self, property: "files")
     var owner: RealmUser? {
         return self.owners.first
@@ -75,9 +75,9 @@ class RealmFile: Object {
 }
 
 class RealmUser: Object {
-    fileprivate(set) dynamic var uuid = ""
-    fileprivate(set) dynamic var size = 0
-    private dynamic var _dataPresent: String = DataPresent.suspicious.rawValue
+    @objc fileprivate(set) dynamic var uuid = ""
+    @objc fileprivate(set) dynamic var size = 0
+    @objc private dynamic var _dataPresent: String = DataPresent.suspicious.rawValue
     fileprivate(set) var dataPresent: DataPresent {
         get {
             return DataPresent(rawValue: _dataPresent) ?? .suspicious
@@ -86,9 +86,9 @@ class RealmUser: Object {
             _dataPresent = newValue.rawValue
         }
     }
-    fileprivate(set) dynamic var isSizeSuspicious = false
+    @objc fileprivate(set) dynamic var isSizeSuspicious = false
     let files = List<RealmFile>()
-    fileprivate(set) dynamic var latestReceipt: Receipt?
+    @objc fileprivate(set) dynamic var latestReceipt: Receipt?
     override static func primaryKey() -> String? {
         return "uuid"
     }
@@ -260,7 +260,7 @@ class AdminRealmController {
             let oldSize = file.size
             file.size = oldSize
         }
-        let totalSize = files.reduce(0, { $0.1.size + $0.0 })
+        let totalSize = files.reduce(0, { $1.size + $0 })
         realmUser.size = totalSize
         realmUser.isSizeSuspicious = totalSize >= 10000000 ? true : false
         let receiptPresent = realmUser.files.filter({ $0.name == DataPresent.kReceiptKey }).isEmpty == false
