@@ -42,12 +42,12 @@ public class ReminderVessel: Object {
         case plant
     }
     
-    public internal(set) dynamic var uuid = UUID().uuidString
-    public internal(set) dynamic var displayName: String?
+    @objc public internal(set) dynamic var uuid = UUID().uuidString
+    @objc public internal(set) dynamic var displayName: String?
     public let reminders = List<Reminder>()
     
-    private dynamic var iconImageData: Data?
-    private dynamic var iconEmojiString: String?
+    @objc private dynamic var iconImageData: Data?
+    @objc private dynamic var iconEmojiString: String?
     public internal(set) var icon: Icon? {
         get { return Icon(rawImageData: self.iconImageData, emojiString: self.iconEmojiString) }
         set {
@@ -56,7 +56,7 @@ public class ReminderVessel: Object {
         }
     }
     
-    private dynamic var kindString = Kind.plant.rawValue
+    @objc private dynamic var kindString = Kind.plant.rawValue
     public internal(set) var kind: Kind {
         get { return Kind(rawValue: self.kindString) ?? .plant }
         set { self.kindString = newValue.rawValue }

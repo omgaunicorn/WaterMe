@@ -41,19 +41,19 @@ public class Reminder: Object {
         get { return self.kindValue }
         set { self.update(with: newValue) }
     }
-    public internal(set) dynamic var interval = Reminder.defaultInterval
-    public internal(set) dynamic var note: String?
+    @objc public internal(set) dynamic var interval = Reminder.defaultInterval
+    @objc public internal(set) dynamic var note: String?
     public let performed = List<ReminderPerform>()
     public var vessel: ReminderVessel? { return self.vessels.first }
     
     // MARK: Implementation Details
-    internal dynamic var kindString: String = Reminder.kCaseWaterValue
-    internal dynamic var descriptionString: String?
+    @objc internal dynamic var kindString: String = Reminder.kCaseWaterValue
+    @objc internal dynamic var descriptionString: String?
     internal let vessels = LinkingObjects(fromType: ReminderVessel.self, property: "reminders") //#keyPath(ReminderVessel.reminders)
 }
 
 public class ReminderPerform: Object {
-    public internal(set) var date = Date()
+    @objc public internal(set) dynamic var date = Date()
 }
 
 fileprivate extension Reminder {

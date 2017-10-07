@@ -87,7 +87,7 @@ public class UnpurchasedSubscriptionDownloader: NSObject, UnpurchasedSubscriptio
     
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         var subscriptions = UnpurchasedSubscription.subscriptions(from: response.products)
-        subscriptions.sort(by: { $0.0.price < $0.1.price })
+        subscriptions.sort(by: { $0.price < $1.price })
         let result = UnpurchasedSubscriptionDownloadResult.success(subscriptions)
         self.results = result
         completion?(result)

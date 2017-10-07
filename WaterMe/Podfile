@@ -5,7 +5,7 @@ target 'WaterMe' do
 	pod 'FormatterKit', '~> 1.8.2'
 	pod 'Result', '~> 3.2.2'
 	pod 'RealmSwift'
-	pod 'XCGLogger', '~> 5.0.1'
+	pod 'XCGLogger', '~> 6.0.1'
 	pod 'TPInAppReceipt'
 	pod 'WaterMeData', :path => 'WaterMeData'
 	pod 'WaterMeStore', :path => 'WaterMeStore'
@@ -17,7 +17,7 @@ target 'AdminConsole' do
 	
 	pod 'Result', '~> 3.2.2'
 	pod 'RealmSwift'
-	pod 'XCGLogger', '~> 5.0.1'
+	pod 'XCGLogger', '~> 6.0.1'
 	pod 'WaterMeData', :path => 'WaterMeData'
     pod 'WaterMeStore', :path => 'WaterMeStore'
 end
@@ -32,7 +32,7 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings['SWIFT_VERSION'] = '3.2'
+      config.build_settings['SWIFT_VERSION'] = '4.0'
     end
   end
 end

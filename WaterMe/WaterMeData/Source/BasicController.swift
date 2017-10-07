@@ -39,7 +39,7 @@ internal extension Realm {
     internal func waterMe_commitWrite() -> Result<Void, RealmError> {
         do {
             try self.commitWrite()
-            return .success()
+            return .success(())
         } catch {
             return .failure(.writeError)
         }

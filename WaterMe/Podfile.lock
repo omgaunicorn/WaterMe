@@ -32,23 +32,23 @@ PODS:
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
-  - Realm (2.9.0):
-    - Realm/Headers (= 2.9.0)
-  - Realm/Headers (2.9.0)
-  - RealmSwift (2.9.0):
-    - Realm (= 2.9.0)
-  - Result (3.2.3)
+  - Realm (2.10.2):
+    - Realm/Headers (= 2.10.2)
+  - Realm/Headers (2.10.2)
+  - RealmSwift (2.10.2):
+    - Realm (= 2.10.2)
+  - Result (3.2.4)
   - TPInAppReceipt (1.1.4)
   - WaterMeData (1.0.0):
     - RealmSwift
     - Result (~> 3.2.2)
-    - XCGLogger (~> 5.0.1)
+    - XCGLogger (~> 6.0.1)
   - WaterMeStore (1.0.0):
     - Result (~> 3.2.2)
-    - XCGLogger (~> 5.0.1)
-  - XCGLogger (5.0.1):
-    - XCGLogger/Core (= 5.0.1)
-  - XCGLogger/Core (5.0.1):
+    - XCGLogger (~> 6.0.1)
+  - XCGLogger (6.0.1):
+    - XCGLogger/Core (= 6.0.1)
+  - XCGLogger/Core (6.0.1):
     - ObjcExceptionBridging
 
 DEPENDENCIES:
@@ -58,7 +58,7 @@ DEPENDENCIES:
   - TPInAppReceipt
   - WaterMeData (from `WaterMeData`)
   - WaterMeStore (from `WaterMeStore`)
-  - XCGLogger (~> 5.0.1)
+  - XCGLogger (~> 6.0.1)
 
 EXTERNAL SOURCES:
   WaterMeData:
@@ -69,14 +69,14 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   FormatterKit: 4b8f29acc9b872d5d12a63efb560661e8f2e1b98
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
-  Realm: f14ab1673502559cb16592ddb8f383c474c13e05
-  RealmSwift: 16ad2c187042c4934f49750375582fe508627dcb
-  Result: 128640a6347e8d2ae48b142556739a2d13f90ce6
+  Realm: 0ef72b837fb67e9f4b098bac771ddd72c7fdbb69
+  RealmSwift: 07a9ae0505091eda6b2ee7c190c3786d6e90a7b0
+  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
   TPInAppReceipt: df20c542f4ecadd6b357185635b283ec03ff50b6
-  WaterMeData: 611a676d812d920dcc1d6a1dd6a9993a71698735
-  WaterMeStore: a9f2d84844aecb6d02663e36bc479117bc212b02
-  XCGLogger: 0b43697155d41e4a1b15fc776f319c2141646b09
+  WaterMeData: 489169aa74d692017725b1c9277c694804b809e0
+  WaterMeStore: 68e6e18ec1ae1b413b4a2ada3fea155fa211458b
+  XCGLogger: b4ca980580108cfeaf221afe158f5d89c1be22e0
 
-PODFILE CHECKSUM: 50efce21dee955bb63299e289b78f5f8c9301a3f
+PODFILE CHECKSUM: 7a57c0a49485b484abbbacac25022dbf05107a0d
 
-COCOAPODS: 1.3.0.rc.1
+COCOAPODS: 1.4.0.beta.1

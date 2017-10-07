@@ -34,7 +34,7 @@ Pod::Spec.new do |s|
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
   s.dependency 'RealmSwift'
-  s.dependency 'XCGLogger', '~> 5.0.1'
+  s.dependency 'XCGLogger', '~> 6.0.1'
   s.dependency 'Result', '~> 3.2.2'
 
 end

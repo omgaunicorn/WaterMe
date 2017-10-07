@@ -82,7 +82,7 @@ public class SubscriptionRestorer: NSObject, SubscriptionRestoreType, SKPaymentT
             return
         }
         self.reset()
-        completionHandler(.success())
+        completionHandler(.success(()))
     }
     
     public func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
