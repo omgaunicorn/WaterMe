@@ -26,12 +26,13 @@ import UIKit
 
 class ReminderVesselMainViewController: UIViewController, HasProController, HasBasicController {
 
-    class func newVC(basicController: BasicController, proController: ProController? = nil) -> UIViewController {
+    class func newVC(basicController: BasicController, proController: ProController? = nil) -> UINavigationController {
         let sb = UIStoryboard(name: "ReminderVesselMain", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderVesselMainViewController
+        vc.title = "Manage Plants" // set here because it works better in UITabBarController
         vc.configure(with: basicController)
         vc.configure(with: proController)
         return navVC
@@ -44,7 +45,6 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "WaterMe"
     }
     
     override func viewDidAppear(_ animated: Bool) {

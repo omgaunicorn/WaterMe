@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="QGv-3Z-A53">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QGv-3Z-A53">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,8 +13,8 @@
         <scene sceneID="gRv-Fa-NuM">
             <objects>
                 <navigationController id="QGv-3Z-A53" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="XHe-h9-hLQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="XHe-h9-hLQ">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -25,14 +25,10 @@
             </objects>
             <point key="canvasLocation" x="-543" y="142"/>
         </scene>
-        <!--WaterMe-->
+        <!--Maanage Plants-->
         <scene sceneID="PPX-eb-O8u">
             <objects>
                 <viewController id="CBd-BS-reS" customClass="ReminderVesselMainViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0ha-Z7-pTe"/>
-                        <viewControllerLayoutGuide type="bottom" id="tXQ-Sd-wL7"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Mny-NS-8h4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -49,10 +45,11 @@
                             <constraint firstItem="JRu-LM-rcj" firstAttribute="centerY" secondItem="Mny-NS-8h4" secondAttribute="centerY" id="65H-n0-bsp"/>
                             <constraint firstItem="JRu-LM-rcj" firstAttribute="width" secondItem="Mny-NS-8h4" secondAttribute="width" id="KaB-2W-sxo"/>
                             <constraint firstItem="JRu-LM-rcj" firstAttribute="height" secondItem="Mny-NS-8h4" secondAttribute="height" id="Q9E-xZ-nBq"/>
-                            <constraint firstItem="JRu-LM-rcj" firstAttribute="centerX" secondItem="Mny-NS-8h4" secondAttribute="centerX" id="oAO-cW-QIi"/>
+                            <constraint firstItem="JRu-LM-rcj" firstAttribute="centerX" secondItem="qj8-Ga-TBi" secondAttribute="centerX" id="oAO-cW-QIi"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="qj8-Ga-TBi"/>
                     </view>
-                    <navigationItem key="navigationItem" title="WaterMe" id="PVD-j4-HSM">
+                    <navigationItem key="navigationItem" title="Maanage Plants" largeTitleDisplayMode="always" id="PVD-j4-HSM">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="DIA-zQ-5My">
                             <connections>
                                 <action selector="addReminderVesselButtonTapped:" destination="CBd-BS-reS" id="6WQ-Gn-6Fu"/>
@@ -68,7 +65,7 @@
         <scene sceneID="aCx-no-gal">
             <objects>
                 <collectionViewController id="xXJ-ox-gNm" customClass="ReminderVesselCollectionViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" id="SEW-wG-Tax">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="SEW-wG-Tax">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

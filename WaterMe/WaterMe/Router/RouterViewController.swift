@@ -80,13 +80,13 @@ class RouterViewController: UIViewController {
             }
         } else if BasicController.localRealmExists == true {
             let freeRC = BasicController(kind: .local)
-            let vc = ReminderVesselMainViewController.newVC(basicController: freeRC, proController: nil)
+            let vc = ReminderVesselTabViewController(basicController: freeRC, proController: nil)
             self.doOnViewDidAppear.append({ self.presentOnTop(vc, animated: true, completion: nil) })
         } else {
             log.severe("We're in a first run experience here")
             log.severe("for now we're setting up a local basic experience")
             let freeRC = BasicController(kind: .local)
-            let vc = ReminderVesselMainViewController.newVC(basicController: freeRC, proController: nil)
+            let vc = ReminderVesselTabViewController(basicController: freeRC, proController: nil)
             self.doOnViewDidAppear.append({ self.presentOnTop(vc, animated: true, completion: nil) })
         }
     }
