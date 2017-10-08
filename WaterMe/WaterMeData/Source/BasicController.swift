@@ -112,6 +112,13 @@ public class BasicController {
         }
     }
     
+    public func allReminders() -> Result<AnyRealmCollection<Reminder>, RealmError> {
+        return self.realm.map() { realm in
+            let collection = realm.objects(Reminder.self)
+            return AnyRealmCollection(collection)
+        }
+    }
+    
     public func newReminder(for vessel: ReminderVessel) -> Result<Reminder, RealmError> {
         let realmResult = self.realm
         guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }

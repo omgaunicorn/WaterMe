@@ -31,7 +31,7 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
     var proRC: ProController?
     var basicRC: BasicController?
     
-    private var data: Result<AnyRealmCollection<ReminderVessel>, RealmError>?
+    private var data: Result<AnyRealmCollection<Reminder>, RealmError>?
     
     private var flow: UICollectionViewFlowLayout? {
         return self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
@@ -40,7 +40,9 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.collectionView?.register(ReminderCollectionViewCell.nib, forCellWithReuseIdentifier: ReminderCollectionViewCell.reuseID)
         self.flow?.minimumInteritemSpacing = 0
+        self.hardReloadData()
     }
     
     private func hardReloadData() {
@@ -48,7 +50,7 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
         self.notificationToken = nil
         self.data = nil
         
-        guard let result = self.basicRC?.allVessels() else { return }
+        guard let result = self.basicRC?.allReminders() else { return }
         switch result {
         case .failure:
             self.data = result
@@ -57,7 +59,7 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
         }
     }
     
-    private func dataChanged(_ changes: RealmCollectionChange<AnyRealmCollection<ReminderVessel>>) {
+    private func dataChanged(_ changes: RealmCollectionChange<AnyRealmCollection<Reminder>>) {
         switch changes {
         case .initial(let data):
             self.data = .success(data)
@@ -71,6 +73,29 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
         case .error(let error):
             log.error(error)
         }
+    }
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.data?.value?.count ?? 0
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReminderCollectionViewCell.reuseID, for: indexPath)
+        if let reminder = self.data?.value?[indexPath.row], let cell = cell as? ReminderCollectionViewCell {
+            cell.update(with: reminder)
+        }
+        return cell
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        let halfWidth = floor(self.view.bounds.width / 2)
+        self.flow?.itemSize = CGSize(width: halfWidth, height: 200)
     }
     
     private var notificationToken: NotificationToken?
