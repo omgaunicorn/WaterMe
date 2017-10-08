@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13168.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="g5Q-Rb-Z4g">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="g5Q-Rb-Z4g">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13147.4"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -27,7 +28,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcd-zd-Vwt" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
-                                            <rect key="frame" x="124.5" y="18.5" width="125" height="128"/>
+                                            <rect key="frame" x="125" y="18.5" width="125" height="128"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="125" id="oqe-y3-qA5"/>
@@ -35,7 +36,7 @@
                                             </constraints>
                                         </view>
                                         <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o3q-JB-Mxf">
-                                            <rect key="frame" x="125" y="20.5" width="125" height="125"/>
+                                            <rect key="frame" x="125.5" y="20.5" width="125" height="125"/>
                                             <state key="normal" title="Photo"/>
                                             <connections>
                                                 <action selector="iconButtonTapped:" destination="gC9-Lk-0nU" eventType="touchUpInside" id="dsU-aw-6Tg"/>
@@ -74,16 +75,12 @@
         <scene sceneID="6V6-7E-D6Z">
             <objects>
                 <viewController id="hwy-bV-hUN" customClass="ReminderVesselEditViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="6Cx-RF-Xm6"/>
-                        <viewControllerLayoutGuide type="bottom" id="Vnl-NY-P1W"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="rlg-JY-Gc1">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6BV-F7-HAz">
-                                <rect key="frame" x="-0.5" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <connections>
                                     <segue destination="VdB-w4-RH3" kind="embed" id="TxS-H2-F5x"/>
                                 </connections>
@@ -94,8 +91,9 @@
                             <constraint firstItem="6BV-F7-HAz" firstAttribute="width" secondItem="rlg-JY-Gc1" secondAttribute="width" id="HKX-eL-F9t"/>
                             <constraint firstItem="6BV-F7-HAz" firstAttribute="height" secondItem="rlg-JY-Gc1" secondAttribute="height" id="pbe-Vi-uQ4"/>
                             <constraint firstItem="6BV-F7-HAz" firstAttribute="centerY" secondItem="rlg-JY-Gc1" secondAttribute="centerY" id="qTM-Z3-ehw"/>
-                            <constraint firstItem="6BV-F7-HAz" firstAttribute="centerX" secondItem="rlg-JY-Gc1" secondAttribute="centerX" id="ykD-Dt-fa2"/>
+                            <constraint firstItem="6BV-F7-HAz" firstAttribute="centerX" secondItem="eYA-NT-INK" secondAttribute="centerX" id="ykD-Dt-fa2"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="eYA-NT-INK"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Vessel" id="I5b-Wd-mrD">
                         <barButtonItem key="leftBarButtonItem" title="Delete" id="SH7-kB-gu2">
@@ -123,7 +121,7 @@
             <objects>
                 <navigationController modalPresentationStyle="formSheet" id="g5Q-Rb-Z4g" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="CBl-W2-mWD">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>

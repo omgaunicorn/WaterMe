@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" systemVersion="16F2073" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="Euq-e7-F8U">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Euq-e7-F8U">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,7 +15,7 @@
             <objects>
                 <navigationController modalPresentationStyle="formSheet" id="Euq-e7-F8U" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="SvS-m1-hNy">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -30,10 +30,6 @@
         <scene sceneID="rPd-gj-6xU">
             <objects>
                 <viewController id="EzP-gR-dN4" customClass="ReminderEditViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="iun-Sb-aHr"/>
-                        <viewControllerLayoutGuide type="bottom" id="DCL-9N-aVJ"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="MWU-KS-gJQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -49,9 +45,10 @@
                         <constraints>
                             <constraint firstItem="CQB-gW-brA" firstAttribute="width" secondItem="MWU-KS-gJQ" secondAttribute="width" id="5Op-og-ITM"/>
                             <constraint firstItem="CQB-gW-brA" firstAttribute="height" secondItem="MWU-KS-gJQ" secondAttribute="height" id="D4A-Ob-675"/>
-                            <constraint firstItem="CQB-gW-brA" firstAttribute="centerX" secondItem="MWU-KS-gJQ" secondAttribute="centerX" id="UkR-mC-mMW"/>
+                            <constraint firstItem="CQB-gW-brA" firstAttribute="centerX" secondItem="7Xd-ep-i2i" secondAttribute="centerX" id="UkR-mC-mMW"/>
                             <constraint firstItem="CQB-gW-brA" firstAttribute="centerY" secondItem="MWU-KS-gJQ" secondAttribute="centerY" id="nj7-uq-suA"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="7Xd-ep-i2i"/>
                     </view>
                     <navigationItem key="navigationItem" title="Edit Reminder" id="Z5c-bL-Vpf">
                         <barButtonItem key="leftBarButtonItem" title="Delete" id="btZ-gf-j8a">
@@ -96,16 +93,12 @@
         <scene sceneID="kEj-Jg-ZBR">
             <objects>
                 <viewController storyboardIdentifier="ReminderIntervalPickerViewController" modalPresentationStyle="overCurrentContext" id="NwA-e7-GPw" customClass="ReminderIntervalPickerViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Xru-UT-b1D"/>
-                        <viewControllerLayoutGuide type="bottom" id="fML-5t-PxN"/>
-                    </layoutGuides>
                     <view key="view" opaque="NO" contentMode="scaleToFill" id="IyY-zF-d0S">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tMR-Dp-DGg">
-                                <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gke-to-w7O">
                                         <rect key="frame" x="-0.5" y="400.5" width="375" height="266.5"/>
@@ -155,10 +148,11 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="tMR-Dp-DGg" firstAttribute="width" secondItem="IyY-zF-d0S" secondAttribute="width" id="4Eh-Vv-oNx"/>
-                            <constraint firstItem="tMR-Dp-DGg" firstAttribute="centerX" secondItem="IyY-zF-d0S" secondAttribute="centerX" id="K80-HX-zWf"/>
+                            <constraint firstItem="tMR-Dp-DGg" firstAttribute="centerX" secondItem="aIA-TO-MSO" secondAttribute="centerX" id="K80-HX-zWf"/>
                             <constraint firstItem="tMR-Dp-DGg" firstAttribute="centerY" secondItem="IyY-zF-d0S" secondAttribute="centerY" id="Mhv-t5-pFo"/>
                             <constraint firstItem="tMR-Dp-DGg" firstAttribute="height" secondItem="IyY-zF-d0S" secondAttribute="height" id="r8y-hZ-Ba4"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="aIA-TO-MSO"/>
                     </view>
                     <connections>
                         <outlet property="pickerView" destination="Yza-fM-hD0" id="vhf-5D-5Oz"/>
