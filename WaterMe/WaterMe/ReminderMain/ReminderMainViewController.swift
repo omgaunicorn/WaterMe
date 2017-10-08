@@ -38,12 +38,22 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         return navVC
     }
     
+    private weak var collectionVC: ReminderCollectionViewController!
+    
     var basicRC: BasicController?
     var proRC: ProController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if var destVC = segue.destination as? ReminderCollectionViewController {
+            self.collectionVC = destVC
+            destVC.configure(with: self.basicRC)
+            destVC.configure(with: self.proRC)
+        }
     }
     
 }

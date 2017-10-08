@@ -60,7 +60,7 @@ class ReminderVesselTabViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.viewControllers = [self.reminderVesselMainViewControllerNavVC, self.reminderMainViewControllerNavVC]
+        self.viewControllers = [self.reminderMainViewControllerNavVC, self.reminderVesselMainViewControllerNavVC]
     }
     
 }

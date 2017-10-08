@@ -55,10 +55,10 @@
             </objects>
             <point key="canvasLocation" x="130" y="269"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Reminder Collection View Controller-->
         <scene sceneID="d4S-rd-Hhi">
             <objects>
-                <collectionViewController id="jyv-In-YNW" sceneMemberID="viewController">
+                <collectionViewController id="jyv-In-YNW" customClass="ReminderCollectionViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="32O-Kc-8k3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -69,16 +69,7 @@
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
-                        <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="reE-2t-8Ik">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </view>
-                            </collectionViewCell>
-                        </cells>
+                        <cells/>
                         <connections>
                             <outlet property="dataSource" destination="jyv-In-YNW" id="mYy-Om-10v"/>
                             <outlet property="delegate" destination="jyv-In-YNW" id="IDT-Lw-XA7"/>
