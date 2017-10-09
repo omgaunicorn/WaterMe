@@ -29,27 +29,59 @@ class ReminderCollectionViewCell: UICollectionViewCell {
     static let reuseID = "ReminderCollectionViewCell"
     class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
     
-    @IBOutlet private weak var topLabel: UILabel?
-    @IBOutlet private weak var middleLabel: UILabel?
-    @IBOutlet private weak var bottomLabel: UILabel?
+    @IBOutlet private weak var labelOne: UILabel?
+    @IBOutlet private weak var labelTwo: UILabel?
+    @IBOutlet private weak var labelThree: UILabel?
+    @IBOutlet private weak var labelFour: UILabel?
     @IBOutlet private weak var largeEmojiImageView: EmojiImageView?
     @IBOutlet private weak var smallEmojiImageView: EmojiImageView?
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        self.largeEmojiImageView?.size = .large
+        self.smallEmojiImageView?.size = .small
         self.reset()
     }
     
     func configure(with reminder: Reminder?) {
         guard let reminder = reminder else { self.reset(); return; }
         
-        self.topLabel?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .selectableTableViewCell)
+        // vessel name style
+        let vesselName = reminder.vessel?.displayName
+        let vesselNameStyle = vesselName != nil ?
+            Style.reminderVesselCollectionViewCell :
+            Style.reminderVesselCollectionViewCellDisabled
+        self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? "My Plant", style: vesselNameStyle)
+
+        // other stuff
+        self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .selectableTableViewCell)
+        self.largeEmojiImageView?.setIcon(reminder.vessel?.icon)
+        self.smallEmojiImageView?.setKind(reminder.kind)
+        
+        // relative time
+        self.labelFour?.text = "\(reminder.interval)"
+        
+        // put in the auxiliary text
+        switch reminder.kind {
+        case .fertilize, .water:
+            self.labelThree?.isHidden = true
+        case .move(let auxString), .other(let auxString):
+            if let auxString = auxString {
+                self.labelThree?.isHidden = false
+                self.labelThree?.attributedText = NSAttributedString(string: auxString, style: .readOnlyTableViewCell)
+            } else {
+                self.labelThree?.isHidden = true
+            }
+        }
     }
     
     private func reset() {
-        self.topLabel?.text = nil
-        self.middleLabel?.text = nil
-        self.bottomLabel?.text = nil
+        self.labelOne?.text = nil
+        self.labelTwo?.text = nil
+        self.labelThree?.text = nil
+        self.labelFour?.text = nil
+        self.labelTwo?.isHidden = false
         self.largeEmojiImageView?.setKind(nil)
         self.smallEmojiImageView?.setKind(nil)
     }
