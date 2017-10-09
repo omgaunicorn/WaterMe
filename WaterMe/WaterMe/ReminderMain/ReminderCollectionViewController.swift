@@ -94,8 +94,14 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        let halfWidth = floor(self.view.bounds.width / 2)
-        self.flow?.itemSize = CGSize(width: halfWidth, height: 200)
+        switch self.view.traitCollection.horizontalSizeClass {
+        case .compact, .unspecified:
+            self.flow?.itemSize = CGSize(width: self.view.bounds.width, height: 200)
+        case .regular:
+            let halfWidth = floor(self.view.bounds.width / 2)
+            self.flow?.itemSize = CGSize(width: halfWidth, height: 200)
+        }
+
     }
     
     private var notificationToken: NotificationToken?

@@ -43,6 +43,7 @@ public class Reminder: Object {
     }
     @objc public internal(set) dynamic var interval = Reminder.defaultInterval
     @objc public internal(set) dynamic var note: String?
+    @objc public internal(set) dynamic var nextPerformDate: Date?
     public let performed = List<ReminderPerform>()
     public var vessel: ReminderVessel? { return self.vessels.first }
     

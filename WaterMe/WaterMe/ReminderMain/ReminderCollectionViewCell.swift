@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import FormatterKit
 import WaterMeData
 import UIKit
 
@@ -35,6 +36,8 @@ class ReminderCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var labelFour: UILabel?
     @IBOutlet private weak var largeEmojiImageView: EmojiImageView?
     @IBOutlet private weak var smallEmojiImageView: EmojiImageView?
+    
+    private let reminderDateFormatter = TTTTimeIntervalFormatter.newTimeAgoFormatter
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -60,7 +63,9 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         self.smallEmojiImageView?.setKind(reminder.kind)
         
         // relative time
-        self.labelFour?.text = "\(reminder.interval)"
+        let interval = reminder.nextPerformDate?.timeIntervalSinceNow
+        let intervalString = interval != nil ? self.reminderDateFormatter.string(forTimeInterval: interval!) : "Now"
+        self.labelFour?.attributedText = NSAttributedString(string: intervalString!, style: .selectableTableViewCell)
         
         // put in the auxiliary text
         switch reminder.kind {
