@@ -140,3 +140,18 @@ extension Reminder: UICompleteCheckable {
         }
     }
 }
+
+public extension Reminder.Kind {
+    public var stringValue: String {
+        switch self {
+        case .water:
+            return "Water Plant"
+        case .fertilize:
+            return "Fertilize Soil"
+        case .move:
+            return "Move Plant"
+        case .other:
+            return "Other"
+        }
+    }
+}

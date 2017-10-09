@@ -37,12 +37,26 @@ class ReminderCollectionViewCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.reset()
     }
     
-    func update(with reminder: Reminder) {
-        print(reminder.kind)
-        print(reminder.vessel!.displayName)
+    func configure(with reminder: Reminder?) {
+        guard let reminder = reminder else { self.reset(); return; }
+        
+        self.topLabel?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .selectableTableViewCell)
+    }
+    
+    private func reset() {
+        self.topLabel?.text = nil
+        self.middleLabel?.text = nil
+        self.bottomLabel?.text = nil
+        self.largeEmojiImageView?.setKind(nil)
+        self.smallEmojiImageView?.setKind(nil)
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.reset()
     }
 
 }

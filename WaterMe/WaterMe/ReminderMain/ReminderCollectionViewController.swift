@@ -86,7 +86,7 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReminderCollectionViewCell.reuseID, for: indexPath)
         if let reminder = self.data?.value?[indexPath.row], let cell = cell as? ReminderCollectionViewCell {
-            cell.update(with: reminder)
+            cell.configure(with: reminder)
         }
         return cell
     }

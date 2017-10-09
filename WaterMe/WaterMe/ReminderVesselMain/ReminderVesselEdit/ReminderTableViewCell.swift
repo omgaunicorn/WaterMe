@@ -37,9 +37,10 @@ class ReminderTableViewCell: UITableViewCell {
     fileprivate let formatter = DateComponentsFormatter.newReminderIntervalFormatter
     
     func configure(with reminder: Reminder?) {
-        guard let reminder = reminder else { return }
+        guard let reminder = reminder else { self.reset(); return; }
         
         // do stuff that is the same for all cases
+        self.topLabel?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .selectableTableViewCell)
         let interval = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval), style: .selectableTableViewCell)
         let helper = NSAttributedString(string: "Every: ", style: .selectableTableViewCellHelper)
         self.middleLabel?.attributedText = helper + interval
@@ -47,20 +48,14 @@ class ReminderTableViewCell: UITableViewCell {
         
         // do stuff that is case specific
         switch reminder.kind {
-        case .water:
-            self.topLabel?.attributedText = NSAttributedString(string: "Water Plant", style: .selectableTableViewCell)
-            self.bottomLabel?.isHidden = true
-        case .fertilize:
-            self.topLabel?.attributedText = NSAttributedString(string: "Fertilize Soil", style: .selectableTableViewCell)
+        case .water, .fertilize:
             self.bottomLabel?.isHidden = true
         case .move(let location):
-            self.topLabel?.attributedText = NSAttributedString(string: "Move Plant", style: .selectableTableViewCell)
             let style: Style = location != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
             let helper = NSAttributedString(string: "Location: ", style: .selectableTableViewCellHelper)
             let location = NSAttributedString(string: location ?? "No Location Entered", style: style)
             self.bottomLabel?.attributedText = helper + location
         case .other(let description):
-            self.topLabel?.attributedText = NSAttributedString(string: "Other", style: .selectableTableViewCell)
             let style: Style = description != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
             let helper = NSAttributedString(string: "Description: ", style: .selectableTableViewCellHelper)
             let description = NSAttributedString(string: description ?? "No Description Entered", style: style)
@@ -71,10 +66,10 @@ class ReminderTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.emojiImageView?.size = .small
-        self.prepareForReuse()
+        self.reset()
     }
     
-    override func prepareForReuse() {
+    private func reset() {
         self.topLabel?.text = nil
         self.middleLabel?.text = nil
         self.bottomLabel?.text = nil
@@ -82,6 +77,10 @@ class ReminderTableViewCell: UITableViewCell {
         self.middleLabel?.isHidden = false
         self.bottomLabel?.isHidden = false
         self.emojiImageView?.setKind(nil)
+    }
+    
+    override func prepareForReuse() {
+        self.reset()
     }
 
 }
