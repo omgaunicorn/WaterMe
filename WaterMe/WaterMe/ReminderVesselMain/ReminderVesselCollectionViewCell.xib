@@ -54,11 +54,11 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="hgV-dD-EUV" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="RqO-F4-zYe"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hgV-dD-EUV" secondAttribute="bottom" constant="8" id="SQg-2s-SjW"/>
-                <constraint firstItem="hgV-dD-EUV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="czD-EK-bRo"/>
-                <constraint firstAttribute="trailing" secondItem="hgV-dD-EUV" secondAttribute="trailing" constant="8" id="jWX-3f-Mfp"/>
-                <constraint firstItem="hgV-dD-EUV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="top" constant="8" id="oLd-6L-wyZ"/>
+                <constraint firstItem="Gvh-4O-Dec" firstAttribute="trailing" secondItem="hgV-dD-EUV" secondAttribute="trailing" constant="8" id="7VK-VM-Ah4"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="centerY" secondItem="Gvh-4O-Dec" secondAttribute="centerY" id="UTK-ra-qx5"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Gvh-4O-Dec" secondAttribute="top" constant="8" id="ccC-Hh-YUU"/>
+                <constraint firstItem="Gvh-4O-Dec" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hgV-dD-EUV" secondAttribute="bottom" constant="8" id="jAU-CL-APK"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="leading" secondItem="Gvh-4O-Dec" secondAttribute="leading" constant="8" id="mt6-Ei-bkE"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Gvh-4O-Dec"/>
             <size key="customSize" width="221" height="192"/>
