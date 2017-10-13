@@ -90,18 +90,30 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
         }
         return cell
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        switch self.view.traitCollection.horizontalSizeClass {
-        case .compact, .unspecified:
-            self.flow?.itemSize = CGSize(width: self.view.bounds.width, height: 200)
-        case .regular:
-            let halfWidth = floor(self.view.bounds.width / 2)
-            self.flow?.itemSize = CGSize(width: halfWidth, height: 200)
-        }
+        self.updateFlowItemSize()
+    }
 
+    private func updateFlowItemSize() {
+        let numberOfItemsPerRow: CGFloat
+        let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+        switch (self.view.traitCollection.horizontalSizeClass, accessibility) {
+        case (.unspecified, _):
+            assertionFailure("Hit a size class this VC was not expecting")
+            fallthrough
+        case (.regular, false):
+            numberOfItemsPerRow = 2
+        case (.regular, true):
+            numberOfItemsPerRow = 1
+        case (.compact, false):
+            numberOfItemsPerRow = 2
+        case (.compact, true):
+            numberOfItemsPerRow = 1
+        }
+        let width: CGFloat = floor((self.collectionView?.bounds.width ?? 0) / numberOfItemsPerRow)
+        self.flow?.itemSize = CGSize(width: width, height: 180)
     }
     
     private var notificationToken: NotificationToken?
