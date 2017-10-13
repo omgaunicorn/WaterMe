@@ -39,13 +39,25 @@
                                     <segue destination="jyv-In-YNW" kind="embed" id="Ikd-gx-ZFw"/>
                                 </connections>
                             </containerView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RHs-C3-vgv">
+                                <rect key="frame" x="0.0" y="116" width="375" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="EYe-2i-8sb"/>
+                                </constraints>
+                                <connections>
+                                    <segue destination="Cjs-fa-2MT" kind="embed" id="9bw-IU-Nrk"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="RHs-C3-vgv" firstAttribute="centerX" secondItem="lUe-we-dUa" secondAttribute="centerX" id="7cH-xo-eNc"/>
                             <constraint firstItem="7bz-mK-2hj" firstAttribute="centerY" secondItem="RKH-f9-TFG" secondAttribute="centerY" id="A4k-uU-z7f"/>
+                            <constraint firstItem="RHs-C3-vgv" firstAttribute="top" secondItem="RKH-f9-TFG" secondAttribute="top" id="Kjp-17-gOG"/>
                             <constraint firstItem="7bz-mK-2hj" firstAttribute="centerX" secondItem="RKH-f9-TFG" secondAttribute="centerX" id="cer-Au-nJZ"/>
                             <constraint firstItem="7bz-mK-2hj" firstAttribute="width" secondItem="lUe-we-dUa" secondAttribute="width" id="ijA-gq-gs8"/>
                             <constraint firstItem="7bz-mK-2hj" firstAttribute="height" secondItem="lUe-we-dUa" secondAttribute="height" id="ldG-ia-ebf"/>
+                            <constraint firstItem="RHs-C3-vgv" firstAttribute="width" secondItem="lUe-we-dUa" secondAttribute="width" id="ysY-vB-dH6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RKH-f9-TFG"/>
                     </view>
@@ -79,6 +91,20 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="92S-qn-emR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="993" y="269"/>
+        </scene>
+        <!--Reminder Finish Drop Target View Controller-->
+        <scene sceneID="Orj-ZA-XNR">
+            <objects>
+                <viewController id="Cjs-fa-2MT" customClass="ReminderFinishDropTargetViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Q0w-r9-5E9">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.45138680930000002" green="0.99309605359999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LbB-1F-e1E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="679" y="874"/>
         </scene>
     </scenes>
 </document>

@@ -38,7 +38,8 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         return navVC
     }
     
-    private weak var collectionVC: ReminderCollectionViewController!
+    private weak var collectionVC: ReminderCollectionViewController?
+    private weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     
     var basicRC: BasicController?
     var proRC: ProController?
@@ -47,12 +48,19 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         super.viewDidLoad()
         
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.collectionVC?.collectionView?.contentInset.top = self.dropTargetViewController?.view.bounds.height ?? 0
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if var destVC = segue.destination as? ReminderCollectionViewController {
             self.collectionVC = destVC
             destVC.configure(with: self.basicRC)
             destVC.configure(with: self.proRC)
+        } else if let destVC = segue.destination as? ReminderFinishDropTargetViewController {
+            self.dropTargetViewController = destVC
         }
     }
     
