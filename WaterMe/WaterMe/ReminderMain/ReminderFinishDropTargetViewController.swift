@@ -25,5 +25,20 @@ import UIKit
 
 class ReminderFinishDropTargetViewController: UIViewController {
 
+    @IBOutlet private weak var dropTargetView: UIView?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.dropTargetView?.addInteraction(UIDropInteraction(delegate: self))
+
+    }
+    
 }
 
+extension ReminderFinishDropTargetViewController: UIDropInteractionDelegate {
+    func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
+        print("interested")
+        return false
+    }
+}
