@@ -24,7 +24,7 @@
 import WaterMeData
 import UIKit
 
-class ReminderFinishDropTargetViewController: UIViewController, HasBasicController, HasProController {
+class ReminderFinishDropTargetViewController: UIViewController, HasBasicController, HasProController, UIDropInteractionDelegate {
 
     @IBOutlet private weak var dropTargetView: UIView?
 
@@ -36,25 +36,29 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
 
         self.dropTargetView?.addInteraction(UIDropInteraction(delegate: self))
     }
-    
-}
 
-extension ReminderFinishDropTargetViewController: UIDropInteractionDelegate {
+    // MARK: UIDropInteractionDelegate
+
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
-        print("interested")
-        return true
+        return !session.reminderDrags.isEmpty
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-        let prop = UIDropProposal(operation: .copy)
-        return prop
+        guard !session.reminderDrags.isEmpty else { return UIDropProposal(operation: .forbidden) }
+        return UIDropProposal(operation: .copy)
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        print("perform")
+        print("Water These: \(session.reminderDrags)")
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
-        print("concluded")
+        print("Finished Watering: \(session.reminderDrags)")
+    }
+}
+
+fileprivate extension UIDropSession {
+    fileprivate var reminderDrags: [Reminder.Drag] {
+        return self.localDragSession?.items.flatMap({ $0.localObject as? Reminder.Drag }) ?? []
     }
 }
