@@ -40,6 +40,7 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.collectionView?.dragInteractionEnabled = true // needed for iphone
         self.collectionView?.dragDelegate = self
         self.collectionView?.register(ReminderCollectionViewCell.nib, forCellWithReuseIdentifier: ReminderCollectionViewCell.reuseID)
         self.flow?.minimumInteritemSpacing = 0
@@ -127,11 +128,19 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
 
 extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 
-    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        guard let reminder = self.data?.value?[indexPath.row] else { return [] }
+    private func dragItemForReminder(at indexPath: IndexPath) -> UIDragItem? {
+        guard let reminder = self.data?.value?[indexPath.row] else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
         item.localObject = reminder
-        return [item]
+        return item
+    }
+
+    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+        return [self.dragItemForReminder(at: indexPath)].flatMap({ $0 })
+    }
+
+    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
+        return [self.dragItemForReminder(at: indexPath)].flatMap({ $0 })
     }
 
     func collectionView(_ collectionView: UICollectionView, dragSessionIsRestrictedToDraggingApplication session: UIDragSession) -> Bool {
