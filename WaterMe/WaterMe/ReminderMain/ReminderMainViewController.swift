@@ -55,10 +55,13 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if var destVC = segue.destination as? ReminderCollectionViewController {
+        var hasBasic = segue.destination as? HasBasicController
+        hasBasic?.configure(with: self.basicRC)
+        var hasPro = segue.destination as? HasProController
+        hasPro?.configure(with: self.proRC)
+
+        if let destVC = segue.destination as? ReminderCollectionViewController {
             self.collectionVC = destVC
-            destVC.configure(with: self.basicRC)
-            destVC.configure(with: self.proRC)
         } else if let destVC = segue.destination as? ReminderFinishDropTargetViewController {
             self.dropTargetViewController = destVC
         }
