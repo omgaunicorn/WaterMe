@@ -41,6 +41,7 @@ internal extension Realm {
             try self.commitWrite()
             return .success(())
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -66,6 +67,7 @@ public class BasicController {
         do {
             return try .success(Realm(configuration: self.config))
         } catch {
+            log.error(error)
             return .failure(.loadError)
         }
     }
@@ -73,7 +75,7 @@ public class BasicController {
     public init(kind: Kind) {
         self.kind = kind
         var realmConfig = Realm.Configuration()
-        realmConfig.schemaVersion = 11
+        realmConfig.schemaVersion = 12
         realmConfig.objectTypes = [ReminderVessel.self, Reminder.self, ReminderPerform.self]
         switch kind {
         case .local:

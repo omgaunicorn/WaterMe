@@ -41,6 +41,7 @@ public class Reminder: Object {
         get { return self.kindValue }
         set { self.update(with: newValue) }
     }
+    @objc public private(set) dynamic var uuid = UUID().uuidString
     @objc public internal(set) dynamic var interval = Reminder.defaultInterval
     @objc public internal(set) dynamic var note: String?
     @objc public internal(set) dynamic var nextPerformDate: Date?
@@ -51,6 +52,10 @@ public class Reminder: Object {
     @objc internal dynamic var kindString: String = Reminder.kCaseWaterValue
     @objc internal dynamic var descriptionString: String?
     internal let vessels = LinkingObjects(fromType: ReminderVessel.self, property: "reminders") //#keyPath(ReminderVessel.reminders)
+
+    public override class func primaryKey() -> String {
+        return #keyPath(Reminder.uuid)
+    }
 }
 
 public class ReminderPerform: Object {
