@@ -46,7 +46,16 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if let data = self.collectionVC?.data, case .failure(let error) = data {
+            self.collectionVC?.data = nil
+            let alert = UIAlertController(error: error, completion: nil)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
     override func viewDidLayoutSubviews() {

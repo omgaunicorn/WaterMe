@@ -31,7 +31,7 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
     var proRC: ProController?
     var basicRC: BasicController?
     
-    private var data: Result<AnyRealmCollection<Reminder>, RealmError>?
+    var data: Result<AnyRealmCollection<Reminder>, RealmError>?
     
     private var flow: UICollectionViewFlowLayout? {
         return self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
