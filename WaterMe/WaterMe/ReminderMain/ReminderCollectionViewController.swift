@@ -109,7 +109,7 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
         case (.regular, true):
             numberOfItemsPerRow = 1
         case (.compact, false):
-            numberOfItemsPerRow = 2
+            numberOfItemsPerRow = 1
         case (.compact, true):
             numberOfItemsPerRow = 1
         }

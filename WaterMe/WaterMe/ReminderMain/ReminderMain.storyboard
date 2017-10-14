@@ -5,7 +5,9 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -35,7 +37,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7bz-mK-2hj">
-                                <rect key="frame" x="0.0" y="58" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <connections>
                                     <segue destination="jyv-In-YNW" kind="embed" id="Ikd-gx-ZFw"/>
                                 </connections>
@@ -52,12 +54,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="7bz-mK-2hj" firstAttribute="centerX" secondItem="lUe-we-dUa" secondAttribute="centerXWithinMargins" id="0gz-Ze-d6B"/>
                             <constraint firstItem="RHs-C3-vgv" firstAttribute="centerX" secondItem="lUe-we-dUa" secondAttribute="centerX" id="7cH-xo-eNc"/>
-                            <constraint firstItem="7bz-mK-2hj" firstAttribute="centerY" secondItem="RKH-f9-TFG" secondAttribute="centerY" id="A4k-uU-z7f"/>
+                            <constraint firstItem="7bz-mK-2hj" firstAttribute="top" secondItem="lUe-we-dUa" secondAttribute="top" id="K8a-GJ-HMs"/>
                             <constraint firstItem="RHs-C3-vgv" firstAttribute="top" secondItem="RKH-f9-TFG" secondAttribute="top" id="Kjp-17-gOG"/>
-                            <constraint firstItem="7bz-mK-2hj" firstAttribute="centerX" secondItem="RKH-f9-TFG" secondAttribute="centerX" id="cer-Au-nJZ"/>
-                            <constraint firstItem="7bz-mK-2hj" firstAttribute="width" secondItem="lUe-we-dUa" secondAttribute="width" id="ijA-gq-gs8"/>
-                            <constraint firstItem="7bz-mK-2hj" firstAttribute="height" secondItem="lUe-we-dUa" secondAttribute="height" id="ldG-ia-ebf"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="7bz-mK-2hj" secondAttribute="bottom" id="Lnd-A7-Vnp"/>
+                            <constraint firstItem="7bz-mK-2hj" firstAttribute="width" secondItem="lUe-we-dUa" secondAttribute="width" id="tuv-UN-25u"/>
                             <constraint firstItem="RHs-C3-vgv" firstAttribute="width" secondItem="lUe-we-dUa" secondAttribute="width" id="ysY-vB-dH6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RKH-f9-TFG"/>
@@ -109,13 +111,14 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.45138680930000002" green="0.99309605359999997" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.45138680930000002" green="0.99309605359999997" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="A2T-Np-1PS" secondAttribute="bottom" constant="32" id="6Lz-Zj-nrM"/>
                             <constraint firstItem="A2T-Np-1PS" firstAttribute="centerX" secondItem="Q0w-r9-5E9" secondAttribute="centerX" id="BR4-Yl-lJU"/>
                             <constraint firstItem="A2T-Np-1PS" firstAttribute="top" secondItem="Q0w-r9-5E9" secondAttribute="top" constant="32" id="GkR-MK-T2S"/>
                             <constraint firstItem="A2T-Np-1PS" firstAttribute="centerY" secondItem="Q0w-r9-5E9" secondAttribute="centerY" id="s7M-TQ-R8W"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="ype-GC-kiU"/>
                     </view>
                     <connections>
                         <outlet property="dropTargetView" destination="A2T-Np-1PS" id="1m8-sU-suH"/>
