@@ -125,6 +125,14 @@ public class BasicController {
         return self.reminders(matching: identifiers).flatMap({ self.appendNewPerform(to: $0) })
     }
 
+    public func reminder(matching identifier: Reminder.Identifier) -> Result<Reminder, RealmError> {
+        return self.realm.flatMap() { realm -> Result<Reminder, RealmError> in
+            guard let reminder = realm.object(ofType: Reminder.self, forPrimaryKey: identifier.reminderIdentifier)
+                else { return .failure(.objectDeleted) }
+            return .success(reminder)
+        }
+    }
+
     internal func reminders(matching identifiers: [Reminder.Identifier]) -> Result<[Reminder], RealmError> {
         return self.realm.map() { realm in
             return identifiers.flatMap({ realm.object(ofType: Reminder.self, forPrimaryKey: $0.reminderIdentifier) })

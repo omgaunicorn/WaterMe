@@ -92,10 +92,52 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 }
 
 extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
-    func userDidSelect(reminder: Reminder, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController) {
-        let vc = ReminderEditViewController.newVC(basicController: self.basicRC, purpose: .existing(reminder)) { vc in
-            vc.dismiss(animated: true, completion: { deselectAnimated(true) })
+    func userDidSelectReminder(with identifier: Reminder.Identifier,
+                               deselectAnimated: @escaping (Bool) -> Void,
+                               within viewController: ReminderCollectionViewController)
+    {
+        guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.popoverPresentationController?.delegate = viewController
+        let editReminder = UIAlertAction(title: "Edit Reminder", style: .default) { _ in
+            let result = basicRC.reminder(matching: identifier)
+            switch result {
+            case .success(let reminder):
+                let vc = ReminderEditViewController.newVC(basicController: self.basicRC, purpose: .existing(reminder)) { vc in
+                    vc.dismiss(animated: true, completion: { deselectAnimated(true) })
+                }
+                self.present(vc, animated: true, completion: nil)
+            case .failure(let error):
+                deselectAnimated(true)
+                self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
+            }
         }
-        self.present(vc, animated: true, completion: nil)
+        let editVessel = UIAlertAction(title: "Edit Plant", style: .default) { _ in
+            let result = basicRC.reminder(matching: identifier)
+            switch result {
+            case .success(let reminder):
+                let vc = ReminderVesselEditViewController.newVC(basicController: self.basicRC, editVessel: reminder.vessel) { vc in
+                    vc.dismiss(animated: true, completion: { deselectAnimated(true) })
+                }
+                self.present(vc, animated: true, completion: nil)
+            case .failure(let error):
+                deselectAnimated(true)
+                self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
+            }
+        }
+        let performReminder = UIAlertAction(title: "Mark Reminder as Done", style: .default) { _ in
+            deselectAnimated(true)
+            let result = basicRC.appendNewPerformToReminders(with: [identifier])
+            guard case .failure(let error) = result else { return }
+            self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in deselectAnimated(true) })
+        alert.addAction(performReminder)
+        alert.addAction(editReminder)
+        alert.addAction(editVessel)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
     }
 }
+
+

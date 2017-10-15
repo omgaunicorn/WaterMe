@@ -27,7 +27,7 @@ import WaterMeData
 import UIKit
 
 protocol ReminderCollectionViewControllerDelegate: class {
-    func userDidSelect(reminder: Reminder, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController)
+    func userDidSelectReminder(with identifier: Reminder.Identifier, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController)
 }
 
 class ReminderCollectionViewController: ContentSizeReloadCollectionViewController, HasBasicController, HasProController {
@@ -101,9 +101,9 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let reminder = self.data?.value?[indexPath.row] else { return }
-        self.delegate?.userDidSelect(reminder: reminder,
-                                     deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) },
-                                     within: self)
+        self.delegate?.userDidSelectReminder(with: .init(reminder: reminder),
+                                             deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) },
+                                             within: self)
 
     }
 
@@ -159,5 +159,14 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 
     func collectionView(_ collectionView: UICollectionView, dragSessionIsRestrictedToDraggingApplication session: UIDragSession) -> Bool {
         return false
+    }
+}
+
+extension ReminderCollectionViewController: UIPopoverPresentationControllerDelegate {
+    func prepareForPopoverPresentation(_ popController: UIPopoverPresentationController) {
+        let selectedIndexPath = self.collectionView?.indexPathsForSelectedItems?.last ?? IndexPath(row: 0, section: 0)
+        let selectedView = self.collectionView?.cellForItem(at: selectedIndexPath) ?? self.view
+        popController.sourceView = selectedView
+        popController.sourceRect = selectedView?.frame ?? .zero
     }
 }
