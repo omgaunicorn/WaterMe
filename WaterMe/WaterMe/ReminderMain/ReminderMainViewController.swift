@@ -26,13 +26,13 @@ import UIKit
 
 class ReminderMainViewController: UIViewController, HasProController, HasBasicController {
     
-    class func newVC(basicController: BasicController, proController: ProController? = nil) -> UINavigationController {
+    class func newVC(basicController: BasicController?, proController: ProController? = nil) -> UINavigationController {
         let sb = UIStoryboard(name: "ReminderMain", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderMainViewController
-        vc.title = "Water Plants" // set here because it works better in UITabBarController
+        vc.title = "WaterMe" // set here because it works better in UITabBarController
         vc.configure(with: basicController)
         vc.configure(with: proController)
         return navVC
@@ -56,6 +56,15 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
             let alert = UIAlertController(error: error, completion: nil)
             self.present(alert, animated: true, completion: nil)
         }
+    }
+
+    @IBAction private func addButtonTapped(_ sender: Any) {
+        let vc = ReminderVesselMainViewController.newVC(basicController: self.basicRC, proController: self.proRC)
+        self.present(vc, animated: true, completion: nil)
+    }
+
+    @IBAction private func settingsButtonTapped(_ sender: Any) {
+
     }
 
     override func viewDidLayoutSubviews() {

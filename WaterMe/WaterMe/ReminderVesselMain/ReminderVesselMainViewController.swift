@@ -26,13 +26,13 @@ import UIKit
 
 class ReminderVesselMainViewController: UIViewController, HasProController, HasBasicController {
 
-    class func newVC(basicController: BasicController, proController: ProController? = nil) -> UINavigationController {
+    class func newVC(basicController: BasicController?, proController: ProController? = nil) -> UINavigationController {
         let sb = UIStoryboard(name: "ReminderVesselMain", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderVesselMainViewController
-        vc.title = "Manage Plants" // set here because it works better in UITabBarController
+        vc.title = "Plants" // set here because it works better in UITabBarController
         vc.configure(with: basicController)
         vc.configure(with: proController)
         return navVC
@@ -59,11 +59,15 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     @IBAction private func addReminderVesselButtonTapped(_ sender: NSObject?) {
         self.editReminderVessel(nil)
     }
+
+    @IBAction private func doneButtonTapped(_ sender: Any) {
+        print("Done")
+    }
     
     private func editReminderVessel(_ vessel: ReminderVessel?) {
         guard let basicRC = self.basicRC else { return }
         let deselectAction: (() -> Void)? = vessel == nil ? nil : { self.collectionVC?.collectionView?.deselectAllItems(animated: true) }
-        let editVC = ReminderVesselEditViewController.newVC(basicRC: basicRC, editVessel: vessel) { vc in
+        let editVC = ReminderVesselEditViewController.newVC(basicController: basicRC, editVessel: vessel) { vc in
             vc.dismiss(animated: true, completion: deselectAction)
         }
         self.present(editVC, animated: true, completion: nil)

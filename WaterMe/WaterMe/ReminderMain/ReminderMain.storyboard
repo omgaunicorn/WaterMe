@@ -64,7 +64,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RKH-f9-TFG"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Waater Plants" largeTitleDisplayMode="always" id="cCm-qF-cNz"/>
+                    <navigationItem key="navigationItem" title="Waater Plants" largeTitleDisplayMode="always" id="cCm-qF-cNz">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="CHt-OL-hON">
+                            <connections>
+                                <action selector="settingsButtonTapped:" destination="W2n-zh-dpd" id="Kxp-XG-Bz4"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="Lsv-84-A48">
+                            <connections>
+                                <action selector="addButtonTapped:" destination="W2n-zh-dpd" id="PZL-zG-CcW"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wys-cg-Usu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
