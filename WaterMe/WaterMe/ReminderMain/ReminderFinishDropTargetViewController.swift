@@ -28,8 +28,8 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
 
     @IBOutlet private weak var dropTargetView: UIView?
 
-    var proRC: ProController?
     var basicRC: BasicController?
+    var proRC: ProController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +49,10 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        print("Water These: \(session.reminderDrags)")
+        guard let results = self.basicRC?.appendNewPerformToReminders(with: session.reminderDrags) else { return }
+        if case .failure(let error) = results {
+            print("Display an error")
+        }
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
@@ -58,7 +61,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
 }
 
 fileprivate extension UIDropSession {
-    fileprivate var reminderDrags: [Reminder.Drag] {
-        return self.localDragSession?.items.flatMap({ $0.localObject as? Reminder.Drag }) ?? []
+    fileprivate var reminderDrags: [Reminder.Identifier] {
+        return self.localDragSession?.items.flatMap({ $0.localObject as? Reminder.Identifier }) ?? []
     }
 }

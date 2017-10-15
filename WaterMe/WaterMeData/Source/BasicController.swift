@@ -120,6 +120,28 @@ public class BasicController {
             return AnyRealmCollection(collection)
         }
     }
+
+    public func appendNewPerformToReminders(with identifiers: [Reminder.Identifier]) -> Result<Void, RealmError> {
+        return self.reminders(matching: identifiers).flatMap({ self.appendNewPerform(to: $0) })
+    }
+
+    internal func reminders(matching identifiers: [Reminder.Identifier]) -> Result<[Reminder], RealmError> {
+        return self.realm.map() { realm in
+            return identifiers.flatMap({ realm.object(ofType: Reminder.self, forPrimaryKey: $0.reminderIdentifier) })
+        }
+    }
+
+    internal func appendNewPerform(to reminders: [Reminder]) -> Result<Void, RealmError> {
+        let realmResult = self.realm
+        guard case .success(let realm) = realmResult else { return .failure(realmResult.error!) }
+        realm.beginWrite()
+        for reminder in reminders {
+            let newPerform = ReminderPerform()
+            reminder.performed.append(newPerform)
+            reminder.nextPerformDate = newPerform.date + TimeInterval(reminder.interval * 24 * 60 * 60)
+        }
+        return realm.waterMe_commitWrite()
+    }
     
     public func newReminder(for vessel: ReminderVessel) -> Result<Reminder, RealmError> {
         let realmResult = self.realm

@@ -131,7 +131,7 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
     private func dragItemForReminder(at indexPath: IndexPath) -> UIDragItem? {
         guard let reminder = self.data?.value?[indexPath.row] else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
-        item.localObject = Reminder.Drag(reminder: reminder)
+        item.localObject = Reminder.Identifier(reminder: reminder)
         return item
     }
 
@@ -145,14 +145,5 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 
     func collectionView(_ collectionView: UICollectionView, dragSessionIsRestrictedToDraggingApplication session: UIDragSession) -> Bool {
         return false
-    }
-}
-
-extension Reminder {
-    struct Drag {
-        var reminderIdentifier: String
-        fileprivate init(reminder: Reminder) {
-            self.reminderIdentifier = reminder.uuid
-        }
     }
 }
