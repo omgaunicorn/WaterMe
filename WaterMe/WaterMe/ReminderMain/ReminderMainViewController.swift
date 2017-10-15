@@ -59,7 +59,9 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     }
 
     @IBAction private func addButtonTapped(_ sender: Any) {
-        let vc = ReminderVesselMainViewController.newVC(basicController: self.basicRC, proController: self.proRC)
+        let vc = ReminderVesselMainViewController.newVC(basicController: self.basicRC, proController: self.proRC) { vc in
+            vc.dismiss(animated: true, completion: nil)
+        }
         self.present(vc, animated: true, completion: nil)
     }
 

@@ -26,7 +26,9 @@ import UIKit
 
 class ReminderVesselMainViewController: UIViewController, HasProController, HasBasicController {
 
-    class func newVC(basicController: BasicController?, proController: ProController? = nil) -> UINavigationController {
+    class func newVC(basicController: BasicController?,
+                     proController: ProController? = nil,
+                     completionHandler: @escaping (UIViewController) -> Void) -> UINavigationController {
         let sb = UIStoryboard(name: "ReminderVesselMain", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
@@ -35,6 +37,7 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
         vc.title = "Plants" // set here because it works better in UITabBarController
         vc.configure(with: basicController)
         vc.configure(with: proController)
+        vc.completionHandler = completionHandler
         return navVC
     }
     
@@ -42,10 +45,8 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     
     var basicRC: BasicController?
     var proRC: ProController?
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+
+    private var completionHandler: ((UIViewController) -> Void)?
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -61,7 +62,7 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     }
 
     @IBAction private func doneButtonTapped(_ sender: Any) {
-        print("Done")
+        self.completionHandler?(self)
     }
     
     private func editReminderVessel(_ vessel: ReminderVessel?) {
