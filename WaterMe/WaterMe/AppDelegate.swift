@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import WaterMeData
 import XCGLogger
 import UIKit
 
@@ -32,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     class var shared: AppDelegate { return UIApplication.shared.delegate as! AppDelegate }
     
     var window: UIWindow?
-    let receiptWatcher = ReceiptWatcher()
         
     override init() {
         super.init()
@@ -49,6 +49,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+
+        let freeRC = BasicController(kind: .local)
+        let vc = ReminderMainViewController.newVC(basicController: freeRC, proController: nil)
+
+        if self.window == nil {
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+        }
+        self.window!.backgroundColor = .white
+        self.window!.rootViewController = vc
+        self.window!.makeKeyAndVisible()
+        
         return true
     }
     

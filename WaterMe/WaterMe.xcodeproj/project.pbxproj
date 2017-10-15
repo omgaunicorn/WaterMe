@@ -10,15 +10,12 @@
 		313EDE3EF93BBBBB532773D1 /* Pods_NoDeviceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 154A62BF32449BE9AEC1D580 /* Pods_NoDeviceTests.framework */; };
 		32960DF0C162FA7CB997DAE0 /* Pods_WaterMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B125E6363F6731C5C3C2000 /* Pods_WaterMe.framework */; };
 		500679AF1F4BF3DB00F8100D /* ReminderMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */; };
-		500679B11F4BF46800F8100D /* ReminderVesselTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500679B01F4BF46800F8100D /* ReminderVesselTabViewController.swift */; };
 		501C0E8B1ECE5EFF00D4EE7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */; };
 		501C0E8D1ECE5EFF00D4EE7C /* UserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E8C1ECE5EFF00D4EE7C /* UserTableViewController.swift */; };
 		501C0E901ECE5EFF00D4EE7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E8E1ECE5EFF00D4EE7C /* Main.storyboard */; };
 		501C0E921ECE5EFF00D4EE7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E911ECE5EFF00D4EE7C /* Assets.xcassets */; };
 		501C0E951ECE5EFF00D4EE7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E931ECE5EFF00D4EE7C /* LaunchScreen.storyboard */; };
 		501C0E9B1ECE602400D4EE7C /* PrivateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */; };
-		501F92211EC55DF50014939D /* RouterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F921F1EC55DF50014939D /* RouterViewController.swift */; };
-		501F92221EC55DF50014939D /* Router.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501F92201EC55DF50014939D /* Router.storyboard */; };
 		501F92281EC55E080014939D /* SubscriptionChoice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501F92231EC55E080014939D /* SubscriptionChoice.storyboard */; };
 		501F92291EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92241EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift */; };
 		501F922A1EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 501F92251EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib */; };
@@ -49,7 +46,6 @@
 		508E615A1F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */; };
 		508FFCAF1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */; };
 		508FFCB01EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */; };
-		50A004CA1EDC8E7A00DD1546 /* ReceiptWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A004C91EDC8E7A00DD1546 /* ReceiptWatcher.swift */; };
 		50A3DF971EE3331D00F0B966 /* StyleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */; };
 		50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */; };
 		50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */; };
@@ -591,7 +587,6 @@
 				508FFCB01EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib in Resources */,
 				50BB0F691EC0011800850FF4 /* LaunchScreen.storyboard in Resources */,
 				507A64581F049CCA004E18C5 /* ReminderTableViewCell.xib in Resources */,
-				501F92221EC55DF50014939D /* Router.storyboard in Resources */,
 				50E8B1E41EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard in Resources */,
 				502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */,
 				50E8B1E01EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib in Resources */,
@@ -888,11 +883,8 @@
 				50B511A71EFE144700ED1DF4 /* ReminderKindTableViewCell.swift in Sources */,
 				50A3DF971EE3331D00F0B966 /* StyleExtensions.swift in Sources */,
 				50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */,
-				501F92211EC55DF50014939D /* RouterViewController.swift in Sources */,
-				500679B11F4BF46800F8100D /* ReminderVesselTabViewController.swift in Sources */,
 				50E8B1E61EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift in Sources */,
 				50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */,
-				50A004CA1EDC8E7A00DD1546 /* ReceiptWatcher.swift in Sources */,
 				50D3A0831EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift in Sources */,
 				50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */,
 			);
