@@ -92,7 +92,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 }
 
 extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
-    func didSelect(reminder: Reminder, deselectAnimated: @escaping (Bool) -> Void) {
+    func userDidSelect(reminder: Reminder, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController) {
         let vc = ReminderEditViewController.newVC(basicController: self.basicRC, purpose: .existing(reminder)) { vc in
             vc.dismiss(animated: true, completion: { deselectAnimated(true) })
         }

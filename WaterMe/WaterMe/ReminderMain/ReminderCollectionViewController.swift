@@ -27,7 +27,7 @@ import WaterMeData
 import UIKit
 
 protocol ReminderCollectionViewControllerDelegate: class {
-    func didSelect(reminder: Reminder, deselectAnimated: @escaping (Bool) -> Void)
+    func userDidSelect(reminder: Reminder, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController)
 }
 
 class ReminderCollectionViewController: ContentSizeReloadCollectionViewController, HasBasicController, HasProController {
@@ -101,8 +101,9 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let reminder = self.data?.value?[indexPath.row] else { return }
-        self.delegate?.didSelect(reminder: reminder,
-                                 deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) })
+        self.delegate?.userDidSelect(reminder: reminder,
+                                     deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) },
+                                     within: self)
 
     }
 
