@@ -170,3 +170,22 @@ public extension Reminder {
         }
     }
 }
+
+public extension Reminder {
+    public enum SortOrder {
+        case nextPerformDate, interval, kind, note
+
+        internal var keyPath: String {
+            switch self {
+            case .interval:
+                return #keyPath(Reminder.interval)
+            case .kind:
+                return #keyPath(Reminder.kindString)
+            case .nextPerformDate:
+                return #keyPath(Reminder.nextPerformDate)
+            case .note:
+                return #keyPath(Reminder.note)
+            }
+        }
+    }
+}
