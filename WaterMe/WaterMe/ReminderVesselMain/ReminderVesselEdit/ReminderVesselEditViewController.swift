@@ -192,17 +192,15 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     }
     
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?) {
-        guard let vessel = self.vessel?.value, let basicRC = self.basicRC
-            else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
-        let addReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .new(vessel)) { vc in
+        guard let vessel = self.vessel?.value else { assertionFailure("Missing ReminderVessel"); return; }
+        let addReminderVC = ReminderEditViewController.newVC(basicController: basicRC, purpose: .new(vessel)) { vc in
             vc.dismiss(animated: true, completion: nil)
         }
         self.present(addReminderVC, animated: true, completion: nil)
     }
     
     func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController?) {
-        guard let basicRC = self.basicRC else { return }
-        let editReminderVC = ReminderEditViewController.newVC(basicRC: basicRC, purpose: .existing(reminder)) { [weak self] vc in
+        let editReminderVC = ReminderEditViewController.newVC(basicController: basicRC, purpose: .existing(reminder)) { [weak self] vc in
             vc.dismiss(animated: true, completion: { self?.tableViewController?.tableView.deselectSelectedRows(animated: true) })
         }
         self.present(editReminderVC, animated: true, completion: nil)

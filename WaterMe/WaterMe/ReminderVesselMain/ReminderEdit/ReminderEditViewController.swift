@@ -33,7 +33,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     typealias CompletionHandler = (UIViewController) -> Void
     
-    class func newVC(basicRC: BasicController,
+    class func newVC(basicController: BasicController?,
                      purpose: Purpose,
                      completionHandler: @escaping CompletionHandler) -> UIViewController
     {
@@ -42,11 +42,11 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderEditViewController
-        vc.configure(with: basicRC)
+        vc.configure(with: basicController)
         vc.completionHandler = completionHandler
         switch purpose {
         case .new(let vessel):
-            vc.reminder = basicRC.newReminder(for: vessel)
+            vc.reminder = basicController?.newReminder(for: vessel)
         case .existing(let reminder):
             vc.reminder = .success(reminder)
         }

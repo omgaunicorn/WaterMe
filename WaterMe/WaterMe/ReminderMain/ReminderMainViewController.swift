@@ -46,6 +46,8 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.collectionVC?.delegate = self
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -87,4 +89,13 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         }
     }
     
+}
+
+extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
+    func didSelect(reminder: Reminder, deselectAnimated: @escaping (Bool) -> Void) {
+        let vc = ReminderEditViewController.newVC(basicController: self.basicRC, purpose: .existing(reminder)) { vc in
+            vc.dismiss(animated: true, completion: { deselectAnimated(true) })
+        }
+        self.present(vc, animated: true, completion: nil)
+    }
 }

@@ -26,13 +26,19 @@ import RealmSwift
 import WaterMeData
 import UIKit
 
+protocol ReminderCollectionViewControllerDelegate: class {
+    func didSelect(reminder: Reminder, deselectAnimated: @escaping (Bool) -> Void)
+}
+
 class ReminderCollectionViewController: ContentSizeReloadCollectionViewController, HasBasicController, HasProController {
     
     var proRC: ProController?
     var basicRC: BasicController?
     
     var data: Result<AnyRealmCollection<Reminder>, RealmError>?
-    
+
+    weak var delegate: ReminderCollectionViewControllerDelegate?
+
     private var flow: UICollectionViewFlowLayout? {
         return self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
@@ -91,6 +97,13 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
             cell.configure(with: reminder)
         }
         return cell
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let reminder = self.data?.value?[indexPath.row] else { return }
+        self.delegate?.didSelect(reminder: reminder,
+                                 deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) })
+
     }
 
     override func viewDidLayoutSubviews() {
