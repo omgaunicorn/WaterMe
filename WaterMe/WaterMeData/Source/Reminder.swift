@@ -56,6 +56,14 @@ public class Reminder: Object {
     public override class func primaryKey() -> String {
         return #keyPath(Reminder.uuid)
     }
+
+    internal func recalculateNextPerformDate(comparisonPerform: ReminderPerform? = nil) {
+        if let lastPerform = comparisonPerform ?? self.performed.last {
+            self.nextPerformDate = lastPerform.date + TimeInterval(self.interval * 24 * 60 * 60)
+        } else {
+            self.nextPerformDate = nil
+        }
+    }
 }
 
 public class ReminderPerform: Object {

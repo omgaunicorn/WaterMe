@@ -138,7 +138,7 @@ public class BasicController {
         for reminder in reminders {
             let newPerform = ReminderPerform()
             reminder.performed.append(newPerform)
-            reminder.nextPerformDate = newPerform.date + TimeInterval(reminder.interval * 24 * 60 * 60)
+            reminder.recalculateNextPerformDate(comparisonPerform: newPerform)
         }
         return realm.waterMe_commitWrite()
     }
@@ -199,6 +199,7 @@ public class BasicController {
         }
         if let interval = interval {
             reminder.interval = interval
+            reminder.recalculateNextPerformDate()
         }
         if let note = note {
             // make sure the string is not empty. If it is empty, set it to blank string
