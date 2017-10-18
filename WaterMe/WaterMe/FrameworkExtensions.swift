@@ -26,7 +26,20 @@ import WaterMeData
 import FormatterKit
 import UIKit
 
-class ContentSizeReloadCollectionViewController: UICollectionViewController {
+class StandardCollectionViewController: UICollectionViewController {
+
+    var flow: UICollectionViewFlowLayout? {
+        return self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
+    }
+
+    var itemHeight: CGFloat {
+        return 100
+    }
+
+    var columnCount: Int {
+        return 2
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self,
@@ -40,6 +53,19 @@ class ContentSizeReloadCollectionViewController: UICollectionViewController {
         // Whenever the text size is changed by the user, just reload the collection view
         // then all the cells get their attributed strings re-set
         self.collectionView?.reloadData()
+    }
+
+    /// Updates flow layout based on `columnCount` and `itemHeight` properties
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.updateFlowItemSize()
+    }
+
+    private func updateFlowItemSize() {
+        let columnCount = CGFloat(self.columnCount)
+        let height = self.itemHeight
+        let width = floor((self.collectionView?.bounds.width ?? 0) / columnCount)
+        self.flow?.itemSize = CGSize(width: width, height: height)
     }
 }
 

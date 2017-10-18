@@ -23,7 +23,7 @@
 
 import UIKit
 
-class EmojiPickerViewController: ContentSizeReloadCollectionViewController {
+class EmojiPickerViewController: StandardCollectionViewController {
     
     class func newVC(emojiChosen: @escaping (String?, UIViewController) -> Void) -> UIViewController {
         let layout = UICollectionViewFlowLayout()
@@ -36,9 +36,6 @@ class EmojiPickerViewController: ContentSizeReloadCollectionViewController {
     
     var emojiChosen: ((String?, UIViewController) -> Void)?
     private let data = ["💐", "🌷", "🌹", "🥀", "🌻", "🌼", "🌸", "🌺", "🍏", "🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🍈", "🍒", "🍑", "🍍", "🥝", "🥑", "🍅", "🍆", "🥒", "🥕", "🌽", "🌶", "🥔", "🍠", "🌰", "🥜", "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🎍", "🎋", "🍃", "🍂", "🍁", "🍄", "🌾", "🥚", "🍳", "🐔", "🐧", "🐤", "🐣", "🐥", "🐓", "🦆", "🦃", "🐇", "🦀", "🦑", "🐙", "🦐", "🍤", "🐠", "🐟", "🐢", "🐍", "🦎", "🐝", "🍯", "🥐", "🍞", "🥖", "🧀", "🥗", "🍣", "🍱", "🍛", "🍚", "☕️", "🍵", "🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🥛", "🐷", "🐽", "🐸", "🐒", "🦅", "🦉", "🦇", "🐺", "🐗", "🐴", "🦄", "🐛", "🦋", "🐌", "🐚", "🐞", "🐜", "🕷", "🦂", "🐡", "🐬", "🦈", "🐳", "🐋", "🐊", "🐆", "🐅", "🐃", "🐂", "🐄", "🦌", "🐪", "🐫", "🐘", "🦏", "🦍", "🐎", "🐖", "🐐", "🐏", "🐑", "🐕", "🐩", "🐈", "🕊", "🐁", "🐀", "🐿", "🐉", "🐲"]
-    private var flow: UICollectionViewFlowLayout? {
-        return self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,25 +68,22 @@ class EmojiPickerViewController: ContentSizeReloadCollectionViewController {
         cell?.configure(withEmojiString: self.data[indexPath.row])
         return _cell
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.updateFlowItemSize()
-    }
-    
-    private func updateFlowItemSize() {
-        let numberOfItemsPerRow: CGFloat
+
+    override var columnCount: Int {
         let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
-        switch (self.view.traitCollection.horizontalSizeClass, accessibility) {
+        let horizontalClass = self.view.traitCollection.horizontalSizeClass
+        switch (horizontalClass, accessibility) {
         case (.unspecified, _), (.regular, _):
             assertionFailure("Hit a size class this VC was not expecting")
             fallthrough
         case (.compact, false):
-            numberOfItemsPerRow = 4
+            return 4
         case (.compact, true):
-            numberOfItemsPerRow = 2
+            return 2
         }
-        let width: CGFloat = floor((self.collectionView?.bounds.width ?? 0) / numberOfItemsPerRow)
-        self.flow?.itemSize = CGSize(width: width, height: width)
+    }
+
+    override var itemHeight: CGFloat {
+        return floor((self.collectionView?.bounds.width ?? 0) / CGFloat(self.columnCount))
     }
 }

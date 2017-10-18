@@ -30,7 +30,7 @@ protocol ReminderCollectionViewControllerDelegate: class {
     func userDidSelectReminder(with identifier: Reminder.Identifier, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController)
 }
 
-class ReminderCollectionViewController: ContentSizeReloadCollectionViewController, HasBasicController, HasProController {
+class ReminderCollectionViewController: StandardCollectionViewController, HasBasicController, HasProController {
     
     var proRC: ProController?
     var basicRC: BasicController?
@@ -38,10 +38,6 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
     var data: Result<AnyRealmCollection<Reminder>, RealmError>?
 
     weak var delegate: ReminderCollectionViewControllerDelegate?
-
-    private var flow: UICollectionViewFlowLayout? {
-        return self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,29 +103,26 @@ class ReminderCollectionViewController: ContentSizeReloadCollectionViewControlle
 
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.updateFlowItemSize()
-    }
-
-    private func updateFlowItemSize() {
-        let numberOfItemsPerRow: CGFloat
+    override var columnCount: Int {
         let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
-        switch (self.view.traitCollection.horizontalSizeClass, accessibility) {
+        let horizontalClass = self.view.traitCollection.horizontalSizeClass
+        switch (horizontalClass, accessibility) {
         case (.unspecified, _):
             assertionFailure("Hit a size class this VC was not expecting")
             fallthrough
         case (.regular, false):
-            numberOfItemsPerRow = 2
+            return 2
         case (.regular, true):
-            numberOfItemsPerRow = 1
+            return 1
         case (.compact, false):
-            numberOfItemsPerRow = 1
+            return 2
         case (.compact, true):
-            numberOfItemsPerRow = 1
+            return 1
         }
-        let width: CGFloat = floor((self.collectionView?.bounds.width ?? 0) / numberOfItemsPerRow)
-        self.flow?.itemSize = CGSize(width: width, height: 180)
+    }
+
+    override var itemHeight: CGFloat {
+        return 180
     }
     
     private var notificationToken: NotificationToken?

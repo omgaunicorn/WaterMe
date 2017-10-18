@@ -26,7 +26,7 @@ import WaterMeData
 import RealmSwift
 import UIKit
 
-class ReminderVesselCollectionViewController: ContentSizeReloadCollectionViewController, HasBasicController {
+class ReminderVesselCollectionViewController: StandardCollectionViewController, HasBasicController {
     
     var vesselChosen: ((ReminderVessel) -> Void)?
         
@@ -38,9 +38,6 @@ class ReminderVesselCollectionViewController: ContentSizeReloadCollectionViewCon
     }
     
     internal var data: Result<AnyRealmCollection<ReminderVessel>, RealmError>?
-    private var flow: UICollectionViewFlowLayout? {
-        return self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,30 +92,23 @@ class ReminderVesselCollectionViewController: ContentSizeReloadCollectionViewCon
         guard let vessel = self.data?.value?[indexPath.row] else { return }
         self.vesselChosen?(vessel)
     }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.updateFlowItemSize()
-    }
 
-    private func updateFlowItemSize() {
-        let numberOfItemsPerRow: CGFloat
+    override var columnCount: Int {
         let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
-        switch (self.view.traitCollection.horizontalSizeClass, accessibility) {
-        case (.unspecified, _):
+        let horizontalClass = self.view.traitCollection.horizontalSizeClass
+        switch (horizontalClass, accessibility) {
+        case (.unspecified, _), (.regular, _):
             assertionFailure("Hit a size class this VC was not expecting")
             fallthrough
-        case (.regular, false):
-            numberOfItemsPerRow = 4
-        case (.regular, true):
-            numberOfItemsPerRow = 2
         case (.compact, false):
-            numberOfItemsPerRow = 2
+            return 2
         case (.compact, true):
-            numberOfItemsPerRow = 1
+            return 1
         }
-        let width: CGFloat = floor((self.collectionView?.bounds.width ?? 0) / numberOfItemsPerRow)
-        self.flow?.itemSize = CGSize(width: width, height: width)
+    }
+
+    override var itemHeight: CGFloat {
+        return floor((self.collectionView?.bounds.width ?? 0) / CGFloat(self.columnCount))
     }
     
     private var notificationToken: NotificationToken?
