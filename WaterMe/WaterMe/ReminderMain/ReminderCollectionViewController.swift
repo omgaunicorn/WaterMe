@@ -80,23 +80,24 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return ReminderGedeg.numberOfSections(for: self.data?.value) ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.data?.value?.count ?? 0
+        return ReminderGedeg.numberOfItems(inSection: section, for: self.data?.value) ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReminderCollectionViewCell.reuseID, for: indexPath)
-        if let reminder = self.data?.value?[indexPath.row], let cell = cell as? ReminderCollectionViewCell {
+        let reminder = ReminderGedeg.reminder(at: indexPath, in: self.data?.value)
+        if let reminder = reminder, let cell = cell as? ReminderCollectionViewCell {
             cell.configure(with: reminder)
         }
         return cell
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let reminder = self.data?.value?[indexPath.row] else { return }
+        guard let reminder = ReminderGedeg.reminder(at: indexPath, in: self.data?.value) else { return }
         self.delegate?.userDidSelectReminder(with: .init(reminder: reminder),
                                              deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) },
                                              within: self)
@@ -136,7 +137,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
 extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 
     private func dragItemForReminder(at indexPath: IndexPath) -> UIDragItem? {
-        guard let reminder = self.data?.value?[indexPath.row] else { return nil }
+        guard let reminder = ReminderGedeg.reminder(at: indexPath, in: self.data?.value) else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
         item.localObject = Reminder.Identifier(reminder: reminder)
         return item

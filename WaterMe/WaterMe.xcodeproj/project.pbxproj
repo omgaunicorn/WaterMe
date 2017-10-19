@@ -71,6 +71,7 @@
 		50D3A0831EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3A0821EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift */; };
 		50D3A08A1EC76DD3001B4A7D /* RestorePurchase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50D3A0891EC76DD3001B4A7D /* RestorePurchase.storyboard */; };
 		50D3A08C1EC76DE5001B4A7D /* RestorePurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3A08B1EC76DE5001B4A7D /* RestorePurchaseViewController.swift */; };
+		50DF0BB81F99218C0068009F /* ReminderGedeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DF0BB71F99218C0068009F /* ReminderGedeg.swift */; };
 		50DFA8B31ED7A08E000D2956 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */; };
 		50DFA8B51ED7A352000D2956 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */; };
 		50DFA8B71ED7B27F000D2956 /* SynchronizingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */; };
@@ -175,6 +176,7 @@
 		50D3A0821EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionMigrationViewController.swift; sourceTree = "<group>"; };
 		50D3A0891EC76DD3001B4A7D /* RestorePurchase.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RestorePurchase.storyboard; sourceTree = "<group>"; };
 		50D3A08B1EC76DE5001B4A7D /* RestorePurchaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorePurchaseViewController.swift; sourceTree = "<group>"; };
+		50DF0BB71F99218C0068009F /* ReminderGedeg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderGedeg.swift; sourceTree = "<group>"; };
 		50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 		50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizingViewController.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 				502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */,
 				508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */,
 				502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */,
+				50DF0BB71F99218C0068009F /* ReminderGedeg.swift */,
 			);
 			path = ReminderMain;
 			sourceTree = "<group>";
@@ -884,6 +887,7 @@
 				50A3DF971EE3331D00F0B966 /* StyleExtensions.swift in Sources */,
 				50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */,
 				50E8B1E61EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift in Sources */,
+				50DF0BB81F99218C0068009F /* ReminderGedeg.swift in Sources */,
 				50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */,
 				50D3A0831EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift in Sources */,
 				50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */,
