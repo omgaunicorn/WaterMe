@@ -75,7 +75,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
             self.data = .success(data)
             self.collectionView?.reloadData()
         case .update(_, deletions: let del, insertions: let ins, modifications: let mod):
-            self.collectionView?.reloadData()
+            self.collectionView?.reloadData() // temp needed until Sections are sorted out
 //            self.collectionView?.performBatchUpdates({
 //                self.collectionView?.insertItems(at: ins.map({ IndexPath(row: $0, section: 0) }))
 //                self.collectionView?.deleteItems(at: del.map({ IndexPath(row: $0, section: 0) }))
@@ -104,24 +104,11 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: ReminderHeaderCollectionReusableView.kind, withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID, for: indexPath)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: ReminderHeaderCollectionReusableView.kind,
+                                                                     withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID,
+                                                                     for: indexPath)
         if let header = header as? ReminderHeaderCollectionReusableView, let section = Reminder.Section(rawValue: indexPath.section) {
-            let title: String
-            switch section {
-            case .now:
-                title = "Now"
-            case .today:
-                title = "Today"
-            case .tomorrow:
-                title = "Tomorrow"
-            case .thisWeek:
-                title = "This Week"
-            case .nextWeek:
-                title = "Next Week"
-            case .later:
-                title = "Later"
-            }
-            header.label?.text = title
+            header.label?.text = section.localizedTitleString
         }
         return header
     }

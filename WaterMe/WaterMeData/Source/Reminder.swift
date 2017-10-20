@@ -197,3 +197,26 @@ public extension Reminder {
         }
     }
 }
+
+public extension Reminder {
+    public enum Section: Int {
+        case now, today, tomorrow, thisWeek, nextWeek, later
+        public static let count = 6
+        public var localizedTitleString: String {
+            switch self {
+            case .now:
+                return "Now"
+            case .today:
+                return "Today"
+            case .tomorrow:
+                return "Tomorrow"
+            case .thisWeek:
+                return "This Week"
+            case .nextWeek:
+                return "Next Week"
+            case .later:
+                return "Later"
+            }
+        }
+    }
+}

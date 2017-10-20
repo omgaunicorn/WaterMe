@@ -91,43 +91,21 @@ enum EDC /*Exhaustive Date Comparison*/ {
     }
 }
 
-extension Reminder {
-    enum Section: Int {
-        case now, today, tomorrow, thisWeek, nextWeek, later
-        static let count = 6
-
-        fileprivate var filter: (Reminder) -> Bool {
-            switch self {
-            case .now:
-                return { $0.nextPerformDate == nil || EDC.f1_isBeforeToday($0.nextPerformDate) }
-            case .today:
-                return { EDC.f2_isInToday($0.nextPerformDate) }
-            case .tomorrow:
-                return { EDC.f3_isInTomorrow($0.nextPerformDate) }
-            case .thisWeek:
-                return { EDC.f4_isInThisWeekAndAfterTomorrow($0.nextPerformDate) }
-            case .nextWeek:
-                return { EDC.f5_isInNextWeek($0.nextPerformDate) }
-            case .later:
-                return { EDC.f6_isNotCoveredByOthers($0.nextPerformDate) }
-            }
+fileprivate extension Reminder.Section {
+    fileprivate var filter: (Reminder) -> Bool {
+        switch self {
+        case .now:
+            return { $0.nextPerformDate == nil || EDC.f1_isBeforeToday($0.nextPerformDate) }
+        case .today:
+            return { EDC.f2_isInToday($0.nextPerformDate) }
+        case .tomorrow:
+            return { EDC.f3_isInTomorrow($0.nextPerformDate) }
+        case .thisWeek:
+            return { EDC.f4_isInThisWeekAndAfterTomorrow($0.nextPerformDate) }
+        case .nextWeek:
+            return { EDC.f5_isInNextWeek($0.nextPerformDate) }
+        case .later:
+            return { EDC.f6_isNotCoveredByOthers($0.nextPerformDate) }
         }
     }
-
-    /* copy pasta for later
-    switch section {
-    case .now:
-        break
-    case .today:
-        break
-    case .tomorrow:
-        break
-    case .thisWeek:
-        break
-    case .nextWeek:
-        break
-    case .later:
-        break
-    }
-     */
 }
