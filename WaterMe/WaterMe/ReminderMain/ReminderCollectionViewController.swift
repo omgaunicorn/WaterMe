@@ -42,9 +42,15 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.flow?.sectionHeadersPinToVisibleBounds = true
+        self.flow?.headerReferenceSize = CGSize(width: 200, height: 80)
         self.collectionView?.dragInteractionEnabled = true // needed for iphone
         self.collectionView?.dragDelegate = self
-        self.collectionView?.register(ReminderCollectionViewCell.nib, forCellWithReuseIdentifier: ReminderCollectionViewCell.reuseID)
+        self.collectionView?.register(ReminderCollectionViewCell.nib,
+                                      forCellWithReuseIdentifier: ReminderCollectionViewCell.reuseID)
+        self.collectionView?.register(ReminderHeaderCollectionReusableView.nib,
+                                      forSupplementaryViewOfKind: ReminderHeaderCollectionReusableView.kind,
+                                      withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID)
         self.flow?.minimumInteritemSpacing = 0
         self.hardReloadData()
     }
@@ -69,11 +75,12 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
             self.data = .success(data)
             self.collectionView?.reloadData()
         case .update(_, deletions: let del, insertions: let ins, modifications: let mod):
-            self.collectionView?.performBatchUpdates({
-                self.collectionView?.insertItems(at: ins.map({ IndexPath(row: $0, section: 0) }))
-                self.collectionView?.deleteItems(at: del.map({ IndexPath(row: $0, section: 0) }))
-                self.collectionView?.reloadItems(at: mod.map({ IndexPath(row: $0, section: 0) }))
-            }, completion: nil)
+            self.collectionView?.reloadData()
+//            self.collectionView?.performBatchUpdates({
+//                self.collectionView?.insertItems(at: ins.map({ IndexPath(row: $0, section: 0) }))
+//                self.collectionView?.deleteItems(at: del.map({ IndexPath(row: $0, section: 0) }))
+//                self.collectionView?.reloadItems(at: mod.map({ IndexPath(row: $0, section: 0) }))
+//            }, completion: nil)
         case .error(let error):
             log.error(error)
         }
@@ -94,6 +101,29 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
             cell.configure(with: reminder)
         }
         return cell
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: ReminderHeaderCollectionReusableView.kind, withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID, for: indexPath)
+        if let header = header as? ReminderHeaderCollectionReusableView, let section = Reminder.Section(rawValue: indexPath.section) {
+            let title: String
+            switch section {
+            case .now:
+                title = "Now"
+            case .today:
+                title = "Today"
+            case .tomorrow:
+                title = "Tomorrow"
+            case .thisWeek:
+                title = "This Week"
+            case .nextWeek:
+                title = "Next Week"
+            case .later:
+                title = "Later"
+            }
+            header.label?.text = title
+        }
+        return header
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

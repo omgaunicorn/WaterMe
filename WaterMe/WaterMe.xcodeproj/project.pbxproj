@@ -62,6 +62,8 @@
 		50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */; };
 		50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */; };
 		50BB816A1EF7731E0030F5BA /* ReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */; };
+		50BDC03F1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BDC03D1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift */; };
+		50BDC0401F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50BDC03E1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib */; };
 		50C1AA971ED006B300E3BF0A /* AdminRealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C1AA961ED006B300E3BF0A /* AdminRealmController.swift */; };
 		50C30E541EFF490D006003A1 /* ReminderIntervalPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */; };
 		50C30E561EFF9349006003A1 /* ReminderIntervalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C30E551EFF9349006003A1 /* ReminderIntervalTableViewCell.swift */; };
@@ -165,6 +167,8 @@
 		50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTableViewCell.swift; sourceTree = "<group>"; };
+		50BDC03D1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
+		50BDC03E1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
 		50C1AA961ED006B300E3BF0A /* AdminRealmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminRealmController.swift; sourceTree = "<group>"; };
 		50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderIntervalPickerViewController.swift; sourceTree = "<group>"; };
 		50C30E551EFF9349006003A1 /* ReminderIntervalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderIntervalTableViewCell.swift; sourceTree = "<group>"; };
@@ -237,6 +241,8 @@
 				502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */,
 				508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */,
 				502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */,
+				50BDC03D1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift */,
+				50BDC03E1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib */,
 				50DF0BB71F99218C0068009F /* ReminderGedeg.swift */,
 			);
 			path = ReminderMain;
@@ -605,6 +611,7 @@
 				50D3A0811EC57F68001B4A7D /* SubscriptionMigration.storyboard in Resources */,
 				50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */,
 				501F922A1EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib in Resources */,
+				50BDC0401F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib in Resources */,
 				50BB0F6C1EC001C200850FF4 /* Videos in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -866,6 +873,7 @@
 				5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */,
 				501F92291EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift in Sources */,
 				50C30E541EFF490D006003A1 /* ReminderIntervalPickerViewController.swift in Sources */,
+				50BDC03F1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift in Sources */,
 				50C30E561EFF9349006003A1 /* ReminderIntervalTableViewCell.swift in Sources */,
 				508E615A1F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift in Sources */,
 				508E61571F8AD57400B28DD8 /* ReminderCollectionViewController.swift in Sources */,
