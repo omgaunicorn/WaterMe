@@ -31,19 +31,103 @@ import Foundation
  i.e. Today, Tomorrow, This Week, Later
  Gedeg == Grouper / Degrouper
 */
+
 enum ReminderGedeg {
 
     typealias Reminders = AnyRealmCollection<Reminder>
 
     static func numberOfSections(for reminders: Reminders?) -> Int? {
-        return 1
+        return Reminder.Section.count
     }
 
     static func numberOfItems(inSection section: Int, for reminders: Reminders?) -> Int? {
-        return reminders?.count
+        guard let section = Reminder.Section(rawValue: section) else { assertionFailure(); return nil; }
+        let filtered = reminders?.filter(section.filter)
+        return filtered?.count
     }
 
     static func reminder(at indexPath: IndexPath, in reminders: Reminders?) -> Reminder? {
-        return reminders?[indexPath.row]
+        guard let section = Reminder.Section(rawValue: indexPath.section) else { assertionFailure(); return nil; }
+        let filtered = reminders?.filter(section.filter)
+        let reminder = filtered?[indexPath.row]
+        return reminder
     }
+}
+
+enum EDC /*Exhaustive Date Comparison*/ {
+
+    static func f1_isBeforeToday(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
+        guard let testDate = testDate, calendar.isDate(testDate, inSameDayAs: now) == false else { return false }
+        return testDate < now
+    }
+
+    static func f2_isInToday(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
+        guard let testDate = testDate, self.f1_isBeforeToday(testDate, calendar: calendar, now: now) == false else { return false }
+        return calendar.isDate(testDate, inSameDayAs: now)
+    }
+
+    static func f3_isInTomorrow(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
+        guard let testDate = testDate, self.f2_isInToday(testDate, calendar: calendar, now: now) == false else { return false }
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: now)!
+        return calendar.isDate(testDate, inSameDayAs: tomorrow)
+    }
+
+    static func f4_isInThisWeekAndAfterTomorrow(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
+        guard let testDate = testDate, self.f3_isInTomorrow(testDate, calendar: calendar, now: now) == false else { return false }
+        let testDateIsInSameWeekAsNow = calendar.isDate(testDate, equalTo: now, toGranularity: .weekOfYear)
+        return testDateIsInSameWeekAsNow
+    }
+
+    static func f5_isInNextWeek(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
+        guard let testDate = testDate, self.f4_isInThisWeekAndAfterTomorrow(testDate, calendar: calendar, now: now) == false else { return false }
+        let nextWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: now)!
+        let testDateIsInSameWeekAsNextWeek = calendar.isDate(testDate, equalTo: nextWeek, toGranularity: .weekOfYear)
+        return testDateIsInSameWeekAsNextWeek
+    }
+
+    static func f6_isNotCoveredByOthers(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
+        guard let testDate = testDate, self.f5_isInNextWeek(testDate, calendar: calendar, now: now) == false else { return false }
+        return true
+    }
+}
+
+extension Reminder {
+    enum Section: Int {
+        case now, today, tomorrow, thisWeek, nextWeek, later
+        static let count = 6
+
+        fileprivate var filter: (Reminder) -> Bool {
+            switch self {
+            case .now:
+                return { $0.nextPerformDate == nil || EDC.f1_isBeforeToday($0.nextPerformDate) }
+            case .today:
+                return { EDC.f2_isInToday($0.nextPerformDate) }
+            case .tomorrow:
+                return { EDC.f3_isInTomorrow($0.nextPerformDate) }
+            case .thisWeek:
+                return { EDC.f4_isInThisWeekAndAfterTomorrow($0.nextPerformDate) }
+            case .nextWeek:
+                return { EDC.f5_isInNextWeek($0.nextPerformDate) }
+            case .later:
+                return { EDC.f6_isNotCoveredByOthers($0.nextPerformDate) }
+            }
+        }
+    }
+
+    /* copy pasta for later
+    switch section {
+    case .now:
+        break
+    case .today:
+        break
+    case .tomorrow:
+        break
+    case .thisWeek:
+        break
+    case .nextWeek:
+        break
+    case .later:
+        break
+    }
+     */
 }
