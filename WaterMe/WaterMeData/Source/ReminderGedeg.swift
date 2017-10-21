@@ -33,19 +33,24 @@ import Foundation
 
 public enum ReminderGedeg {
 
+    public static let enabled: Bool = true
+
     public typealias Reminders = AnyRealmCollection<Reminder>
 
     public static func numberOfSections(for reminders: Reminders?) -> Int? {
+        guard self.enabled else { return 1 }
         return ReminderSection.count
     }
 
     public static func numberOfItems(inSection section: Int, for reminders: Reminders?) -> Int? {
+        guard self.enabled else { return reminders?.count }
         guard let section = ReminderSection(rawValue: section) else { assertionFailure(); return nil; }
         let filtered = reminders?.filter(section.filter)
         return filtered?.count
     }
 
     public static func reminder(at indexPath: IndexPath, in reminders: Reminders?) -> Reminder? {
+        guard self.enabled else { return reminders?[indexPath.row] }
         guard let section = ReminderSection(rawValue: indexPath.section) else { assertionFailure(); return nil; }
         let filtered = reminders?.filter(section.filter)
         let reminder = filtered?[indexPath.row]

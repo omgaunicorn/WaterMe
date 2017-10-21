@@ -75,12 +75,15 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
             self.data = .success(data)
             self.collectionView?.reloadData()
         case .update(_, deletions: let del, insertions: let ins, modifications: let mod):
-            self.collectionView?.reloadData() // temp needed until Sections are sorted out
-//            self.collectionView?.performBatchUpdates({
-//                self.collectionView?.insertItems(at: ins.map({ IndexPath(row: $0, section: 0) }))
-//                self.collectionView?.deleteItems(at: del.map({ IndexPath(row: $0, section: 0) }))
-//                self.collectionView?.reloadItems(at: mod.map({ IndexPath(row: $0, section: 0) }))
-//            }, completion: nil)
+            guard ReminderGedeg.enabled == false else {
+                self.collectionView?.reloadData() // temp needed until Sections are sorted out
+                return
+            }
+            self.collectionView?.performBatchUpdates({
+                self.collectionView?.insertItems(at: ins.map({ IndexPath(row: $0, section: 0) }))
+                self.collectionView?.deleteItems(at: del.map({ IndexPath(row: $0, section: 0) }))
+                self.collectionView?.reloadItems(at: mod.map({ IndexPath(row: $0, section: 0) }))
+            }, completion: nil)
         case .error(let error):
             log.error(error)
         }
@@ -148,7 +151,6 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     deinit {
         self.notificationToken?.stop()
     }
-    
 }
 
 extension ReminderCollectionViewController: UICollectionViewDragDelegate {
