@@ -33,7 +33,7 @@ import Foundation
 
 public enum ReminderGedeg {
 
-    public static let enabled: Bool = true
+    public static let enabled: Bool = false
 
     public typealias Reminders = AnyRealmCollection<Reminder>
 

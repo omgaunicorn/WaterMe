@@ -116,6 +116,16 @@ public class BasicController {
     
     public func allReminders(sorted: Reminder.SortOrder = .nextPerformDate, ascending: Bool = true) -> Result<AnyRealmCollection<Reminder>, RealmError> {
         return self.realm.map() { realm in
+//            let startDate = Date()
+//            let endDate = Date() + (24 * 60 * 60)
+//            let predicate = NSComparisonPredicate(
+//                leftExpression: NSExpression(forKeyPath: #keyPath(Reminder.nextPerformDate)),
+//                rightExpression: NSExpression(forConstantValue: startDate),
+//                modifier: .direct,
+//                type: .greaterThan)
+//            let predicate = "\(#keyPath(Reminder.nextPerformDate)) == nil"
+//            let predicate = NSPredicate(format: "\(#keyPath(Reminder.nextPerformDate)) != nil")
+//            let predicate = NSPredicate(format: "\(#keyPath(Reminder.nextPerformDate)) > %@", startDate as CVarArg)
             let collection = realm.objects(Reminder.self).sorted(byKeyPath: sorted.keyPath, ascending: ascending)
             return AnyRealmCollection(collection)
         }

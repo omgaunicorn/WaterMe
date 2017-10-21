@@ -79,6 +79,8 @@ class ReminderCollectionViewCell: UICollectionViewCell {
                 self.labelThree?.isHidden = true
             }
         }
+
+        print(reminder.nextPerformDate)
     }
     
     private func reset() {
