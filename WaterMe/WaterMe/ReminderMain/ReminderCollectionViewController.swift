@@ -107,7 +107,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: ReminderHeaderCollectionReusableView.kind,
                                                                      withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID,
                                                                      for: indexPath)
-        if let header = header as? ReminderHeaderCollectionReusableView, let section = Reminder.Section(rawValue: indexPath.section) {
+        if let header = header as? ReminderHeaderCollectionReusableView, let section = ReminderSection(rawValue: indexPath.section) {
             header.label?.text = section.localizedTitleString
         }
         return header

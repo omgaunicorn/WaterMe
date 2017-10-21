@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import WaterMeData
 import RealmSwift
 import Foundation
 
@@ -32,66 +31,66 @@ import Foundation
  Gedeg == Grouper / Degrouper
 */
 
-enum ReminderGedeg {
+public enum ReminderGedeg {
 
-    typealias Reminders = AnyRealmCollection<Reminder>
+    public typealias Reminders = AnyRealmCollection<Reminder>
 
-    static func numberOfSections(for reminders: Reminders?) -> Int? {
-        return Reminder.Section.count
+    public static func numberOfSections(for reminders: Reminders?) -> Int? {
+        return ReminderSection.count
     }
 
-    static func numberOfItems(inSection section: Int, for reminders: Reminders?) -> Int? {
-        guard let section = Reminder.Section(rawValue: section) else { assertionFailure(); return nil; }
+    public static func numberOfItems(inSection section: Int, for reminders: Reminders?) -> Int? {
+        guard let section = ReminderSection(rawValue: section) else { assertionFailure(); return nil; }
         let filtered = reminders?.filter(section.filter)
         return filtered?.count
     }
 
-    static func reminder(at indexPath: IndexPath, in reminders: Reminders?) -> Reminder? {
-        guard let section = Reminder.Section(rawValue: indexPath.section) else { assertionFailure(); return nil; }
+    public static func reminder(at indexPath: IndexPath, in reminders: Reminders?) -> Reminder? {
+        guard let section = ReminderSection(rawValue: indexPath.section) else { assertionFailure(); return nil; }
         let filtered = reminders?.filter(section.filter)
         let reminder = filtered?[indexPath.row]
         return reminder
     }
 }
 
-enum EDC /*Exhaustive Date Comparison*/ {
+internal enum EDC /*Exhaustive Date Comparison*/ {
 
-    static func f1_isBeforeToday(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
+    internal static func f1_isBeforeToday(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
         guard let testDate = testDate, calendar.isDate(testDate, inSameDayAs: now) == false else { return false }
         return testDate < now
     }
 
-    static func f2_isInToday(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
+    internal static func f2_isInToday(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
         guard let testDate = testDate, self.f1_isBeforeToday(testDate, calendar: calendar, now: now) == false else { return false }
         return calendar.isDate(testDate, inSameDayAs: now)
     }
 
-    static func f3_isInTomorrow(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
+    internal static func f3_isInTomorrow(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
         guard let testDate = testDate, self.f2_isInToday(testDate, calendar: calendar, now: now) == false else { return false }
         let tomorrow = calendar.date(byAdding: .day, value: 1, to: now)!
         return calendar.isDate(testDate, inSameDayAs: tomorrow)
     }
 
-    static func f4_isInThisWeekAndAfterTomorrow(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
+    internal static func f4_isInThisWeekAndAfterTomorrow(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
         guard let testDate = testDate, self.f3_isInTomorrow(testDate, calendar: calendar, now: now) == false else { return false }
         let testDateIsInSameWeekAsNow = calendar.isDate(testDate, equalTo: now, toGranularity: .weekOfYear)
         return testDateIsInSameWeekAsNow
     }
 
-    static func f5_isInNextWeek(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
+    internal static func f5_isInNextWeek(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
         guard let testDate = testDate, self.f4_isInThisWeekAndAfterTomorrow(testDate, calendar: calendar, now: now) == false else { return false }
         let nextWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: now)!
         let testDateIsInSameWeekAsNextWeek = calendar.isDate(testDate, equalTo: nextWeek, toGranularity: .weekOfYear)
         return testDateIsInSameWeekAsNextWeek
     }
 
-    static func f6_isNotCoveredByOthers(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
+    internal static func f6_isNotCoveredByOthers(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
         guard let testDate = testDate, self.f5_isInNextWeek(testDate, calendar: calendar, now: now) == false else { return false }
         return true
     }
 }
 
-fileprivate extension Reminder.Section {
+fileprivate extension ReminderSection {
     fileprivate var filter: (Reminder) -> Bool {
         switch self {
         case .now:
