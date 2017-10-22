@@ -22,3 +22,17 @@
 //
 
 import Foundation
+
+enum ReminderDateCalculator {
+
+    static func today(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
+        let startOfNow = calendar.startOfDay(for: now)
+        let tomorrow = calendar.date(byAdding: Calendar.Component.day, value: 1, to: now)!
+        let startOfTomorrow = calendar.startOfDay(for: tomorrow)
+        return DateInterval(start: startOfNow, end: startOfTomorrow)
+    }
+
+}
+
+internal extension ReminderSection {
+}
