@@ -98,7 +98,7 @@ internal enum EDC /*Exhaustive Date Comparison*/ {
 fileprivate extension ReminderSection {
     fileprivate var filter: (Reminder) -> Bool {
         switch self {
-        case .now:
+        case .late:
             return { $0.nextPerformDate == nil || EDC.f1_isBeforeToday($0.nextPerformDate) }
         case .today:
             return { EDC.f2_isInToday($0.nextPerformDate) }
@@ -106,10 +106,8 @@ fileprivate extension ReminderSection {
             return { EDC.f3_isInTomorrow($0.nextPerformDate) }
         case .thisWeek:
             return { EDC.f4_isInThisWeekAndAfterTomorrow($0.nextPerformDate) }
-        case .nextWeek:
-            return { EDC.f5_isInNextWeek($0.nextPerformDate) }
         case .later:
-            return { EDC.f6_isNotCoveredByOthers($0.nextPerformDate) }
+            return { EDC.f5_isInNextWeek($0.nextPerformDate) }
         }
     }
 }

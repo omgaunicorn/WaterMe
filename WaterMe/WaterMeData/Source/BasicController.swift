@@ -114,9 +114,12 @@ public class BasicController {
         }
     }
     
-    public func allReminders(sorted: Reminder.SortOrder = .nextPerformDate, ascending: Bool = true) -> Result<AnyRealmCollection<Reminder>, RealmError> {
+    public func allReminders(section: ReminderSection = .later,
+                             sorted: Reminder.SortOrder = .nextPerformDate,
+                             ascending: Bool = true) -> Result<AnyRealmCollection<Reminder>, RealmError>
+    {
         return self.realm.map() { realm in
-            let range = ReminderDateCalculator.today()
+            let range = section.dateInterval
             let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
                 NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(Reminder.nextPerformDate)),
                                       rightExpression: NSExpression(forConstantValue: range.start),
