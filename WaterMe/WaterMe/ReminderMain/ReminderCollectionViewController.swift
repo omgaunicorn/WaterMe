@@ -35,7 +35,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     var proRC: ProController?
     var basicRC: BasicController?
 
-    private var reminderDataSource: ReminderGedeg2?
+    private(set) var reminders: ReminderGedeg?
     
     weak var delegate: ReminderCollectionViewControllerDelegate?
 
@@ -56,24 +56,20 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
     
     private func hardReloadData() {
-        self.notificationToken?.stop()
-        self.notificationToken = nil
-        self.reminderDataSource = nil
-
-        self.reminderDataSource = ReminderGedegDataSource(basicRC: self.basicRC, managedCollectionView: self.collectionView)
+        self.reminders = ReminderGedegDataSource(basicRC: self.basicRC, managedCollectionView: self.collectionView)
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return self.reminderDataSource?.numberOfSections() ?? 0
+        return self.reminders?.numberOfSections() ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.reminderDataSource?.numberOfItems(inSection: section) ?? 0
+        return self.reminders?.numberOfItems(inSection: section) ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReminderCollectionViewCell.reuseID, for: indexPath)
-        let reminder = self.reminderDataSource?.reminder(at: indexPath)
+        let reminder = self.reminders?.reminder(at: indexPath)
         if let reminder = reminder, let cell = cell as? ReminderCollectionViewCell {
             cell.configure(with: reminder)
         }
@@ -91,7 +87,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let reminder = self.reminderDataSource?.reminder(at: indexPath) else { return }
+        guard let reminder = self.reminders?.reminder(at: indexPath) else { return }
         self.delegate?.userDidSelectReminder(with: .init(reminder: reminder),
                                              deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) },
                                              within: self)
@@ -119,18 +115,12 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     override var itemHeight: CGFloat {
         return 180
     }
-    
-    private var notificationToken: NotificationToken?
-    
-    deinit {
-        self.notificationToken?.stop()
-    }
 }
 
 extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 
     private func dragItemForReminder(at indexPath: IndexPath) -> UIDragItem? {
-        guard let reminder = self.reminderDataSource?.reminder(at: indexPath) else { return nil }
+        guard let reminder = self.reminders?.reminder(at: indexPath) else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
         item.localObject = Reminder.Identifier(reminder: reminder)
         return item

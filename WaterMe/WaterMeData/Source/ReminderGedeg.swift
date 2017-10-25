@@ -32,20 +32,23 @@ import Foundation
  Gedeg == Grouper / Degrouper
 */
 
-open class ReminderGedeg2: NSObject {
+open class ReminderGedeg: NSObject {
 
-    private var reminders: [ReminderSection : AnyRealmCollection<Reminder>] = [:]
+    private(set) var reminders: [ReminderSection : AnyRealmCollection<Reminder>] = [:]
+    public var lastError: RealmError?
 
-    public init(basicRC: BasicController?) {
+    public init?(basicRC: BasicController?) {
         super.init()
-        guard let basicRC = basicRC else { assertionFailure("Passed NIL BasicController. Can't do anything"); return; }
+        guard let basicRC = basicRC else { return nil }
         for i in 0 ..< ReminderSection.count {
             let section = ReminderSection(rawValue: i)!
             let result = basicRC.allReminders(section: section, sorted: .nextPerformDate, ascending: true)
-            if case .success(let reminders) = result {
-                // and subscribe for updates
+            switch result {
+            case .success(let reminders):
                 let token = reminders.addNotificationBlock({ [weak self] in self?.collection(for: section, changed: $0) })
                 self.tokens += [token]
+            case .failure(let error):
+                self.lastError = error
             }
         }
     }
@@ -72,14 +75,14 @@ open class ReminderGedeg2: NSObject {
         return self.reminders.count
     }
 
-    public func numberOfItems(inSection section: Int) -> Int? {
+    public func numberOfItems(inSection section: Int) -> Int {
         let section = ReminderSection(rawValue: section)!
-        return self.reminders[section]?.count
+        return self.reminders[section]!.count
     }
 
-    public func reminder(at indexPath: IndexPath) -> Reminder? {
+    public func reminder(at indexPath: IndexPath) -> Reminder {
         let section = ReminderSection(rawValue: indexPath.section)!
-        let reminder = self.reminders[section]?[indexPath.row]
+        let reminder = self.reminders[section]![indexPath.row]
         return reminder
     }
 
@@ -87,86 +90,5 @@ open class ReminderGedeg2: NSObject {
 
     deinit {
         self.tokens.forEach({ $0.stop() })
-    }
-}
-
-public enum ReminderGedeg {
-
-    public static let enabled: Bool = false
-
-    public typealias Reminders = AnyRealmCollection<Reminder>
-
-    public static func numberOfSections(for reminders: Reminders?) -> Int? {
-        guard self.enabled else { return 1 }
-        return ReminderSection.count
-    }
-
-    public static func numberOfItems(inSection section: Int, for reminders: Reminders?) -> Int? {
-        guard self.enabled else { return reminders?.count }
-        guard let section = ReminderSection(rawValue: section) else { assertionFailure(); return nil; }
-        let filtered = reminders?.filter(section.filter)
-        return filtered?.count
-    }
-
-    public static func reminder(at indexPath: IndexPath, in reminders: Reminders?) -> Reminder? {
-        guard self.enabled else { return reminders?[indexPath.row] }
-        guard let section = ReminderSection(rawValue: indexPath.section) else { assertionFailure(); return nil; }
-        let filtered = reminders?.filter(section.filter)
-        let reminder = filtered?[indexPath.row]
-        return reminder
-    }
-}
-
-internal enum EDC /*Exhaustive Date Comparison*/ {
-
-    internal static func f1_isBeforeToday(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
-        guard let testDate = testDate, calendar.isDate(testDate, inSameDayAs: now) == false else { return false }
-        return testDate < now
-    }
-
-    internal static func f2_isInToday(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
-        guard let testDate = testDate, self.f1_isBeforeToday(testDate, calendar: calendar, now: now) == false else { return false }
-        return calendar.isDate(testDate, inSameDayAs: now)
-    }
-
-    internal static func f3_isInTomorrow(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
-        guard let testDate = testDate, self.f2_isInToday(testDate, calendar: calendar, now: now) == false else { return false }
-        let tomorrow = calendar.date(byAdding: .day, value: 1, to: now)!
-        return calendar.isDate(testDate, inSameDayAs: tomorrow)
-    }
-
-    internal static func f4_isInThisWeekAndAfterTomorrow(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
-        guard let testDate = testDate, self.f3_isInTomorrow(testDate, calendar: calendar, now: now) == false else { return false }
-        let testDateIsInSameWeekAsNow = calendar.isDate(testDate, equalTo: now, toGranularity: .weekOfYear)
-        return testDateIsInSameWeekAsNow
-    }
-
-    internal static func f5_isInNextWeek(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
-        guard let testDate = testDate, self.f4_isInThisWeekAndAfterTomorrow(testDate, calendar: calendar, now: now) == false else { return false }
-        let nextWeek = calendar.date(byAdding: .weekOfYear, value: 1, to: now)!
-        let testDateIsInSameWeekAsNextWeek = calendar.isDate(testDate, equalTo: nextWeek, toGranularity: .weekOfYear)
-        return testDateIsInSameWeekAsNextWeek
-    }
-
-    internal static func f6_isNotCoveredByOthers(_ testDate: Date?, calendar: Calendar = Calendar.current, now: Date = Date()) -> Bool {
-        guard let testDate = testDate, self.f5_isInNextWeek(testDate, calendar: calendar, now: now) == false else { return false }
-        return true
-    }
-}
-
-fileprivate extension ReminderSection {
-    fileprivate var filter: (Reminder) -> Bool {
-        switch self {
-        case .late:
-            return { $0.nextPerformDate == nil || EDC.f1_isBeforeToday($0.nextPerformDate) }
-        case .today:
-            return { EDC.f2_isInToday($0.nextPerformDate) }
-        case .tomorrow:
-            return { EDC.f3_isInTomorrow($0.nextPerformDate) }
-        case .thisWeek:
-            return { EDC.f4_isInThisWeekAndAfterTomorrow($0.nextPerformDate) }
-        case .later:
-            return { EDC.f5_isInNextWeek($0.nextPerformDate) }
-        }
     }
 }

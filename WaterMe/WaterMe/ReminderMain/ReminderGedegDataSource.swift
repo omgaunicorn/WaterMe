@@ -24,11 +24,11 @@
 import WaterMeData
 import UIKit
 
-class ReminderGedegDataSource: ReminderGedeg2 {
+class ReminderGedegDataSource: ReminderGedeg {
 
     private weak var collectionView: UICollectionView?
 
-    init(basicRC: BasicController?, managedCollectionView: UICollectionView?) {
+    init?(basicRC: BasicController?, managedCollectionView: UICollectionView?) {
         self.collectionView = managedCollectionView
         super.init(basicRC: basicRC)
     }
@@ -46,4 +46,3 @@ class ReminderGedegDataSource: ReminderGedeg2 {
         }, completion: nil)
     }
 }
-
