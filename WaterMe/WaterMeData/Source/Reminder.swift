@@ -201,7 +201,7 @@ public extension Reminder {
 // TODO: Change to extension Reminder.Section. Not sure why it wasn't working.
 public enum ReminderSection: Int {
     case late, today, tomorrow, thisWeek, later
-    public static let count = 6
+    public static let count = 5
     public var localizedTitleString: String {
         switch self {
         case .late:

@@ -120,7 +120,7 @@ public class BasicController {
     {
         return self.realm.map() { realm in
             let range = section.dateInterval
-            let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+            let andPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
                 NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(Reminder.nextPerformDate)),
                                       rightExpression: NSExpression(forConstantValue: range.start),
                                       modifier: .direct,
@@ -130,8 +130,18 @@ public class BasicController {
                                       modifier: .direct,
                                       type: .lessThan)
                 ])
-            let collection = realm.objects(Reminder.self).filter(predicate).sorted(byKeyPath: sorted.keyPath, ascending: ascending)
-            return AnyRealmCollection(collection)
+            if case .late = section {
+                let nilCheck = NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(Reminder.nextPerformDate)),
+                                      rightExpression: NSExpression(forConstantValue: nil),
+                                      modifier: .direct,
+                                      type: .equalTo)
+                let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [nilCheck, andPredicate])
+                let collection = realm.objects(Reminder.self).filter(orPredicate).sorted(byKeyPath: sorted.keyPath, ascending: ascending)
+                return AnyRealmCollection(collection)
+            } else {
+                let collection = realm.objects(Reminder.self).filter(andPredicate).sorted(byKeyPath: sorted.keyPath, ascending: ascending)
+                return AnyRealmCollection(collection)
+            }
         }
     }
 

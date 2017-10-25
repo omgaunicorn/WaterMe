@@ -22,6 +22,7 @@
 //
 
 import RealmSwift
+import Result
 import Foundation
 
 /**
@@ -30,6 +31,64 @@ import Foundation
  i.e. Today, Tomorrow, This Week, Later
  Gedeg == Grouper / Degrouper
 */
+
+open class ReminderGedeg2: NSObject {
+
+    private var reminders: [ReminderSection : AnyRealmCollection<Reminder>] = [:]
+
+    public init(basicRC: BasicController?) {
+        super.init()
+        guard let basicRC = basicRC else { assertionFailure("Passed NIL BasicController. Can't do anything"); return; }
+        for i in 0 ..< ReminderSection.count {
+            let section = ReminderSection(rawValue: i)!
+            let result = basicRC.allReminders(section: section, sorted: .nextPerformDate, ascending: true)
+            if case .success(let reminders) = result {
+                // and subscribe for updates
+                let token = reminders.addNotificationBlock({ [weak self] in self?.collection(for: section, changed: $0) })
+                self.tokens += [token]
+            }
+        }
+    }
+
+    private func collection(for section: ReminderSection, changed changes: RealmCollectionChange<AnyRealmCollection<Reminder>>) {
+        switch changes {
+        case .initial(let data):
+            self.reminders[section] = data
+            if self.reminders.count == self.tokens.count {
+                self.allDataReady()
+            }
+        case .update(_, deletions: let del, insertions: let ins, modifications: let mod):
+            self.updates(in: section, deletions: del, insertions: ins, modifications: mod)
+        case .error(let error):
+            log.error(error)
+        }
+    }
+
+    open func allDataReady() { }
+
+    open func updates(in section: ReminderSection, deletions: [Int], insertions: [Int], modifications: [Int]) { }
+
+    public func numberOfSections() -> Int {
+        return self.reminders.count
+    }
+
+    public func numberOfItems(inSection section: Int) -> Int? {
+        let section = ReminderSection(rawValue: section)!
+        return self.reminders[section]?.count
+    }
+
+    public func reminder(at indexPath: IndexPath) -> Reminder? {
+        let section = ReminderSection(rawValue: indexPath.section)!
+        let reminder = self.reminders[section]?[indexPath.row]
+        return reminder
+    }
+
+    private var tokens: [NotificationToken] = []
+
+    deinit {
+        self.tokens.forEach({ $0.stop() })
+    }
+}
 
 public enum ReminderGedeg {
 
