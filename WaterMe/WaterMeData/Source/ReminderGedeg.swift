@@ -46,7 +46,7 @@ open class ReminderGedeg: NSObject {
         }
         for i in 0 ..< ReminderSection.count {
             let section = ReminderSection(rawValue: i)!
-            let result = basicRC.allReminders(section: section, sorted: .nextPerformDate, ascending: true)
+            let result = basicRC.reminders(in: section, sorted: .nextPerformDate, ascending: true)
             switch result {
             case .success(let reminders):
                 let token = reminders.addNotificationBlock({ [weak self] in self?.collection(for: section, changed: $0) })

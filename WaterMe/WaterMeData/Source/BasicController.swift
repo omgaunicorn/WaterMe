@@ -113,10 +113,15 @@ public class BasicController {
             return AnyRealmCollection(collection)
         }
     }
-    
-    public func allReminders(section: ReminderSection = .later,
-                             sorted: Reminder.SortOrder = .nextPerformDate,
-                             ascending: Bool = true) -> Result<AnyRealmCollection<Reminder>, RealmError>
+
+    public func allReminders(sorted: Reminder.SortOrder = .nextPerformDate,
+                             ascending: Bool = true) -> Result<AnyRealmCollection<Reminder>, RealmError> {
+        return self.realm.map({ AnyRealmCollection($0.objects(Reminder.self).sorted(byKeyPath: sorted.keyPath, ascending: ascending)) })
+    }
+
+    public func reminders(in section: ReminderSection,
+                          sorted: Reminder.SortOrder = .nextPerformDate,
+                          ascending: Bool = true) -> Result<AnyRealmCollection<Reminder>, RealmError>
     {
         return self.realm.map() { realm in
             let range = section.dateInterval

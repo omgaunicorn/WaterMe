@@ -27,7 +27,7 @@ import UserNotifications
 class ReminderUserNotificationController {
 
     init(basicController: BasicController) {
-        
+//        basicController.allReminders()
     }
 
 }
