@@ -31,9 +31,11 @@ let log = XCGLogger.default
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     class var shared: AppDelegate { return UIApplication.shared.delegate as! AppDelegate }
-    
+
+    private var notifictionController: ReminderUserNotificationController?
+
     var window: UIWindow?
-        
+
     override init() {
         super.init()
         
@@ -52,6 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let freeRC = BasicController(kind: .local)
         let vc = ReminderMainViewController.newVC(basicController: freeRC, proController: nil)
+
+        self.notifictionController = ReminderUserNotificationController(basicController: freeRC)
 
         if self.window == nil {
             self.window = UIWindow(frame: UIScreen.main.bounds)
