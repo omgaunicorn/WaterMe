@@ -38,11 +38,14 @@ class ReminderGedegDataSource: ReminderGedeg {
         self.collectionView?.reloadData()
     }
 
-    override func updates(in section: ReminderSection, deletions: [Int], insertions: [Int], modifications: [Int]) {
+    override func batchedUpdates(_ updates: [Update]) {
+        guard updates.isEmpty == false else { return }
         self.collectionView?.performBatchUpdates({
-            self.collectionView?.insertItems(at: insertions.map({ IndexPath(row: $0, section: section.rawValue) }))
-            self.collectionView?.deleteItems(at: deletions.map({ IndexPath(row: $0, section: section.rawValue) }))
-            self.collectionView?.reloadItems(at: modifications.map({ IndexPath(row: $0, section: section.rawValue) }))
+            for u in updates {
+                self.collectionView?.insertItems(at: u.insertions.map({ IndexPath(row: $0, section: u.section.rawValue) }))
+                self.collectionView?.deleteItems(at: u.deletions.map({ IndexPath(row: $0, section: u.section.rawValue) }))
+                self.collectionView?.reloadItems(at: u.modifications.map({ IndexPath(row: $0, section: u.section.rawValue) }))
+            }
         }, completion: nil)
     }
 }

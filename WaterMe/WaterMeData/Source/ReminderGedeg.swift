@@ -34,12 +34,16 @@ import Foundation
 
 open class ReminderGedeg: NSObject {
 
+    private let updateBatcher = Batcher()
     private(set) var reminders: [ReminderSection : AnyRealmCollection<Reminder>] = [:]
     public var lastError: RealmError?
 
     public init?(basicRC: BasicController?) {
         super.init()
         guard let basicRC = basicRC else { return nil }
+        self.updateBatcher.batchFired = { [unowned self] updates in
+            self.batchedUpdates(updates)
+        }
         for i in 0 ..< ReminderSection.count {
             let section = ReminderSection(rawValue: i)!
             let result = basicRC.allReminders(section: section, sorted: .nextPerformDate, ascending: true)
@@ -61,7 +65,7 @@ open class ReminderGedeg: NSObject {
                 self.allDataReady()
             }
         case .update(_, deletions: let del, insertions: let ins, modifications: let mod):
-            self.updates(in: section, deletions: del, insertions: ins, modifications: mod)
+            self.updateBatcher.appendUpdateExtendingTimer(Update(section: section, deletions: del, insertions: ins, modifications: mod))
         case .error(let error):
             log.error(error)
         }
@@ -69,7 +73,7 @@ open class ReminderGedeg: NSObject {
 
     open func allDataReady() { }
 
-    open func updates(in section: ReminderSection, deletions: [Int], insertions: [Int], modifications: [Int]) { }
+    open func batchedUpdates(_ updates: [Update]) { }
 
     public func numberOfSections() -> Int {
         return self.reminders.count
@@ -90,5 +94,31 @@ open class ReminderGedeg: NSObject {
 
     deinit {
         self.tokens.forEach({ $0.stop() })
+    }
+
+    public struct Update {
+        public var section: ReminderSection
+        public var deletions: [Int]
+        public var insertions: [Int]
+        public var modifications: [Int]
+    }
+
+    private class Batcher {
+        private var timer: Timer?
+        private var updates = [Update]()
+        var batchFired: (([Update]) -> Void)?
+        func appendUpdateExtendingTimer(_ update: Update) {
+            self.timer?.invalidate()
+            self.updates.append(update)
+            self.timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: false)
+        }
+        @objc private func timerFired(_ timer: Timer?) {
+            timer?.invalidate()
+            self.timer?.invalidate()
+            self.timer = nil
+            let updates = self.updates
+            self.updates = []
+            self.batchFired?(updates)
+        }
     }
 }
