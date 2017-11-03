@@ -93,12 +93,16 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
 extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
     func userDidSelectReminder(with identifier: Reminder.Identifier,
+                               from view: UIView,
                                deselectAnimated: @escaping (Bool) -> Void,
                                within viewController: ReminderCollectionViewController)
     {
         guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.popoverPresentationController?.delegate = viewController
+        alert.popoverPresentationController!.sourceView = view
+        let origin = CGPoint(x: view.bounds.size.width / 2, y: view.bounds.size.height / 2)
+        alert.popoverPresentationController!.sourceRect = CGRect(origin: origin, size: .zero)
+        alert.popoverPresentationController!.permittedArrowDirections = [.up, .down]
         let editReminder = UIAlertAction(title: "Edit Reminder", style: .default) { _ in
             let result = basicRC.reminder(matching: identifier)
             switch result {
