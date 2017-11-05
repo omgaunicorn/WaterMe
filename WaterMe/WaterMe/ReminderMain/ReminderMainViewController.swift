@@ -99,10 +99,15 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
     {
         guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.popoverPresentationController!.sourceView = view
+        
+        // configure popover presentation for ipad
+        // popoverPresentationController is NIL on iPhones
+        alert.popoverPresentationController?.sourceView = view
         let origin = CGPoint(x: view.bounds.size.width / 2, y: view.bounds.size.height / 2)
-        alert.popoverPresentationController!.sourceRect = CGRect(origin: origin, size: .zero)
-        alert.popoverPresentationController!.permittedArrowDirections = [.up, .down]
+        alert.popoverPresentationController?.sourceRect = CGRect(origin: origin, size: .zero)
+        alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
+
+        // configure the alert to show
         let editReminder = UIAlertAction(title: "Edit Reminder", style: .default) { _ in
             let result = basicRC.reminder(matching: identifier)
             switch result {
@@ -143,5 +148,3 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
 }
-
-
