@@ -84,7 +84,7 @@ public class ReceiptController {
     public var receiptChanged: ((Receipt, ReceiptController) -> Void)? {
         didSet {
             if self.receiptChanged == nil {
-                self.receiptToken?.stop()
+              self.receiptToken?.invalidate()
                 self.receiptToken = nil
             } else {
                 self.configureReceiptNotificationsIfNeeded()
@@ -101,7 +101,7 @@ public class ReceiptController {
             self.receiptChanged?(self.receipt, self)
             return
         }
-        self.receiptToken = realm.objects(Receipt.self).addNotificationBlock() { [weak self] changes in
+      self.receiptToken = realm.objects(Receipt.self).observe() { [weak self] changes in
             guard let weakSelf = self else { return }
             switch changes {
             case .initial(let data), .update(let data, _, _, _):
@@ -129,6 +129,6 @@ public class ReceiptController {
     private var receiptToken: NotificationToken?
     
     deinit {
-        self.receiptToken?.stop()
+      self.receiptToken?.invalidate()
     }
 }

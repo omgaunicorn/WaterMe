@@ -180,7 +180,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     func userChangedName(to newName: String, andDismissKeyboard dismissKeyboard: Bool, controller: ReminderVesselEditTableViewController?) {
         guard let vessel = self.vessel?.value, let basicRC = self.basicRC
             else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
-        self.notificationToken?.stop() // stop the update notifications from causing the tableview to reload
+      self.notificationToken?.invalidate() // stop the update notifications from causing the tableview to reload
         let updateResult = basicRC.update(displayName: newName, in: vessel)
         if case .failure(let error) = updateResult {
             let alert = UIAlertController(error: error, completion: nil)
@@ -220,12 +220,12 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     }
     
     private func startNotifications() {
-        self.notificationToken = self.vessel?.value?.addNotificationBlock({ [weak self] in self?.vesselChanged($0) })
+      self.notificationToken = self.vessel?.value?.observe({ [weak self] in self?.vesselChanged($0) })
     }
     
     private var notificationToken: NotificationToken?
     
     deinit {
-        self.notificationToken?.stop()
+      self.notificationToken?.invalidate()
     }
 }

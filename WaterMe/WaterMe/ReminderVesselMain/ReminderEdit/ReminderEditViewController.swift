@@ -102,7 +102,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         // if this came from the keyboard stop notifications
         // so the keyboard doesn't get dismissed because of tableview reloads
         if fromKeyboard == true {
-            self.notificationToken?.stop()
+          self.notificationToken?.invalidate()
         }
         
         // after we exit this scope, we need to turn notifications back on
@@ -170,12 +170,12 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     private func startNotifications() {
-        self.notificationToken = self.reminder?.value?.addNotificationBlock({ [weak self] in self?.reminderChanged($0) })
+      self.notificationToken = self.reminder?.value?.observe({ [weak self] in self?.reminderChanged($0) })
     }
     
     private var notificationToken: NotificationToken?
     
     deinit {
-        self.notificationToken?.stop()
+      self.notificationToken?.invalidate()
     }
 }

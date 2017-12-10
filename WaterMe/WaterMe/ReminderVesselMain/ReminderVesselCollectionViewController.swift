@@ -47,7 +47,7 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
     }
     
     private func hardReloadData() {
-        self.notificationToken?.stop()
+      self.notificationToken?.invalidate()
         self.notificationToken = nil
         self.data = nil
         
@@ -56,7 +56,7 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
         case .failure:
             self.data = result
         case .success(let collection):
-            self.notificationToken = collection.addNotificationBlock({ [weak self] changes in self?.dataChanged(changes) })
+          self.notificationToken = collection.observe({ [weak self] changes in self?.dataChanged(changes) })
         }
     }
     
@@ -114,7 +114,7 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
     private var notificationToken: NotificationToken?
     
     deinit {
-        self.notificationToken?.stop()
+      self.notificationToken?.invalidate()
     }
     
 }

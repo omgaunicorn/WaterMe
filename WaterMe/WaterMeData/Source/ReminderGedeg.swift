@@ -49,7 +49,7 @@ open class ReminderGedeg: NSObject {
             let result = basicRC.reminders(in: section, sorted: .nextPerformDate, ascending: true)
             switch result {
             case .success(let reminders):
-                let token = reminders.addNotificationBlock({ [weak self] in self?.collection(for: section, changed: $0) })
+              let token = reminders.observe({ [weak self] in self?.collection(for: section, changed: $0) })
                 self.tokens += [token]
             case .failure(let error):
                 self.lastError = error
@@ -93,7 +93,7 @@ open class ReminderGedeg: NSObject {
     private var tokens: [NotificationToken] = []
 
     deinit {
-        self.tokens.forEach({ $0.stop() })
+      self.tokens.forEach({ $0.invalidate() })
     }
 
     public struct Update {

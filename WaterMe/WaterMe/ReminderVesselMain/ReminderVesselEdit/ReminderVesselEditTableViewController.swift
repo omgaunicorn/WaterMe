@@ -59,17 +59,17 @@ class ReminderVesselEditTableViewController: UITableViewController {
     }
     
     func reloadAll() {
-        self.notificationToken?.stop()
+      self.notificationToken?.invalidate()
         self.remindersData = nil
         self.tableView.reloadData()
-        self.notificationToken = self.delegate?.vessel?.value?.reminders.addNotificationBlock({ [weak self] in self?.remindersChanged($0) })
+      self.notificationToken = self.delegate?.vessel?.value?.reminders.observe({ [weak self] in self?.remindersChanged($0) })
     }
     
     func reloadReminders() {
-        self.notificationToken?.stop()
+      self.notificationToken?.invalidate()
         self.remindersData = nil
         self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
-        self.notificationToken = self.delegate?.vessel?.value?.reminders.addNotificationBlock({ [weak self] in self?.remindersChanged($0) })
+      self.notificationToken = self.delegate?.vessel?.value?.reminders.observe({ [weak self] in self?.remindersChanged($0) })
     }
     
     func nameTextFieldBecomeFirstResponder() {
@@ -220,6 +220,6 @@ class ReminderVesselEditTableViewController: UITableViewController {
     private var notificationToken: NotificationToken?
     
     deinit {
-        self.notificationToken?.stop()
+      self.notificationToken?.invalidate()
     }
 }
