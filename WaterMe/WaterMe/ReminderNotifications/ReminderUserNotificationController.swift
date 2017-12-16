@@ -22,13 +22,54 @@
 //
 
 import WaterMeData
+import RealmSwift
 import UserNotifications
 
 class ReminderUserNotificationController {
 
-    init(basicController: BasicController) {
-//        basicController.allReminders()
+    private var data: AnyRealmCollection<Reminder>?
+
+    init?(basicController: BasicController) {
+        guard let collection = basicController.allReminders().value else { return nil }
+        self.token = collection.observe({ [weak self] in self?.dataChanged($0) })
+    }
+
+    private func dataChanged(_ changes: RealmCollectionChange<AnyRealmCollection<Reminder>>) {
+        switch changes {
+        case .initial(let data):
+            self.data = data
+            self.updateScheduledNotifications()
+        case .update:
+            self.updateScheduledNotifications()
+        case .error(let error):
+            self.data = nil
+            self.token?.invalidate()
+            self.token = nil
+            self.updateScheduledNotifications()
+            log.error("Realm Error in 'ReminderUserNotificationController': \(error)")
+        }
+    }
+
+    private func updateScheduledNotifications() {
+        // DispatchQueue(label: String(describing: type(of: self)), qos: .utility).async { [weak self] in
+        // self.resetAllNotifications
+        guard let data = self.data else {
+            log.error("Reminder data for notifications was NIL")
+            return
+        }
+        guard data.isEmpty == false else {
+            log.debug("No notifications to schedule")
+            return
+        }
+        for reminder in data {
+            print(reminder.nextPerformDate)
+        }
+    }
+
+    private var token: NotificationToken?
+
+    deinit {
+        self.token?.invalidate()
     }
 
 }
-
