@@ -82,12 +82,6 @@ class SubscriptionChoiceCollectionViewController: UICollectionViewController, UI
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let topInset = self.topParent.topLayoutGuide.length
-        let bottomInset = self.topParent.bottomLayoutGuide.length
-        self.collectionView?.contentInset.top = topInset
-        self.collectionView?.contentInset.bottom = bottomInset
-        self.collectionView?.scrollIndicatorInsets.top = topInset
-        self.collectionView?.scrollIndicatorInsets.bottom = bottomInset
     }
     
 }

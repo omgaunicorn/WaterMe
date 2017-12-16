@@ -31,10 +31,10 @@ internal let log = XCGLogger.default
 internal extension URL {
     internal func realmURL(withAppName appName: String, userPath: String) -> URL {
         var userPath = userPath
-        if userPath.characters.first == "/" {
+        if userPath.first == "/" {
             userPath.remove(at: userPath.startIndex)
         }
-        if userPath.characters.last != "/" {
+        if userPath.last != "/" {
             userPath += "/"
         }
         var components = URLComponents(url: self, resolvingAgainstBaseURL: false)!
@@ -43,7 +43,7 @@ internal extension URL {
         } else {
             components.scheme = "realm"
         }
-        if components.path.characters.last == "/" {
+        if components.path.last == "/" {
             components.path += userPath + appName
         } else {
             components.path += "/" + userPath + appName
