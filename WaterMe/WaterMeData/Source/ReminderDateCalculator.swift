@@ -23,6 +23,15 @@
 
 import Foundation
 
+public extension Calendar {
+    public func dateWithExact(hour: Int, on date: Date) -> Date {
+        let start = self.startOfDay(for: date)
+        let interval = TimeInterval(hour * 60 * 60)
+        let end = start + interval
+        return end
+    }
+}
+
 enum ReminderDateCalculator {
 
     static func late(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
