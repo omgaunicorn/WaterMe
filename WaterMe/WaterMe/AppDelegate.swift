@@ -24,6 +24,8 @@
 import WaterMeData
 import XCGLogger
 import UIKit
+import UserNotifications
+import UserNotificationsUI
 
 let log = XCGLogger.default
 
@@ -33,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     class var shared: AppDelegate { return UIApplication.shared.delegate as! AppDelegate }
 
     private var notifictionController: ReminderUserNotificationController?
+    private let notificationUIDelegate = ReminderNotificationUIDelegate()
 
     var window: UIWindow?
 
@@ -47,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+        UNUserNotificationCenter.current().delegate = self.notificationUIDelegate
         return true
     }
     
@@ -76,5 +80,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let _currentBuild = Bundle(for: type(of: self)).infoDictionary?[kCFBundleVersionKey as String] as? String
         guard let savedBuild = _savedBuild, let currentBuild = _currentBuild, currentBuild == savedBuild else { return false }
         return true
+    }
+
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        UNUserNotificationCenter.current().requestAuthorizationIfNeeded() { authorized in
+            print("Notifications Authorized: \(authorized)")
+        }
+    }
+}
+
+extension UNUserNotificationCenter {
+    func requestAuthorizationIfNeeded(completion: ((Bool) -> Void)?) {
+        self.getNotificationSettings() { preSettings in
+            switch preSettings.authorizationStatus {
+            case .authorized, .denied:
+                DispatchQueue.main.async {
+                    completion?(preSettings.authorizationStatus.boolValue)
+                }
+            case .notDetermined:
+                self.requestAuthorization(options: [.alert, .badge, .sound]) { _, error in
+                    if let error = error {
+                        log.error("Error requesting notification authorization: \(error)")
+                    }
+                    self.getNotificationSettings() { postSettings in
+                        DispatchQueue.main.async {
+                            completion?(postSettings.authorizationStatus.boolValue)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+class ReminderNotificationUIDelegate: NSObject, UNUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Swift.Void)
+    {
+        completionHandler([.alert, .badge, .sound])
     }
 }

@@ -52,12 +52,13 @@ class ReminderUserNotificationController {
 
     private func updateScheduledNotifications() {
         // DispatchQueue(label: String(describing: type(of: self)), qos: .utility).async { [weak self] in
-        // self.resetAllNotifications
+        let center = UNUserNotificationCenter.current()
+        center.removeAllDeliveredNotifications()
+        center.removeAllPendingNotificationRequests()
         guard let data = self.data else {
             log.error("Reminder data for notifications was NIL")
             return
         }
-        let center = UNUserNotificationCenter.current()
         center.authorized() { authorized in
             guard authorized else {
                 log.info("Not authorized to schedule notifications")
@@ -81,10 +82,14 @@ class ReminderUserNotificationController {
             let calendar = Calendar.current
             let _date = reminder.nextPerformDate ?? Date()
             let date = calendar.dateWithExact(hour: 8, on: _date)
-            let components = Calendar.current.dateComponents([.hour, .day, .month, .year, .era], from: date)
-            let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+            let _interval = date.timeIntervalSinceNow
+            // can't schedule things in the past
+            // all items that are late / never performed
+            // need to be added in 1 second
+            let interval = _interval > 0 ? _interval : 1
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
             let _content = UNMutableNotificationContent()
-            _content.body = "Something needs to be done!"
+            _content.body = type(of: self).LocalizedStrings.notificationBody(withVesselName:  reminder.vessel?.displayName, reminderKind: reminder.kind)
             // swiftlint:disable:next force_cast
             let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
             let request = UNNotificationRequest(identifier: reminder.uuid, content: content, trigger: trigger)
@@ -103,15 +108,45 @@ class ReminderUserNotificationController {
 extension UNUserNotificationCenter {
     func authorized(completion: @escaping (Bool) -> Void) {
         self.getNotificationSettings() { settings in
-            let authorized: Bool
-            switch settings.authorizationStatus {
-            case .authorized:
-                authorized = true
-            case .denied, .notDetermined:
-                authorized = false
-            }
             DispatchQueue.main.async {
-                completion(authorized)
+                completion(settings.authorizationStatus.boolValue)
+            }
+        }
+    }
+}
+
+extension UNAuthorizationStatus {
+    var boolValue: Bool {
+        switch self {
+        case .authorized:
+            return true
+        case .notDetermined, .denied:
+            return false
+        }
+    }
+}
+
+extension ReminderUserNotificationController {
+    enum LocalizedStrings {
+        static func notificationBody(withVesselName vesselName: String?, reminderKind: Reminder.Kind) -> String {
+            let vesselName = vesselName ?? "Untitled Plant"
+            switch reminderKind {
+            case .water:
+                return "\(vesselName) needs to be watered."
+            case .fertilize:
+                return "\(vesselName) needs to be fertilized."
+            case .move(location: let location):
+                if let location = location {
+                    return "\(vesselName) needs to be moved to: '\(location).'"
+                } else {
+                    return "\(vesselName) needs to be moved."
+                }
+            case .other(description: let description):
+                if let description = description {
+                    return "\(vesselName): '\(description)'"
+                } else {
+                    return "\(vesselName): Unknown Reminder"
+                }
             }
         }
     }
