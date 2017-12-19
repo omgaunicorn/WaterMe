@@ -70,8 +70,8 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         
         self.startNotifications()
         
-        self.deleteButton?.title = "Delete"
-        self.title = "New Plant"
+        self.deleteButton?.title = UIAlertController.LocalizedString.buttonTitleDelete
+        self.title = UIAlertController.LocalizedString.buttonTitleNewPlant
     }
     
     override func viewDidAppear(_ animated: Bool) {

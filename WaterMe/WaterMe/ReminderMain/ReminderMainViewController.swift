@@ -32,7 +32,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderMainViewController
-        vc.title = "WaterMe" // set here because it works better in UITabBarController
+        vc.title = AppDelegate.LocalizedString.appTitle // set here because it works better in UITabBarController
         vc.configure(with: basicController)
         vc.configure(with: proController)
         return navVC
@@ -108,7 +108,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
 
         // configure the alert to show
-        let editReminder = UIAlertAction(title: "Edit Reminder", style: .default) { _ in
+        let editReminder = UIAlertAction(title: LocalizedString.buttonTitleReminderEdit, style: .default) { _ in
             let result = basicRC.reminder(matching: identifier)
             switch result {
             case .success(let reminder):
@@ -121,7 +121,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                 self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
             }
         }
-        let editVessel = UIAlertAction(title: "Edit Plant", style: .default) { _ in
+        let editVessel = UIAlertAction(title: LocalizedString.buttonTitleReminderVesselEdit, style: .default) { _ in
             let result = basicRC.reminder(matching: identifier)
             switch result {
             case .success(let reminder):
@@ -134,13 +134,13 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                 self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
             }
         }
-        let performReminder = UIAlertAction(title: "Mark Reminder as Done", style: .default) { _ in
+        let performReminder = UIAlertAction(title: LocalizedString.buttonTitleReminderPerform, style: .default) { _ in
             deselectAnimated(true)
             let result = basicRC.appendNewPerformToReminders(with: [identifier])
             guard case .failure(let error) = result else { return }
             self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
         }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in deselectAnimated(true) })
+        let cancel = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleCancel, style: .cancel, handler: { _ in deselectAnimated(true) })
         alert.addAction(performReminder)
         alert.addAction(editReminder)
         alert.addAction(editVessel)

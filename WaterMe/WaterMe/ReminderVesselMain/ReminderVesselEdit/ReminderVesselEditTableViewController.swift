@@ -43,11 +43,11 @@ class ReminderVesselEditTableViewController: UITableViewController {
         var localizedTitle: String {
             switch self {
             case .photo:
-                return "Photo"
+                return ReminderVessel.LocalizedString.photo
             case .name:
-                return "Name"
+                return ReminderVessel.LocalizedString.name
             case .reminders:
-                return "Reminders"
+                return ReminderVessel.LocalizedString.reminders
             }
         }
     }
@@ -177,7 +177,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
         case .name, .photo:
             return UISwipeActionsConfiguration(actions: [])
         case .reminders:
-            let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [unowned self] _, _, successfullyDeleted in
+            let deleteAction = UIContextualAction(style: .destructive, title: UIAlertController.LocalizedString.buttonTitleDelete) { [unowned self] _, _, successfullyDeleted in
                 guard let reminder = self.remindersData?[indexPath.row] else {
                     successfullyDeleted(false)
                     return

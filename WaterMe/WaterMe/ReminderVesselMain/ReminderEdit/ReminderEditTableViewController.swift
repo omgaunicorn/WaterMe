@@ -204,15 +204,15 @@ class ReminderEditTableViewController: UITableViewController {
         var localizedString: String {
             switch self {
             case .kind:
-                return "Kind of Reminder"
+                return ReminderEditViewController.LocalizedString.sectionTitleKind
             case .details:
-                return "Details"
+                return ReminderEditViewController.LocalizedString.sectionTitleDetails
             case .interval:
-                return "Remind Every"
+                return ReminderEditViewController.LocalizedString.sectionTitleInterval
             case .notes:
-                return "Notes"
+                return ReminderEditViewController.LocalizedString.sectionTitleNotes
             case .performed:
-                return "Last Performed"
+                return ReminderEditViewController.LocalizedString.sectionTitleLastPerformed
             }
         }
         func numberOfRows(for kind: Reminder.Kind) -> Int {
@@ -230,13 +230,17 @@ fileprivate extension TextFieldTableViewCell {
     func configure(with kind: Reminder.Kind) {
         switch kind {
         case .move(let location):
-            self.setLabelText("Move to", andTextFieldPlaceHolderText: "Other side of the yard.")
+            self.setLabelText(ReminderEditViewController.LocalizedString.dataEntryLabelMove,
+                              andTextFieldPlaceHolderText: ReminderEditViewController.LocalizedString.dataEntryPlaceholderMove)
             self.setTextField(text: location)
         case .other(let description):
-            self.setLabelText("Description", andTextFieldPlaceHolderText: "Trim the leaves and throw out the clippings.")
+            self.setLabelText(ReminderEditViewController.LocalizedString.dataEntryLabelDescription,
+                              andTextFieldPlaceHolderText: ReminderEditViewController.LocalizedString.dataEntryPlaceholderDescription)
             self.setTextField(text: description)
         default:
-            assertionFailure("Wrong Kind being passed in")
+            let error = "Unsupported Kind: \(kind)"
+            log.error(error)
+            assertionFailure(error)
         }
     }
 }

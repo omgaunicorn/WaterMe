@@ -50,13 +50,13 @@ extension Reminder.Kind {
     fileprivate var localizedString: String {
         switch self {
         case .water:
-            return "Water"
+            return LocalizedString.water
         case .fertilize:
-            return "Fertilize"
+            return LocalizedString.fertilize
         case .move:
-            return "Move"
+            return LocalizedString.move
         case .other:
-            return "Other"
+            return LocalizedString.other
         }
     }
     fileprivate func isSameKind(as other: Reminder.Kind) -> Bool {

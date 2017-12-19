@@ -29,27 +29,21 @@ extension UIAlertController {
     enum EmojiPhotoChoice {
         case photos, camera, emoji, error(UIViewController)
     }
-    
-    static let emojiLocalizedString = "Emoji"
-    
-    class var photosLocalizedString: String {
-        return "Photos"
-    }
-    
+        
     class var cameraLocalizedString: String {
         switch SelfContainedImagePickerController.cameraPermission {
         case .authorized, .notDetermined:
-            return "Camera"
+            return UIAlertController.LocalizedString.buttonTitleCamera
         case .denied, .restricted:
-            return "Camera 🔒"
+            return UIAlertController.LocalizedString.buttonTitleCameraLocked
         }
     }
     
     class func emojiPhotoActionSheet(completionHandler: @escaping (EmojiPhotoChoice) -> Void) -> UIAlertController {
         let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let emoji = UIAlertAction(title: self.emojiLocalizedString, style: .default) { _ in completionHandler(.emoji) }
-        let photo = UIAlertAction(title: self.photosLocalizedString, style: .default) { _ in completionHandler(.photos) }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let emoji = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleEmoji, style: .default) { _ in completionHandler(.emoji) }
+        let photo = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitlePhotos, style: .default) { _ in completionHandler(.photos) }
+        let cancel = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleCancel, style: .cancel, handler: nil)
         
         alertVC.addAction(emoji)
         let front = UIImagePickerController.isCameraDeviceAvailable(.front)
@@ -75,19 +69,23 @@ extension UIAlertController {
     }
     
     class func cameraRestrictedAlert() -> UIAlertController {
-        let alertVC = UIAlertController(title: "Camera Restricted", message: "WaterMe cannot access your camera. This feature has been restricted by this device's administrator.", preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let alertVC = UIAlertController(title: ReminderVesselEditViewController.LocalizedString.alertTitleCameraRestricted,
+                                        message: ReminderVesselEditViewController.LocalizedString.alertBodyCameraRestricted,
+                                        preferredStyle: .alert)
+        let cancel = UIAlertAction(title: LocalizedString.buttonTitleCancel, style: .cancel, handler: nil)
         alertVC.addAction(cancel)
         return alertVC
     }
     
     class func cameraDeniedAlert() -> UIAlertController {
-        let alertVC = UIAlertController(title: "Permission Denied", message: "WaterMe cannot access your camera. You can grant access in Settings", preferredStyle: .alert)
-        let settings = UIAlertAction(title: "Settings", style: .default) { _ in
+        let alertVC = UIAlertController(title: ReminderVesselEditViewController.LocalizedString.alertTitlePermissionDenied,
+                                        message: ReminderVesselEditViewController.LocalizedString.alertBodyCameraDenied,
+                                        preferredStyle: .alert)
+        let settings = UIAlertAction(title: LocalizedString.buttonTitleSettings, style: .default) { _ in
             let url = URL(string: UIApplicationOpenSettingsURLString)!
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancel = UIAlertAction(title: LocalizedString.buttonTitleCancel, style: .cancel, handler: nil)
         alertVC.addAction(settings)
         alertVC.addAction(cancel)
         return alertVC

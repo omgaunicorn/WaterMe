@@ -34,7 +34,7 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderVesselMainViewController
-        vc.title = "Plants" // set here because it works better in UITabBarController
+        vc.title = LocalizedString.title // set here because it works better in UITabBarController
         vc.configure(with: basicController)
         vc.configure(with: proController)
         vc.completionHandler = completionHandler

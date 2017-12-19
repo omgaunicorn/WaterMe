@@ -163,7 +163,7 @@ extension Formatter {
 
 extension TTTTimeIntervalFormatter {
     func timeAgoString(for interval: TimeInterval?) -> String {
-        guard let interval = interval else { return "Never" }
+        guard let interval = interval else { return ReminderMainViewController.LocalizedString.timeAgoLabelNever }
         let intervalString = self.string(forTimeInterval: interval)
         assert(intervalString != nil, "Time Ago Formatter Returned NIL for Interval: \(interval)")
         return intervalString ?? "–"
@@ -188,7 +188,7 @@ extension UIAlertController {
     
     convenience init<T>(error: T, completion: ((ErrorSelection<T>) -> Void)?) {
         self.init(title: error.title, message: error.details, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: "Dismiss", style: .cancel, handler: { _ in completion?(.cancel) })
+        let cancelAction = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel, handler: { _ in completion?(.cancel) })
         self.addAction(cancelAction)
         if let actionTitle = error.actionTitle {
             let errorAction = UIAlertAction(title: actionTitle, style: .default, handler: { _ in completion?(.error(error)) })
@@ -210,16 +210,16 @@ extension UIAlertController {
             let fix = UIAlertAction(title: actionTitle, style: .default, handler: { _ in completion(.error(error)) })
             self.addAction(fix)
         }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in completion(.cancel) })
-        let save = UIAlertAction(title: "Save Anyway", style: .destructive, handler: { _ in completion(.saveAnyway) })
+        let cancel = UIAlertAction(title: LocalizedString.buttonTitleCancel, style: .cancel, handler: { _ in completion(.cancel) })
+        let save = UIAlertAction(title: LocalizedString.buttonTitleSaveAnyway, style: .destructive, handler: { _ in completion(.saveAnyway) })
         self.addAction(cancel)
         self.addAction(save)
     }
     
     private convenience init<T>(actionSheetWithActions actions: [UIAlertAction], cancelSaveCompletion completion: @escaping (SaveAnywayErrorSelection<T>) -> Void) {
-        self.init(title: nil, message: "There are some issues you might want to resolve.", preferredStyle: .actionSheet)
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in completion(.cancel) })
-        let save = UIAlertAction(title: "Save Anyway", style: .destructive, handler: { _ in completion(.saveAnyway) })
+        self.init(title: nil, message: LocalizedString.titleUnsolvedIssues, preferredStyle: .actionSheet)
+        let cancel = UIAlertAction(title: LocalizedString.buttonTitleCancel, style: .cancel, handler: { _ in completion(.cancel) })
+        let save = UIAlertAction(title: LocalizedString.buttonTitleSaveAnyway, style: .destructive, handler: { _ in completion(.saveAnyway) })
         actions.forEach({ self.addAction($0) })
         self.addAction(cancel)
         self.addAction(save)

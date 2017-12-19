@@ -42,7 +42,8 @@ class ReminderTableViewCell: UITableViewCell {
         // do stuff that is the same for all cases
         self.topLabel?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .selectableTableViewCell)
         let interval = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval), style: .selectableTableViewCell)
-        let helper = NSAttributedString(string: "Every: ", style: .selectableTableViewCellHelper)
+        let helper = NSAttributedString(string: ReminderVesselEditViewController.LocalizedString.rowLabelInterval,
+                                        style: .selectableTableViewCellHelper)
         self.middleLabel?.attributedText = helper + interval
         self.emojiImageView?.setKind(reminder.kind)
         
@@ -52,13 +53,16 @@ class ReminderTableViewCell: UITableViewCell {
             self.bottomLabel?.isHidden = true
         case .move(let location):
             let style: Style = location != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
-            let helper = NSAttributedString(string: "Location: ", style: .selectableTableViewCellHelper)
-            let location = NSAttributedString(string: location ?? "No Location Entered", style: style)
+            let helper = NSAttributedString(string: ReminderVesselEditViewController.LocalizedString.rowLabelLocation,
+                                            style: .selectableTableViewCellHelper)
+            let location = NSAttributedString(string: location ?? ReminderVesselEditViewController.LocalizedString.rowValueLabelLocationNoValue, style: style)
             self.bottomLabel?.attributedText = helper + location
         case .other(let description):
             let style: Style = description != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
-            let helper = NSAttributedString(string: "Description: ", style: .selectableTableViewCellHelper)
-            let description = NSAttributedString(string: description ?? "No Description Entered", style: style)
+            let helper = NSAttributedString(string: ReminderVesselEditViewController.LocalizedString.rowLabelDescription,
+                                            style: .selectableTableViewCellHelper)
+            let description = NSAttributedString(string: description ?? ReminderVesselEditViewController.LocalizedString.rowValueLabelDescriptionNoValue,
+                                                 style: style)
             self.bottomLabel?.attributedText = helper + description
         }
     }

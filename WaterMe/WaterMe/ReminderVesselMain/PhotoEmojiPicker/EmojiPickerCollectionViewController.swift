@@ -39,7 +39,7 @@ class EmojiPickerViewController: StandardCollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Emoji"
+        self.title = LocalizedString.title
         let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelButtonTapped(_:)))
         self.navigationItem.rightBarButtonItem = cancel
         self.collectionView?.backgroundColor = .white

@@ -63,7 +63,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.deleteButton?.title = "Delete"
+        self.deleteButton?.title = UIAlertController.LocalizedString.buttonTitleDelete
         
         self.tableViewController = self.childViewControllers.first()
         self.tableViewController?.reminder = { [unowned self] in return self.reminder }

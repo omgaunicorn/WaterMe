@@ -146,27 +146,6 @@ class ReminderUserNotificationController {
     }
 }
 
-extension ReminderUserNotificationController {
-    enum LocalizedStrings {
-        static func notificationBodyWithPlantNames(plantNames: [String?]) -> String {
-            switch plantNames.count {
-            case 0:
-                fatalError("Tried to create a notification for no plants")
-            case 1:
-                let name1 = plantNames[0] ?? ReminderVessel.LocalizedString.untitledPlant
-                return "\(name1) needs attention today."
-            case 2:
-                let name1 = plantNames[0] ?? ReminderVessel.LocalizedString.untitledPlant
-                let name2 = plantNames[1] ?? ReminderVessel.LocalizedString.untitledPlant
-                return "\(name1) & \(name2) need attention today."
-            default:
-                let name1 = plantNames[0] ?? ReminderVessel.LocalizedString.untitledPlant
-                return "\(name1) & \(plantNames.count) more need attention today."
-            }
-        }
-    }
-}
-
 private struct ReminderNotificationInformation {
     var parentPlantUUID: String
     var parentPlantName: String?

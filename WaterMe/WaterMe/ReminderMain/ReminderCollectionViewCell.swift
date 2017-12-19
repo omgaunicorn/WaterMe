@@ -65,7 +65,9 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         
         // relative time
         let interval = reminder.nextPerformDate?.timeIntervalSinceNow
-        let intervalString = interval != nil ? self.reminderDateFormatter.string(forTimeInterval: interval!) : "Now"
+        let intervalString = interval != nil ?
+            self.reminderDateFormatter.string(forTimeInterval: interval!) :
+            ReminderMainViewController.LocalizedString.nextPerformLabelNow
         self.labelFour?.attributedText = NSAttributedString(string: intervalString!, style: .selectableTableViewCell)
         
         // put in the auxiliary text
