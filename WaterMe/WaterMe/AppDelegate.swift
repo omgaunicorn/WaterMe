@@ -84,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         UNUserNotificationCenter.current().requestAuthorizationIfNeeded() { authorized in
-            print("Notifications Authorized: \(authorized)")
+            log.debug("Notifications Authorized: \(authorized)")
         }
     }
 }
@@ -118,14 +118,6 @@ class ReminderNotificationUIDelegate: NSObject, UNUserNotificationCenterDelegate
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Swift.Void)
     {
-        if
-            let trigger = notification.request.trigger as? UNTimeIntervalNotificationTrigger,
-            trigger.timeInterval == UNTimeIntervalNotificationTrigger.kMin
-        {
-            // if the notification was just created, then don't show it
-            completionHandler([])
-        } else {
-            completionHandler([.alert, .badge, .sound])
-        }
+        completionHandler([.alert, .badge, .sound])
     }
 }

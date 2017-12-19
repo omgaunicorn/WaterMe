@@ -29,7 +29,7 @@ class ReminderUserNotificationController {
 
     private var data: AnyRealmCollection<Reminder>?
 
-    private let queue = DispatchQueue(label: String(describing: ReminderUserNotificationController.self), qos: .utility)
+    private let queue = DispatchQueue(label: String(describing: ReminderUserNotificationController.self) + "_SerialQueue", qos: .utility)
 
     init?(basicController: BasicController) {
         guard let collection = basicController.allReminders().value else { return nil }
@@ -73,9 +73,11 @@ class ReminderUserNotificationController {
                 }
                 for request in requests {
                     center.add(request) { error in
-                        print(error)
+                        guard let error = error else { return }
+                        log.error(error)
                     }
                 }
+                log.debug("Scheduled Notifications: \(requests.count)")
             }
         }
     }
@@ -111,19 +113,28 @@ class ReminderUserNotificationController {
             }
 
             // convert the matches into one notification each
+            // this makes it so the user only gets 1 notification per day at the time they requested
             let reminders = matches.map() { reminderTime, matches -> UNNotificationRequest in
-                let _interval = reminderTime.timeIntervalSince(nowReminderTime)
-                let interval = _interval < UNTimeIntervalNotificationTrigger.kMin ? UNTimeIntervalNotificationTrigger.kMin : _interval
-                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+                let interval = reminderTime.timeIntervalSince(nowReminderTime)
+                let trigger: UNTimeIntervalNotificationTrigger?
+                if interval <= 0 {
+                    // if trigger is less than or equal to 0 we need to tell the system there is no trigger
+                    // this causes it to send the notification immediately
+                    trigger = nil
+                } else {
+                    trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+                }
                 let _content = UNMutableNotificationContent()
-                print("\(reminderTime): Reminders: \(matches.count)")
-                _content.body = "Reminders: \(matches.count)"
+                // shuffle the names so that different plant names show in the notifications
+                let plantNames = ReminderNotificationInformation.uniqueParentPlantNames(from: matches).shuffled()
+                _content.body = ReminderUserNotificationController.LocalizedStrings.notificationBodyWithPlantNames(plantNames: plantNames)
                 // swiftlint:disable:next force_cast
                 let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
                 let request = UNNotificationRequest(identifier: reminderTime.description, content: content, trigger: trigger)
                 return request
             }
 
+            // call the completion handler
             completion(reminders)
         }
     }
@@ -137,38 +148,39 @@ class ReminderUserNotificationController {
 
 extension ReminderUserNotificationController {
     enum LocalizedStrings {
-        static func notificationBody(withVesselName vesselName: String?, reminderKind: Reminder.Kind) -> String {
-            let vesselName = vesselName ?? "Untitled Plant"
-            switch reminderKind {
-            case .water:
-                return "\(vesselName) needs to be watered."
-            case .fertilize:
-                return "\(vesselName) needs to be fertilized."
-            case .move(location: let location):
-                if let location = location {
-                    return "\(vesselName) needs to be moved to: '\(location).'"
-                } else {
-                    return "\(vesselName) needs to be moved."
-                }
-            case .other(description: let description):
-                if let description = description {
-                    return "\(vesselName): '\(description)'"
-                } else {
-                    return "\(vesselName): Unknown Reminder"
-                }
+        static func notificationBodyWithPlantNames(plantNames: [String?]) -> String {
+            switch plantNames.count {
+            case 0:
+                fatalError("Tried to create a notification for no plants")
+            case 1:
+                let name1 = plantNames[0] ?? "Untitled Plant"
+                return "\(name1) needs attention today."
+            case 2:
+                let name1 = plantNames[0] ?? "Untitled Plant"
+                let name2 = plantNames[1] ?? "Untitled Plant"
+                return "\(name1) & \(name2) need attention today."
+            default:
+                let name1 = plantNames[0] ?? "Untitled Plant"
+                return "\(name1) & \(plantNames.count) more need attention today."
             }
         }
     }
 }
 
 private struct ReminderNotificationInformation {
+    var parentPlantUUID: String
     var parentPlantName: String?
-    var parentPlantUUID: String?
     var nextPerformDate: Date?
 
     init(reminder: Reminder) {
-        self.parentPlantName = reminder.vessel?.displayName
-        self.parentPlantUUID = reminder.vessel?.uuid
+        self.parentPlantUUID = reminder.vessel!.uuid
+        self.parentPlantName = reminder.vessel!.displayName
         self.nextPerformDate = reminder.nextPerformDate
+    }
+
+    static func uniqueParentPlantNames(from reminders: [ReminderNotificationInformation]) -> [String?] {
+        let uniqueParents = Dictionary(grouping: reminders, by: { $0.parentPlantUUID })
+        let parentNames = uniqueParents.map({ $0.value.first?.parentPlantName })
+        return parentNames
     }
 }
