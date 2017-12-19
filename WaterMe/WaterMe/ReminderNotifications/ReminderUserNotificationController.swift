@@ -78,24 +78,48 @@ class ReminderUserNotificationController {
     }
 
     private func notificationRequests(from reminders: AnyRealmCollection<Reminder>) -> [UNNotificationRequest] {
-        let map = reminders.map() { reminder -> UNNotificationRequest in
-            let calendar = Calendar.current
-            let _date = reminder.nextPerformDate ?? Date()
-            let date = calendar.dateWithExact(hour: 8, on: _date)
-            let _interval = date.timeIntervalSinceNow
-            // can't schedule things in the past
-            // all items that are late / never performed
-            // need to be added in 1 second
-            let interval = _interval > 0 ? _interval : 1
+        // make sure we have data to work with
+        guard let _data = self.data, _data.isEmpty == false else { return [] }
+
+        // get preference values for reminder time and number of days to remind for
+        let reminderHour = UserDefaults.standard.reminderHour
+        let reminderDays = UserDefaults.standard.reminderDays
+
+        // get some constants we'll use throughout
+        let calendar = Calendar.current
+        let nowReminderTime = calendar.dateWithExact(hour: reminderHour, onSameDayAs: Date())
+
+        // get immutable versions of the dats
+        // need to fix this so we get Struct copies from the realm objects
+        let data = Array(_data)
+
+        // loop through the number of days the user wants to be reminded for
+        // get all reminders that happened on or before the end of the day of `futureReminderTime`
+        let matches = (0 ..< reminderDays).flatMap() { i -> (Date, [Reminder])? in
+            let futureReminderTime = nowReminderTime + TimeInterval(i * 24 * 60 * 60)
+            let endOfFutureDay = calendar.endOfDay(for: futureReminderTime)
+            let matches = data.filter() { reminder -> Bool in
+                let reminderTime = calendar.dateWithExact(hour: reminderHour, onSameDayAs: reminder.nextPerformDate)
+                return (reminderTime ?? nowReminderTime) <= endOfFutureDay
+            }
+            guard matches.isEmpty == false else { return nil }
+            return (futureReminderTime, matches)
+        }
+
+        // convert the matches into one notification each
+        let reminders = matches.map() { reminderTime, matches -> UNNotificationRequest in
+            let _interval = reminderTime.timeIntervalSince(nowReminderTime)
+            let interval = _interval <= 0 ? 1 : _interval
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
             let _content = UNMutableNotificationContent()
-            _content.body = type(of: self).LocalizedStrings.notificationBody(withVesselName:  reminder.vessel?.displayName, reminderKind: reminder.kind)
+            print("\(reminderTime): Reminders: \(matches.count)")
+            _content.body = "Reminders: \(matches.count)"
             // swiftlint:disable:next force_cast
             let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
-            let request = UNNotificationRequest(identifier: reminder.uuid, content: content, trigger: trigger)
+            let request = UNNotificationRequest(identifier: reminderTime.description, content: content, trigger: trigger)
             return request
         }
-        return Array(map)
+        return reminders
     }
 
     private var token: NotificationToken?

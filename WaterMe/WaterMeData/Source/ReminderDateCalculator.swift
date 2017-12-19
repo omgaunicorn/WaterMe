@@ -24,11 +24,23 @@
 import Foundation
 
 public extension Calendar {
-    public func dateWithExact(hour: Int, on date: Date) -> Date {
+    public func dateWithExact(hour: Int, onSameDayAs date: Date) -> Date {
         let start = self.startOfDay(for: date)
         let interval = TimeInterval(hour * 60 * 60)
         let end = start + interval
         return end
+    }
+    public func dateWithExact(hour: Int, onSameDayAs date: Date?) -> Date? {
+        guard let date = date else { return nil }
+        let adjusted: Date = self.dateWithExact(hour: hour, onSameDayAs: date)
+        return adjusted
+    }
+    public func endOfDay(for date: Date) -> Date {
+        var addition = DateComponents()
+        addition.day = 1
+        let plusOneDay = self.date(byAdding: addition, to: date)!
+        let startOfPlusOneDay = self.startOfDay(for: plusOneDay)
+        return startOfPlusOneDay
     }
 }
 
