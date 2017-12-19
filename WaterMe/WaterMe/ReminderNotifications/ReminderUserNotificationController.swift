@@ -109,7 +109,7 @@ class ReminderUserNotificationController {
         // convert the matches into one notification each
         let reminders = matches.map() { reminderTime, matches -> UNNotificationRequest in
             let _interval = reminderTime.timeIntervalSince(nowReminderTime)
-            let interval = _interval <= 0 ? 1 : _interval
+            let interval = _interval < UNTimeIntervalNotificationTrigger.kMin ? UNTimeIntervalNotificationTrigger.kMin : _interval
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
             let _content = UNMutableNotificationContent()
             print("\(reminderTime): Reminders: \(matches.count)")
@@ -127,6 +127,10 @@ class ReminderUserNotificationController {
     deinit {
         self.token?.invalidate()
     }
+}
+
+extension UNTimeIntervalNotificationTrigger {
+    static let kMin: TimeInterval = 1.675
 }
 
 extension UNUserNotificationCenter {

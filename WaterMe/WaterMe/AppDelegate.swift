@@ -118,6 +118,14 @@ class ReminderNotificationUIDelegate: NSObject, UNUserNotificationCenterDelegate
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Swift.Void)
     {
-        completionHandler([.alert, .badge, .sound])
+        if
+            let trigger = notification.request.trigger as? UNTimeIntervalNotificationTrigger,
+            trigger.timeInterval == UNTimeIntervalNotificationTrigger.kMin
+        {
+            // if the notification was just created, then don't show it
+            completionHandler([])
+        } else {
+            completionHandler([.alert, .badge, .sound])
+        }
     }
 }
