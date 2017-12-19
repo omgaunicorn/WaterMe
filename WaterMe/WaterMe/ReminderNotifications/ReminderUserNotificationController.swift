@@ -29,6 +29,8 @@ class ReminderUserNotificationController {
 
     private var data: AnyRealmCollection<Reminder>?
 
+    private let queue = DispatchQueue(label: String(describing: ReminderUserNotificationController.self), qos: .utility)
+
     init?(basicController: BasicController) {
         guard let collection = basicController.allReminders().value else { return nil }
         self.token = collection.observe({ [weak self] in self?.dataChanged($0) })
@@ -64,22 +66,23 @@ class ReminderUserNotificationController {
                 log.info("Not authorized to schedule notifications")
                 return
             }
-            let requests = self.notificationRequests(from: data)
-            guard requests.isEmpty == false else {
-                log.debug("No notifications to schedule")
-                return
-            }
-            for request in requests {
-                center.add(request) { error in
-                    print(error)
+            self.notificationRequests(from: data) { requests in
+                guard requests.isEmpty == false else {
+                    log.debug("No notifications to schedule")
+                    return
+                }
+                for request in requests {
+                    center.add(request) { error in
+                        print(error)
+                    }
                 }
             }
         }
     }
 
-    private func notificationRequests(from reminders: AnyRealmCollection<Reminder>) -> [UNNotificationRequest] {
+    private func notificationRequests(from reminders: AnyRealmCollection<Reminder>, completion: @escaping ([UNNotificationRequest]) -> Void) {
         // make sure we have data to work with
-        guard let _data = self.data, _data.isEmpty == false else { return [] }
+        guard let _data = self.data, _data.isEmpty == false else { completion([]); return; }
 
         // get preference values for reminder time and number of days to remind for
         let reminderHour = UserDefaults.standard.reminderHour
@@ -89,68 +92,46 @@ class ReminderUserNotificationController {
         let calendar = Calendar.current
         let nowReminderTime = calendar.dateWithExact(hour: reminderHour, onSameDayAs: Date())
 
-        // get immutable versions of the dats
-        // need to fix this so we get Struct copies from the realm objects
-        let data = Array(_data)
+        // get immutable versions of the data
+        let data = Array(_data.map({ ReminderNotificationInformation(reminder: $0) }))
 
-        // loop through the number of days the user wants to be reminded for
-        // get all reminders that happened on or before the end of the day of `futureReminderTime`
-        let matches = (0 ..< reminderDays).flatMap() { i -> (Date, [Reminder])? in
-            let futureReminderTime = nowReminderTime + TimeInterval(i * 24 * 60 * 60)
-            let endOfFutureDay = calendar.endOfDay(for: futureReminderTime)
-            let matches = data.filter() { reminder -> Bool in
-                let reminderTime = calendar.dateWithExact(hour: reminderHour, onSameDayAs: reminder.nextPerformDate)
-                return (reminderTime ?? nowReminderTime) <= endOfFutureDay
+        // hop on a background queue to do the processing
+        self.queue.async {
+            // loop through the number of days the user wants to be reminded for
+            // get all reminders that happened on or before the end of the day of `futureReminderTime`
+            let matches = (0 ..< reminderDays).flatMap() { i -> (Date, [ReminderNotificationInformation])? in
+                let futureReminderTime = nowReminderTime + TimeInterval(i * 24 * 60 * 60)
+                let endOfFutureDay = calendar.endOfDay(for: futureReminderTime)
+                let matches = data.filter() { reminder -> Bool in
+                    let reminderTime = calendar.dateWithExact(hour: reminderHour, onSameDayAs: reminder.nextPerformDate)
+                    return (reminderTime ?? nowReminderTime) <= endOfFutureDay
+                }
+                guard matches.isEmpty == false else { return nil }
+                return (futureReminderTime, matches)
             }
-            guard matches.isEmpty == false else { return nil }
-            return (futureReminderTime, matches)
-        }
 
-        // convert the matches into one notification each
-        let reminders = matches.map() { reminderTime, matches -> UNNotificationRequest in
-            let _interval = reminderTime.timeIntervalSince(nowReminderTime)
-            let interval = _interval < UNTimeIntervalNotificationTrigger.kMin ? UNTimeIntervalNotificationTrigger.kMin : _interval
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
-            let _content = UNMutableNotificationContent()
-            print("\(reminderTime): Reminders: \(matches.count)")
-            _content.body = "Reminders: \(matches.count)"
-            // swiftlint:disable:next force_cast
-            let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
-            let request = UNNotificationRequest(identifier: reminderTime.description, content: content, trigger: trigger)
-            return request
+            // convert the matches into one notification each
+            let reminders = matches.map() { reminderTime, matches -> UNNotificationRequest in
+                let _interval = reminderTime.timeIntervalSince(nowReminderTime)
+                let interval = _interval < UNTimeIntervalNotificationTrigger.kMin ? UNTimeIntervalNotificationTrigger.kMin : _interval
+                let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+                let _content = UNMutableNotificationContent()
+                print("\(reminderTime): Reminders: \(matches.count)")
+                _content.body = "Reminders: \(matches.count)"
+                // swiftlint:disable:next force_cast
+                let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
+                let request = UNNotificationRequest(identifier: reminderTime.description, content: content, trigger: trigger)
+                return request
+            }
+
+            completion(reminders)
         }
-        return reminders
     }
 
     private var token: NotificationToken?
 
     deinit {
         self.token?.invalidate()
-    }
-}
-
-extension UNTimeIntervalNotificationTrigger {
-    static let kMin: TimeInterval = 1.675
-}
-
-extension UNUserNotificationCenter {
-    func authorized(completion: @escaping (Bool) -> Void) {
-        self.getNotificationSettings() { settings in
-            DispatchQueue.main.async {
-                completion(settings.authorizationStatus.boolValue)
-            }
-        }
-    }
-}
-
-extension UNAuthorizationStatus {
-    var boolValue: Bool {
-        switch self {
-        case .authorized:
-            return true
-        case .notDetermined, .denied:
-            return false
-        }
     }
 }
 
@@ -177,5 +158,17 @@ extension ReminderUserNotificationController {
                 }
             }
         }
+    }
+}
+
+private struct ReminderNotificationInformation {
+    var parentPlantName: String?
+    var parentPlantUUID: String?
+    var nextPerformDate: Date?
+
+    init(reminder: Reminder) {
+        self.parentPlantName = reminder.vessel?.displayName
+        self.parentPlantUUID = reminder.vessel?.uuid
+        self.nextPerformDate = reminder.nextPerformDate
     }
 }

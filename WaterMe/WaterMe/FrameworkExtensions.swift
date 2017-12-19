@@ -25,6 +25,32 @@ import WaterMeStore
 import WaterMeData
 import FormatterKit
 import UIKit
+import UserNotifications
+
+extension UNTimeIntervalNotificationTrigger {
+    static let kMin: TimeInterval = 1.675
+}
+
+extension UNUserNotificationCenter {
+    func authorized(completion: @escaping (Bool) -> Void) {
+        self.getNotificationSettings() { settings in
+            DispatchQueue.main.async {
+                completion(settings.authorizationStatus.boolValue)
+            }
+        }
+    }
+}
+
+extension UNAuthorizationStatus {
+    var boolValue: Bool {
+        switch self {
+        case .authorized:
+            return true
+        case .notDetermined, .denied:
+            return false
+        }
+    }
+}
 
 class StandardCollectionViewController: UICollectionViewController {
 
