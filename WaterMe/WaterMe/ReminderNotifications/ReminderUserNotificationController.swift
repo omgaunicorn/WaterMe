@@ -57,8 +57,8 @@ class ReminderUserNotificationController {
         let center = UNUserNotificationCenter.current()
         center.removeAllDeliveredNotifications()
         center.removeAllPendingNotificationRequests()
-        guard let data = self.data else {
-            log.error("Reminder data for notifications was NIL")
+        guard let data = self.data, data.isEmpty == false else {
+            log.error("Reminder data for notifications was NIL or was empty: \(String(describing: self.data?.isEmpty))")
             return
         }
         center.authorized() { authorized in
@@ -66,7 +66,7 @@ class ReminderUserNotificationController {
                 log.info("Not authorized to schedule notifications")
                 return
             }
-            self.notificationRequests(from: data) { requests in
+            self.notificationRequests() { requests in
                 guard requests.isEmpty == false else {
                     log.debug("No notifications to schedule")
                     return
@@ -82,7 +82,7 @@ class ReminderUserNotificationController {
         }
     }
 
-    private func notificationRequests(from reminders: AnyRealmCollection<Reminder>, completion: @escaping ([UNNotificationRequest]) -> Void) {
+    private func notificationRequests(completion: @escaping ([UNNotificationRequest]) -> Void) {
         // make sure we have data to work with
         guard let _data = self.data, _data.isEmpty == false else { completion([]); return; }
 
@@ -153,14 +153,14 @@ extension ReminderUserNotificationController {
             case 0:
                 fatalError("Tried to create a notification for no plants")
             case 1:
-                let name1 = plantNames[0] ?? "Untitled Plant"
+                let name1 = plantNames[0] ?? ReminderVessel.LocalizedString.untitledPlant
                 return "\(name1) needs attention today."
             case 2:
-                let name1 = plantNames[0] ?? "Untitled Plant"
-                let name2 = plantNames[1] ?? "Untitled Plant"
+                let name1 = plantNames[0] ?? ReminderVessel.LocalizedString.untitledPlant
+                let name2 = plantNames[1] ?? ReminderVessel.LocalizedString.untitledPlant
                 return "\(name1) & \(name2) need attention today."
             default:
-                let name1 = plantNames[0] ?? "Untitled Plant"
+                let name1 = plantNames[0] ?? ReminderVessel.LocalizedString.untitledPlant
                 return "\(name1) & \(plantNames.count) more need attention today."
             }
         }

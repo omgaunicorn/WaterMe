@@ -10,6 +10,7 @@
 		313EDE3EF93BBBBB532773D1 /* Pods_NoDeviceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 154A62BF32449BE9AEC1D580 /* Pods_NoDeviceTests.framework */; };
 		32960DF0C162FA7CB997DAE0 /* Pods_WaterMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B125E6363F6731C5C3C2000 /* Pods_WaterMe.framework */; };
 		500679AF1F4BF3DB00F8100D /* ReminderMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */; };
+		501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A9AE41FE9682C0016160D /* LocalizedStrings.swift */; };
 		501C0E8B1ECE5EFF00D4EE7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */; };
 		501C0E8D1ECE5EFF00D4EE7C /* UserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E8C1ECE5EFF00D4EE7C /* UserTableViewController.swift */; };
 		501C0E901ECE5EFF00D4EE7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E8E1ECE5EFF00D4EE7C /* Main.storyboard */; };
@@ -108,6 +109,7 @@
 		4B125E6363F6731C5C3C2000 /* Pods_WaterMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaterMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderMainViewController.swift; sourceTree = "<group>"; };
 		500679B01F4BF46800F8100D /* ReminderVesselTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVesselTabViewController.swift; sourceTree = "<group>"; };
+		501A9AE41FE9682C0016160D /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		501C0E881ECE5EFF00D4EE7C /* AdminConsole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdminConsole.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		501C0E8C1ECE5EFF00D4EE7C /* UserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewController.swift; sourceTree = "<group>"; };
@@ -382,6 +384,7 @@
 				50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */,
 				50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */,
 				50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */,
+				501A9AE41FE9682C0016160D /* LocalizedStrings.swift */,
 				5049D1A11FACF9F30076565E /* ReminderNotifications */,
 				501F921E1EC55DA80014939D /* Router */,
 				500679AD1F4BF3B700F8100D /* ReminderMain */,
@@ -906,6 +909,7 @@
 				50B511A71EFE144700ED1DF4 /* ReminderKindTableViewCell.swift in Sources */,
 				50A3DF971EE3331D00F0B966 /* StyleExtensions.swift in Sources */,
 				50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */,
+				501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */,
 				50E8B1E61EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift in Sources */,
 				50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */,
 				50D3A0831EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift in Sources */,
