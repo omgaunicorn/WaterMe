@@ -31,11 +31,13 @@ let log = XCGLogger.default
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+
+    // swiftlint:disable:next force_cast
     class var shared: AppDelegate { return UIApplication.shared.delegate as! AppDelegate }
 
-    private var notifictionController: ReminderUserNotificationController?
+    // swiftlint:disable:next weak_delegate
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
+    private var notifictionController: ReminderUserNotificationController?
 
     var window: UIWindow?
 
