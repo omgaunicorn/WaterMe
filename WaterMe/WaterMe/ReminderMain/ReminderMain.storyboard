@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vTc-0H-0zJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vTc-0H-0zJ">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -114,19 +113,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2T-Np-1PS">
-                                <rect key="frame" x="144.5" y="32" width="86" height="86"/>
-                                <color key="backgroundColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="A2T-Np-1PS" secondAttribute="height" multiplier="1:1" id="9dD-3n-FFd"/>
-                                </constraints>
+                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2T-Np-1PS" customClass="ReminderDropTargetView" customModule="WaterMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.45138680930000002" green="0.99309605359999997" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="A2T-Np-1PS" secondAttribute="bottom" constant="32" id="6Lz-Zj-nrM"/>
+                            <constraint firstItem="A2T-Np-1PS" firstAttribute="width" secondItem="Q0w-r9-5E9" secondAttribute="width" id="3rx-tf-KFL"/>
                             <constraint firstItem="A2T-Np-1PS" firstAttribute="centerX" secondItem="Q0w-r9-5E9" secondAttribute="centerX" id="BR4-Yl-lJU"/>
-                            <constraint firstItem="A2T-Np-1PS" firstAttribute="top" secondItem="Q0w-r9-5E9" secondAttribute="top" constant="32" id="GkR-MK-T2S"/>
+                            <constraint firstItem="A2T-Np-1PS" firstAttribute="height" secondItem="Q0w-r9-5E9" secondAttribute="height" id="iJj-9d-Z2N"/>
                             <constraint firstItem="A2T-Np-1PS" firstAttribute="centerY" secondItem="Q0w-r9-5E9" secondAttribute="centerY" id="s7M-TQ-R8W"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ype-GC-kiU"/>
