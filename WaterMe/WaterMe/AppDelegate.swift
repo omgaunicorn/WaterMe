@@ -45,7 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         super.init()
         
         // configure logging
+        // TODO: Change this to no longer be debug when ready for release
         log.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, showDate: true, writeToFile: true, fileLevel: .debug)
+        log.formatters = [LogSpreader()]
         
         // as early as possible, configure standard defaults
         UserDefaults.standard.configure()
@@ -122,4 +124,29 @@ class ReminderNotificationUIDelegate: NSObject, UNUserNotificationCenterDelegate
     {
         completionHandler([.alert, .badge, .sound])
     }
+}
+
+class LogSpreader: NSObject, LogFormatterProtocol {
+
+    func format(logDetails: inout LogDetails, message: inout String) -> String {
+        // send the log to other services here
+        switch logDetails.level {
+        case .none:
+            break
+        case .verbose:
+            break
+        case .debug:
+            break
+        case .info:
+            break
+        case .warning:
+            break
+        case .error:
+            break
+        case .severe:
+            break
+        }
+        return ""
+    }
+
 }
