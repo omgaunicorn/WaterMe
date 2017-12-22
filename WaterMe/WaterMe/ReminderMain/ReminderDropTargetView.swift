@@ -31,7 +31,7 @@ class ReminderDropTargetView: UIView {
     }
 
     private let kVideoStartTime = CMTime(value: 1, timescale: 100)
-    private let kVideoHoverTime = CMTime(value: 170, timescale: 100)
+    private let kVideoHoverTime = CMTime(value: 165, timescale: 100)
     private let kVideoEndTime = CMTime(value: 533, timescale: 100)
     private let kRate = Float(1.0)
     private let kVideoLandscapeAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-landscape", withExtension: "mov", subdirectory: "Videos")!)
@@ -40,6 +40,7 @@ class ReminderDropTargetView: UIView {
     private let videoLayer: AVPlayerLayer = {
         let l = AVPlayerLayer()
         l.videoGravity = .resizeAspect
+        l.opacity = 0
         return l
     }()
 
@@ -75,7 +76,14 @@ class ReminderDropTargetView: UIView {
                     }
                 }
             case .drop:
-                self.player.playImmediately(atRate: kRate)
+                if self.videoLayer.opacity < 1 {
+                    self.player.pause()
+                    self.player.seek(to: kVideoStartTime)
+                    self.videoLayer.opacity = 1
+                    self.player.playImmediately(atRate: kRate)
+                } else {
+                    self.player.playImmediately(atRate: kRate)
+                }
             }
         }
     }
@@ -83,16 +91,21 @@ class ReminderDropTargetView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        let token1 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoHoverTime)], queue: nil) { [unowned self] in
+        let token1 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoStartTime)], queue: nil) { [unowned self] in
+            guard case .noHover = self.videoState else { return }
+            self.videoLayer.opacity = 0
+        }
+
+        let token2 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoHoverTime)], queue: nil) { [unowned self] in
             guard case .hover = self.videoState else { return }
             self.player.pause()
         }
 
-        let token2 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoEndTime)], queue: nil) { [unowned self] in
+        let token3 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoEndTime)], queue: nil) { [unowned self] in
             self.videoLayer.opacity = 0
         }
 
-        self.observerTokens += [token1, token2]
+        self.observerTokens += [token1, token2, token3]
         self.videoLayer.player = self.player
         self.layer.addSublayer(self.videoLayer)
     }
