@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vTc-0H-0zJ">
-    <device id="retina5_9" orientation="landscape">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -17,7 +17,7 @@
             <objects>
                 <navigationController id="vTc-0H-0zJ" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="kx8-Oc-lfB">
-                        <rect key="frame" x="0.0" y="0.0" width="812" height="32"/>
+                        <rect key="frame" x="0.0" y="44" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -33,17 +33,17 @@
             <objects>
                 <viewController id="W2n-zh-dpd" customClass="ReminderMainViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lUe-we-dUa">
-                        <rect key="frame" x="0.0" y="0.0" width="812" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7bz-mK-2hj">
-                                <rect key="frame" x="225" y="5.6666666666666572" width="543" height="375"/>
+                                <rect key="frame" x="0.0" y="53" width="375" height="812"/>
                                 <connections>
                                     <segue destination="jyv-In-YNW" kind="embed" id="Ikd-gx-ZFw"/>
                                 </connections>
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RHs-C3-vgv">
-                                <rect key="frame" x="44" y="32" width="181" height="322"/>
+                                <rect key="frame" x="0.0" y="140" width="375" height="211"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="RHs-C3-vgv" secondAttribute="height" multiplier="16:9" id="Sgj-xU-18S"/>
                                     <constraint firstAttribute="width" secondItem="RHs-C3-vgv" secondAttribute="height" multiplier="9:16" id="a8r-nh-GjS"/>
@@ -97,34 +97,34 @@
                         <viewLayoutGuide key="safeArea" id="RKH-f9-TFG"/>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="BQk-4v-qhP"/>
+                                <exclude reference="OK7-YU-hR7"/>
+                                <exclude reference="STd-8H-34B"/>
+                                <exclude reference="8nT-JD-1r3"/>
+                                <exclude reference="Ziq-pt-hBy"/>
+                                <exclude reference="qUK-SV-Lbr"/>
                                 <exclude reference="PQH-7g-PhD"/>
                                 <exclude reference="eMD-ax-xIM"/>
                                 <exclude reference="eNa-rT-1F5"/>
                                 <exclude reference="ydB-bT-fJp"/>
-                                <exclude reference="8nT-JD-1r3"/>
-                                <exclude reference="Ziq-pt-hBy"/>
-                                <exclude reference="qUK-SV-Lbr"/>
-                                <exclude reference="BQk-4v-qhP"/>
-                                <exclude reference="OK7-YU-hR7"/>
-                                <exclude reference="STd-8H-34B"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
+                                <exclude reference="BQk-4v-qhP"/>
+                                <include reference="OK7-YU-hR7"/>
+                                <include reference="STd-8H-34B"/>
+                                <exclude reference="3KT-GX-dHt"/>
+                                <exclude reference="7yQ-7j-c2m"/>
+                                <exclude reference="8nT-JD-1r3"/>
+                                <exclude reference="Ziq-pt-hBy"/>
+                                <include reference="qUK-SV-Lbr"/>
                                 <exclude reference="0gz-Ze-d6B"/>
                                 <exclude reference="PQH-7g-PhD"/>
                                 <exclude reference="eMD-ax-xIM"/>
                                 <exclude reference="eNa-rT-1F5"/>
                                 <exclude reference="tuv-UN-25u"/>
                                 <include reference="ydB-bT-fJp"/>
-                                <exclude reference="3KT-GX-dHt"/>
-                                <exclude reference="7yQ-7j-c2m"/>
-                                <exclude reference="8nT-JD-1r3"/>
-                                <exclude reference="Ziq-pt-hBy"/>
-                                <include reference="qUK-SV-Lbr"/>
-                                <exclude reference="BQk-4v-qhP"/>
-                                <include reference="OK7-YU-hR7"/>
-                                <include reference="STd-8H-34B"/>
                             </mask>
                         </variation>
                     </view>
@@ -150,7 +150,7 @@
             <objects>
                 <collectionViewController id="jyv-In-YNW" customClass="ReminderCollectionViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="32O-Kc-8k3">
-                        <rect key="frame" x="0.0" y="0.0" width="543" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dp4-W4-56m">
@@ -175,11 +175,11 @@
             <objects>
                 <viewController id="Cjs-fa-2MT" customClass="ReminderFinishDropTargetViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q0w-r9-5E9">
-                        <rect key="frame" x="0.0" y="0.0" width="181" height="322"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2T-Np-1PS" customClass="ReminderDropTargetView" customModule="WaterMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="181" height="322"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="211"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

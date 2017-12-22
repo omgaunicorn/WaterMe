@@ -83,6 +83,7 @@ class DragAndDropPlayerManager {
         let p = AVQueuePlayer()
         p.allowsExternalPlayback = false
         p.actionAtItemEnd = .pause
+        p.volume = 0
         return p
     }()
 
@@ -136,6 +137,7 @@ class DragAndDropPlayerManager {
     }
 
     init(configuration: Configuration) {
+        
         self.configuration = configuration
         self.landscapeVideoAsset = AVPlayerItem(url: configuration.landscapeVideoURL)
         self.portraitVideoAsset = AVPlayerItem(url: configuration.portraitVideoURL)

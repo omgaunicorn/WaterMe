@@ -23,9 +23,10 @@
 
 import WaterMeData
 import XCGLogger
-import UIKit
 import UserNotifications
 import UserNotificationsUI
+import AVFoundation
+import UIKit
 
 let log = XCGLogger.default
 
@@ -59,6 +60,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // Configure audio so the water video does not pause the users music
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
 
         let freeRC = BasicController(kind: .local)
         let vc = ReminderMainViewController.newVC(basicController: freeRC, proController: nil)
