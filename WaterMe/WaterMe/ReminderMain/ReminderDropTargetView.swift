@@ -31,7 +31,18 @@ class ReminderDropTargetView: UIView {
         get { return self.videoManager.hoverState }
     }
 
-    private let videoManager = DragAndDropPlayerManager()
+    private let videoManager: DragAndDropPlayerManager = {
+        let t1 = DragAndDropPlayerManager.Timings(start: CMTime(value: 1, timescale: 100),
+                                                  hover: CMTime(value: 165, timescale: 100),
+                                                  end: CMTime(value: 533, timescale: 100))
+        let t2 = DragAndDropPlayerManager.Timings(start: CMTime(value: 1, timescale: 100),
+                                                  hover: CMTime(value: 80, timescale: 100),
+                                                  end: CMTime(value: 408, timescale: 100))
+        let c = DragAndDropPlayerManager.Configuration(landscapeTimings: t1, portraitTimings: t2, forwardRate: 1.0, reverseRate: -1.0,
+                                                       landscapeVideoURL: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-landscape", withExtension: "mov", subdirectory: "Videos")!,
+                                                       portraitVideoURL: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-portrait", withExtension: "mov", subdirectory: "Videos")!)
+        return DragAndDropPlayerManager(configuration: c)
+    }()
 
     private let videoLayer: AVPlayerLayer = {
         let l = AVPlayerLayer()

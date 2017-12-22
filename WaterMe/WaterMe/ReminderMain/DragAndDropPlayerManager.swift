@@ -1,5 +1,5 @@
 //
-//  WateringVideoManager.swift
+//  DragAndDropPlayerManager.swift
 //  WaterMe
 //
 //  Created by Jeffrey Bergier on 22/12/17.
@@ -29,13 +29,49 @@ class DragAndDropPlayerManager {
         case noHover, hover, drop
     }
 
-    private let kVideoStartTime = CMTime(value: 1, timescale: 100)
-    private let kVideoHoverTime = CMTime(value: 165, timescale: 100)
-    private let kVideoEndTime = CMTime(value: 533, timescale: 100)
-    private let kRate = Float(1.0)
-    // TODO: Fix CMTime and observers so things work in landscape
-    private let kVideoLandscapeAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-landscape", withExtension: "mov", subdirectory: "Videos")!)
-    private let kVideoPortraitAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-portrait", withExtension: "mov", subdirectory: "Videos")!)
+    struct Configuration {
+        var landscapeTimings: Timings
+        var portraitTimings: Timings
+        var forwardRate: Float
+        var reverseRate: Float
+        var landscapeVideoURL: URL
+        var portraitVideoURL: URL
+    }
+
+    struct Timings {
+        var start: CMTime
+        var hover: CMTime
+        var end: CMTime
+    }
+
+    private var startTime: CMTime {
+        switch self.landscapeVideo {
+        case true:
+            return configuration.landscapeTimings.start
+        case false:
+            return configuration.portraitTimings.start
+        }
+    }
+    private var hoverTime: CMTime {
+        switch self.landscapeVideo {
+        case true:
+            return configuration.landscapeTimings.hover
+        case false:
+            return configuration.portraitTimings.hover
+        }
+    }
+    private var endTime: CMTime {
+        switch self.landscapeVideo {
+        case true:
+            return configuration.landscapeTimings.end
+        case false:
+            return configuration.portraitTimings.end
+        }
+    }
+
+    private let configuration: Configuration
+    private let landscapeVideoAsset: AVPlayerItem
+    private let portraitVideoAsset: AVPlayerItem
 
     private(set) var videoLayerShouldBeHidden = true {
         didSet {
@@ -55,9 +91,9 @@ class DragAndDropPlayerManager {
             self.player.removeAllItems()
             switch self.landscapeVideo {
             case true:
-                self.player.insert(kVideoLandscapeAsset, after: nil)
+                self.player.insert(landscapeVideoAsset, after: nil)
             case false:
-                self.player.insert(kVideoPortraitAsset, after: nil)
+                self.player.insert(portraitVideoAsset, after: nil)
             }
         }
     }
@@ -70,53 +106,77 @@ class DragAndDropPlayerManager {
             case .noHover:
                 if self.videoLayerShouldBeHidden == true {
                     self.player.pause()
-                    self.player.seek(to: kVideoStartTime)
+                    self.player.seek(to: startTime)
                     self.videoLayerShouldBeHidden = false
                 } else {
-                    self.player.playImmediately(atRate: -1 * kRate)
+                    self.player.playImmediately(atRate: self.configuration.reverseRate)
                 }
             case .hover:
                 if self.videoLayerShouldBeHidden == true {
                     self.player.pause()
-                    self.player.seek(to: kVideoStartTime)
+                    self.player.seek(to: startTime)
                     self.videoLayerShouldBeHidden = false
-                    self.player.playImmediately(atRate: kRate)
+                    self.player.playImmediately(atRate: self.configuration.forwardRate)
                 } else {
-                    if self.player.currentTime().seconds > kVideoHoverTime.seconds {
-                        self.player.playImmediately(atRate: -1 * kRate)
+                    if self.player.currentTime().seconds > hoverTime.seconds {
+                        self.player.playImmediately(atRate: self.configuration.reverseRate)
                     } else {
-                        self.player.playImmediately(atRate: kRate)
+                        self.player.playImmediately(atRate: self.configuration.forwardRate)
                     }
                 }
             case .drop:
                 if self.videoLayerShouldBeHidden == true {
                     self.player.pause()
-                    self.player.seek(to: kVideoStartTime)
+                    self.player.seek(to: startTime)
                     self.videoLayerShouldBeHidden = false
-                    self.player.playImmediately(atRate: kRate)
-                } else {
-                    self.player.playImmediately(atRate: kRate)
                 }
+                self.player.playImmediately(atRate: self.configuration.forwardRate)
             }
         }
     }
 
-    init() {
-        let token1 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoStartTime)], queue: nil) { [unowned self] in
-            guard case .noHover = self.hoverState else { return }
+    init(configuration: Configuration) {
+        self.configuration = configuration
+        self.landscapeVideoAsset = AVPlayerItem(url: configuration.landscapeVideoURL)
+        self.portraitVideoAsset = AVPlayerItem(url: configuration.portraitVideoURL)
+
+        let landscapeStart = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: configuration.landscapeTimings.start)], queue: nil)
+        { [unowned self] in
+            guard self.landscapeVideo == true, case .noHover = self.hoverState else { return }
             self.videoLayerShouldBeHidden = true
         }
 
-        let token2 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoHoverTime)], queue: nil) { [unowned self] in
-            guard case .hover = self.hoverState else { return }
+        let landscapeHover = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: configuration.landscapeTimings.hover)], queue: nil)
+        { [unowned self] in
+            guard self.landscapeVideo == true, case .hover = self.hoverState else { return }
             self.player.pause()
         }
 
-        let token3 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoEndTime)], queue: nil) { [unowned self] in
+        let landscapeEnd = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: configuration.landscapeTimings.end)], queue: nil)
+        { [unowned self] in
+            guard self.landscapeVideo == true else { return }
             self.videoLayerShouldBeHidden = true
         }
 
-        self.observerTokens += [token1, token2, token3]
+        let portraitStart = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: configuration.portraitTimings.start)], queue: nil)
+        { [unowned self] in
+            guard self.landscapeVideo == false, case .noHover = self.hoverState else { return }
+            self.videoLayerShouldBeHidden = true
+        }
+
+        let portraitHover = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: configuration.portraitTimings.hover)], queue: nil)
+        { [unowned self] in
+            guard self.landscapeVideo == false, case .hover = self.hoverState else { return }
+            self.player.pause()
+        }
+
+        let portraitEnd = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: configuration.portraitTimings.end)], queue: nil)
+        { [unowned self] in
+            guard self.landscapeVideo == false else { return }
+            self.videoLayerShouldBeHidden = true
+        }
+
+        self.observerTokens += [landscapeStart, landscapeHover, landscapeEnd, portraitStart, portraitHover, portraitEnd]
     }
 
     private var observerTokens = [Any]()
