@@ -40,7 +40,12 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        self.dropTargetView?.play()
+        Timer.scheduledTimer(withTimeInterval: 7, repeats: true) { _ in
+            let randomNumber = Int(arc4random_uniform(3))
+            let value = ReminderDropTargetView.VideoState(rawValue: randomNumber)!
+            print("TIMER FIRED: \(value)")
+            self.dropTargetView?.videoState = value
+        }.fire()
     }
 
     // MARK: UIDropInteractionDelegate

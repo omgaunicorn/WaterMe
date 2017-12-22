@@ -39,42 +39,56 @@ class ReminderDropTargetView: UIView {
         return p
     }()
 
-    private static let videoStart = CMTime(value: 1, timescale: 100)
-    private static let videoHoverStop = CMTime(value: 70, timescale: 100)
-    private static let videoEnd = CMTime(value: 533, timescale: 100)
+    private let kVideoStartTime = CMTime(value: 1, timescale: 100)
+    private let kVideoHoverTime = CMTime(value: 70, timescale: 100)
+    private let kVideoEndTime = CMTime(value: 533, timescale: 100)
+    private let kRate = Float(1.0)
 
     private static let videoAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-landscape", withExtension: "mov", subdirectory: "Videos")!)
+
+    enum VideoState: Int {
+        case noHover, hover, drop
+    }
+
+    var videoState = VideoState.noHover {
+        didSet {
+            switch self.videoState {
+            case .noHover:
+                self.player.playImmediately(atRate: -1 * kRate)
+            case .hover:
+                if self.player.currentTime().seconds > kVideoHoverTime.seconds {
+                    self.player.playImmediately(atRate: -1 * kRate)
+                } else {
+                    self.player.playImmediately(atRate: kRate)
+                }
+            case .drop:
+                self.player.playImmediately(atRate: kRate)
+            }
+        }
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        let time1 = type(of: self).videoStart
+        let time1 = kVideoStartTime
         self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: time1)], queue: nil) { [unowned self] in
             print("START")
-            if self.player.rate < 0 {
-                self.player.rate = 1
-            }
         }
 
-        let time2 = type(of: self).videoHoverStop
+        let time2 = kVideoHoverTime
         self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: time2)], queue: nil) { [unowned self] in
             print("MIDDLE")
+            guard case .hover = self.videoState else { return }
+            self.player.pause()
         }
 
-        let time3 = type(of: self).videoEnd
+        let time3 = kVideoEndTime
         self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: time3)], queue: nil) { [unowned self] in
             print("END")
-            if self.player.rate > 0 {
-                self.player.rate = -1
-            }
         }
 
         self.videoLayer.player = self.player
         self.layer.addSublayer(self.videoLayer)
-    }
-
-    func play() {
-        self.player.play()
     }
 
     override func layoutSubviews() {
