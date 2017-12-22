@@ -26,6 +26,17 @@ import UIKit
 
 class ReminderDropTargetView: UIView {
 
+    enum VideoState: Int {
+        case noHover, hover, drop
+    }
+
+    private let kVideoStartTime = CMTime(value: 1, timescale: 100)
+    private let kVideoHoverTime = CMTime(value: 170, timescale: 100)
+    private let kVideoEndTime = CMTime(value: 533, timescale: 100)
+    private let kRate = Float(1.0)
+    private let kVideoLandscapeAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-landscape", withExtension: "mov", subdirectory: "Videos")!)
+    private let kVideoPortraitAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-portrait", withExtension: "mov", subdirectory: "Videos")!)
+
     private let videoLayer: AVPlayerLayer = {
         let l = AVPlayerLayer()
         l.videoGravity = .resizeAspect
@@ -38,18 +49,6 @@ class ReminderDropTargetView: UIView {
         p.actionAtItemEnd = .pause
         return p
     }()
-
-    private let kVideoStartTime = CMTime(value: 1, timescale: 100)
-    private let kVideoHoverTime = CMTime(value: 70, timescale: 100)
-    private let kVideoEndTime = CMTime(value: 533, timescale: 100)
-    private let kRate = Float(1.0)
-
-    private static let videoLandscapeAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-landscape", withExtension: "mov", subdirectory: "Videos")!)
-    private static let videoPortraitAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-portrait", withExtension: "mov", subdirectory: "Videos")!)
-
-    enum VideoState: Int {
-        case noHover, hover, drop
-    }
 
     var videoState = VideoState.noHover {
         didSet {
@@ -84,24 +83,16 @@ class ReminderDropTargetView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        let time1 = kVideoStartTime
-        self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: time1)], queue: nil) { [unowned self] in
-            print("START")
-        }
-
-        let time2 = kVideoHoverTime
-        self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: time2)], queue: nil) { [unowned self] in
-            print("MIDDLE")
+        let token1 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoHoverTime)], queue: nil) { [unowned self] in
             guard case .hover = self.videoState else { return }
             self.player.pause()
         }
 
-        let time3 = kVideoEndTime
-        self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: time3)], queue: nil) { [unowned self] in
-            print("END")
+        let token2 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoEndTime)], queue: nil) { [unowned self] in
             self.videoLayer.opacity = 0
         }
 
+        self.observerTokens += [token1, token2]
         self.videoLayer.player = self.player
         self.layer.addSublayer(self.videoLayer)
     }
@@ -117,9 +108,17 @@ class ReminderDropTargetView: UIView {
         super.traitCollectionDidChange(previousTraitCollection)
         switch self.traitCollection.verticalSizeClass {
         case .regular, .unspecified:
-            self.player.insert(type(of: self).videoLandscapeAsset, after: nil)
+            self.player.insert(kVideoLandscapeAsset, after: nil)
         case .compact:
-            self.player.insert(type(of: self).videoPortraitAsset, after: nil)
+            self.player.insert(kVideoPortraitAsset, after: nil)
+        }
+    }
+
+    private var observerTokens = [Any]()
+
+    deinit {
+        for token in self.observerTokens {
+            self.player.removeTimeObserver(token)
         }
     }
 
