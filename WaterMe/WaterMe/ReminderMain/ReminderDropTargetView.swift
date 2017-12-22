@@ -33,7 +33,7 @@ class ReminderDropTargetView: UIView {
     }()
 
     private let player: AVQueuePlayer = {
-        let p = AVQueuePlayer(items: [ReminderDropTargetView.videoAsset])
+        let p = AVQueuePlayer()
         p.allowsExternalPlayback = false
         p.actionAtItemEnd = .pause
         return p
@@ -44,7 +44,8 @@ class ReminderDropTargetView: UIView {
     private let kVideoEndTime = CMTime(value: 533, timescale: 100)
     private let kRate = Float(1.0)
 
-    private static let videoAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-landscape", withExtension: "mov", subdirectory: "Videos")!)
+    private static let videoLandscapeAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-landscape", withExtension: "mov", subdirectory: "Videos")!)
+    private static let videoPortraitAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-portrait", withExtension: "mov", subdirectory: "Videos")!)
 
     enum VideoState: Int {
         case noHover, hover, drop
@@ -108,6 +109,18 @@ class ReminderDropTargetView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.videoLayer.frame = self.layer.bounds
+    }
+
+    // TODO: Fix CMTime and observers so things work in landscape
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        self.player.removeAllItems()
+        super.traitCollectionDidChange(previousTraitCollection)
+        switch self.traitCollection.verticalSizeClass {
+        case .regular, .unspecified:
+            self.player.insert(type(of: self).videoLandscapeAsset, after: nil)
+        case .compact:
+            self.player.insert(type(of: self).videoPortraitAsset, after: nil)
+        }
     }
 
 }
