@@ -26,16 +26,12 @@ import UIKit
 
 class ReminderDropTargetView: UIView {
 
-    enum VideoState: Int {
-        case noHover, hover, drop
+    var hoverState: DragAndDropPlayerManager.HoverState {
+        set { self.videoManager.hoverState = newValue }
+        get { return self.videoManager.hoverState }
     }
 
-    private let kVideoStartTime = CMTime(value: 1, timescale: 100)
-    private let kVideoHoverTime = CMTime(value: 165, timescale: 100)
-    private let kVideoEndTime = CMTime(value: 533, timescale: 100)
-    private let kRate = Float(1.0)
-    private let kVideoLandscapeAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-landscape", withExtension: "mov", subdirectory: "Videos")!)
-    private let kVideoPortraitAsset = AVPlayerItem(url: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-portrait", withExtension: "mov", subdirectory: "Videos")!)
+    private let videoManager = DragAndDropPlayerManager()
 
     private let videoLayer: AVPlayerLayer = {
         let l = AVPlayerLayer()
@@ -44,69 +40,13 @@ class ReminderDropTargetView: UIView {
         return l
     }()
 
-    private let player: AVQueuePlayer = {
-        let p = AVQueuePlayer()
-        p.allowsExternalPlayback = false
-        p.actionAtItemEnd = .pause
-        return p
-    }()
-
-    var videoState = VideoState.noHover {
-        didSet {
-            switch self.videoState {
-            case .noHover:
-                if self.videoLayer.opacity < 1 {
-                    self.player.pause()
-                    self.player.seek(to: kVideoStartTime)
-                    self.videoLayer.opacity = 1
-                } else {
-                    self.player.playImmediately(atRate: -1 * kRate)
-                }
-            case .hover:
-                if self.videoLayer.opacity < 1 {
-                    self.player.pause()
-                    self.player.seek(to: kVideoStartTime)
-                    self.videoLayer.opacity = 1
-                    self.player.playImmediately(atRate: kRate)
-                } else {
-                    if self.player.currentTime().seconds > kVideoHoverTime.seconds {
-                        self.player.playImmediately(atRate: -1 * kRate)
-                    } else {
-                        self.player.playImmediately(atRate: kRate)
-                    }
-                }
-            case .drop:
-                if self.videoLayer.opacity < 1 {
-                    self.player.pause()
-                    self.player.seek(to: kVideoStartTime)
-                    self.videoLayer.opacity = 1
-                    self.player.playImmediately(atRate: kRate)
-                } else {
-                    self.player.playImmediately(atRate: kRate)
-                }
-            }
-        }
-    }
-
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        let token1 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoStartTime)], queue: nil) { [unowned self] in
-            guard case .noHover = self.videoState else { return }
-            self.videoLayer.opacity = 0
+        self.videoManager.videoHiddenChanged = { [unowned self] hidden in
+            self.videoLayer.opacity = hidden ? 0 : 1
         }
-
-        let token2 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoHoverTime)], queue: nil) { [unowned self] in
-            guard case .hover = self.videoState else { return }
-            self.player.pause()
-        }
-
-        let token3 = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: kVideoEndTime)], queue: nil) { [unowned self] in
-            self.videoLayer.opacity = 0
-        }
-
-        self.observerTokens += [token1, token2, token3]
-        self.videoLayer.player = self.player
+        self.videoLayer.player = self.videoManager.player
         self.layer.addSublayer(self.videoLayer)
     }
 
@@ -115,24 +55,13 @@ class ReminderDropTargetView: UIView {
         self.videoLayer.frame = self.layer.bounds
     }
 
-    // TODO: Fix CMTime and observers so things work in landscape
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        self.player.removeAllItems()
         super.traitCollectionDidChange(previousTraitCollection)
         switch self.traitCollection.verticalSizeClass {
         case .regular, .unspecified:
-            self.player.insert(kVideoLandscapeAsset, after: nil)
+            self.videoManager.landscapeVideo = true
         case .compact:
-            self.player.insert(kVideoPortraitAsset, after: nil)
+            self.videoManager.landscapeVideo = false
         }
     }
-
-    private var observerTokens = [Any]()
-
-    deinit {
-        for token in self.observerTokens {
-            self.player.removeTimeObserver(token)
-        }
-    }
-
 }

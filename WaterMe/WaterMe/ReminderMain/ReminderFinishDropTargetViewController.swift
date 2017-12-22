@@ -60,15 +60,15 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     // UI Updates
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
-        self.dropTargetView?.videoState = .hover
+        self.dropTargetView?.hoverState = .hover
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
-        self.dropTargetView?.videoState = .noHover
+        self.dropTargetView?.hoverState = .noHover
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
-        self.dropTargetView?.videoState = .drop
+        self.dropTargetView?.hoverState = .drop
         print("Finished Watering: \(session.reminderDrags)")
     }
 
