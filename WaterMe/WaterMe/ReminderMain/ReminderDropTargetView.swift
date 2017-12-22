@@ -54,12 +54,25 @@ class ReminderDropTargetView: UIView {
         didSet {
             switch self.videoState {
             case .noHover:
-                self.player.playImmediately(atRate: -1 * kRate)
-            case .hover:
-                if self.player.currentTime().seconds > kVideoHoverTime.seconds {
-                    self.player.playImmediately(atRate: -1 * kRate)
+                if self.videoLayer.opacity < 1 {
+                    self.player.pause()
+                    self.player.seek(to: kVideoStartTime)
+                    self.videoLayer.opacity = 1
                 } else {
+                    self.player.playImmediately(atRate: -1 * kRate)
+                }
+            case .hover:
+                if self.videoLayer.opacity < 1 {
+                    self.player.pause()
+                    self.player.seek(to: kVideoStartTime)
+                    self.videoLayer.opacity = 1
                     self.player.playImmediately(atRate: kRate)
+                } else {
+                    if self.player.currentTime().seconds > kVideoHoverTime.seconds {
+                        self.player.playImmediately(atRate: -1 * kRate)
+                    } else {
+                        self.player.playImmediately(atRate: kRate)
+                    }
                 }
             case .drop:
                 self.player.playImmediately(atRate: kRate)
@@ -85,6 +98,7 @@ class ReminderDropTargetView: UIView {
         let time3 = kVideoEndTime
         self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: time3)], queue: nil) { [unowned self] in
             print("END")
+            self.videoLayer.opacity = 0
         }
 
         self.videoLayer.player = self.player

@@ -117,7 +117,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="150"/>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.45138680930000002" green="0.99309605359999997" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="A2T-Np-1PS" firstAttribute="width" secondItem="Q0w-r9-5E9" secondAttribute="width" id="3rx-tf-KFL"/>
                             <constraint firstItem="A2T-Np-1PS" firstAttribute="centerX" secondItem="Q0w-r9-5E9" secondAttribute="centerX" id="BR4-Yl-lJU"/>

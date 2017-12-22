@@ -37,18 +37,9 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         self.dropTargetView?.addInteraction(UIDropInteraction(delegate: self))
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        Timer.scheduledTimer(withTimeInterval: 7, repeats: true) { _ in
-            let randomNumber = Int(arc4random_uniform(3))
-            let value = ReminderDropTargetView.VideoState(rawValue: randomNumber)!
-            print("TIMER FIRED: \(value)")
-            self.dropTargetView?.videoState = value
-        }.fire()
-    }
-
     // MARK: UIDropInteractionDelegate
+
+    // Data Updates
 
     func dropInteraction(_ interaction: UIDropInteraction, canHandle session: UIDropSession) -> Bool {
         return !session.reminderDrags.isEmpty
@@ -66,9 +57,21 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         }
     }
 
+    // UI Updates
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
+        self.dropTargetView?.videoState = .hover
+    }
+
+    func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
+        self.dropTargetView?.videoState = .noHover
+    }
+
     func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
+        self.dropTargetView?.videoState = .drop
         print("Finished Watering: \(session.reminderDrags)")
     }
+
 }
 
 fileprivate extension UIDropSession {
