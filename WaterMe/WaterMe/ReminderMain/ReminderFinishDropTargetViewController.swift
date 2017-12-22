@@ -26,7 +26,7 @@ import UIKit
 
 class ReminderFinishDropTargetViewController: UIViewController, HasBasicController, HasProController, UIDropInteractionDelegate {
 
-    @IBOutlet private weak var dropTargetView: UIView?
+    @IBOutlet private weak var dropTargetView: ReminderDropTargetView?
 
     var basicRC: BasicController?
     var proRC: ProController?
@@ -35,6 +35,12 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         super.viewDidLoad()
 
         self.dropTargetView?.addInteraction(UIDropInteraction(delegate: self))
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.dropTargetView?.play()
     }
 
     // MARK: UIDropInteractionDelegate
