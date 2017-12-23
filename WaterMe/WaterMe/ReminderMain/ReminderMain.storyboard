@@ -44,6 +44,7 @@
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RHs-C3-vgv">
                                 <rect key="frame" x="0.0" y="140" width="375" height="211"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="RHs-C3-vgv" secondAttribute="height" multiplier="16:9" id="Sgj-xU-18S"/>
                                     <constraint firstAttribute="width" secondItem="RHs-C3-vgv" secondAttribute="height" multiplier="9:16" id="a8r-nh-GjS"/>
@@ -66,8 +67,8 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="7bz-mK-2hj" firstAttribute="centerY" secondItem="RKH-f9-TFG" secondAttribute="centerY" id="0IA-3C-T9e"/>
                             <constraint firstItem="7bz-mK-2hj" firstAttribute="centerX" secondItem="lUe-we-dUa" secondAttribute="centerXWithinMargins" id="0gz-Ze-d6B"/>
+                            <constraint firstItem="7bz-mK-2hj" firstAttribute="centerY" secondItem="lUe-we-dUa" secondAttribute="centerYWithinMargins" id="1ww-zB-T14"/>
                             <constraint firstItem="RHs-C3-vgv" firstAttribute="centerX" secondItem="RKH-f9-TFG" secondAttribute="centerX" id="3KT-GX-dHt"/>
                             <constraint firstItem="RHs-C3-vgv" firstAttribute="width" secondItem="lUe-we-dUa" secondAttribute="width" id="7yQ-7j-c2m"/>
                             <constraint firstItem="RHs-C3-vgv" firstAttribute="leading" secondItem="lUe-we-dUa" secondAttribute="leadingMargin" id="8nT-JD-1r3">
@@ -97,34 +98,34 @@
                         <viewLayoutGuide key="safeArea" id="RKH-f9-TFG"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="BQk-4v-qhP"/>
-                                <exclude reference="OK7-YU-hR7"/>
-                                <exclude reference="STd-8H-34B"/>
-                                <exclude reference="8nT-JD-1r3"/>
-                                <exclude reference="Ziq-pt-hBy"/>
-                                <exclude reference="qUK-SV-Lbr"/>
                                 <exclude reference="PQH-7g-PhD"/>
                                 <exclude reference="eMD-ax-xIM"/>
                                 <exclude reference="eNa-rT-1F5"/>
                                 <exclude reference="ydB-bT-fJp"/>
+                                <exclude reference="8nT-JD-1r3"/>
+                                <exclude reference="Ziq-pt-hBy"/>
+                                <exclude reference="qUK-SV-Lbr"/>
+                                <exclude reference="BQk-4v-qhP"/>
+                                <exclude reference="OK7-YU-hR7"/>
+                                <exclude reference="STd-8H-34B"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
-                                <exclude reference="BQk-4v-qhP"/>
-                                <include reference="OK7-YU-hR7"/>
-                                <include reference="STd-8H-34B"/>
-                                <exclude reference="3KT-GX-dHt"/>
-                                <exclude reference="7yQ-7j-c2m"/>
-                                <exclude reference="8nT-JD-1r3"/>
-                                <exclude reference="Ziq-pt-hBy"/>
-                                <include reference="qUK-SV-Lbr"/>
                                 <exclude reference="0gz-Ze-d6B"/>
                                 <exclude reference="PQH-7g-PhD"/>
                                 <exclude reference="eMD-ax-xIM"/>
                                 <exclude reference="eNa-rT-1F5"/>
                                 <exclude reference="tuv-UN-25u"/>
                                 <include reference="ydB-bT-fJp"/>
+                                <exclude reference="3KT-GX-dHt"/>
+                                <exclude reference="7yQ-7j-c2m"/>
+                                <exclude reference="8nT-JD-1r3"/>
+                                <exclude reference="Ziq-pt-hBy"/>
+                                <include reference="qUK-SV-Lbr"/>
+                                <exclude reference="BQk-4v-qhP"/>
+                                <include reference="OK7-YU-hR7"/>
+                                <include reference="STd-8H-34B"/>
                             </mask>
                         </variation>
                     </view>

@@ -43,7 +43,8 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         super.viewDidLoad()
 
         self.flow?.sectionHeadersPinToVisibleBounds = true
-        self.flow?.headerReferenceSize = CGSize(width: 200, height: 80)
+        self.flow?.headerReferenceSize = CGSize(width: 200, height: 40)
+        self.collectionView?.contentInsetAdjustmentBehavior = .always
         self.collectionView?.dragInteractionEnabled = true // needed for iphone
         self.collectionView?.dragDelegate = self
         self.collectionView?.register(ReminderCollectionViewCell.nib,
@@ -81,7 +82,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
                                                                      withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID,
                                                                      for: indexPath)
         if let header = header as? ReminderHeaderCollectionReusableView, let section = ReminderSection(rawValue: indexPath.section) {
-            header.label?.text = section.localizedTitleString
+            header.setText(section.localizedTitleString)
         }
         return header
     }

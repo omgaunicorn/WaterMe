@@ -75,6 +75,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         super.viewDidLayoutSubviews()
         switch self.traitCollection.verticalSizeClass {
         case .regular, .unspecified:
+            print(self.dropTargetViewController?.view.bounds.height ?? 0)
             self.collectionVC?.collectionView?.contentInset.top = self.dropTargetViewController?.view.bounds.height ?? 0
         case .compact:
             self.collectionVC?.collectionView?.contentInset.top = 0

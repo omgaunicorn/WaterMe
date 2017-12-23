@@ -46,6 +46,11 @@ extension ReminderVesselIconTableViewCell {
     static let style_iconButtonHeightAccessibilityTextSizeDisabled: CGFloat = 140
 }
 
+extension UICollectionReusableView {
+    static let style_backgroundViewCornerRadius: CGFloat = 6
+    static let style_sectionHeaderBackgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.8)
+}
+
 enum Style {
 
     static let centerStyle: NSParagraphStyle = {
@@ -55,6 +60,7 @@ enum Style {
         return p.copy() as! NSParagraphStyle
     }()
 
+    case sectionHeader
     case selectableTableViewCell
     case selectableTableViewCellDisabled
     case selectableTableViewCellHelper
@@ -116,6 +122,8 @@ enum Style {
             var x = type(of: self).selectableTableViewCell.attributes
             x[.paragraphStyle] = type(of: self).centerStyle
             return x
+        case .sectionHeader:
+            return type(of: self).selectableTableViewCell.attributes
         }
     }
     
