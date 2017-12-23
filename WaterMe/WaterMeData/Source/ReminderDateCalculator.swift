@@ -53,29 +53,42 @@ enum ReminderDateCalculator {
     }
 
     static func today(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
-        let startOfToday = self.late(calendar: calendar, now: now).end
-        let startOfTomorrow = calendar.date(byAdding: .day, value: 1, to: startOfToday)!
-        return DateInterval(start: startOfToday, end: startOfTomorrow)
+        let range = calendar.dateInterval(of: .day, for: now)!
+        return range
     }
 
     static func tomorrow(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
-        let startOfTomorrow = self.today(calendar: calendar, now: now).end
-        let startOfDayAfterTomorrow = calendar.date(byAdding: .day, value: 1, to: startOfTomorrow)!
-        return DateInterval(start: startOfTomorrow, end: startOfDayAfterTomorrow)
+        var c = DateComponents()
+        c.day = 1
+        let tomorrow = calendar.date(byAdding: c, to: now)!
+        let range = calendar.dateInterval(of: .day, for: tomorrow)!
+        return range
     }
 
     static func thisWeek(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
+        // find the start of next week using NOW as the reference
+        let rangeOfWeekContainingToday = calendar.dateInterval(of: .weekOfMonth, for: now)!
+        let endOfWeekContainingToday = rangeOfWeekContainingToday.end
+        // this is a super cheap hack to roll things in to the next unit
+        let beginningOfNextWeek = endOfWeekContainingToday.addingTimeInterval(1)
+        let rangeOfNextWeek = calendar.dateInterval(of: .weekOfMonth, for: beginningOfNextWeek)!
+        let trueBeginningOfNextWeek = rangeOfNextWeek.start
+
+        // find startOfDayAfterTomorrow so we don't conflict with earlier results
         let startOfDayAfterTomorrow = self.tomorrow(calendar: calendar, now: now).end
-        var components = calendar.dateComponents([.weekOfYear], from: startOfDayAfterTomorrow)
-        components.weekOfYear! += 1
-        let startOfNextWeek = calendar.nextDate(after: startOfDayAfterTomorrow, matching: components, matchingPolicy: .nextTime)!
-        return DateInterval(start: startOfDayAfterTomorrow, end: startOfNextWeek)
+
+        // make sure that start of next week is after startOfDayAfterTomorrow
+        if trueBeginningOfNextWeek >= startOfDayAfterTomorrow {
+            return DateInterval(start: startOfDayAfterTomorrow, end: trueBeginningOfNextWeek)
+        } else {
+            return DateInterval(start: startOfDayAfterTomorrow, end: startOfDayAfterTomorrow)
+        }
     }
 
     static func later(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
-        let startOfNextNextWeek = self.thisWeek(calendar: calendar, now: now).end
+        let startOfNextWeek = self.thisWeek(calendar: calendar, now: now).end
         let endOfDays = Date.distantFuture
-        return DateInterval(start: startOfNextNextWeek, end: endOfDays)
+        return DateInterval(start: startOfNextWeek, end: endOfDays)
     }
 }
 
