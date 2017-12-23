@@ -53,16 +53,25 @@ enum ReminderDateCalculator {
     }
 
     static func today(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
+        // get the range of NOW
         let range = calendar.dateInterval(of: .day, for: now)!
-        return range
+        // get the previous end so all values are contiguous
+        let previousEnd = self.late(calendar: calendar, now: now).end
+
+        return DateInterval(start: previousEnd, end: range.end)
     }
 
     static func tomorrow(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
+        // get tomorrow
         var c = DateComponents()
         c.day = 1
         let tomorrow = calendar.date(byAdding: c, to: now)!
+        // get the range of tomorrow
         let range = calendar.dateInterval(of: .day, for: tomorrow)!
-        return range
+        // get the previous end so all values are contiguous
+        let previousEnd = self.today(calendar: calendar, now: now).end
+
+        return DateInterval(start: previousEnd, end: range.end)
     }
 
     static func thisWeek(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
@@ -73,15 +82,13 @@ enum ReminderDateCalculator {
         let beginningOfNextWeek = endOfWeekContainingToday.addingTimeInterval(1)
         let rangeOfNextWeek = calendar.dateInterval(of: .weekOfMonth, for: beginningOfNextWeek)!
         let trueBeginningOfNextWeek = rangeOfNextWeek.start
-
-        // find startOfDayAfterTomorrow so we don't conflict with earlier results
-        let startOfDayAfterTomorrow = self.tomorrow(calendar: calendar, now: now).end
-
-        // make sure that start of next week is after startOfDayAfterTomorrow
-        if trueBeginningOfNextWeek >= startOfDayAfterTomorrow {
-            return DateInterval(start: startOfDayAfterTomorrow, end: trueBeginningOfNextWeek)
+        // get the previous end so all values are contiguous
+        let previousEnd = self.tomorrow(calendar: calendar, now: now).end
+        // make sure that start of next week is after previousEnd
+        if trueBeginningOfNextWeek >= previousEnd {
+            return DateInterval(start: previousEnd, end: trueBeginningOfNextWeek)
         } else {
-            return DateInterval(start: startOfDayAfterTomorrow, end: startOfDayAfterTomorrow)
+            return DateInterval(start: previousEnd, end: previousEnd)
         }
     }
 
