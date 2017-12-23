@@ -73,13 +73,27 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        self.updateCollectionViewInsets()
+    }
+
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+        self.updateCollectionViewInsets()
+    }
+
+    private func updateCollectionViewInsets() {
+        let safeArea = self.view.safeAreaInsets
+        let insets: UIEdgeInsets
         switch self.traitCollection.verticalSizeClass {
         case .regular, .unspecified:
-            print(self.dropTargetViewController?.view.bounds.height ?? 0)
-            self.collectionVC?.collectionView?.contentInset.top = self.dropTargetViewController?.view.bounds.height ?? 0
+            let dragViewHeight = self.dropTargetViewController?.view.bounds.height ?? 0
+            insets = UIEdgeInsets(top: safeArea.top + dragViewHeight, left: safeArea.left, bottom: safeArea.bottom, right: safeArea.right)
         case .compact:
-            self.collectionVC?.collectionView?.contentInset.top = 0
+            let dragViewWidth = self.dropTargetViewController?.view.bounds.width ?? 0
+            insets = UIEdgeInsets(top: safeArea.top, left: safeArea.left + dragViewWidth, bottom: safeArea.bottom, right: safeArea.right)
         }
+        self.collectionVC?.collectionView?.contentInset = insets
+        self.collectionVC?.collectionView?.scrollIndicatorInsets = insets
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

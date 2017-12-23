@@ -44,7 +44,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
 
         self.flow?.sectionHeadersPinToVisibleBounds = true
         self.flow?.headerReferenceSize = CGSize(width: 200, height: 40)
-        self.collectionView?.contentInsetAdjustmentBehavior = .always
+        self.collectionView?.contentInsetAdjustmentBehavior = .never
         self.collectionView?.dragInteractionEnabled = true // needed for iphone
         self.collectionView?.dragDelegate = self
         self.collectionView?.register(ReminderCollectionViewCell.nib,
