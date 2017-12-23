@@ -47,6 +47,14 @@ extension ReminderVesselIconTableViewCell {
 }
 
 enum Style {
+
+    static let centerStyle: NSParagraphStyle = {
+        let p = NSMutableParagraphStyle()
+        p.alignment = .center
+        // swiftlint:disable:next force_cast
+        return p.copy() as! NSParagraphStyle
+    }()
+
     case selectableTableViewCell
     case selectableTableViewCellDisabled
     case selectableTableViewCellHelper
@@ -54,19 +62,22 @@ enum Style {
     case textInputTableViewCell
     case emojiSmall(accessibilityFontSizeEnabled: Bool)
     case emojiLarge(accessibilityFontSizeEnabled: Bool)
-    case reminderVesselCollectionViewCell
-    case reminderVesselCollectionViewCellDisabled
+    case reminderVesselCollectionViewCellPrimary
+    case reminderVesselCollectionViewCellPrimaryDisabled
+    case reminderVesselCollectionViewCellSecondary
     var attributes: [NSAttributedStringKey : Any] {
         switch self {
-        case .reminderVesselCollectionViewCell:
+        case .reminderVesselCollectionViewCellPrimary:
             return [
                 .font : Font.bodyPlus,
-                .foregroundColor : Color.textPrimary
+                .foregroundColor : Color.textPrimary,
+                .paragraphStyle : type(of: self).centerStyle
             ]
-        case .reminderVesselCollectionViewCellDisabled:
+        case .reminderVesselCollectionViewCellPrimaryDisabled:
             return [
                 .font : Font.bodyPlus,
-                .foregroundColor : Color.textSecondary
+                .foregroundColor : Color.textSecondary,
+                .paragraphStyle : type(of: self).centerStyle
             ]
         case .emojiSmall(let accessibilityFontSizeEnabled):
             return [
@@ -101,6 +112,10 @@ enum Style {
                 .font : Font.bodyMinusBold,
                 .foregroundColor : Color.textSecondary
             ]
+        case .reminderVesselCollectionViewCellSecondary:
+            var x = type(of: self).selectableTableViewCell.attributes
+            x[.paragraphStyle] = type(of: self).centerStyle
+            return x
         }
     }
     

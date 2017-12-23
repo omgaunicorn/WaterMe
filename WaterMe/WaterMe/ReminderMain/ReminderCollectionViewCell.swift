@@ -32,8 +32,6 @@ class ReminderCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet private weak var labelOne: UILabel?
     @IBOutlet private weak var labelTwo: UILabel?
-    @IBOutlet private weak var labelThree: UILabel?
-    @IBOutlet private weak var labelFour: UILabel?
     @IBOutlet private weak var largeEmojiImageView: EmojiImageView?
     @IBOutlet private weak var smallEmojiImageView: EmojiImageView?
     
@@ -53,43 +51,20 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         // vessel name style
         let vesselName = reminder.vessel?.displayName
         let vesselNameStyle = vesselName != nil ?
-            Style.reminderVesselCollectionViewCell :
-            Style.reminderVesselCollectionViewCellDisabled
+            Style.reminderVesselCollectionViewCellPrimary :
+            Style.reminderVesselCollectionViewCellPrimaryDisabled
         self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
                                                            style: vesselNameStyle)
 
         // other stuff
-        self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .selectableTableViewCell)
+        self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .reminderVesselCollectionViewCellSecondary)
         self.largeEmojiImageView?.setIcon(reminder.vessel?.icon)
         self.smallEmojiImageView?.setKind(reminder.kind)
-        
-        // relative time
-        let interval = reminder.nextPerformDate?.timeIntervalSinceNow
-        let intervalString = interval != nil ?
-            self.reminderDateFormatter.string(forTimeInterval: interval!) :
-            ReminderMainViewController.LocalizedString.nextPerformLabelNow
-        self.labelFour?.attributedText = NSAttributedString(string: intervalString!, style: .selectableTableViewCell)
-        
-        // put in the auxiliary text
-        switch reminder.kind {
-        case .fertilize, .water:
-            self.labelThree?.isHidden = true
-        case .move(let auxString), .other(let auxString):
-            if let auxString = auxString {
-                self.labelThree?.isHidden = false
-                self.labelThree?.attributedText = NSAttributedString(string: auxString, style: .readOnlyTableViewCell)
-            } else {
-                self.labelThree?.isHidden = true
-            }
-        }
     }
     
     private func reset() {
         self.labelOne?.text = nil
         self.labelTwo?.text = nil
-        self.labelThree?.text = nil
-        self.labelFour?.text = nil
-        self.labelTwo?.isHidden = false
         self.largeEmojiImageView?.setKind(nil)
         self.smallEmojiImageView?.setKind(nil)
     }

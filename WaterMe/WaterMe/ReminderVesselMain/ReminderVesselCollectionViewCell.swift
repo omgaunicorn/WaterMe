@@ -40,8 +40,8 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
     func configure(with vessel: ReminderVessel) {
         let vesselName = vessel.displayName
         let vesselNameStyle = vesselName != nil ?
-            Style.reminderVesselCollectionViewCell :
-            Style.reminderVesselCollectionViewCellDisabled
+            Style.reminderVesselCollectionViewCellPrimary :
+            Style.reminderVesselCollectionViewCellPrimaryDisabled
         self.nameLabel?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
                                                             style: vesselNameStyle)
         self.emojiImageView?.setIcon(vessel.icon)
