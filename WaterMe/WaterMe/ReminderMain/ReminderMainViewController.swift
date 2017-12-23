@@ -48,6 +48,9 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         super.viewDidLoad()
 
         self.collectionVC?.delegate = self
+        // custom behavior needed here, otherwise it only automatically adjusts along the scrolling direction
+        // we need it to automatically adjust in both axes
+        self.collectionVC?.collectionView?.contentInsetAdjustmentBehavior = .always
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -82,6 +85,26 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     }
 
     private func updateCollectionViewInsets() {
+        let customInset: UIEdgeInsets
+        switch self.traitCollection.verticalSizeClass {
+        case .regular, .unspecified:
+            // get the width and set the custom inset
+            let dragViewHeight = self.dropTargetViewController?.view.bounds.height ?? 0
+            customInset = UIEdgeInsets(top: dragViewHeight, left: 0, bottom: 0, right: 0)
+            // we need custom scroll insets in portrait
+            self.collectionVC?.collectionView?.scrollIndicatorInsets = customInset
+        case .compact:
+            // Scroll Indicators can have normal behavior in landscape
+            self.collectionVC?.collectionView?.scrollIndicatorInsets = .zero
+            // get the width and set the custom inset
+            let dragViewWidth = self.dropTargetViewController?.view.bounds.width ?? 0
+            customInset = UIEdgeInsets(top: 0, left: dragViewWidth, bottom: 0, right: 0)
+        }
+        self.collectionVC?.collectionView?.contentInset = customInset
+    }
+
+    /*
+    private func updateCollectionViewInsets() {
         let safeArea = self.view.safeAreaInsets
         let insets: UIEdgeInsets
         switch self.traitCollection.verticalSizeClass {
@@ -95,6 +118,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         self.collectionVC?.collectionView?.contentInset = insets
         self.collectionVC?.collectionView?.scrollIndicatorInsets = insets
     }
+    */
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var hasBasic = segue.destination as? HasBasicController
