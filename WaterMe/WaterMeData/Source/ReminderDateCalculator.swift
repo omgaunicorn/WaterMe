@@ -24,15 +24,21 @@
 import Foundation
 
 public extension Calendar {
-    public func dateWithExact(hour: Int, onSameDayAs date: Date) -> Date {
-        let start = self.startOfDay(for: date)
-        let interval = TimeInterval(hour * 60 * 60)
-        let end = start + interval
+    public func dateWithExact(hour desiredHour: Int, onSameDayAs inputDate: Date) -> Date {
+        // get the start of the day
+        let start = self.startOfDay(for: inputDate)
+        // find out what the hour of the start of the day (sometimes its not 0)
+        let startComponents = self.dateComponents([.hour], from: start)
+        let startHour = startComponents.hour!
+        // do the math to get the current hour of the start of the day (usually 0) to the desired hour
+        // then add it to the start of the day date
+        let end = self.date(byAdding: .hour, value: desiredHour - startHour, to: start)!
+
         return end
     }
-    public func dateWithExact(hour: Int, onSameDayAs date: Date?) -> Date? {
-        guard let date = date else { return nil }
-        let adjusted: Date = self.dateWithExact(hour: hour, onSameDayAs: date)
+    public func dateWithExact(hour desiredHour: Int, onSameDayAs inputDate: Date?) -> Date? {
+        guard let inputDate = inputDate else { return nil }
+        let adjusted: Date = self.dateWithExact(hour: desiredHour, onSameDayAs: inputDate)
         return adjusted
     }
     public func endOfDay(for date: Date) -> Date {
