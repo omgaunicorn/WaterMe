@@ -36,9 +36,7 @@ public extension Calendar {
         return adjusted
     }
     public func endOfDay(for date: Date) -> Date {
-        var addition = DateComponents()
-        addition.day = 1
-        let plusOneDay = self.date(byAdding: addition, to: date)!
+        let plusOneDay = self.date(byAdding: .day, value: 1, to: date)!
         let startOfPlusOneDay = self.startOfDay(for: plusOneDay)
         return startOfPlusOneDay
     }
@@ -63,9 +61,7 @@ enum ReminderDateCalculator {
 
     static func tomorrow(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
         // get tomorrow
-        var c = DateComponents()
-        c.day = 1
-        let tomorrow = calendar.date(byAdding: c, to: now)!
+        let tomorrow = calendar.date(byAdding: .day, value: 1, to: now)!
         // get the range of tomorrow
         let range = calendar.dateInterval(of: .day, for: tomorrow)!
         // get the previous end so all values are contiguous
@@ -81,12 +77,12 @@ enum ReminderDateCalculator {
         // this is a super cheap hack to roll things in to the next unit
         let beginningOfNextWeek = endOfWeekContainingToday.addingTimeInterval(1)
         let rangeOfNextWeek = calendar.dateInterval(of: .weekOfMonth, for: beginningOfNextWeek)!
-        let trueBeginningOfNextWeek = rangeOfNextWeek.start
+        let startOfNextWeek = rangeOfNextWeek.start
         // get the previous end so all values are contiguous
         let previousEnd = self.tomorrow(calendar: calendar, now: now).end
         // make sure that start of next week is after previousEnd
-        if trueBeginningOfNextWeek >= previousEnd {
-            return DateInterval(start: previousEnd, end: trueBeginningOfNextWeek)
+        if startOfNextWeek >= previousEnd {
+            return DateInterval(start: previousEnd, end: startOfNextWeek)
         } else {
             return DateInterval(start: previousEnd, end: previousEnd)
         }

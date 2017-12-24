@@ -104,6 +104,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     }
 
     /*
+    // old code to manually manage insets if needed in the future
     private func updateCollectionViewInsets() {
         let safeArea = self.view.safeAreaInsets
         let insets: UIEdgeInsets
