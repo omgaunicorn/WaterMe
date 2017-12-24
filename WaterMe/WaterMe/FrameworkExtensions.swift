@@ -57,7 +57,6 @@ extension Sequence {
     }
 }
 
-
 extension UNAuthorizationStatus {
     var boolValue: Bool {
         switch self {
@@ -75,12 +74,8 @@ class StandardCollectionViewController: UICollectionViewController {
         return self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
 
-    var itemHeight: CGFloat {
-        return 100
-    }
-
-    var columnCount: Int {
-        return 2
+    var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
+        return (2, 100)
     }
 
     override func viewDidLoad() {
@@ -105,15 +100,14 @@ class StandardCollectionViewController: UICollectionViewController {
     }
 
     private func updateFlowItemSize() {
-        let columnCount = CGFloat(self.columnCount)
-        let height = self.itemHeight
+        let tuple = self.columnCountAndItemHeight
+        let columnCount = CGFloat(tuple.columnCount)
+        let itemHeight = tuple.itemHeight
         // calculate width of collectionView with insets accounted for
-        let rawWidth = self.collectionView?.bounds.width ?? 0
-        let insets = self.collectionView?.adjustedContentInset ?? .zero
-        let width = rawWidth - insets.left - insets.right
+        let width = self.collectionView?.availableContentSize.width ?? 0
         // calculate column width based on usable width of collectionview
         let division = width / columnCount
-        self.flow?.itemSize = CGSize(width: floor(division), height: height)
+        self.flow?.itemSize = CGSize(width: floor(division), height: itemHeight)
     }
 }
 
@@ -136,6 +130,12 @@ extension UICollectionView {
     func deselectAllItems(animated: Bool) {
         let indexPaths = self.indexPathsForSelectedItems
         indexPaths?.forEach({ self.deselectItem(at: $0, animated: animated) })
+    }
+    var availableContentSize: CGSize {
+        let insets = self.adjustedContentInset
+        let width = self.bounds.width - insets.left - insets.right
+        let height = self.bounds.height - insets.top - insets.bottom
+        return CGSize(width: width, height: height)
     }
 }
 

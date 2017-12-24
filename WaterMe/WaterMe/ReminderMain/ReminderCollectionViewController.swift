@@ -94,33 +94,43 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
 
     }
 
-    override var columnCount: Int {
+    override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
         let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
         let horizontalClass = self.view.traitCollection.horizontalSizeClass
-        switch (horizontalClass, accessibility) {
-        case (.unspecified, _):
+        let verticalClass = self.view.traitCollection.verticalSizeClass
+        switch (horizontalClass, verticalClass, accessibility) {
+        case (.unspecified, _, _), (_, .unspecified, _):
             assertionFailure("Hit a size class this VC was not expecting")
             fallthrough
-        case (.regular, false):
-            return 2
-        case (.regular, true):
-            return 1
-        case (.compact, false):
-            return 2
-        case (.compact, true):
-            return 1
+        case (.compact, .regular, false): // iPhone Portrait, no Accessibility
+            return (2, 220)
+        case (.compact, .regular, true): // iPhone Portrait, w/ Accessibility
+            return (1, 300)
+        case (.compact, .compact, false): // iPhone Landscape, no Accessibility
+            return (2, 230)
+        case (.compact, .compact, true): // iPhone Landscape, w/ Accessibility
+            return (1, 300)
+        case (.regular, .compact, false): // iPhone+ Landscape, no Accessibility
+            return (3, 200)
+        case (.regular, .compact, true): // iPhone+ Landscape, w/ Accessibility
+            return (2, 300)
+        case (.regular, .regular, false): // iPad No Accessibility
+            return (4, 200)
+        case (.regular, .regular, true): // iPad w/ Accessibility
+            return (2, 300)
         }
-    }
-
-    override var itemHeight: CGFloat {
-        return 180
     }
 }
 
 extension ReminderCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         guard let reminders = self.reminders, reminders.numberOfItems(inSection: section) > 0 else { return .zero }
-        return CGSize(width: collectionView.bounds.width, height: 40)
+        switch UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
+        case true:
+            return CGSize(width: collectionView.availableContentSize.width, height: 55)
+        case false:
+            return CGSize(width: collectionView.availableContentSize.width, height: 40)
+        }
     }
 }
 

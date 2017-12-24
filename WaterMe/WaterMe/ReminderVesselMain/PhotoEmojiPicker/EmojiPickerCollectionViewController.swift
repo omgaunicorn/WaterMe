@@ -69,7 +69,8 @@ class EmojiPickerViewController: StandardCollectionViewController {
         return _cell
     }
 
-    override var columnCount: Int {
+    override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
+        let width = self.collectionView?.availableContentSize.width ?? 0
         let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
         let horizontalClass = self.view.traitCollection.horizontalSizeClass
         switch (horizontalClass, accessibility) {
@@ -77,13 +78,13 @@ class EmojiPickerViewController: StandardCollectionViewController {
             assertionFailure("Hit a size class this VC was not expecting")
             fallthrough
         case (.compact, false):
-            return 4
+            let columnCount = 4
+            let itemHeight = floor((width) / CGFloat(columnCount))
+            return (columnCount, itemHeight)
         case (.compact, true):
-            return 2
+            let columnCount = 2
+            let itemHeight = floor((width) / CGFloat(columnCount))
+            return (columnCount, itemHeight)
         }
-    }
-
-    override var itemHeight: CGFloat {
-        return floor((self.collectionView?.bounds.width ?? 0) / CGFloat(self.columnCount))
     }
 }
