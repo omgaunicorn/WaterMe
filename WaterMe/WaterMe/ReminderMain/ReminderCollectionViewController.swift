@@ -43,7 +43,6 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         super.viewDidLoad()
 
         self.flow?.sectionHeadersPinToVisibleBounds = true
-        self.flow?.headerReferenceSize = CGSize(width: 200, height: 40)
         self.collectionView?.dragInteractionEnabled = true // needed for iphone
         self.collectionView?.dragDelegate = self
         self.collectionView?.register(ReminderCollectionViewCell.nib,
@@ -115,6 +114,13 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
 
     override var itemHeight: CGFloat {
         return 180
+    }
+}
+
+extension ReminderCollectionViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        guard let reminders = self.reminders, reminders.numberOfItems(inSection: section) > 0 else { return .zero }
+        return CGSize(width: collectionView.bounds.width, height: 40)
     }
 }
 
