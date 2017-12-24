@@ -46,6 +46,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
+        guard self.dropTargetView?.hoverState != .drop else { return UIDropProposal(operation: .forbidden) }
         guard !session.reminderDrags.isEmpty else { return UIDropProposal(operation: .forbidden) }
         return UIDropProposal(operation: .copy)
     }
@@ -60,10 +61,12 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     // UI Updates
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
+        guard self.dropTargetView?.hoverState != .drop else { return }
         self.dropTargetView?.hoverState = .hover
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
+        guard self.dropTargetView?.hoverState != .drop else { return }
         self.dropTargetView?.hoverState = .noHover
     }
 

@@ -108,7 +108,6 @@ class DragAndDropPlayerManager {
                 if self.videoLayerShouldBeHidden == true {
                     self.player.pause()
                     self.player.seek(to: startTime)
-                    self.videoLayerShouldBeHidden = false
                 } else {
                     self.player.playImmediately(atRate: self.configuration.reverseRate)
                 }
@@ -158,6 +157,7 @@ class DragAndDropPlayerManager {
         { [unowned self] in
             guard self.landscapeVideo == true else { return }
             self.videoLayerShouldBeHidden = true
+            self.hoverState = .noHover
         }
 
         let portraitStart = self.player.addBoundaryTimeObserver(forTimes: [NSValue(time: configuration.portraitTimings.start)], queue: nil)
@@ -176,6 +176,7 @@ class DragAndDropPlayerManager {
         { [unowned self] in
             guard self.landscapeVideo == false else { return }
             self.videoLayerShouldBeHidden = true
+            self.hoverState = .noHover
         }
 
         self.observerTokens += [landscapeStart, landscapeHover, landscapeEnd, portraitStart, portraitHover, portraitEnd]
