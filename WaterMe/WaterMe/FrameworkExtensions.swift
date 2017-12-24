@@ -107,8 +107,13 @@ class StandardCollectionViewController: UICollectionViewController {
     private func updateFlowItemSize() {
         let columnCount = CGFloat(self.columnCount)
         let height = self.itemHeight
-        let width = floor((self.collectionView?.bounds.width ?? 0) / columnCount)
-        self.flow?.itemSize = CGSize(width: width, height: height)
+        // calculate width of collectionView with insets accounted for
+        let rawWidth = self.collectionView?.bounds.width ?? 0
+        let insets = self.collectionView?.adjustedContentInset ?? .zero
+        let width = rawWidth - insets.left - insets.right
+        // calculate column width based on usable width of collectionview
+        let division = width / columnCount
+        self.flow?.itemSize = CGSize(width: floor(division), height: height)
     }
 }
 
