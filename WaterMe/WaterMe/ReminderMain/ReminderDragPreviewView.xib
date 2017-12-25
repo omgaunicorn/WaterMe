@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ReminderDragPreviewView" customModule="WaterMe" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="71"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="prc-XY-weH">
+                    <rect key="frame" x="16" y="8" width="55" height="55"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XYx-WY-Wjm" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="XYx-WY-Wjm" secondAttribute="height" multiplier="1:1" id="9mg-Rw-fIt"/>
+                                <constraint firstAttribute="width" constant="50" id="AW0-Qw-MIC"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SVx-Z7-0ep" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
+                            <rect key="frame" x="30" y="30" width="25" height="25"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="SVx-Z7-0ep" secondAttribute="height" multiplier="1:1" id="Zia-i9-19o"/>
+                                <constraint firstAttribute="width" constant="25" id="aQd-I2-2Ec"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="XYx-WY-Wjm" firstAttribute="top" secondItem="prc-XY-weH" secondAttribute="top" id="9RV-iR-ZiT"/>
+                        <constraint firstItem="SVx-Z7-0ep" firstAttribute="bottom" secondItem="XYx-WY-Wjm" secondAttribute="bottom" constant="5" id="Boi-x0-eeG"/>
+                        <constraint firstAttribute="trailing" secondItem="SVx-Z7-0ep" secondAttribute="trailing" id="Lxu-OQ-kZd"/>
+                        <constraint firstItem="SVx-Z7-0ep" firstAttribute="trailing" secondItem="XYx-WY-Wjm" secondAttribute="trailing" constant="5" id="hLb-Kj-Zt8"/>
+                        <constraint firstItem="XYx-WY-Wjm" firstAttribute="leading" secondItem="prc-XY-weH" secondAttribute="leading" id="lua-WZ-3P4"/>
+                        <constraint firstAttribute="bottom" secondItem="SVx-Z7-0ep" secondAttribute="bottom" id="uxc-EC-KkY"/>
+                    </constraints>
+                </view>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qbd-Z9-8I2">
+                    <rect key="frame" x="79" y="21.666666666666671" width="105" height="28"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" verticalCompressionResistancePriority="753" text="Label One" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pq1-YI-kPk">
+                            <rect key="frame" x="0.0" y="0.0" width="105" height="12"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="752" text="Label Two" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SiQ-dT-qQp">
+                            <rect key="frame" x="0.0" y="15.999999999999996" width="105" height="12"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <viewLayoutGuide key="safeArea" id="Nep-Na-zSa"/>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="prc-XY-weH" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerYWithinMargins" id="ARf-4G-e4U"/>
+                <constraint firstItem="qbd-Z9-8I2" firstAttribute="leading" secondItem="prc-XY-weH" secondAttribute="trailing" constant="8" id="EA6-aS-ZfC"/>
+                <constraint firstItem="prc-XY-weH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="Fvd-rs-Q7G"/>
+                <constraint firstItem="qbd-Z9-8I2" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerYWithinMargins" id="jb1-t4-8XT"/>
+                <constraint firstAttribute="trailingMargin" secondItem="qbd-Z9-8I2" secondAttribute="trailing" id="k0q-JM-h8h"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="labelOne" destination="pq1-YI-kPk" id="7zB-Zo-xV7"/>
+                <outlet property="labelTwo" destination="SiQ-dT-qQp" id="8dk-hJ-ovz"/>
+                <outlet property="largeEmojiImageView" destination="XYx-WY-Wjm" id="3bM-A5-LN1"/>
+                <outlet property="smallEmojiImageView" destination="SVx-Z7-0ep" id="IJx-w8-iCq"/>
+            </connections>
+            <point key="canvasLocation" x="-32.5" y="-203.5"/>
+        </view>
+    </objects>
+</document>

@@ -1,8 +1,8 @@
 //
-//  ReminderCollectionViewCell.swift
+//  ReminderDragPreviewView.swift
 //  WaterMe
 //
-//  Created by Jeffrey Bergier on 08/10/17.
+//  Created by Jeffrey Bergier on 25/12/17.
 //  Copyright © 2017 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
@@ -25,67 +25,64 @@ import FormatterKit
 import WaterMeData
 import UIKit
 
-class ReminderCollectionViewCell: UICollectionViewCell {
-    
-    static let reuseID = "ReminderCollectionViewCell"
-    class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
-    
+class ReminderDragPreviewView: UIView {
+
+    class func newView(for reminder: Reminder) -> ReminderDragPreviewView {
+        let v = self.nib.instantiate(withOwner: nil, options: nil).first as! ReminderDragPreviewView
+        v.configure(with: reminder)
+        return v
+    }
+
+    class func dragPreview(for reminder: Reminder) -> UIDragPreview {
+        let v = self.newView(for: reminder)
+        let p = UIDragPreview(view: v)
+        p.parameters.visiblePath = UIBezierPath(roundedRect: v.bounds, cornerRadius: ReminderCollectionViewCell.style_dragAndDropPreviewCornerRadius)
+        return p
+    }
+
+    class var nib: UINib { return UINib(nibName: "ReminderDragPreviewView", bundle: Bundle(for: self.self)) }
+
     @IBOutlet private weak var labelOne: UILabel?
     @IBOutlet private weak var labelTwo: UILabel?
     @IBOutlet private weak var largeEmojiImageView: EmojiImageView?
     @IBOutlet private weak var smallEmojiImageView: EmojiImageView?
-    @IBOutlet private weak var emojiImageWidthConstraint: NSLayoutConstraint?
-    
+
     private let reminderDateFormatter = TTTTimeIntervalFormatter.newTimeAgoFormatter
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        self.largeEmojiImageView?.size = .large
+
+        self.largeEmojiImageView?.size = .small
         self.largeEmojiImageView?.ring = true
-        self.smallEmojiImageView?.size = .small
+        self.largeEmojiImageView?.ignoreAccessibilitySizes = true
+        self.smallEmojiImageView?.size = .superSmall
         self.smallEmojiImageView?.ring = false
-        self.emojiImageWidthConstraint?.constant = type(of: self).style_emojiImageViewWidth
+        self.smallEmojiImageView?.ignoreAccessibilitySizes = true
         self.reset()
     }
-    
+
     func configure(with reminder: Reminder?) {
         guard let reminder = reminder else { self.reset(); return; }
-        
+
         // vessel name style
         let vesselName = reminder.vessel?.displayName
         let vesselNameStyle = vesselName != nil ?
-            Style.reminderVesselCollectionViewCellPrimary :
-            Style.reminderVesselCollectionViewCellPrimaryDisabled
+            Style.reminderVesselDragPreviewViewPrimary :
+            Style.reminderVesselDragPreviewViewPrimaryDisabled
         self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
                                                            style: vesselNameStyle)
 
         // other stuff
-        self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .reminderVesselCollectionViewCellSecondary)
+        self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .reminderVesselDragPreviewViewSecondary)
         self.largeEmojiImageView?.setIcon(reminder.vessel?.icon)
         self.smallEmojiImageView?.setKind(reminder.kind)
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        switch UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
-        case true:
-            self.emojiImageWidthConstraint!.constant = type(of: self).style_emojiImageViewWidthAccessibility
-        case false:
-            self.emojiImageWidthConstraint!.constant = type(of: self).style_emojiImageViewWidth
-        }
-    }
-    
     private func reset() {
         self.labelOne?.text = nil
         self.labelTwo?.text = nil
         self.largeEmojiImageView?.setKind(nil)
         self.smallEmojiImageView?.setKind(nil)
-    }
-    
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.reset()
     }
 
 }

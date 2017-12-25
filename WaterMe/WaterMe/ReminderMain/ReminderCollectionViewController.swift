@@ -139,6 +139,7 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
     private func dragItemForReminder(at indexPath: IndexPath) -> UIDragItem? {
         guard let reminder = self.reminders?.reminder(at: indexPath) else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
+        item.previewProvider = { ReminderDragPreviewView.dragPreview(for: reminder) }
         item.localObject = Reminder.Identifier(reminder: reminder)
         return item
     }
@@ -153,5 +154,12 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 
     func collectionView(_ collectionView: UICollectionView, dragSessionIsRestrictedToDraggingApplication session: UIDragSession) -> Bool {
         return false
+    }
+
+    func collectionView(_ collectionView: UICollectionView, dragPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
+        let p = UIDragPreviewParameters()
+        p.visiblePath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: ReminderCollectionViewCell.style_dragAndDropPreviewCornerRadius)
+        return p
     }
 }

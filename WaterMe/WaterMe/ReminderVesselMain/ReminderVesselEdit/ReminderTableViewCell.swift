@@ -70,6 +70,7 @@ class ReminderTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.emojiImageView?.size = .small
+        self.emojiImageView?.ring = false
         self.reset()
     }
     

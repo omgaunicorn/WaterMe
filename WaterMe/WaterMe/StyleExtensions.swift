@@ -27,6 +27,7 @@ import UIKit
 extension ReminderCollectionViewCell {
     static let style_emojiImageViewWidth: CGFloat = 100
     static let style_emojiImageViewWidthAccessibility: CGFloat = 170
+    static let style_dragAndDropPreviewCornerRadius: CGFloat = 8
 }
 
 extension UITableViewCell {
@@ -71,8 +72,12 @@ enum Style {
     case selectableTableViewCellHelper
     case readOnlyTableViewCell
     case textInputTableViewCell
+    case emojiSuperSmall
     case emojiSmall(accessibilityFontSizeEnabled: Bool)
     case emojiLarge(accessibilityFontSizeEnabled: Bool)
+    case reminderVesselDragPreviewViewPrimary
+    case reminderVesselDragPreviewViewPrimaryDisabled
+    case reminderVesselDragPreviewViewSecondary
     case reminderVesselCollectionViewCellPrimary
     case reminderVesselCollectionViewCellPrimaryDisabled
     case reminderVesselCollectionViewCellSecondary
@@ -89,6 +94,20 @@ enum Style {
                 .font : Font.bodyPlus,
                 .foregroundColor : Color.textSecondary,
                 .paragraphStyle : type(of: self).centerStyle
+            ]
+        case .reminderVesselDragPreviewViewPrimary:
+            return [
+                .font : Font.bodyIgnoringDynamicType,
+                .foregroundColor : Color.textPrimary
+            ]
+        case .reminderVesselDragPreviewViewPrimaryDisabled:
+            return [
+                .font : Font.bodyIgnoringDynamicType,
+                .foregroundColor : Color.textSecondary
+            ]
+        case .emojiSuperSmall:
+            return [
+                .font : UIFont.systemFont(ofSize: 20)
             ]
         case .emojiSmall(let accessibilityFontSizeEnabled):
             return [
@@ -127,6 +146,11 @@ enum Style {
             var x = type(of: self).selectableTableViewCell.attributes
             x[.paragraphStyle] = type(of: self).centerStyle
             return x
+        case .reminderVesselDragPreviewViewSecondary:
+            return [
+                .font : Font.bodyMinusIgnoringDynamicType,
+                .foregroundColor : Color.textPrimary
+            ]
         case .sectionHeader:
             return type(of: self).selectableTableViewCell.attributes
         }
@@ -144,6 +168,12 @@ enum Style {
         }
         static var bodyMinusBold: UIFont {
             return UIFont.preferredFont(forTextStyle: .subheadline)
+        }
+        static var bodyIgnoringDynamicType: UIFont {
+            return UIFont.systemFont(ofSize: 18)
+        }
+        static var bodyMinusIgnoringDynamicType: UIFont {
+            return UIFont.systemFont(ofSize: 14)
         }
     }
     
