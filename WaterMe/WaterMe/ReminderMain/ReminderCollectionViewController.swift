@@ -103,21 +103,21 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
             assertionFailure("Hit a size class this VC was not expecting")
             fallthrough
         case (.compact, .regular, false): // iPhone Portrait, no Accessibility
-            return (2, 220)
+            return (2, 200)
         case (.compact, .regular, true): // iPhone Portrait, w/ Accessibility
-            return (1, 300)
+            return (1, 320)
         case (.compact, .compact, false): // iPhone Landscape, no Accessibility
-            return (2, 230)
+            return (2, 200)
         case (.compact, .compact, true): // iPhone Landscape, w/ Accessibility
-            return (1, 300)
+            return (1, 320)
         case (.regular, .compact, false): // iPhone+ Landscape, no Accessibility
             return (3, 200)
         case (.regular, .compact, true): // iPhone+ Landscape, w/ Accessibility
-            return (2, 300)
+            return (2, 320)
         case (.regular, .regular, false): // iPad No Accessibility
             return (4, 200)
         case (.regular, .regular, true): // iPad w/ Accessibility
-            return (2, 300)
+            return (2, 320)
         }
     }
 }

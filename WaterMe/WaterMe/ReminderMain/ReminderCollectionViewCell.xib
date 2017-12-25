@@ -34,18 +34,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="180" height="234"/>
                         <subviews>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GzY-Tt-xlc">
-                                <rect key="frame" x="36" y="8" width="108" height="118"/>
+                                <rect key="frame" x="20" y="8" width="140" height="150"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j3K-6I-2P2" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="108" height="108"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="140" height="140"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="j3K-6I-2P2" secondAttribute="height" multiplier="1:1" id="Tdb-iF-aYE"/>
-                                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="160" id="fOa-qs-guY"/>
+                                            <constraint firstAttribute="width" constant="140" id="fOa-qs-guY"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ot4-p8-7SB" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
-                                        <rect key="frame" x="57.5" y="57.5" width="60.5" height="60.5"/>
+                                        <rect key="frame" x="72" y="72" width="78" height="78"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="Ot4-p8-7SB" secondAttribute="height" multiplier="1:1" id="UoX-HK-Zhj"/>
@@ -64,7 +64,7 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="3qB-SZ-7P5">
-                                <rect key="frame" x="20" y="126" width="140" height="43"/>
+                                <rect key="frame" x="20" y="158" width="140" height="43"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" verticalCompressionResistancePriority="753" text="Label One" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31D-mD-Ddy">
                                         <rect key="frame" x="0.0" y="0.0" width="140" height="19.5"/>
@@ -84,7 +84,6 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3qB-SZ-7P5" secondAttribute="bottom" constant="8" id="JI1-Hp-Mtj"/>
-                            <constraint firstItem="j3K-6I-2P2" firstAttribute="width" secondItem="8nv-Ik-oWH" secondAttribute="width" multiplier="3/5" priority="999" id="O32-5R-whN"/>
                             <constraint firstItem="GzY-Tt-xlc" firstAttribute="centerX" secondItem="8nv-Ik-oWH" secondAttribute="centerX" id="fW4-ma-KBh"/>
                             <constraint firstAttribute="trailing" secondItem="3qB-SZ-7P5" secondAttribute="trailing" constant="20" symbolic="YES" id="olM-O4-q9I"/>
                             <constraint firstItem="GzY-Tt-xlc" firstAttribute="top" secondItem="8nv-Ik-oWH" secondAttribute="top" constant="8" id="rwO-l1-BKk"/>
@@ -104,6 +103,7 @@
             <size key="customSize" width="372" height="220"/>
             <connections>
                 <outlet property="backgroundView" destination="pNt-mf-2sp" id="usR-aj-t36"/>
+                <outlet property="emojiImageWidthConstraint" destination="fOa-qs-guY" id="6Lu-4R-aGZ"/>
                 <outlet property="labelOne" destination="31D-mD-Ddy" id="ZH3-de-egF"/>
                 <outlet property="labelTwo" destination="VBk-Eu-V0p" id="4WO-RG-Je8"/>
                 <outlet property="largeEmojiImageView" destination="j3K-6I-2P2" id="9hj-gi-frD"/>

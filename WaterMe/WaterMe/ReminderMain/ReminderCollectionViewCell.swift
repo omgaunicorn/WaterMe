@@ -34,6 +34,7 @@ class ReminderCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var labelTwo: UILabel?
     @IBOutlet private weak var largeEmojiImageView: EmojiImageView?
     @IBOutlet private weak var smallEmojiImageView: EmojiImageView?
+    @IBOutlet private weak var emojiImageWidthConstraint: NSLayoutConstraint?
     
     private let reminderDateFormatter = TTTTimeIntervalFormatter.newTimeAgoFormatter
 
@@ -42,6 +43,7 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         
         self.largeEmojiImageView?.size = .large
         self.smallEmojiImageView?.size = .small
+        self.emojiImageWidthConstraint?.constant = type(of: self).style_emojiImageViewWidth
         self.reset()
     }
     
@@ -60,6 +62,16 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .reminderVesselCollectionViewCellSecondary)
         self.largeEmojiImageView?.setIcon(reminder.vessel?.icon)
         self.smallEmojiImageView?.setKind(reminder.kind)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        switch UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
+        case true:
+            self.emojiImageWidthConstraint!.constant = type(of: self).style_emojiImageViewWidthAccessibility
+        case false:
+            self.emojiImageWidthConstraint!.constant = type(of: self).style_emojiImageViewWidth
+        }
     }
     
     private func reset() {

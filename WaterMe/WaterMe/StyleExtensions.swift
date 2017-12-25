@@ -24,6 +24,11 @@
 import WaterMeData
 import UIKit
 
+extension ReminderCollectionViewCell {
+    static let style_emojiImageViewWidth: CGFloat = 100
+    static let style_emojiImageViewWidthAccessibility: CGFloat = 170
+}
+
 extension UITableViewCell {
     static let style_labelCellTopPadding: CGFloat = 12
     static let style_labelCellBottomPadding: CGFloat = 10
