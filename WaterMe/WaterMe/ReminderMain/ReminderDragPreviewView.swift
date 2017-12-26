@@ -28,6 +28,7 @@ import UIKit
 class ReminderDragPreviewView: UIView {
 
     class func newView(for reminder: Reminder) -> ReminderDragPreviewView {
+        // swiftlint:disable:next force_cast
         let v = self.nib.instantiate(withOwner: nil, options: nil).first as! ReminderDragPreviewView
         v.configure(with: reminder)
         return v

@@ -5,21 +5,19 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="ReminderDragPreviewView" customModule="WaterMe" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="200" height="71"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="ReminderDragPreviewView" customModule="WaterMe" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="200" height="75"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="prc-XY-weH">
-                    <rect key="frame" x="16" y="8" width="55" height="55"/>
+                    <rect key="frame" x="16" y="12.666666666666664" width="55" height="54.999999999999993"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XYx-WY-Wjm" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -48,8 +46,8 @@
                         <constraint firstAttribute="bottom" secondItem="SVx-Z7-0ep" secondAttribute="bottom" id="uxc-EC-KkY"/>
                     </constraints>
                 </view>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="qbd-Z9-8I2">
-                    <rect key="frame" x="79" y="21.666666666666671" width="105" height="28"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="dhq-nI-9XW">
+                    <rect key="frame" x="75" y="23.666666666666671" width="105" height="28"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" verticalCompressionResistancePriority="753" text="Label One" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pq1-YI-kPk">
                             <rect key="frame" x="0.0" y="0.0" width="105" height="12"/>
@@ -64,19 +62,17 @@
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
-                    <viewLayoutGuide key="safeArea" id="Nep-Na-zSa"/>
                 </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="prc-XY-weH" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerYWithinMargins" id="ARf-4G-e4U"/>
-                <constraint firstItem="qbd-Z9-8I2" firstAttribute="leading" secondItem="prc-XY-weH" secondAttribute="trailing" constant="8" id="EA6-aS-ZfC"/>
+                <constraint firstItem="dhq-nI-9XW" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="3qG-g3-yLa"/>
                 <constraint firstItem="prc-XY-weH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="Fvd-rs-Q7G"/>
-                <constraint firstItem="qbd-Z9-8I2" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerYWithinMargins" id="jb1-t4-8XT"/>
-                <constraint firstAttribute="trailingMargin" secondItem="qbd-Z9-8I2" secondAttribute="trailing" id="k0q-JM-h8h"/>
+                <constraint firstAttribute="trailing" secondItem="dhq-nI-9XW" secondAttribute="trailing" constant="20" symbolic="YES" id="Wux-0Z-Q9E"/>
+                <constraint firstItem="XYx-WY-Wjm" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="hKn-32-5I3"/>
+                <constraint firstItem="dhq-nI-9XW" firstAttribute="leading" secondItem="prc-XY-weH" secondAttribute="trailing" constant="4" id="vnC-hP-Lt0"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <connections>
                 <outlet property="labelOne" destination="pq1-YI-kPk" id="7zB-Zo-xV7"/>
                 <outlet property="labelTwo" destination="SiQ-dT-qQp" id="8dk-hJ-ovz"/>
