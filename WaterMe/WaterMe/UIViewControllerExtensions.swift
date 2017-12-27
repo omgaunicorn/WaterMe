@@ -23,6 +23,10 @@
 
 import UIKit
 
+class SettingsMainViewController: UIViewController {
+
+}
+
 // Help for childVC's to find info from their parents or themselves easily
 extension UIViewController {
     var topParent: UIViewController {

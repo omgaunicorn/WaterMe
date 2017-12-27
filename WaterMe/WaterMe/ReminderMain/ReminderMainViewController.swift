@@ -47,6 +47,12 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // configure toolbar buttons
+        let plants = UIBarButtonItem(title: ReminderVesselMainViewController.LocalizedString.title, style: .done, target: self, action: #selector(self.plantsButtonTapped(_:)))
+        let settings = UIBarButtonItem(title: SettingsMainViewController.LocalizedString.title, style: .plain, target: self, action: #selector(self.settingsButtonTapped(_:)))
+        self.navigationItem.rightBarButtonItem = plants
+        self.navigationItem.leftBarButtonItem = settings
+
         self.collectionVC?.delegate = self
         // custom behavior needed here, otherwise it only automatically adjusts along the scrolling direction
         // we need it to automatically adjust in both axes
@@ -63,7 +69,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         }
     }
 
-    @IBAction private func addButtonTapped(_ sender: Any) {
+    @IBAction private func plantsButtonTapped(_ sender: Any) {
         let vc = ReminderVesselMainViewController.newVC(basicController: self.basicRC, proController: self.proRC) { vc in
             vc.dismiss(animated: true, completion: nil)
         }

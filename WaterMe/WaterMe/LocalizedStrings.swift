@@ -97,9 +97,6 @@ extension UIAlertController {
         static let buttonTitleSaveAnyway =
             NSLocalizedString("Save Anyway",
                               comment: "Button Title in an Alert to save the reminder or plant even though all of the fields have not been filled in yet. Fields not yet filled in could include Name, Photo, Reminders.")
-        static let buttonTitleSettings =
-            NSLocalizedString("Settings",
-                              comment: "Button Title in an Alert to take the user to the Settings page for WaterMe and change permissions and notification preferences.")
         static let titleUnsolvedIssues =
             NSLocalizedString("There are some issues you might want to resolve.",
                               comment: "Title of an Alert that tells the user that they are trying to save a Plant or Reminder and they have not filled in all the fields. They may want to cancel the save and go back and fill them in. Or they may want to Save the changes anyway. Fields not filled in could include, Name, Photo, Reminders.")
@@ -110,7 +107,15 @@ extension ReminderVesselMainViewController {
     enum LocalizedString {
         static let title =
             NSLocalizedString("Plants",
-                              comment: "Title of the screen where the user can manage their plants.")
+                              comment: "Title of the screen where the user can manage their plants. Also, title of the button that opens this screen.")
+    }
+}
+
+extension SettingsMainViewController {
+    enum LocalizedString {
+        static let title =
+            NSLocalizedString("Settings",
+                              comment: "Screen title for the settings screen. Also used for button titles to open the Settings screen.")
     }
 }
 
