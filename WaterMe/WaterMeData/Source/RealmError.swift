@@ -8,12 +8,14 @@
 import Foundation
 
 public enum RealmError: Error {
-    case loadError, createError, writeError, readError, objectDeleted
+    case loadError, createError, writeError, readError, objectDeleted, unableToDeleteLastReminder
 }
 
 extension RealmError: UserFacingError {
     public var title: String {
         switch self {
+        case .unableToDeleteLastReminder:
+            return "Error Deleting"
         case .loadError:
             return "Error Loading"
         default:
@@ -32,11 +34,13 @@ extension RealmError: UserFacingError {
             return "Error reading from save file. Check to make sure there is free space available on this device."
         case .writeError:
             return "Error saving changes. Check to make sure there is free space available on this device."
+        case .unableToDeleteLastReminder:
+            return "Unable to delete this reminder because its the only reminder for this plant. Each plant must have at least one reminder."
         }
     }
     public var actionTitle: String? {
         switch self {
-        case .objectDeleted:
+        case .objectDeleted, .unableToDeleteLastReminder:
             return nil
         default:
             return "Manage Storage"

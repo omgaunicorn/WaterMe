@@ -199,8 +199,12 @@ public class BasicController {
             if let icon = icon {
                 v.icon = icon
             }
-            if let reminders = reminders {
+            if let reminders = reminders, reminders.isEmpty == false {
                 v.reminders.append(objectsIn: reminders)
+            } else {
+                // enforce at least one reminder rule
+                let reminder = Reminder()
+                v.reminders.append(reminder)
             }
             realm.beginWrite()
             realm.add(v)
@@ -258,6 +262,9 @@ public class BasicController {
     }
         
     public func delete(reminder: Reminder) -> Result<Void, RealmError> {
+        if let vessel = reminder.vessel, vessel.reminders.count <= 1 {
+            return .failure(.unableToDeleteLastReminder) 
+        }
         return self.realm.flatMap() { realm in
             realm.beginWrite()
             self.delete(reminder: reminder, inOpenRealm: realm)
