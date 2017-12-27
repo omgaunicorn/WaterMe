@@ -31,6 +31,8 @@ class ReminderDropTargetView: UIView {
         get { return self.videoManager.hoverState }
     }
 
+    var finishedPlayingDropVideo: (() -> Void)?
+
     private let videoManager: DragAndDropPlayerManager = {
         let t1 = DragAndDropPlayerManager.Timings(start: CMTime(value: 1, timescale: 100),
                                                   hover: CMTime(value: 165, timescale: 100),
@@ -56,6 +58,9 @@ class ReminderDropTargetView: UIView {
 
         self.videoManager.videoHiddenChanged = { [unowned self] hidden in
             self.videoLayer.opacity = hidden ? 0 : 1
+            if case .drop = self.hoverState {
+                self.finishedPlayingDropVideo?()
+            }
         }
         self.videoLayer.player = self.videoManager.player
         self.layer.addSublayer(self.videoLayer)

@@ -24,17 +24,30 @@
 import WaterMeData
 import UIKit
 
+protocol ReminderFinishDropTargetViewControllerDelegate: class {
+    func dropTargetView(willResizeHeightTo: CGFloat, from: ReminderFinishDropTargetViewController) -> (() -> Void)?
+}
+
 class ReminderFinishDropTargetViewController: UIViewController, HasBasicController, HasProController, UIDropInteractionDelegate {
 
     @IBOutlet private weak var dropTargetView: ReminderDropTargetView?
+    @IBOutlet private weak var dropTargetViewHeightConstraint: NSLayoutConstraint?
 
     var basicRC: BasicController?
     var proRC: ProController?
+    weak var delegate: ReminderFinishDropTargetViewControllerDelegate?
+    var dropTargetViewHeight: CGFloat {
+        return self.dropTargetViewHeightConstraint?.constant ?? 0
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.dropTargetView?.addInteraction(UIDropInteraction(delegate: self))
+        self.dropTargetView?.finishedPlayingDropVideo = { [unowned self] in
+            self.updateDropTargetHeightForNotDragging(animated: true)
+            self.dragInProgress = false
+        }
     }
 
     // MARK: UIDropInteractionDelegate
@@ -46,7 +59,6 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidUpdate session: UIDropSession) -> UIDropProposal {
-        guard self.dropTargetView?.hoverState != .drop else { return UIDropProposal(operation: .forbidden) }
         guard !session.reminderDrags.isEmpty else { return UIDropProposal(operation: .forbidden) }
         return UIDropProposal(operation: .copy)
     }
@@ -58,23 +70,75 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         }
     }
 
+    // Handle resizes
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        if self.dragInProgress == false {
+            self.updateDropTargetHeightForNotDragging()
+        }
+    }
+
+    private func updateDropTargetHeightForDragging(animated: Bool = false) {
+        let changes: () -> Void = {
+            let height = self.view.bounds.height
+            self.dropTargetViewHeightConstraint?.constant = height
+            let animateAlongSide = self.delegate?.dropTargetView(willResizeHeightTo: height, from: self)
+            animateAlongSide?()
+            self.view.layoutIfNeeded()
+        }
+        if animated {
+            UIView.animate(withDuration: 0.3, animations: changes)
+        } else {
+            changes()
+        }
+    }
+
+    private func updateDropTargetHeightForNotDragging(animated: Bool = false) {
+        let verticalSizeClass = self.view.traitCollection.verticalSizeClass
+        let changes: () -> Void = {
+            let height: CGFloat
+            switch verticalSizeClass {
+            case .regular, .unspecified:
+                height = 50
+            case .compact:
+                height = self.view.bounds.height
+            }
+            self.dropTargetViewHeightConstraint?.constant = height
+            let animateAlongSide = self.delegate?.dropTargetView(willResizeHeightTo: height, from: self)
+            animateAlongSide?()
+            self.view.layoutIfNeeded()
+        }
+        if animated {
+            UIView.animate(withDuration: 0.3, animations: changes)
+        } else {
+            changes()
+        }
+    }
+
     // UI Updates
 
+    private var dragInProgress = false
+
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
+        self.dragInProgress = true
+        self.updateDropTargetHeightForDragging(animated: true)
         guard self.dropTargetView?.hoverState != .drop else { return }
         self.dropTargetView?.hoverState = .hover
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
+        self.updateDropTargetHeightForNotDragging(animated: true)
+        self.dragInProgress = false
         guard self.dropTargetView?.hoverState != .drop else { return }
         self.dropTargetView?.hoverState = .noHover
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
+        guard self.dropTargetView?.hoverState != .drop else { return }
         self.dropTargetView?.hoverState = .drop
-        print("Finished Watering: \(session.reminderDrags)")
     }
-
 }
 
 fileprivate extension UIDropSession {

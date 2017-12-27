@@ -95,7 +95,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         switch self.traitCollection.verticalSizeClass {
         case .regular, .unspecified:
             // get the width and set the custom inset
-            let dragViewHeight = self.dropTargetViewController?.view.bounds.height ?? 0
+            let dragViewHeight = self.dropTargetViewController?.dropTargetViewHeight ?? 0
             customInset = UIEdgeInsets(top: dragViewHeight, left: 0, bottom: 0, right: 0)
             // we need custom scroll insets in portrait
             self.collectionVC?.collectionView?.scrollIndicatorInsets = customInset
@@ -136,10 +136,24 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         if let destVC = segue.destination as? ReminderCollectionViewController {
             self.collectionVC = destVC
         } else if let destVC = segue.destination as? ReminderFinishDropTargetViewController {
+            destVC.delegate = self
             self.dropTargetViewController = destVC
         }
     }
-    
+}
+
+extension ReminderMainViewController: ReminderFinishDropTargetViewControllerDelegate {
+    func dropTargetView(willResizeHeightTo newHeight: CGFloat, from: ReminderFinishDropTargetViewController) -> (() -> Void)? {
+        switch self.view.traitCollection.verticalSizeClass {
+        case .regular, .unspecified:
+            return {
+                self.collectionVC?.collectionView?.contentInset.top = newHeight
+                self.collectionVC?.collectionView?.scrollIndicatorInsets.top = newHeight
+            }
+        case .compact:
+            return nil
+        }
+    }
 }
 
 extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {

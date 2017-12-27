@@ -161,19 +161,23 @@
                         <subviews>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2T-Np-1PS" customClass="ReminderDropTargetView" customModule="WaterMe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                <color key="backgroundColor" red="0.40000000600000002" green="1" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="233" id="1zY-bW-qhu"/>
+                                </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.40000000600000002" green="1" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="A2T-Np-1PS" firstAttribute="width" secondItem="Q0w-r9-5E9" secondAttribute="width" id="3rx-tf-KFL"/>
-                            <constraint firstItem="A2T-Np-1PS" firstAttribute="centerX" secondItem="Q0w-r9-5E9" secondAttribute="centerX" id="BR4-Yl-lJU"/>
-                            <constraint firstItem="A2T-Np-1PS" firstAttribute="height" secondItem="Q0w-r9-5E9" secondAttribute="height" id="iJj-9d-Z2N"/>
-                            <constraint firstItem="A2T-Np-1PS" firstAttribute="centerY" secondItem="Q0w-r9-5E9" secondAttribute="centerY" id="s7M-TQ-R8W"/>
+                            <constraint firstItem="A2T-Np-1PS" firstAttribute="top" secondItem="ype-GC-kiU" secondAttribute="top" id="1kk-Tb-Pk0"/>
+                            <constraint firstItem="ype-GC-kiU" firstAttribute="trailing" secondItem="A2T-Np-1PS" secondAttribute="trailing" id="5T4-qn-NFy"/>
+                            <constraint firstItem="A2T-Np-1PS" firstAttribute="leading" secondItem="ype-GC-kiU" secondAttribute="leading" id="pgM-nh-BkM"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ype-GC-kiU"/>
                     </view>
                     <connections>
                         <outlet property="dropTargetView" destination="A2T-Np-1PS" id="1m8-sU-suH"/>
+                        <outlet property="dropTargetViewHeightConstraint" destination="1zY-bW-qhu" id="Tte-hP-Z53"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LbB-1F-e1E" userLabel="First Responder" sceneMemberID="firstResponder"/>
