@@ -27,7 +27,7 @@ import RealmSwift
 import UIKit
 
 protocol ReminderVesselEditTableViewControllerDelegate: class {
-    var vessel: Result<ReminderVessel, RealmError>? { get }
+    var vesselResult: Result<ReminderVessel, RealmError>! { get }
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?)
     func userChangedName(to: String, andDismissKeyboard: Bool, controller: ReminderVesselEditTableViewController?)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
@@ -62,14 +62,14 @@ class ReminderVesselEditTableViewController: UITableViewController {
         self.notificationToken?.invalidate()
         self.remindersData = nil
         self.tableView.reloadData()
-        self.notificationToken = self.delegate?.vessel?.value?.reminders.observe({ [weak self] in self?.remindersChanged($0) })
+        self.notificationToken = self.delegate?.vesselResult.value?.reminders.observe({ [weak self] in self?.remindersChanged($0) })
     }
     
     func reloadReminders() {
         self.notificationToken?.invalidate()
         self.remindersData = nil
         self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
-        self.notificationToken = self.delegate?.vessel?.value?.reminders.observe({ [weak self] in self?.remindersChanged($0) })
+        self.notificationToken = self.delegate?.vesselResult.value?.reminders.observe({ [weak self] in self?.remindersChanged($0) })
     }
     
     func nameTextFieldBecomeFirstResponder() {
@@ -140,7 +140,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
             let id = TextFieldTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? TextFieldTableViewCell
-            cell?.setTextField(text: self.delegate?.vessel?.value?.displayName)
+            cell?.setTextField(text: self.delegate?.vesselResult.value?.displayName)
             cell?.setLabelText(nil, andTextFieldPlaceHolderText: "Plant Name")
             cell?.textChanged = { [unowned self] newName in
                 self.delegate?.userChangedName(to: newName, andDismissKeyboard: false, controller: self)
@@ -150,7 +150,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
             let id = ReminderVesselIconTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? ReminderVesselIconTableViewCell
-            cell?.configure(with: self.delegate?.vessel?.value?.icon)
+            cell?.configure(with: self.delegate?.vesselResult.value?.icon)
             cell?.iconButtonTapped = { [unowned self] in self.delegate?.userChosePhotoChange(controller: self) }
             return _cell
         case .reminders:

@@ -46,9 +46,9 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         vc.completionHandler = completionHandler
         switch purpose {
         case .new(let vessel):
-            vc.reminder = basicController?.newReminder(for: vessel)
+            vc.reminderResult = basicController?.newReminder(for: vessel)
         case .existing(let reminder):
-            vc.reminder = .success(reminder)
+            vc.reminderResult = .success(reminder)
         }
         return navVC
     }
@@ -57,7 +57,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     @IBOutlet private weak var deleteButton: UIBarButtonItem?
     
     var basicRC: BasicController?
-    private var reminder: Result<Reminder, RealmError>?
+    private var reminderResult: Result<Reminder, RealmError>!
     private var completionHandler: CompletionHandler?
     
     override func viewDidLoad() {
@@ -66,7 +66,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         self.deleteButton?.title = UIAlertController.LocalizedString.buttonTitleDelete
         
         self.tableViewController = self.childViewControllers.first()
-        self.tableViewController?.reminder = { [unowned self] in return self.reminder }
+        self.tableViewController?.reminder = { [unowned self] in return self.reminderResult }
         self.tableViewController?.kindChanged = { [unowned self] in self.update(kind: $0, fromKeyboard: $1) }
         self.tableViewController?.noteChanged = { [unowned self] in self.update(note: $0, fromKeyboard: true) }
         self.tableViewController?.intervalChosen = { [unowned self] in self.intervalChosen() }
@@ -76,9 +76,9 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if let result = self.reminder, case .failure(let error) = result {
-            self.reminder = nil
-            let alert = UIAlertController(error: error) { selection in
+        if case .failure(let error) = self.reminderResult! {
+            self.reminderResult = nil
+            let alert = UIAlertController(error: error) { _ in
                 self.completionHandler?(self)
             }
             self.present(alert, animated: true, completion: nil)
@@ -90,13 +90,15 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         case .change:
             self.tableViewController?.tableView.reloadData()
         case .deleted, .error:
+            self.notificationToken?.invalidate()
+            self.notificationToken = nil
             self.completionHandler?(self)
         }
     }
     
     private func update(kind: Reminder.Kind? = nil, interval: Int? = nil, note: String? = nil, fromKeyboard: Bool = false) {
         // make sure we have the info we needed
-        guard let reminder = self.reminder?.value, let basicRC = self.basicRC
+        guard let reminder = self.reminderResult.value, let basicRC = self.basicRC
             else { assertionFailure("Missing Reminder or Realm Controller"); return; }
         
         // if this came from the keyboard stop notifications
@@ -123,7 +125,8 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     private func intervalChosen() {
-        let existingValue = self.reminder!.value!.interval
+        guard let existingValue = self.reminderResult.value?.interval
+            else { assertionFailure("No Reminder Present"); self.completionHandler?(self); return; }
         let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard, existingValue: existingValue) { vc, newValue in
             vc.dismiss(animated: true, completion: nil)
             guard let newValue = newValue else { return }
@@ -133,22 +136,20 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     @IBAction private func deleteButtonTapped(_ sender: Any) {
-        guard let reminder = self.reminder?.value, let basicRC = self.basicRC
+        guard let reminder = self.reminderResult.value, let basicRC = self.basicRC
             else { assertionFailure("Missing Reminder or Realm Controller."); self.completionHandler?(self); return; }
         let deleteResult = basicRC.delete(reminder: reminder)
         switch deleteResult {
         case .success:
             self.completionHandler?(self)
         case .failure(let error):
-            let alert = UIAlertController(error: error) { selection in
-                self.completionHandler?(self)
-            }
+            let alert = UIAlertController(error: error, completion: nil)
             self.present(alert, animated: true, completion: nil)
         }
     }
     
     @IBAction private func doneButtonTapped(_ sender: Any) {
-        guard let reminder = self.reminder?.value else { self.completionHandler?(self); return; }
+        guard let reminder = self.reminderResult.value else { self.completionHandler?(self); return; }
         let sender = sender as? UIBarButtonItem
         assert(sender != nil, "Expected UIBarButtonItem to call this method")
         let errors = reminder.isUIComplete
@@ -170,7 +171,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     private func startNotifications() {
-      self.notificationToken = self.reminder?.value?.observe({ [weak self] in self?.reminderChanged($0) })
+      self.notificationToken = self.reminderResult.value?.observe({ [weak self] in self?.reminderChanged($0) })
     }
     
     private var notificationToken: NotificationToken?
