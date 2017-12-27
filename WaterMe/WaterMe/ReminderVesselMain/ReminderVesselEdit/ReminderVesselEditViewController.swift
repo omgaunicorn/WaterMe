@@ -98,6 +98,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         let deleteResult = basicRC.delete(vessel: vessel)
         switch deleteResult {
         case .success:
+            self.tableViewController?.reminderVesselWasDeleted()
             self.completionHandler?(self)
         case .failure(let error):
             let alert = UIAlertController(error: error) { _ in

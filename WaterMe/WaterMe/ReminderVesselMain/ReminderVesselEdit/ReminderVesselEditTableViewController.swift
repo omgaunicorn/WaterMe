@@ -59,17 +59,17 @@ class ReminderVesselEditTableViewController: UITableViewController {
     }
     
     func reloadAll() {
-      self.notificationToken?.invalidate()
+        self.notificationToken?.invalidate()
         self.remindersData = nil
         self.tableView.reloadData()
-      self.notificationToken = self.delegate?.vessel?.value?.reminders.observe({ [weak self] in self?.remindersChanged($0) })
+        self.notificationToken = self.delegate?.vessel?.value?.reminders.observe({ [weak self] in self?.remindersChanged($0) })
     }
     
     func reloadReminders() {
-      self.notificationToken?.invalidate()
+        self.notificationToken?.invalidate()
         self.remindersData = nil
         self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
-      self.notificationToken = self.delegate?.vessel?.value?.reminders.observe({ [weak self] in self?.remindersChanged($0) })
+        self.notificationToken = self.delegate?.vessel?.value?.reminders.observe({ [weak self] in self?.remindersChanged($0) })
     }
     
     func nameTextFieldBecomeFirstResponder() {
@@ -80,6 +80,11 @@ class ReminderVesselEditTableViewController: UITableViewController {
             let cell = self.tableView.cellForRow(at: indexPath) as? TextFieldTableViewCell
             cell?.textFieldBecomeFirstResponder()
         })
+    }
+
+    func reminderVesselWasDeleted() {
+        self.notificationToken?.invalidate()
+        self.notificationToken = nil
     }
     
     override func viewDidLoad() {
@@ -161,7 +166,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
         guard let section = Section(rawValue: indexPath.section) else { assertionFailure("Unknown Section"); return; }
         switch section {
         case .name, .photo:
-            break // ignore
+        break // ignore
         case .reminders:
             guard let reminder = self.remindersData?[indexPath.row] else { return }
             self.delegate?.userChose(reminder: reminder, controller: self)
@@ -220,6 +225,6 @@ class ReminderVesselEditTableViewController: UITableViewController {
     private var notificationToken: NotificationToken?
     
     deinit {
-      self.notificationToken?.invalidate()
+        self.notificationToken?.invalidate()
     }
 }
