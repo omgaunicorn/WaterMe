@@ -159,42 +159,72 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cDx-Vx-NlI">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Bz-NO-4fe">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="yVu-1c-hMW">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <subviews>
-                                        <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2T-Np-1PS" customClass="WateringAnimationPlayerView" customModule="WaterMe" customModuleProvider="target">
+                                <subviews>
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nWN-u9-0ET">
+                                        <rect key="frame" x="0.0" y="0.0" width="215" height="233"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                    <visualEffectView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XOq-TB-qsu">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="MJQ-C5-2t4">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="A2T-Np-1PS" firstAttribute="leading" secondItem="yVu-1c-hMW" secondAttribute="leading" id="AfE-XW-d9i"/>
-                                        <constraint firstAttribute="trailing" secondItem="A2T-Np-1PS" secondAttribute="trailing" id="J2f-tQ-itx"/>
-                                        <constraint firstItem="A2T-Np-1PS" firstAttribute="top" secondItem="yVu-1c-hMW" secondAttribute="top" id="gOH-Gg-B9p"/>
-                                        <constraint firstAttribute="bottom" secondItem="A2T-Np-1PS" secondAttribute="bottom" id="rTb-hZ-hSa"/>
-                                    </constraints>
-                                </view>
+                                        <blurEffect style="extraLight"/>
+                                    </visualEffectView>
+                                    <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2T-Np-1PS" customClass="WateringAnimationPlayerView" customModule="WaterMe" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="233" id="QlK-Nb-dwh"/>
+                                    <constraint firstAttribute="trailing" secondItem="XOq-TB-qsu" secondAttribute="trailing" id="3D9-tG-eEH"/>
+                                    <constraint firstAttribute="bottom" secondItem="A2T-Np-1PS" secondAttribute="bottom" id="75y-kJ-lwr"/>
+                                    <constraint firstItem="nWN-u9-0ET" firstAttribute="top" secondItem="0Bz-NO-4fe" secondAttribute="top" id="7mp-jm-DWN"/>
+                                    <constraint firstAttribute="height" constant="233" id="E0m-N2-PYL"/>
+                                    <constraint firstAttribute="bottom" secondItem="nWN-u9-0ET" secondAttribute="bottom" id="Kb3-5E-y1s"/>
+                                    <constraint firstItem="XOq-TB-qsu" firstAttribute="leading" secondItem="0Bz-NO-4fe" secondAttribute="leading" id="KuX-lC-Imj"/>
+                                    <constraint firstItem="XOq-TB-qsu" firstAttribute="top" secondItem="0Bz-NO-4fe" secondAttribute="top" id="R85-vR-NW5"/>
+                                    <constraint firstAttribute="trailing" secondItem="nWN-u9-0ET" secondAttribute="trailing" id="Rx5-fy-p6u"/>
+                                    <constraint firstItem="nWN-u9-0ET" firstAttribute="leading" secondItem="0Bz-NO-4fe" secondAttribute="leading" id="RzO-6V-44T"/>
+                                    <constraint firstItem="A2T-Np-1PS" firstAttribute="top" secondItem="0Bz-NO-4fe" secondAttribute="top" id="jbO-ug-N0C"/>
+                                    <constraint firstAttribute="bottom" secondItem="XOq-TB-qsu" secondAttribute="bottom" id="mui-6T-nNm"/>
+                                    <constraint firstItem="A2T-Np-1PS" firstAttribute="leading" secondItem="0Bz-NO-4fe" secondAttribute="leading" id="njn-cs-bBs"/>
+                                    <constraint firstAttribute="trailing" secondItem="A2T-Np-1PS" secondAttribute="trailing" id="zjo-Gp-6db"/>
                                 </constraints>
-                                <blurEffect style="extraLight"/>
-                            </visualEffectView>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="nWN-u9-0ET"/>
+                                        <exclude reference="XOq-TB-qsu"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact">
+                                    <mask key="subviews">
+                                        <include reference="nWN-u9-0ET"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular">
+                                    <mask key="subviews">
+                                        <include reference="XOq-TB-qsu"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="cDx-Vx-NlI" firstAttribute="leading" secondItem="ype-GC-kiU" secondAttribute="leading" id="NPk-oB-9fC"/>
-                            <constraint firstItem="cDx-Vx-NlI" firstAttribute="top" secondItem="ype-GC-kiU" secondAttribute="top" id="Ppc-Um-rT7"/>
-                            <constraint firstItem="ype-GC-kiU" firstAttribute="trailing" secondItem="cDx-Vx-NlI" secondAttribute="trailing" id="h3v-IS-eRw"/>
+                            <constraint firstItem="0Bz-NO-4fe" firstAttribute="leading" secondItem="Q0w-r9-5E9" secondAttribute="leading" id="dKz-mb-5a6"/>
+                            <constraint firstAttribute="trailing" secondItem="0Bz-NO-4fe" secondAttribute="trailing" id="hQy-rz-vFA"/>
+                            <constraint firstItem="0Bz-NO-4fe" firstAttribute="top" secondItem="ype-GC-kiU" secondAttribute="top" id="xh5-c4-00N"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ype-GC-kiU"/>
                     </view>
                     <connections>
                         <outlet property="animationView" destination="A2T-Np-1PS" id="8mU-Jm-gwL"/>
-                        <outlet property="dropTargetView" destination="cDx-Vx-NlI" id="Wn1-iR-Dy6"/>
-                        <outlet property="dropTargetViewHeightConstraint" destination="QlK-Nb-dwh" id="evC-n2-T4K"/>
+                        <outlet property="dropTargetView" destination="0Bz-NO-4fe" id="TkM-Am-V1q"/>
+                        <outlet property="dropTargetViewHeightConstraint" destination="E0m-N2-PYL" id="yEx-TM-7Ye"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LbB-1F-e1E" userLabel="First Responder" sceneMemberID="firstResponder"/>
