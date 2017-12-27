@@ -24,7 +24,7 @@
 import AVFoundation
 import UIKit
 
-class ReminderDropTargetView: UIView {
+class WateringAnimationPlayerView: UIView {
 
     var hoverState: DragAndDropPlayerManager.HoverState {
         set { self.videoManager.hoverState = newValue }
@@ -34,41 +34,43 @@ class ReminderDropTargetView: UIView {
     var finishedPlayingDropVideo: (() -> Void)?
 
     private let videoManager: DragAndDropPlayerManager = {
-        let t1 = DragAndDropPlayerManager.Timings(start: CMTime(value: 1, timescale: 100),
+        let t1 = DragAndDropPlayerManager.Timings(start: CMTime(value: 2, timescale: 100),
                                                   hover: CMTime(value: 165, timescale: 100),
                                                   end: CMTime(value: 533, timescale: 100))
-        let t2 = DragAndDropPlayerManager.Timings(start: CMTime(value: 1, timescale: 100),
+        let t2 = DragAndDropPlayerManager.Timings(start: CMTime(value: 2, timescale: 100),
                                                   hover: CMTime(value: 70, timescale: 100),
                                                   end: CMTime(value: 408, timescale: 100))
         let c = DragAndDropPlayerManager.Configuration(landscapeTimings: t1, portraitTimings: t2, forwardRate: 1.0, reverseRate: -1.0,
-                                                       landscapeVideoURL: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-landscape", withExtension: "mov", subdirectory: "Videos")!,
-                                                       portraitVideoURL: Bundle(for: ReminderDropTargetView.self).url(forResource: "iPhone5-portrait", withExtension: "mov", subdirectory: "Videos")!)
+                                                       landscapeVideoURL: Bundle(for: WateringAnimationPlayerView.self).url(forResource: "iPhone5-landscape", withExtension: "mov", subdirectory: "Videos")!,
+                                                       portraitVideoURL: Bundle(for: WateringAnimationPlayerView.self).url(forResource: "iPhone5-portrait", withExtension: "mov", subdirectory: "Videos")!)
         return DragAndDropPlayerManager(configuration: c)
     }()
 
-    private let videoLayer: AVPlayerLayer = {
-        let l = AVPlayerLayer()
-        l.videoGravity = .resizeAspect
-        l.opacity = 0
-        return l
-    }()
+    override class var layerClass: AnyClass {
+        return AVPlayerLayer.self
+    }
+
+    private var videoLayer: AVPlayerLayer {
+        // swiftlint:disable:next force_cast
+        return self.layer as! AVPlayerLayer
+    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
 
         self.videoManager.videoHiddenChanged = { [unowned self] hidden in
-            self.videoLayer.opacity = hidden ? 0 : 1
+            UIView.animate(withDuration: 0.3) {
+                self.alpha = hidden ? 0 : 1
+            }
             if case .drop = self.hoverState {
                 self.finishedPlayingDropVideo?()
             }
         }
-        self.videoLayer.player = self.videoManager.player
-        self.layer.addSublayer(self.videoLayer)
-    }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        self.videoLayer.frame = self.layer.bounds
+        self.videoLayer.backgroundColor = UIColor.white.cgColor
+        self.videoLayer.videoGravity = .resizeAspect
+        self.videoLayer.opacity = 0
+        self.videoLayer.player = self.videoManager.player
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

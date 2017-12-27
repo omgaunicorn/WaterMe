@@ -11,7 +11,7 @@
 		32960DF0C162FA7CB997DAE0 /* Pods_WaterMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B125E6363F6731C5C3C2000 /* Pods_WaterMe.framework */; };
 		500679AF1F4BF3DB00F8100D /* ReminderMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */; };
 		501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A9AE41FE9682C0016160D /* LocalizedStrings.swift */; };
-		501A9AE71FEB15C20016160D /* ReminderDropTargetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A9AE61FEB15C20016160D /* ReminderDropTargetView.swift */; };
+		501A9AE71FEB15C20016160D /* WateringAnimationPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */; };
 		501C0E8B1ECE5EFF00D4EE7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */; };
 		501C0E8D1ECE5EFF00D4EE7C /* UserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E8C1ECE5EFF00D4EE7C /* UserTableViewController.swift */; };
 		501C0E901ECE5EFF00D4EE7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E8E1ECE5EFF00D4EE7C /* Main.storyboard */; };
@@ -114,7 +114,7 @@
 		500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderMainViewController.swift; sourceTree = "<group>"; };
 		500679B01F4BF46800F8100D /* ReminderVesselTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVesselTabViewController.swift; sourceTree = "<group>"; };
 		501A9AE41FE9682C0016160D /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
-		501A9AE61FEB15C20016160D /* ReminderDropTargetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDropTargetView.swift; sourceTree = "<group>"; };
+		501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WateringAnimationPlayerView.swift; sourceTree = "<group>"; };
 		501C0E881ECE5EFF00D4EE7C /* AdminConsole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdminConsole.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		501C0E8C1ECE5EFF00D4EE7C /* UserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewController.swift; sourceTree = "<group>"; };
@@ -251,7 +251,7 @@
 				500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */,
 				508E61561F8AD57400B28DD8 /* ReminderCollectionViewController.swift */,
 				502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */,
-				501A9AE61FEB15C20016160D /* ReminderDropTargetView.swift */,
+				501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */,
 				50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */,
 				508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */,
 				502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */,
@@ -894,7 +894,7 @@
 				50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */,
 				50B61EE11F2FB904004654B4 /* EmojiImageView.swift in Sources */,
 				50D3A08C1EC76DE5001B4A7D /* RestorePurchaseViewController.swift in Sources */,
-				501A9AE71FEB15C20016160D /* ReminderDropTargetView.swift in Sources */,
+				501A9AE71FEB15C20016160D /* WateringAnimationPlayerView.swift in Sources */,
 				501F922C1EC55E080014939D /* SubscriptionChoiceViewController.swift in Sources */,
 				50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */,
 				50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */,

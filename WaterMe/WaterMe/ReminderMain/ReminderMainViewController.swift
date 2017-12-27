@@ -144,15 +144,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
 extension ReminderMainViewController: ReminderFinishDropTargetViewControllerDelegate {
     func dropTargetView(willResizeHeightTo newHeight: CGFloat, from: ReminderFinishDropTargetViewController) -> (() -> Void)? {
-        switch self.view.traitCollection.verticalSizeClass {
-        case .regular, .unspecified:
-            return {
-                self.collectionVC?.collectionView?.contentInset.top = newHeight
-                self.collectionVC?.collectionView?.scrollIndicatorInsets.top = newHeight
-            }
-        case .compact:
-            return nil
-        }
+        return { self.updateCollectionViewInsets() }
     }
 }
 

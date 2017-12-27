@@ -30,7 +30,8 @@ protocol ReminderFinishDropTargetViewControllerDelegate: class {
 
 class ReminderFinishDropTargetViewController: UIViewController, HasBasicController, HasProController, UIDropInteractionDelegate {
 
-    @IBOutlet private weak var dropTargetView: ReminderDropTargetView?
+    @IBOutlet private weak var animationView: WateringAnimationPlayerView?
+    @IBOutlet private weak var dropTargetView: UIView?
     @IBOutlet private weak var dropTargetViewHeightConstraint: NSLayoutConstraint?
 
     var basicRC: BasicController?
@@ -44,7 +45,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         super.viewDidLoad()
 
         self.dropTargetView?.addInteraction(UIDropInteraction(delegate: self))
-        self.dropTargetView?.finishedPlayingDropVideo = { [unowned self] in
+        self.animationView?.finishedPlayingDropVideo = { [unowned self] in
             self.updateDropTargetHeightForNotDragging(animated: true)
             self.dragInProgress = false
         }
@@ -124,20 +125,20 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
         self.dragInProgress = true
         self.updateDropTargetHeightForDragging(animated: true)
-        guard self.dropTargetView?.hoverState != .drop else { return }
-        self.dropTargetView?.hoverState = .hover
+        guard self.animationView?.hoverState != .drop else { return }
+        self.animationView?.hoverState = .hover
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
         self.updateDropTargetHeightForNotDragging(animated: true)
         self.dragInProgress = false
-        guard self.dropTargetView?.hoverState != .drop else { return }
-        self.dropTargetView?.hoverState = .noHover
+        guard self.animationView?.hoverState != .drop else { return }
+        self.animationView?.hoverState = .noHover
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
-        guard self.dropTargetView?.hoverState != .drop else { return }
-        self.dropTargetView?.hoverState = .drop
+        guard self.animationView?.hoverState != .drop else { return }
+        self.animationView?.hoverState = .drop
     }
 }
 
