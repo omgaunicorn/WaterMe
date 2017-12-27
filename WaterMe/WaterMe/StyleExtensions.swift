@@ -60,8 +60,10 @@ extension UICollectionReusableView {
 enum Style {
 
     static let centerStyle: NSParagraphStyle = {
-        let p = NSMutableParagraphStyle()
+        // swiftlint:disable:next force_cast
+        let p = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
         p.alignment = .center
+        p.lineBreakMode = .byTruncatingMiddle
         // swiftlint:disable:next force_cast
         return p.copy() as! NSParagraphStyle
     }()
