@@ -31,18 +31,31 @@ class ReminderUserNotificationController {
 
     private let queue = DispatchQueue(label: String(describing: ReminderUserNotificationController.self) + "_SerialQueue", qos: .utility)
 
+    private var timer: Timer?
+
     init?(basicController: BasicController) {
         guard let collection = basicController.allReminders().value else { return nil }
         self.token = collection.observe({ [weak self] in self?.dataChanged($0) })
+        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground(with:)), name: .UIApplicationDidEnterBackground, object: nil)
+    }
+
+    private func resetTimer() {
+        self.timer?.invalidate()
+        self.timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { timer in
+            timer.invalidate()
+            self.timer?.invalidate()
+            self.timer = nil
+            self.updateScheduledNotifications()
+        }
     }
 
     private func dataChanged(_ changes: RealmCollectionChange<AnyRealmCollection<Reminder>>) {
         switch changes {
         case .initial(let data):
             self.data = data
-            self.updateScheduledNotifications()
+            self.resetTimer()
         case .update:
-            self.updateScheduledNotifications()
+            self.resetTimer()
         case .error(let error):
             self.data = nil
             self.token?.invalidate()
@@ -50,6 +63,11 @@ class ReminderUserNotificationController {
             self.updateScheduledNotifications()
             log.error("Realm Error in 'ReminderUserNotificationController': \(error)")
         }
+    }
+
+    @objc private func applicationDidEnterBackground(with notification: Notification?) {
+        self.resetTimer()
+        self.timer!.fire()
     }
 
     private func updateScheduledNotifications() {

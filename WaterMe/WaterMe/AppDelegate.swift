@@ -125,6 +125,13 @@ class ReminderNotificationUIDelegate: NSObject, UNUserNotificationCenterDelegate
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Swift.Void)
     {
+        // if the trigger is NIL that means it was fired while the app was open and its for the past
+        guard notification.request.trigger != nil else {
+            completionHandler([])
+            return
+        }
+        // if its not NIL that means its a scheduled notification
+        // that just happened to arrive while the user is using the app
         completionHandler([.alert, .badge, .sound])
     }
 }
