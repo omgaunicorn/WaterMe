@@ -82,12 +82,20 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.updateCollectionViewInsets()
+
+        // if dropTargetViewController it causes the collectionview insets to be updated
+        if self.dropTargetViewController == nil {
+            self.updateCollectionViewInsets()
+        }
     }
 
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        self.updateCollectionViewInsets()
+
+        // if dropTargetViewController it causes the collectionview insets to be updated
+        if self.dropTargetViewController == nil {
+            self.updateCollectionViewInsets()
+        }
     }
 
     private func updateCollectionViewInsets() {
@@ -109,24 +117,6 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         self.collectionVC?.collectionView?.contentInset = customInset
     }
 
-    /*
-    // old code to manually manage insets if needed in the future
-    private func updateCollectionViewInsets() {
-        let safeArea = self.view.safeAreaInsets
-        let insets: UIEdgeInsets
-        switch self.traitCollection.verticalSizeClass {
-        case .regular, .unspecified:
-            let dragViewHeight = self.dropTargetViewController?.view.bounds.height ?? 0
-            insets = UIEdgeInsets(top: safeArea.top + dragViewHeight, left: safeArea.left, bottom: safeArea.bottom, right: safeArea.right)
-        case .compact:
-            let dragViewWidth = self.dropTargetViewController?.view.bounds.width ?? 0
-            insets = UIEdgeInsets(top: safeArea.top, left: safeArea.left + dragViewWidth, bottom: safeArea.bottom, right: safeArea.right)
-        }
-        self.collectionVC?.collectionView?.contentInset = insets
-        self.collectionVC?.collectionView?.scrollIndicatorInsets = insets
-    }
-    */
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var hasBasic = segue.destination as? HasBasicController
         hasBasic?.configure(with: self.basicRC)
@@ -143,7 +133,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 }
 
 extension ReminderMainViewController: ReminderFinishDropTargetViewControllerDelegate {
-    func dropTargetView(willResizeHeightTo newHeight: CGFloat, from: ReminderFinishDropTargetViewController) -> (() -> Void)? {
+    func animateAlongSideDropTargetViewResize(within: ReminderFinishDropTargetViewController) -> (() -> Void)? {
         return { self.updateCollectionViewInsets() }
     }
 }

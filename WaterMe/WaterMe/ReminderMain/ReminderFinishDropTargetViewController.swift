@@ -25,7 +25,7 @@ import WaterMeData
 import UIKit
 
 protocol ReminderFinishDropTargetViewControllerDelegate: class {
-    func dropTargetView(willResizeHeightTo: CGFloat, from: ReminderFinishDropTargetViewController) -> (() -> Void)?
+    func animateAlongSideDropTargetViewResize(within: ReminderFinishDropTargetViewController) -> (() -> Void)?
 }
 
 class ReminderFinishDropTargetViewController: UIViewController, HasBasicController, HasProController, UIDropInteractionDelegate {
@@ -47,8 +47,12 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         self.dropTargetView?.addInteraction(UIDropInteraction(delegate: self))
         self.animationView?.finishedPlayingDropVideo = { [unowned self] in
             self.updateDropTargetHeightForNotDragging(animated: true)
-            self.dragInProgress = false
+            self.isDragInProgress = false
         }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     // MARK: UIDropInteractionDelegate
@@ -71,59 +75,85 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         }
     }
 
-    // Handle resizes
+    // Handle View Layouts
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        // if we change size (rotate or ipad resize) and the video is not at the beginning,
+        // just start it playing to the beginning
+        guard self.animationView?.hoverState != .noHover else { return }
+        self.animationView?.hoverState = .noHover
+    }
+
+    // Because the child View controller layout subviews and other layout methods get called AFTER the parent
+    // I need this childVC to cause the collectionView from the parent to get its insets updated
+    // Or else, during rotation, the parent VC sees the wrong height for the dropTargetView
+    // kind of hacky, but I couldn't figure out a better way to do it.
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        if self.dragInProgress == false {
-            self.updateDropTargetHeightForNotDragging()
+        if self.isDragInProgress == false {
+            self.updateDropTargetHeightForNotDragging(animated: false)
         }
     }
 
-    private func updateDropTargetHeightForDragging(animated: Bool = false) {
+    override func viewSafeAreaInsetsDidChange() {
+        super.viewDidLayoutSubviews()
+
+        if self.isDragInProgress == false {
+            self.updateDropTargetHeightForNotDragging(animated: false)
+        }
+    }
+
+    private func updateDropTargetHeightForDragging(animated: Bool) {
         let changes: () -> Void = {
             let height = self.view.bounds.height
             self.dropTargetViewHeightConstraint?.constant = height
-            let animateAlongSide = self.delegate?.dropTargetView(willResizeHeightTo: height, from: self)
-            animateAlongSide?()
-            self.view.layoutIfNeeded()
+            self.delegate?.animateAlongSideDropTargetViewResize(within: self)?()
         }
-        if animated {
-            UIView.animate(withDuration: 0.3, animations: changes)
-        } else {
+
+        guard animated == true else {
             changes()
+            return
+        }
+
+        UIView.animate(withDuration: 0.3) {
+            changes()
+            self.view.layoutIfNeeded()
         }
     }
 
-    private func updateDropTargetHeightForNotDragging(animated: Bool = false) {
+    private func updateDropTargetHeightForNotDragging(animated: Bool) {
         let verticalSizeClass = self.view.traitCollection.verticalSizeClass
         let changes: () -> Void = {
             let height: CGFloat
             switch verticalSizeClass {
             case .regular, .unspecified:
-                height = 50
+                height = type(of: self).style_dropTargetViewCompactHeight
             case .compact:
                 height = self.view.bounds.height
             }
             self.dropTargetViewHeightConstraint?.constant = height
-            let animateAlongSide = self.delegate?.dropTargetView(willResizeHeightTo: height, from: self)
-            animateAlongSide?()
-            self.view.layoutIfNeeded()
+            self.delegate?.animateAlongSideDropTargetViewResize(within: self)?()
         }
-        if animated {
-            UIView.animate(withDuration: 0.3, animations: changes)
-        } else {
+
+        guard animated == true else {
             changes()
+            return
+        }
+
+        UIView.animate(withDuration: 0.3) {
+            changes()
+            self.view.layoutIfNeeded()
         }
     }
 
     // UI Updates
 
-    private var dragInProgress = false
+    private var isDragInProgress = false
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
-        self.dragInProgress = true
+        self.isDragInProgress = true
         self.updateDropTargetHeightForDragging(animated: true)
         guard self.animationView?.hoverState != .drop else { return }
         self.animationView?.hoverState = .hover
@@ -131,7 +161,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
         self.updateDropTargetHeightForNotDragging(animated: true)
-        self.dragInProgress = false
+        self.isDragInProgress = false
         guard self.animationView?.hoverState != .drop else { return }
         self.animationView?.hoverState = .noHover
     }

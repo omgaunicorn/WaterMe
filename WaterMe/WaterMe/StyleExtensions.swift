@@ -24,6 +24,10 @@
 import WaterMeData
 import UIKit
 
+extension ReminderFinishDropTargetViewController {
+    static let style_dropTargetViewCompactHeight: CGFloat = 88
+}
+
 extension ReminderCollectionViewCell {
     static let style_emojiImageViewWidth: CGFloat = 100
     static let style_emojiImageViewWidthAccessibility: CGFloat = 170
