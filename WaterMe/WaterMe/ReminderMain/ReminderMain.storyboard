@@ -200,15 +200,37 @@
                                         <exclude reference="nWN-u9-0ET"/>
                                         <exclude reference="XOq-TB-qsu"/>
                                     </mask>
+                                    <mask key="constraints">
+                                        <exclude reference="3D9-tG-eEH"/>
+                                        <exclude reference="KuX-lC-Imj"/>
+                                        <exclude reference="R85-vR-NW5"/>
+                                        <exclude reference="mui-6T-nNm"/>
+                                        <exclude reference="7mp-jm-DWN"/>
+                                        <exclude reference="Kb3-5E-y1s"/>
+                                        <exclude reference="Rx5-fy-p6u"/>
+                                        <exclude reference="RzO-6V-44T"/>
+                                    </mask>
                                 </variation>
                                 <variation key="heightClass=compact">
                                     <mask key="subviews">
                                         <include reference="nWN-u9-0ET"/>
                                     </mask>
+                                    <mask key="constraints">
+                                        <include reference="7mp-jm-DWN"/>
+                                        <include reference="Kb3-5E-y1s"/>
+                                        <include reference="Rx5-fy-p6u"/>
+                                        <include reference="RzO-6V-44T"/>
+                                    </mask>
                                 </variation>
                                 <variation key="heightClass=regular">
                                     <mask key="subviews">
                                         <include reference="XOq-TB-qsu"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="3D9-tG-eEH"/>
+                                        <include reference="KuX-lC-Imj"/>
+                                        <include reference="R85-vR-NW5"/>
+                                        <include reference="mui-6T-nNm"/>
                                     </mask>
                                 </variation>
                             </view>
