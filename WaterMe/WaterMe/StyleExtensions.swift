@@ -58,7 +58,6 @@ extension ReminderVesselIconTableViewCell {
 
 extension UICollectionReusableView {
     static let style_backgroundViewCornerRadius: CGFloat = 6
-    static let style_sectionHeaderBackgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 0.8)
 }
 
 enum Style {

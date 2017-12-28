@@ -5,7 +5,6 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -15,33 +14,32 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MTs-iF-5Ao">
+                <visualEffectView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V3U-pY-mzG">
                     <rect key="frame" x="8" y="4" width="304" height="42"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y7Q-aj-glf">
-                            <rect key="frame" x="12" y="10" width="280" height="21"/>
-                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstItem="Y7Q-aj-glf" firstAttribute="centerY" secondItem="MTs-iF-5Ao" secondAttribute="centerY" id="E2a-MX-jto"/>
-                        <constraint firstAttribute="trailing" secondItem="Y7Q-aj-glf" secondAttribute="trailing" constant="12" id="Eaq-MB-WO3"/>
-                        <constraint firstItem="Y7Q-aj-glf" firstAttribute="leading" secondItem="MTs-iF-5Ao" secondAttribute="leading" constant="12" id="aPB-GX-NVw"/>
-                    </constraints>
-                </view>
+                    <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="pcN-MV-h1T">
+                        <rect key="frame" x="0.0" y="0.0" width="304" height="42"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <blurEffect style="extraLight"/>
+                </visualEffectView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y7Q-aj-glf">
+                    <rect key="frame" x="20" y="14" width="280" height="21"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="MTs-iF-5Ao" secondAttribute="bottom" constant="4" id="2lq-56-ACe"/>
-                <constraint firstItem="MTs-iF-5Ao" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" constant="8" id="PVY-Gx-PMX"/>
-                <constraint firstItem="MTs-iF-5Ao" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="4" id="RkW-0f-Ubu"/>
-                <constraint firstItem="VXr-Tz-HHm" firstAttribute="trailing" secondItem="MTs-iF-5Ao" secondAttribute="trailing" constant="8" id="ptQ-S5-HOI"/>
+                <constraint firstItem="V3U-pY-mzG" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="8" id="Bva-2s-ScO"/>
+                <constraint firstItem="V3U-pY-mzG" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="4" id="Qtn-Jo-xLU"/>
+                <constraint firstAttribute="bottom" secondItem="V3U-pY-mzG" secondAttribute="bottom" constant="4" id="Xce-cG-kgv"/>
+                <constraint firstAttribute="trailing" secondItem="V3U-pY-mzG" secondAttribute="trailing" constant="8" id="Z1o-uW-aJa"/>
+                <constraint firstItem="Y7Q-aj-glf" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="20" id="lD1-ZM-Pdg"/>
+                <constraint firstAttribute="trailing" secondItem="Y7Q-aj-glf" secondAttribute="trailing" constant="20" id="mbV-rb-bxB"/>
+                <constraint firstItem="Y7Q-aj-glf" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="pf8-j6-6Gh"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
             <connections>
-                <outlet property="backgroundView" destination="MTs-iF-5Ao" id="Bov-Dd-BOG"/>
+                <outlet property="backgroundView" destination="V3U-pY-mzG" id="FvW-Wm-ZP1"/>
                 <outlet property="label" destination="Y7Q-aj-glf" id="D0m-Ha-ZnT"/>
             </connections>
         </collectionReusableView>

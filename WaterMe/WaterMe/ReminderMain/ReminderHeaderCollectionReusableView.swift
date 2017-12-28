@@ -32,15 +32,12 @@ class ReminderHeaderCollectionReusableView: UICollectionReusableView {
     @IBOutlet private weak var label: UILabel?
     @IBOutlet private weak var backgroundView: UIView?
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.backgroundView?.layer.cornerRadius = type(of: self).style_backgroundViewCornerRadius
+    }
+
     func setText(_ text: String) {
         self.label?.attributedText = NSAttributedString(string: text, style: .sectionHeader)
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-
-        self.backgroundView?.layer.cornerRadius = type(of: self).style_backgroundViewCornerRadius
-        self.backgroundView?.backgroundColor = type(of: self).style_sectionHeaderBackgroundColor
-    }
-    
 }
