@@ -41,7 +41,7 @@
                                     <segue destination="jyv-In-YNW" kind="embed" id="Ikd-gx-ZFw"/>
                                 </connections>
                             </containerView>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RHs-C3-vgv" userLabel="DragView">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RHs-C3-vgv" userLabel="DragView" customClass="OnlySubviewsTouchableView" customModule="WaterMe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="64" width="414" height="233"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -155,7 +155,7 @@
         <scene sceneID="Orj-ZA-XNR">
             <objects>
                 <viewController id="Cjs-fa-2MT" customClass="ReminderFinishDropTargetViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Q0w-r9-5E9">
+                    <view key="view" contentMode="scaleToFill" id="Q0w-r9-5E9" customClass="OnlySubviewsTouchableView" customModule="WaterMe" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -163,7 +163,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                                 <subviews>
                                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nWN-u9-0ET">
-                                        <rect key="frame" x="0.0" y="0.0" width="215" height="233"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="181" height="233"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <visualEffectView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XOq-TB-qsu">

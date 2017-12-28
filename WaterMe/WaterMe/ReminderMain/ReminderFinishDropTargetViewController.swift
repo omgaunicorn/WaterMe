@@ -177,3 +177,13 @@ fileprivate extension UIDropSession {
         return self.localDragSession?.items.flatMap({ $0.localObject as? Reminder.Identifier }) ?? []
     }
 }
+
+class OnlySubviewsTouchableView: UIView {
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let touchedView = super.hitTest(point, with: event)
+        // if the deepest touchedview is myself, return NIL so it passes through
+        guard touchedView !== self else { return nil }
+        // otherwise just use the super value
+        return touchedView
+    }
+}
