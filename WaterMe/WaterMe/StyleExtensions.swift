@@ -86,8 +86,15 @@ enum Style {
     case reminderVesselCollectionViewCellPrimary
     case reminderVesselCollectionViewCellPrimaryDisabled
     case reminderVesselCollectionViewCellSecondary
+    case dragInstructionalText
     var attributes: [NSAttributedStringKey : Any] {
         switch self {
+        case .dragInstructionalText:
+            return [
+                .font : Font.bodyPlusPlus,
+                .foregroundColor : Color.textPrimary,
+                .paragraphStyle : type(of: self).centerStyle
+            ]
         case .reminderVesselCollectionViewCellPrimary:
             return [
                 .font : Font.bodyPlus,
@@ -162,6 +169,12 @@ enum Style {
     }
     
     private enum Font {
+        static var bodyPlusPlusPlus: UIFont {
+            return UIFont.preferredFont(forTextStyle: .title1)
+        }
+        static var bodyPlusPlus: UIFont {
+            return UIFont.preferredFont(forTextStyle: .title2)
+        }
         static var bodyPlus: UIFont {
             return UIFont.preferredFont(forTextStyle: .title3)
         }

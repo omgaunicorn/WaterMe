@@ -30,6 +30,7 @@ protocol ReminderFinishDropTargetViewControllerDelegate: class {
 
 class ReminderFinishDropTargetViewController: UIViewController, HasBasicController, HasProController, UIDropInteractionDelegate {
 
+    @IBOutlet private weak var instructionalView: DragTargetInstructionalView?
     @IBOutlet private weak var animationView: WateringAnimationPlayerView?
     @IBOutlet private weak var dropTargetView: UIView?
     @IBOutlet private weak var dropTargetViewHeightConstraint: NSLayoutConstraint?
@@ -53,6 +54,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.instructionalView?.performInstructionalAnimation(completion: nil)
     }
 
     // MARK: UIDropInteractionDelegate
