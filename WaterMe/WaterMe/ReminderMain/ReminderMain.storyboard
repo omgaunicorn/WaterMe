@@ -293,7 +293,57 @@
                                     </visualEffectView>
                                     <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2T-Np-1PS" customClass="WateringAnimationPlayerView" customModule="WaterMe" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QIf-SG-lIu">
+                                                <rect key="frame" x="0.0" y="232" width="414" height="1"/>
+                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1" id="K9J-Ui-70A"/>
+                                                </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="K9J-Ui-70A"/>
+                                                    </mask>
+                                                </variation>
+                                                <variation key="heightClass=regular">
+                                                    <mask key="constraints">
+                                                        <include reference="K9J-Ui-70A"/>
+                                                    </mask>
+                                                </variation>
+                                            </view>
+                                        </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="QIf-SG-lIu" firstAttribute="leading" secondItem="A2T-Np-1PS" secondAttribute="leading" constant="87" id="dGl-yB-l0z">
+                                                <variation key="heightClass=regular" constant="0.0"/>
+                                            </constraint>
+                                            <constraint firstAttribute="bottom" secondItem="QIf-SG-lIu" secondAttribute="bottom" constant="53" id="lcq-h3-3tb">
+                                                <variation key="heightClass=regular" constant="0.0"/>
+                                            </constraint>
+                                            <constraint firstAttribute="trailing" secondItem="QIf-SG-lIu" secondAttribute="trailing" constant="87" id="uwB-JV-9ZH">
+                                                <variation key="heightClass=regular" constant="0.0"/>
+                                            </constraint>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="subviews">
+                                                <exclude reference="QIf-SG-lIu"/>
+                                            </mask>
+                                            <mask key="constraints">
+                                                <exclude reference="dGl-yB-l0z"/>
+                                                <exclude reference="lcq-h3-3tb"/>
+                                                <exclude reference="uwB-JV-9ZH"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular">
+                                            <mask key="subviews">
+                                                <include reference="QIf-SG-lIu"/>
+                                            </mask>
+                                            <mask key="constraints">
+                                                <include reference="dGl-yB-l0z"/>
+                                                <include reference="lcq-h3-3tb"/>
+                                                <include reference="uwB-JV-9ZH"/>
+                                            </mask>
+                                        </variation>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

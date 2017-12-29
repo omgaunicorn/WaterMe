@@ -253,6 +253,7 @@
 				500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */,
 				508E61561F8AD57400B28DD8 /* ReminderCollectionViewController.swift */,
 				502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */,
+				5015EEF51FF56FF200CAC7D7 /* DragTargetInstructionalView.swift */,
 				501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */,
 				50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */,
 				508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */,
@@ -262,7 +263,6 @@
 				50BDC03D1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift */,
 				50BDC03E1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib */,
 				50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */,
-				5015EEF51FF56FF200CAC7D7 /* DragTargetInstructionalView.swift */,
 			);
 			path = ReminderMain;
 			sourceTree = "<group>";
