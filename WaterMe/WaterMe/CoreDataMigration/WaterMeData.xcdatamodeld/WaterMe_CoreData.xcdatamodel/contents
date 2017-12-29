@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13772" systemVersion="17C88" minimumToolsVersion="Xcode 7.3" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="NotificationEntity" representedClassName=".NotificationEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="cd_00100_notificationTransformable" optional="YES" attributeType="Transformable" syncable="YES"/>
+    </entity>
+    <entity name="PlantEntity" representedClassName=".PlantEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="cd_00100_imageEmojiTransformable" attributeType="Transformable" syncable="YES"/>
+        <attribute name="cd_00100_lastWateredDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="cd_00100_nameString" attributeType="String" syncable="YES"/>
+        <attribute name="cd_00100_wateringIntervalNumber" attributeType="Double" usesScalarValueType="NO" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="NotificationEntity" positionX="-1386" positionY="-792" width="128" height="60"/>
+        <element name="PlantEntity" positionX="-1404" positionY="-846" width="128" height="105"/>
+    </elements>
+</model>
