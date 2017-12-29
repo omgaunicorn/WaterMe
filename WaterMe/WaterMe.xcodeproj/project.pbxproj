@@ -94,6 +94,7 @@
 		50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */; };
 		50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */; };
 		50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */; };
+		50F388E01FF6D9C10031ED45 /* CoreDataMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */; };
 		50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */; };
 		9D4B103D2737652DACA70CD7 /* Pods_AdminConsole.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60B42EA777AEA20F10FDAC7E /* Pods_AdminConsole.framework */; };
 /* End PBXBuildFile section */
@@ -208,6 +209,7 @@
 		50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselEditTableViewController.swift; sourceTree = "<group>"; };
 		50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselIconTableViewCell.swift; sourceTree = "<group>"; };
 		50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMigrator.swift; sourceTree = "<group>"; };
 		50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderGedegDataSource.swift; sourceTree = "<group>"; };
 		60B42EA777AEA20F10FDAC7E /* Pods_AdminConsole.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdminConsole.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EFB7CDDCE654C40FF935324 /* Pods-AdminConsole.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdminConsole.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole.debug.xcconfig"; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 				50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */,
 				50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */,
 				501A9AE41FE9682C0016160D /* LocalizedStrings.swift */,
+				50F388DE1FF6D9870031ED45 /* CoreDataMigration */,
 				5049D1A11FACF9F30076565E /* ReminderNotifications */,
 				501F921E1EC55DA80014939D /* Router */,
 				500679AD1F4BF3B700F8100D /* ReminderMain */,
@@ -460,6 +463,14 @@
 				5045CBA51EFCC810008E6D6A /* ReminderEdit */,
 			);
 			path = ReminderVesselMain;
+			sourceTree = "<group>";
+		};
+		50F388DE1FF6D9870031ED45 /* CoreDataMigration */ = {
+			isa = PBXGroup;
+			children = (
+				50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */,
+			);
+			path = CoreDataMigration;
 			sourceTree = "<group>";
 		};
 		6A5C6D5D7EF88C8DB7DFA58F /* Pods */ = {
@@ -893,6 +904,7 @@
 			files = (
 				50E8B1E21EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift in Sources */,
 				5015EEF61FF56FF300CAC7D7 /* DragTargetInstructionalView.swift in Sources */,
+				50F388E01FF6D9C10031ED45 /* CoreDataMigrator.swift in Sources */,
 				5087A9231EE3A6B00046E687 /* SelfContainedImagePickerController.swift in Sources */,
 				502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */,
 				50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */,
