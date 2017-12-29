@@ -245,6 +245,31 @@ public class BasicController {
             return realm.waterMe_commitWrite()
         }
     }
+
+    public func coreDataMigration(vesselName: String?,
+                                  vesselImage: UIImage?,
+                                  vesselEmoji: String?,
+                                  reminderInterval: NSNumber?,
+                                  reminderLastPerformDate: Date?) -> Result<Void, RealmError>
+    {
+        return self.realm.flatMap() { realm in
+            realm.beginWrite()
+            let vessel = ReminderVessel()
+            vessel.displayName = vesselName
+            vessel.icon = ReminderVessel.Icon(rawImage: vesselImage, emojiString: vesselEmoji)
+            let reminder = Reminder()
+            reminder.interval = reminderInterval?.intValue ?? -1
+            if let lastPerformDate = reminderLastPerformDate {
+                let performed = ReminderPerform()
+                performed.date = lastPerformDate
+                reminder.performed.append(performed)
+                reminder.recalculateNextPerformDate()
+            }
+            vessel.reminders.append(reminder)
+            realm.add(vessel)
+            return realm.waterMe_commitWrite()
+        }
+    }
         
     public func delete(vessel: ReminderVessel) -> Result<Void, RealmError> {
         return self.realm.flatMap() { realm in

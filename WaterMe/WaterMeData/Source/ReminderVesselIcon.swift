@@ -27,6 +27,23 @@ public extension ReminderVessel {
     
     public enum Icon {
         case emoji(String), image(UIImage)
+
+        internal init?(rawImage: UIImage?, emojiString: String?) {
+            if let emoji = emojiString {
+                // self = .emoji(emoji) // produced an error
+                self.init(emojiString: emoji)
+            } else if let image = rawImage {
+                self.init(rawImage: image)
+            } else {
+                return nil
+            }
+        }
+
+        // Hack: Needed just for the initializer above. Otherwise it produced an error.
+        // self used before self.init
+        private init(emojiString: String) {
+            self = .emoji(emojiString)
+        }
         
         public init(rawImage: UIImage) {
             let size = rawImage.maxSize
