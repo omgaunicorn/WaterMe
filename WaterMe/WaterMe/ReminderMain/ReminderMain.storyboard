@@ -167,26 +167,26 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="468-Sm-OV2">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                        <rect key="frame" x="8" y="8" width="398" height="221"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Lvs-q0-INH">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="398" height="221"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lrx-3q-gxN">
-                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="398" height="221"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Dpm-mD-6Ju">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="221"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hay-DG-Nh1" customClass="DragTargetInstructionalView" customModule="WaterMe" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="398" height="221"/>
                                                                 <subviews>
                                                                     <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGa-EH-nJR">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="221"/>
                                                                         <state key="normal" title="Button"/>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Draag Remminders Herre" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jNl-14-8Vm">
-                                                                        <rect key="frame" x="20" y="105.66666666666667" width="374" height="21"/>
+                                                                        <rect key="frame" x="20" y="100" width="358" height="21"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -350,15 +350,23 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="A2T-Np-1PS" secondAttribute="bottom" id="75y-kJ-lwr"/>
                                     <constraint firstItem="nWN-u9-0ET" firstAttribute="top" secondItem="0Bz-NO-4fe" secondAttribute="top" id="7mp-jm-DWN"/>
-                                    <constraint firstItem="468-Sm-OV2" firstAttribute="leading" secondItem="0Bz-NO-4fe" secondAttribute="leading" id="9s6-mI-zKG"/>
+                                    <constraint firstItem="468-Sm-OV2" firstAttribute="leading" secondItem="0Bz-NO-4fe" secondAttribute="leading" id="9s6-mI-zKG">
+                                        <variation key="heightClass=regular" constant="8"/>
+                                    </constraint>
                                     <constraint firstAttribute="height" constant="233" id="E0m-N2-PYL"/>
-                                    <constraint firstAttribute="bottom" secondItem="468-Sm-OV2" secondAttribute="bottom" id="EBV-WS-W14"/>
+                                    <constraint firstAttribute="bottom" secondItem="468-Sm-OV2" secondAttribute="bottom" id="EBV-WS-W14">
+                                        <variation key="heightClass=regular" constant="4"/>
+                                    </constraint>
                                     <constraint firstAttribute="bottom" secondItem="nWN-u9-0ET" secondAttribute="bottom" id="Kb3-5E-y1s"/>
                                     <constraint firstAttribute="trailing" secondItem="nWN-u9-0ET" secondAttribute="trailing" id="Rx5-fy-p6u"/>
                                     <constraint firstItem="nWN-u9-0ET" firstAttribute="leading" secondItem="0Bz-NO-4fe" secondAttribute="leading" id="RzO-6V-44T"/>
-                                    <constraint firstAttribute="trailing" secondItem="468-Sm-OV2" secondAttribute="trailing" id="b9O-zY-S7T"/>
+                                    <constraint firstAttribute="trailing" secondItem="468-Sm-OV2" secondAttribute="trailing" id="b9O-zY-S7T">
+                                        <variation key="heightClass=regular" constant="8"/>
+                                    </constraint>
                                     <constraint firstItem="A2T-Np-1PS" firstAttribute="top" secondItem="0Bz-NO-4fe" secondAttribute="top" id="jbO-ug-N0C"/>
-                                    <constraint firstItem="468-Sm-OV2" firstAttribute="top" secondItem="0Bz-NO-4fe" secondAttribute="top" id="jyc-3a-lST"/>
+                                    <constraint firstItem="468-Sm-OV2" firstAttribute="top" secondItem="0Bz-NO-4fe" secondAttribute="top" id="jyc-3a-lST">
+                                        <variation key="heightClass=regular" constant="8"/>
+                                    </constraint>
                                     <constraint firstItem="A2T-Np-1PS" firstAttribute="leading" secondItem="0Bz-NO-4fe" secondAttribute="leading" id="njn-cs-bBs"/>
                                     <constraint firstAttribute="trailing" secondItem="A2T-Np-1PS" secondAttribute="trailing" id="zjo-Gp-6db"/>
                                 </constraints>
@@ -414,6 +422,7 @@
                         <outlet property="animationView" destination="A2T-Np-1PS" id="8mU-Jm-gwL"/>
                         <outlet property="dropTargetView" destination="0Bz-NO-4fe" id="TkM-Am-V1q"/>
                         <outlet property="dropTargetViewHeightConstraint" destination="E0m-N2-PYL" id="yEx-TM-7Ye"/>
+                        <outlet property="dropTargetVisualEffectView" destination="468-Sm-OV2" id="nGR-Fs-xRb"/>
                         <outlet property="instructionalView" destination="Hay-DG-Nh1" id="fV3-3C-vKC"/>
                     </connections>
                 </viewController>

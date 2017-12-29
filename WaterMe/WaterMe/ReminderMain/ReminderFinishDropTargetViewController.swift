@@ -34,6 +34,12 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     @IBOutlet private weak var animationView: WateringAnimationPlayerView?
     @IBOutlet private weak var dropTargetView: UIView?
     @IBOutlet private weak var dropTargetViewHeightConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var dropTargetVisualEffectView: UIVisualEffectView? {
+        didSet {
+            self.dropTargetVisualEffectView?.clipsToBounds = true
+            self.dropTargetVisualEffectView?.layer.cornerRadius = ReminderHeaderCollectionReusableView.style_backgroundViewCornerRadius
+        }
+    }
 
     var basicRC: BasicController?
     var proRC: ProController?
