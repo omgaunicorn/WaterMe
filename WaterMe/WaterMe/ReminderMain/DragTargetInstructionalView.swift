@@ -25,6 +25,8 @@ import UIKit
 
 class DragTargetInstructionalView: UIView {
 
+    var isDragInProgress = false
+
     @IBOutlet private weak var textLabel: UILabel?
     @IBOutlet private weak var circleButton: UIButton?
 
@@ -34,6 +36,10 @@ class DragTargetInstructionalView: UIView {
         self.textLabel?.alpha = 0
         self.circleButton?.alpha = 0
         self.circleButton?.setTitle(nil, for: .normal)
+        self.updateDynamicText()
+    }
+
+    private func updateDynamicText() {
         self.textLabel?.attributedText = NSAttributedString(string: "Drag and Drop Here", style: .dragInstructionalText)
     }
 
@@ -54,8 +60,6 @@ class DragTargetInstructionalView: UIView {
             return
         }
 
-        self.createCircleImage()
-
         UIView.animate(withDuration: 1, delay: 1, options: [], animations: {
             self.textLabel?.alpha = 1
         }, completion: { _ in
@@ -71,20 +75,23 @@ class DragTargetInstructionalView: UIView {
         })
     }
 
-    private func createCircleImage() {
+    private func updateCircleImageIfNeeded() {
+        let currentImage = self.circleButton?.image(for: .normal)
+        let bounds = self.circleButton?.bounds ?? .zero
+        guard currentImage?.size != bounds.size else { return }
+
         let circleStroke: CGFloat = 2
         let plusStroke: CGFloat = 3
         let plusRadius: CGFloat = 14
-        let bounds = self.circleButton?.bounds ?? .zero
         let renderer = UIGraphicsImageRenderer(bounds: bounds)
         let image = renderer.image() { _ in
             UIColor.black.setStroke()
-            let circleRect = CGRect(x: bounds.origin.x + circleStroke / 2,
-                                    y: bounds.origin.y + circleStroke / 2,
-                                    width: bounds.width - circleStroke,
-                                    height: bounds.height - circleStroke)
-            let circlePath = UIBezierPath(roundedRect: circleRect,
-                                          cornerRadius: ReminderCollectionViewCell.style_backgroundViewCornerRadius)
+            let circleDiam = (bounds.height - (circleStroke * 2)) * (9 / 10)
+            let circleRect = CGRect(x: (bounds.width / 2) - (circleDiam / 2),
+                                    y: (bounds.height / 2) - (circleDiam / 2),
+                                    width: circleDiam,
+                                    height: circleDiam)
+            let circlePath = UIBezierPath(ovalIn: circleRect)
             let plusVerticalPath = UIBezierPath()
             plusVerticalPath.move(to: CGPoint(x: bounds.size.width / 2,
                                               y: (bounds.size.height / 2) - plusRadius))
@@ -96,12 +103,23 @@ class DragTargetInstructionalView: UIView {
             plusHorizontalPath.addLine(to: CGPoint(x: (bounds.size.width / 2) + plusRadius,
                                                  y: bounds.size.height / 2))
             circlePath.lineWidth = circleStroke
-            circlePath.stroke(with: CGBlendMode.normal, alpha: 0.3)
+            circlePath.stroke(with: CGBlendMode.normal, alpha: 1.0)
             plusVerticalPath.lineWidth = plusStroke
             plusVerticalPath.stroke()
             plusHorizontalPath.lineWidth = plusStroke
             plusHorizontalPath.stroke()
         }
         self.circleButton?.setImage(image, for: .normal)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        guard self.isDragInProgress == false else { return }
+        self.updateCircleImageIfNeeded()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.updateDynamicText()
     }
 }

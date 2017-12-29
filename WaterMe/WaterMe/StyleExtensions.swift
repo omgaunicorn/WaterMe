@@ -26,6 +26,7 @@ import UIKit
 
 extension ReminderFinishDropTargetViewController {
     static let style_dropTargetViewCompactHeight: CGFloat = 88
+    static let style_dropTargetViewCompactHeightAccessibilityTextSizeEnabled: CGFloat = 132
 }
 
 extension ReminderCollectionViewCell {

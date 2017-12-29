@@ -137,7 +137,9 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
             let height: CGFloat
             switch verticalSizeClass {
             case .regular, .unspecified:
-                height = type(of: self).style_dropTargetViewCompactHeight
+                height = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory ?
+                    type(of: self).style_dropTargetViewCompactHeightAccessibilityTextSizeEnabled :
+                    type(of: self).style_dropTargetViewCompactHeight
             case .compact:
                 height = self.view.bounds.height
             }
@@ -158,7 +160,11 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
 
     // UI Updates
 
-    private var isDragInProgress = false
+    private var isDragInProgress = false {
+        didSet {
+            self.instructionalView?.isDragInProgress = self.isDragInProgress
+        }
+    }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
         self.isDragInProgress = true

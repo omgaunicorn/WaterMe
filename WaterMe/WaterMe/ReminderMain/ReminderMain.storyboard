@@ -182,7 +182,7 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                                                                 <subviews>
                                                                     <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGa-EH-nJR">
-                                                                        <rect key="frame" x="10" y="10" width="394" height="213"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                                                                         <state key="normal" title="Button"/>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Draag Remminders Herre" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jNl-14-8Vm">
@@ -196,18 +196,18 @@
                                                                 <constraints>
                                                                     <constraint firstItem="jNl-14-8Vm" firstAttribute="leading" secondItem="Hay-DG-Nh1" secondAttribute="leading" constant="20" symbolic="YES" id="8VS-nh-6jS"/>
                                                                     <constraint firstItem="tGa-EH-nJR" firstAttribute="leading" secondItem="Hay-DG-Nh1" secondAttribute="leading" constant="114" id="BVs-o3-JVs">
-                                                                        <variation key="heightClass=regular" constant="10"/>
+                                                                        <variation key="heightClass=regular" constant="0.0"/>
                                                                     </constraint>
                                                                     <constraint firstAttribute="bottom" secondItem="tGa-EH-nJR" secondAttribute="bottom" constant="23" id="DF7-im-YqB">
-                                                                        <variation key="heightClass=regular" constant="10"/>
+                                                                        <variation key="heightClass=regular" constant="0.0"/>
                                                                     </constraint>
                                                                     <constraint firstAttribute="trailing" secondItem="jNl-14-8Vm" secondAttribute="trailing" constant="20" symbolic="YES" id="Q3a-mI-ggV"/>
                                                                     <constraint firstAttribute="trailing" secondItem="tGa-EH-nJR" secondAttribute="trailing" constant="113.67" id="Xca-AO-9Lf">
-                                                                        <variation key="heightClass=regular" constant="10"/>
+                                                                        <variation key="heightClass=regular" constant="0.0"/>
                                                                     </constraint>
                                                                     <constraint firstItem="jNl-14-8Vm" firstAttribute="centerY" secondItem="Hay-DG-Nh1" secondAttribute="centerY" id="awD-9S-YPj"/>
                                                                     <constraint firstItem="tGa-EH-nJR" firstAttribute="top" secondItem="Hay-DG-Nh1" secondAttribute="top" constant="23.670000000000002" id="mlh-zd-ejH">
-                                                                        <variation key="heightClass=regular" constant="10"/>
+                                                                        <variation key="heightClass=regular" constant="0.0"/>
                                                                     </constraint>
                                                                 </constraints>
                                                                 <variation key="default">
