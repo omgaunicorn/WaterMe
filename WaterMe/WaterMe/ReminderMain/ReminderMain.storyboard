@@ -7,7 +7,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -183,21 +182,8 @@
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="233"/>
                                                                 <subviews>
                                                                     <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGa-EH-nJR">
-                                                                        <rect key="frame" x="114.00000000000001" y="23.666666666666671" width="186.33333333333337" height="186.33333333333331"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" secondItem="tGa-EH-nJR" secondAttribute="height" multiplier="1:1" id="gBv-FS-uof"/>
-                                                                        </constraints>
+                                                                        <rect key="frame" x="10" y="10" width="394" height="213"/>
                                                                         <state key="normal" title="Button"/>
-                                                                        <variation key="default">
-                                                                            <mask key="constraints">
-                                                                                <exclude reference="gBv-FS-uof"/>
-                                                                            </mask>
-                                                                        </variation>
-                                                                        <variation key="heightClass=regular">
-                                                                            <mask key="constraints">
-                                                                                <include reference="gBv-FS-uof"/>
-                                                                            </mask>
-                                                                        </variation>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Draag Remminders Herre" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jNl-14-8Vm">
                                                                         <rect key="frame" x="20" y="105.66666666666667" width="374" height="21"/>
@@ -208,21 +194,31 @@
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
-                                                                    <constraint firstItem="tGa-EH-nJR" firstAttribute="centerX" secondItem="Hay-DG-Nh1" secondAttribute="centerX" id="21d-mv-ZYE"/>
                                                                     <constraint firstItem="jNl-14-8Vm" firstAttribute="leading" secondItem="Hay-DG-Nh1" secondAttribute="leading" constant="20" symbolic="YES" id="8VS-nh-6jS"/>
-                                                                    <constraint firstItem="tGa-EH-nJR" firstAttribute="centerY" secondItem="Hay-DG-Nh1" secondAttribute="centerY" id="JGh-AU-kVE"/>
+                                                                    <constraint firstItem="tGa-EH-nJR" firstAttribute="leading" secondItem="Hay-DG-Nh1" secondAttribute="leading" constant="114" id="BVs-o3-JVs">
+                                                                        <variation key="heightClass=regular" constant="10"/>
+                                                                    </constraint>
+                                                                    <constraint firstAttribute="bottom" secondItem="tGa-EH-nJR" secondAttribute="bottom" constant="23" id="DF7-im-YqB">
+                                                                        <variation key="heightClass=regular" constant="10"/>
+                                                                    </constraint>
                                                                     <constraint firstAttribute="trailing" secondItem="jNl-14-8Vm" secondAttribute="trailing" constant="20" symbolic="YES" id="Q3a-mI-ggV"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="tGa-EH-nJR" secondAttribute="trailing" constant="113.67" id="Xca-AO-9Lf">
+                                                                        <variation key="heightClass=regular" constant="10"/>
+                                                                    </constraint>
                                                                     <constraint firstItem="jNl-14-8Vm" firstAttribute="centerY" secondItem="Hay-DG-Nh1" secondAttribute="centerY" id="awD-9S-YPj"/>
-                                                                    <constraint firstItem="tGa-EH-nJR" firstAttribute="height" secondItem="Hay-DG-Nh1" secondAttribute="height" multiplier="8/10" id="gHV-ld-1Ek"/>
+                                                                    <constraint firstItem="tGa-EH-nJR" firstAttribute="top" secondItem="Hay-DG-Nh1" secondAttribute="top" constant="23.670000000000002" id="mlh-zd-ejH">
+                                                                        <variation key="heightClass=regular" constant="10"/>
+                                                                    </constraint>
                                                                 </constraints>
                                                                 <variation key="default">
                                                                     <mask key="subviews">
                                                                         <exclude reference="tGa-EH-nJR"/>
                                                                     </mask>
                                                                     <mask key="constraints">
-                                                                        <exclude reference="21d-mv-ZYE"/>
-                                                                        <exclude reference="JGh-AU-kVE"/>
-                                                                        <exclude reference="gHV-ld-1Ek"/>
+                                                                        <exclude reference="BVs-o3-JVs"/>
+                                                                        <exclude reference="DF7-im-YqB"/>
+                                                                        <exclude reference="Xca-AO-9Lf"/>
+                                                                        <exclude reference="mlh-zd-ejH"/>
                                                                     </mask>
                                                                 </variation>
                                                                 <variation key="heightClass=regular">
@@ -230,9 +226,10 @@
                                                                         <include reference="tGa-EH-nJR"/>
                                                                     </mask>
                                                                     <mask key="constraints">
-                                                                        <include reference="21d-mv-ZYE"/>
-                                                                        <include reference="JGh-AU-kVE"/>
-                                                                        <include reference="gHV-ld-1Ek"/>
+                                                                        <include reference="BVs-o3-JVs"/>
+                                                                        <include reference="DF7-im-YqB"/>
+                                                                        <include reference="Xca-AO-9Lf"/>
+                                                                        <include reference="mlh-zd-ejH"/>
                                                                     </mask>
                                                                 </variation>
                                                                 <connections>

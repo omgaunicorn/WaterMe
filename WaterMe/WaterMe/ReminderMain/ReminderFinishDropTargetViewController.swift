@@ -52,9 +52,15 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         }
     }
 
+    private var viewDidAppearOnce = false
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.instructionalView?.performInstructionalAnimation(completion: nil)
+
+        if self.viewDidAppearOnce == false {
+            self.viewDidAppearOnce = true
+            self.instructionalView?.performInstructionalAnimation(completion: nil)
+        }
     }
 
     // MARK: UIDropInteractionDelegate
