@@ -40,7 +40,7 @@ class DragTargetInstructionalView: UIView {
     }
 
     private func updateDynamicText() {
-        self.textLabel?.attributedText = NSAttributedString(string: "Drag and Drop Here", style: .dragInstructionalText)
+        self.textLabel?.attributedText = NSAttributedString(string: "Drag and Drop Here", style: .dragInstructionalText(self.tintColor))
     }
 
     func resetInstructionAnimation(completion: (() -> Void)?) {
@@ -116,6 +116,11 @@ class DragTargetInstructionalView: UIView {
         super.layoutSubviews()
         guard self.isDragInProgress == false else { return }
         self.updateCircleImageIfNeeded()
+    }
+
+    override func tintColorDidChange() {
+        super.tintColorDidChange()
+        self.updateDynamicText()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

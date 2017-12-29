@@ -24,6 +24,15 @@
 import WaterMeData
 import UIKit
 
+extension UIApplication {
+    static let style_tintColor = UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)
+    static let style_visualEffectViewBackgroundColor = UIApplication.style_tintColor.withAlphaComponent(0.25)
+    class func style_configure() {
+        UIView.appearance().tintColor = self.style_tintColor
+        UIVisualEffectView.appearance().backgroundColor = self.style_visualEffectViewBackgroundColor
+    }
+}
+
 extension ReminderFinishDropTargetViewController {
     static let style_dropTargetViewCompactHeight: CGFloat = 88
     static let style_dropTargetViewCompactHeightAccessibilityTextSizeEnabled: CGFloat = 132
@@ -87,13 +96,13 @@ enum Style {
     case reminderVesselCollectionViewCellPrimary
     case reminderVesselCollectionViewCellPrimaryDisabled
     case reminderVesselCollectionViewCellSecondary
-    case dragInstructionalText
+    case dragInstructionalText(UIColor)
     var attributes: [NSAttributedStringKey : Any] {
         switch self {
-        case .dragInstructionalText:
+        case .dragInstructionalText(let color):
             return [
                 .font : Font.bodyPlusPlus,
-                .foregroundColor : Color.textPrimary,
+                .foregroundColor : color,
                 .paragraphStyle : type(of: self).centerStyle
             ]
         case .reminderVesselCollectionViewCellPrimary:

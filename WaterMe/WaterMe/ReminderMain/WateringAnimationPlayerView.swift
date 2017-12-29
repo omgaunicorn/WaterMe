@@ -26,6 +26,8 @@ import UIKit
 
 class WateringAnimationPlayerView: UIView {
 
+    @IBOutlet private weak var hairlineView: UIView?
+
     var hoverState: DragAndDropPlayerManager.HoverState {
         set { self.videoManager.hoverState = newValue }
         get { return self.videoManager.hoverState }
@@ -71,6 +73,11 @@ class WateringAnimationPlayerView: UIView {
         self.videoLayer.videoGravity = .resizeAspect
         self.videoLayer.opacity = 0
         self.videoLayer.player = self.videoManager.player
+    }
+
+    override func tintColorDidChange() {
+        super.tintColorDidChange()
+        self.hairlineView?.backgroundColor = self.tintColor
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
