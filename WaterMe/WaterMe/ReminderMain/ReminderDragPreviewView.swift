@@ -37,7 +37,7 @@ class ReminderDragPreviewView: UIView {
     class func dragPreview(for reminder: Reminder) -> UIDragPreview {
         let v = self.newView(for: reminder)
         let p = UIDragPreview(view: v)
-        p.parameters.visiblePath = UIBezierPath(roundedRect: v.bounds, cornerRadius: ReminderCollectionViewCell.style_dragAndDropPreviewCornerRadius)
+        p.parameters.visiblePath = UIBezierPath(roundedRect: v.bounds, cornerRadius: UIApplication.style_cornerRadius)
         return p
     }
 

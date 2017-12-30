@@ -36,8 +36,24 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
         return vc
     }
 
+    @IBOutlet private weak var contentView: UIView?
+    @IBOutlet private weak var titleLabel: UILabel?
+    @IBOutlet private weak var subtitleLabel: UILabel?
+    @IBOutlet private weak var bodyLabel: UILabel?
+    @IBOutlet private weak var progressView: UIProgressView?
+    @IBOutlet private weak var migrateButton: UIButton?
+    @IBOutlet private weak var cancelButton: UIButton?
+    @IBOutlet private weak var deleteButton: UIButton?
+
     private var completionHandler: ((UIViewController) -> Void)!
     private var migrator: CoreDataMigrator!
     var basicRC: BasicController?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.contentView?.layer.cornerRadius = UIApplication.style_cornerRadius
+        self.progressView?.observedProgress = self.migrator.progress
+    }
 
 }

@@ -43,6 +43,8 @@ class CoreDataMigrator {
         return CoreDataMigrator.storeDirectory.appendingPathComponent("WaterMeData.sqlite")
     }()
 
+    let progress = Progress()
+
     var numberOfPlantsToMigrate: Int {
         return try! self.container.viewContext.count(for: NSFetchRequest(entityName: String(describing: PlantEntity.self)))
     }
@@ -53,28 +55,31 @@ class CoreDataMigrator {
         let sqLiteURL = CoreDataMigrator.storeURL
         // if the file doesn't exist then they never had the old version of the app.
         guard FileManager.default.fileExists(atPath: sqLiteURL.path) == true else { return nil }
-        let container = WaterMePersistentContainer(name: "WaterMeData")
-        container.persistentStoreDescriptions.first?.isReadOnly = true
-        container.loadPersistentStores() { _, error  in
+        self.container = WaterMePersistentContainer(name: "WaterMeData")
+        self.container.persistentStoreDescriptions.first?.isReadOnly = true
+        self.container.loadPersistentStores() { _, error  in
             guard error == nil else {
                 let error = "Error Loading Core Data Model. This leaves the Migrator in an invalid state: \(error!)"
                 log.error(error)
                 assertionFailure(error)
                 return
             }
+            let count = self.numberOfPlantsToMigrate
+            self.progress.totalUnitCount = Int64(count)
+            self.progress.completedUnitCount = 0
         }
         log.debug("Loaded Core Data Stack: Ready for Migration.")
-        self.container = container
     }
 
     func performMigration(with basicRC: BasicController, completion: ((Bool) -> Void)?) -> Progress {
         let count = self.numberOfPlantsToMigrate
-        let progress = Progress(totalUnitCount: Int64(count))
+        self.progress.totalUnitCount = Int64(count)
+        self.progress.completedUnitCount = 0
         self.container.performBackgroundTask() { c in
             let plants = try! c.fetch(NSFetchRequest(entityName: String(describing: PlantEntity.self)))
             var migrated = 0 {
                 didSet {
-                    progress.completedUnitCount = Int64(migrated)
+                    self.progress.completedUnitCount = Int64(migrated)
                 }
             }
             for thing in plants {
@@ -104,6 +109,6 @@ class CoreDataMigrator {
             }
             completion?(migrated == count)
         }
-        return progress
+        return self.progress
     }
 }

@@ -159,7 +159,7 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
     func collectionView(_ collectionView: UICollectionView, dragPreviewParametersForItemAt indexPath: IndexPath) -> UIDragPreviewParameters? {
         guard let cell = collectionView.cellForItem(at: indexPath) else { return nil }
         let p = UIDragPreviewParameters()
-        p.visiblePath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: ReminderCollectionViewCell.style_dragAndDropPreviewCornerRadius)
+        p.visiblePath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: UIApplication.style_cornerRadius)
         return p
     }
 }

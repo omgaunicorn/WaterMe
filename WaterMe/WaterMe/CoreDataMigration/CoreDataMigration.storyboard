@@ -6,6 +6,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -21,45 +22,73 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tRW-yr-Xbb">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tRW-yr-Xbb">
                                 <rect key="frame" x="27" y="183.5" width="320" height="320"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p3q-0E-dFQ">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pHc-DA-1ih">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="61.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="466"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YYC-f4-sIQ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="61.5"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="YYC-f4-sIQ">
+                                                        <rect key="frame" x="20" y="20" width="280" height="426"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvp-ln-oJN">
-                                                                <rect key="frame" x="139" y="0.0" width="42" height="20.5"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoadingIcon-AllParts" translatesAutoresizingMaskIntoConstraints="NO" id="whF-N4-baW">
+                                                                <rect key="frame" x="55" y="0.0" width="170" height="88"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="88" id="wgA-2Z-GX1"/>
+                                                                </constraints>
+                                                            </imageView>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WaterMe 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bvp-ln-oJN">
+                                                                <rect key="frame" x="79" y="96" width="122.5" height="31.5"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uRw-Ju-xf3">
-                                                                <rect key="frame" x="139" y="20.5" width="42" height="20.5"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Data Migration" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uRw-Ju-xf3">
+                                                                <rect key="frame" x="76" y="135.5" width="128" height="24"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zqK-ue-aJE">
-                                                                <rect key="frame" x="139" y="41" width="42" height="20.5"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zqK-ue-aJE">
+                                                                <rect key="frame" x="0.0" y="167.5" width="280" height="108.5"/>
+                                                                <string key="text">Thanks for using WaterMe. WaterMe 2 is an all new version with lots of new features. The upgrade requires a one time migration of your plants. Choose an option below.</string>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
+                                                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="7gQ-mO-mkG">
+                                                                <rect key="frame" x="0.0" y="284" width="280" height="2"/>
+                                                            </progressView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KqR-Zx-YMo">
+                                                                <rect key="frame" x="113" y="294" width="54" height="44"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                                                <state key="normal" title="Start"/>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CK1-Tk-oEq">
+                                                                <rect key="frame" x="84.5" y="346" width="111" height="36"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                                <state key="normal" title="Skip for Now"/>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="siJ-KH-Ae9">
+                                                                <rect key="frame" x="81" y="390" width="118" height="36"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                                <state key="normal" title="Don't Migrate"/>
+                                                            </button>
                                                         </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="7gQ-mO-mkG" firstAttribute="width" secondItem="YYC-f4-sIQ" secondAttribute="width" id="e3p-Ee-iLi"/>
+                                                        </constraints>
                                                     </stackView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="YYC-f4-sIQ" secondAttribute="trailing" id="Fkn-l0-pjB"/>
-                                                    <constraint firstItem="YYC-f4-sIQ" firstAttribute="top" secondItem="pHc-DA-1ih" secondAttribute="top" id="aDX-Qf-i0f"/>
-                                                    <constraint firstAttribute="bottom" secondItem="YYC-f4-sIQ" secondAttribute="bottom" id="jZ1-6T-wGB"/>
-                                                    <constraint firstItem="YYC-f4-sIQ" firstAttribute="leading" secondItem="pHc-DA-1ih" secondAttribute="leading" id="t19-7l-CYF"/>
+                                                    <constraint firstAttribute="trailing" secondItem="YYC-f4-sIQ" secondAttribute="trailing" constant="20" symbolic="YES" id="Fkn-l0-pjB"/>
+                                                    <constraint firstItem="YYC-f4-sIQ" firstAttribute="top" secondItem="pHc-DA-1ih" secondAttribute="top" constant="20" symbolic="YES" id="aDX-Qf-i0f"/>
+                                                    <constraint firstAttribute="bottom" secondItem="YYC-f4-sIQ" secondAttribute="bottom" constant="20" symbolic="YES" id="jZ1-6T-wGB"/>
+                                                    <constraint firstItem="YYC-f4-sIQ" firstAttribute="leading" secondItem="pHc-DA-1ih" secondAttribute="leading" constant="20" symbolic="YES" id="t19-7l-CYF"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -94,10 +123,23 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HCO-P4-dIc"/>
                     </view>
+                    <connections>
+                        <outlet property="bodyLabel" destination="zqK-ue-aJE" id="FA5-cW-lI4"/>
+                        <outlet property="cancelButton" destination="CK1-Tk-oEq" id="zki-su-bIP"/>
+                        <outlet property="contentView" destination="tRW-yr-Xbb" id="Rjc-9a-5vS"/>
+                        <outlet property="deleteButton" destination="siJ-KH-Ae9" id="qcZ-bx-ace"/>
+                        <outlet property="migrateButton" destination="KqR-Zx-YMo" id="6Un-Gr-zfc"/>
+                        <outlet property="progressView" destination="7gQ-mO-mkG" id="3i4-HY-B3l"/>
+                        <outlet property="subtitleLabel" destination="uRw-Ju-xf3" id="qHg-Hq-f0O"/>
+                        <outlet property="titleLabel" destination="bvp-ln-oJN" id="RQk-rE-LsO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mHG-aC-G3d" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="150" y="153"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="LoadingIcon-AllParts" width="170" height="170"/>
+    </resources>
 </document>

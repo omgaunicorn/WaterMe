@@ -27,6 +27,7 @@ import UIKit
 extension UIApplication {
     static let style_tintColor = UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)
     static let style_visualEffectViewBackgroundColor = UIApplication.style_tintColor.withAlphaComponent(0.25)
+    static let style_cornerRadius: CGFloat = 8
     class func style_configure() {
         UIView.appearance().tintColor = self.style_tintColor
         UIVisualEffectView.appearance().backgroundColor = self.style_visualEffectViewBackgroundColor
@@ -41,7 +42,6 @@ extension ReminderFinishDropTargetViewController {
 extension ReminderCollectionViewCell {
     static let style_emojiImageViewWidth: CGFloat = 100
     static let style_emojiImageViewWidthAccessibility: CGFloat = 170
-    static let style_dragAndDropPreviewCornerRadius: CGFloat = 8
 }
 
 extension UITableViewCell {
