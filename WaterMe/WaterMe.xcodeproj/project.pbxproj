@@ -85,6 +85,8 @@
 		50DFA8B71ED7B27F000D2956 /* SynchronizingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */; };
 		50DFA8B91ED7BCE0000D2956 /* ReceiptWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B81ED7BCE0000D2956 /* ReceiptWatcher.swift */; };
 		50E3F2C91FF6EF35003245E3 /* ImageEmojiObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E3F2C81FF6EF35003245E3 /* ImageEmojiObject.swift */; };
+		50E3F2CB1FF70D27003245E3 /* CoreDataMigration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */; };
+		50E3F2CD1FF70D3B003245E3 /* CoreDataMigratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */; };
 		50E8B1D51EDF79E700ACCDAF /* ReminderVesselMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E8B1D31EDF79E700ACCDAF /* ReminderVesselMain.storyboard */; };
 		50E8B1D61EDF79E700ACCDAF /* ReminderVesselMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1D41EDF79E700ACCDAF /* ReminderVesselMainViewController.swift */; };
 		50E8B1DF1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1DD1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift */; };
@@ -202,6 +204,8 @@
 		50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizingViewController.swift; sourceTree = "<group>"; };
 		50DFA8B81ED7BCE0000D2956 /* ReceiptWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptWatcher.swift; sourceTree = "<group>"; };
 		50E3F2C81FF6EF35003245E3 /* ImageEmojiObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEmojiObject.swift; sourceTree = "<group>"; };
+		50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CoreDataMigration.storyboard; sourceTree = "<group>"; };
+		50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMigratorViewController.swift; sourceTree = "<group>"; };
 		50E8B1D31EDF79E700ACCDAF /* ReminderVesselMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReminderVesselMain.storyboard; sourceTree = "<group>"; };
 		50E8B1D41EDF79E700ACCDAF /* ReminderVesselMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselMainViewController.swift; sourceTree = "<group>"; };
 		50E8B1DD1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -473,6 +477,8 @@
 		50F388DE1FF6D9870031ED45 /* CoreDataMigration */ = {
 			isa = PBXGroup;
 			children = (
+				50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */,
+				50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */,
 				50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */,
 				50E3F2C81FF6EF35003245E3 /* ImageEmojiObject.swift */,
 				50F388E11FF6DA490031ED45 /* WaterMeData.xcdatamodeld */,
@@ -660,6 +666,7 @@
 				501F922A1EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib in Resources */,
 				5075B48E1FF178DC007B42D8 /* ReminderDragPreviewView.xib in Resources */,
 				50BDC0401F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib in Resources */,
+				50E3F2CB1FF70D27003245E3 /* CoreDataMigration.storyboard in Resources */,
 				50BB0F6C1EC001C200850FF4 /* Videos in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -947,6 +954,7 @@
 				50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */,
 				50E8B1DF1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift in Sources */,
 				50B511A71EFE144700ED1DF4 /* ReminderKindTableViewCell.swift in Sources */,
+				50E3F2CD1FF70D3B003245E3 /* CoreDataMigratorViewController.swift in Sources */,
 				50A3DF971EE3331D00F0B966 /* StyleExtensions.swift in Sources */,
 				50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */,
 				50E3F2C91FF6EF35003245E3 /* ImageEmojiObject.swift in Sources */,
