@@ -33,7 +33,7 @@ class WaterMePersistentContainer: NSPersistentContainer {
 
 protocol CoreDataMigratable {
     var progress: Progress { get }
-    func start(with: BasicController, completion: @escaping (Bool) -> Void) -> Progress
+    func start(with: BasicController, completion: @escaping (Bool) -> Void)
     func deleteCoreDataStoreWithoutMigrating()
 }
 
@@ -77,7 +77,7 @@ class CoreDataMigrator: CoreDataMigratable {
         log.debug("Loaded Core Data Stack: Ready for Migration.")
     }
 
-    func start(with basicRC: BasicController, completion: @escaping (Bool) -> Void) -> Progress {
+    func start(with basicRC: BasicController, completion: @escaping (Bool) -> Void) {
         let count = self.numberOfPlantsToMigrate
         self.progress.totalUnitCount = Int64(count)
         self.progress.completedUnitCount = 0
@@ -89,6 +89,8 @@ class CoreDataMigrator: CoreDataMigratable {
                 }
             }
             for thing in plants {
+                // TODO: Remove sleep to make migration slower
+                sleep(2)
                 print("----- BEGIN PLANT -----")
                 guard let plant = thing as? PlantEntity else { continue }
                 print(plant.cd_00100_nameString!)
@@ -115,7 +117,6 @@ class CoreDataMigrator: CoreDataMigratable {
             }
             completion(migrated == count)
         }
-        return self.progress
     }
 
     func deleteCoreDataStoreWithoutMigrating() {

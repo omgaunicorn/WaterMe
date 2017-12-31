@@ -40,8 +40,7 @@ class ReminderGedegDataSource: ReminderGedeg {
 
     override func batchedUpdates(_ updates: [Update]) {
         guard updates.isEmpty == false else { return }
-        self.collectionView?.reloadData()
-        /*
+//        self.collectionView?.reloadData()
         self.collectionView?.performBatchUpdates({
             for u in updates {
                 self.collectionView?.insertItems(at: u.insertions.map({ IndexPath(row: $0, section: u.section.rawValue) }))
@@ -49,6 +48,5 @@ class ReminderGedegDataSource: ReminderGedeg {
                 self.collectionView?.reloadItems(at: u.modifications.map({ IndexPath(row: $0, section: u.section.rawValue) }))
             }
         }, completion: nil)
-         */
     }
 }

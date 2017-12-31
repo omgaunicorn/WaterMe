@@ -49,7 +49,7 @@ extension CoreDataMigratorViewController {
 
 class CoreDataMigratorViewController: UIViewController, HasBasicController {
 
-    class func newVC(migrator: CoreDataMigratable, basicRC: BasicController, completion: @escaping (UIViewController) -> Void) -> UIViewController {
+    class func newVC(migrator: CoreDataMigratable, basicRC: BasicController, completion: @escaping (UIViewController, Bool) -> Void) -> UIViewController {
         let sb = UIStoryboard(name: "CoreDataMigration", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         var vc = sb.instantiateInitialViewController() as! CoreDataMigratorViewController
@@ -68,7 +68,7 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
     @IBOutlet private weak var cancelButton: UIButton?
     @IBOutlet private weak var deleteButton: UIButton?
 
-    private var completionHandler: ((UIViewController) -> Void)!
+    private var completionHandler: ((UIViewController, Bool) -> Void)!
     private var migrator: CoreDataMigratable!
     var basicRC: BasicController?
 
@@ -87,6 +87,31 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
         self.migrateButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.migrateButtonTitle, style: .migratorPrimaryButton(tintColor)), for: .normal)
         self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.cancelButtonTitle, style: .migratorSecondaryButton(tintColor)), for: .normal)
         self.deleteButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.deleteButtonTitle, style: .migratorSecondaryButton(tintColor)), for: .normal)
+    }
+
+    @IBAction private func migrateButtonTapped(_ sender: Any) {
+        guard let basicRC = self.basicRC else {
+            let message = "RealmController missing on a VC where this should not be possible."
+            log.error(message)
+            assertionFailure(message)
+            self.completionHandler(self, false)
+            return
+        }
+        // this VC could disappear while the migration is in progress
+        // AND the VC does not own the migrator.
+        // So it IS valid for the VC to be NIL while the migrator is working
+        // So this weak self is required
+        self.migrator.start(with: basicRC) { [weak self] success in
+            self?.completionHandler(self!, success)
+        }
+    }
+
+    @IBAction private func cancelButtonTapped(_ sender: Any) {
+        self.completionHandler(self, false)
+    }
+
+    @IBAction private func deleteButtonTapped(_ sender: Any) {
+
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

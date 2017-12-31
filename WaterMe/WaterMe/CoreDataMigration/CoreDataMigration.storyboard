@@ -78,16 +78,25 @@
                                                                         <rect key="frame" x="47.5" y="0.0" width="68" height="44"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                                         <state key="normal" title="Staart"/>
+                                                                        <connections>
+                                                                            <action selector="migrateButtonTapped:" destination="bbV-Xm-AwN" eventType="touchUpInside" id="x8W-ZD-Y0n"/>
+                                                                        </connections>
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CK1-Tk-oEq">
                                                                         <rect key="frame" x="0.0" y="44" width="163" height="36"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                                         <state key="normal" title="Skippp for Nowww"/>
+                                                                        <connections>
+                                                                            <action selector="cancelButtonTapped:" destination="bbV-Xm-AwN" eventType="touchUpInside" id="qWd-H4-2a2"/>
+                                                                        </connections>
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="siJ-KH-Ae9">
                                                                         <rect key="frame" x="1.5" y="80" width="160" height="36"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                                         <state key="normal" title="Donnn't Migraaate"/>
+                                                                        <connections>
+                                                                            <action selector="deleteButtonTapped:" destination="bbV-Xm-AwN" eventType="touchUpInside" id="4i0-mw-Lrk"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                             </stackView>
