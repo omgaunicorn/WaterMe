@@ -87,28 +87,62 @@ enum Style {
     case selectableTableViewCellHelper
     case readOnlyTableViewCell
     case textInputTableViewCell
+    case migratorTitle
+    case migratorSubtitle
+    case migratorBody
+    case migratorPrimaryButton(UIColor)
+    case migratorSecondaryButton(UIColor)
     case emojiSuperSmall
     case emojiSmall(accessibilityFontSizeEnabled: Bool)
     case emojiLarge(accessibilityFontSizeEnabled: Bool)
     case reminderVesselDragPreviewViewPrimary
     case reminderVesselDragPreviewViewPrimaryDisabled
     case reminderVesselDragPreviewViewSecondary
-    case reminderVesselCollectionViewCellPrimary
+    case reminderVesselCollectionViewCellPrimary(UIColor?)
     case reminderVesselCollectionViewCellPrimaryDisabled
     case reminderVesselCollectionViewCellSecondary
     case dragInstructionalText(UIColor)
     var attributes: [NSAttributedStringKey : Any] {
         switch self {
+        case .migratorTitle:
+            return [
+                .font : Font.bodyPlusPlusPlus,
+                .foregroundColor : Color.textPrimary,
+                .paragraphStyle : type(of: self).centerStyle
+            ]
+        case .migratorSubtitle:
+            return [
+                .font : Font.bodyPlusBold,
+                .foregroundColor : Color.textPrimary,
+                .paragraphStyle : type(of: self).centerStyle
+            ]
+        case .migratorBody:
+            return [
+                .font : Font.body,
+                .foregroundColor : Color.textPrimary
+            ]
+        case .migratorPrimaryButton(let tintColor):
+            return [
+                .font : Font.bodyPlus,
+                .foregroundColor : tintColor,
+                .paragraphStyle : type(of: self).centerStyle
+            ]
+        case .migratorSecondaryButton(let tintColor):
+            return [
+                .font : Font.body,
+                .foregroundColor : tintColor,
+                .paragraphStyle : type(of: self).centerStyle
+            ]
         case .dragInstructionalText(let color):
             return [
                 .font : Font.bodyPlusPlus,
                 .foregroundColor : color,
                 .paragraphStyle : type(of: self).centerStyle
             ]
-        case .reminderVesselCollectionViewCellPrimary:
+        case .reminderVesselCollectionViewCellPrimary(let color):
             return [
                 .font : Font.bodyPlus,
-                .foregroundColor : Color.textPrimary,
+                .foregroundColor : color ?? Color.textPrimary,
                 .paragraphStyle : type(of: self).centerStyle
             ]
         case .reminderVesselCollectionViewCellPrimaryDisabled:
@@ -197,6 +231,9 @@ enum Style {
         static var bodyMinusBold: UIFont {
             return UIFont.preferredFont(forTextStyle: .subheadline)
         }
+        static var bodyPlusBold: UIFont {
+            return UIFont.preferredFont(forTextStyle: .headline)
+        }
         static var bodyIgnoringDynamicType: UIFont {
             return UIFont.systemFont(ofSize: 18)
         }
@@ -216,12 +253,8 @@ enum Style {
 }
 
 extension NSAttributedString {
-    convenience init(string: String, style: Style, withTintColorFromView view: UIView? = nil) {
-        var attributes = style.attributes
-        if let view = view {
-            attributes[NSAttributedStringKey.foregroundColor] = view.tintColor
-        }
-        self.init(string: string, attributes: attributes)
+    convenience init(string: String, style: Style) {
+        self.init(string: string, attributes: style.attributes)
     }
     
     func appending(_ rhs: NSAttributedString) -> NSAttributedString {

@@ -35,7 +35,8 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
     var iconButtonTapped: (() -> Void)?
     
     func configure(with icon: ReminderVessel.Icon?) {
-        let cameraString = NSAttributedString(string: ReminderVessel.LocalizedString.photo, style: Style.reminderVesselCollectionViewCellPrimary, withTintColorFromView: self)
+        let tintColor = self.tintColor
+        let cameraString = NSAttributedString(string: ReminderVessel.LocalizedString.photo, style: Style.reminderVesselCollectionViewCellPrimary(tintColor))
         self.cameraButton?.setAttributedTitle(cameraString, for: .normal)
         self.emojiImageView?.setIcon(icon)
     }
