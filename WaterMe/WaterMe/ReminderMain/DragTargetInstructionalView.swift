@@ -60,21 +60,15 @@ class DragTargetInstructionalView: UIView {
             return
         }
 
-        UIView.animate(withDuration: type(of: self).style_animationDurationNormal,
-                       delay: type(of: self).style_animationDelayNormal,
-                       options: [],
-                       animations: {
-                        self.textLabel?.alpha = 1
+        let typeOfSelf = type(of: self)
+        typeOfSelf.priv_animateNormalDelayNormal({
+            self.textLabel?.alpha = 1
         }, completion: { _ in
-            UIView.animate(withDuration: type(of: self).style_animationDurationLong,
-                           delay: type(of: self).style_animationDelayLong,
-                           options: [],
-                           animations: {
-                            self.textLabel?.alpha = 0
+            typeOfSelf.priv_animateLongDelayLong({
+                self.textLabel?.alpha = 0
             }, completion: { _ in
-                UIView.animate(withDuration: type(of: self).style_animationDurationNormal,
-                               animations: {
-                                self.circleButton?.alpha = 1
+                typeOfSelf.priv_animateNormal({
+                    self.circleButton?.alpha = 1
                 }, completion: { _ in
                     completion?()
                 })
@@ -133,5 +127,29 @@ class DragTargetInstructionalView: UIView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         self.updateDynamicText()
+    }
+}
+
+private extension DragTargetInstructionalView {
+    private class func priv_animateNormal(_ animations: @escaping () -> Void, completion: @escaping ((Bool) -> Void)) {
+        UIView.animate(withDuration: self.style_animationDurationNormal,
+                       delay: 0,
+                       options: [],
+                       animations: animations,
+                       completion: completion)
+    }
+    private class func priv_animateNormalDelayNormal(_ animations: @escaping () -> Void, completion: @escaping ((Bool) -> Void)) {
+        UIView.animate(withDuration: self.style_animationDurationNormal,
+                     delay: self.style_animationDelayNormal,
+                     options: [],
+                     animations: animations,
+                     completion: completion)
+    }
+    private class func priv_animateLongDelayLong(_ animations: @escaping () -> Void, completion: @escaping ((Bool) -> Void)) {
+        UIView.animate(withDuration: self.style_animationDurationLong,
+                       delay: self.style_animationDelayLong,
+                       options: [],
+                       animations: animations,
+                       completion: completion)
     }
 }

@@ -254,3 +254,20 @@ extension UIAlertController {
         presentingVC.present(actionSheet, animated: true, completion: nil)
     }
 }
+
+extension UIView {
+    class func style_animateNormal(_ animations: @escaping () -> Void, completion: @escaping ((Bool) -> Void)) {
+        self.animate(withDuration: UIApplication.style_animationDurationNormal,
+                     delay: 0,
+                     options: [],
+                     animations: animations,
+                     completion: completion)
+    }
+    class func style_animateNormal(_ animations: @escaping () -> Void) {
+        self.animate(withDuration: UIApplication.style_animationDurationNormal,
+                     delay: 0,
+                     options: [],
+                     animations: animations,
+                     completion: nil)
+    }
+}

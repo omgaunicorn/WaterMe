@@ -131,7 +131,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
             return
         }
 
-        UIView.animate(withDuration: UIApplication.style_animationDurationNormal) {
+        UIView.style_animateNormal() {
             changes()
             self.view.layoutIfNeeded()
         }
@@ -158,7 +158,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
             return
         }
 
-        UIView.animate(withDuration: UIApplication.style_animationDurationNormal) {
+        UIView.style_animateNormal() {
             changes()
             self.view.layoutIfNeeded()
         }

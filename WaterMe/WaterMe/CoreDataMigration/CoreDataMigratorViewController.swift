@@ -158,14 +158,14 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
         // AND the VC does not own the migrator.
         // So it IS valid for the VC to be NIL while the migrator is working
         // So this weak self is required
-        UIView.animate(withDuration: UIApplication.style_animationDurationNormal, animations: {
+        UIView.style_animateNormal({
             self.state = .migrating
         }, completion: { _ in
             UIApplication.shared.isIdleTimerDisabled = true
             self.migrator.start(with: basicRC) { [weak self] success in
                 UIApplication.shared.isIdleTimerDisabled = false
                 guard let welf = self else { return }
-                UIView.animate(withDuration: UIApplication.style_animationDurationNormal) {
+                UIView.style_animateNormal() {
                     welf.state = success ? .success : .error
                 }
             }
