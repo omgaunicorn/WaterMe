@@ -107,7 +107,7 @@ class CoreDataMigrator: CoreDataMigratable {
                                                         reminderLastPerformDate: reminderLastPerformDate)
                 switch result {
                 case .failure(let error):
-                    let description = "Error while migrating plant nameed: \(vesselName!): \(error)"
+                    let description = "Error while migrating plant named: \(vesselName!): \(error)"
                     log.error(description)
                     assertionFailure(description)
                 case .success:
@@ -115,7 +115,9 @@ class CoreDataMigrator: CoreDataMigratable {
                 }
                 print("----- END PLANT -----")
             }
-            completion(migrated == count)
+            DispatchQueue.main.async {
+                completion(migrated == count)
+            }
         }
     }
 

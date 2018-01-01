@@ -35,12 +35,27 @@ extension CoreDataMigratorViewController {
         static let body =
             NSLocalizedString("In order to upgrade to WaterMe 2, a one time data migration is required.",
                               comment: "MigratorScreen: Body: Body text that explains the one time migration needed to upgrade to the new WaterMe.")
+        static let bodyMigrating =
+            NSLocalizedString("Migrating… Don't switch to a different app or lock the screen.",
+                              comment: "MigratorScreen: Body: Body text that explains that the user should not lock the screen or switch apps until the migration is complete.")
+        static let bodySuccess =
+            NSLocalizedString("Success! Your plants have been migrated.",
+                              comment: "MigratorScreen: Body: Body text that explains that the migration succeeded.")
+        static let bodyFailure =
+            NSLocalizedString("Oh no. A problem ocurred while migrating your plants.",
+                              comment: "MigratorScreen: Body: Body text that explains that the migration failed.")
         static let migrateButtonTitle =
             NSLocalizedString("Start Migration",
                               comment: "MigratorScreen: Start Button Title: When the user clicks this button the migration starts.")
+        static let migratingButtonTitle =
+            NSLocalizedString("Migrating…",
+                              comment: "MigratorScreen: Migrating Button Title: After the user starts the migration, the text of the button changes to this to show that migration is in progress.")
         static let cancelButtonTitle =
             NSLocalizedString("Skip for Now",
                               comment: "MigratorScreen: Cancel Button Title: When the user clicks this button the screen is dismissed and the migration does not happen, but next time the app is started, it will ask again.")
+        static let doneButtonTitle =
+            NSLocalizedString("Continue",
+                              comment: "MigratorScreen: Done Button Title: After migrtion has failed or succeeded this button is shown to the user. When they tap it, it closes the migrator screen and brings them to the main app.")
         static let deleteButtonTitle =
             NSLocalizedString("Don't Migrate My Plants",
                               comment: "MigratorScreen: Delete Button Title: When the user clicks this button, the screen is dismissed and it will never appear again and they will not have access to their previous plants. This action is destructive.")
@@ -48,6 +63,10 @@ extension CoreDataMigratorViewController {
 }
 
 class CoreDataMigratorViewController: UIViewController, HasBasicController {
+
+    enum UIState {
+        case launch, migrating, success, error
+    }
 
     class func newVC(migrator: CoreDataMigratable, basicRC: BasicController, completion: @escaping (UIViewController, Bool) -> Void) -> UIViewController {
         let sb = UIStoryboard(name: "CoreDataMigration", bundle: Bundle(for: self))
@@ -71,6 +90,11 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
     private var completionHandler: ((UIViewController, Bool) -> Void)!
     private var migrator: CoreDataMigratable!
     var basicRC: BasicController?
+    private var state = UIState.launch {
+        didSet {
+            self.configureAttributedText()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,13 +104,46 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
     }
 
     private func configureAttributedText() {
-        let tintColor = self.view.tintColor ?? .black
+        // set things to all defaults
         self.titleLabel?.attributedText = NSAttributedString(string: LocalizedString.title, style: .migratorTitle)
         self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.subtitle, style: .migratorSubtitle)
         self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.body, style: .migratorBody)
-        self.migrateButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.migrateButtonTitle, style: .migratorPrimaryButton(tintColor)), for: .normal)
-        self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.cancelButtonTitle, style: .migratorSecondaryButton(tintColor)), for: .normal)
-        self.deleteButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.deleteButtonTitle, style: .migratorSecondaryButton(tintColor)), for: .normal)
+        self.migrateButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.migrateButtonTitle, style: .migratorPrimaryButton), for: .normal)
+        self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.cancelButtonTitle, style: .migratorSecondaryButton), for: .normal)
+        self.deleteButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.deleteButtonTitle, style: .migratorSecondaryButton), for: .normal)
+        self.progressView?.isHidden = false
+        self.bodyLabel?.isHidden = false
+        self.migrateButton?.alpha = 1
+        self.migrateButton?.isHidden = false
+        self.cancelButton?.isHidden = false
+        self.deleteButton?.isHidden = false
+        self.migrateButton?.isEnabled = true
+        self.cancelButton?.isEnabled = true
+        self.deleteButton?.isEnabled = true
+
+        // customize things for each state
+        let disableAlpha: CGFloat = 0.3
+        switch self.state {
+        case .launch:
+            self.progressView?.isHidden = true
+        case .migrating:
+            self.migrateButton?.alpha = disableAlpha
+            self.cancelButton?.isHidden = true
+            self.deleteButton?.isHidden = true
+            self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodyMigrating, style: .migratorBodySmall)
+            self.migrateButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.migratingButtonTitle, style: .migratorPrimaryButton), for: .normal)
+        case .success:
+            self.progressView?.isHidden = true
+            self.migrateButton?.isHidden = true
+            self.deleteButton?.isHidden = true
+            self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodySuccess, style: .migratorBody)
+            self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.doneButtonTitle, style: .migratorPrimaryButton), for: .normal)
+        case .error:
+            self.migrateButton?.isHidden = true
+            self.deleteButton?.isHidden = true
+            self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodyFailure, style: .migratorBody)
+            self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.doneButtonTitle, style: .migratorPrimaryButton), for: .normal)
+        }
     }
 
     @IBAction private func migrateButtonTapped(_ sender: Any) {
@@ -101,9 +158,18 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
         // AND the VC does not own the migrator.
         // So it IS valid for the VC to be NIL while the migrator is working
         // So this weak self is required
-        self.migrator.start(with: basicRC) { [weak self] success in
-            self?.completionHandler(self!, success)
-        }
+        UIView.animate(withDuration: 0.3, animations: {
+            self.state = .migrating
+        }, completion: { _ in
+            UIApplication.shared.isIdleTimerDisabled = true
+            self.migrator.start(with: basicRC) { [weak self] success in
+                UIApplication.shared.isIdleTimerDisabled = false
+                guard let welf = self else { return }
+                UIView.animate(withDuration: 0.3) {
+                    welf.state = success ? .success : .error
+                }
+            }
+        })
     }
 
     @IBAction private func cancelButtonTapped(_ sender: Any) {

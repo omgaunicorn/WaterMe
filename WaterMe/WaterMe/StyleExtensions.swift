@@ -90,8 +90,9 @@ enum Style {
     case migratorTitle
     case migratorSubtitle
     case migratorBody
-    case migratorPrimaryButton(UIColor)
-    case migratorSecondaryButton(UIColor)
+    case migratorBodySmall
+    case migratorPrimaryButton
+    case migratorSecondaryButton
     case emojiSuperSmall
     case emojiSmall(accessibilityFontSizeEnabled: Bool)
     case emojiLarge(accessibilityFontSizeEnabled: Bool)
@@ -121,17 +122,18 @@ enum Style {
                 .font : Font.body,
                 .foregroundColor : Color.textPrimary
             ]
-        case .migratorPrimaryButton(let tintColor):
+        case .migratorBodySmall:
             return [
-                .font : Font.bodyPlus,
-                .foregroundColor : tintColor,
-                .paragraphStyle : type(of: self).centerStyle
+                .font : Font.bodyMinus,
+                .foregroundColor : Color.textPrimary
             ]
-        case .migratorSecondaryButton(let tintColor):
+        case .migratorPrimaryButton:
             return [
-                .font : Font.body,
-                .foregroundColor : tintColor,
-                .paragraphStyle : type(of: self).centerStyle
+                .font : Font.bodyPlusPlus
+            ]
+        case .migratorSecondaryButton:
+            return [
+                .font : Font.body
             ]
         case .dragInstructionalText(let color):
             return [
