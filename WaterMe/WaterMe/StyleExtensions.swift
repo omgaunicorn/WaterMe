@@ -25,6 +25,7 @@ import WaterMeData
 import UIKit
 
 extension UIApplication {
+    static let style_animationDurationNormal: TimeInterval = 0.3
     static let style_tintColor = UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)
     static let style_visualEffectViewBackgroundColor = UIApplication.style_tintColor.withAlphaComponent(0.25)
     static let style_cornerRadius: CGFloat = 8
@@ -32,6 +33,13 @@ extension UIApplication {
         UIView.appearance().tintColor = self.style_tintColor
         UIVisualEffectView.appearance().backgroundColor = self.style_visualEffectViewBackgroundColor
     }
+}
+
+extension DragTargetInstructionalView {
+    static let style_animationDurationLong: TimeInterval = 2
+    static let style_animationDurationNormal: TimeInterval = 1
+    static let style_animationDelayLong: TimeInterval = 4
+    static let style_animationDelayNormal: TimeInterval = 1
 }
 
 extension ReminderFinishDropTargetViewController {

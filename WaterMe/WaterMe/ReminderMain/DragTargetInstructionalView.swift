@@ -60,14 +60,21 @@ class DragTargetInstructionalView: UIView {
             return
         }
 
-        UIView.animate(withDuration: 1, delay: 1, options: [], animations: {
-            self.textLabel?.alpha = 1
+        UIView.animate(withDuration: type(of: self).style_animationDurationNormal,
+                       delay: type(of: self).style_animationDelayNormal,
+                       options: [],
+                       animations: {
+                        self.textLabel?.alpha = 1
         }, completion: { _ in
-            UIView.animate(withDuration: 2, delay: 4, options: [], animations: {
-                self.textLabel?.alpha = 0
+            UIView.animate(withDuration: type(of: self).style_animationDurationLong,
+                           delay: type(of: self).style_animationDelayLong,
+                           options: [],
+                           animations: {
+                            self.textLabel?.alpha = 0
             }, completion: { _ in
-                UIView.animate(withDuration: 1, animations: {
-                    self.circleButton?.alpha = 1
+                UIView.animate(withDuration: type(of: self).style_animationDurationNormal,
+                               animations: {
+                                self.circleButton?.alpha = 1
                 }, completion: { _ in
                     completion?()
                 })

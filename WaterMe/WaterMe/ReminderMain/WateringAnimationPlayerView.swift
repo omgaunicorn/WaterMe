@@ -61,7 +61,7 @@ class WateringAnimationPlayerView: UIView {
         super.awakeFromNib()
 
         self.videoManager.videoHiddenChanged = { [unowned self] hidden in
-            UIView.animate(withDuration: 0.3) {
+            UIView.animate(withDuration: UIApplication.style_animationDurationNormal) {
                 self.alpha = hidden ? 0 : 1
             }
             if case .drop = self.hoverState {

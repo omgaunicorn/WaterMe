@@ -122,7 +122,7 @@ class ReminderEditTableViewController: UITableViewController {
         switch reminderKind {
         case .other, .move:
             let indexPath = IndexPath(row: 0, section: 1)
-            UIView.animate(withDuration: 0.3, animations: {
+            UIView.animate(withDuration: UIApplication.style_animationDurationNormal, animations: {
                 self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
             }, completion: { _ in
                 let cell = self.tableView.cellForRow(at: indexPath) as? TextFieldTableViewCell
