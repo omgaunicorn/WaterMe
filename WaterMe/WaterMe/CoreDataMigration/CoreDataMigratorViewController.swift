@@ -177,7 +177,8 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
     }
 
     @IBAction private func deleteButtonTapped(_ sender: Any) {
-
+        self.migrator.deleteCoreDataStoreWithoutMigrating()
+        self.completionHandler(self, false)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

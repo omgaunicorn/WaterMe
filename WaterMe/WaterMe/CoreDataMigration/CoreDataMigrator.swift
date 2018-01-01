@@ -25,7 +25,7 @@ import CoreData
 import Foundation
 import WaterMeData
 
-class WaterMePersistentContainer: NSPersistentContainer {
+private class WaterMePersistentContainer: NSPersistentContainer {
     override class func defaultDirectoryURL() -> URL {
         return CoreDataMigrator.storeDirectory
     }
@@ -39,23 +39,53 @@ protocol CoreDataMigratable {
 
 class CoreDataMigrator: CoreDataMigratable {
 
-    static let storeDirectory: URL = {
+    private static let storeDirectoryPostMigration: URL = {
+        return CoreDataMigrator.storeDirectory.appendingPathComponent("WaterMe-PostMigration", isDirectory: true)
+    }()
+
+    fileprivate static let storeDirectory: URL = {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         let sqLiteURL = appSupport.appendingPathComponent("WaterMe", isDirectory: true)
         return sqLiteURL
     }()
 
-    static let storeURL: URL = {
+    private static let storeURL: URL = {
         return CoreDataMigrator.storeDirectory.appendingPathComponent("WaterMeData.sqlite")
     }()
 
-    let progress = Progress()
+    private static let storeFilesToMove: [URL] = {
+        return [
+            CoreDataMigrator.storeURL,
+            CoreDataMigrator.storeDirectory.appendingPathComponent("WaterMeData.sqlite-shm"),
+            CoreDataMigrator.storeDirectory.appendingPathComponent("WaterMeData.sqlite-wal")
+        ]
+    }()
 
-    private var numberOfPlantsToMigrate: Int {
-        return try! self.container.viewContext.count(for: NSFetchRequest(entityName: String(describing: PlantEntity.self)))
+    private class func plants(from c: NSManagedObjectContext) -> [Any] {
+        do {
+            return try c.fetch(NSFetchRequest(entityName: String(describing: PlantEntity.self)))
+        } catch {
+            let message = "CoreDataError Fetching old plants: \(error)"
+            log.error(message)
+            assertionFailure(message)
+            return []
+        }
+    }
+
+    private var numberOfPlantsToMigrate: Int? {
+        do {
+            return try self.container.viewContext.count(for: NSFetchRequest(entityName: String(describing: PlantEntity.self)))
+        } catch {
+            let message = "CoreDataError Fetching Count of old plants: \(error)"
+            log.error(message)
+            assertionFailure(message)
+            return nil
+        }
     }
 
     private let container: NSPersistentContainer
+
+    let progress = Progress()
 
     init?() {
         let sqLiteURL = CoreDataMigrator.storeURL
@@ -71,29 +101,32 @@ class CoreDataMigrator: CoreDataMigratable {
                 return
             }
             let count = self.numberOfPlantsToMigrate
-            self.progress.totalUnitCount = Int64(count)
+            self.progress.totalUnitCount = Int64(count ?? -1)
             self.progress.completedUnitCount = 0
         }
         log.debug("Loaded Core Data Stack: Ready for Migration.")
     }
 
     func start(with basicRC: BasicController, completion: @escaping (Bool) -> Void) {
-        let count = self.numberOfPlantsToMigrate
+        let count = self.numberOfPlantsToMigrate ?? -1
         self.progress.totalUnitCount = Int64(count)
         self.progress.completedUnitCount = 0
         self.container.performBackgroundTask() { c in
-            let plants = try! c.fetch(NSFetchRequest(entityName: String(describing: PlantEntity.self)))
             var migrated = 0 {
                 didSet {
                     self.progress.completedUnitCount = Int64(migrated)
                 }
             }
-            for thing in plants {
+            let plants = type(of: self).plants(from: c)
+            plants.forEach() { _plant in
                 // TODO: Remove sleep to make migration slower
                 sleep(2)
-                print("----- BEGIN PLANT -----")
-                guard let plant = thing as? PlantEntity else { continue }
-                print(plant.cd_00100_nameString!)
+                guard let plant = _plant as? PlantEntity else {
+                    let error = "Object in PlantArray is not PlantEntity: \(_plant)"
+                    log.error(error)
+                    assertionFailure(error)
+                    return
+                }
                 let imageEmoji = plant.cd_00100_imageEmojiTransformable as? ImageEmojiObject
                 let vesselName = plant.cd_00100_nameString
                 let vesselImage = imageEmoji?.emojiImage
@@ -113,15 +146,42 @@ class CoreDataMigrator: CoreDataMigratable {
                 case .success:
                     migrated += 1
                 }
-                print("----- END PLANT -----")
             }
+            self.deleteCoreDataStoreWithoutMigrating()
             DispatchQueue.main.async {
                 completion(migrated == count)
             }
         }
     }
 
-    func deleteCoreDataStoreWithoutMigrating() {
+    private func moveCoreDataStoreToPostMigrationLocation() throws {
+        let fm = FileManager.default
+        let destinationDir = type(of: self).storeDirectoryPostMigration
+        let filesToMove = type(of: self).storeFilesToMove
+        var isDir: ObjCBool = false
+        let exists = fm.fileExists(atPath: destinationDir.path, isDirectory: &isDir)
+        switch (exists, isDir.boolValue) {
+        case (true, false):
+            try fm.removeItem(at: destinationDir)
+            fallthrough
+        case (false, _):
+            try fm.createDirectory(at: destinationDir, withIntermediateDirectories: false, attributes: nil)
+            fallthrough
+        case (true, true):
+            try filesToMove.forEach() { sourceURL in
+                let destination = destinationDir.appendingPathComponent(sourceURL.lastPathComponent)
+                try fm.moveItem(at: sourceURL, to: destination)
+            }
+        }
+    }
 
+    func deleteCoreDataStoreWithoutMigrating() {
+        do {
+            try self.moveCoreDataStoreToPostMigrationLocation()
+        } catch {
+            let message = "Error Moving Core Data Store Files: \(error)"
+            log.error(message)
+            assertionFailure(message)
+        }
     }
 }
