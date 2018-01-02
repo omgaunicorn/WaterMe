@@ -61,13 +61,13 @@ class ReminderUserNotificationController {
             self.token?.invalidate()
             self.token = nil
             self.updateScheduledNotifications()
-            log.error("Realm Error in 'ReminderUserNotificationController': \(error)")
+            log.error("Realm Error: \(error)")
         }
     }
 
     @objc private func applicationDidEnterBackground(with notification: Notification?) {
         self.resetTimer()
-        self.timer!.fire()
+        self.timer?.fire()
     }
 
     private func updateScheduledNotifications() {
@@ -146,6 +146,7 @@ class ReminderUserNotificationController {
                 // shuffle the names so that different plant names show in the notifications
                 let plantNames = ReminderNotificationInformation.uniqueParentPlantNames(from: matches).shuffled()
                 _content.body = ReminderUserNotificationController.LocalizedStrings.notificationBodyWithPlantNames(plantNames: plantNames)
+                _content.badge = NSNumber(value: matches.count)
                 // swiftlint:disable:next force_cast
                 let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
                 let request = UNNotificationRequest(identifier: reminderTime.description, content: content, trigger: trigger)
