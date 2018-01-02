@@ -37,7 +37,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="NJ2-bR-CfS">
                                                                 <rect key="frame" x="-20" y="0.0" width="0.0" height="167.5"/>
                                                                 <subviews>
-                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoadingIcon-AllParts" translatesAutoresizingMaskIntoConstraints="NO" id="whF-N4-baW">
+                                                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WaterMeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="whF-N4-baW">
                                                                         <rect key="frame" x="75" y="0.0" width="170" height="88"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="88" id="wgA-2Z-GX1"/>
@@ -158,6 +158,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LoadingIcon-AllParts" width="170" height="170"/>
+        <image name="WaterMeIcon" width="170" height="170"/>
     </resources>
 </document>
