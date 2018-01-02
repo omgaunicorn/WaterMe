@@ -6,6 +6,7 @@ disabled_rules:
     - variable_name
     - type_name
     - line_length
+    - class_delegate_protocol
     # - opening_brace
     # - cyclomatic_complexity
     # - file_length

@@ -52,7 +52,7 @@
                         <viewLayoutGuide key="safeArea" id="qj8-Ga-TBi"/>
                     </view>
                     <navigationItem key="navigationItem" title="Maanage Plants" largeTitleDisplayMode="never" id="PVD-j4-HSM">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="add" id="DIA-zQ-5My">
+                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="add" id="DIA-zQ-5My">
                             <connections>
                                 <action selector="addReminderVesselButtonTapped:" destination="CBd-BS-reS" id="6WQ-Gn-6Fu"/>
                             </connections>
