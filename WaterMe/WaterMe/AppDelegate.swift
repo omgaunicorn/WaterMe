@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
     private var notifictionController: ReminderUserNotificationController?
 
-    let coreDataMigrator = CoreDataMigrator()
+    var coreDataMigrator = CoreDataMigrator()
 
     var window: UIWindow?
 

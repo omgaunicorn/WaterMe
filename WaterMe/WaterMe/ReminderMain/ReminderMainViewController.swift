@@ -68,6 +68,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
             self.present(alert, animated: true, completion: nil)
         } else if let migrator = AppDelegate.shared.coreDataMigrator, let basicRC = self.basicRC {
             let vc = CoreDataMigratorViewController.newVC(migrator: migrator, basicRC: basicRC) { vc, success in
+                AppDelegate.shared.coreDataMigrator = nil
                 vc.dismiss(animated: true, completion: nil)
             }
             self.present(vc, animated: true, completion: nil)

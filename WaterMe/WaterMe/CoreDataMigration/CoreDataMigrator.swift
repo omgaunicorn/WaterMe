@@ -25,12 +25,6 @@ import CoreData
 import Foundation
 import WaterMeData
 
-private class WaterMePersistentContainer: NSPersistentContainer {
-    override class func defaultDirectoryURL() -> URL {
-        return CoreDataMigrator.storeDirectory
-    }
-}
-
 protocol CoreDataMigratable {
     var progress: Progress { get }
     func start(with: BasicController, completion: @escaping (Bool) -> Void)
@@ -39,20 +33,16 @@ protocol CoreDataMigratable {
 
 class CoreDataMigrator: CoreDataMigratable {
 
-    private static let storeDirectoryPostMigration: URL = {
-        return CoreDataMigrator.storeDirectory.appendingPathComponent("WaterMe-PostMigration", isDirectory: true)
-    }()
+    // MARK: Core Data Locations on Disk
 
+    private static let momName = "WaterMeData"
+    private static let storeURL = CoreDataMigrator.storeDirectory.appendingPathComponent("WaterMeData.sqlite")
+    private static let storeDirectoryPostMigration = CoreDataMigrator.storeDirectory.appendingPathComponent("WaterMe1.coredata", isDirectory: true)
     fileprivate static let storeDirectory: URL = {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let sqLiteURL = appSupport.appendingPathComponent("WaterMe", isDirectory: true)
-        return sqLiteURL
+        let sqliteURL = appSupport.appendingPathComponent("WaterMe", isDirectory: true)
+        return sqliteURL
     }()
-
-    private static let storeURL: URL = {
-        return CoreDataMigrator.storeDirectory.appendingPathComponent("WaterMeData.sqlite")
-    }()
-
     private static let storeFilesToMove: [URL] = {
         return [
             CoreDataMigrator.storeURL,
@@ -61,16 +51,12 @@ class CoreDataMigrator: CoreDataMigratable {
         ]
     }()
 
-    private class func plants(from c: NSManagedObjectContext) -> [Any] {
-        do {
-            return try c.fetch(NSFetchRequest(entityName: String(describing: PlantEntity.self)))
-        } catch {
-            let message = "CoreDataError Fetching old plants: \(error)"
-            log.error(message)
-            assertionFailure(message)
-            return []
-        }
-    }
+    // MARK: Properties
+
+    private let container: NSPersistentContainer
+    let progress = Progress()
+
+    // MARK: Helper for Counting Plants
 
     private var numberOfPlantsToMigrate: Int? {
         do {
@@ -83,15 +69,15 @@ class CoreDataMigrator: CoreDataMigratable {
         }
     }
 
-    private let container: NSPersistentContainer
+    // MARK: Init
 
-    let progress = Progress()
-
+    // Looks for a core data file on disk. If it exists, that means the user upgraded from WaterMe 1
+    // If it exists, initialization succeeds. Otherwise, it returns NIL
     init?() {
         let sqLiteURL = CoreDataMigrator.storeURL
         // if the file doesn't exist then they never had the old version of the app.
         guard FileManager.default.fileExists(atPath: sqLiteURL.path) == true else { return nil }
-        self.container = WaterMePersistentContainer(name: "WaterMeData")
+        self.container = WaterMePersistentContainer(name: CoreDataMigrator.momName)
         self.container.persistentStoreDescriptions.first?.isReadOnly = true
         self.container.loadPersistentStores() { _, error  in
             guard error == nil else {
@@ -107,6 +93,14 @@ class CoreDataMigrator: CoreDataMigratable {
         log.debug("Loaded Core Data Stack: Ready for Migration.")
     }
 
+    // MARK: Perform the Migration
+
+    // This function just loads the data from Core Data and iterates over it
+    // Each iteration it creates a new object in REALM
+    // It also updates the progress object
+    // Finally it shuts down the core data stack and moves the underlying files
+    // Moving the files means the data is not lost but its not detected on next boot
+    // Which means it won't try to migrate again.
     func start(with basicRC: BasicController, completion: @escaping (Bool) -> Void) {
         let count = self.numberOfPlantsToMigrate ?? -1
         self.progress.totalUnitCount = Int64(count)
@@ -147,17 +141,55 @@ class CoreDataMigrator: CoreDataMigratable {
                     migrated += 1
                 }
             }
-            self.deleteCoreDataStoreWithoutMigrating()
+            self.closeCoreDataStoresAndMoveUnderlyingFiles()
             DispatchQueue.main.async {
                 completion(migrated == count)
             }
         }
     }
 
-    private func moveCoreDataStoreToPostMigrationLocation() throws {
+    func deleteCoreDataStoreWithoutMigrating() {
+        self.closeCoreDataStoresAndMoveUnderlyingFiles()
+    }
+
+    // MARK: Helper functions for capturing errors
+
+    private func closeCoreDataStoresAndMoveUnderlyingFiles() {
+        do {
+            // close all the stores before moving the files
+            try self.container.persistentStoreCoordinator.persistentStores.forEach() {
+                try self.container.persistentStoreCoordinator.remove($0)
+            }
+            // move the underlying files
+            try type(of: self).moveCoreDataStoreToPostMigrationLocation()
+        } catch {
+            let message = "Error Moving Core Data Store Files: \(error)"
+            log.error(message)
+            assertionFailure(message)
+        }
+    }
+
+    private class func plants(from c: NSManagedObjectContext) -> [Any] {
+        do {
+            return try c.fetch(NSFetchRequest(entityName: String(describing: PlantEntity.self)))
+        } catch {
+            let message = "CoreDataError Fetching old plants: \(error)"
+            log.error(message)
+            assertionFailure(message)
+            return []
+        }
+    }
+
+    // MARK: Move the underlying files
+
+    // Checks to see if there is a location on disk to move the files to
+    // If not, it makes a folder. If a file exists with the same name as folder
+    // It deletes the file and then makes the folder
+    // Lastly it moves the core data files there
+    private class func moveCoreDataStoreToPostMigrationLocation() throws {
         let fm = FileManager.default
-        let destinationDir = type(of: self).storeDirectoryPostMigration
-        let filesToMove = type(of: self).storeFilesToMove
+        let destinationDir = self.storeDirectoryPostMigration
+        let filesToMove = self.storeFilesToMove
         var isDir: ObjCBool = false
         let exists = fm.fileExists(atPath: destinationDir.path, isDirectory: &isDir)
         switch (exists, isDir.boolValue) {
@@ -175,13 +207,16 @@ class CoreDataMigrator: CoreDataMigratable {
         }
     }
 
-    func deleteCoreDataStoreWithoutMigrating() {
-        do {
-            try self.moveCoreDataStoreToPostMigrationLocation()
-        } catch {
-            let message = "Error Moving Core Data Store Files: \(error)"
-            log.error(message)
-            assertionFailure(message)
-        }
+    deinit {
+        print("Core Data Migrator destroyed")
+    }
+}
+
+// MARK: Custom Subclass of NSPersistentContainer
+
+// Subclass needed to give Core Data my custom directory from WaterMe1
+private class WaterMePersistentContainer: NSPersistentContainer {
+    override class func defaultDirectoryURL() -> URL {
+        return CoreDataMigrator.storeDirectory
     }
 }
