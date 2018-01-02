@@ -229,3 +229,41 @@ extension ReminderUserNotificationController {
         }
     }
 }
+
+extension CoreDataMigratorViewController {
+    enum LocalizedString {
+        static let title =
+            NSLocalizedString("WaterMe 2",
+                              comment: "MigratorScreen: Title: Name of the app.")
+        static let subtitle =
+            NSLocalizedString("Data Migration",
+                              comment: "MigratorScreen: Subtitle: Explains what is happening on the screen.")
+        static let body =
+            NSLocalizedString("In order to upgrade to WaterMe 2, a one time data migration is required.",
+                              comment: "MigratorScreen: Body: Body text that explains the one time migration needed to upgrade to the new WaterMe.")
+        static let bodyMigrating =
+            NSLocalizedString("Migrating… Don't switch to a different app or lock the screen.",
+                              comment: "MigratorScreen: Body: Body text that explains that the user should not lock the screen or switch apps until the migration is complete.")
+        static let bodySuccess =
+            NSLocalizedString("Success! Your plants have been migrated.",
+                              comment: "MigratorScreen: Body: Body text that explains that the migration succeeded.")
+        static let bodyFailure =
+            NSLocalizedString("Oh no. A problem ocurred while migrating your plants. Please double check that all your plants are in WaterMe.",
+                              comment: "MigratorScreen: Body: Body text that explains that the migration failed.")
+        static let migrateButtonTitle =
+            NSLocalizedString("Start Migration",
+                              comment: "MigratorScreen: Start Button Title: When the user clicks this button the migration starts.")
+        static let migratingButtonTitle =
+            NSLocalizedString("Migrating…",
+                              comment: "MigratorScreen: Migrating Button Title: After the user starts the migration, the text of the button changes to this to show that migration is in progress.")
+        static let cancelButtonTitle =
+            NSLocalizedString("Skip for Now",
+                              comment: "MigratorScreen: Cancel Button Title: When the user clicks this button the screen is dismissed and the migration does not happen, but next time the app is started, it will ask again.")
+        static let doneButtonTitle =
+            NSLocalizedString("Continue",
+                              comment: "MigratorScreen: Done Button Title: After migrtion has failed or succeeded this button is shown to the user. When they tap it, it closes the migrator screen and brings them to the main app.")
+        static let deleteButtonTitle =
+            NSLocalizedString("Don't Migrate My Plants",
+                              comment: "MigratorScreen: Delete Button Title: When the user clicks this button, the screen is dismissed and it will never appear again and they will not have access to their previous plants. This action is destructive.")
+    }
+}
