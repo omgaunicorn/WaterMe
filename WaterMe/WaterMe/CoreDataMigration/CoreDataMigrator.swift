@@ -113,8 +113,6 @@ class CoreDataMigrator: CoreDataMigratable {
             }
             let plants = type(of: self).plants(from: c)
             plants.forEach() { _plant in
-                // TODO: Remove sleep to make migration slower
-                sleep(2)
                 guard let plant = _plant as? PlantEntity else {
                     let error = "Object in PlantArray is not PlantEntity: \(_plant)"
                     log.error(error)
