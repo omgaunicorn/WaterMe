@@ -49,9 +49,9 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
         // configure toolbar buttons
         let plants = UIBarButtonItem(title: ReminderVesselMainViewController.LocalizedString.title, style: .done, target: self, action: #selector(self.plantsButtonTapped(_:)))
-        let settings = UIBarButtonItem(title: SettingsMainViewController.LocalizedString.title, style: .plain, target: self, action: #selector(self.settingsButtonTapped(_:)))
+//        let settings = UIBarButtonItem(title: SettingsMainViewController.LocalizedString.title, style: .plain, target: self, action: #selector(self.settingsButtonTapped(_:)))
         self.navigationItem.rightBarButtonItem = plants
-        self.navigationItem.leftBarButtonItem = settings
+//        self.navigationItem.leftBarButtonItem = settings
 
         self.collectionVC?.delegate = self
         // custom behavior needed here, otherwise it only automatically adjusts along the scrolling direction
@@ -67,7 +67,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
             let alert = UIAlertController(error: error, completion: nil)
             self.present(alert, animated: true, completion: nil)
         } else if let migrator = AppDelegate.shared.coreDataMigrator, let basicRC = self.basicRC {
-            let vc = CoreDataMigratorViewController.newVC(migrator: migrator, basicRC: basicRC) { vc, success in
+            let vc = CoreDataMigratorViewController.newVC(migrator: migrator, basicRC: basicRC) { vc, _ in
                 AppDelegate.shared.coreDataMigrator = nil
                 vc.dismiss(animated: true, completion: nil)
             }

@@ -204,10 +204,6 @@ class CoreDataMigrator: CoreDataMigratable {
             }
         }
     }
-
-    deinit {
-        print("Core Data Migrator destroyed")
-    }
 }
 
 // MARK: Custom Subclass of NSPersistentContainer

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QGv-3Z-A53">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QGv-3Z-A53">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -52,14 +52,14 @@
                         <viewLayoutGuide key="safeArea" id="qj8-Ga-TBi"/>
                     </view>
                     <navigationItem key="navigationItem" title="Maanage Plants" largeTitleDisplayMode="never" id="PVD-j4-HSM">
-                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="adP-Yw-Qe4">
-                            <connections>
-                                <action selector="doneButtonTapped:" destination="CBd-BS-reS" id="AIe-9A-AKo"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="DIA-zQ-5My">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="add" id="DIA-zQ-5My">
                             <connections>
                                 <action selector="addReminderVesselButtonTapped:" destination="CBd-BS-reS" id="6WQ-Gn-6Fu"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="adP-Yw-Qe4">
+                            <connections>
+                                <action selector="doneButtonTapped:" destination="CBd-BS-reS" id="AIe-9A-AKo"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
