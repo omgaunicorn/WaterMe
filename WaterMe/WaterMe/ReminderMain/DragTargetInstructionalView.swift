@@ -43,23 +43,38 @@ class DragTargetInstructionalView: UIView {
         self.textLabel?.attributedText = NSAttributedString(string: "Drag and Drop Here", style: .dragInstructionalText(self.tintColor))
     }
 
-    func resetInstructionAnimation(completion: (() -> Void)?) {
-        UIView.animate(withDuration: 1, animations: {
+    private enum AnimState {
+        case notStarted, animating, finished
+    }
+
+    private var animState = AnimState.notStarted
+
+    func performInstructionalAnimation(completion: (() -> Void)?) {
+        switch self.animState {
+        case .animating:
+            completion?() // do nothing
+        case .notStarted:
+            self.animateFromBeginning(completion: completion)
+        case .finished:
+            self.animateToBeginning() {
+                self.animateFromBeginning(completion: completion)
+            }
+        }
+    }
+
+    private func animateToBeginning(completion: (() -> Void)?) {
+        self.animState = .animating
+        type(of: self).priv_animateNormal({
             self.textLabel?.alpha = 0
             self.circleButton?.alpha = 0
         }, completion: { _ in
+            self.animState = .notStarted
             completion?()
         })
     }
 
-    func performInstructionalAnimation(completion: (() -> Void)?) {
-        guard self.circleButton?.alpha == 0 else {
-            self.resetInstructionAnimation() {
-                self.performInstructionalAnimation(completion: completion)
-            }
-            return
-        }
-
+    private func animateFromBeginning(completion: (() -> Void)?) {
+        self.animState = .animating
         let typeOfSelf = type(of: self)
         typeOfSelf.priv_animateNormalDelayNormal({
             self.textLabel?.alpha = 1
@@ -70,6 +85,7 @@ class DragTargetInstructionalView: UIView {
                 typeOfSelf.priv_animateNormal({
                     self.circleButton?.alpha = 1
                 }, completion: { _ in
+                    self.animState = .finished
                     completion?()
                 })
             })

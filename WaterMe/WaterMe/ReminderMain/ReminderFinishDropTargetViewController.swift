@@ -69,6 +69,10 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         }
     }
 
+    @IBAction private func instructionalViewTapped(_ sender: Any) {
+        self.instructionalView?.performInstructionalAnimation(completion: nil)
+    }
+
     // MARK: UIDropInteractionDelegate
 
     // Data Updates

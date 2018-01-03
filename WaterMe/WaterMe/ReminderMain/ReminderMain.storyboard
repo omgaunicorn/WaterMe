@@ -209,9 +209,9 @@
                                                             <exclude reference="ula-eI-h4j"/>
                                                         </mask>
                                                         <mask key="constraints">
-                                                            <exclude reference="Vjd-xW-V0h"/>
-                                                            <exclude reference="MP0-Dk-adY"/>
                                                             <exclude reference="L4g-OP-N2b"/>
+                                                            <exclude reference="MP0-Dk-adY"/>
+                                                            <exclude reference="Vjd-xW-V0h"/>
                                                             <exclude reference="j0O-YL-92I"/>
                                                         </mask>
                                                     </variation>
@@ -220,15 +220,16 @@
                                                             <include reference="ula-eI-h4j"/>
                                                         </mask>
                                                         <mask key="constraints">
-                                                            <include reference="Vjd-xW-V0h"/>
-                                                            <include reference="MP0-Dk-adY"/>
                                                             <include reference="L4g-OP-N2b"/>
+                                                            <include reference="MP0-Dk-adY"/>
+                                                            <include reference="Vjd-xW-V0h"/>
                                                             <include reference="j0O-YL-92I"/>
                                                         </mask>
                                                     </variation>
                                                     <connections>
                                                         <outlet property="circleButton" destination="ula-eI-h4j" id="YNE-36-106"/>
                                                         <outlet property="textLabel" destination="8ax-fT-iNm" id="6pB-nR-uLe"/>
+                                                        <outletCollection property="gestureRecognizers" destination="3fD-8R-J1p" appends="YES" id="O79-Dq-ylb"/>
                                                     </connections>
                                                 </view>
                                             </subviews>
@@ -402,6 +403,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LbB-1F-e1E" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="3fD-8R-J1p">
+                    <connections>
+                        <action selector="instructionalViewTapped:" destination="Cjs-fa-2MT" id="qzw-8B-2On"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="538" y="1068"/>
         </scene>
