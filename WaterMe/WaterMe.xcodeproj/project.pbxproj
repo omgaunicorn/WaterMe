@@ -42,6 +42,7 @@
 		50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */; };
 		5075B48E1FF178DC007B42D8 /* ReminderDragPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */; };
 		5075B4901FF178EA007B42D8 /* ReminderDragPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5075B48F1FF178EA007B42D8 /* ReminderDragPreviewView.swift */; };
+		507777AA1FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */; };
 		507A64581F049CCA004E18C5 /* ReminderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */; };
 		5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */; };
 		5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */; };
@@ -155,6 +156,7 @@
 		50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewTableViewCell.xib; sourceTree = "<group>"; };
 		5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderDragPreviewView.xib; sourceTree = "<group>"; };
 		5075B48F1FF178EA007B42D8 /* ReminderDragPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDragPreviewView.swift; sourceTree = "<group>"; };
+		507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderNotificationUIDelegate.swift; sourceTree = "<group>"; };
 		507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderTableViewCell.xib; sourceTree = "<group>"; };
 		5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPickerCollectionViewCell.swift; sourceTree = "<group>"; };
 		5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmojiPickerCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 			isa = PBXGroup;
 			children = (
 				5049D1A21FACFA1B0076565E /* ReminderUserNotificationController.swift */,
+				507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */,
 			);
 			path = ReminderNotifications;
 			sourceTree = "<group>";
@@ -936,6 +939,7 @@
 				50BDC03F1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift in Sources */,
 				50C30E561EFF9349006003A1 /* ReminderIntervalTableViewCell.swift in Sources */,
 				508E615A1F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift in Sources */,
+				507777AA1FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift in Sources */,
 				508E61571F8AD57400B28DD8 /* ReminderCollectionViewController.swift in Sources */,
 				50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */,
 				50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */,
