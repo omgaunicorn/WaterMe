@@ -183,7 +183,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     func userChangedName(to newName: String, andDismissKeyboard dismissKeyboard: Bool, controller: ReminderVesselEditTableViewController?) {
         guard let vessel = self.vesselResult.value, let basicRC = self.basicRC
             else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
-      self.notificationToken?.invalidate() // stop the update notifications from causing the tableview to reload
+        self.notificationToken?.invalidate() // stop the update notifications from causing the tableview to reload
         let updateResult = basicRC.update(displayName: newName, in: vessel)
         if case .failure(let error) = updateResult {
             let alert = UIAlertController(error: error, completion: nil)

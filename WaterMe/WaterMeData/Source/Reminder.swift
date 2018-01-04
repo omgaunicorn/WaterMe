@@ -51,6 +51,7 @@ public class Reminder: Object {
     // MARK: Implementation Details
     @objc internal dynamic var kindString: String = Reminder.kCaseWaterValue
     @objc internal dynamic var descriptionString: String?
+    @objc internal dynamic var bloop = false
     internal let vessels = LinkingObjects(fromType: ReminderVessel.self, property: "reminders") //#keyPath(ReminderVessel.reminders)
 
     public override class func primaryKey() -> String {
@@ -68,6 +69,7 @@ public class Reminder: Object {
 
 public class ReminderPerform: Object {
     @objc public internal(set) dynamic var date = Date()
+    @objc internal dynamic var bloop = false
 }
 
 fileprivate extension Reminder {

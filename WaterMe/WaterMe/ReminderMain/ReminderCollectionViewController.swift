@@ -139,7 +139,8 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
     private func dragItemForReminder(at indexPath: IndexPath) -> UIDragItem? {
         guard let reminder = self.reminders?.reminder(at: indexPath) else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
-        item.previewProvider = { ReminderDragPreviewView.dragPreview(for: reminder) }
+        // TODO: Decide whether I am using this custom view or not
+//        item.previewProvider = { ReminderDragPreviewView.dragPreview(for: reminder) }
         item.localObject = Reminder.Identifier(reminder: reminder)
         return item
     }

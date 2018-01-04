@@ -75,7 +75,7 @@ public class BasicController {
     public init(kind: Kind) {
         self.kind = kind
         var realmConfig = Realm.Configuration()
-        realmConfig.schemaVersion = 12
+        realmConfig.schemaVersion = 14
         realmConfig.objectTypes = [ReminderVessel.self, Reminder.self, ReminderPerform.self]
         switch kind {
         case .local:
@@ -172,9 +172,12 @@ public class BasicController {
         return self.realm.flatMap() { realm in
             realm.beginWrite()
             for reminder in reminders {
+                // append the perform
                 let newPerform = ReminderPerform()
                 reminder.performed.append(newPerform)
                 reminder.recalculateNextPerformDate(comparisonPerform: newPerform)
+                // perform bloops to force notification firing
+                reminder.vessel?.bloop = !(reminder.vessel?.bloop ?? true)
             }
             return realm.waterMe_commitWrite()
         }
@@ -223,6 +226,13 @@ public class BasicController {
             if let icon = icon {
                 vessel.icon = icon
             }
+            // trigger the bloop so notifications fire for the reminder table view
+            for reminder in vessel.reminders {
+                reminder.bloop = !reminder.bloop
+                for perform in reminder.performed {
+                    perform.bloop = !perform.bloop
+                }
+            }
             return realm.waterMe_commitWrite()
         }
     }
@@ -241,6 +251,11 @@ public class BasicController {
             if let note = note {
                 // make sure the string is not empty. If it is empty, set it to blank string
                 reminder.note = note.leadingTrailingWhiteSpaceTrimmedNonEmptyString
+            }
+            // trigger bloops so notifications fire
+            reminder.vessel?.bloop = !(reminder.vessel?.bloop ?? true)
+            for perform in reminder.performed {
+                perform.bloop = !perform.bloop
             }
             return realm.waterMe_commitWrite()
         }

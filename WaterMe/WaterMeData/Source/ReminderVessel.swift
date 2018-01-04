@@ -55,7 +55,8 @@ public class ReminderVessel: Object {
             self.iconEmojiString = newValue?.stringValue
         }
     }
-    
+
+    @objc internal dynamic var bloop = false
     @objc private dynamic var kindString = Kind.plant.rawValue
     public internal(set) var kind: Kind {
         get { return Kind(rawValue: self.kindString) ?? .plant }
