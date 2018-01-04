@@ -66,30 +66,46 @@ class ReminderUserNotificationController {
     }
 
     @objc private func applicationDidEnterBackground(with notification: Notification?) {
-        self.resetTimer()
+        // if the timer exists, that means the data is dirty
+        // but we just got backgrounded, so that means
+        // we need it to fire now so the user doesn't miss notifications
         self.timer?.fire()
     }
 
     private func updateScheduledNotifications() {
-        // DispatchQueue(label: String(describing: type(of: self)), qos: .utility).async { [weak self] in
-        UIApplication.shared.applicationIconBadgeNumber = 0
+        // clear out all the old stuff before making new stuff
         let center = UNUserNotificationCenter.current()
         center.removeAllDeliveredNotifications()
         center.removeAllPendingNotificationRequests()
-        guard let data = self.data, data.isEmpty == false else {
-            log.error("Reminder data for notifications was NIL or was empty: \(String(describing: self.data?.isEmpty))")
+        UIApplication.shared.applicationIconBadgeNumber = 0
+
+        // make sure we have data and its not empty
+        guard let data = self.data else {
+            let error = "Reminder data for notifications was NIL"
+            log.error(error)
+            assertionFailure(error)
             return
         }
+        guard data.isEmpty == false else {
+            log.debug("Data array was empty")
+            return
+        }
+
+        // make sure we're authorized to send notifications
         center.authorized() { authorized in
             guard authorized else {
                 log.info("Not authorized to schedule notifications")
                 return
             }
+
+            // generate notification object requests
             self.notificationRequests() { requests in
                 guard requests.isEmpty == false else {
                     log.debug("No notifications to schedule")
                     return
                 }
+
+                // ask the notification center to schedule the notifications
                 for request in requests {
                     center.add(request) { error in
                         guard let error = error else { return }
