@@ -72,6 +72,7 @@ class ReminderUserNotificationController {
 
     private func updateScheduledNotifications() {
         // DispatchQueue(label: String(describing: type(of: self)), qos: .utility).async { [weak self] in
+        UIApplication.shared.applicationIconBadgeNumber = 0
         let center = UNUserNotificationCenter.current()
         center.removeAllDeliveredNotifications()
         center.removeAllPendingNotificationRequests()
