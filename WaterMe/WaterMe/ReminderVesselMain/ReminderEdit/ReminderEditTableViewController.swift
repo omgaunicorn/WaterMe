@@ -128,7 +128,7 @@ class ReminderEditTableViewController: UITableViewController {
                 let cell = self.tableView.cellForRow(at: indexPath) as? TextFieldTableViewCell
                 cell?.textFieldBecomeFirstResponder()
             })
-        case .fertilize, .water:
+        case .fertilize, .water, .trim:
             assertionFailure("Water and Fertilize Reminders don't have a textfield to select")
         }
     }
@@ -162,7 +162,7 @@ class ReminderEditTableViewController: UITableViewController {
         case kind, details, interval, notes, performed
         static func count(for kind: Reminder.Kind) -> Int {
             switch kind {
-            case .fertilize, .water:
+            case .fertilize, .water, .trim:
                 return 4
             case .other, .move:
                 return 5
@@ -171,7 +171,7 @@ class ReminderEditTableViewController: UITableViewController {
         // swiftlint:disable:next cyclomatic_complexity
         init(section: Int, for kind: Reminder.Kind) {
             switch kind {
-            case .fertilize, .water:
+            case .fertilize, .water, .trim:
                 switch section {
                 case 0:
                     self = .kind

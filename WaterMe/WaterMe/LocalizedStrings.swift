@@ -199,6 +199,9 @@ extension Reminder.Kind {
         static let fertilize =
             NSLocalizedString("Fertilize",
                               comment: "Reminder Kind: This type reminds the user to fertilize their plant.")
+        static let trim =
+            NSLocalizedString("Trim",
+                              comment: "Reminder Kind: This type reminds the user to trim their plant.")
         static let move =
             NSLocalizedString("Move",
                               comment: "Reminder Kind: This type reminds the user to move their plant.")

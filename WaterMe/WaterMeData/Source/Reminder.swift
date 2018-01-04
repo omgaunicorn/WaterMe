@@ -32,8 +32,8 @@ public class Reminder: Object {
     public static let defaultInterval: Int = 7
     
     public enum Kind {
-        case water, fertilize, move(location: String?), other(description: String?)
-        public static let count = 4
+        case water, fertilize, trim, move(location: String?), other(description: String?)
+        public static let count = 5
     }
     
     // MARK: Public Interface
@@ -73,6 +73,7 @@ public class ReminderPerform: Object {
 fileprivate extension Reminder {
     
     fileprivate static let kCaseWaterValue = "kReminderKindCaseWaterValue"
+    fileprivate static let kCaseTrimValue = "kReminderKindCaseTrimValue"
     fileprivate static let kCaseFertilizeValue = "kReminderKindCaseFertilizeValue"
     fileprivate static let kCaseMoveValue = "kReminderKindCaseMoveValue"
     fileprivate static let kCaseOtherValue = "kReminderKindCaseOtherValue"
@@ -83,6 +84,8 @@ fileprivate extension Reminder {
             self.kindString = type(of: self).kCaseWaterValue
         case .fertilize:
             self.kindString = type(of: self).kCaseFertilizeValue
+        case .trim:
+            self.kindString = type(of: self).kCaseTrimValue
         case .move(let location):
             self.kindString = type(of: self).kCaseMoveValue
             // check for new values to prevent being destructive
@@ -104,6 +107,8 @@ fileprivate extension Reminder {
             return .water
         case type(of: self).kCaseFertilizeValue:
             return .fertilize
+        case type(of: self).kCaseTrimValue:
+            return .trim
         case type(of: self).kCaseMoveValue:
             let description = self.descriptionString
             return .move(location: description)
@@ -145,7 +150,7 @@ extension Reminder: UICompleteCheckable {
     
     public var isUIComplete: [Error] {
         switch self.kind {
-        case .fertilize, .water:
+        case .fertilize, .water, .trim:
             return []
         case .move(let description):
             return description?.leadingTrailingWhiteSpaceTrimmedNonEmptyString == nil ? [.missingMoveLocation] : []
@@ -156,12 +161,15 @@ extension Reminder: UICompleteCheckable {
 }
 
 public extension Reminder.Kind {
+    // TODO: LocalizeString These
     public var stringValue: String {
         switch self {
         case .water:
             return "Water Plant"
         case .fertilize:
             return "Fertilize Soil"
+        case .trim:
+            return "Trim Plant"
         case .move:
             return "Move Plant"
         case .other:

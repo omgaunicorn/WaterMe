@@ -53,6 +53,8 @@ extension Reminder.Kind {
             return LocalizedString.water
         case .fertilize:
             return LocalizedString.fertilize
+        case .trim:
+            return LocalizedString.trim
         case .move:
             return LocalizedString.move
         case .other:
@@ -66,6 +68,9 @@ extension Reminder.Kind {
             return true
         case .fertilize:
             guard case .fertilize = other else { return false }
+            return true
+        case .trim:
+            guard case .trim = other else { return false }
             return true
         case .move:
             guard case .move = other else { return false }
@@ -82,8 +87,10 @@ extension Reminder.Kind {
         case 1:
             self = .fertilize
         case 2:
-            self = .move(location: nil)
+            self = .trim
         case 3:
+            self = .move(location: nil)
+        case 4:
             self = .other(description: nil)
         default:
             fatalError("Too Many Rows in Section")
