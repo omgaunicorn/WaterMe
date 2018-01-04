@@ -57,7 +57,7 @@ class ReminderDragPreviewView: UIView {
         self.largeEmojiImageView?.ring = true
         self.largeEmojiImageView?.ignoreAccessibilitySizes = true
         self.smallEmojiImageView?.size = .superSmall
-        self.smallEmojiImageView?.ring = false
+        self.smallEmojiImageView?.ring = true
         self.smallEmojiImageView?.ignoreAccessibilitySizes = true
         self.reset()
     }
