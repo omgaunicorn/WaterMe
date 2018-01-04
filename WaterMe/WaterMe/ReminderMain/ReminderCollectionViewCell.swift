@@ -64,6 +64,8 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .reminderVesselCollectionViewCellSecondary)
         self.largeEmojiImageView?.setIcon(reminder.vessel?.icon)
         self.smallEmojiImageView?.setKind(reminder.kind)
+        self.largeEmojiImageView?.ring = true
+        self.smallEmojiImageView?.ring = true
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

@@ -54,7 +54,8 @@ class EmojiImageView: UIView {
             self.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 0),
             self.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 0),
             self.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 0),
-            self.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 0)
+            self.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 0),
+            imageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 1)
         ]
         self.addConstraints(constraints)
         label.isHidden = true
@@ -98,6 +99,8 @@ class EmojiImageView: UIView {
     private weak var imageViewMaskLayer: CAShapeLayer?
 
     func setIcon(_ icon: ReminderVessel.Icon?, for controlState: UIControlState = .normal) {
+        self.backgroundColor = .clear
+
         guard let icon = icon else {
             self.alpha = 0.4
             self.label?.attributedText = self.size.attributedString(with: "🌸", ignoreAccessibilitySizes: self.ignoreAccessibilitySizes)
@@ -123,6 +126,8 @@ class EmojiImageView: UIView {
     }
 
     func setKind(_ kind: Reminder.Kind?, for controlState: UIControlState = .normal) {
+        self.backgroundColor = .white
+
         guard let kind = kind else {
             self.alpha = 0.4
             self.label?.attributedText = self.size.attributedString(with: "🌸", ignoreAccessibilitySizes: self.ignoreAccessibilitySizes)
@@ -132,36 +137,49 @@ class EmojiImageView: UIView {
             return
         }
 
-        let string: NSAttributedString
+        let image: UIImage?
         switch kind {
         case .water:
-            string = self.size.attributedString(with: "💦", ignoreAccessibilitySizes: self.ignoreAccessibilitySizes)
+            image = #imageLiteral(resourceName: "ReminderKindWater")
         case .fertilize:
-            string = self.size.attributedString(with: "🎩", ignoreAccessibilitySizes: self.ignoreAccessibilitySizes)
+            image = #imageLiteral(resourceName: "ReminderKindFertilize")
         case .move:
-            string = self.size.attributedString(with: "🔄", ignoreAccessibilitySizes: self.ignoreAccessibilitySizes)
+            image = #imageLiteral(resourceName: "ReminderKindMove")
         case .other:
-            string = self.size.attributedString(with: "❓", ignoreAccessibilitySizes: self.ignoreAccessibilitySizes)
+            image = #imageLiteral(resourceName: "ReminderKindOther")
         }
-        self.label?.attributedText = string
+        self.imageView?.image = image
         self.alpha = 1.0
-        self.label?.isHidden = false
-        self.imageView?.isHidden = true
+        self.label?.attributedText = nil
+        self.label?.isHidden = true
+        self.imageView?.isHidden = false
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
+    private func updateRingBounds() {
         let bounds = self.bounds
         let cornerRadius = floor(bounds.size.width / 2)
-        self.imageViewMaskLayer?.path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
+        let path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        self.imageViewMaskLayer?.path = path.cgPath
         switch self.size {
         case .superSmall, .small:
             self.layer.borderWidth = self.ring ? 1 : 0
         case .large:
             self.layer.borderWidth = self.ring ? 2 : 0
         }
-        self.layer.borderColor = self.ring ? self.tintColor.cgColor : nil
         self.layer.cornerRadius = self.ring ? cornerRadius : 0
+    }
+
+    private func updateRingColor() {
+        self.layer.borderColor = self.ring ? self.tintColor.cgColor : nil
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.updateRingBounds()
+    }
+
+    override func tintColorDidChange() {
+        super.tintColorDidChange()
+        self.updateRingColor()
     }
 }
