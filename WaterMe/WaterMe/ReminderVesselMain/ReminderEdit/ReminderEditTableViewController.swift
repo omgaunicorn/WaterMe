@@ -29,7 +29,7 @@ class ReminderEditTableViewController: UITableViewController {
     
     var reminder: (() -> Result<Reminder, RealmError>?)?
     var kindChanged: ((Reminder.Kind, Bool) -> Void)?
-    var intervalChosen: (() -> Void)?
+    var intervalChosen: ((@escaping () -> Void) -> Void)?
     var noteChanged: ((String) -> Void)?
     
     override func viewDidLoad() {
@@ -56,7 +56,9 @@ class ReminderEditTableViewController: UITableViewController {
                 self.kindChanged?(new, false)
             }
         case .interval:
-            self.intervalChosen?()
+            self.intervalChosen?() {
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
         default:
             break // ignore
         }

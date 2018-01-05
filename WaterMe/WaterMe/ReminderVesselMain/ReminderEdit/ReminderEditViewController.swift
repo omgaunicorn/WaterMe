@@ -69,7 +69,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         self.tableViewController?.reminder = { [unowned self] in return self.reminderResult }
         self.tableViewController?.kindChanged = { [unowned self] in self.update(kind: $0, fromKeyboard: $1) }
         self.tableViewController?.noteChanged = { [unowned self] in self.update(note: $0, fromKeyboard: true) }
-        self.tableViewController?.intervalChosen = { [unowned self] in self.intervalChosen() }
+        self.tableViewController?.intervalChosen = { [unowned self] in self.intervalChosen($0) }
         self.startNotifications()
     }
     
@@ -124,18 +124,22 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    private func intervalChosen() {
+    private func intervalChosen(_ deselectSelectedCell: @escaping () -> Void) {
+        self.view.endEditing(false)
         guard let existingValue = self.reminderResult.value?.interval
             else { assertionFailure("No Reminder Present"); self.completionHandler?(self); return; }
         let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard, existingValue: existingValue) { vc, newValue in
-            vc.dismiss(animated: true, completion: nil)
-            guard let newValue = newValue else { return }
-            self.update(interval: newValue)
+            vc.dismiss(animated: true) {
+                deselectSelectedCell()
+                guard let newValue = newValue else { return }
+                self.update(interval: newValue)
+            }
         }
         self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction private func deleteButtonTapped(_ sender: Any) {
+        self.view.endEditing(false)
         guard let reminder = self.reminderResult.value, let basicRC = self.basicRC
             else { assertionFailure("Missing Reminder or Realm Controller."); self.completionHandler?(self); return; }
         let deleteResult = basicRC.delete(reminder: reminder)
@@ -149,6 +153,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     @IBAction private func doneButtonTapped(_ sender: Any) {
+        self.view.endEditing(false)
         guard let reminder = self.reminderResult.value else { self.completionHandler?(self); return; }
         let sender = sender as? UIBarButtonItem
         assert(sender != nil, "Expected UIBarButtonItem to call this method")
