@@ -145,13 +145,16 @@ extension ReminderMainViewController: ReminderFinishDropTargetViewControllerDele
 }
 
 extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
+    // swiftlint:disable:next function_parameter_count
     func userDidSelectReminder(with identifier: Reminder.Identifier,
+                               of kind: Reminder.Kind,
+                               withNote note: String?,
                                from view: UIView,
                                deselectAnimated: @escaping (Bool) -> Void,
                                within viewController: ReminderCollectionViewController)
     {
         guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: kind.stringValue, message: note, preferredStyle: .actionSheet)
         
         // configure popover presentation for ipad
         // popoverPresentationController is NIL on iPhones
