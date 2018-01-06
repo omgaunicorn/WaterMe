@@ -40,4 +40,15 @@ class ReminderHeaderCollectionReusableView: UICollectionReusableView {
     func setText(_ text: String) {
         self.label?.attributedText = NSAttributedString(string: text, style: .sectionHeader)
     }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        if self.bounds.height <= 2 {
+            self.label?.alpha = 0
+            self.backgroundView?.alpha = 0
+        } else {
+            self.label?.alpha = 1
+            self.backgroundView?.alpha = 1
+        }
+    }
 }

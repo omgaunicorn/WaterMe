@@ -126,7 +126,11 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
 
 extension ReminderCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        guard let reminders = self.reminders, reminders.numberOfItems(inSection: section) > 0 else { return .zero }
+        guard let reminders = self.reminders, reminders.numberOfItems(inSection: section) > 0 else {
+            // if I return height of 0 here, things crash
+            // instead I'll just have to set the alpha to 0
+            return CGSize(width: collectionView.availableContentSize.width, height: 1)
+        }
         switch UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
         case true:
             return CGSize(width: collectionView.availableContentSize.width, height: 55)

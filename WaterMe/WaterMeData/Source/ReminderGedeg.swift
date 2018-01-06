@@ -41,8 +41,8 @@ open class ReminderGedeg: NSObject {
     public init?(basicRC: BasicController?) {
         super.init()
         guard let basicRC = basicRC else { return nil }
-        self.updateBatcher.batchFired = { [unowned self] updates in
-            self.batchedUpdates(updates)
+        self.updateBatcher.batchFired = { [unowned self] changes in
+            self.batchedUpdates(ins: changes.ins, dels: changes.dels, mods: changes.mods)
         }
         for i in 0 ..< ReminderSection.count {
             let section = ReminderSection(rawValue: i)!
@@ -73,7 +73,7 @@ open class ReminderGedeg: NSObject {
 
     open func allDataReady() { }
 
-    open func batchedUpdates(_ updates: [Update]) { }
+    open func batchedUpdates(ins: [IndexPath], dels: [IndexPath], mods: [IndexPath]) { }
 
     public func numberOfSections() -> Int {
         return self.reminders.count
@@ -96,17 +96,10 @@ open class ReminderGedeg: NSObject {
         self.tokens.forEach({ $0.invalidate() })
     }
 
-    public struct Update {
-        public var section: ReminderSection
-        public var deletions: [Int]
-        public var insertions: [Int]
-        public var modifications: [Int]
-    }
-
     private class Batcher {
         private var timer: Timer?
         private var updates = [Update]()
-        var batchFired: (([Update]) -> Void)?
+        var batchFired: (((ins: [IndexPath], dels: [IndexPath], mods: [IndexPath])) -> Void)?
         func appendUpdateExtendingTimer(_ update: Update) {
             self.timer?.invalidate()
             self.updates.append(update)
@@ -118,7 +111,29 @@ open class ReminderGedeg: NSObject {
             self.timer = nil
             let updates = self.updates
             self.updates = []
-            self.batchFired?(updates)
+            let ins = updates.deduplicatedIndexPaths(at: \.insertions)
+            let dels = updates.deduplicatedIndexPaths(at: \.deletions)
+            let mods = updates.deduplicatedIndexPaths(at:  \.modifications)
+            self.batchFired?((ins, dels, mods))
         }
+    }
+}
+
+fileprivate extension ReminderGedeg {
+    fileprivate struct Update {
+        public var section: ReminderSection
+        public var deletions: [Int]
+        public var insertions: [Int]
+        public var modifications: [Int]
+    }
+}
+
+fileprivate extension Sequence where Iterator.Element == ReminderGedeg.Update {
+    fileprivate func deduplicatedIndexPaths(at kp: KeyPath<ReminderGedeg.Update, [Int]>) -> [IndexPath] {
+        let rawIndexPaths = self.flatMap() { update in
+            return update[keyPath: kp].map({ IndexPath(row: $0, section: update.section.rawValue) })
+        }
+        let dedupedIndexPaths = Array(Set(rawIndexPaths))
+        return dedupedIndexPaths
     }
 }
