@@ -139,8 +139,13 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
     private func dragItemForReminder(at indexPath: IndexPath) -> UIDragItem? {
         guard let reminder = self.reminders?.reminder(at: indexPath) else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
-        // TODO: Decide whether I am using this custom view or not
-//        item.previewProvider = { ReminderDragPreviewView.dragPreview(for: reminder) }
+        // only make the "small" preview show on iPhones. On iPads, there is plenty of space
+        switch (self.view.traitCollection.horizontalSizeClass, self.view.traitCollection.verticalSizeClass) {
+        case (.regular, .regular):
+            break // do nothing for ipads
+        default:
+            item.previewProvider = { ReminderDragPreviewView.dragPreview(for: reminder) }
+        }
         item.localObject = Reminder.Identifier(reminder: reminder)
         return item
     }
