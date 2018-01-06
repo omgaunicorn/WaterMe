@@ -66,9 +66,7 @@ class ReminderUserNotificationController {
     }
 
     @objc private func applicationDidEnterBackground(with notification: Notification?) {
-        // if the timer exists, that means the data is dirty
-        // but we just got backgrounded, so that means
-        // we need it to fire now so the user doesn't miss notifications
+        self.resetTimer()
         self.timer?.fire()
     }
 
