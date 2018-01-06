@@ -39,16 +39,31 @@ class ReminderGedegDataSource: ReminderGedeg {
     }
 
     override func batchedUpdates(_ updates: [Update]) {
-        guard updates.isEmpty == false else { return }
-        self.collectionView?.reloadData()
-        /*
-         self.collectionView?.performBatchUpdates({
-         for u in updates {
-         self.collectionView?.insertItems(at: u.insertions.map({ IndexPath(row: $0, section: u.section.rawValue) }))
-         self.collectionView?.deleteItems(at: u.deletions.map({ IndexPath(row: $0, section: u.section.rawValue) }))
-         self.collectionView?.reloadItems(at: u.modifications.map({ IndexPath(row: $0, section: u.section.rawValue) }))
-         }
-         }, completion: nil)
-         */
+        guard updates.isEmpty == false, let cv = self.collectionView else { return }
+        cv.performBatchUpdates({
+            let sectionsChanged = Set(updates.map({ $0.section.rawValue }))
+            cv.reloadSections(IndexSet(sectionsChanged))
+        }, completion: { success in
+            guard success == false else { return }
+            let message = "CollectionView failed to Reload Sections: This usually happens when data changes really fast"
+            log.warning(message)
+            cv.reloadData()
+        })
     }
 }
+
+// old dead code that crashes on last delete
+/*
+let ins = updates.flatMap() { update in
+    return update.insertions.map({ IndexPath(row: $0, section: update.section.rawValue) })
+}
+let del = updates.flatMap() { update in
+    return update.deletions.map({ IndexPath(row: $0, section: update.section.rawValue) })
+}
+let mod = updates.flatMap() { update in
+    return update.modifications.map({ IndexPath(row: $0, section: update.section.rawValue) })
+}
+cv.insertItems(at: ins)
+cv.deleteItems(at: del)
+cv.reloadItems(at: mod)
+*/
