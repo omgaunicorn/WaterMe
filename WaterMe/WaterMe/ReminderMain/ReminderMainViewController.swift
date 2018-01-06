@@ -40,6 +40,9 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
     private weak var collectionVC: ReminderCollectionViewController?
     private weak var dropTargetViewController: ReminderFinishDropTargetViewController?
+
+    private lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(title: ReminderVesselMainViewController.LocalizedString.title, style: .done, target: self, action: #selector(self.plantsButtonTapped(_:)))
+    private lazy var settingsBBI: UIBarButtonItem = UIBarButtonItem(title: SettingsMainViewController.LocalizedString.title, style: .plain, target: self, action: #selector(self.settingsButtonTapped(_:)))
     
     var basicRC: BasicController?
     var proRC: ProController?
@@ -48,10 +51,8 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         super.viewDidLoad()
 
         // configure toolbar buttons
-        let plants = UIBarButtonItem(title: ReminderVesselMainViewController.LocalizedString.title, style: .done, target: self, action: #selector(self.plantsButtonTapped(_:)))
-//        let settings = UIBarButtonItem(title: SettingsMainViewController.LocalizedString.title, style: .plain, target: self, action: #selector(self.settingsButtonTapped(_:)))
-        self.navigationItem.rightBarButtonItem = plants
-//        self.navigationItem.leftBarButtonItem = settings
+        self.navigationItem.rightBarButtonItem = self.plantsBBI
+        self.navigationItem.leftBarButtonItem = self.settingsBBI
 
         self.collectionVC?.delegate = self
         // custom behavior needed here, otherwise it only automatically adjusts along the scrolling direction
@@ -145,6 +146,17 @@ extension ReminderMainViewController: ReminderFinishDropTargetViewControllerDele
 }
 
 extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
+
+    func dragSessionWillBegin(_ session: UIDragSession, within viewController: ReminderCollectionViewController) {
+        self.settingsBBI.isEnabled = false
+        self.plantsBBI.isEnabled = false
+    }
+    
+    func dragSessionDidEnd(_ session: UIDragSession, within viewController: ReminderCollectionViewController) {
+        self.settingsBBI.isEnabled = true
+        self.plantsBBI.isEnabled = true
+    }
+
     // swiftlint:disable:next function_parameter_count
     func userDidSelectReminder(with identifier: Reminder.Identifier,
                                of kind: Reminder.Kind,

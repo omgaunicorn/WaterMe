@@ -27,7 +27,10 @@ import WaterMeData
 import UIKit
 
 protocol ReminderCollectionViewControllerDelegate: class {
+    // swiftlint:disable:next function_parameter_count
     func userDidSelectReminder(with identifier: Reminder.Identifier, of kind: Reminder.Kind, withNote note: String?, from view: UIView, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController)
+    func dragSessionWillBegin(_ session: UIDragSession, within viewController: ReminderCollectionViewController)
+    func dragSessionDidEnd(_ session: UIDragSession, within viewController: ReminderCollectionViewController)
 }
 
 class ReminderCollectionViewController: StandardCollectionViewController, HasBasicController, HasProController {
@@ -83,6 +86,12 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
             header.setText(section.localizedTitleString)
         }
         return header
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        // we don't want the user to be able to select a cell when a drag is active
+        guard collectionView.hasActiveDrag == false else { return false }
+        return true
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -173,5 +182,13 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
         let p = UIDragPreviewParameters()
         p.visiblePath = UIBezierPath(roundedRect: cell.bounds, cornerRadius: UIApplication.style_cornerRadius)
         return p
+    }
+
+    func collectionView(_ collectionView: UICollectionView, dragSessionWillBegin session: UIDragSession) {
+        self.delegate?.dragSessionWillBegin(session, within: self)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, dragSessionDidEnd session: UIDragSession) {
+        self.delegate?.dragSessionDidEnd(session, within: self)
     }
 }
