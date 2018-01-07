@@ -187,7 +187,7 @@ private struct ReminderNotificationInformation {
 
     init(reminder: Reminder) {
         self.parentPlantUUID = reminder.vessel!.uuid
-        self.parentPlantName = reminder.vessel!.displayName
+        self.parentPlantName = reminder.vessel!.shortLabelSafeDisplayName
         self.nextPerformDate = reminder.nextPerformDate
     }
 

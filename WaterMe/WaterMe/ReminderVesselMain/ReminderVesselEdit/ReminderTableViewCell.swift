@@ -40,7 +40,7 @@ class ReminderTableViewCell: UITableViewCell {
         guard let reminder = reminder else { self.reset(); return; }
         
         // do stuff that is the same for all cases
-        self.topLabel?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .selectableTableViewCell)
+        self.topLabel?.attributedText = NSAttributedString(string: reminder.kind.localizedShortString, style: .selectableTableViewCell)
         let interval = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval), style: .selectableTableViewCell)
         let helper = NSAttributedString(string: ReminderVesselEditViewController.LocalizedString.rowLabelInterval,
                                         style: .selectableTableViewCellHelper)

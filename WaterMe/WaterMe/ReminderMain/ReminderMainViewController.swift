@@ -43,6 +43,14 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
     private lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(title: ReminderVesselMainViewController.LocalizedString.title, style: .done, target: self, action: #selector(self.plantsButtonTapped(_:)))
     private lazy var settingsBBI: UIBarButtonItem = UIBarButtonItem(title: SettingsMainViewController.LocalizedString.title, style: .plain, target: self, action: #selector(self.settingsButtonTapped(_:)))
+
+    private let dueDateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateStyle = .full
+        df.timeStyle = .none
+        df.doesRelativeDateFormatting = true
+        return df
+    }()
     
     var basicRC: BasicController?
     var proRC: ProController?
@@ -151,22 +159,22 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         self.settingsBBI.isEnabled = false
         self.plantsBBI.isEnabled = false
     }
-    
+
     func dragSessionDidEnd(_ session: UIDragSession, within viewController: ReminderCollectionViewController) {
         self.settingsBBI.isEnabled = true
         self.plantsBBI.isEnabled = true
     }
 
-    // swiftlint:disable:next function_parameter_count
-    func userDidSelectReminder(with identifier: Reminder.Identifier,
-                               of kind: Reminder.Kind,
-                               withNote note: String?,
-                               from view: UIView,
-                               deselectAnimated: @escaping (Bool) -> Void,
-                               within viewController: ReminderCollectionViewController)
+    func userDidSelect(reminder: Reminder,
+                       from view: UIView,
+                       deselectAnimated: @escaping (Bool) -> Void,
+                       within viewController: ReminderCollectionViewController)
     {
         guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
-        let alert = UIAlertController(title: kind.stringValue, message: note, preferredStyle: .actionSheet)
+
+        let dueDateString = self.dueDateFormatter.string(from: reminder.nextPerformDate ?? Date())
+        let message = reminder.localizedAlertMessage(withLocalizedDateString: dueDateString)
+        let alert = UIAlertController(title: reminder.localizedAlertTitle, message: message, preferredStyle: .actionSheet)
         
         // configure popover presentation for ipad
         // popoverPresentationController is NIL on iPhones
@@ -175,6 +183,9 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         alert.popoverPresentationController?.sourceRect = CGRect(origin: origin, size: .zero)
         alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
 
+        // need an idenfitier starting now because this is all async
+        // the reminder could be deleted or changed before the user makes a choice
+        let identifier = Reminder.Identifier(reminder: reminder)
         // configure the alert to show
         let editReminder = UIAlertAction(title: LocalizedString.buttonTitleReminderEdit, style: .default) { _ in
             let result = basicRC.reminder(matching: identifier)
@@ -214,5 +225,25 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         alert.addAction(editVessel)
         alert.addAction(cancel)
         self.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension Reminder {
+    var localizedAlertTitle: String {
+        if let displayName = self.vessel?.shortLabelSafeDisplayName {
+            let format = ReminderMainViewController.LocalizedString.reminderAlertTitle
+            return String.localizedStringWithFormat(format, self.kind.localizedLongString, displayName)
+        } else {
+            return self.kind.localizedLongString
+        }
+    }
+    func localizedAlertMessage(withLocalizedDateString dateString: String) -> String {
+        if let note = self.note {
+            let format = ReminderMainViewController.LocalizedString.reminderAlertMessage2Arg
+            return String.localizedStringWithFormat(format, dateString, note)
+        } else {
+            let format = ReminderMainViewController.LocalizedString.reminderAlertMessage1Arg
+            return String.localizedStringWithFormat(format, dateString)
+        }
     }
 }

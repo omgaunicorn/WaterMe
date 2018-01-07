@@ -63,7 +63,7 @@ class ReminderCollectionViewCell: UICollectionViewCell {
                                                            style: vesselNameStyle)
 
         // other stuff
-        self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.stringValue, style: .reminderVesselCollectionViewCellSecondary)
+        self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.localizedLongString, style: .reminderVesselCollectionViewCellSecondary)
         self.largeEmojiImageView?.setIcon(reminder.vessel?.icon)
         self.smallEmojiImageView?.setKind(reminder.kind)
         self.largeEmojiImageView?.ring = true

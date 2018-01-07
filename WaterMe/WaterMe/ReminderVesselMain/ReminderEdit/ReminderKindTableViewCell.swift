@@ -35,7 +35,7 @@ class ReminderKindTableViewCell: SimpleLabelTableViewCell {
     
     func configure(rowNumber: Int, compareWith compare: Reminder.Kind) {
         let id = Reminder.Kind(row: rowNumber)
-        self.label.attributedText = NSAttributedString(string: id.localizedString, style: Style.selectableTableViewCell)
+        self.label.attributedText = NSAttributedString(string: id.localizedShortString, style: Style.selectableTableViewCell)
         self.accessoryType = id.isSameKind(as: compare) ? .checkmark : .none
     }
     
@@ -47,16 +47,30 @@ class ReminderKindTableViewCell: SimpleLabelTableViewCell {
 }
 
 extension Reminder.Kind {
-    fileprivate var localizedString: String {
+    var localizedLongString: String {
         switch self {
         case .water:
-            return LocalizedString.water
+            return LocalizedString.waterLong
         case .fertilize:
-            return LocalizedString.fertilize
+            return LocalizedString.fertilizeLong
         case .trim:
-            return LocalizedString.trim
+            return LocalizedString.trimLong
         case .move:
-            return LocalizedString.move
+            return LocalizedString.moveLong
+        case .other:
+            return LocalizedString.other
+        }
+    }
+    var localizedShortString: String {
+        switch self {
+        case .water:
+            return LocalizedString.waterShort
+        case .fertilize:
+            return LocalizedString.fertilizeShort
+        case .trim:
+            return LocalizedString.trimShort
+        case .move:
+            return LocalizedString.moveShort
         case .other:
             return LocalizedString.other
         }

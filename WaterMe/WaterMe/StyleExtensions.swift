@@ -24,6 +24,21 @@
 import WaterMeData
 import UIKit
 
+extension ReminderVessel {
+    var shortLabelSafeDisplayName: String? {
+        let name = self.displayName ?? ""
+        let characterLimit = 20
+        guard name.count > characterLimit else { return self.displayName }
+        let endIndex = name.index(name.startIndex, offsetBy: characterLimit)
+        let substring = String(self.displayName![..<endIndex])
+        if let trimmed = substring.leadingTrailingWhiteSpaceTrimmedNonEmptyString {
+            return trimmed + "…"
+        } else {
+            return nil
+        }
+    }
+}
+
 extension UIApplication {
     static let style_animationDurationNormal: TimeInterval = 0.3
     static let style_tintColor = UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)

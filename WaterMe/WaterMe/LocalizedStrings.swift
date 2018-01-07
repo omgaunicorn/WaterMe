@@ -65,6 +65,15 @@ extension ReminderMainViewController {
         static let buttonTitleReminderPerform =
             NSLocalizedString("Mark Reminder as Done",
                               comment: "Button Title in an Alert. Shows when the user taps on a reminder. After being selected, this will mark the reminder as performed.")
+        static let reminderAlertTitle =
+            NSLocalizedString("%@ – %@",
+                              comment: "ReminderMainViewController: Select Reminder Alert Title: 2 Arguments: When the user taps on a reminder, this is the title of the alert if the plant has a name. It tells the user the kind of reminder and the name of the plant. e.g. 'Water Plant - My Cool Plant'")
+        static let reminderAlertMessage1Arg =
+            NSLocalizedString("Due: %@",
+                              comment: "ReminderMainViewController: Select Reminder Alert Message: 1 Argument: When the user taps on a reminder, this is the message of the alert when the reminder does not have a note. It tells the user the Due date of the reminder. The due date is provided by the system already localized.")
+        static let reminderAlertMessage2Arg =
+            NSLocalizedString("Due: %@\nNote: %@",
+                              comment: "ReminderMainViewController: Select Reminder Alert Message: 2 Arguments: When the user taps on a reminder, this is the message of the alert when the reminder has a note. It tells the user the Due date of the reminder and the note. The due date is provided by the system already localized.")
     }
 }
 
@@ -100,6 +109,38 @@ extension UIAlertController {
         static let titleUnsolvedIssues =
             NSLocalizedString("There are some issues you might want to resolve.",
                               comment: "Title of an Alert that tells the user that they are trying to save a Plant or Reminder and they have not filled in all the fields. They may want to cancel the save and go back and fill them in. Or they may want to Save the changes anyway. Fields not filled in could include, Name, Photo, Reminders.")
+    }
+}
+
+extension Reminder.Kind {
+    enum LocalizedString {
+        static let waterLong =
+            NSLocalizedString("Water Plant",
+                              comment: "Reminder Kind: Long Description: This type reminds the user to water their plant.")
+        static let fertilizeLong =
+            NSLocalizedString("Fertilize Soil",
+                              comment: "Reminder Kind: Long Description:  This type reminds the user to fertilize their plant.")
+        static let trimLong =
+            NSLocalizedString("Trim Plant",
+                              comment: "Reminder Kind: Long Description:  This type reminds the user to trim their plant.")
+        static let moveLong =
+            NSLocalizedString("Move Plant",
+                              comment: "Reminder Kind: Long Description:  This type reminds the user to move their plant.")
+        static let waterShort =
+            NSLocalizedString("Water",
+                              comment: "Reminder Kind: Short Description: This type reminds the user to water their plant.")
+        static let fertilizeShort =
+            NSLocalizedString("Fertilize",
+                              comment: "Reminder Kind: Short Description:  This type reminds the user to fertilize their plant.")
+        static let trimShort =
+            NSLocalizedString("Trim",
+                              comment: "Reminder Kind: Short Description:  This type reminds the user to trim their plant.")
+        static let moveShort =
+            NSLocalizedString("Move",
+                              comment: "Reminder Kind: Short Description:  This type reminds the user to move their plant.")
+        static let other =
+            NSLocalizedString("Other",
+                              comment: "Reminder Kind: This type reminds the user to do something the user entered.")
     }
 }
 
@@ -188,26 +229,6 @@ extension ReminderEditViewController {
         static let dataEntryPlaceholderDescription =
             NSLocalizedString("Trim the leaves and throw out the clippings.",
                               comment: "Edit Reminder: Data Entry Placeholder: Placeholder text in a textfield. The user should type in what they want to be reminded to do to their plant.")
-    }
-}
-
-extension Reminder.Kind {
-    enum LocalizedString {
-        static let water =
-            NSLocalizedString("Water",
-                              comment: "Reminder Kind: This type reminds the user to water their plant.")
-        static let fertilize =
-            NSLocalizedString("Fertilize",
-                              comment: "Reminder Kind: This type reminds the user to fertilize their plant.")
-        static let trim =
-            NSLocalizedString("Trim",
-                              comment: "Reminder Kind: This type reminds the user to trim their plant.")
-        static let move =
-            NSLocalizedString("Move",
-                              comment: "Reminder Kind: This type reminds the user to move their plant.")
-        static let other =
-            NSLocalizedString("Other",
-                              comment: "Reminder Kind: This type reminds the user to do something the user entered.")
     }
 }
 

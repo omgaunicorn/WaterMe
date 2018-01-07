@@ -27,8 +27,7 @@ import WaterMeData
 import UIKit
 
 protocol ReminderCollectionViewControllerDelegate: class {
-    // swiftlint:disable:next function_parameter_count
-    func userDidSelectReminder(with identifier: Reminder.Identifier, of kind: Reminder.Kind, withNote note: String?, from view: UIView, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController)
+    func userDidSelect(reminder: Reminder, from view: UIView, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController)
     func dragSessionWillBegin(_ session: UIDragSession, within viewController: ReminderCollectionViewController)
     func dragSessionDidEnd(_ session: UIDragSession, within viewController: ReminderCollectionViewController)
 }
@@ -96,13 +95,10 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let reminder = self.reminders?.reminder(at: indexPath), let cell = collectionView.cellForItem(at: indexPath) else { return }
-        self.delegate?.userDidSelectReminder(with: .init(reminder: reminder),
-                                             of: reminder.kind,
-                                             withNote: reminder.note,
-                                             from: cell,
-                                             deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) },
-                                             within: self)
-
+        self.delegate?.userDidSelect(reminder: reminder,
+                                     from: cell,
+                                     deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) },
+                                     within: self)
     }
 
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {

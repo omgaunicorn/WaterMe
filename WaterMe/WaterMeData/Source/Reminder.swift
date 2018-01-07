@@ -162,24 +162,6 @@ extension Reminder: UICompleteCheckable {
     }
 }
 
-public extension Reminder.Kind {
-    // TODO: LocalizeString These
-    public var stringValue: String {
-        switch self {
-        case .water:
-            return "Water Plant"
-        case .fertilize:
-            return "Fertilize Soil"
-        case .trim:
-            return "Trim Plant"
-        case .move:
-            return "Move Plant"
-        case .other:
-            return "Other"
-        }
-    }
-}
-
 public extension Reminder {
     public struct Identifier {
         public var reminderIdentifier: String
