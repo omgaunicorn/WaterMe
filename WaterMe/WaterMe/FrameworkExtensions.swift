@@ -271,3 +271,7 @@ extension UIView {
                      completion: nil)
     }
 }
+
+enum Either<T, U> {
+    case left(T), right(U)
+}

@@ -154,13 +154,17 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     
     @IBAction private func doneButtonTapped(_ _sender: Any) {
         self.view.endEditing(false)
-        guard let reminder = self.reminderResult.value else { self.completionHandler?(self); return; }
-        let sender = _sender as? UIBarButtonItem
-        assert(sender != nil, "Expected UIBarButtonItem to call this method")
+        guard let sender = _sender as? UIBarButtonItem, let reminder = self.reminderResult.value else {
+            let message = "Expected UIBarButtonItem to call this method"
+            log.error(message)
+            assertionFailure(message)
+            self.completionHandler?(self)
+            return
+        }
         let errors = reminder.isUIComplete
         switch errors.isEmpty {
         case true:
-            let notificationAlert = UIAlertController(newPermissionAlertIfNeededWithSelectionCompletionHandler: { selection in
+            let notificationAlert = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .left(sender)) { selection in
                 switch selection {
                 case .allowed:
                     self.completionHandler?(self)
@@ -169,7 +173,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
                 case .cancel:
                     break // do nothing
                 }
-            })
+            }
             if let notificationAlert = notificationAlert {
                 self.present(notificationAlert, animated: true, completion: nil)
             } else {

@@ -30,22 +30,26 @@ extension UIAlertController {
         case denied, allowed, cancel
     }
 
-    convenience init?(newPermissionAlertIfNeededWithSelectionCompletionHandler selection: ((PermissionSelection) -> Void)?) {
+    convenience init?(newPermissionAlertIfNeededPresentedFrom sender: Either<UIBarButtonItem, UIView>?,
+                      selectionCompletionHandler selection: ((PermissionSelection) -> Void)?)
+    {
         let nc = UNUserNotificationCenter.current()
         let ud = UserDefaults.standard
         let authorizationStatus = nc.settings.authorizationStatus
         let userAskedToBeAsked = ud.userHasRequestedToBeAskedAboutNotificationPermissions
         switch (authorizationStatus, userAskedToBeAsked) {
         case (.notDetermined, true):
-            self.init(newRequestPermissionAlertWithSelectionCompletionHandler: selection)
+            self.init(newRequestPermissionAlertPresentedFrom: sender, selectionCompletionHandler: selection)
         case (.denied, true):
-            self.init(newPermissionDeniedAlertWithSelectionCompletionHandler: selection)
+            self.init(newPermissionDeniedAlertPresentedFrom: sender, selectionCompletionHandler: selection)
         default:
             return nil
         }
     }
 
-    private convenience init(newRequestPermissionAlertWithSelectionCompletionHandler selection: ((PermissionSelection) -> Void)?) {
+    private convenience init(newRequestPermissionAlertPresentedFrom sender: Either<UIBarButtonItem, UIView>?,
+                             selectionCompletionHandler selection: ((PermissionSelection) -> Void)?)
+    {
         self.init(title: LocalizedString.newPermissionTitle,
                   message: LocalizedString.newPermissionMessage,
                   preferredStyle: .actionSheet)
@@ -69,8 +73,17 @@ extension UIAlertController {
         self.addAction(yes)
         self.addAction(no)
         self.addAction(cancel)
+        guard let sender = sender else { return }
+        switch sender {
+        case .left(let bbi):
+            self.popoverPresentationController?.barButtonItem = bbi
+        case .right(let view):
+            break
+        }
     }
-    private convenience init(newPermissionDeniedAlertWithSelectionCompletionHandler selection: ((PermissionSelection) -> Void)?) {
+    private convenience init(newPermissionDeniedAlertPresentedFrom sender: Either<UIBarButtonItem, UIView>?,
+                             selectionCompletionHandler selection: ((PermissionSelection) -> Void)?)
+    {
         self.init(title: LocalizedString.permissionDeniedAlertTitle,
                   message: LocalizedString.permissionDeniedAlertMessage,
                   preferredStyle: .actionSheet)
@@ -91,5 +104,12 @@ extension UIAlertController {
         self.addAction(settings)
         self.addAction(dontAsk)
         self.addAction(cancel)
+        guard let sender = sender else { return }
+        switch sender {
+        case .left(let bbi):
+            self.popoverPresentationController?.barButtonItem = bbi
+        case .right(let view):
+            break
+        }
     }
 }
