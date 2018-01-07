@@ -88,8 +88,13 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
 
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         guard let results = self.basicRC?.appendNewPerformToReminders(with: session.reminderDrags) else { return }
-        if case .failure(let error) = results {
-            print("Display an error")
+        switch results {
+        case .failure(let error):
+            self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
+        case .success:
+            let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: nil, selectionCompletionHandler: nil)
+            guard let notificationPermissionVC = notPermVC else { return }
+            self.present(notificationPermissionVC, animated: true, completion: nil)
         }
     }
 
