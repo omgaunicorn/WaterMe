@@ -166,12 +166,8 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         case true:
             let notificationAlert = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .left(sender)) { selection in
                 switch selection {
-                case .allowed:
-                    self.completionHandler?(self)
-                case .denied:
-                    self.doneButtonTapped(_sender) // check again
-                case .cancel:
-                    break // do nothing
+                case .allowed, .denied: self.completionHandler?(self)
+                case .cancel: break // do nothing
                 }
             }
             if let notificationAlert = notificationAlert {

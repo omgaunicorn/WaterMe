@@ -125,10 +125,10 @@ extension UIAlertController {
             NSLocalizedString("Don't Send Notifications",
                               comment: "Alert: New Permission: Button Title: Don't Send Notifications: Title of the button that will result in the user not being asked for permissions ever again.")
         static let permissionDeniedAlertTitle =
-            NSLocalizedString("Permissions Denied",
+            NSLocalizedString("Can't Send Push Notifications",
                               comment: "Alert: Permission Denied: Title: Title of the alert that tells the user that notification permissions are denied.")
         static let permissionDeniedAlertMessage =
-            NSLocalizedString("Permissions to send notifications have been denied. If you would like to receive notifications, tap the Settings button below.",
+            NSLocalizedString("Permissions to send notifications have been denied. If you would like to receive notifications when your plants need to be attened to, tap the Settings button below.",
                               comment: "Alert: Permission Denied: Message: Message of the alert that tells the user that notification permissions are denied. It asks the user to open Settings.")
         static let permissionDeniedButtonTitleDontAskAgain: String =
             NSLocalizedString("Don't Ask Again",

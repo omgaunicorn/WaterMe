@@ -37,22 +37,33 @@ extension UIAlertController {
         let ud = UserDefaults.standard
         let authorizationStatus = nc.settings.authorizationStatus
         let userAskedToBeAsked = ud.userHasRequestedToBeAskedAboutNotificationPermissions
+        let style: UIAlertControllerStyle = sender != nil ? .actionSheet : .alert
         switch (authorizationStatus, userAskedToBeAsked) {
         case (.notDetermined, true):
-            self.init(newRequestPermissionAlertPresentedFrom: sender, selectionCompletionHandler: selection)
+            self.init(newRequestPermissionAlertWithStyle: style, selectionCompletionHandler: selection)
         case (.denied, true):
-            self.init(newPermissionDeniedAlertPresentedFrom: sender, selectionCompletionHandler: selection)
+            self.init(newPermissionDeniedAlertWithStyle: style, selectionCompletionHandler: selection)
         default:
             return nil
         }
+        guard let sender = sender else { return }
+        switch sender {
+        case .left(let bbi):
+            self.popoverPresentationController?.barButtonItem = bbi
+        case .right(let view):
+            self.popoverPresentationController?.sourceView = view
+            let origin = CGPoint(x: view.bounds.size.width / 2, y: view.bounds.size.height / 2)
+            self.popoverPresentationController?.sourceRect = CGRect(origin: origin, size: .zero)
+            self.popoverPresentationController?.permittedArrowDirections = [.up, .down]
+        }
     }
 
-    private convenience init(newRequestPermissionAlertPresentedFrom sender: Either<UIBarButtonItem, UIView>?,
+    private convenience init(newRequestPermissionAlertWithStyle style: UIAlertControllerStyle,
                              selectionCompletionHandler selection: ((PermissionSelection) -> Void)?)
     {
         self.init(title: LocalizedString.newPermissionTitle,
                   message: LocalizedString.newPermissionMessage,
-                  preferredStyle: .actionSheet)
+                  preferredStyle: style)
         let yes = UIAlertAction(title: LocalizedString.newPermissionButtonTitleSendNotifications, style: .default) { _ in
             UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
             UNUserNotificationCenter.current().requestAuthorizationIfNeeded() { permitted in
@@ -73,20 +84,13 @@ extension UIAlertController {
         self.addAction(yes)
         self.addAction(no)
         self.addAction(cancel)
-        guard let sender = sender else { return }
-        switch sender {
-        case .left(let bbi):
-            self.popoverPresentationController?.barButtonItem = bbi
-        case .right(let view):
-            break
-        }
     }
-    private convenience init(newPermissionDeniedAlertPresentedFrom sender: Either<UIBarButtonItem, UIView>?,
+    private convenience init(newPermissionDeniedAlertWithStyle style: UIAlertControllerStyle,
                              selectionCompletionHandler selection: ((PermissionSelection) -> Void)?)
     {
         self.init(title: LocalizedString.permissionDeniedAlertTitle,
                   message: LocalizedString.permissionDeniedAlertMessage,
-                  preferredStyle: .actionSheet)
+                  preferredStyle: style)
         let settings = UIAlertAction(title: LocalizedString.buttonTitleSettings, style: .default) { _ in
             UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
             UIApplication.shared.openSettings() { _ in
@@ -104,12 +108,5 @@ extension UIAlertController {
         self.addAction(settings)
         self.addAction(dontAsk)
         self.addAction(cancel)
-        guard let sender = sender else { return }
-        switch sender {
-        case .left(let bbi):
-            self.popoverPresentationController?.barButtonItem = bbi
-        case .right(let view):
-            break
-        }
     }
 }

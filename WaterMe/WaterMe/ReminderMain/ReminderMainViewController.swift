@@ -216,8 +216,14 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         let performReminder = UIAlertAction(title: LocalizedString.buttonTitleReminderPerform, style: .default) { _ in
             deselectAnimated(true)
             let result = basicRC.appendNewPerformToReminders(with: [identifier])
-            guard case .failure(let error) = result else { return }
-            self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
+            switch result {
+            case .failure(let error):
+                self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
+            case .success:
+                let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .right(view), selectionCompletionHandler: nil)
+                guard let notificationPermissionVC = notPermVC else { return }
+                self.present(notificationPermissionVC, animated: true, completion: nil)
+            }
         }
         let cancel = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleCancel, style: .cancel, handler: { _ in deselectAnimated(true) })
         alert.addAction(performReminder)
