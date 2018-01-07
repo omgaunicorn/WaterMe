@@ -77,6 +77,7 @@
 		50C30E561EFF9349006003A1 /* ReminderIntervalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C30E551EFF9349006003A1 /* ReminderIntervalTableViewCell.swift */; };
 		50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */; };
 		50C96A3A1EC2CFE8002802C1 /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */; };
+		50CB5AFA2001BAA900868F30 /* ReminderNotificationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */; };
 		50D3A0811EC57F68001B4A7D /* SubscriptionMigration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50D3A0801EC57F68001B4A7D /* SubscriptionMigration.storyboard */; };
 		50D3A0831EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3A0821EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift */; };
 		50D3A08A1EC76DD3001B4A7D /* RestorePurchase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50D3A0891EC76DD3001B4A7D /* RestorePurchase.storyboard */; };
@@ -197,6 +198,7 @@
 		50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoDeviceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
 		50C96A3B1EC2CFE8002802C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderNotificationAlert.swift; sourceTree = "<group>"; };
 		50D3A0801EC57F68001B4A7D /* SubscriptionMigration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubscriptionMigration.storyboard; sourceTree = "<group>"; };
 		50D3A0821EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionMigrationViewController.swift; sourceTree = "<group>"; };
 		50D3A0891EC76DD3001B4A7D /* RestorePurchase.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RestorePurchase.storyboard; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 			children = (
 				5049D1A21FACFA1B0076565E /* ReminderUserNotificationController.swift */,
 				507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */,
+				50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */,
 			);
 			path = ReminderNotifications;
 			sourceTree = "<group>";
@@ -934,6 +937,7 @@
 				5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */,
 				5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */,
 				50F388E41FF6DA490031ED45 /* WaterMeData.xcdatamodeld in Sources */,
+				50CB5AFA2001BAA900868F30 /* ReminderNotificationAlert.swift in Sources */,
 				501F92291EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift in Sources */,
 				50C30E541EFF490D006003A1 /* ReminderIntervalPickerViewController.swift in Sources */,
 				50BDC03F1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift in Sources */,
