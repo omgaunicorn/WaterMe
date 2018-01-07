@@ -82,8 +82,7 @@ extension UIAlertController {
                                         message: ReminderVesselEditViewController.LocalizedString.alertBodyCameraDenied,
                                         preferredStyle: .alert)
         let settings = UIAlertAction(title: SettingsMainViewController.LocalizedString.title, style: .default) { _ in
-            let url = URL(string: UIApplicationOpenSettingsURLString)!
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+            UIApplication.shared.openSettings(completion: nil)
         }
         let cancel = UIAlertAction(title: LocalizedString.buttonTitleCancel, style: .cancel, handler: nil)
         alertVC.addAction(settings)

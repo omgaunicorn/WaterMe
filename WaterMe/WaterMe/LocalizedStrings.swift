@@ -106,9 +106,33 @@ extension UIAlertController {
         static let buttonTitleSaveAnyway =
             NSLocalizedString("Save Anyway",
                               comment: "Button Title in an Alert to save the reminder or plant even though all of the fields have not been filled in yet. Fields not yet filled in could include Name, Photo, Reminders.")
+        static let buttonTitleSettings =
+            NSLocalizedString("Settings",
+                              comment: "Alert: Button Title: Settings: Button title that opens the settings app.")
         static let titleUnsolvedIssues =
             NSLocalizedString("There are some issues you might want to resolve.",
                               comment: "Title of an Alert that tells the user that they are trying to save a Plant or Reminder and they have not filled in all the fields. They may want to cancel the save and go back and fill them in. Or they may want to Save the changes anyway. Fields not filled in could include, Name, Photo, Reminders.")
+        static let newPermissionTitle: String =
+            NSLocalizedString("Push Notifications",
+                              comment: "Alert: New Permission: Title: Title of the alert that asks the user if they want to grant notification permissions.")
+        static let newPermissionMessage: String =
+            NSLocalizedString("Do you want WaterMe to send notifications when your plants need attention? WaterMe sends no more than 1 per day.",
+                              comment: "Alert: New Permission: Message: Message of the alert that asks the user if they want to grant notification permissions.")
+        static let newPermissionButtonTitleSendNotifications: String =
+            NSLocalizedString("Send Notifications",
+                              comment: "Alert: New Permission: Button Title: Send Notifications: Title of the button that will result in the user being presented the system dialog to grant notification permissions.")
+        static let newPermissionButtonTitleDontSendNotifications: String =
+            NSLocalizedString("Don't Send Notifications",
+                              comment: "Alert: New Permission: Button Title: Don't Send Notifications: Title of the button that will result in the user not being asked for permissions ever again.")
+        static let permissionDeniedAlertTitle =
+            NSLocalizedString("Permissions Denied",
+                              comment: "Alert: Permission Denied: Title: Title of the alert that tells the user that notification permissions are denied.")
+        static let permissionDeniedAlertMessage =
+            NSLocalizedString("Permissions to send notifications have been denied. If you would like to receive notifications, tap the Settings button below.",
+                              comment: "Alert: Permission Denied: Message: Message of the alert that tells the user that notification permissions are denied. It asks the user to open Settings.")
+        static let permissionDeniedButtonTitleDontAskAgain: String =
+            NSLocalizedString("Don't Ask Again",
+                              comment: "Alert: New Permission: Button Title: Don't Ask Again: Button title that will stop the app from asking about denied notifications again.")
     }
 }
 

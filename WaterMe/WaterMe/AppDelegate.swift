@@ -30,6 +30,13 @@ import UIKit
 
 let log = XCGLogger.default
 
+extension UIApplication {
+    func openSettings(completion: ((Bool) -> Void)?) {
+        let url = URL(string: UIApplicationOpenSettingsURLString)!
+        self.open(url, options: [:], completionHandler: completion)
+    }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -90,12 +97,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let _currentBuild = Bundle(for: type(of: self)).infoDictionary?[kCFBundleVersionKey as String] as? String
         guard let savedBuild = _savedBuild, let currentBuild = _currentBuild, currentBuild == savedBuild else { return false }
         return true
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-        UNUserNotificationCenter.current().requestAuthorizationIfNeeded() { authorized in
-            log.debug("Notifications Authorized: \(authorized)")
-        }
     }
 }
 

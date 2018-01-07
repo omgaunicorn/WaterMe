@@ -32,7 +32,7 @@ extension UserDefaults {
         static let kNumberOfReminderDays = "NUMBER_OF_REMINDER_DAYS"
     }
     
-    var userNeedsToBeAskedAboutNotifications: Bool {
+    var userHasRequestedToBeAskedAboutNotificationPermissions: Bool {
         get {
             guard let number = self.object(forKey: Constants.kFirstRun) as? NSNumber
                 else { fatalError("Must call configure() before accessing user defaults") }

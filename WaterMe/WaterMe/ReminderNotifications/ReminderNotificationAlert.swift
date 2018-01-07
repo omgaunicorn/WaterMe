@@ -25,26 +25,71 @@ import UserNotifications
 import UIKit
 
 extension UIAlertController {
-    class func newRequestPermissionAlert(selection: (() -> Void)?) -> UIAlertController? {
-        guard UserDefaults.standard.userNeedsToBeAskedAboutNotifications == true else { return nil }
-        let title = "Push Notifications"
-        let message = "Do you want WaterMe to send notifications when your plants need attention? WaterMe sends no more than 1 per day."
-        let vc = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
-        let yes = UIAlertAction(title: "Send Notifications", style: .default) { _ in
-            UserDefaults.standard.userNeedsToBeAskedAboutNotifications = false
-            UNUserNotificationCenter.current().requestAuthorizationIfNeeded(completion: nil)
-            selection?()
+
+    enum PermissionSelection {
+        case denied, allowed, cancel
+    }
+
+    convenience init?(newPermissionAlertIfNeededWithSelectionCompletionHandler selection: ((PermissionSelection) -> Void)?) {
+        let nc = UNUserNotificationCenter.current()
+        let ud = UserDefaults.standard
+        let authorizationStatus = nc.settings.authorizationStatus
+        let userAskedToBeAsked = ud.userHasRequestedToBeAskedAboutNotificationPermissions
+        switch (authorizationStatus, userAskedToBeAsked) {
+        case (.notDetermined, true):
+            self.init(newRequestPermissionAlertWithSelectionCompletionHandler: selection)
+        case (.denied, true):
+            self.init(newPermissionDeniedAlertWithSelectionCompletionHandler: selection)
+        default:
+            return nil
         }
-        let no = UIAlertAction(title: "Don't Send Notifications", style: .default) { _ in
-            UserDefaults.standard.userNeedsToBeAskedAboutNotifications = false
-            selection?()
+    }
+
+    private convenience init(newRequestPermissionAlertWithSelectionCompletionHandler selection: ((PermissionSelection) -> Void)?) {
+        self.init(title: LocalizedString.newPermissionTitle,
+                  message: LocalizedString.newPermissionMessage,
+                  preferredStyle: .actionSheet)
+        let yes = UIAlertAction(title: LocalizedString.newPermissionButtonTitleSendNotifications, style: .default) { _ in
+            UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
+            UNUserNotificationCenter.current().requestAuthorizationIfNeeded() { permitted in
+                switch permitted {
+                case true: selection?(.allowed)
+                case false: selection?(.denied)
+                }
+            }
         }
-        let cancel = UIAlertAction(title: "Dismiss", style: .cancel) { _ in
-            selection?()
+        let no = UIAlertAction(title: LocalizedString.newPermissionButtonTitleDontSendNotifications, style: .destructive) { _ in
+            UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = false
+            selection?(.denied)
         }
-        vc.addAction(yes)
-        vc.addAction(no)
-        vc.addAction(cancel)
-        return vc
+        let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
+            UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
+            selection?(.cancel)
+        }
+        self.addAction(yes)
+        self.addAction(no)
+        self.addAction(cancel)
+    }
+    private convenience init(newPermissionDeniedAlertWithSelectionCompletionHandler selection: ((PermissionSelection) -> Void)?) {
+        self.init(title: LocalizedString.permissionDeniedAlertTitle,
+                  message: LocalizedString.permissionDeniedAlertMessage,
+                  preferredStyle: .actionSheet)
+        let settings = UIAlertAction(title: LocalizedString.buttonTitleSettings, style: .default) { _ in
+            UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
+            UIApplication.shared.openSettings() { _ in
+                selection?(.cancel)
+            }
+        }
+        let dontAsk = UIAlertAction(title: LocalizedString.permissionDeniedButtonTitleDontAskAgain, style: .destructive) { _ in
+            UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = false
+            selection?(.denied)
+        }
+        let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
+            UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
+            selection?(.cancel)
+        }
+        self.addAction(settings)
+        self.addAction(dontAsk)
+        self.addAction(cancel)
     }
 }

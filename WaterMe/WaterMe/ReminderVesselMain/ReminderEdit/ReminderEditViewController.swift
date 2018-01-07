@@ -152,17 +152,24 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         }
     }
     
-    @IBAction private func doneButtonTapped(_ sender: Any) {
+    @IBAction private func doneButtonTapped(_ _sender: Any) {
         self.view.endEditing(false)
         guard let reminder = self.reminderResult.value else { self.completionHandler?(self); return; }
-        let sender = sender as? UIBarButtonItem
+        let sender = _sender as? UIBarButtonItem
         assert(sender != nil, "Expected UIBarButtonItem to call this method")
         let errors = reminder.isUIComplete
         switch errors.isEmpty {
         case true:
-            let notificationAlert = UIAlertController.newRequestPermissionAlert() {
-                self.completionHandler?(self)
-            }
+            let notificationAlert = UIAlertController(newPermissionAlertIfNeededWithSelectionCompletionHandler: { selection in
+                switch selection {
+                case .allowed:
+                    self.completionHandler?(self)
+                case .denied:
+                    self.doneButtonTapped(_sender) // check again
+                case .cancel:
+                    break // do nothing
+                }
+            })
             if let notificationAlert = notificationAlert {
                 self.present(notificationAlert, animated: true, completion: nil)
             } else {

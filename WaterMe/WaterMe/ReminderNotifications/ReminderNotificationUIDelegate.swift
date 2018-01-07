@@ -40,6 +40,19 @@ class ReminderNotificationUIDelegate: NSObject, UNUserNotificationCenterDelegate
 }
 
 extension UNUserNotificationCenter {
+    var settings: UNNotificationSettings {
+        let semaphore = DispatchSemaphore(value: 0)
+        var settings: UNNotificationSettings!
+        self.getNotificationSettings() { s in
+            settings = s
+            semaphore.signal()
+        }
+        semaphore.wait()
+        return settings
+    }
+}
+
+extension UNUserNotificationCenter {
     func requestAuthorizationIfNeeded(completion: ((Bool) -> Void)?) {
         self.getNotificationSettings() { preSettings in
             switch preSettings.authorizationStatus {
