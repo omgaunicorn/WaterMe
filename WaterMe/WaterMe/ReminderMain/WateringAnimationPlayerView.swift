@@ -75,6 +75,10 @@ class WateringAnimationPlayerView: UIView {
         self.videoLayer.player = self.videoManager.player
     }
 
+    func hardReset() {
+        self.videoManager.hardReset()
+    }
+
     override func tintColorDidChange() {
         super.tintColorDidChange()
         self.hairlineView?.backgroundColor = self.tintColor

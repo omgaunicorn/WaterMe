@@ -51,6 +51,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillEnterForeground(_:)), name: .UIApplicationWillEnterForeground, object: nil)
         self.dropTargetView?.addInteraction(UIDropInteraction(delegate: self))
         self.animationView?.finishedPlayingDropVideo = { [unowned self] in
             self.updateDropTargetHeightForNotDragging(animated: true)
@@ -98,7 +99,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         }
     }
 
-    // Handle View Layouts
+    // MARK: Handle View Layouts
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
@@ -173,7 +174,14 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         }
     }
 
-    // UI Updates
+    // MARK: Handle Drag and Drop
+
+    @objc private func applicationWillEnterForeground(_ notification: Any) {
+        guard self.viewDidAppearOnce == true else { return }
+        self.updateDropTargetHeightForNotDragging(animated: true)
+        self.animationView?.hardReset()
+        self.instructionalView?.performInstructionalAnimation(completion: nil)
+    }
 
     private var isDragInProgress = false {
         didSet {

@@ -25,7 +25,7 @@ import AVFoundation
 
 class DragAndDropPlayerManager {
 
-    enum HoverState: Int {
+    enum HoverState {
         case noHover, hover, drop
     }
 
@@ -180,6 +180,13 @@ class DragAndDropPlayerManager {
         }
 
         self.observerTokens += [landscapeStart, landscapeHover, landscapeEnd, portraitStart, portraitHover, portraitEnd]
+    }
+
+    func hardReset() {
+        self.hoverState = .noHover
+        self.videoLayerShouldBeHidden = true
+        self.player.pause()
+        self.player.seek(to: startTime)
     }
 
     private var observerTokens = [Any]()
