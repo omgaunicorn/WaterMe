@@ -25,24 +25,55 @@
 import XCTest
 
 class RealmTests: XCTestCase {
-    
-//    func testURLParser() {
-//        let nonSecure = URL(string: "http://myserver.level1.com:8080")!
-//        let appName = "MeToo3"
-//        let realmURL = nonSecure.realmURL(withAppName: appName)
-//        XCTAssert(realmURL == URL(string: "realm://myserver.level1.com:8080/~/MeToo3")!)
-//        
-//        let nonSecureSlash = URL(string: "http://myserver.level1.com:8080/")!
-//        let realmURLSlash = nonSecureSlash.realmURL(withAppName: appName)
-//        XCTAssert(realmURLSlash == URL(string: "realm://myserver.level1.com:8080/~/MeToo3")!)
-//        
-//        let secure = URL(string: "https://myserver.level1.com:8080")!
-//        let secureRealmURL = secure.realmURL(withAppName: appName)
-//        XCTAssert(secureRealmURL == URL(string: "realms://myserver.level1.com:8080/~/MeToo3")!)
-//        
-//        let secureSlash = URL(string: "https://myserver.level1.com:8080/")!
-//        let secureRealmURLSlash = secureSlash.realmURL(withAppName: appName)
-//        XCTAssert(secureRealmURLSlash == URL(string: "realms://myserver.level1.com:8080/~/MeToo3")!)
-//    }
-//    
+
+    func testUserPathCode() {
+        let appName = "MeToo3"
+        let url = URL(string: "http://myserver.level1.com:8080")!
+
+        let user1 = "/~/"
+        let realmURL1 = url.realmURL(withAppName: appName, userPath: user1)
+        XCTAssert(realmURL1 == URL(string: "realm://myserver.level1.com:8080/~/MeToo3")!)
+
+        let user2 = "~/"
+        let realmURL2 = url.realmURL(withAppName: appName, userPath: user2)
+        XCTAssert(realmURL2 == URL(string: "realm://myserver.level1.com:8080/~/MeToo3")!)
+
+        let user3 = "~"
+        let realmURL3 = url.realmURL(withAppName: appName, userPath: user3)
+        XCTAssert(realmURL3 == URL(string: "realm://myserver.level1.com:8080/~/MeToo3")!)
+
+        let user4 = "/jeffburg/"
+        let realmURL4 = url.realmURL(withAppName: appName, userPath: user4)
+        XCTAssert(realmURL4 == URL(string: "realm://myserver.level1.com:8080/jeffburg/MeToo3")!)
+
+        let user5 = "jeffburg/"
+        let realmURL5 = url.realmURL(withAppName: appName, userPath: user5)
+        XCTAssert(realmURL5 == URL(string: "realm://myserver.level1.com:8080/jeffburg/MeToo3")!)
+
+        let user6 = "jeffburg"
+        let realmURL6 = url.realmURL(withAppName: appName, userPath: user6)
+        XCTAssert(realmURL6 == URL(string: "realm://myserver.level1.com:8080/jeffburg/MeToo3")!)
+    }
+
+    func testSecureVSNonSecureCode() {
+        let appName = "MeToo3"
+        let user = "~/"
+
+        let nonSecure = URL(string: "http://myserver.level1.com:8080")!
+        let realmURL = nonSecure.realmURL(withAppName: appName, userPath: user)
+        XCTAssert(realmURL == URL(string: "realm://myserver.level1.com:8080/~/MeToo3")!)
+
+        let nonSecureSlash = URL(string: "http://myserver.level1.com:8080/")!
+        let realmURLSlash = nonSecureSlash.realmURL(withAppName: appName, userPath: user)
+        XCTAssert(realmURLSlash == URL(string: "realm://myserver.level1.com:8080/~/MeToo3")!)
+
+        let secure = URL(string: "https://myserver.level1.com:8080")!
+        let secureRealmURL = secure.realmURL(withAppName: appName, userPath: user)
+        XCTAssert(secureRealmURL == URL(string: "realms://myserver.level1.com:8080/~/MeToo3")!)
+
+        let secureSlash = URL(string: "https://myserver.level1.com:8080/")!
+        let secureRealmURLSlash = secureSlash.realmURL(withAppName: appName, userPath: user)
+        XCTAssert(secureRealmURLSlash == URL(string: "realms://myserver.level1.com:8080/~/MeToo3")!)
+    }
+
 }
