@@ -33,8 +33,12 @@ class ReminderUserNotificationController {
 
     private var timer: Timer?
 
-    init?(basicController: BasicController) {
-        guard let collection = basicController.allReminders().value else { return nil }
+    init?(basicController: BasicController?) {
+        guard
+            let basicController = basicController,
+            let collection = basicController.allReminders().value
+        else { return nil }
+        
         self.token = collection.observe({ [weak self] in self?.dataChanged($0) })
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground(with:)), name: .UIApplicationDidEnterBackground, object: nil)
     }

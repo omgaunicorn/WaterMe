@@ -73,10 +73,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure audio so the water video does not pause the users music
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
 
-        let freeRC = BasicController(kind: .local)
-        let vc = ReminderMainViewController.newVC(basicController: freeRC, proController: nil)
-
-        self.notifictionController = ReminderUserNotificationController(basicController: freeRC)
+        let result = BasicController.new(of: .local)
+        let vc = ReminderMainViewController.newVC(basicRCResult: result, proController: nil)
+        self.notifictionController = ReminderUserNotificationController(basicController: result.value)
 
         if self.window == nil {
             self.window = UIWindow(frame: UIScreen.main.bounds)

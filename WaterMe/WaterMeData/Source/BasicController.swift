@@ -71,15 +71,24 @@ public class BasicController {
             return .failure(.loadError)
         }
     }
-    
-    public init(kind: Kind) {
+
+    public class func new(of kind: Kind) -> Result<BasicController, RealmError> {
+        do {
+            let bc = try BasicController(kind: kind)
+            return .success(bc)
+        } catch {
+            return .failure(.createError)
+        }
+    }
+
+    private init(kind: Kind) throws {
         self.kind = kind
         var realmConfig = Realm.Configuration()
         realmConfig.schemaVersion = 14
         realmConfig.objectTypes = [ReminderVessel.self, Reminder.self, ReminderPerform.self]
         switch kind {
         case .local:
-            try! type(of: self).createLocalRealmDirectoryIfNeeded()
+            try type(of: self).createLocalRealmDirectoryIfNeeded()
             realmConfig.fileURL = type(of: self).localRealmFile
         case .sync(let user):
             let url = user.realmURL(withAppName: "WaterMeBasic")

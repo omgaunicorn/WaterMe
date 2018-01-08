@@ -21,25 +21,28 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Result
 import WaterMeData
 import UIKit
 
 class ReminderMainViewController: UIViewController, HasProController, HasBasicController {
     
-    class func newVC(basicController: BasicController?, proController: ProController? = nil) -> UINavigationController {
+    class func newVC(basicRCResult: Result<BasicController, RealmError>, proController: ProController? = nil) -> UINavigationController {
         let sb = UIStoryboard(name: "ReminderMain", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderMainViewController
         vc.title = AppDelegate.LocalizedString.appTitle // set here because it works better in UITabBarController
-        vc.configure(with: basicController)
+        vc.applicationDidFinishLaunchingError = basicRCResult.error
+        vc.configure(with: basicRCResult.value)
         vc.configure(with: proController)
         return navVC
     }
 
     private weak var collectionVC: ReminderCollectionViewController?
     private weak var dropTargetViewController: ReminderFinishDropTargetViewController?
+    private var applicationDidFinishLaunchingError: RealmError?
 
     private lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(title: ReminderVesselMainViewController.LocalizedString.title, style: .done, target: self, action: #selector(self.plantsButtonTapped(_:)))
     private lazy var settingsBBI: UIBarButtonItem = UIBarButtonItem(title: SettingsMainViewController.LocalizedString.title, style: .plain, target: self, action: #selector(self.settingsButtonTapped(_:)))
@@ -54,7 +57,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     
     var basicRC: BasicController?
     var proRC: ProController?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -71,7 +74,11 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if let error = self.collectionVC?.reminders?.lastError {
+        if let error = self.applicationDidFinishLaunchingError {
+            self.applicationDidFinishLaunchingError = nil
+            let alert = UIAlertController(error: error, completion: nil)
+            self.present(alert, animated: true, completion: nil)
+        } else if let error = self.collectionVC?.reminders?.lastError {
             self.collectionVC?.reminders?.lastError = nil
             let alert = UIAlertController(error: error, completion: nil)
             self.present(alert, animated: true, completion: nil)
@@ -165,6 +172,8 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         self.plantsBBI.isEnabled = true
     }
 
+    // this produces a warning and it is a really long function
+    // potential for refactor, but its nice how its so contained
     func userDidSelect(reminder: Reminder,
                        from view: UIView,
                        deselectAnimated: @escaping (Bool) -> Void,
@@ -172,6 +181,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
     {
         guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
 
+        // prepare information for the alert we're going to present
         let dueDateString = self.dueDateFormatter.string(from: reminder.nextPerformDate ?? Date())
         let message = reminder.localizedAlertMessage(withLocalizedDateString: dueDateString)
         let alert = UIAlertController(title: reminder.localizedAlertTitle, message: message, preferredStyle: .actionSheet)
