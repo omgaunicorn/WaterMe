@@ -164,17 +164,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         let errors = reminder.isUIComplete
         switch errors.isEmpty {
         case true:
-            let notificationAlert = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .left(sender)) { selection in
-                switch selection {
-                case .allowed, .denied: self.completionHandler?(self)
-                case .cancel: break // do nothing
-                }
-            }
-            if let notificationAlert = notificationAlert {
-                self.present(notificationAlert, animated: true, completion: nil)
-            } else {
-                self.completionHandler?(self)
-            }
+            self.completionHandler?(self)
         case false:
             UIAlertController.presentAlertVC(for: errors, over: self, from: sender) { selection in
                 switch selection {
