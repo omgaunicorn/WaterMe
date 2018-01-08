@@ -34,3 +34,4 @@ trailing_comma:
 excluded:
   - Pods
   - NoDeviceTests
+  - AdminConsole
