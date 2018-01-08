@@ -23,7 +23,6 @@
 
 import WaterMeStore
 import WaterMeData
-import FormatterKit
 import UIKit
 import UserNotifications
 
@@ -158,20 +157,20 @@ extension Formatter {
         f.unitsStyle = .full
         return f
     }
-    class var newTimeAgoFormatter: TTTTimeIntervalFormatter {
-        let f = TTTTimeIntervalFormatter()
-        f.usesApproximateQualifier = true
-        f.usesIdiomaticDeicticExpressions = true
+    class var newTimeAgoFormatter: DateFormatter {
+        let f = DateFormatter()
+        f.dateStyle = .full
+        f.timeStyle = .none
+        f.doesRelativeDateFormatting = true
         return f
     }
 }
 
-extension TTTTimeIntervalFormatter {
-    func timeAgoString(for interval: TimeInterval?) -> String {
-        guard let interval = interval else { return ReminderMainViewController.LocalizedString.timeAgoLabelNever }
-        let intervalString = self.string(forTimeInterval: interval)
-        assert(intervalString != nil, "Time Ago Formatter Returned NIL for Interval: \(interval)")
-        return intervalString ?? "–"
+extension DateFormatter {
+    func timeAgoString(for date: Date?) -> String {
+        guard let date = date else { return ReminderMainViewController.LocalizedString.timeAgoLabelNever }
+        let dateString = self.string(from: date)
+        return dateString
     }
 }
 

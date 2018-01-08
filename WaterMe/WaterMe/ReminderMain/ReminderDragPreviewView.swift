@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import FormatterKit
 import WaterMeData
 import UIKit
 
@@ -47,8 +46,6 @@ class ReminderDragPreviewView: UIView {
     @IBOutlet private weak var labelTwo: UILabel?
     @IBOutlet private weak var largeEmojiImageView: EmojiImageView?
     @IBOutlet private weak var smallEmojiImageView: EmojiImageView?
-
-    private let reminderDateFormatter = TTTTimeIntervalFormatter.newTimeAgoFormatter
 
     override func awakeFromNib() {
         super.awakeFromNib()

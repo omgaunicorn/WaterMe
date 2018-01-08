@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import FormatterKit
 import WaterMeData
 import UIKit
 
@@ -36,8 +35,6 @@ class ReminderCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var smallEmojiImageView: EmojiImageView?
     @IBOutlet private weak var emojiImageWidthConstraint: NSLayoutConstraint?
     
-    private let reminderDateFormatter = TTTTimeIntervalFormatter.newTimeAgoFormatter
-
     override func awakeFromNib() {
         super.awakeFromNib()
         

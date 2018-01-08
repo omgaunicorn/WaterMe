@@ -36,8 +36,8 @@ class LastPerformedTableViewCell: SimpleLabelTableViewCell {
     }
     
     func configureWith(lastPerformedDate: Date?) {
-        let interval = lastPerformedDate?.timeIntervalSinceNow
-        self.label.attributedText = NSAttributedString(string: self.formatter.timeAgoString(for: interval), style: Style.readOnlyTableViewCell)
+        let dateString = self.formatter.timeAgoString(for: lastPerformedDate)
+        self.label.attributedText = NSAttributedString(string: dateString, style: Style.readOnlyTableViewCell)
     }
     
     override func prepareForReuse() {
