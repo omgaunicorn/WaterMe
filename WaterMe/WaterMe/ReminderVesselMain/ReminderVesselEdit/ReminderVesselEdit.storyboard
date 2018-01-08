@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="g5Q-Rb-Z4g">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="g5Q-Rb-Z4g">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -95,22 +95,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eYA-NT-INK"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Vessel" id="I5b-Wd-mrD">
-                        <barButtonItem key="leftBarButtonItem" title="Delete" id="SH7-kB-gu2">
-                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="deleteButtonTapped:" destination="hwy-bV-hUN" id="eaB-Or-a50"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="mzj-1R-Z4H">
-                            <connections>
-                                <action selector="doneButtonTapped:" destination="hwy-bV-hUN" id="LEw-GB-POc"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="deleteButton" destination="SH7-kB-gu2" id="Z4i-Dm-3s9"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="Edit Vessel" id="I5b-Wd-mrD"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jX6-mk-C8X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

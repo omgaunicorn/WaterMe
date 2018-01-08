@@ -84,6 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if self.window == nil {
             self.window = UIWindow(frame: UIScreen.main.bounds)
         }
+//        self.window!.tintColor = UIApplication.style_tintColor
         self.window!.backgroundColor = .white
         self.window!.rootViewController = vc
         self.window!.makeKeyAndVisible()

@@ -42,12 +42,11 @@ extension ReminderVessel {
 extension UIApplication {
     static let style_animationDurationLong: TimeInterval = 1.2
     static let style_animationDurationNormal: TimeInterval = 0.3
-    static let style_tintColor = UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)
-    static let style_visualEffectViewBackgroundColor = UIApplication.style_tintColor.withAlphaComponent(0.25)
     static let style_cornerRadius: CGFloat = 8
     class func style_configure() {
-        UIView.appearance().tintColor = self.style_tintColor
-        UIVisualEffectView.appearance().backgroundColor = self.style_visualEffectViewBackgroundColor
+        UIView.appearance().tintColor = Style.Color.tint
+        UIView.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = nil
+        UIVisualEffectView.appearance().backgroundColor = Style.Color.visuelEffectViewBackground
     }
 }
 
@@ -268,12 +267,21 @@ enum Style {
         }
     }
     
-    private enum Color {
+    enum Color {
         static var textSecondary: UIColor {
             return .gray
         }
         static var textPrimary: UIColor {
             return .black
+        }
+        static var delete: UIColor {
+            return .red
+        }
+        static var tint: UIColor {
+            return UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)
+        }
+        static var visuelEffectViewBackground: UIColor {
+            return tint.withAlphaComponent(0.25)
         }
     }
 }

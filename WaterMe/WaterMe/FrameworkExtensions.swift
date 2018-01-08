@@ -36,6 +36,17 @@ extension MutableCollection {
     }
 }
 
+extension UIBarButtonItem {
+    convenience init(localizedDeleteButtonWithTarget target: Any, action: Selector) {
+        self.init(title: UIAlertController.LocalizedString.buttonTitleDelete, style: .plain, target: target, action: action)
+        self.tintColor = Style.Color.delete
+    }
+    convenience init(localizedSaveButtonWithTarget target: Any, action: Selector) {
+        self.init(barButtonSystemItem: .save, target: target, action: action)
+        self.style = .done
+    }
+}
+
 extension Sequence {
     func shuffled() -> [Element] {
         var result = Array(self)

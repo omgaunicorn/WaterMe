@@ -50,7 +50,9 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     }
     
     /*@IBOutlet*/ private weak var tableViewController: ReminderVesselEditTableViewController?
-    @IBOutlet private weak var deleteButton: UIBarButtonItem?
+
+    private lazy var deleteBBI: UIBarButtonItem = UIBarButtonItem(localizedDeleteButtonWithTarget: self, action: #selector(self.deleteButtonTapped(_:)))
+    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedSaveButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
     
     var basicRC: BasicController?
     private(set) var vesselResult: Result<ReminderVessel, RealmError>!
@@ -69,11 +71,11 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        self.navigationItem.leftBarButtonItem = self.deleteBBI
+        self.navigationItem.rightBarButtonItem = self.doneBBI
+
         self.startNotifications()
-        
-        self.deleteButton?.title = UIAlertController.LocalizedString.buttonTitleDelete
-        self.title = UIAlertController.LocalizedString.buttonTitleNewPlant
     }
     
     override func viewDidAppear(_ animated: Bool) {

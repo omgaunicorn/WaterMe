@@ -54,16 +54,19 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     /*@IBOutlet*/ private weak var tableViewController: ReminderEditTableViewController?
-    @IBOutlet private weak var deleteButton: UIBarButtonItem?
-    
+
+    private lazy var deleteBBI: UIBarButtonItem = UIBarButtonItem(localizedDeleteButtonWithTarget: self, action: #selector(self.deleteButtonTapped(_:)))
+    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedSaveButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
+
     var basicRC: BasicController?
     private var reminderResult: Result<Reminder, RealmError>!
     private var completionHandler: CompletionHandler?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.deleteButton?.title = UIAlertController.LocalizedString.buttonTitleDelete
+
+        self.navigationItem.leftBarButtonItem = self.deleteBBI
+        self.navigationItem.rightBarButtonItem = self.doneBBI
         
         self.tableViewController?.reminder = { [unowned self] in return self.reminderResult }
         self.tableViewController?.kindChanged = { [unowned self] in self.update(kind: $0, fromKeyboard: $1) }

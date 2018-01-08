@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Euq-e7-F8U">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Euq-e7-F8U">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -50,22 +50,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7Xd-ep-i2i"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Reminder" id="Z5c-bL-Vpf">
-                        <barButtonItem key="leftBarButtonItem" title="Delete" id="btZ-gf-j8a">
-                            <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="deleteButtonTapped:" destination="EzP-gR-dN4" id="ilM-Qq-wIl"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="dbJ-qI-y1p">
-                            <connections>
-                                <action selector="doneButtonTapped:" destination="EzP-gR-dN4" id="B5w-Xk-8hx"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="deleteButton" destination="btZ-gf-j8a" id="zgv-V9-cvT"/>
-                    </connections>
+                    <navigationItem key="navigationItem" title="Edit Reminder" id="Z5c-bL-Vpf"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fS0-h6-ZtP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
