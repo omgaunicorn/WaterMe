@@ -52,8 +52,7 @@ extension UIAlertController {
             self.popoverPresentationController?.barButtonItem = bbi
         case .right(let view):
             self.popoverPresentationController?.sourceView = view
-            let origin = CGPoint(x: view.bounds.size.width / 2, y: view.bounds.size.height / 2)
-            self.popoverPresentationController?.sourceRect = CGRect(origin: origin, size: .zero)
+            self.popoverPresentationController?.sourceRect = type(of: self).sourceRect(from: view)
             self.popoverPresentationController?.permittedArrowDirections = [.up, .down]
         }
     }

@@ -142,16 +142,28 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     
     @IBAction private func deleteButtonTapped(_ sender: Any) {
         self.view.endEditing(false)
-        guard let reminder = self.reminderResult.value, let basicRC = self.basicRC
-            else { assertionFailure("Missing Reminder or Realm Controller."); self.completionHandler?(self); return; }
-        let deleteResult = basicRC.delete(reminder: reminder)
-        switch deleteResult {
-        case .success:
+        guard
+            let reminder = self.reminderResult.value,
+            let basicRC = self.basicRC,
+            let sender = sender as? UIBarButtonItem
+        else {
+            assertionFailure("Missing Reminder or Realm Controller.")
             self.completionHandler?(self)
-        case .failure(let error):
-            let alert = UIAlertController(error: error, completion: nil)
-            self.present(alert, animated: true, completion: nil)
+            return
         }
+
+        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .left(sender)) { confirmed in
+            guard confirmed == true else { return }
+            let deleteResult = basicRC.delete(reminder: reminder)
+            switch deleteResult {
+            case .success:
+                self.completionHandler?(self)
+            case .failure(let error):
+                let alert = UIAlertController(error: error, completion: nil)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        self.present(confirmation, animated: true, completion: nil)
     }
     
     @IBAction private func doneButtonTapped(_ _sender: Any) {

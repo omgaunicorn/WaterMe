@@ -100,6 +100,9 @@ extension UIAlertController {
         static let buttonTitleDismiss =
             NSLocalizedString("Dismiss",
                               comment: "Button Title in an Alert to close the alert. This button title normally only appears when there are no other options in the alert.")
+        static let buttonTitleDontDelete =
+            NSLocalizedString("Don't Delete",
+                              comment: "Alert: Delete Confirmation: Button Title: When the user is being asked to confirm to delete an item, this button lets them not delete it.")
         static let buttonTitleCancel =
             NSLocalizedString("Cancel",
                               comment: "Button Title in an Alert to close the alert without saving any changes.")
@@ -133,6 +136,9 @@ extension UIAlertController {
         static let permissionDeniedButtonTitleDontAskAgain: String =
             NSLocalizedString("Don't Ask Again",
                               comment: "Alert: New Permission: Button Title: Don't Ask Again: Button title that will stop the app from asking about denied notifications again.")
+        static let deleteAlertMessage: String =
+            NSLocalizedString("Are you sure you want to delete this?",
+                              comment: "Alert: Delete: Message: Message of the alert that asks the user if they want to delete this item.")
     }
 }
 

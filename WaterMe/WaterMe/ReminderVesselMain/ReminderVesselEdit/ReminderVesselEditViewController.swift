@@ -98,19 +98,30 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     
     @IBAction private func deleteButtonTapped(_ sender: Any) {
         self.view.endEditing(false)
-        guard let vessel = self.vesselResult.value, let basicRC = self.basicRC
-            else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
-        let deleteResult = basicRC.delete(vessel: vessel)
-        switch deleteResult {
-        case .success:
-            self.tableViewController?.reminderVesselWasDeleted()
+        guard
+            let vessel = self.vesselResult.value,
+            let basicRC = self.basicRC,
+            let sender = sender as? UIBarButtonItem
+        else {
+            assertionFailure("Missing ReminderVessel or Realm Controller")
             self.completionHandler?(self)
-        case .failure(let error):
-            let alert = UIAlertController(error: error) { _ in
-                self.completionHandler?(self)
-            }
-            self.present(alert, animated: true, completion: nil)
+            return
         }
+        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .left(sender)) { confirmed in
+            guard confirmed == true else { return }
+            let deleteResult = basicRC.delete(vessel: vessel)
+            switch deleteResult {
+            case .success:
+                self.tableViewController?.reminderVesselWasDeleted()
+                self.completionHandler?(self)
+            case .failure(let error):
+                let alert = UIAlertController(error: error) { _ in
+                    self.completionHandler?(self)
+                }
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        self.present(confirmation, animated: true, completion: nil)
     }
     
     @IBAction private func doneButtonTapped(_ sender: Any) {
