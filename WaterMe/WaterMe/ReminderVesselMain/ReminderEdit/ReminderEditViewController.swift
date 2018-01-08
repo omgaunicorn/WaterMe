@@ -65,7 +65,6 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         
         self.deleteButton?.title = UIAlertController.LocalizedString.buttonTitleDelete
         
-        self.tableViewController = self.childViewControllers.first()
         self.tableViewController?.reminder = { [unowned self] in return self.reminderResult }
         self.tableViewController?.kindChanged = { [unowned self] in self.update(kind: $0, fromKeyboard: $1) }
         self.tableViewController?.noteChanged = { [unowned self] in self.update(note: $0, fromKeyboard: true) }
@@ -176,6 +175,12 @@ class ReminderEditViewController: UIViewController, HasBasicController {
                     self.completionHandler?(self)
                 }
             }
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let tableVC = segue.destination as? ReminderEditTableViewController {
+            self.tableViewController = tableVC
         }
     }
     

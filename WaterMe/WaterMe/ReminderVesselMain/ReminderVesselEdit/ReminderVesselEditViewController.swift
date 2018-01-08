@@ -206,10 +206,10 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         self.present(addReminderVC, animated: true, completion: nil)
     }
     
-    func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController?) {
+    func userChose(reminder: Reminder, deselectRowAnimated: ((Bool) -> Void)?, controller: ReminderVesselEditTableViewController?) {
         self.view.endEditing(false)
-        let editReminderVC = ReminderEditViewController.newVC(basicController: basicRC, purpose: .existing(reminder)) { [weak self] vc in
-            vc.dismiss(animated: true, completion: { self?.tableViewController?.tableView.deselectSelectedRows(animated: true) })
+        let editReminderVC = ReminderEditViewController.newVC(basicController: basicRC, purpose: .existing(reminder)) { vc in
+            vc.dismiss(animated: true, completion: { deselectRowAnimated?(true) })
         }
         self.present(editReminderVC, animated: true, completion: nil)
     }

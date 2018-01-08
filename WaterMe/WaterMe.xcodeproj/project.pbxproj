@@ -19,11 +19,6 @@
 		501C0E921ECE5EFF00D4EE7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E911ECE5EFF00D4EE7C /* Assets.xcassets */; };
 		501C0E951ECE5EFF00D4EE7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E931ECE5EFF00D4EE7C /* LaunchScreen.storyboard */; };
 		501C0E9B1ECE602400D4EE7C /* PrivateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */; };
-		501F92281EC55E080014939D /* SubscriptionChoice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501F92231EC55E080014939D /* SubscriptionChoice.storyboard */; };
-		501F92291EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92241EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift */; };
-		501F922A1EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 501F92251EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib */; };
-		501F922B1EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */; };
-		501F922C1EC55E080014939D /* SubscriptionChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */; };
 		50299E651FED926400363EF3 /* DragAndDropPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */; };
 		502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */; };
 		502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */; };
@@ -68,7 +63,6 @@
 		50BB0F6C1EC001C200850FF4 /* Videos in Resources */ = {isa = PBXBuildFile; fileRef = 50BB0F6B1EC001C200850FF4 /* Videos */; };
 		50BB0F711EC00E9500850FF4 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50BB0F701EC00E9500850FF4 /* CloudKit.framework */; };
 		50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */; };
-		50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */; };
 		50BB816A1EF7731E0030F5BA /* ReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */; };
 		50BDC03F1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BDC03D1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift */; };
 		50BDC0401F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50BDC03E1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib */; };
@@ -78,10 +72,6 @@
 		50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */; };
 		50C96A3A1EC2CFE8002802C1 /* SubscriptionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */; };
 		50CB5AFA2001BAA900868F30 /* ReminderNotificationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */; };
-		50D3A0811EC57F68001B4A7D /* SubscriptionMigration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50D3A0801EC57F68001B4A7D /* SubscriptionMigration.storyboard */; };
-		50D3A0831EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3A0821EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift */; };
-		50D3A08A1EC76DD3001B4A7D /* RestorePurchase.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50D3A0891EC76DD3001B4A7D /* RestorePurchase.storyboard */; };
-		50D3A08C1EC76DE5001B4A7D /* RestorePurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D3A08B1EC76DE5001B4A7D /* RestorePurchaseViewController.swift */; };
 		50DFA8B31ED7A08E000D2956 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */; };
 		50DFA8B51ED7A352000D2956 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */; };
 		50DFA8B71ED7B27F000D2956 /* SynchronizingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */; };
@@ -134,11 +124,6 @@
 		501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKeys.swift; sourceTree = "<group>"; };
 		501F921F1EC55DF50014939D /* RouterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterViewController.swift; sourceTree = "<group>"; };
 		501F92201EC55DF50014939D /* Router.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Router.storyboard; sourceTree = "<group>"; };
-		501F92231EC55E080014939D /* SubscriptionChoice.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubscriptionChoice.storyboard; sourceTree = "<group>"; };
-		501F92241EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewCell.swift; sourceTree = "<group>"; };
-		501F92251EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscriptionChoiceCollectionViewCell.xib; sourceTree = "<group>"; };
-		501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceCollectionViewController.swift; sourceTree = "<group>"; };
-		501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionChoiceViewController.swift; sourceTree = "<group>"; };
 		50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropPlayerManager.swift; sourceTree = "<group>"; };
 		502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderCollectionViewCell.xib; sourceTree = "<group>"; };
 		502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFinishDropTargetViewController.swift; sourceTree = "<group>"; };
@@ -169,7 +154,6 @@
 		508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCollectionViewCell.swift; sourceTree = "<group>"; };
 		508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalAddButtonTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionalAddButtonTableViewHeaderFooterView.xib; sourceTree = "<group>"; };
-		50A004C91EDC8E7A00DD1546 /* ReceiptWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptWatcher.swift; sourceTree = "<group>"; };
 		50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleExtensions.swift; sourceTree = "<group>"; };
 		50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPickerCollectionViewController.swift; sourceTree = "<group>"; };
 		50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastPerformedTableViewCell.swift; sourceTree = "<group>"; };
@@ -187,7 +171,6 @@
 		50BB0F6F1EC00E8E00850FF4 /* WaterMe.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WaterMe.entitlements; sourceTree = "<group>"; };
 		50BB0F701EC00E9500850FF4 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtensions.swift; sourceTree = "<group>"; };
 		50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTableViewCell.swift; sourceTree = "<group>"; };
 		50BDC03D1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		50BDC03E1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
@@ -199,10 +182,6 @@
 		50C96A391EC2CFE8002802C1 /* SubscriptionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionTests.swift; sourceTree = "<group>"; };
 		50C96A3B1EC2CFE8002802C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderNotificationAlert.swift; sourceTree = "<group>"; };
-		50D3A0801EC57F68001B4A7D /* SubscriptionMigration.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SubscriptionMigration.storyboard; sourceTree = "<group>"; };
-		50D3A0821EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionMigrationViewController.swift; sourceTree = "<group>"; };
-		50D3A0891EC76DD3001B4A7D /* RestorePurchase.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = RestorePurchase.storyboard; sourceTree = "<group>"; };
-		50D3A08B1EC76DE5001B4A7D /* RestorePurchaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorePurchaseViewController.swift; sourceTree = "<group>"; };
 		50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 		50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizingViewController.swift; sourceTree = "<group>"; };
@@ -307,18 +286,6 @@
 			path = AdminConsole;
 			sourceTree = "<group>";
 		};
-		501F921D1EC55D610014939D /* SubscriptionChoice */ = {
-			isa = PBXGroup;
-			children = (
-				501F92231EC55E080014939D /* SubscriptionChoice.storyboard */,
-				501F92271EC55E080014939D /* SubscriptionChoiceViewController.swift */,
-				501F92261EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift */,
-				501F92241EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift */,
-				501F92251EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib */,
-			);
-			path = SubscriptionChoice;
-			sourceTree = "<group>";
-		};
 		501F921E1EC55DA80014939D /* Router */ = {
 			isa = PBXGroup;
 			children = (
@@ -411,10 +378,8 @@
 			isa = PBXGroup;
 			children = (
 				50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */,
-				50A004C91EDC8E7A00DD1546 /* ReceiptWatcher.swift */,
 				50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */,
 				50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */,
-				50BB0F7B1EC219A600850FF4 /* UIViewControllerExtensions.swift */,
 				50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */,
 				501A9AE41FE9682C0016160D /* LocalizedStrings.swift */,
 				50F388DE1FF6D9870031ED45 /* CoreDataMigration */,
@@ -422,9 +387,6 @@
 				501F921E1EC55DA80014939D /* Router */,
 				500679AD1F4BF3B700F8100D /* ReminderMain */,
 				50E8B1D21EDF79C600ACCDAF /* ReminderVesselMain */,
-				501F921D1EC55D610014939D /* SubscriptionChoice */,
-				50D3A07F1EC57F32001B4A7D /* SubscriptionMigration */,
-				50D3A0881EC76D97001B4A7D /* RestorePurchase */,
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
 				50BB0F6B1EC001C200850FF4 /* Videos */,
 				50BB0F651EBFF9A700850FF4 /* Settings.bundle */,
@@ -444,24 +406,6 @@
 				50C96A3B1EC2CFE8002802C1 /* Info.plist */,
 			);
 			path = NoDeviceTests;
-			sourceTree = "<group>";
-		};
-		50D3A07F1EC57F32001B4A7D /* SubscriptionMigration */ = {
-			isa = PBXGroup;
-			children = (
-				50D3A0801EC57F68001B4A7D /* SubscriptionMigration.storyboard */,
-				50D3A0821EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift */,
-			);
-			path = SubscriptionMigration;
-			sourceTree = "<group>";
-		};
-		50D3A0881EC76D97001B4A7D /* RestorePurchase */ = {
-			isa = PBXGroup;
-			children = (
-				50D3A0891EC76DD3001B4A7D /* RestorePurchase.storyboard */,
-				50D3A08B1EC76DE5001B4A7D /* RestorePurchaseViewController.swift */,
-			);
-			path = RestorePurchase;
 			sourceTree = "<group>";
 		};
 		50E8B1D21EDF79C600ACCDAF /* ReminderVesselMain */ = {
@@ -659,17 +603,13 @@
 				502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */,
 				50E8B1E01EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib in Resources */,
 				5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */,
-				50D3A08A1EC76DD3001B4A7D /* RestorePurchase.storyboard in Resources */,
 				50B511A51EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib in Resources */,
 				50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */,
 				5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */,
-				501F92281EC55E080014939D /* SubscriptionChoice.storyboard in Resources */,
 				508E61551F8ACC5E00B28DD8 /* ReminderMain.storyboard in Resources */,
 				50E8B1D51EDF79E700ACCDAF /* ReminderVesselMain.storyboard in Resources */,
 				50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */,
-				50D3A0811EC57F68001B4A7D /* SubscriptionMigration.storyboard in Resources */,
 				50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */,
-				501F922A1EC55E080014939D /* SubscriptionChoiceCollectionViewCell.xib in Resources */,
 				5075B48E1FF178DC007B42D8 /* ReminderDragPreviewView.xib in Resources */,
 				50BDC0401F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib in Resources */,
 				50E3F2CB1FF70D27003245E3 /* CoreDataMigration.storyboard in Resources */,
@@ -929,16 +869,13 @@
 				502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */,
 				50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */,
 				50B61EE11F2FB904004654B4 /* EmojiImageView.swift in Sources */,
-				50D3A08C1EC76DE5001B4A7D /* RestorePurchaseViewController.swift in Sources */,
 				501A9AE71FEB15C20016160D /* WateringAnimationPlayerView.swift in Sources */,
-				501F922C1EC55E080014939D /* SubscriptionChoiceViewController.swift in Sources */,
 				50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */,
 				50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */,
 				5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */,
 				5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */,
 				50F388E41FF6DA490031ED45 /* WaterMeData.xcdatamodeld in Sources */,
 				50CB5AFA2001BAA900868F30 /* ReminderNotificationAlert.swift in Sources */,
-				501F92291EC55E080014939D /* SubscriptionChoiceCollectionViewCell.swift in Sources */,
 				50C30E541EFF490D006003A1 /* ReminderIntervalPickerViewController.swift in Sources */,
 				50BDC03F1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift in Sources */,
 				50C30E561EFF9349006003A1 /* ReminderIntervalTableViewCell.swift in Sources */,
@@ -947,11 +884,9 @@
 				508E61571F8AD57400B28DD8 /* ReminderCollectionViewController.swift in Sources */,
 				50C96A321EC2BB03002802C1 /* FrameworkExtensions.swift in Sources */,
 				50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */,
-				501F922B1EC55E080014939D /* SubscriptionChoiceCollectionViewController.swift in Sources */,
 				50E8B1D61EDF79E700ACCDAF /* ReminderVesselMainViewController.swift in Sources */,
 				5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */,
 				5045CBAB1EFCCB50008E6D6A /* ReminderEditViewController.swift in Sources */,
-				50BB0F7C1EC219A600850FF4 /* UIViewControllerExtensions.swift in Sources */,
 				50BB0F751EC01B8E00850FF4 /* UserDefaults.swift in Sources */,
 				50AA4A4A1F00AFE600D81831 /* SimpleLabelTableViewCell.swift in Sources */,
 				508FFCAF1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift in Sources */,
@@ -969,7 +904,6 @@
 				501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */,
 				50E8B1E61EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift in Sources */,
 				50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */,
-				50D3A0831EC57F7A001B4A7D /* SubscriptionMigrationViewController.swift in Sources */,
 				50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */,
 				5049D1A31FACFA1B0076565E /* ReminderUserNotificationController.swift in Sources */,
 			);

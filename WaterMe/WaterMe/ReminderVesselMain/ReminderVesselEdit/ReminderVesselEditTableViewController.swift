@@ -31,7 +31,7 @@ protocol ReminderVesselEditTableViewControllerDelegate: class {
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?)
     func userChangedName(to: String, andDismissKeyboard: Bool, controller: ReminderVesselEditTableViewController?)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
-    func userChose(reminder: Reminder, controller: ReminderVesselEditTableViewController?)
+    func userChose(reminder: Reminder, deselectRowAnimated: ((Bool) -> Void)?, controller: ReminderVesselEditTableViewController?)
     func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController?) -> Bool
 }
 
@@ -169,7 +169,9 @@ class ReminderVesselEditTableViewController: UITableViewController {
         break // ignore
         case .reminders:
             guard let reminder = self.remindersData?[indexPath.row] else { return }
-            self.delegate?.userChose(reminder: reminder, controller: self)
+            self.delegate?.userChose(reminder: reminder, deselectRowAnimated: { anim in
+                tableView.deselectRow(at: indexPath, animated: anim)
+            }, controller: self)
         }
     }
     

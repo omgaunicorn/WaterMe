@@ -21,20 +21,8 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import WaterMeStore
 import WaterMeData
 import UIKit
-import UserNotifications
-
-extension UNUserNotificationCenter {
-    func authorized(completion: @escaping (Bool) -> Void) {
-        self.getNotificationSettings() { settings in
-            DispatchQueue.main.async {
-                completion(settings.authorizationStatus.boolValue)
-            }
-        }
-    }
-}
 
 extension MutableCollection {
     mutating func shuffle() {
@@ -53,17 +41,6 @@ extension Sequence {
         var result = Array(self)
         result.shuffle()
         return result
-    }
-}
-
-extension UNAuthorizationStatus {
-    var boolValue: Bool {
-        switch self {
-        case .authorized:
-            return true
-        case .notDetermined, .denied:
-            return false
-        }
     }
 }
 
@@ -110,21 +87,6 @@ class StandardCollectionViewController: UICollectionViewController {
     }
 }
 
-extension UITableView {
-    func deselectSelectedRows(animated: Bool) {
-        let selectedIndexPaths = self.indexPathsForSelectedRows ?? []
-        selectedIndexPaths.forEach() { indexPath in
-            self.deselectRow(at: indexPath, animated: animated)
-        }
-    }
-}
-
-extension Sequence {
-    func first<T>(of type: T.Type? = nil) -> T? {
-        return self.first(where: { $0 is T }) as? T
-    }
-}
-
 extension UICollectionView {
     func deselectAllItems(animated: Bool) {
         let indexPaths = self.indexPathsForSelectedItems
@@ -135,18 +97,6 @@ extension UICollectionView {
         let width = self.bounds.width - insets.left - insets.right
         let height = self.bounds.height - insets.top - insets.bottom
         return CGSize(width: width, height: height)
-    }
-}
-
-extension Receipt {
-    var serverPurchasedSubscription: PurchasedSubscription? {
-        guard let pID = self.server_productID, let exp = self.server_expirationDate, let pur = self.server_purchaseDate else { return nil }
-        return PurchasedSubscription(productID: pID, purchaseDate: pur, expirationDate: exp)
-    }
-    
-    var clientPurchasedSubscription: PurchasedSubscription? {
-        guard let pID = self.client_productID, let exp = self.client_expirationDate, let pur = self.client_purchaseDate else { return nil }
-        return PurchasedSubscription(productID: pID, purchaseDate: pur, expirationDate: exp)
     }
 }
 
