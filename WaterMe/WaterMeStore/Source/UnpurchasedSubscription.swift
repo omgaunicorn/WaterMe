@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import StoreKit
 import Foundation
 
 public struct UnpurchasedSubscription {
@@ -30,5 +31,5 @@ public struct UnpurchasedSubscription {
     public var localizedDescription: String
     public var price: Double
     public var priceLocale: Locale
-    internal var product: SKProductProtocol
+    internal var product: SKProduct
 }

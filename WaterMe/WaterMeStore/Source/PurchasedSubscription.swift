@@ -24,16 +24,11 @@
 import Foundation
 
 public struct PurchasedSubscription {
-    public private(set) var period: Period
-    public private(set) var level: Level
-    public var productID: String {
-        didSet {
-            self.period = Period(productID: self.productID)!
-            self.level = Level(productID: self.productID)!
-        }
-    }
-    public var purchaseDate: Date
-    public var expirationDate: Date
+    let period: Period
+    let level: Level
+    let productID: String
+    let purchaseDate: Date
+    let expirationDate: Date
     
     public init?(productID: String, purchaseDate: Date, expirationDate: Date) {
         guard
