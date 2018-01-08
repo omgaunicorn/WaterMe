@@ -35,7 +35,7 @@ import Foundation
 open class ReminderGedeg: NSObject {
 
     private let updateBatcher = Batcher()
-    private(set) var reminders: [ReminderSection : AnyRealmCollection<Reminder>] = [:]
+    private(set) var reminders: [Reminder.Section : AnyRealmCollection<Reminder>] = [:]
     public var lastError: RealmError?
 
     public init?(basicRC: BasicController?) {
@@ -44,8 +44,8 @@ open class ReminderGedeg: NSObject {
         self.updateBatcher.batchFired = { [unowned self] changes in
             self.batchedUpdates(ins: changes.ins, dels: changes.dels, mods: changes.mods)
         }
-        for i in 0 ..< ReminderSection.count {
-            let section = ReminderSection(rawValue: i)!
+        for i in 0 ..< Reminder.Section.count {
+            let section = Reminder.Section(rawValue: i)!
             let result = basicRC.reminders(in: section, sorted: .nextPerformDate, ascending: true)
             switch result {
             case .success(let reminders):
@@ -57,7 +57,7 @@ open class ReminderGedeg: NSObject {
         }
     }
 
-    private func collection(for section: ReminderSection, changed changes: RealmCollectionChange<AnyRealmCollection<Reminder>>) {
+    private func collection(for section: Reminder.Section, changed changes: RealmCollectionChange<AnyRealmCollection<Reminder>>) {
         switch changes {
         case .initial(let data):
             self.reminders[section] = data
@@ -80,12 +80,12 @@ open class ReminderGedeg: NSObject {
     }
 
     public func numberOfItems(inSection section: Int) -> Int {
-        let section = ReminderSection(rawValue: section)!
+        let section = Reminder.Section(rawValue: section)!
         return self.reminders[section]!.count
     }
 
     public func reminder(at indexPath: IndexPath) -> Reminder {
-        let section = ReminderSection(rawValue: indexPath.section)!
+        let section = Reminder.Section(rawValue: indexPath.section)!
         let reminder = self.reminders[section]![indexPath.row]
         return reminder
     }
@@ -121,7 +121,7 @@ open class ReminderGedeg: NSObject {
 
 fileprivate extension ReminderGedeg {
     fileprivate struct Update {
-        public var section: ReminderSection
+        public var section: Reminder.Section
         public var deletions: [Int]
         public var insertions: [Int]
         public var modifications: [Int]

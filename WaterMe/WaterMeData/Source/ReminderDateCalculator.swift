@@ -101,7 +101,7 @@ enum ReminderDateCalculator {
     }
 }
 
-internal extension ReminderSection {
+internal extension Reminder.Section {
     var dateInterval: DateInterval {
         switch self {
         case .late:

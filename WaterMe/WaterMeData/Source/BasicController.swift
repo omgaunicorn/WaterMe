@@ -119,7 +119,7 @@ public class BasicController {
         return self.realm.map({ AnyRealmCollection($0.objects(Reminder.self).sorted(byKeyPath: sorted.keyPath, ascending: ascending)) })
     }
 
-    public func reminders(in section: ReminderSection,
+    public func reminders(in section: Reminder.Section,
                           sorted: Reminder.SortOrder = .nextPerformDate,
                           ascending: Bool = true) -> Result<AnyRealmCollection<Reminder>, RealmError>
     {
