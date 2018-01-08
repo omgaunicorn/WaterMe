@@ -40,6 +40,7 @@ extension ReminderVessel {
 }
 
 extension UIApplication {
+    static let style_animationDurationLong: TimeInterval = 1.2
     static let style_animationDurationNormal: TimeInterval = 0.3
     static let style_tintColor = UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)
     static let style_visualEffectViewBackgroundColor = UIApplication.style_tintColor.withAlphaComponent(0.25)

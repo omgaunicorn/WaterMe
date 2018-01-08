@@ -269,6 +269,20 @@ extension UIView {
                      animations: animations,
                      completion: nil)
     }
+    class func style_animateLong(_ animations: @escaping () -> Void, completion: @escaping ((Bool) -> Void)) {
+        self.animate(withDuration: UIApplication.style_animationDurationLong,
+                     delay: 0,
+                     options: [],
+                     animations: animations,
+                     completion: completion)
+    }
+    class func style_animateLong(_ animations: @escaping () -> Void) {
+        self.animate(withDuration: UIApplication.style_animationDurationLong,
+                     delay: 0,
+                     options: [],
+                     animations: animations,
+                     completion: nil)
+    }
 }
 
 enum Either<T, U> {

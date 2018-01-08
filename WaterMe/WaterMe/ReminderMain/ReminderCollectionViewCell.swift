@@ -34,6 +34,9 @@ class ReminderCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var largeEmojiImageView: EmojiImageView?
     @IBOutlet private weak var smallEmojiImageView: EmojiImageView?
     @IBOutlet private weak var emojiImageWidthConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var justPerformedView: UIView?
+
+    private var lastPerformedDate: Date?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,12 +47,16 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         self.smallEmojiImageView?.ring = false
         self.emojiImageWidthConstraint?.constant = type(of: self).style_emojiImageViewWidth
         self.selectedBackgroundView?.layer.cornerRadius = UIApplication.style_cornerRadius
+        self.justPerformedView?.layer.cornerRadius = UIApplication.style_cornerRadius
         
         self.reset()
     }
     
     func configure(with reminder: Reminder?) {
         guard let reminder = reminder else { self.reset(); return; }
+
+        // configure date
+        self.lastPerformedDate = reminder.performed.last?.date
         
         // vessel name style
         let vesselName = reminder.vessel?.displayName
@@ -76,12 +83,32 @@ class ReminderCollectionViewCell: UICollectionViewCell {
             self.emojiImageWidthConstraint!.constant = type(of: self).style_emojiImageViewWidth
         }
     }
+
+    func willDisplay() {
+        guard let lastPerformedDate = self.lastPerformedDate else { return }
+        let interval = lastPerformedDate.timeIntervalSinceNow
+        guard interval >= -1 && interval <= 0 else { return }
+        UIView.style_animateLong({
+            self.justPerformedView?.alpha = 0.5
+        }, completion: { _ in
+            UIView.style_animateLong() {
+                self.justPerformedView?.alpha = 0
+            }
+        })
+    }
     
     private func reset() {
+        self.justPerformedView?.alpha = 0
+        self.lastPerformedDate = nil
         self.labelOne?.text = nil
         self.labelTwo?.text = nil
         self.largeEmojiImageView?.setKind(nil)
         self.smallEmojiImageView?.setKind(nil)
+    }
+
+    override func tintColorDidChange() {
+        super.tintColorDidChange()
+        self.justPerformedView?.backgroundColor = self.tintColor
     }
     
     override func prepareForReuse() {

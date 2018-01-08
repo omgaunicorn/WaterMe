@@ -53,6 +53,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
                                       forSupplementaryViewOfKind: ReminderHeaderCollectionReusableView.kind,
                                       withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID)
         self.flow?.minimumInteritemSpacing = 0
+        self.flow?.minimumLineSpacing = 0
         self.hardReloadData()
     }
     
@@ -99,6 +100,11 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
                                      from: cell,
                                      deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) },
                                      within: self)
+    }
+
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let cell = cell as? ReminderCollectionViewCell
+        cell?.willDisplay()
     }
 
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {

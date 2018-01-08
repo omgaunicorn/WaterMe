@@ -33,6 +33,10 @@
                     <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8nv-Ik-oWH" userLabel="ContentView">
                         <rect key="frame" x="0.0" y="0.0" width="180" height="234"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tGl-cs-VUE">
+                                <rect key="frame" x="2" y="2" width="176" height="230"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GzY-Tt-xlc">
                                 <rect key="frame" x="20" y="8" width="140" height="150"/>
                                 <subviews>
@@ -83,9 +87,13 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="tGl-cs-VUE" firstAttribute="leading" secondItem="8nv-Ik-oWH" secondAttribute="leading" constant="2" id="Hqo-B4-Kqz"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="3qB-SZ-7P5" secondAttribute="bottom" constant="8" id="JI1-Hp-Mtj"/>
+                            <constraint firstAttribute="bottom" secondItem="tGl-cs-VUE" secondAttribute="bottom" constant="2" id="VXf-oJ-LZS"/>
                             <constraint firstItem="GzY-Tt-xlc" firstAttribute="centerX" secondItem="8nv-Ik-oWH" secondAttribute="centerX" id="fW4-ma-KBh"/>
+                            <constraint firstAttribute="trailing" secondItem="tGl-cs-VUE" secondAttribute="trailing" constant="2" id="m86-im-vzz"/>
                             <constraint firstAttribute="trailing" secondItem="3qB-SZ-7P5" secondAttribute="trailing" constant="20" symbolic="YES" id="olM-O4-q9I"/>
+                            <constraint firstItem="tGl-cs-VUE" firstAttribute="top" secondItem="8nv-Ik-oWH" secondAttribute="top" constant="2" id="rBM-fS-xYY"/>
                             <constraint firstItem="GzY-Tt-xlc" firstAttribute="top" secondItem="8nv-Ik-oWH" secondAttribute="top" constant="8" id="rwO-l1-BKk"/>
                             <constraint firstItem="3qB-SZ-7P5" firstAttribute="top" secondItem="GzY-Tt-xlc" secondAttribute="bottom" id="wMY-bB-Gx4"/>
                             <constraint firstItem="3qB-SZ-7P5" firstAttribute="leading" secondItem="8nv-Ik-oWH" secondAttribute="leading" constant="20" symbolic="YES" id="xQO-nF-loB"/>
@@ -104,6 +112,7 @@
             <connections>
                 <outlet property="backgroundView" destination="pNt-mf-2sp" id="usR-aj-t36"/>
                 <outlet property="emojiImageWidthConstraint" destination="fOa-qs-guY" id="6Lu-4R-aGZ"/>
+                <outlet property="justPerformedView" destination="tGl-cs-VUE" id="9LP-1B-i9K"/>
                 <outlet property="labelOne" destination="31D-mD-Ddy" id="ZH3-de-egF"/>
                 <outlet property="labelTwo" destination="VBk-Eu-V0p" id="4WO-RG-Je8"/>
                 <outlet property="largeEmojiImageView" destination="j3K-6I-2P2" id="9hj-gi-frD"/>
