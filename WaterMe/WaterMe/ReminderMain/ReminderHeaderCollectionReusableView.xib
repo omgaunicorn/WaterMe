@@ -31,9 +31,10 @@
             </subviews>
             <constraints>
                 <constraint firstItem="V3U-pY-mzG" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="8" id="Bva-2s-ScO"/>
-                <constraint firstItem="V3U-pY-mzG" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="4" id="Qtn-Jo-xLU"/>
-                <constraint firstAttribute="bottom" secondItem="V3U-pY-mzG" secondAttribute="bottom" constant="4" id="Xce-cG-kgv"/>
+                <constraint firstItem="V3U-pY-mzG" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" priority="999" constant="4" id="Qtn-Jo-xLU"/>
+                <constraint firstAttribute="bottom" secondItem="V3U-pY-mzG" secondAttribute="bottom" priority="999" constant="4" id="Xce-cG-kgv"/>
                 <constraint firstAttribute="trailing" secondItem="V3U-pY-mzG" secondAttribute="trailing" constant="8" id="Z1o-uW-aJa"/>
+                <constraint firstItem="V3U-pY-mzG" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="hlv-RK-3We"/>
                 <constraint firstItem="Y7Q-aj-glf" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="20" id="lD1-ZM-Pdg"/>
                 <constraint firstAttribute="trailing" secondItem="Y7Q-aj-glf" secondAttribute="trailing" constant="20" id="mbV-rb-bxB"/>
                 <constraint firstItem="Y7Q-aj-glf" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="pf8-j6-6Gh"/>
