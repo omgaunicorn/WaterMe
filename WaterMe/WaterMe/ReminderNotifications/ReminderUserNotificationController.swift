@@ -129,7 +129,7 @@ class ReminderUserNotificationController {
 
         // get some constants we'll use throughout
         let calendar = Calendar.current
-        let nowReminderTime = calendar.dateWithExact(hour: reminderHour, onSameDayAs: Date())
+        let now = Date()
 
         // get immutable versions of the data
         let data = Array(_data.map({ ReminderNotificationInformation(reminder: $0) }))
@@ -139,20 +139,22 @@ class ReminderUserNotificationController {
             // loop through the number of days the user wants to be reminded for
             // get all reminders that happened on or before the end of the day of `futureReminderTime`
             let matches = (0 ..< reminderDays).flatMap() { i -> (Date, [ReminderNotificationInformation])? in
-                let futureReminderTime = nowReminderTime + TimeInterval(i * 24 * 60 * 60)
-                let endOfFutureDay = calendar.endOfDay(for: futureReminderTime)
+                let _testDate = calendar.date(byAdding: .day, value: i, to: now)
+                guard let testDate = _testDate else { return nil }
+                let endOfDayInTestDate = calendar.endOfDay(for: testDate)
                 let matches = data.filter() { reminder -> Bool in
-                    let reminderTime = calendar.dateWithExact(hour: reminderHour, onSameDayAs: reminder.nextPerformDate)
-                    return (reminderTime ?? nowReminderTime) <= endOfFutureDay
+                    let endOfDayInNextPerformDate = calendar.endOfDay(for: reminder.nextPerformDate ?? now)
+                    return endOfDayInNextPerformDate <= endOfDayInTestDate
                 }
                 guard matches.isEmpty == false else { return nil }
-                return (futureReminderTime, matches)
+                let reminderTimeInSameDayAsTestDate = calendar.dateWithExact(hour: reminderHour, onSameDayAs: testDate)
+                return (reminderTimeInSameDayAsTestDate, matches)
             }
 
             // convert the matches into one notification each
             // this makes it so the user only gets 1 notification per day at the time they requested
             let reminders = matches.map() { reminderTime, matches -> UNNotificationRequest in
-                let interval = reminderTime.timeIntervalSince(nowReminderTime)
+                let interval = reminderTime.timeIntervalSince(now)
                 let trigger: UNTimeIntervalNotificationTrigger?
                 if interval <= 0 {
                     // if trigger is less than or equal to 0 we need to tell the system there is no trigger
