@@ -24,5 +24,29 @@
 import UIKit
 
 class SettingsMainViewController: UIViewController {
+
+    typealias Completion = ((UIViewController) -> Void)
+
+    class func newVC(completion: Completion?) -> UIViewController {
+        let sb = UIStoryboard(name: "Settings", bundle: Bundle(for: self))
+        // swiftlint:disable:next force_cast
+        let navVC = sb.instantiateInitialViewController() as! UINavigationController
+        // swiftlint:disable:next force_cast
+        let vc = navVC.viewControllers.first as! SettingsMainViewController
+        vc.completionHandler = completion
+        return navVC
+    }
+
+    private var completionHandler: Completion?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.title = LocalizedString.title
+    }
+
+    @IBAction private func doneButtonTapped(_ sender: Any) {
+        self.completionHandler?(self)
+    }
     
 }

@@ -99,7 +99,10 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     }
 
     @IBAction private func settingsButtonTapped(_ sender: Any) {
-
+        let vc = SettingsMainViewController.newVC() { vc in
+            vc.dismiss(animated: true, completion: nil)
+        }
+        self.present(vc, animated: true, completion: nil)
     }
 
     override func viewDidLayoutSubviews() {

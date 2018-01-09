@@ -28,10 +28,6 @@ import UserNotificationsUI
 import AVFoundation
 import UIKit
 
-class SettingsMainViewController: UIViewController {
-
-}
-
 let log = XCGLogger.default
 
 extension UIApplication {
