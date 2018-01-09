@@ -36,6 +36,7 @@
 		506A6218200562AC008EF601 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506A6217200562AC008EF601 /* Settings.storyboard */; };
 		506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A6219200562B9008EF601 /* SettingsMainViewController.swift */; };
 		506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A621B200562C3008EF601 /* SettingsTableViewController.swift */; };
+		50702D11200589B0009EF952 /* SettingsTipJarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */; };
 		50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */; };
 		50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */; };
 		5075B48E1FF178DC007B42D8 /* ReminderDragPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */; };
@@ -140,6 +141,7 @@
 		506A6217200562AC008EF601 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		506A6219200562B9008EF601 /* SettingsMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainViewController.swift; sourceTree = "<group>"; };
 		506A621B200562C3008EF601 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTipJarTableViewCell.swift; sourceTree = "<group>"; };
 		50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewTableViewCell.swift; sourceTree = "<group>"; };
 		50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewTableViewCell.xib; sourceTree = "<group>"; };
 		5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderDragPreviewView.xib; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				506A6217200562AC008EF601 /* Settings.storyboard */,
 				506A6219200562B9008EF601 /* SettingsMainViewController.swift */,
 				506A621B200562C3008EF601 /* SettingsTableViewController.swift */,
+				50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -911,6 +914,7 @@
 				506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */,
 				501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */,
 				50E8B1E61EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift in Sources */,
+				50702D11200589B0009EF952 /* SettingsTipJarTableViewCell.swift in Sources */,
 				50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */,
 				50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */,
 				506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */,

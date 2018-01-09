@@ -193,6 +193,18 @@ extension SettingsMainViewController {
         static let cellTitleEmailDeveloper =
             NSLocalizedString("Email Developer",
                               comment: "Settings: Cell Title: Email Developer: When tapped, this opens an email screen to email the developer.")
+        static let cellTitleTipJarFree =
+            NSLocalizedString("Leave Review on App Store",
+                              comment: "Settings: Cell Title: Tip Jar Free: When tapped, this opens an screen to review the app.")
+        static let cellTitleTipJarSmall =
+            NSLocalizedString("Generous Tip",
+                              comment: "Settings: Cell Title: Tip Jar Free: When tapped, this asks the user to pay a small amount via in-app-purchase")
+        static let cellTitleTipJarMedium =
+            NSLocalizedString("Massive Tip",
+                              comment: "Settings: Cell Title: Tip Jar Free: When tapped, this asks the user to pay a small amount via in-app-purchase")
+        static let cellTitleTipJarLarge =
+            NSLocalizedString("Amazing Tip",
+                              comment: "Settings: Cell Title: Tip Jar Free: When tapped, this asks the user to pay a small amount via in-app-purchase")
     }
 }
 

@@ -29,6 +29,7 @@ class SettingsTableViewController: UITableViewController {
         super.viewDidLoad()
 
         self.tableView.register(SimpleLabelTableViewCell.self, forCellReuseIdentifier: SimpleLabelTableViewCell.reuseID)
+        self.tableView.register(SettingsTipJarTableViewCell.self, forCellReuseIdentifier: SettingsTipJarTableViewCell.reuseID)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -49,16 +50,15 @@ class SettingsTableViewController: UITableViewController {
         guard let (_, row) = Sections.sectionsAndRows(from: indexPath) else { fatalError("Wrong Section/Row") }
         switch row {
         case .left(let row):
-            let cell = tableView.dequeueReusableCell(withIdentifier: SimpleLabelTableViewCell.reuseID, for: indexPath)
-            if let cell = cell as? SimpleLabelTableViewCell {
-                cell.label.attributedText = NSAttributedString(string: row.localizedTitle, style: .selectableTableViewCell)
-            }
+            let _cell = tableView.dequeueReusableCell(withIdentifier: SimpleLabelTableViewCell.reuseID, for: indexPath)
+            guard let cell = _cell as? SimpleLabelTableViewCell else { return _cell }
+            cell.label.attributedText = NSAttributedString(string: row.localizedTitle, style: .selectableTableViewCell)
+            cell.accessoryType = .disclosureIndicator
             return cell
         case .right(let row):
-            let cell = tableView.dequeueReusableCell(withIdentifier: SimpleLabelTableViewCell.reuseID, for: indexPath)
-            if let cell = cell as? SimpleLabelTableViewCell {
-                cell.label.attributedText = NSAttributedString(string: "Hi There", style: .selectableTableViewCell)
-            }
+            let _cell = tableView.dequeueReusableCell(withIdentifier: SettingsTipJarTableViewCell.reuseID, for: indexPath)
+            guard let cell = _cell as? SettingsTipJarTableViewCell else { return _cell }
+            cell.configure(with: row)
             return cell
         }
     }
@@ -67,8 +67,10 @@ class SettingsTableViewController: UITableViewController {
         guard let section = Sections(rawValue: section) else { assertionFailure("Wrong Section"); return nil; }
         return section.localizedTitle
     }
+}
 
-    private enum Sections: Int {
+extension SettingsTableViewController {
+    fileprivate enum Sections: Int {
         static let count = 2
         case settings, tipJar
         var localizedTitle: String {
@@ -92,7 +94,7 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
-    private enum SettingsRows: Int {
+    fileprivate enum SettingsRows: Int {
         static let count = 2
         case openSettings, emailDeveloper
         var localizedTitle: String {
@@ -105,8 +107,20 @@ class SettingsTableViewController: UITableViewController {
         }
     }
 
-    private enum TipJarRows: Int {
+    enum TipJarRows: Int {
         static let count = 4
         case free, small, medium, large
+        var localizedTitle: String {
+            switch self {
+            case .free:
+                return SettingsMainViewController.LocalizedString.cellTitleTipJarFree
+            case .small:
+                return SettingsMainViewController.LocalizedString.cellTitleTipJarSmall
+            case .medium:
+                return SettingsMainViewController.LocalizedString.cellTitleTipJarMedium
+            case .large:
+                return SettingsMainViewController.LocalizedString.cellTitleTipJarLarge
+            }
+        }
     }
 }
