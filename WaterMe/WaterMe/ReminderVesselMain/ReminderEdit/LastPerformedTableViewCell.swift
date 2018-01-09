@@ -25,7 +25,7 @@ import UIKit
 
 class LastPerformedTableViewCell: SimpleLabelTableViewCell {
     
-    static let reuseID = "LastPerformedTableViewCell"
+    override class var reuseID: String { return "LastPerformedTableViewCell" }
     
     private let formatter = Formatter.newTimeAgoFormatter
     

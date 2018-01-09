@@ -25,4 +25,26 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.tableView.register(SimpleLabelTableViewCell.self, forCellReuseIdentifier: SimpleLabelTableViewCell.reuseID)
+    }
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 2
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: SimpleLabelTableViewCell.reuseID, for: indexPath)
+        if let cell = cell as? SimpleLabelTableViewCell {
+            cell.label.attributedText = NSAttributedString(string: "Hi There", style: .selectableTableViewCell)
+        }
+        return cell
+    }
+
 }

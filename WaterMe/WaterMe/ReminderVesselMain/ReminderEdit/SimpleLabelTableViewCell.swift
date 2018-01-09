@@ -24,6 +24,8 @@
 import UIKit
 
 class SimpleLabelTableViewCell: UITableViewCell {
+
+    class var reuseID: String { return "SimpleLabelTableViewCell" }
     
     let label = UILabel()
     

@@ -37,6 +37,7 @@ class SettingsMainViewController: UIViewController {
         return navVC
     }
 
+    /*@IBOutlet*/ private weak var tableViewController: SettingsTableViewController?
     private var completionHandler: Completion?
 
     override func viewDidLoad() {
@@ -47,6 +48,12 @@ class SettingsMainViewController: UIViewController {
 
     @IBAction private func doneButtonTapped(_ sender: Any) {
         self.completionHandler?(self)
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let settingsVC = segue.destination as? SettingsTableViewController {
+            self.tableViewController = settingsVC
+        }
     }
     
 }

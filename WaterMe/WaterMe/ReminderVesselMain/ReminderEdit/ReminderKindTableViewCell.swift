@@ -26,7 +26,7 @@ import UIKit
 
 class ReminderKindTableViewCell: SimpleLabelTableViewCell {
     
-    static let reuseID = "ReminderKindTableViewCell"
+    override class var reuseID: String { return "ReminderKindTableViewCell" }
     
     override func setup() {
         super.setup()

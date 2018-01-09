@@ -25,7 +25,7 @@ import UIKit
 
 class ReminderIntervalTableViewCell: SimpleLabelTableViewCell {
     
-    static let reuseID = "ReminderIntervalTableViewCell"
+    override class var reuseID: String { return "ReminderIntervalTableViewCell" }
     
     fileprivate let formatter = DateComponentsFormatter.newReminderIntervalFormatter
     
