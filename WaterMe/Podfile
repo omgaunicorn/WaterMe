@@ -5,9 +5,9 @@ target 'WaterMe' do
 	pod 'Result', '~> 3.2.2'
 	pod 'RealmSwift'
 	pod 'XCGLogger', '~> 6.0.1'
-	## pod 'TPInAppReceipt'
+	pod 'TPInAppReceipt'
 	pod 'WaterMeData', :path => 'WaterMeData'
-	## pod 'WaterMeStore', :path => 'WaterMeStore'
+	pod 'WaterMeStore', :path => 'WaterMeStore'
 end
 
 target 'AdminConsole' do
@@ -25,7 +25,7 @@ target 'NoDeviceTests' do
 	platform :ios, '10.3'
 	use_frameworks!
     pod 'WaterMeData', :path => 'WaterMeData'
-    ## pod 'WaterMeStore', :path => 'WaterMeStore'
+    pod 'WaterMeStore', :path => 'WaterMeStore'
 end
 
 post_install do |installer|

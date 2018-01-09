@@ -109,7 +109,6 @@
 		2D34773B578BFF62486A3E66 /* Pods-NoDeviceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.release.xcconfig"; sourceTree = "<group>"; };
 		4B125E6363F6731C5C3C2000 /* Pods_WaterMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaterMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderMainViewController.swift; sourceTree = "<group>"; };
-		500679B01F4BF46800F8100D /* ReminderVesselTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVesselTabViewController.swift; sourceTree = "<group>"; };
 		5015EEF51FF56FF200CAC7D7 /* DragTargetInstructionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragTargetInstructionalView.swift; sourceTree = "<group>"; };
 		501A9AE41FE9682C0016160D /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WateringAnimationPlayerView.swift; sourceTree = "<group>"; };
@@ -121,8 +120,6 @@
 		501C0E941ECE5EFF00D4EE7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		501C0E961ECE5EFF00D4EE7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKeys.swift; sourceTree = "<group>"; };
-		501F921F1EC55DF50014939D /* RouterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RouterViewController.swift; sourceTree = "<group>"; };
-		501F92201EC55DF50014939D /* Router.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Router.storyboard; sourceTree = "<group>"; };
 		50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropPlayerManager.swift; sourceTree = "<group>"; };
 		502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderCollectionViewCell.xib; sourceTree = "<group>"; };
 		502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFinishDropTargetViewController.swift; sourceTree = "<group>"; };
@@ -244,17 +241,12 @@
 				508E61541F8ACC5E00B28DD8 /* ReminderMain.storyboard */,
 				500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */,
 				508E61561F8AD57400B28DD8 /* ReminderCollectionViewController.swift */,
-				502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */,
-				5015EEF51FF56FF200CAC7D7 /* DragTargetInstructionalView.swift */,
-				501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */,
-				50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */,
 				508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */,
 				502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */,
-				5075B48F1FF178EA007B42D8 /* ReminderDragPreviewView.swift */,
-				5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */,
 				50BDC03D1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift */,
 				50BDC03E1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib */,
 				50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */,
+				506A6216200561D5008EF601 /* DragAndDrop */,
 			);
 			path = ReminderMain;
 			sourceTree = "<group>";
@@ -282,16 +274,6 @@
 				501C0E961ECE5EFF00D4EE7C /* Info.plist */,
 			);
 			path = AdminConsole;
-			sourceTree = "<group>";
-		};
-		501F921E1EC55DA80014939D /* Router */ = {
-			isa = PBXGroup;
-			children = (
-				501F92201EC55DF50014939D /* Router.storyboard */,
-				501F921F1EC55DF50014939D /* RouterViewController.swift */,
-				500679B01F4BF46800F8100D /* ReminderVesselTabViewController.swift */,
-			);
-			path = Router;
 			sourceTree = "<group>";
 		};
 		5045CBA51EFCC810008E6D6A /* ReminderEdit */ = {
@@ -350,6 +332,26 @@
 			path = ReminderNotifications;
 			sourceTree = "<group>";
 		};
+		506A6215200561C6008EF601 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		506A6216200561D5008EF601 /* DragAndDrop */ = {
+			isa = PBXGroup;
+			children = (
+				502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */,
+				5015EEF51FF56FF200CAC7D7 /* DragTargetInstructionalView.swift */,
+				501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */,
+				50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */,
+				5075B48F1FF178EA007B42D8 /* ReminderDragPreviewView.swift */,
+				5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */,
+			);
+			path = DragAndDrop;
+			sourceTree = "<group>";
+		};
 		50BB0F471EBFCDE500850FF4 = {
 			isa = PBXGroup;
 			children = (
@@ -380,11 +382,11 @@
 				50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */,
 				50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */,
 				501A9AE41FE9682C0016160D /* LocalizedStrings.swift */,
-				50F388DE1FF6D9870031ED45 /* CoreDataMigration */,
-				5049D1A11FACF9F30076565E /* ReminderNotifications */,
-				501F921E1EC55DA80014939D /* Router */,
 				500679AD1F4BF3B700F8100D /* ReminderMain */,
 				50E8B1D21EDF79C600ACCDAF /* ReminderVesselMain */,
+				506A6215200561C6008EF601 /* Settings */,
+				5049D1A11FACF9F30076565E /* ReminderNotifications */,
+				50F388DE1FF6D9870031ED45 /* CoreDataMigration */,
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
 				50BB0F6B1EC001C200850FF4 /* Videos */,
 				50BB0F651EBFF9A700850FF4 /* Settings.bundle */,
@@ -650,7 +652,9 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/TPInAppReceipt/TPInAppReceipt.framework",
 				"${BUILT_PRODUCTS_DIR}/WaterMeData/WaterMeData.framework",
+				"${BUILT_PRODUCTS_DIR}/WaterMeStore/WaterMeStore.framework",
 				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -659,7 +663,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TPInAppReceipt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeData.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeStore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -712,8 +718,8 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/WaterMeData/WaterMeData.framework",
-				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
 				"${BUILT_PRODUCTS_DIR}/WaterMeStore/WaterMeStore.framework",
+				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -722,8 +728,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeData.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeStore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -756,6 +762,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/WaterMeData/WaterMeData.framework",
+				"${BUILT_PRODUCTS_DIR}/WaterMeStore/WaterMeStore.framework",
 				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -765,6 +772,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeData.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeStore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
