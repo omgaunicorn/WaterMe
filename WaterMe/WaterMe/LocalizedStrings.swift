@@ -109,9 +109,6 @@ extension UIAlertController {
         static let buttonTitleSaveAnyway =
             NSLocalizedString("Save Anyway",
                               comment: "Button Title in an Alert to save the reminder or plant even though all of the fields have not been filled in yet. Fields not yet filled in could include Name, Photo, Reminders.")
-        static let buttonTitleSettings =
-            NSLocalizedString("Settings",
-                              comment: "Alert: Button Title: Settings: Button title that opens the settings app.")
         static let titleUnsolvedIssues =
             NSLocalizedString("There are some issues you might want to resolve.",
                               comment: "Title of an Alert that tells the user that they are trying to save a Plant or Reminder and they have not filled in all the fields. They may want to cancel the save and go back and fill them in. Or they may want to Save the changes anyway. Fields not filled in could include, Name, Photo, Reminders.")
@@ -186,7 +183,16 @@ extension SettingsMainViewController {
     enum LocalizedString {
         static let title =
             NSLocalizedString("Settings",
+                              comment: "Title of the settings screen. Also button title that opens both the in-app settings screen and the iOS settings screen for WaterMe.")
+        static let sectionTitleTipJar =
+            NSLocalizedString("Tip Jar",
                               comment: "Screen title for the settings screen. Also used for button titles to open the Settings screen.")
+        static let cellTitleOpenSettings =
+            NSLocalizedString("Open Settings",
+                              comment: "Settings: Cell Title: Open Settings: When tapped this opens the iOS settings app to the WaterMe screen.")
+        static let cellTitleEmailDeveloper =
+            NSLocalizedString("Email Developer",
+                              comment: "Settings: Cell Title: Email Developer: When tapped, this opens an email screen to email the developer.")
     }
 }
 

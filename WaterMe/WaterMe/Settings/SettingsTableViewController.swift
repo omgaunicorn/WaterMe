@@ -32,19 +32,81 @@ class SettingsTableViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return Sections.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        guard let section = Sections(rawValue: section) else { assertionFailure("Wrong Section"); return 0 }
+        switch section {
+        case .settings:
+            return SettingsRows.count
+        case .tipJar:
+            return TipJarRows.count
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: SimpleLabelTableViewCell.reuseID, for: indexPath)
-        if let cell = cell as? SimpleLabelTableViewCell {
-            cell.label.attributedText = NSAttributedString(string: "Hi There", style: .selectableTableViewCell)
+        guard let (_, row) = Sections.sectionsAndRows(from: indexPath) else { fatalError("Wrong Section/Row") }
+        switch row {
+        case .left(let row):
+            let cell = tableView.dequeueReusableCell(withIdentifier: SimpleLabelTableViewCell.reuseID, for: indexPath)
+            if let cell = cell as? SimpleLabelTableViewCell {
+                cell.label.attributedText = NSAttributedString(string: row.localizedTitle, style: .selectableTableViewCell)
+            }
+            return cell
+        case .right(let row):
+            let cell = tableView.dequeueReusableCell(withIdentifier: SimpleLabelTableViewCell.reuseID, for: indexPath)
+            if let cell = cell as? SimpleLabelTableViewCell {
+                cell.label.attributedText = NSAttributedString(string: "Hi There", style: .selectableTableViewCell)
+            }
+            return cell
         }
-        return cell
     }
 
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        guard let section = Sections(rawValue: section) else { assertionFailure("Wrong Section"); return nil; }
+        return section.localizedTitle
+    }
+
+    private enum Sections: Int {
+        static let count = 2
+        case settings, tipJar
+        var localizedTitle: String {
+            switch self {
+            case .settings:
+                return SettingsMainViewController.LocalizedString.title
+            case .tipJar:
+                return SettingsMainViewController.LocalizedString.sectionTitleTipJar
+            }
+        }
+        static func sectionsAndRows(from indexPath: IndexPath) -> (Sections, Either<SettingsRows, TipJarRows>)? {
+            guard let section = Sections(rawValue: indexPath.section) else { assertionFailure("Wrong Section"); return nil; }
+            switch section {
+            case .settings:
+                guard let rows = SettingsRows(rawValue: indexPath.row) else { assertionFailure("Wrong Rows"); return nil; }
+                return (section, .left(rows))
+            case .tipJar:
+                guard let rows = TipJarRows(rawValue: indexPath.row) else { assertionFailure("Wrong Rows"); return nil; }
+                return (section, .right(rows))
+            }
+        }
+    }
+
+    private enum SettingsRows: Int {
+        static let count = 2
+        case openSettings, emailDeveloper
+        var localizedTitle: String {
+            switch self {
+            case .openSettings:
+                return SettingsMainViewController.LocalizedString.cellTitleOpenSettings
+            case .emailDeveloper:
+                return SettingsMainViewController.LocalizedString.cellTitleEmailDeveloper
+            }
+        }
+    }
+
+    private enum TipJarRows: Int {
+        static let count = 4
+        case free, small, medium, large
+    }
 }
