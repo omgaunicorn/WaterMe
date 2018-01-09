@@ -35,9 +35,9 @@
                                                 <constraint firstAttribute="width" secondItem="fcd-zd-Vwt" secondAttribute="height" multiplier="1:1" id="r1s-vL-dWI"/>
                                             </constraints>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o3q-JB-Mxf">
-                                            <rect key="frame" x="125.5" y="20.5" width="125" height="125"/>
-                                            <state key="normal" title="Photo"/>
+                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o3q-JB-Mxf">
+                                            <rect key="frame" x="125" y="51.5" width="125" height="64"/>
+                                            <state key="normal" image="Camera"/>
                                             <connections>
                                                 <action selector="iconButtonTapped:" destination="gC9-Lk-0nU" eventType="touchUpInside" id="dsU-aw-6Tg"/>
                                             </connections>
@@ -118,4 +118,7 @@
             <point key="canvasLocation" x="-719" y="114"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Camera" width="64" height="64"/>
+    </resources>
 </document>
