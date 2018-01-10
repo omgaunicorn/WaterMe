@@ -120,6 +120,7 @@ class EmojiImageView: UIView {
         case .image(let image):
             self.imageView?.image = image
             self.imageView?.isHidden = false
+            self.imageView?.contentMode = .scaleAspectFill
             self.label?.attributedText = nil
             self.label?.isHidden = true
         }
@@ -151,6 +152,7 @@ class EmojiImageView: UIView {
             image = #imageLiteral(resourceName: "ReminderKindOther")
         }
         self.imageView?.image = image
+        self.imageView?.contentMode = .scaleAspectFit
         self.alpha = 1.0
         self.label?.attributedText = nil
         self.label?.isHidden = true

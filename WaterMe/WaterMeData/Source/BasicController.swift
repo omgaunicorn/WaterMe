@@ -234,6 +234,11 @@ public class BasicController {
             }
             if let icon = icon {
                 vessel.icon = icon
+                if vessel.icon == nil {
+                    // something went wrong. We need to close the realm and present an error
+                    _ = realm.waterMe_commitWrite()
+                    return .failure(.imageCouldntBeCompressedEnough)
+                }
             }
             // trigger the bloop so notifications fire for the reminder table view
             for reminder in vessel.reminders {

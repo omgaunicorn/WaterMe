@@ -47,7 +47,7 @@ public extension ReminderVessel {
         
         public init(rawImage: UIImage) {
             let size = rawImage.maxSize
-            let cropped = rawImage.cropping(to: size)
+            let cropped = rawImage.resize(toTargetSize: size)
             self = .image(cropped)
         }
     }
@@ -71,7 +71,7 @@ internal extension ReminderVessel.Icon {
         case .emoji:
             return nil
         case .image(let image):
-            let data = image.dataNoLarger(than: 40000)
+            let data = image.dataNoLarger(than: 50000)
             return data
         }
     }
@@ -104,23 +104,46 @@ internal extension CGSize {
 }
 
 fileprivate extension UIImage {
+
+    fileprivate static let style_maxSize: CGFloat = 500
+    fileprivate static let style_scale: CGFloat = 1
     
     fileprivate var maxSize: CGSize {
-        let max: CGFloat = 640
+        let max: CGFloat = type(of: self).style_maxSize
         let size = self.size.squareSize(withMaxEdge: max)
         return size
     }
     
-    fileprivate func cropping(to size: CGSize) -> UIImage {
-        var size = size
-        size.width *= self.scale
-        size.height *= self.scale
-        
-        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        
-        let imageRef = self.cgImage!.cropping(to: rect)
-        let image = UIImage(cgImage: imageRef!, scale: self.scale, orientation: self.imageOrientation)
-        return image
+    fileprivate func resize(toTargetSize targetSize: CGSize) -> UIImage {
+        // inspired by Hamptin Catlin
+        // https://gist.github.com/licvido/55d12a8eb76a8103c753
+
+        let newScale = type(of: self).style_scale
+        let originalSize = self.size
+
+        let widthRatio = targetSize.width / originalSize.width
+        let heightRatio = targetSize.height / originalSize.height
+
+        // Figure out what our orientation is, and use that to form the rectangle
+        let newSize: CGSize
+        if widthRatio > heightRatio {
+            newSize = CGSize(width: floor(originalSize.width * heightRatio), height: floor(originalSize.height * heightRatio))
+        } else {
+            newSize = CGSize(width: floor(originalSize.width * widthRatio), height: floor(originalSize.height * widthRatio))
+        }
+
+        // This is the rect that we've calculated out and this is what is actually used below
+        let rect = CGRect(origin: .zero, size: newSize)
+
+        // Actually do the resizing to the rect using the ImageContext stuff
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = newScale
+        format.opaque = true
+        let newImage = UIGraphicsImageRenderer(size: newSize, format: format).image() { _ in
+            self.draw(in: rect)
+        }
+
+        return newImage
     }
     
     fileprivate func dataNoLarger(than max: Int) -> Data? {
@@ -132,6 +155,9 @@ fileprivate extension UIImage {
             guard let data = _data, data.count < max else { continue }
             compressedData = data
         }
+        let message = "Image couldn't be compressed to fit: \(max) bytes"
+        log.error(message)
+        assert(compressedData != nil, message)
         return compressedData
     }
 }

@@ -24,7 +24,7 @@
 import Foundation
 
 public enum RealmError: Error {
-    case loadError, createError, writeError, readError, objectDeleted, unableToDeleteLastReminder
+    case loadError, createError, writeError, readError, objectDeleted, unableToDeleteLastReminder, imageCouldntBeCompressedEnough
 }
 
 extension RealmError: UserFacingError {
@@ -34,12 +34,16 @@ extension RealmError: UserFacingError {
             return "Error Deleting"
         case .loadError:
             return "Error Loading"
+        case .imageCouldntBeCompressedEnough:
+            return "Error Saving Image"
         default:
             return "Error Saving"
         }
     }
     public var details: String? {
         switch self {
+        case .imageCouldntBeCompressedEnough:
+            return "The selected image couldn't be saved. Please choose a different image or an emoji."
         case .objectDeleted:
             return "Unable to save changes because the item was deleted. Possibly from another device."
         case .createError:
@@ -56,7 +60,7 @@ extension RealmError: UserFacingError {
     }
     public var actionTitle: String? {
         switch self {
-        case .objectDeleted, .unableToDeleteLastReminder:
+        case .objectDeleted, .unableToDeleteLastReminder, .imageCouldntBeCompressedEnough:
             return nil
         default:
             return "Manage Storage"
