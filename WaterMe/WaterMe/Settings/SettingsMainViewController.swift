@@ -48,15 +48,11 @@ class SettingsMainViewController: UIViewController {
         self.tableViewController?.settingsRowChosen = { [unowned self] chosen, deselectRowAnimated in
             switch chosen {
             case .emailDeveloper:
-                let either = EmailDeveloperViewController.newVC() { vc in
+                let vc = EmailDeveloperViewController.newVC() { vc in
+                    guard let vc = vc else { deselectRowAnimated?(true); return; }
                     vc.dismiss(animated: true, completion: { deselectRowAnimated?(true) })
                 }
-                switch either {
-                case .left(let vc):
-                    self.present(vc, animated: true, completion: nil)
-                case .right(let url):
-                    print(url)
-                }
+                self.present(vc, animated: true, completion: nil)
             case .openSettings:
                 UIApplication.shared.openSettings(completion: { _ in deselectRowAnimated?(true) })
             }
@@ -65,10 +61,6 @@ class SettingsMainViewController: UIViewController {
 
     @IBAction private func doneButtonTapped(_ sender: Any) {
         self.completionHandler?(self)
-    }
-
-    private func presentEmail() {
-
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -24,19 +24,27 @@
 import WaterMeData
 import MessageUI
 import UIKit
+import MobileCoreServices
 
 class EmailDeveloperViewController: MFMailComposeViewController, MFMailComposeViewControllerDelegate {
 
-    typealias Completion = (UIViewController) -> Void
+    typealias Completion = (UIViewController?) -> Void
 
-    class func newVC(completion: Completion?) -> Either<UIViewController, URL> {
-        guard self.canSendMail() == true else { return .right(PrivateKeys.kEmailAddressURL) }
-        let vc = EmailDeveloperViewController()
-        vc.mailComposeDelegate = vc
-        vc.setSubject("I have an idea for WaterMe!")
-        vc.setToRecipients([PrivateKeys.kEmailAddress])
-        vc.completion = completion
-        return .left(vc)
+    class func newVC(completion: Completion?) -> UIViewController {
+        if self.canSendMail() == true {
+            let vc = EmailDeveloperViewController()
+            vc.mailComposeDelegate = vc
+            vc.setSubject(LocalizedString.subject)
+            vc.setToRecipients([PrivateKeys.kEmailAddress])
+            vc.completion = completion
+            return vc
+        } else {
+            let vc = UIAlertController(copyEmailAlertWithAddress: PrivateKeys.kEmailAddressURL) {
+                UIPasteboard.general.setValue(PrivateKeys.kEmailAddress, forPasteboardType: kUTTypeUTF8PlainText as String)
+                completion?(nil)
+            }
+            return vc
+        }
     }
 
     private var completion: Completion?
@@ -56,4 +64,16 @@ class EmailDeveloperViewController: MFMailComposeViewController, MFMailComposeVi
     }
 }
 
-
+extension UIAlertController {
+    convenience init(copyEmailAlertWithAddress address: URL, completion: (() -> Void)?) {
+        self.init(title: LocalizedString.copyEmailAlertButtonTitle, message: LocalizedString.copyEmailAlertMessage, preferredStyle: .alert)
+        let copy = UIAlertAction(title: LocalizedString.copyEmailAlertButtonTitle, style: .default) { _ in
+            completion?()
+        }
+        let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
+            completion?()
+        }
+        self.addAction(copy)
+        self.addAction(cancel)
+    }
+}

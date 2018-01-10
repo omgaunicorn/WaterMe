@@ -136,6 +136,20 @@ extension UIAlertController {
         static let deleteAlertMessage: String =
             NSLocalizedString("Are you sure you want to delete this?",
                               comment: "Alert: Delete: Message: Message of the alert that asks the user if they want to delete this item.")
+        static let copyEmailAlertButtonTitle: String =
+            NSLocalizedString("Copy Email Address",
+                              comment: "Alert: Email Copy: Button Title and Alert Title: When the user taps this button, the developers email address is copied into the users clipboard so the user can paste it into their favorite email app.")
+        static let copyEmailAlertMessage: String =
+            NSLocalizedString("Copy my email address into your clipboard, then paste it in your favorite email app.",
+                              comment: "Alert: Email Copy: Message: Alert message that tells the user that they can copy my email address into their clipboard and paste it in their favorite email app.")
+    }
+}
+
+extension EmailDeveloperViewController {
+    enum LocalizedString {
+        static let subject =
+            NSLocalizedString("I have an idea for WaterMe!",
+                              comment: "Email Compose: Subject: Shows in the subject line when an iOS in-app mail sheet is presented.")
     }
 }
 
