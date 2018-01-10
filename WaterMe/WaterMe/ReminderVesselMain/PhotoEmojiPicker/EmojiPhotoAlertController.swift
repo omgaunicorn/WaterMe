@@ -31,7 +31,7 @@ extension UIAlertController {
     }
         
     class var cameraLocalizedString: String {
-        switch SelfContainedImagePickerController.cameraPermission {
+        switch ImagePickerCropperViewController.cameraPermission {
         case .authorized, .notDetermined:
             return UIAlertController.LocalizedString.buttonTitleCamera
         case .denied, .restricted:
@@ -50,7 +50,7 @@ extension UIAlertController {
         let rear = UIImagePickerController.isCameraDeviceAvailable(.rear)
         if front || rear {
             let camera = UIAlertAction(title: self.cameraLocalizedString, style: .default) { _ in
-                switch SelfContainedImagePickerController.cameraPermission {
+                switch ImagePickerCropperViewController.cameraPermission {
                 case .authorized, .notDetermined:
                     completionHandler(.camera)
                 case .restricted:

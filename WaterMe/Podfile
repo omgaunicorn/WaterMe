@@ -2,6 +2,7 @@ target 'WaterMe' do
 	platform :ios, '10.3'
 	use_frameworks!
 	
+	pod 'CropViewController'
 	pod 'Result', '~> 3.2.2'
 	pod 'RealmSwift'
 	pod 'XCGLogger', '~> 6.0.1'

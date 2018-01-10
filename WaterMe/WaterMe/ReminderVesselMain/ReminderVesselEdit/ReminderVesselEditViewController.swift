@@ -156,7 +156,6 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     }
     
     private func updateIcon(_ icon: ReminderVessel.Icon) {
-        self.view.endEditing(false)
         guard let vessel = self.vesselResult.value, let basicRC = self.basicRC
             else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
         let updateResult = basicRC.update(icon: icon, in: vessel)
@@ -166,17 +165,18 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     }
     
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?) {
+        self.view.endEditing(false)
         let vc = UIAlertController.emojiPhotoActionSheet() { choice in
             switch choice {
             case .camera:
-                let vc = SelfContainedImagePickerController.newCameraVC() { image, vc in
+                let vc = ImagePickerCropperViewController.newCameraVC() { image, vc in
                     vc.dismiss(animated: true, completion: nil)
                     guard let image = image else { return }
                     self.updateIcon(ReminderVessel.Icon(rawImage: image))
                 }
                 self.present(vc, animated: true, completion: nil)
             case .photos:
-                let vc = SelfContainedImagePickerController.newPhotosVC() { image, vc in
+                let vc = ImagePickerCropperViewController.newPhotosVC() { image, vc in
                     vc.dismiss(animated: true, completion: nil)
                     guard let image = image else { return }
                     self.updateIcon(ReminderVessel.Icon(rawImage: image))

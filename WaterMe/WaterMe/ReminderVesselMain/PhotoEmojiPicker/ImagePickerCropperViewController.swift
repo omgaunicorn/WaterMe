@@ -21,23 +21,24 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import CropViewController
 import MobileCoreServices
 import Photos
 import UIKit
 
-class SelfContainedImagePickerController: UIImagePickerController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ImagePickerCropperViewController: UIImagePickerController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     class var cameraPermission: AVAuthorizationStatus {
         return AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
     }
     
-    private class func newVC(completionHandler: @escaping (UIImage?, UIViewController) -> Void) -> SelfContainedImagePickerController {
-        let vc = SelfContainedImagePickerController()
+    private class func newVC(completionHandler: @escaping (UIImage?, UIViewController) -> Void) -> ImagePickerCropperViewController {
+        let vc = ImagePickerCropperViewController()
         vc.completionHandler = completionHandler
-        vc.modalPresentationStyle = .formSheet
+        vc.modalPresentationStyle = .overFullScreen
         vc.imageExportPreset = .compatible
         vc.delegate = vc
-        vc.allowsEditing = true
+        vc.allowsEditing = false
         vc.mediaTypes = [kUTTypeImage as String]
         return vc
     }
@@ -95,8 +96,13 @@ class SelfContainedImagePickerController: UIImagePickerController, UIImagePicker
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let original = info[UIImagePickerControllerOriginalImage] as? UIImage
-        let edited = info[UIImagePickerControllerEditedImage] as? UIImage
-        self.completionHandler?(edited ?? original, self)
+        guard let image = original else { self.completionHandler?(nil, picker); return; }
+        let crop = CropViewController(croppingStyle: .default, image: image)
+        crop.aspectRatioPickerButtonHidden = true
+        crop.aspectRatioPreset = .presetSquare
+        crop.aspectRatioLockEnabled = true
+        crop.delegate = self
+        self.present(crop, animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -105,5 +111,17 @@ class SelfContainedImagePickerController: UIImagePickerController, UIImagePicker
     
     deinit {
         self.permissionCheckTimer?.invalidate()
+    }
+}
+
+extension ImagePickerCropperViewController: CropViewControllerDelegate {
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        cropViewController.dismiss(animated: true) {
+            self.completionHandler?(image, self)
+        }
+    }
+
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        cropViewController.dismiss(animated: true, completion: nil)
     }
 }
