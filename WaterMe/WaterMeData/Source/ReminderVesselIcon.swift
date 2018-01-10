@@ -46,9 +46,16 @@ public extension ReminderVessel {
         }
         
         public init(rawImage: UIImage) {
-            let size = rawImage.maxSize
-            let cropped = rawImage.resize(toTargetSize: size)
-            self = .image(cropped)
+            // all of this code assumes we're cropping to square image
+            // it also assumes that we're converting it to a new image with a scale of 1
+            let smallestDimension = rawImage.size.width > rawImage.size.height ? rawImage.size.height : rawImage.size.width
+            let smallestScaledDimension = smallestDimension * rawImage.scale
+            let originalSquareSize = CGSize(width: smallestScaledDimension, height: smallestScaledDimension)
+            let cropped = rawImage.cropping(to: originalSquareSize)
+            let max = UIImage.style_maxSize
+            let reducedSize = originalSquareSize.width > max ? CGSize(width: max, height: max) : originalSquareSize
+            let resized = cropped.resize(toTargetSize: reducedSize)
+            self = .image(resized)
         }
     }
     
@@ -87,31 +94,21 @@ internal extension ReminderVessel.Icon {
     
 }
 
-internal extension CGSize {
-    /*@testable*/ internal func squareSize(withMaxEdge max: CGFloat) -> CGSize {
-        let widthLess = self.width < max
-        let heightLess = self.height < max
-        if widthLess || heightLess {
-            if self.width < self.height {
-                return CGSize(width: self.width, height: self.width)
-            } else {
-                return CGSize(width: self.height, height: self.height)
-            }
-        } else {
-            return CGSize(width: max, height: max)
-        }
-    }
-}
-
 fileprivate extension UIImage {
 
     fileprivate static let style_maxSize: CGFloat = 500
     fileprivate static let style_scale: CGFloat = 1
-    
-    fileprivate var maxSize: CGSize {
-        let max: CGFloat = type(of: self).style_maxSize
-        let size = self.size.squareSize(withMaxEdge: max)
-        return size
+
+    fileprivate func cropping(to size: CGSize) -> UIImage {
+        var size = size
+        size.width *= self.scale
+        size.height *= self.scale
+
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+
+        let imageRef = self.cgImage!.cropping(to: rect)
+        let image = UIImage(cgImage: imageRef!, scale: self.scale, orientation: self.imageOrientation)
+        return image
     }
     
     fileprivate func resize(toTargetSize targetSize: CGSize) -> UIImage {
@@ -139,7 +136,7 @@ fileprivate extension UIImage {
         let format = UIGraphicsImageRendererFormat()
         format.scale = newScale
         format.opaque = true
-        let newImage = UIGraphicsImageRenderer(size: newSize, format: format).image() { _ in
+        let newImage = UIGraphicsImageRenderer(bounds: rect, format: format).image() { _ in
             self.draw(in: rect)
         }
 
