@@ -57,6 +57,15 @@ class SettingsMainViewController: UIViewController {
                 UIApplication.shared.openSettings(completion: { _ in deselectRowAnimated?(true) })
             }
         }
+
+        self.tableViewController?.tipJarRowChosen = { [unowned self] chosen, deselectRowAnimated in
+            let alert = UIAlertController(title: "@NSNotImplemented", message: "Sorry, you can't pay me yet. Feature coming soon!", preferredStyle: .alert)
+            let cancel = UIAlertAction(title: "Dismiss", style: .cancel) { _ in
+                deselectRowAnimated?(true)
+            }
+            alert.addAction(cancel)
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
     @IBAction private func doneButtonTapped(_ sender: Any) {
