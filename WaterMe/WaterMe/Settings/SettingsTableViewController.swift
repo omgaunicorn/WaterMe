@@ -25,6 +25,9 @@ import UIKit
 
 class SettingsTableViewController: UITableViewController {
 
+    var settingsRowChosen: ((SettingsRows, ((Bool) -> Void)?) -> Void)?
+    var tipJarRowChosen: ((TipJarRows, ((Bool) -> Void)?) -> Void)?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -67,6 +70,17 @@ class SettingsTableViewController: UITableViewController {
         guard let section = Sections(rawValue: section) else { assertionFailure("Wrong Section"); return nil; }
         return section.localizedTitle
     }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let (_, row) = Sections.sectionsAndRows(from: indexPath) else { fatalError("Wrong Section/Row") }
+        let completion: ((Bool) -> Void)? = { tableView.deselectRow(at: indexPath, animated: $0) }
+        switch row {
+        case .left(let row):
+            self.settingsRowChosen?(row, completion)
+        case .right(let row):
+            self.tipJarRowChosen?(row, completion)
+        }
+    }
 }
 
 extension SettingsTableViewController {
@@ -94,7 +108,7 @@ extension SettingsTableViewController {
         }
     }
 
-    fileprivate enum SettingsRows: Int {
+    enum SettingsRows: Int {
         static let count = 2
         case openSettings, emailDeveloper
         var localizedTitle: String {

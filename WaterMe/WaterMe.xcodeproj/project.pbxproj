@@ -37,6 +37,7 @@
 		506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A6219200562B9008EF601 /* SettingsMainViewController.swift */; };
 		506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A621B200562C3008EF601 /* SettingsTableViewController.swift */; };
 		50702D11200589B0009EF952 /* SettingsTipJarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */; };
+		50702D13200591CC009EF952 /* EmailDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50702D12200591CC009EF952 /* EmailDeveloperViewController.swift */; };
 		50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */; };
 		50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */; };
 		5075B48E1FF178DC007B42D8 /* ReminderDragPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */; };
@@ -142,6 +143,7 @@
 		506A6219200562B9008EF601 /* SettingsMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainViewController.swift; sourceTree = "<group>"; };
 		506A621B200562C3008EF601 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTipJarTableViewCell.swift; sourceTree = "<group>"; };
+		50702D12200591CC009EF952 /* EmailDeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailDeveloperViewController.swift; sourceTree = "<group>"; };
 		50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewTableViewCell.swift; sourceTree = "<group>"; };
 		50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewTableViewCell.xib; sourceTree = "<group>"; };
 		5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderDragPreviewView.xib; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				506A6219200562B9008EF601 /* SettingsMainViewController.swift */,
 				506A621B200562C3008EF601 /* SettingsTableViewController.swift */,
 				50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */,
+				50702D12200591CC009EF952 /* EmailDeveloperViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -874,6 +877,7 @@
 			files = (
 				50E8B1E21EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift in Sources */,
 				5015EEF61FF56FF300CAC7D7 /* DragTargetInstructionalView.swift in Sources */,
+				50702D13200591CC009EF952 /* EmailDeveloperViewController.swift in Sources */,
 				50F388E01FF6D9C10031ED45 /* CoreDataMigrator.swift in Sources */,
 				5087A9231EE3A6B00046E687 /* SelfContainedImagePickerController.swift in Sources */,
 				502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */,
