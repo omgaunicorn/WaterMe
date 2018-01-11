@@ -58,6 +58,7 @@ class ReminderUserNotificationController {
         case .initial(let data):
             self.data = data
             self.resetTimer()
+            self.timer?.fire()
         case .update:
             self.resetTimer()
         case .error(let error):
@@ -70,7 +71,6 @@ class ReminderUserNotificationController {
     }
 
     @objc private func applicationDidEnterBackground(with notification: Notification?) {
-        self.resetTimer()
         self.timer?.fire()
     }
 
@@ -155,6 +155,8 @@ class ReminderUserNotificationController {
             // this makes it so the user only gets 1 notification per day at the time they requested
             let reminders = matches.map() { reminderTime, matches -> UNNotificationRequest in
                 let interval = reminderTime.timeIntervalSince(now)
+                let _content = UNMutableNotificationContent()
+                _content.badge = NSNumber(value: matches.count - 1)
                 let trigger: UNTimeIntervalNotificationTrigger?
                 if interval <= 0 {
                     // if trigger is less than or equal to 0 we need to tell the system there is no trigger
@@ -162,12 +164,14 @@ class ReminderUserNotificationController {
                     trigger = nil
                 } else {
                     trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+                    // shuffle the names so that different plant names show in the notifications
+                    let plantNames = ReminderNotificationInformation.uniqueParentPlantNames(from: matches).shuffled()
+                    // only set the body if there is a trigger. this way a notification won't be shown to the user
+                    // only the badge will update.
+                    _content.body = ReminderUserNotificationController.LocalizedStrings.notificationBodyWithPlantNames(plantNames: plantNames)
+                    _content.sound = .default()
                 }
-                let _content = UNMutableNotificationContent()
-                // shuffle the names so that different plant names show in the notifications
-                let plantNames = ReminderNotificationInformation.uniqueParentPlantNames(from: matches).shuffled()
-                _content.body = ReminderUserNotificationController.LocalizedStrings.notificationBodyWithPlantNames(plantNames: plantNames)
-                _content.badge = NSNumber(value: matches.count)
+
                 // swiftlint:disable:next force_cast
                 let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
                 let request = UNNotificationRequest(identifier: reminderTime.description, content: content, trigger: trigger)

@@ -310,7 +310,7 @@ extension ReminderUserNotificationController {
                 return "\(name1) & \(name2) need attention today."
             default:
                 let name1 = plantNames[0] ?? ReminderVessel.LocalizedString.untitledPlant
-                return "\(name1) & \(plantNames.count) more need attention today."
+                return "\(name1) & \(plantNames.count - 1) more need attention today."
             }
         }
     }
