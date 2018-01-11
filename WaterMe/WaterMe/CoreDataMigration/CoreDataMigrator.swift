@@ -40,8 +40,8 @@ class CoreDataMigrator: CoreDataMigratable {
     private static let storeDirectoryPostMigration = CoreDataMigrator.storeDirectory.appendingPathComponent("WaterMe1.coredata", isDirectory: true)
     fileprivate static let storeDirectory: URL = {
         let appSupport = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let sqliteURL = appSupport.appendingPathComponent("WaterMe", isDirectory: true)
-        return sqliteURL
+        let storeDirectory = appSupport.appendingPathComponent("WaterMe", isDirectory: true)
+        return storeDirectory
     }()
     private static let storeFilesToMove: [URL] = {
         return [
@@ -111,32 +111,35 @@ class CoreDataMigrator: CoreDataMigratable {
                     self.progress.completedUnitCount = Int64(migrated)
                 }
             }
-            let plants = type(of: self).plants(from: c)
-            plants.forEach() { _plant in
-                guard let plant = _plant as? PlantEntity else {
-                    let error = "Object in PlantArray is not PlantEntity: \(_plant)"
-                    log.error(error)
-                    assertionFailure(error)
-                    return
-                }
-                let imageEmoji = plant.cd_00100_imageEmojiTransformable as? ImageEmojiObject
-                let vesselName = plant.cd_00100_nameString
-                let vesselImage = imageEmoji?.emojiImage
-                let vesselEmoji = imageEmoji?.emojiString
-                let reminderInterval = plant.cd_00100_wateringIntervalNumber
-                let reminderLastPerformDate = plant.cd_00100_lastWateredDate
-                let result = basicRC.coreDataMigration(vesselName: vesselName,
-                                                        vesselImage: vesselImage,
-                                                        vesselEmoji: vesselEmoji,
-                                                        reminderInterval: reminderInterval,
-                                                        reminderLastPerformDate: reminderLastPerformDate)
-                switch result {
-                case .failure(let error):
-                    let description = "Error while migrating plant named: \(vesselName!): \(error)"
-                    log.error(description)
-                    assertionFailure(description)
-                case .success:
-                    migrated += 1
+            var plants = type(of: self).plants(from: c)
+            for _ in 0 ..< plants.count { // weird loop so core data memory can be drained in each iteration
+                autoreleasepool() {
+                    let _plant = plants.popLast()
+                    guard let plant = _plant as? PlantEntity else {
+                        let error = "Object in PlantArray is not PlantEntity: \(String(describing: _plant))"
+                        log.error(error)
+                        assertionFailure(error)
+                        return
+                    }
+                    let imageEmoji = plant.cd_00100_imageEmojiTransformable as? ImageEmojiObject
+                    let vesselName = plant.cd_00100_nameString
+                    let vesselImage = imageEmoji?.emojiImage
+                    let vesselEmoji = imageEmoji?.emojiString
+                    let reminderInterval = plant.cd_00100_wateringIntervalNumber
+                    let reminderLastPerformDate = plant.cd_00100_lastWateredDate
+                    let result = basicRC.coreDataMigration(vesselName: vesselName,
+                                                           vesselImage: vesselImage,
+                                                           vesselEmoji: vesselEmoji,
+                                                           reminderInterval: reminderInterval,
+                                                           reminderLastPerformDate: reminderLastPerformDate)
+                    switch result {
+                    case .failure(let error):
+                        let description = "Error while migrating plant named: \(vesselName!): \(error)"
+                        log.error(description)
+                        assertionFailure(description)
+                    case .success:
+                        migrated += 1
+                    }
                 }
             }
             self.closeCoreDataStoresAndMoveUnderlyingFiles()
