@@ -51,18 +51,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qj8-Ga-TBi"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Maanage Plants" largeTitleDisplayMode="never" id="PVD-j4-HSM">
-                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="add" id="DIA-zQ-5My">
-                            <connections>
-                                <action selector="addReminderVesselButtonTapped:" destination="CBd-BS-reS" id="6WQ-Gn-6Fu"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="adP-Yw-Qe4">
-                            <connections>
-                                <action selector="doneButtonTapped:" destination="CBd-BS-reS" id="AIe-9A-AKo"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Maanage Plants" largeTitleDisplayMode="never" id="PVD-j4-HSM"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WcX-AE-OXu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

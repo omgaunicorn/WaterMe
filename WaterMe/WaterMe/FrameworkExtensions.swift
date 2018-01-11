@@ -45,6 +45,13 @@ extension UIBarButtonItem {
         self.init(barButtonSystemItem: .save, target: target, action: action)
         self.style = .done
     }
+    convenience init(localizedDoneButtonWithTarget target: Any, action: Selector) {
+        self.init(barButtonSystemItem: .done, target: target, action: action)
+        self.style = .done
+    }
+    convenience init(localizedAddReminderVesselBBIButtonWithTarget target: Any, action: Selector) {
+        self.init(title: UIAlertController.LocalizedString.buttonTitleNewPlant, style: .plain, target: target, action: action)
+    }
 }
 
 extension Sequence {

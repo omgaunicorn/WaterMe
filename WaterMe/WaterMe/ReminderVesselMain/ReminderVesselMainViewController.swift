@@ -42,11 +42,21 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     }
     
     /*@IBOutlet*/ private weak var collectionVC: ReminderVesselCollectionViewController?
+
+    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
+    private lazy var addReminderVesselBBI: UIBarButtonItem = UIBarButtonItem(localizedAddReminderVesselBBIButtonWithTarget: self, action: #selector(self.addReminderVesselButtonTapped(_:)))
     
     var basicRC: BasicController?
     var proRC: ProController?
 
     private var completionHandler: ((UIViewController) -> Void)?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.navigationItem.leftBarButtonItem = self.addReminderVesselBBI
+        self.navigationItem.rightBarButtonItem = self.doneBBI
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
