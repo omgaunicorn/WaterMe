@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import CropViewController
 import WaterMeData
 import UIKit
 
@@ -46,6 +47,7 @@ extension UIApplication {
     class func style_configure() {
         UIView.appearance().tintColor = Style.Color.tint
         UIView.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = nil
+        UIVisualEffectView.appearance(whenContainedInInstancesOf: [CropViewController.self]).backgroundColor = nil
         UIVisualEffectView.appearance().backgroundColor = Style.Color.visuelEffectViewBackground
     }
 }

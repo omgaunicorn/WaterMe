@@ -98,10 +98,8 @@ class ImagePickerCropperViewController: UIImagePickerController, UIImagePickerCo
         let original = info[UIImagePickerControllerOriginalImage] as? UIImage
         guard let image = original else { self.completionHandler?(nil, picker); return; }
         let crop = CropViewController(croppingStyle: .default, image: image)
-        crop.aspectRatioPickerButtonHidden = true
-        crop.aspectRatioPreset = .presetSquare
-        crop.aspectRatioLockEnabled = true
         crop.delegate = self
+        crop.style_waterMe()
         self.present(crop, animated: true, completion: nil)
     }
     
@@ -111,6 +109,27 @@ class ImagePickerCropperViewController: UIImagePickerController, UIImagePickerCo
     
     deinit {
         self.permissionCheckTimer?.invalidate()
+    }
+}
+
+extension CropViewController {
+    func style_waterMe() {
+        // hide the aspect ratio button
+        // lock the aspect ratio to square
+        self.aspectRatioPickerButtonHidden = true
+        self.aspectRatioPreset = .presetSquare
+        self.aspectRatioLockEnabled = true
+        self.resetAspectRatioEnabled = true
+
+        // configure the buttons to have the right tintcolor
+        self.toolbar.doneIconButton.setTitleColor(nil, for: .normal)
+        self.toolbar.doneTextButton.setTitleColor(nil, for: .normal)
+        self.toolbar.cancelIconButton.setTitleColor(nil, for: .normal)
+        self.toolbar.cancelIconButton.setTitleColor(nil, for: .normal)
+        self.toolbar.doneIconButton.tintColor = Style.Color.tint
+        self.toolbar.doneTextButton.tintColor = Style.Color.tint
+        self.toolbar.cancelIconButton.tintColor = Style.Color.delete
+        self.toolbar.cancelIconButton.tintColor = Style.Color.delete
     }
 }
 
