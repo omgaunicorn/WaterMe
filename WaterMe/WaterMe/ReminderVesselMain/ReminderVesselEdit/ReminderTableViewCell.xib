@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
@@ -21,30 +21,30 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqQ-mh-PX3" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="24" width="70" height="70"/>
+                        <rect key="frame" x="20" y="34" width="50" height="50"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="3pn-tb-aR3"/>
+                            <constraint firstAttribute="width" constant="50" id="3pn-tb-aR3"/>
                             <constraint firstAttribute="width" secondItem="cqQ-mh-PX3" secondAttribute="height" multiplier="1:1" id="baG-hc-IXr"/>
                         </constraints>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="pJ1-Qa-CHB">
-                        <rect key="frame" x="78" y="16" width="222" height="87.5"/>
+                        <rect key="frame" x="82" y="16" width="218" height="87.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" verticalCompressionResistancePriority="753" text="Top Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Icd-mF-8hY">
-                                <rect key="frame" x="0.0" y="0.0" width="222" height="19.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="218" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" verticalCompressionResistancePriority="752" text="Middle Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XRB-j7-927">
-                                <rect key="frame" x="0.0" y="27.5" width="222" height="19.5"/>
+                                <rect key="frame" x="0.0" y="27.5" width="218" height="19.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Bottom Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNE-8C-dC4">
-                                <rect key="frame" x="0.0" y="55" width="222" height="32.5"/>
+                                <rect key="frame" x="0.0" y="55" width="218" height="32.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -53,10 +53,10 @@
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="pJ1-Qa-CHB" firstAttribute="leading" secondItem="cqQ-mh-PX3" secondAttribute="trailing" constant="8" symbolic="YES" id="GOh-yB-03Q"/>
+                    <constraint firstItem="pJ1-Qa-CHB" firstAttribute="leading" secondItem="cqQ-mh-PX3" secondAttribute="trailing" constant="12" id="GOh-yB-03Q"/>
                     <constraint firstItem="pJ1-Qa-CHB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="Jjx-TH-D2S"/>
                     <constraint firstItem="cqQ-mh-PX3" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="T2m-Cr-x6t"/>
-                    <constraint firstItem="cqQ-mh-PX3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="XNp-4R-Tf3"/>
+                    <constraint firstItem="cqQ-mh-PX3" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" symbolic="YES" id="XNp-4R-Tf3"/>
                     <constraint firstAttribute="bottom" secondItem="pJ1-Qa-CHB" secondAttribute="bottom" constant="16" id="p5M-wS-BZM"/>
                     <constraint firstAttribute="trailing" secondItem="pJ1-Qa-CHB" secondAttribute="trailing" constant="20" symbolic="YES" id="vux-3O-Ynd"/>
                 </constraints>

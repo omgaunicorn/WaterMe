@@ -47,6 +47,7 @@ extension UIApplication {
     class func style_configure() {
         UIView.appearance().tintColor = Style.Color.tint
         UIView.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = nil
+        UIImageView.appearance(whenContainedInInstancesOf: [ReminderTableViewCell.self]).tintColor = Style.Color.textSecondary
         UIVisualEffectView.appearance(whenContainedInInstancesOf: [CropViewController.self]).backgroundColor = nil
         UIVisualEffectView.appearance().backgroundColor = Style.Color.visuelEffectViewBackground
     }
