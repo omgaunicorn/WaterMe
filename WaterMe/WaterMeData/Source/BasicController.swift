@@ -89,6 +89,7 @@ public class BasicController {
         switch kind {
         case .local:
             try type(of: self).createLocalRealmDirectoryIfNeeded()
+            try type(of: self).copyRealmFromBundleIfNeeded()
             realmConfig.fileURL = type(of: self).localRealmFile
         case .sync(let user):
             let url = user.realmURL(withAppName: "WaterMeBasic")
@@ -108,9 +109,25 @@ public class BasicController {
     }
     
     private class func createLocalRealmDirectoryIfNeeded() throws {
-        if self.localRealmExists == false {
-            try FileManager.default.createDirectory(at: self.localRealmDirectory, withIntermediateDirectories: true, attributes: nil)
-        }
+        guard self.localRealmExists == false else { return }
+        try FileManager.default.createDirectory(at: self.localRealmDirectory, withIntermediateDirectories: true, attributes: nil)
+    }
+
+    private class func copyRealmFromBundleIfNeeded() throws {
+        guard
+            self.localRealmExists == false,
+            self.legacyCoreDataStoreExists == false,
+            let bundleURL = Bundle.main.url(forResource: "StarterRealm", withExtension: "realm")
+        else { return }
+        try FileManager.default.copyItem(at: bundleURL, to: self.localRealmFile)
+    }
+
+    private class var legacyCoreDataStoreExists: Bool {
+        let fm = FileManager.default
+        let appSupport = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let storeDirectory = appSupport.appendingPathComponent("WaterMe", isDirectory: true)
+        let storeURL = storeDirectory.appendingPathComponent("WaterMeData.sqlite")
+        return fm.fileExists(atPath: storeURL.path)
     }
     
     // MARK: WaterMeClient API

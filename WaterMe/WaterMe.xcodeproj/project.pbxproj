@@ -44,6 +44,7 @@
 		5075B4901FF178EA007B42D8 /* ReminderDragPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5075B48F1FF178EA007B42D8 /* ReminderDragPreviewView.swift */; };
 		507777AA1FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */; };
 		507A64581F049CCA004E18C5 /* ReminderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */; };
+		507E91F22008047E001A1BBE /* StarterRealm.realm in Resources */ = {isa = PBXBuildFile; fileRef = 507E91F120080419001A1BBE /* StarterRealm.realm */; };
 		5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */; };
 		5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */; };
 		5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */; };
@@ -150,6 +151,7 @@
 		5075B48F1FF178EA007B42D8 /* ReminderDragPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDragPreviewView.swift; sourceTree = "<group>"; };
 		507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderNotificationUIDelegate.swift; sourceTree = "<group>"; };
 		507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderTableViewCell.xib; sourceTree = "<group>"; };
+		507E91F120080419001A1BBE /* StarterRealm.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = StarterRealm.realm; sourceTree = "<group>"; };
 		5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPickerCollectionViewCell.swift; sourceTree = "<group>"; };
 		5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmojiPickerCollectionViewCell.xib; sourceTree = "<group>"; };
 		5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCropperViewController.swift; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 				5049D1A11FACF9F30076565E /* ReminderNotifications */,
 				50F388DE1FF6D9870031ED45 /* CoreDataMigration */,
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
+				507E91F120080419001A1BBE /* StarterRealm.realm */,
 				50BB0F6B1EC001C200850FF4 /* Videos */,
 				50BB0F651EBFF9A700850FF4 /* Settings.bundle */,
 				50BB0F671EC0011800850FF4 /* LaunchScreen.storyboard */,
@@ -621,6 +624,7 @@
 				50B511A51EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib in Resources */,
 				50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */,
 				5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */,
+				507E91F22008047E001A1BBE /* StarterRealm.realm in Resources */,
 				508E61551F8ACC5E00B28DD8 /* ReminderMain.storyboard in Resources */,
 				50E8B1D51EDF79E700ACCDAF /* ReminderVesselMain.storyboard in Resources */,
 				50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */,
