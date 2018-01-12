@@ -197,13 +197,14 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
-        self.updateDropTargetHeightForNotDragging(animated: true)
         self.isDragInProgress = false
         guard self.animationView?.hoverState != .drop else { return }
+        self.updateDropTargetHeightForNotDragging(animated: true)
         self.animationView?.hoverState = .noHover
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
+        self.isDragInProgress = false
         guard self.animationView?.hoverState != .drop else { return }
         self.animationView?.hoverState = .drop
     }
