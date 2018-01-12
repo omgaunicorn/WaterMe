@@ -48,8 +48,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private(set) var notifictionController: ReminderUserNotificationController?
 
     var coreDataMigrator = CoreDataMigrator()
-
     var window: UIWindow?
+    var userDefaultObserverTokens: [NSKeyValueObservation] = []
 
     override init() {
         super.init()
@@ -62,8 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // as early as possible, configure standard defaults
         UserDefaults.standard.configure()
 
-        // register for notifications about the increase contrast setting
-        _ = NotificationCenter.default.addObserver(forName: .UIAccessibilityDarkerSystemColorsStatusDidChange, object: nil, queue: nil) { _ in
+        // make re-usable closures for notifications I'll register for later
+        let appearanceChanges = {
             // need to rip the view hierarchy out of the window and put it back in
             // in order for the new UIAppearance to take effect
             UIApplication.style_configure()
@@ -71,6 +71,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = nil
             self.window?.rootViewController = prevVC
         }
+        let notificationChanges = {
+            self.notifictionController?.notificationPermissionsMayHaveChanged()
+        }
+        // register for notifications about the increase contrast setting
+        _ = NotificationCenter.default.addObserver(forName: .UIAccessibilityDarkerSystemColorsStatusDidChange, object: nil, queue: nil) { _ in
+            appearanceChanges()
+        }
+        // register for notifications if user defaults change while the app is running
+        let token1 = UserDefaults.standard.observe(\.INCREASE_CONTRAST) { _, _ in
+            appearanceChanges()
+        }
+        let token2 = UserDefaults.standard.observe(\.REMINDER_HOUR) { _, _ in
+            notificationChanges()
+        }
+        let token3 = UserDefaults.standard.observe(\.NUMBER_OF_REMINDER_DAYS) { _, _ in
+            notificationChanges()
+        }
+        self.userDefaultObserverTokens += [token1, token2, token3]
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {

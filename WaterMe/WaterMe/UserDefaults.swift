@@ -90,4 +90,17 @@ extension UserDefaults {
             Constants.kIncreaseContrast : false
         ])
     }
+
+    // MARK: For KVO only, do not use
+    @objc dynamic var INCREASE_CONTRAST: Any {
+        fatalError()
+    }
+
+    @objc dynamic var NUMBER_OF_REMINDER_DAYS: Any {
+        fatalError()
+    }
+
+    @objc dynamic var REMINDER_HOUR: Any {
+        fatalError()
+    }
 }
