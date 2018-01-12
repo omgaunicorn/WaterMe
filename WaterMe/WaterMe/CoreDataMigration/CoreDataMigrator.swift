@@ -112,8 +112,13 @@ class CoreDataMigrator: CoreDataMigratable {
                 }
             }
             var plants = type(of: self).plants(from: c)
-            for _ in 0 ..< plants.count { // weird loop so core data memory can be drained in each iteration
+            // weird loop so core data memory can be drained in each iteration
+            for _ in 0 ..< plants.count {
                 autoreleasepool() {
+                    // needs more testing but the ReminderGedeg was sometimes
+                    // crashing when migration happened at full speed
+                    Thread.sleep(forTimeInterval: 0.1)
+                    // popping them out of the array allows the memory to be freed in the release pool
                     let _plant = plants.popLast()
                     guard let plant = _plant as? PlantEntity else {
                         let error = "Object in PlantArray is not PlantEntity: \(String(describing: _plant))"

@@ -103,7 +103,7 @@ open class ReminderGedeg: NSObject {
         func appendUpdateExtendingTimer(_ update: Update) {
             self.timer?.invalidate()
             self.updates.append(update)
-            self.timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: false)
+            self.timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: false)
         }
         @objc private func timerFired(_ timer: Timer?) {
             timer?.invalidate()
