@@ -34,7 +34,8 @@ class ReminderEditTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        self.clearsSelectionOnViewWillAppear = false
         self.tableView.register(TextViewTableViewCell.nib, forCellReuseIdentifier: TextViewTableViewCell.reuseID)
         self.tableView.register(TextFieldTableViewCell.nib, forCellReuseIdentifier: TextFieldTableViewCell.reuseID)
         self.tableView.register(ReminderKindTableViewCell.self, forCellReuseIdentifier: ReminderKindTableViewCell.reuseID)

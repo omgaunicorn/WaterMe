@@ -31,6 +31,7 @@ class SettingsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.clearsSelectionOnViewWillAppear = false
         self.tableView.register(SimpleLabelTableViewCell.self, forCellReuseIdentifier: SimpleLabelTableViewCell.reuseID)
         self.tableView.register(SettingsTipJarTableViewCell.self, forCellReuseIdentifier: SettingsTipJarTableViewCell.reuseID)
     }
