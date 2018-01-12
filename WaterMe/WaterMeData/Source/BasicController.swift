@@ -50,12 +50,6 @@ internal extension Realm {
 public class BasicController {
     
     // MARK: Initialization
-    
-    public class var localRealmExists: Bool {
-        let fm = FileManager.default
-        let exists = fm.fileExists(atPath: self.localRealmFile.path)
-        return exists
-    }
 
     public enum Kind {
         case local, sync(SyncUser)
@@ -103,6 +97,20 @@ public class BasicController {
         let url = appsupport.appendingPathComponent("WaterMe", isDirectory: true).appendingPathComponent("Free", isDirectory: true)
         return url
     }
+
+    public class var localRealmExists: Bool {
+        let fm = FileManager.default
+        let exists = fm.fileExists(atPath: self.localRealmFile.path)
+        return exists
+    }
+
+    private class var legacyCoreDataStoreExists: Bool {
+        let fm = FileManager.default
+        let appSupport = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+        let storeDirectory = appSupport.appendingPathComponent("WaterMe", isDirectory: true)
+        let storeURL = storeDirectory.appendingPathComponent("WaterMeData.sqlite")
+        return fm.fileExists(atPath: storeURL.path)
+    }
     
     private class var localRealmFile: URL {
         return self.localRealmDirectory.appendingPathComponent("Realm.realm", isDirectory: false)
@@ -120,14 +128,6 @@ public class BasicController {
             let bundleURL = Bundle.main.url(forResource: "StarterRealm", withExtension: "realm")
         else { return }
         try FileManager.default.copyItem(at: bundleURL, to: self.localRealmFile)
-    }
-
-    private class var legacyCoreDataStoreExists: Bool {
-        let fm = FileManager.default
-        let appSupport = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let storeDirectory = appSupport.appendingPathComponent("WaterMe", isDirectory: true)
-        let storeURL = storeDirectory.appendingPathComponent("WaterMeData.sqlite")
-        return fm.fileExists(atPath: storeURL.path)
     }
     
     // MARK: WaterMeClient API

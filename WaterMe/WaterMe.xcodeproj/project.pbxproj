@@ -44,7 +44,6 @@
 		5075B4901FF178EA007B42D8 /* ReminderDragPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5075B48F1FF178EA007B42D8 /* ReminderDragPreviewView.swift */; };
 		507777AA1FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */; };
 		507A64581F049CCA004E18C5 /* ReminderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */; };
-		507E91F22008047E001A1BBE /* StarterRealm.realm in Resources */ = {isa = PBXBuildFile; fileRef = 507E91F120080419001A1BBE /* StarterRealm.realm */; };
 		5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */; };
 		5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */; };
 		5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */; };
@@ -97,6 +96,7 @@
 		50F388E01FF6D9C10031ED45 /* CoreDataMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */; };
 		50F388E41FF6DA490031ED45 /* WaterMeData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50F388E11FF6DA490031ED45 /* WaterMeData.xcdatamodeld */; };
 		50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */; };
+		50F7A360200844390063A1FC /* StarterRealm.realm in Resources */ = {isa = PBXBuildFile; fileRef = 50F7A362200844390063A1FC /* StarterRealm.realm */; };
 		9D4B103D2737652DACA70CD7 /* Pods_AdminConsole.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60B42EA777AEA20F10FDAC7E /* Pods_AdminConsole.framework */; };
 /* End PBXBuildFile section */
 
@@ -116,6 +116,7 @@
 		4B125E6363F6731C5C3C2000 /* Pods_WaterMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaterMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderMainViewController.swift; sourceTree = "<group>"; };
 		5015EEF51FF56FF200CAC7D7 /* DragTargetInstructionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragTargetInstructionalView.swift; sourceTree = "<group>"; };
+		5017BECE200850A6004105EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/StarterRealm.realm; sourceTree = "<group>"; };
 		501A9AE41FE9682C0016160D /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WateringAnimationPlayerView.swift; sourceTree = "<group>"; };
 		501C0E881ECE5EFF00D4EE7C /* AdminConsole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdminConsole.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -151,7 +152,6 @@
 		5075B48F1FF178EA007B42D8 /* ReminderDragPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDragPreviewView.swift; sourceTree = "<group>"; };
 		507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderNotificationUIDelegate.swift; sourceTree = "<group>"; };
 		507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderTableViewCell.xib; sourceTree = "<group>"; };
-		507E91F120080419001A1BBE /* StarterRealm.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = StarterRealm.realm; sourceTree = "<group>"; };
 		5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPickerCollectionViewCell.swift; sourceTree = "<group>"; };
 		5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmojiPickerCollectionViewCell.xib; sourceTree = "<group>"; };
 		5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCropperViewController.swift; sourceTree = "<group>"; };
@@ -405,7 +405,7 @@
 				5049D1A11FACF9F30076565E /* ReminderNotifications */,
 				50F388DE1FF6D9870031ED45 /* CoreDataMigration */,
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
-				507E91F120080419001A1BBE /* StarterRealm.realm */,
+				50F7A362200844390063A1FC /* StarterRealm.realm */,
 				50BB0F6B1EC001C200850FF4 /* Videos */,
 				50BB0F651EBFF9A700850FF4 /* Settings.bundle */,
 				50BB0F671EC0011800850FF4 /* LaunchScreen.storyboard */,
@@ -624,7 +624,7 @@
 				50B511A51EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib in Resources */,
 				50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */,
 				5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */,
-				507E91F22008047E001A1BBE /* StarterRealm.realm in Resources */,
+				50F7A360200844390063A1FC /* StarterRealm.realm in Resources */,
 				508E61551F8ACC5E00B28DD8 /* ReminderMain.storyboard in Resources */,
 				50E8B1D51EDF79E700ACCDAF /* ReminderVesselMain.storyboard in Resources */,
 				50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */,
@@ -966,6 +966,14 @@
 				501C0E941ECE5EFF00D4EE7C /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		50F7A362200844390063A1FC /* StarterRealm.realm */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5017BECE200850A6004105EE /* Base */,
+			);
+			name = StarterRealm.realm;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
