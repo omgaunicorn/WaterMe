@@ -165,7 +165,7 @@ class ReminderUserNotificationController {
             let reminders = matches.map() { reminderTime, matches -> UNNotificationRequest in
                 let interval = reminderTime.timeIntervalSince(now)
                 let _content = UNMutableNotificationContent()
-                _content.badge = NSNumber(value: matches.count - 1)
+                _content.badge = NSNumber(value: matches.count)
                 let trigger: UNTimeIntervalNotificationTrigger?
                 if interval <= 0 {
                     // if trigger is less than or equal to 0 we need to tell the system there is no trigger
