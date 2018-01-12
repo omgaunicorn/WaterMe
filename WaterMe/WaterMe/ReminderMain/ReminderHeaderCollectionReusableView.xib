@@ -19,6 +19,20 @@
                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="pcN-MV-h1T">
                         <rect key="frame" x="0.0" y="0.0" width="304" height="42"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0nE-hO-pjZ">
+                                <rect key="frame" x="0.0" y="39" width="304" height="3"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="3" id="GYK-i9-ddt"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="0nE-hO-pjZ" firstAttribute="leading" secondItem="pcN-MV-h1T" secondAttribute="leading" id="QmI-id-6dV"/>
+                            <constraint firstAttribute="bottom" secondItem="0nE-hO-pjZ" secondAttribute="bottom" id="dvO-RV-9Lc"/>
+                            <constraint firstAttribute="trailing" secondItem="0nE-hO-pjZ" secondAttribute="trailing" id="ei7-nf-gif"/>
+                        </constraints>
                     </view>
                     <blurEffect style="extraLight"/>
                 </visualEffectView>
@@ -41,6 +55,7 @@
             </constraints>
             <connections>
                 <outlet property="backgroundView" destination="V3U-pY-mzG" id="FvW-Wm-ZP1"/>
+                <outlet property="colorView" destination="0nE-hO-pjZ" id="HyY-wZ-CPj"/>
                 <outlet property="label" destination="Y7Q-aj-glf" id="D0m-Ha-ZnT"/>
             </connections>
         </collectionReusableView>

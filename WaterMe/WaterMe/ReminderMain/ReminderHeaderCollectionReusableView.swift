@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import WaterMeData
 import UIKit
 
 class ReminderHeaderCollectionReusableView: UICollectionReusableView {
@@ -31,14 +32,16 @@ class ReminderHeaderCollectionReusableView: UICollectionReusableView {
 
     @IBOutlet private weak var label: UILabel?
     @IBOutlet private weak var backgroundView: UIView?
+    @IBOutlet private weak var colorView: UIView?
 
     override func awakeFromNib() {
         super.awakeFromNib()
         self.backgroundView?.layer.cornerRadius = type(of: self).style_backgroundViewCornerRadius
     }
 
-    func setText(_ text: String) {
-        self.label?.attributedText = NSAttributedString(string: text, style: .sectionHeader)
+    func setSection(_ section: Reminder.Section) {
+        self.label?.attributedText = NSAttributedString(string: section.localizedTitleString, style: .sectionHeader(section))
+        self.colorView?.backgroundColor = Style.Color.color(for: section)
     }
 
     override func layoutSubviews() {

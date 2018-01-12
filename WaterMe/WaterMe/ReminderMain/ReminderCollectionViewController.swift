@@ -83,7 +83,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
                                                                      withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID,
                                                                      for: indexPath)
         if let header = header as? ReminderHeaderCollectionReusableView, let section = Reminder.Section(rawValue: indexPath.section) {
-            header.setText(section.localizedTitleString)
+            header.setSection(section)
         }
         return header
     }

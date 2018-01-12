@@ -107,7 +107,7 @@ enum Style {
         return p.copy() as! NSParagraphStyle
     }()
 
-    case sectionHeader
+    case sectionHeader(Reminder.Section)
     case selectableTableViewCell
     case selectableTableViewCellDisabled
     case selectableTableViewCellHelper
@@ -235,8 +235,11 @@ enum Style {
                 .font : Font.bodyMinusIgnoringDynamicType,
                 .foregroundColor : Color.textPrimary
             ]
-        case .sectionHeader:
-            return type(of: self).selectableTableViewCell.attributes
+        case .sectionHeader(let section):
+            return [
+                .font : Font.bodyPlusBold,
+                .foregroundColor : Color.color(for: section)
+            ]
         }
     }
     
@@ -285,6 +288,31 @@ enum Style {
         }
         static var visuelEffectViewBackground: UIColor {
             return tint.withAlphaComponent(0.25)
+        }
+        static func color(for section: Reminder.Section) -> UIColor {
+            let r: CGFloat
+            let g: CGFloat
+            let b: CGFloat
+            let a: CGFloat
+            switch section {
+            case .late:
+                r = 221
+                g = 158
+                b = 95
+                a = 1.0
+            case .today, .tomorrow:
+                r = 26
+                g = 188
+                b = 156
+                a = 1.0
+            case .thisWeek, .later:
+                r = 200
+                g = 129
+                b = 242
+                a = 1.0
+            }
+            let d: CGFloat = 255
+            return UIColor(red: r / d, green: g / d, blue: b / d, alpha: a)
         }
     }
 }
