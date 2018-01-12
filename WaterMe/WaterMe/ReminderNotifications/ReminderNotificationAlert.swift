@@ -67,8 +67,11 @@ extension UIAlertController {
             UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
             UNUserNotificationCenter.current().requestAuthorizationIfNeeded() { permitted in
                 switch permitted {
-                case true: selection?(.allowed)
-                case false: selection?(.denied)
+                case true:
+                    AppDelegate.shared.notifictionController?.notificationPermissionsMayHaveChanged()
+                    selection?(.allowed)
+                case false:
+                    selection?(.denied)
                 }
             }
         }

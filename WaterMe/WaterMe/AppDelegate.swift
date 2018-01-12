@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // swiftlint:disable:next weak_delegate
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
-    private var notifictionController: ReminderUserNotificationController?
+    private(set) var notifictionController: ReminderUserNotificationController?
 
     var coreDataMigrator = CoreDataMigrator()
 
@@ -80,7 +80,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if self.window == nil {
             self.window = UIWindow(frame: UIScreen.main.bounds)
         }
-//        self.window!.tintColor = UIApplication.style_tintColor
         self.window!.backgroundColor = .white
         self.window!.rootViewController = vc
         self.window!.makeKeyAndVisible()

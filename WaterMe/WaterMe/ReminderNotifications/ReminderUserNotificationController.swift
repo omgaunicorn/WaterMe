@@ -37,10 +37,19 @@ class ReminderUserNotificationController {
         guard
             let basicController = basicController,
             let collection = basicController.allReminders().value
-        else { return nil }
+        else {
+            let message = "Error Initializing: Error loading data from Realm."
+            log.error(message)
+            assertionFailure(message)
+            return nil
+        }
         
         self.token = collection.observe({ [weak self] in self?.dataChanged($0) })
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground(with:)), name: .UIApplicationDidEnterBackground, object: nil)
+    }
+
+    func notificationPermissionsMayHaveChanged() {
+        self.resetTimer()
     }
 
     private func resetTimer() {
