@@ -53,9 +53,8 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillEnterForeground(_:)), name: .UIApplicationWillEnterForeground, object: nil)
         self.dropTargetView?.addInteraction(UIDropInteraction(delegate: self))
-        self.animationView?.finishedPlayingDropVideo = { [unowned self] in
+        self.animationView?.finishedPlayingVideo = { [unowned self] in
             self.updateDropTargetHeightForNotDragging(animated: true)
-            self.isDragInProgress = false
         }
     }
 
@@ -199,7 +198,6 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
         self.isDragInProgress = false
         guard self.animationView?.hoverState != .drop else { return }
-        self.updateDropTargetHeightForNotDragging(animated: true)
         self.animationView?.hoverState = .noHover
     }
 

@@ -33,7 +33,7 @@ class WateringAnimationPlayerView: UIView {
         get { return self.videoManager.hoverState }
     }
 
-    var finishedPlayingDropVideo: (() -> Void)?
+    var finishedPlayingVideo: (() -> Void)?
 
     private let videoManager: DragAndDropPlayerManager = {
         let t1 = DragAndDropPlayerManager.Timings(start: CMTime(value: 3, timescale: 100),
@@ -64,8 +64,11 @@ class WateringAnimationPlayerView: UIView {
             UIView.style_animateNormal() {
                 self.alpha = hidden ? 0 : 1
             }
-            if case .drop = self.hoverState {
-                self.finishedPlayingDropVideo?()
+            switch self.hoverState {
+            case .drop, .noHover:
+                self.finishedPlayingVideo?()
+            case .hover:
+                break
             }
         }
 
