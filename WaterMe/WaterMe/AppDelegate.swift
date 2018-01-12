@@ -61,15 +61,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // as early as possible, configure standard defaults
         UserDefaults.standard.configure()
-    }
-    
-    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
-        UNUserNotificationCenter.current().delegate = self.notificationUIDelegate
-        UIApplication.style_configure()
-        return true
+
+        // register for notifications about the increase contrast setting
+        _ = NotificationCenter.default.addObserver(forName: .UIAccessibilityDarkerSystemColorsStatusDidChange, object: nil, queue: nil) { _ in
+            // need to rip the view hierarchy out of the window and put it back in
+            // in order for the new UIAppearance to take effect
+            UIApplication.style_configure()
+            let prevVC = self.window?.rootViewController
+            self.window?.rootViewController = nil
+            self.window?.rootViewController = prevVC
+        }
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // configure my notification delegate
+        UNUserNotificationCenter.current().delegate = self.notificationUIDelegate
+
+        // style the app with UIAppearance methods
+        UIApplication.style_configure()
+
         // Configure audio so the water video does not pause the users music
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
 

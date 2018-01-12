@@ -112,6 +112,16 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
+			<string>Increase Contrast</string>
+			<key>Key</key>
+			<string>INCREASE_CONTRAST</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
 			<string>Ask for Notifications</string>
 			<key>Key</key>
 			<string>FIRST_RUN</string>

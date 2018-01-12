@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import UIKit
 import Foundation
 
 extension UserDefaults {
@@ -29,6 +30,23 @@ extension UserDefaults {
         static let kFirstRun = "FIRST_RUN"
         static let kReminderHour = "REMINDER_HOUR"
         static let kNumberOfReminderDays = "NUMBER_OF_REMINDER_DAYS"
+        static let kIncreaseContrast = "INCREASE_CONTRAST"
+    }
+
+    var increaseContrast: Bool {
+        get {
+            guard let number = self.object(forKey: Constants.kIncreaseContrast) as? NSNumber
+                else { fatalError("Must call configure() before accessing user defaults") }
+            let systemSetting = UIAccessibilityDarkerSystemColorsEnabled()
+            if systemSetting == true {
+                return systemSetting
+            } else {
+                return number.boolValue
+            }
+        }
+        set {
+            self.set(NSNumber(value: newValue), forKey: Constants.kIncreaseContrast)
+        }
     }
     
     var userHasRequestedToBeAskedAboutNotificationPermissions: Bool {
@@ -68,7 +86,8 @@ extension UserDefaults {
         self.register(defaults: [
             Constants.kFirstRun : true,
             Constants.kReminderHour : 8,
-            Constants.kNumberOfReminderDays : 14
+            Constants.kNumberOfReminderDays : 14,
+            Constants.kIncreaseContrast : false
         ])
     }
 }
