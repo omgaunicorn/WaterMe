@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import WaterMeStore
 import WaterMeData
 import XCGLogger
 import UserNotifications
@@ -34,6 +35,9 @@ extension UIApplication {
     func openSettings(completion: ((Bool) -> Void)?) {
         let url = URL(string: UIApplicationOpenSettingsURLString)!
         self.open(url, options: [:], completionHandler: completion)
+    }
+    func openWriteReviewPage(completion: ((Bool) -> Void)?) {
+        self.open(PrivateKeys.kReviewAppURL, options: [:], completionHandler: completion)
     }
 }
 

@@ -59,12 +59,17 @@ class SettingsMainViewController: UIViewController {
         }
 
         self.tableViewController?.tipJarRowChosen = { [unowned self] chosen, deselectRowAnimated in
-            let alert = UIAlertController(title: "@NSNotImplemented", message: "Sorry, you can't pay me yet. Feature coming soon!", preferredStyle: .alert)
-            let cancel = UIAlertAction(title: "Dismiss", style: .cancel) { _ in
-                deselectRowAnimated?(true)
+            switch chosen {
+            case .free:
+                UIApplication.shared.openWriteReviewPage(completion: { _ in deselectRowAnimated?(true) })
+            default:
+                let alert = UIAlertController(title: "@NSNotImplemented", message: "Sorry, you can't pay me yet. Feature coming soon!", preferredStyle: .alert)
+                let cancel = UIAlertAction(title: "Dismiss", style: .cancel) { _ in
+                    deselectRowAnimated?(true)
+                }
+                alert.addAction(cancel)
+                self.present(alert, animated: true, completion: nil)
             }
-            alert.addAction(cancel)
-            self.present(alert, animated: true, completion: nil)
         }
     }
 
