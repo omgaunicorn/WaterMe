@@ -70,8 +70,8 @@ class SettingsMainViewController: UIViewController {
             }
         }
 
-        pc?.fetchTipJarProducts() { [weak self] result in
-            self?.tableViewController?.products = result.value
+        pc?.fetchTipJarProducts() { [weak self] products in
+            self?.tableViewController?.products = products
         }
     }
 

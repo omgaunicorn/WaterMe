@@ -42,9 +42,9 @@ public struct TipJarProducts {
 
 internal class TipJarProductRequester: NSObject, SKProductsRequestDelegate {
 
-    private var completion: PurchaseController.TipJarProductRequestCompletion?
+    private var completion: ((TipJarProducts?) -> Void)?
 
-    internal func fetchTipJarProducts(completion: @escaping PurchaseController.TipJarProductRequestCompletion) {
+    internal func fetchTipJarProducts(completion: @escaping (TipJarProducts?) -> Void) {
         self.completion = completion
         let request = SKProductsRequest(productIdentifiers: [
             PrivateKeys.kConsumableTipJarSmall,
@@ -58,9 +58,9 @@ internal class TipJarProductRequester: NSObject, SKProductsRequestDelegate {
     internal func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         let products = TipJarProducts(products: response.products)
         if let products = products {
-            self.completion?(.success(products))
+            self.completion?(products)
         } else {
-            self.completion?(.failure(.errorRetrievingTipJarProducts))
+            self.completion?(nil)
         }
         self.completion = nil // nil the completion handler since it captures self. It creates a retain cycle.
     }

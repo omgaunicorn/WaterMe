@@ -26,11 +26,6 @@ import StoreKit
 
 public class PurchaseController {
 
-    public typealias TipJarProductRequestCompletion = (Result<TipJarProducts, PurchaseController.Error>) -> Void
-    public enum Error: Swift.Error {
-        case errorRetrievingTipJarProducts
-    }
-
     private let purchaser = Purchaser()
 
     public var transactionsInFlightUpdated: (() -> Void)?
@@ -56,7 +51,7 @@ public class PurchaseController {
         self.purchaser.finish(transaction: transaction)
     }
 
-    public func fetchTipJarProducts(completion: @escaping TipJarProductRequestCompletion) {
+    public func fetchTipJarProducts(completion: @escaping (TipJarProducts?) -> Void) {
         let requester = TipJarProductRequester()
         requester.fetchTipJarProducts() { result in
             _ = requester // capture the requester here so its not released and deallocated mid-flight
