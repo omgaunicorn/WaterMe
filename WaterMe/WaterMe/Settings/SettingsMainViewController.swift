@@ -62,7 +62,7 @@ class SettingsMainViewController: UIViewController {
             switch chosen {
             case .free:
                 UIApplication.shared.openWriteReviewPage(completion: { _ in deselectRowAnimated?(true) })
-            default:
+            case .small(let product), .medium(let product), .large(let product):
                 let alert = UIAlertController(title: "@NSNotImplemented", message: "Sorry, you can't pay me yet. Feature coming soon!", preferredStyle: .alert)
                 let cancel = UIAlertAction(title: "Dismiss", style: .cancel) { _ in
                     deselectRowAnimated?(true)
@@ -70,6 +70,10 @@ class SettingsMainViewController: UIViewController {
                 alert.addAction(cancel)
                 self.present(alert, animated: true, completion: nil)
             }
+        }
+
+        AppDelegate.shared.purchaseController?.fetchTipJarProducts() { [weak self] result in
+            self?.tableViewController?.products = result.value
         }
     }
 

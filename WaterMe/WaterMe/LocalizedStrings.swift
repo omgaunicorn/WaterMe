@@ -210,15 +210,9 @@ extension SettingsMainViewController {
         static let cellTitleTipJarFree =
             NSLocalizedString("Leave Review on App Store",
                               comment: "Settings: Cell Title: Tip Jar Free: When tapped, this opens an screen to review the app.")
-        static let cellTitleTipJarSmall =
-            NSLocalizedString("Generous Tip",
-                              comment: "Settings: Cell Title: Tip Jar Free: When tapped, this asks the user to pay a small amount via in-app-purchase")
-        static let cellTitleTipJarMedium =
-            NSLocalizedString("Massive Tip",
-                              comment: "Settings: Cell Title: Tip Jar Free: When tapped, this asks the user to pay a small amount via in-app-purchase")
-        static let cellTitleTipJarLarge =
-            NSLocalizedString("Amazing Tip",
-                              comment: "Settings: Cell Title: Tip Jar Free: When tapped, this asks the user to pay a small amount via in-app-purchase")
+        static let cellPriceTipJarFree =
+            NSLocalizedString("Free",
+                              comment: "Settings: Cell Price: Price of leaving a review on the app store... Free")
     }
 }
 

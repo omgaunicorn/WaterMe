@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import StoreKit
 import UIKit
 
 class SettingsTipJarTableViewCell: UITableViewCell {
@@ -29,6 +30,12 @@ class SettingsTipJarTableViewCell: UITableViewCell {
 
     let leadingLabel = UILabel()
     let trailingLabel = UILabel()
+
+    private let priceFormatter: NumberFormatter = {
+        let f = NumberFormatter()
+        f.numberStyle = .currency
+        return f
+    }()
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -58,9 +65,23 @@ class SettingsTipJarTableViewCell: UITableViewCell {
             self.trailingLabel.leadingAnchor.constraintGreaterThanOrEqualToSystemSpacingAfter(self.leadingLabel.trailingAnchor, multiplier: 1)
             ])
     }
-    func configure(with row: SettingsTableViewController.TipJarRows, price: String?) {
-        let title = row.localizedTitle
-        let price = price ?? "–"
+
+    func configure(with row: SettingsTableViewController.TipJarRows, product: SKProduct?) {
+        let title: String
+        let price: String
+        if let product = product {
+            self.priceFormatter.locale = product.priceLocale
+            title = product.localizedTitle
+            price = self.priceFormatter.string(from: product.price)!
+        } else {
+            if case .free = row {
+                title = SettingsMainViewController.LocalizedString.cellTitleTipJarFree
+                price = SettingsMainViewController.LocalizedString.cellPriceTipJarFree
+            } else {
+                title = "–"
+                price = "–"
+            }
+        }
         let leadingString = NSAttributedString(string: title, style: .selectableTableViewCell)
         let trailingString = NSAttributedString(string: price, style: .selectableTableViewCellDisabled)
         self.leadingLabel.attributedText = leadingString

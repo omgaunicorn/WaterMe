@@ -51,6 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
     private(set) var notifictionController: ReminderUserNotificationController?
 
+    let purchaseController = PurchaseController()
     var coreDataMigrator = CoreDataMigrator()
     var window: UIWindow?
     var userDefaultObserverTokens: [NSKeyValueObservation] = []

@@ -21,13 +21,15 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import StoreKit
+import WaterMeStore
 import UIKit
 
 class SettingsTableViewController: UITableViewController {
 
     var settingsRowChosen: ((SettingsRows, ((Bool) -> Void)?) -> Void)?
-    var tipJarRowChosen: ((TipJarRows, ((Bool) -> Void)?) -> Void)?
-    var prices = TipJarPrices() {
+    var tipJarRowChosen: ((TipJarRowSelection, ((Bool) -> Void)?) -> Void)?
+    var products: TipJarProducts? {
         didSet {
             self.tableView.reloadSections(IndexSet([Sections.tipJar.rawValue]), with: .automatic)
         }
@@ -67,7 +69,7 @@ class SettingsTableViewController: UITableViewController {
         case .right(let row):
             let _cell = tableView.dequeueReusableCell(withIdentifier: SettingsTipJarTableViewCell.reuseID, for: indexPath)
             guard let cell = _cell as? SettingsTipJarTableViewCell else { return _cell }
-            cell.configure(with: row, price: self.prices.price(for: row))
+            cell.configure(with: row, product: row.product(from: self.products))
             return cell
         }
     }
@@ -77,14 +79,30 @@ class SettingsTableViewController: UITableViewController {
         return section.localizedTitle
     }
 
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        guard let (_, row) = Sections.sectionsAndRows(from: indexPath) else { assertionFailure("Wrong Section/Row"); return nil; }
+        switch row {
+        case .left:
+            return indexPath
+        case .right(let row):
+            switch row {
+            case .free:
+                return indexPath
+            case .large, .medium, .small:
+                return self.products != nil ? indexPath : nil
+            }
+        }
+    }
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let (_, row) = Sections.sectionsAndRows(from: indexPath) else { fatalError("Wrong Section/Row") }
+        guard let (_, row) = Sections.sectionsAndRows(from: indexPath) else { assertionFailure("Wrong Section/Row"); return; }
         let completion: ((Bool) -> Void)? = { tableView.deselectRow(at: indexPath, animated: $0) }
         switch row {
         case .left(let row):
             self.settingsRowChosen?(row, completion)
         case .right(let row):
-            self.tipJarRowChosen?(row, completion)
+            guard let selection = TipJarRowSelection(row: row, products: self.products) else { return }
+            self.tipJarRowChosen?(selection, completion)
         }
     }
 }
@@ -130,39 +148,36 @@ extension SettingsTableViewController {
     enum TipJarRows: Int {
         static let count = 4
         case free, small, medium, large
-        var localizedTitle: String {
+        func product(from products: TipJarProducts?) -> SKProduct? {
             switch self {
             case .free:
-                return SettingsMainViewController.LocalizedString.cellTitleTipJarFree
+                return nil
             case .small:
-                return SettingsMainViewController.LocalizedString.cellTitleTipJarSmall
+                return products?.small
             case .medium:
-                return SettingsMainViewController.LocalizedString.cellTitleTipJarMedium
+                return products?.medium
             case .large:
-                return SettingsMainViewController.LocalizedString.cellTitleTipJarLarge
+                return products?.large
             }
         }
     }
 
-    struct TipJarPrices {
-        var small: String?
-        var medium: String?
-        var large: String?
-        init() {
-            self.small = nil
-            self.medium = nil
-            self.large = nil
-        }
-        func price(for row: TipJarRows) -> String? {
+    enum TipJarRowSelection {
+        case free, small(SKProduct), medium(SKProduct), large(SKProduct)
+        init?(row: TipJarRows, products: TipJarProducts?) {
+            if case .free = row {
+                self = .free
+            }
+            guard let products = products else { return nil }
             switch row {
             case .free:
-                return "Free"
+                fatalError()
             case .small:
-                return self.small
+                self = .small(products.small)
             case .medium:
-                return self.medium
+                self = .medium(products.medium)
             case .large:
-                return self.large
+                self = .large(products.large)
             }
         }
     }
