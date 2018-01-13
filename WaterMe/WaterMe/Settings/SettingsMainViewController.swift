@@ -66,6 +66,7 @@ class SettingsMainViewController: UIViewController {
                 UIApplication.shared.openWriteReviewPage(completion: { _ in deselectRowAnimated?(true) })
             case .small(let product), .medium(let product), .large(let product):
                 pc?.buy(product: product)
+                deselectRowAnimated?(true)
             }
         }
 
@@ -86,9 +87,12 @@ class SettingsMainViewController: UIViewController {
     private func checkForPurchasesInFlight() {
         guard self.presentedViewController == nil else { return }
         let pc = AppDelegate.shared.purchaseController
-        let transaction = pc?.nextTransactionForPresentingToUser()
-        dump(transaction?.transactionState)
-        print(transaction)
+        guard let transaction = pc?.nextTransactionForPresentingToUser() else { return }
+        let vc = PurchaseConfirmationViewController.newVC(for: transaction) { vc in
+            guard let vc = vc else { self.checkForPurchasesInFlight(); return; }
+            vc.dismiss(animated: true) { self.checkForPurchasesInFlight() }
+        }
+        self.present(vc, animated: true, completion: nil)
     }
 
     @IBAction private func doneButtonTapped(_ sender: Any) {

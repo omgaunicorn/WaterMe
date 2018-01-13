@@ -101,9 +101,12 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     private func checkForPurchasesInFlight() {
         guard self.presentedViewController == nil else { return }
         let pc = AppDelegate.shared.purchaseController
-        let transaction = pc?.nextTransactionForPresentingToUser()
-        print(transaction!.transactionState)
-        print(transaction)
+        guard let transaction = pc?.nextTransactionForPresentingToUser() else { return }
+        let vc = PurchaseConfirmationViewController.newVC(for: transaction) { vc in
+            guard let vc = vc else { self.checkForPurchasesInFlight(); return; }
+            vc.dismiss(animated: true) { self.checkForPurchasesInFlight() }
+        }
+        self.present(vc, animated: true, completion: nil)
     }
 
     @IBAction private func plantsButtonTapped(_ sender: Any) {
