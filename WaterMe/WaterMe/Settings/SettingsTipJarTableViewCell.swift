@@ -23,13 +23,48 @@
 
 import UIKit
 
-class SettingsTipJarTableViewCell: SimpleLabelTableViewCell {
+class SettingsTipJarTableViewCell: UITableViewCell {
 
-    override class var reuseID: String { return "SettingsTipJarTableViewCell" }
+    class var reuseID: String { return "SettingsTipJarTableViewCell" }
 
-    func configure(with row: SettingsTableViewController.TipJarRows) {
+    let leadingLabel = UILabel()
+    let trailingLabel = UILabel()
+
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.setup()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.setup()
+    }
+
+    func setup() {
+        self.leadingLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        self.trailingLabel.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        self.leadingLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.trailingLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.addSubview(self.leadingLabel)
+        self.contentView.addSubview(self.trailingLabel)
+        self.contentView.addConstraints([
+            self.leadingLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UITableViewCell.style_labelCellLeadingPadding),
+            self.leadingLabel.topAnchor.constraint(greaterThanOrEqualTo: self.contentView.topAnchor, constant: UITableViewCell.style_labelCellTopPadding),
+            self.contentView.bottomAnchor.constraint(greaterThanOrEqualTo: self.leadingLabel.bottomAnchor, constant: UITableViewCell.style_labelCellBottomPadding),
+            self.trailingLabel.topAnchor.constraint(greaterThanOrEqualTo: self.contentView.topAnchor, constant: UITableViewCell.style_labelCellTopPadding),
+            self.contentView.bottomAnchor.constraint(greaterThanOrEqualTo: self.trailingLabel.bottomAnchor, constant: UITableViewCell.style_labelCellBottomPadding),
+            self.contentView.trailingAnchor.constraint(equalTo: self.trailingLabel.trailingAnchor, constant: UITableViewCell.style_labelCellTrailingPadding),
+            self.leadingLabel.firstBaselineAnchor.constraint(equalTo: self.trailingLabel.firstBaselineAnchor, constant: 0),
+            self.trailingLabel.leadingAnchor.constraintGreaterThanOrEqualToSystemSpacingAfter(self.leadingLabel.trailingAnchor, multiplier: 1)
+            ])
+    }
+    func configure(with row: SettingsTableViewController.TipJarRows, price: String?) {
         let title = row.localizedTitle
-        self.label.attributedText = NSAttributedString(string: title, style: .selectableTableViewCell)
+        let price = price ?? "–"
+        let leadingString = NSAttributedString(string: title, style: .selectableTableViewCell)
+        let trailingString = NSAttributedString(string: price, style: .selectableTableViewCellDisabled)
+        self.leadingLabel.attributedText = leadingString
+        self.trailingLabel.attributedText = trailingString
     }
     
 }

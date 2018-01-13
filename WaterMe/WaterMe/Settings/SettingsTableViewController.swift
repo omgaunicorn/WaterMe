@@ -27,6 +27,11 @@ class SettingsTableViewController: UITableViewController {
 
     var settingsRowChosen: ((SettingsRows, ((Bool) -> Void)?) -> Void)?
     var tipJarRowChosen: ((TipJarRows, ((Bool) -> Void)?) -> Void)?
+    var prices = TipJarPrices() {
+        didSet {
+            self.tableView.reloadSections(IndexSet([Sections.tipJar.rawValue]), with: .automatic)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +67,7 @@ class SettingsTableViewController: UITableViewController {
         case .right(let row):
             let _cell = tableView.dequeueReusableCell(withIdentifier: SettingsTipJarTableViewCell.reuseID, for: indexPath)
             guard let cell = _cell as? SettingsTipJarTableViewCell else { return _cell }
-            cell.configure(with: row)
+            cell.configure(with: row, price: self.prices.price(for: row))
             return cell
         }
     }
@@ -135,6 +140,29 @@ extension SettingsTableViewController {
                 return SettingsMainViewController.LocalizedString.cellTitleTipJarMedium
             case .large:
                 return SettingsMainViewController.LocalizedString.cellTitleTipJarLarge
+            }
+        }
+    }
+
+    struct TipJarPrices {
+        var small: String?
+        var medium: String?
+        var large: String?
+        init() {
+            self.small = nil
+            self.medium = nil
+            self.large = nil
+        }
+        func price(for row: TipJarRows) -> String? {
+            switch row {
+            case .free:
+                return "Free"
+            case .small:
+                return self.small
+            case .medium:
+                return self.medium
+            case .large:
+                return self.large
             }
         }
     }
