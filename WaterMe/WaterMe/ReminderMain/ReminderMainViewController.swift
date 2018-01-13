@@ -69,6 +69,11 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         // custom behavior needed here, otherwise it only automatically adjusts along the scrolling direction
         // we need it to automatically adjust in both axes
         self.collectionVC?.collectionView?.contentInsetAdjustmentBehavior = .always
+
+        // register to find out about purchases that come in at any time
+        AppDelegate.shared.purchaseController?.transactionsInFlightUpdated = { [weak self] in
+            self?.checkForPurchasesInFlight()
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -88,7 +93,17 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
                 vc.dismiss(animated: true, completion: nil)
             }
             self.present(vc, animated: true, completion: nil)
+        } else {
+            self.checkForPurchasesInFlight()
         }
+    }
+
+    private func checkForPurchasesInFlight() {
+        guard self.presentedViewController == nil else { return }
+        let pc = AppDelegate.shared.purchaseController
+        let transaction = pc?.nextTransactionForPresentingToUser()
+        print(transaction!.transactionState)
+        print(transaction)
     }
 
     @IBAction private func plantsButtonTapped(_ sender: Any) {
@@ -100,7 +115,13 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
     @IBAction private func settingsButtonTapped(_ sender: Any) {
         let vc = SettingsMainViewController.newVC() { vc in
-            vc.dismiss(animated: true, completion: nil)
+            vc.dismiss(animated: true) {
+                // re-register to receive purchase updates
+                AppDelegate.shared.purchaseController?.transactionsInFlightUpdated = {
+                    self.checkForPurchasesInFlight()
+                }
+                self.checkForPurchasesInFlight()
+            }
         }
         self.present(vc, animated: true, completion: nil)
     }

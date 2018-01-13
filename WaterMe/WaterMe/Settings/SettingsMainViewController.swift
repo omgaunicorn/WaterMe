@@ -58,26 +58,41 @@ class SettingsMainViewController: UIViewController {
             }
         }
 
-        self.tableViewController?.tipJarRowChosen = { [unowned self] chosen, deselectRowAnimated in
+        let pc = AppDelegate.shared.purchaseController
+
+        self.tableViewController?.tipJarRowChosen = { chosen, deselectRowAnimated in
             switch chosen {
             case .free:
                 UIApplication.shared.openWriteReviewPage(completion: { _ in deselectRowAnimated?(true) })
             case .small(let product), .medium(let product), .large(let product):
-                let alert = UIAlertController(title: "@NSNotImplemented", message: "Sorry, you can't pay me yet. Feature coming soon!", preferredStyle: .alert)
-                let cancel = UIAlertAction(title: "Dismiss", style: .cancel) { _ in
-                    deselectRowAnimated?(true)
-                }
-                alert.addAction(cancel)
-                self.present(alert, animated: true, completion: nil)
+                pc?.buy(product: product)
             }
         }
 
-        AppDelegate.shared.purchaseController?.fetchTipJarProducts() { [weak self] result in
+        pc?.fetchTipJarProducts() { [weak self] result in
             self?.tableViewController?.products = result.value
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        AppDelegate.shared.purchaseController?.transactionsInFlightUpdated = { [weak self] in
+            self?.checkForPurchasesInFlight()
+        }
+        self.checkForPurchasesInFlight()
+    }
+
+    private func checkForPurchasesInFlight() {
+        guard self.presentedViewController == nil else { return }
+        let pc = AppDelegate.shared.purchaseController
+        let transaction = pc?.nextTransactionForPresentingToUser()
+        dump(transaction?.transactionState)
+        print(transaction)
+    }
+
     @IBAction private func doneButtonTapped(_ sender: Any) {
+        AppDelegate.shared.purchaseController?.transactionsInFlightUpdated = nil
         self.completionHandler?(self)
     }
 
