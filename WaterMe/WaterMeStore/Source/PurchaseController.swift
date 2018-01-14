@@ -29,17 +29,17 @@ public class PurchaseController {
     private let purchaser = Purchaser()
 
     public var transactionsInFlightUpdated: (() -> Void)?
-    private var transactionsInFlight: [SKPaymentTransaction] = []
+    private var transactionsInFlight: [InFlightTransaction] = []
 
     public init?() {
         guard SKPaymentQueue.canMakePayments() else { return nil }
-        self.purchaser.transactionsUpdated = { [unowned self] transaction in
-            self.transactionsInFlight += [transaction]
+        self.purchaser.transactionsUpdated = { [unowned self] inFlights in
+            self.transactionsInFlight += inFlights
             self.transactionsInFlightUpdated?()
         }
     }
 
-    public func nextTransactionForPresentingToUser() -> SKPaymentTransaction? {
+    public func nextTransactionForPresentingToUser() -> InFlightTransaction? {
         return self.transactionsInFlight.popLast()
     }
 
@@ -47,8 +47,8 @@ public class PurchaseController {
         self.purchaser.buy(product: product)
     }
 
-    public func finish(transaction: SKPaymentTransaction) {
-        self.purchaser.finish(transaction: transaction)
+    public func finish(inFlight: InFlightTransaction) {
+        self.purchaser.finish(inFlight: inFlight)
     }
 
     public func fetchTipJarProducts(completion: @escaping (TipJarProducts?) -> Void) {
@@ -62,7 +62,7 @@ public class PurchaseController {
 
 internal class Purchaser: NSObject, SKPaymentTransactionObserver {
 
-    internal var transactionsUpdated: ((SKPaymentTransaction) -> Void)?
+    internal var transactionsUpdated: (([InFlightTransaction]) -> Void)?
     
     override init() {
         super.init()
@@ -74,41 +74,17 @@ internal class Purchaser: NSObject, SKPaymentTransactionObserver {
         SKPaymentQueue.default().add(payment)
     }
 
-    internal func finish(transaction: SKPaymentTransaction) {
+    internal func finish(inFlight: InFlightTransaction) {
+        SKPaymentQueue.default().finishTransaction(inFlight.transaction)
+    }
+
+    private func finish(transaction: SKPaymentTransaction) {
         SKPaymentQueue.default().finishTransaction(transaction)
     }
 
     internal func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        transactions.filter({ trans -> Bool in
-            switch trans.transactionState {
-            case .deferred, .purchasing:
-                return false
-            case .failed:
-                let error = SKError.Code(rawValue: (trans.error! as NSError).code)
-                switch error {
-                case .paymentCancelled?:
-                    self.finish(transaction: trans)
-                    return false
-                default:
-                    return true
-                }
-            case .purchased, .restored:
-                return true
-            }
-        }).forEach({ self.transactionsUpdated?($0) })
+        let (inFlight, _, readyToBeFinished) = InFlightTransaction.process(transactions: transactions)
+        readyToBeFinished.forEach({ self.finish(transaction: $0) })
+        self.transactionsUpdated?(inFlight)
     }
 }
-
-/*
- typedef NS_ENUM(NSInteger,SKErrorCode) {
- SKErrorUnknown,
- SKErrorClientInvalid,                                                     // client is not allowed to issue the request, etc.
- SKErrorPaymentCancelled,                                                  // user cancelled the request, etc.
- SKErrorPaymentInvalid,                                                    // purchase identifier was invalid, etc.
- SKErrorPaymentNotAllowed,                                                 // this device is not allowed to make the payment
- SKErrorStoreProductNotAvailable,                                          // Product is not available in the current storefront
- SKErrorCloudServicePermissionDenied NS_ENUM_AVAILABLE_IOS(9_3),           // user has not allowed access to cloud service information
- SKErrorCloudServiceNetworkConnectionFailed NS_ENUM_AVAILABLE_IOS(9_3),    // the device could not connect to the nework
- SKErrorCloudServiceRevoked NS_ENUM_AVAILABLE_IOS(10_3),                   // user has revoked permission to use this cloud service
- };
- */
