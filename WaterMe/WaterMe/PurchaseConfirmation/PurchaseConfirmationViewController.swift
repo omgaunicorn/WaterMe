@@ -24,15 +24,20 @@
 import WaterMeStore
 import UIKit
 
+typealias PurchaseConfirmationCompletion = (UIViewController?) -> Void
+
 class PurchaseConfirmationViewController: UIViewController {
 
-    class func newVC(for inFlight: InFlightTransaction, completion: ((UIViewController?) -> Void)?) -> UIViewController? {
+    class func newVC(for inFlight: InFlightTransaction, completion: @escaping PurchaseConfirmationCompletion) -> UIViewController? {
         let alert: UIAlertController
         switch inFlight.state {
         case .cancelled:
             return nil
         case .success:
-            alert = UIAlertController(title: "Thanks!!!", message: nil, preferredStyle: .alert)
+            return PurchaseThanksViewController.newVC() { vc in
+                AppDelegate.shared.purchaseController?.finish(inFlight: inFlight)
+                completion(vc)
+            }
         case .errorNetwork:
             alert = UIAlertController(title: "Purchase Error", message: "A network error ocurred. Check your data connection and try and make the purchase again later.", preferredStyle: .alert)
         case .errorNotAllowed:
@@ -42,7 +47,7 @@ class PurchaseConfirmationViewController: UIViewController {
         }
         let confirm = UIAlertAction(title: "Dismiss", style: .cancel) { _ in
             AppDelegate.shared.purchaseController?.finish(inFlight: inFlight)
-            completion?(nil)
+            completion(nil)
         }
         alert.addAction(confirm)
         return alert

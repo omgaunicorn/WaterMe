@@ -42,7 +42,7 @@ extension PurchaseThanksViewController {
 
 class PurchaseThanksViewController: UIViewController {
 
-    class func newVC(completion: @escaping (UIViewController) -> Void) -> UIViewController {
+    class func newVC(completion: @escaping PurchaseConfirmationCompletion) -> UIViewController {
         let sb = UIStoryboard(name: "PurchaseThanks", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let vc = sb.instantiateInitialViewController() as! ModalParentViewController
@@ -61,7 +61,7 @@ class PurchaseThanksViewController: UIViewController {
     @IBOutlet private weak var reviewButton: UIButton?
     @IBOutlet private weak var cancelButton: UIButton?
 
-    private var completionHandler: ((UIViewController) -> Void)!
+    private var completionHandler: PurchaseConfirmationCompletion!
     private let cheerView: CheerView = {
         let v = CheerView()
         v.config.colors = [Style.Color.tint, Style.Color.tint, Style.Color.darkTintColor, Style.Color.darkTintColor]
