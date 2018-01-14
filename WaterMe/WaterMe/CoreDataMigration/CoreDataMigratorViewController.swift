@@ -33,10 +33,14 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
     class func newVC(migrator: CoreDataMigratable, basicRC: BasicController, completion: @escaping (UIViewController, Bool) -> Void) -> UIViewController {
         let sb = UIStoryboard(name: "CoreDataMigration", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
-        var vc = sb.instantiateInitialViewController() as! CoreDataMigratorViewController
-        vc.completionHandler = completion
-        vc.configure(with: basicRC)
-        vc.migrator = migrator
+        let vc = sb.instantiateInitialViewController() as! ModalParentViewController
+        vc.configureChild = { vc in
+            // swiftlint:disable:next force_cast
+            var vc = vc as! CoreDataMigratorViewController
+            vc.completionHandler = completion
+            vc.configure(with: basicRC)
+            vc.migrator = migrator
+        }
         return vc
     }
 

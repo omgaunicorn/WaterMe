@@ -19,6 +19,7 @@
 		501C0E921ECE5EFF00D4EE7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E911ECE5EFF00D4EE7C /* Assets.xcassets */; };
 		501C0E951ECE5EFF00D4EE7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E931ECE5EFF00D4EE7C /* LaunchScreen.storyboard */; };
 		501C0E9B1ECE602400D4EE7C /* PrivateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */; };
+		50281904200BB57D0044BEC8 /* ModalParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50281903200BB57D0044BEC8 /* ModalParentViewController.swift */; };
 		50299E651FED926400363EF3 /* DragAndDropPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */; };
 		502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */; };
 		502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */; };
@@ -128,6 +129,7 @@
 		501C0E941ECE5EFF00D4EE7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		501C0E961ECE5EFF00D4EE7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKeys.swift; sourceTree = "<group>"; };
+		50281903200BB57D0044BEC8 /* ModalParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalParentViewController.swift; sourceTree = "<group>"; };
 		50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropPlayerManager.swift; sourceTree = "<group>"; };
 		502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderCollectionViewCell.xib; sourceTree = "<group>"; };
 		502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFinishDropTargetViewController.swift; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 			isa = PBXGroup;
 			children = (
 				50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */,
+				50281903200BB57D0044BEC8 /* ModalParentViewController.swift */,
 				50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */,
 				50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */,
 				50E3F2C81FF6EF35003245E3 /* ImageEmojiObject.swift */,
@@ -906,6 +909,7 @@
 				5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */,
 				5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */,
 				50F388E41FF6DA490031ED45 /* WaterMeData.xcdatamodeld in Sources */,
+				50281904200BB57D0044BEC8 /* ModalParentViewController.swift in Sources */,
 				50CB5AFA2001BAA900868F30 /* ReminderNotificationAlert.swift in Sources */,
 				50C30E541EFF490D006003A1 /* ReminderIntervalPickerViewController.swift in Sources */,
 				50BDC03F1F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.swift in Sources */,
