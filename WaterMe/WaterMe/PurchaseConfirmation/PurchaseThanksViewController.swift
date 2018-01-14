@@ -25,21 +25,43 @@ import Cheers
 import WaterMeStore
 import UIKit
 
+extension PurchaseThanksViewController {
+    enum LocalizedString {
+        static let title =
+            NSLocalizedString("Thank You!",
+                              comment: "Purchase Thanks: Title: A thank you to the user for supporting WaterMe via In-App Purchase.")
+        static let subtitle =
+            NSLocalizedString("In-App Purchase",
+                              comment: "Purchase Thanks: Subtitle: Reminding the user what we're thanking them for.")
+        static let body =
+            NSLocalizedString("Thank you for your purchase. Your support is critical to WaterMe and to all of my iOS app projects.",
+                              comment: "Purchase Thanks: Body: Body text thanking the user for their support.")
+        
+    }
+}
+
 class PurchaseThanksViewController: UIViewController {
 
-    class func newVC(inFlight: InFlightTransaction?, completion: @escaping (UIViewController) -> Void) -> UIViewController {
+    class func newVC(completion: @escaping (UIViewController) -> Void) -> UIViewController {
         let sb = UIStoryboard(name: "PurchaseThanks", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let vc = sb.instantiateInitialViewController() as! ModalParentViewController
         vc.configureChild = { vc in
             // swiftlint:disable:next force_cast
-            var vc = vc as! PurchaseThanksViewController
+            let vc = vc as! PurchaseThanksViewController
+            vc.completionHandler = completion
         }
         return vc
     }
 
     @IBOutlet private weak var contentView: UIView!
+    @IBOutlet private weak var titleLabel: UILabel?
+    @IBOutlet private weak var subtitleLabel: UILabel?
+    @IBOutlet private weak var bodyLabel: UILabel?
+    @IBOutlet private weak var reviewButton: UIButton?
+    @IBOutlet private weak var cancelButton: UIButton?
 
+    private var completionHandler: ((UIViewController) -> Void)!
     private let cheerView: CheerView = {
         let v = CheerView()
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -55,11 +77,40 @@ class PurchaseThanksViewController: UIViewController {
             self.contentView.trailingAnchor.constraint(equalTo: self.cheerView.trailingAnchor, constant: 0),
             self.cheerView.heightAnchor.constraint(equalToConstant: 1)
             ])
+        self.contentView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        self.cheerView.start()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.transitionCoordinator!.animate(alongsideTransition: { _ in
+            self.contentView.transform = CGAffineTransform.identity
+        }, completion: { _ in
+            self.cheerView.start()
+            Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+                self.cheerView.stop()
+            }
+        })
+    }
+
+    private func configureAttributedText() {
+        self.titleLabel?.attributedText = NSAttributedString(string: LocalizedString.title, style: .migratorTitle)
+        self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.title, style: .migratorSubtitle)
+        self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.body, style: .migratorBody)
+        self.reviewButton?.setAttributedTitle(NSAttributedString(string: SettingsMainViewController.LocalizedString.cellTitleTipJarFree, style: .migratorPrimaryButton), for: .normal)
+        self.cancelButton?.setAttributedTitle(NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleDismiss, style: .migratorSecondaryButton), for: .normal)
+    }
+
+    @IBAction private func reviewButtonTapped(_ sender: Any) {
+        UIApplication.shared.openWriteReviewPage(completion: { _ in self.completionHandler(self) })
+    }
+
+    @IBAction private func cancelButtonTapped(_ sender: Any) {
+        self.completionHandler(self)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.configureAttributedText()
     }
     
 }
