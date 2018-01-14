@@ -31,8 +31,34 @@ class ModalParentViewController: UIViewController {
     var childViewController: UIViewController?
     var configureChild: ((UIViewController) -> Void)?
 
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        self.initConfigure()
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.initConfigure()
+    }
+
+    private func initConfigure() {
+        self.modalTransitionStyle = .crossDissolve
+        self.modalPresentationStyle = .overCurrentContext
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let grayView = UIView()
+        grayView.backgroundColor = Style.grayViewColor
+        grayView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.insertSubview(grayView, belowSubview: self.childVCContainerView)
+        self.view.addConstraints([
+            grayView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 1),
+            grayView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 1),
+            grayView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0),
+            grayView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 0)
+            ])
         self.updateChildVCContainerViewConstraints()
     }
 

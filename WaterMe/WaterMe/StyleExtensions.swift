@@ -25,6 +25,12 @@ import CropViewController
 import WaterMeData
 import UIKit
 
+extension ModalParentViewController {
+    enum Style {
+        static let grayViewColor = UIColor.black.withAlphaComponent(0.5)
+    }
+}
+
 extension ReminderVessel {
     var shortLabelSafeDisplayName: String? {
         let name = self.displayName ?? ""
