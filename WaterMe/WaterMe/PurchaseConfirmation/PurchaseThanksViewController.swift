@@ -34,7 +34,7 @@ extension PurchaseThanksViewController {
             NSLocalizedString("In-App Purchase",
                               comment: "Purchase Thanks: Subtitle: Reminding the user what we're thanking them for.")
         static let body =
-            NSLocalizedString("Thank you for your purchase. Your support is critical to WaterMe and to all of my iOS app projects.",
+            NSLocalizedString("Thank you for your purchase. Your support is critical to the continued development of WaterMe.",
                               comment: "Purchase Thanks: Body: Body text thanking the user for their support.")
         
     }
@@ -64,6 +64,7 @@ class PurchaseThanksViewController: UIViewController {
     private var completionHandler: ((UIViewController) -> Void)!
     private let cheerView: CheerView = {
         let v = CheerView()
+        v.config.colors = [Style.Color.tint, Style.Color.tint, Style.Color.darkTintColor, Style.Color.darkTintColor]
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
@@ -94,7 +95,7 @@ class PurchaseThanksViewController: UIViewController {
 
     private func configureAttributedText() {
         self.titleLabel?.attributedText = NSAttributedString(string: LocalizedString.title, style: .migratorTitle)
-        self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.title, style: .migratorSubtitle)
+        self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.subtitle, style: .migratorSubtitle)
         self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.body, style: .migratorBody)
         self.reviewButton?.setAttributedTitle(NSAttributedString(string: SettingsMainViewController.LocalizedString.cellTitleTipJarFree, style: .migratorPrimaryButton), for: .normal)
         self.cancelButton?.setAttributedTitle(NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleDismiss, style: .migratorSecondaryButton), for: .normal)

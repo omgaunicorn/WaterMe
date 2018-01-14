@@ -291,10 +291,13 @@ enum Style {
         }
         static var tint: UIColor {
             if UserDefaults.standard.increaseContrast == true {
-                return UIColor(red: 97 / 255.0, green: 46 / 255.0, blue: 128 / 255.0, alpha: 1.0)
+                return darkTintColor
             } else {
                 return UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)
             }
+        }
+        static var darkTintColor: UIColor {
+            return UIColor(red: 97 / 255.0, green: 46 / 255.0, blue: 128 / 255.0, alpha: 1.0)
         }
         static var visuelEffectViewBackground: UIColor? {
             if UserDefaults.standard.increaseContrast == true {
