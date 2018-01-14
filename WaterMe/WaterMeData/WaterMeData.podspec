@@ -20,8 +20,7 @@ Pod::Spec.new do |s|
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
-  # s.platform     = :ios
-  s.ios.deployment_target = "10.3"
+  s.ios.deployment_target = "11.0"
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
@@ -33,7 +32,7 @@ Pod::Spec.new do |s|
 
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
-  s.dependency 'RealmSwift'
+  s.dependency 'RealmSwift', '~> 3.0.2'
   s.dependency 'XCGLogger', '~> 6.0.1'
   s.dependency 'Result', '~> 3.2.2'
 

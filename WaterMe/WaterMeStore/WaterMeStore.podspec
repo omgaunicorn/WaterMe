@@ -20,8 +20,7 @@ Pod::Spec.new do |s|
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
-  # s.platform     = :ios
-  s.ios.deployment_target = "10.3"
+  s.ios.deployment_target = "11.0"
 
   # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 

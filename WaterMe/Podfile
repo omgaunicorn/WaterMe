@@ -1,29 +1,29 @@
 target 'WaterMe' do
-	platform :ios, '10.3'
+	platform :ios, '11.0'
 	use_frameworks!
 	
-	pod 'CropViewController'
+	pod 'Cheers', '~> 2.0.0'
+	pod 'CropViewController', '~> 2.3.6'
 	pod 'Result', '~> 3.2.2'
-	pod 'RealmSwift'
+	pod 'RealmSwift', '~> 3.0.2'
 	pod 'XCGLogger', '~> 6.0.1'
-	pod 'TPInAppReceipt'
 	pod 'WaterMeData', :path => 'WaterMeData'
 	pod 'WaterMeStore', :path => 'WaterMeStore'
 end
 
 target 'AdminConsole' do
-	platform :ios, '10.3'
+	platform :ios, '11.0'
 	use_frameworks!
 	
 	pod 'Result', '~> 3.2.2'
-	pod 'RealmSwift'
+	pod 'RealmSwift', '~> 3.0.2'
 	pod 'XCGLogger', '~> 6.0.1'
 	pod 'WaterMeData', :path => 'WaterMeData'
     pod 'WaterMeStore', :path => 'WaterMeStore'
 end
 
 target 'NoDeviceTests' do
-	platform :ios, '10.3'
+	platform :ios, '11.0'
 	use_frameworks!
     pod 'WaterMeData', :path => 'WaterMeData'
     pod 'WaterMeStore', :path => 'WaterMeStore'
