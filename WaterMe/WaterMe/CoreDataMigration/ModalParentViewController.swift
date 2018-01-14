@@ -59,6 +59,8 @@ class ModalParentViewController: UIViewController {
             grayView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor, constant: 0),
             grayView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: 0)
             ])
+        
+        self.view.backgroundColor = .clear
         self.updateChildVCContainerViewConstraints()
     }
 

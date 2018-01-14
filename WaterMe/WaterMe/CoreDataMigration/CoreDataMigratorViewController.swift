@@ -67,6 +67,15 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
 
         self.contentView?.layer.cornerRadius = UIApplication.style_cornerRadius
         self.progressView?.observedProgress = self.migrator.progress
+        self.contentView?.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.transitionCoordinator!.animate(alongsideTransition: { _ in
+            self.contentView?.transform = CGAffineTransform.identity
+        }, completion: nil)
     }
 
     // swiftlint:disable:next function_body_length
