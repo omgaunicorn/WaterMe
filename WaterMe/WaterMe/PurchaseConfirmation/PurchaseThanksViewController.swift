@@ -87,7 +87,7 @@ class PurchaseThanksViewController: UIViewController {
             self.contentView.transform = CGAffineTransform.identity
         }, completion: { _ in
             self.cheerView.start()
-            Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { _ in
+            Timer.scheduledTimer(withTimeInterval: 7, repeats: false) { _ in
                 self.cheerView.stop()
             }
         })
@@ -113,5 +113,4 @@ class PurchaseThanksViewController: UIViewController {
         super.traitCollectionDidChange(previousTraitCollection)
         self.configureAttributedText()
     }
-    
 }

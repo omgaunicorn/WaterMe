@@ -37,27 +37,14 @@ class SettingsMainViewController: UIViewController {
         return navVC
     }
 
-    /*@IBOutlet*/ private weak var tableViewController: SettingsTableViewController?
-    private var completionHandler: Completion?
-    private var purchaseInProgress: (() -> Void)? {
-        didSet {
-            UIView.style_animateNormal {
-                if self.purchaseInProgress != nil {
-                    self.tableViewController?.tableView?.isUserInteractionEnabled = false
-                    self.tableViewController?.tableView?.alpha = 0.5
-                } else {
-                    self.tableViewController?.tableView?.isUserInteractionEnabled = true
-                    self.tableViewController?.tableView?.alpha = 1.0
-                }
-            }
-        }
-    }
+    /*@IBOutlet*/ weak var tableViewController: SettingsTableViewController?
+    private var completionHandler: Completion!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.title = LocalizedString.title
-
+        
         self.tableViewController?.settingsRowChosen = { [unowned self] chosen, deselectRowAnimated in
             switch chosen {
             case .emailDeveloper:
@@ -70,52 +57,10 @@ class SettingsMainViewController: UIViewController {
                 UIApplication.shared.openSettings(completion: { _ in deselectRowAnimated?(true) })
             }
         }
-
-        let pc = AppDelegate.shared.purchaseController
-
-        self.tableViewController?.tipJarRowChosen = { chosen, deselectRowAnimated in
-            switch chosen {
-            case .free:
-                UIApplication.shared.openWriteReviewPage(completion: { _ in deselectRowAnimated?(true) })
-            case .small(let product), .medium(let product), .large(let product):
-                self.purchaseInProgress = {
-                    deselectRowAnimated?(true)
-                }
-                pc?.buy(product: product)
-            }
-        }
-
-        pc?.fetchTipJarProducts() { [weak self] products in
-            self?.tableViewController?.products = products
-        }
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        AppDelegate.shared.purchaseController?.transactionsInFlightUpdated = { [weak self] in
-            self?.checkForPurchasesInFlight()
-        }
-        self.checkForPurchasesInFlight()
-    }
-
-    private func checkForPurchasesInFlight() {
-        guard self.presentedViewController == nil else { return }
-        let pc = AppDelegate.shared.purchaseController
-        guard let transaction = pc?.nextTransactionForPresentingToUser() else { return }
-        self.purchaseInProgress?()
-        self.purchaseInProgress = nil
-        let _vc = PurchaseConfirmationViewController.newVC(for: transaction) { vc in
-            guard let vc = vc else { self.checkForPurchasesInFlight(); return; }
-            vc.dismiss(animated: true) { self.checkForPurchasesInFlight() }
-        }
-        guard let vc = _vc else { return }
-        self.present(vc, animated: true, completion: nil)
-    }
-
-    @IBAction private func doneButtonTapped(_ sender: Any) {
-        AppDelegate.shared.purchaseController?.transactionsInFlightUpdated = nil
-        self.completionHandler?(self)
+    @IBAction func doneButtonTapped(_ sender: Any) {
+        self.completionHandler(self)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

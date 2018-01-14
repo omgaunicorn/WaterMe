@@ -22,6 +22,7 @@
 		50281904200BB57D0044BEC8 /* ModalParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50281903200BB57D0044BEC8 /* ModalParentViewController.swift */; };
 		50281906200BD6110044BEC8 /* PurchaseThanksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50281905200BD6110044BEC8 /* PurchaseThanksViewController.swift */; };
 		50281908200BE7C80044BEC8 /* PurchaseThanks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50281907200BE7C80044BEC8 /* PurchaseThanks.storyboard */; };
+		5028190A200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50281909200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift */; };
 		50299E651FED926400363EF3 /* DragAndDropPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */; };
 		502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */; };
 		502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */; };
@@ -134,6 +135,7 @@
 		50281903200BB57D0044BEC8 /* ModalParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalParentViewController.swift; sourceTree = "<group>"; };
 		50281905200BD6110044BEC8 /* PurchaseThanksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseThanksViewController.swift; sourceTree = "<group>"; };
 		50281907200BE7C80044BEC8 /* PurchaseThanks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PurchaseThanks.storyboard; sourceTree = "<group>"; };
+		50281909200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainPurchaseDimmingViewController.swift; sourceTree = "<group>"; };
 		50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropPlayerManager.swift; sourceTree = "<group>"; };
 		502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderCollectionViewCell.xib; sourceTree = "<group>"; };
 		502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFinishDropTargetViewController.swift; sourceTree = "<group>"; };
@@ -367,6 +369,7 @@
 			children = (
 				506A6217200562AC008EF601 /* Settings.storyboard */,
 				506A6219200562B9008EF601 /* SettingsMainViewController.swift */,
+				50281909200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift */,
 				506A621B200562C3008EF601 /* SettingsTableViewController.swift */,
 				50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */,
 				50702D12200591CC009EF952 /* EmailDeveloperViewController.swift */,
@@ -949,6 +952,7 @@
 				50E8B1E61EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift in Sources */,
 				50702D11200589B0009EF952 /* SettingsTipJarTableViewCell.swift in Sources */,
 				50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */,
+				5028190A200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift in Sources */,
 				50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */,
 				506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */,
 				5049D1A31FACFA1B0076565E /* ReminderUserNotificationController.swift in Sources */,

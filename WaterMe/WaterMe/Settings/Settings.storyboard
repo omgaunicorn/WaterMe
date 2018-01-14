@@ -28,7 +28,7 @@
         <!--Seettings-->
         <scene sceneID="wDT-yd-JJH">
             <objects>
-                <viewController id="lkR-rR-nbN" customClass="SettingsMainViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="lkR-rR-nbN" customClass="SettingsMainPurchaseDimmingViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Uxc-k5-LnG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -69,16 +69,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="AFo-ef-nXp">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AFo-ef-nXp" id="J2Z-JJ-Jb5">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="dfD-an-c4d" id="QiB-Lq-EfS"/>
                             <outlet property="delegate" destination="dfD-an-c4d" id="Jhd-bb-hGU"/>
