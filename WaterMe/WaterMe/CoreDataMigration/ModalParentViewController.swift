@@ -25,8 +25,69 @@ import UIKit
 
 class ModalParentViewController: UIViewController {
 
+    @IBOutlet private weak var childVCContainerView: UIView!
+    private var currentConstraints = [NSLayoutConstraint]()
+
     var childViewController: UIViewController?
     var configureChild: ((UIViewController) -> Void)?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.updateChildVCContainerViewConstraints()
+    }
+
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        coordinator.animate(alongsideTransition: { _ in
+            self.updateChildVCContainerViewConstraints(withNewTraitCollection: newCollection)
+        }, completion: nil)
+    }
+
+    private func updateChildVCContainerViewConstraints(withNewTraitCollection traitCollection: UITraitCollection? = nil) {
+        let traits = traitCollection ?? self.view.traitCollection
+        let accessible = traits.preferredContentSizeCategory.isAccessibilityCategory
+
+        let sub = self.childVCContainerView!
+        let safe = self.view.safeAreaLayoutGuide
+
+        let newConstraints: [NSLayoutConstraint]
+        if accessible {
+            newConstraints = [
+                sub.leadingAnchor.constraintEqualToSystemSpacingAfter(safe.leadingAnchor, multiplier: 1),
+                safe.trailingAnchor.constraintEqualToSystemSpacingAfter(sub.trailingAnchor, multiplier: 1),
+                sub.topAnchor.constraintEqualToSystemSpacingBelow(safe.topAnchor, multiplier: 1),
+                safe.bottomAnchor.constraintEqualToSystemSpacingBelow(sub.bottomAnchor, multiplier: 1)
+            ]
+        } else {
+            switch (traits.verticalSizeClass, traits.horizontalSizeClass) {
+            case (.regular, .regular):
+                newConstraints = [
+                    sub.centerXAnchor.constraint(equalTo: safe.centerXAnchor, constant: 0),
+                    sub.centerYAnchor.constraint(equalTo: safe.centerYAnchor, constant: 0),
+                    sub.widthAnchor.constraint(equalToConstant: 400),
+                    sub.heightAnchor.constraint(equalToConstant: 400)
+                ]
+            case (.regular, _), (.unspecified, _):
+                newConstraints = [
+                    sub.centerXAnchor.constraint(equalTo: safe.centerXAnchor, constant: 0),
+                    sub.centerYAnchor.constraint(equalTo: safe.centerYAnchor, constant: 0),
+                    sub.widthAnchor.constraint(equalTo: safe.widthAnchor, multiplier: 5 / 6),
+                    sub.heightAnchor.constraint(equalTo: safe.heightAnchor, multiplier: 4 / 7)
+                ]
+            case (.compact, _):
+                newConstraints = [
+                    sub.centerXAnchor.constraint(equalTo: safe.centerXAnchor, constant: 0),
+                    sub.centerYAnchor.constraint(equalTo: safe.centerYAnchor, constant: 0),
+                    sub.widthAnchor.constraint(equalTo: safe.widthAnchor, multiplier: 1 / 2),
+                    sub.heightAnchor.constraint(equalTo: safe.heightAnchor, multiplier: 1)
+                ]
+            }
+        }
+
+        self.currentConstraints.forEach({ $0.isActive = false })
+        self.currentConstraints = newConstraints
+        self.view.addConstraints(newConstraints)
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         self.childViewController = segue.destination
