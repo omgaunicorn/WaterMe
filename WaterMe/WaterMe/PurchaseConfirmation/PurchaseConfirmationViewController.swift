@@ -26,9 +26,11 @@ import UIKit
 
 class PurchaseConfirmationViewController: UIViewController {
 
-    class func newVC(for inFlight: InFlightTransaction, completion: ((UIViewController?) -> Void)?) -> UIViewController {
+    class func newVC(for inFlight: InFlightTransaction, completion: ((UIViewController?) -> Void)?) -> UIViewController? {
         let alert: UIAlertController
         switch inFlight.state {
+        case .cancelled:
+            return nil
         case .success:
             alert = UIAlertController(title: "Thanks!!!", message: nil, preferredStyle: .alert)
         case .errorNetwork:

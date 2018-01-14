@@ -39,6 +39,19 @@ class SettingsMainViewController: UIViewController {
 
     /*@IBOutlet*/ private weak var tableViewController: SettingsTableViewController?
     private var completionHandler: Completion?
+    private var purchaseInProgress: (() -> Void)? {
+        didSet {
+            UIView.style_animateNormal {
+                if self.purchaseInProgress != nil {
+                    self.tableViewController?.tableView?.isUserInteractionEnabled = false
+                    self.tableViewController?.tableView?.alpha = 0.5
+                } else {
+                    self.tableViewController?.tableView?.isUserInteractionEnabled = true
+                    self.tableViewController?.tableView?.alpha = 1.0
+                }
+            }
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,8 +78,10 @@ class SettingsMainViewController: UIViewController {
             case .free:
                 UIApplication.shared.openWriteReviewPage(completion: { _ in deselectRowAnimated?(true) })
             case .small(let product), .medium(let product), .large(let product):
+                self.purchaseInProgress = {
+                    deselectRowAnimated?(true)
+                }
                 pc?.buy(product: product)
-                deselectRowAnimated?(true)
             }
         }
 
@@ -88,10 +103,13 @@ class SettingsMainViewController: UIViewController {
         guard self.presentedViewController == nil else { return }
         let pc = AppDelegate.shared.purchaseController
         guard let transaction = pc?.nextTransactionForPresentingToUser() else { return }
-        let vc = PurchaseConfirmationViewController.newVC(for: transaction) { vc in
+        self.purchaseInProgress?()
+        self.purchaseInProgress = nil
+        let _vc = PurchaseConfirmationViewController.newVC(for: transaction) { vc in
             guard let vc = vc else { self.checkForPurchasesInFlight(); return; }
             vc.dismiss(animated: true) { self.checkForPurchasesInFlight() }
         }
+        guard let vc = _vc else { return }
         self.present(vc, animated: true, completion: nil)
     }
 

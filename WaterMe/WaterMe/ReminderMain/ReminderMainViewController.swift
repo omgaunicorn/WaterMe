@@ -102,10 +102,11 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         guard self.presentedViewController == nil else { return }
         let pc = AppDelegate.shared.purchaseController
         guard let transaction = pc?.nextTransactionForPresentingToUser() else { return }
-        let vc = PurchaseConfirmationViewController.newVC(for: transaction) { vc in
+        let _vc = PurchaseConfirmationViewController.newVC(for: transaction) { vc in
             guard let vc = vc else { self.checkForPurchasesInFlight(); return; }
             vc.dismiss(animated: true) { self.checkForPurchasesInFlight() }
         }
+        guard let vc = _vc else { return }
         self.present(vc, animated: true, completion: nil)
     }
 

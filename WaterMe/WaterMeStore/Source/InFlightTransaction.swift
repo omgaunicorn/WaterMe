@@ -34,7 +34,7 @@ public struct InFlightTransaction {
     public let transaction: SKPaymentTransaction
 
     public enum State {
-        case success, errorNetwork, errorNotAllowed, errorUnknown
+        case success, cancelled, errorNetwork, errorNotAllowed, errorUnknown
     }
 
     public static func process(transactions: [SKPaymentTransaction])
@@ -55,6 +55,8 @@ public struct InFlightTransaction {
                 let error = SKError.Code(rawValue: (transaction.error! as NSError).code) ?? .unknown
                 switch error {
                 case .paymentCancelled:
+                    // needs the UI to update but should also be auto-completed
+                    inFlight += [InFlightTransaction(state: .cancelled, transaction: transaction)]
                     readyToBeFinished += [transaction]
                 case .clientInvalid, .cloudServicePermissionDenied, .cloudServiceRevoked, .paymentInvalid, .storeProductNotAvailable, .unknown:
                     inFlight += [InFlightTransaction(state: .errorUnknown, transaction: transaction)]
