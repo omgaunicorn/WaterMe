@@ -30,18 +30,22 @@ class SettingsMainPurchaseDimmingViewController: SettingsMainViewController {
             UIView.style_animateNormal {
                 if self.purchaseInProgress != nil {
                     self.tableViewController?.tableView?.isUserInteractionEnabled = false
-                    self.tableViewController?.tableView?.alpha = 0.5
+                    self.purchaseActivityIndicator.startAnimating()
                 } else {
                     self.tableViewController?.tableView?.isUserInteractionEnabled = true
-                    self.tableViewController?.tableView?.alpha = 1.0
+                    self.purchaseActivityIndicator.stopAnimating()
                 }
             }
         }
     }
 
+    private let purchaseActivityIndicator = TintColorActivityIndicatorView()
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.gray
+
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: self.purchaseActivityIndicator)
+
         let pc = AppDelegate.shared.purchaseController
         self.tableViewController?.tipJarRowChosen = { chosen, deselectRowAnimated in
             switch chosen {
@@ -87,4 +91,11 @@ class SettingsMainPurchaseDimmingViewController: SettingsMainViewController {
         super.doneButtonTapped(sender)
     }
 
+}
+
+class TintColorActivityIndicatorView: UIActivityIndicatorView {
+    override func tintColorDidChange() {
+        super.tintColorDidChange()
+        self.color = self.tintColor
+    }
 }
