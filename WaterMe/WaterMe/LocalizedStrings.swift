@@ -213,6 +213,10 @@ extension SettingsMainViewController {
         static let cellPriceTipJarFree =
             NSLocalizedString("Free",
                               comment: "Settings: Cell Price: Price of leaving a review on the app store... Free")
+        static let cellTitleInfo =
+            NSLocalizedString("I'm Jeff, a professional iOS Developer and UX Designer. I like making small and polished apps in my spare time. If you find WaterMe useful and would like to fund its development, consider supporting the app with the buttons below.",
+                              comment: "Settings: Info Cell: Title: Text in the tip jar area that explains why someone should give money.")
+
     }
 }
 

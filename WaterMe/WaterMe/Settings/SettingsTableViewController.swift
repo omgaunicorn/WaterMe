@@ -22,6 +22,7 @@
 //
 
 import StoreKit
+import WaterMeData
 import WaterMeStore
 import UIKit
 
@@ -34,6 +35,11 @@ class SettingsTableViewController: UITableViewController {
             self.tableView.reloadSections(IndexSet([Sections.tipJar.rawValue]), with: .automatic)
         }
     }
+    var avatarIcon: ReminderVessel.Icon? {
+        didSet {
+            self.tableView.reloadRows(at: [IndexPath(row: TipJarRows.info.rawValue, section: Sections.tipJar.rawValue)], with: .automatic)
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +47,10 @@ class SettingsTableViewController: UITableViewController {
         self.clearsSelectionOnViewWillAppear = false
         self.tableView.register(SimpleLabelTableViewCell.self, forCellReuseIdentifier: SimpleLabelTableViewCell.reuseID)
         self.tableView.register(SettingsTipJarTableViewCell.self, forCellReuseIdentifier: SettingsTipJarTableViewCell.reuseID)
+        self.tableView.register(SettingsInfoTableViewCell.nib, forCellReuseIdentifier: SettingsInfoTableViewCell.reuseID)
+        URLSession.shared.downloadAvatar() { [weak self] icon in
+            self?.avatarIcon = icon
+        }
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -67,10 +77,18 @@ class SettingsTableViewController: UITableViewController {
             cell.accessoryType = .disclosureIndicator
             return cell
         case .right(let row):
-            let _cell = tableView.dequeueReusableCell(withIdentifier: SettingsTipJarTableViewCell.reuseID, for: indexPath)
-            guard let cell = _cell as? SettingsTipJarTableViewCell else { return _cell }
-            cell.configure(with: row, product: row.product(from: self.products))
-            return cell
+            switch row {
+            case .info:
+                let _cell = tableView.dequeueReusableCell(withIdentifier: SettingsInfoTableViewCell.reuseID, for: indexPath)
+                guard let cell = _cell as? SettingsInfoTableViewCell else { return _cell }
+                cell.configure(with: self.avatarIcon, and: SettingsMainViewController.LocalizedString.cellTitleInfo)
+                return cell
+            case .free, .large, .medium, .small:
+                let _cell = tableView.dequeueReusableCell(withIdentifier: SettingsTipJarTableViewCell.reuseID, for: indexPath)
+                guard let cell = _cell as? SettingsTipJarTableViewCell else { return _cell }
+                cell.configure(with: row, product: row.product(from: self.products))
+                return cell
+            }
         }
     }
 
@@ -79,16 +97,39 @@ class SettingsTableViewController: UITableViewController {
         return section.localizedTitle
     }
 
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        guard let (_, row) = Sections.sectionsAndRows(from: indexPath) else { assertionFailure("Wrong Section/Row"); return false; }
+        switch row {
+        case .left:
+            return true
+        case .right(let row):
+            switch row {
+            case .info:
+                return false
+            case .free:
+                return true
+            case .large, .medium, .small:
+                return self.products != nil ? true : false
+            }
+        }
+    }
+
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         guard let (_, row) = Sections.sectionsAndRows(from: indexPath) else { assertionFailure("Wrong Section/Row"); return nil; }
         switch row {
         case .left:
+            // always let the user select a settings row
             return indexPath
         case .right(let row):
             switch row {
+            case .info:
+                // never let the user select the info cell
+                return nil
             case .free:
+                // always let the user select the free row
                 return indexPath
             case .large, .medium, .small:
+                // for the IAPs, only let the user select them if there is a product retrieved from the network
                 return self.products != nil ? indexPath : nil
             }
         }
@@ -146,11 +187,11 @@ extension SettingsTableViewController {
     }
 
     enum TipJarRows: Int {
-        static let count = 4
-        case free, small, medium, large
+        static let count = 5
+        case info, free, small, medium, large
         func product(from products: TipJarProducts?) -> SKProduct? {
             switch self {
-            case .free:
+            case .free, .info:
                 return nil
             case .small:
                 return products?.small
@@ -170,8 +211,9 @@ extension SettingsTableViewController {
             }
             guard let products = products else { return nil }
             switch row {
-            case .free:
-                fatalError()
+            case .free, .info:
+                assertionFailure()
+                return nil
             case .small:
                 self = .small(products.small)
             case .medium:
@@ -180,5 +222,32 @@ extension SettingsTableViewController {
                 self = .large(products.large)
             }
         }
+    }
+}
+
+extension URLSession {
+    func downloadAvatar(completion: @escaping (ReminderVessel.Icon?) -> Void) {
+        let request = URLRequest(url: PrivateKeys.kAvatarURL, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 30)
+        let task = self.dataTask(with: request) { data, response, error in
+            guard
+                error == nil,
+                let response = response as? HTTPURLResponse,
+                response.statusCode == 200,
+                let data = data,
+                let image = UIImage(data: data)
+            else {
+                let message = "Unable to download avatar image"
+                log.warning(message)
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+                return
+            }
+            let icon = ReminderVessel.Icon(rawImage: image)
+            DispatchQueue.main.async {
+                completion(icon)
+            }
+        }
+        task.resume()
     }
 }

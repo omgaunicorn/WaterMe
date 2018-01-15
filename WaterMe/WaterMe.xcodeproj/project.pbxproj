@@ -23,6 +23,8 @@
 		50281906200BD6110044BEC8 /* PurchaseThanksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50281905200BD6110044BEC8 /* PurchaseThanksViewController.swift */; };
 		50281908200BE7C80044BEC8 /* PurchaseThanks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50281907200BE7C80044BEC8 /* PurchaseThanks.storyboard */; };
 		5028190A200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50281909200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift */; };
+		5028190D200D14850044BEC8 /* SettingsInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028190B200D14850044BEC8 /* SettingsInfoTableViewCell.swift */; };
+		5028190E200D14850044BEC8 /* SettingsInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5028190C200D14850044BEC8 /* SettingsInfoTableViewCell.xib */; };
 		50299E651FED926400363EF3 /* DragAndDropPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */; };
 		502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */; };
 		502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */; };
@@ -136,6 +138,8 @@
 		50281905200BD6110044BEC8 /* PurchaseThanksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseThanksViewController.swift; sourceTree = "<group>"; };
 		50281907200BE7C80044BEC8 /* PurchaseThanks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PurchaseThanks.storyboard; sourceTree = "<group>"; };
 		50281909200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainPurchaseDimmingViewController.swift; sourceTree = "<group>"; };
+		5028190B200D14850044BEC8 /* SettingsInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInfoTableViewCell.swift; sourceTree = "<group>"; };
+		5028190C200D14850044BEC8 /* SettingsInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsInfoTableViewCell.xib; sourceTree = "<group>"; };
 		50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropPlayerManager.swift; sourceTree = "<group>"; };
 		502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderCollectionViewCell.xib; sourceTree = "<group>"; };
 		502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFinishDropTargetViewController.swift; sourceTree = "<group>"; };
@@ -373,6 +377,8 @@
 				506A621B200562C3008EF601 /* SettingsTableViewController.swift */,
 				50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */,
 				50702D12200591CC009EF952 /* EmailDeveloperViewController.swift */,
+				5028190B200D14850044BEC8 /* SettingsInfoTableViewCell.swift */,
+				5028190C200D14850044BEC8 /* SettingsInfoTableViewCell.xib */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -656,6 +662,7 @@
 				5075B48E1FF178DC007B42D8 /* ReminderDragPreviewView.xib in Resources */,
 				50BDC0401F9A3E21002281C3 /* ReminderHeaderCollectionReusableView.xib in Resources */,
 				50E3F2CB1FF70D27003245E3 /* CoreDataMigration.storyboard in Resources */,
+				5028190E200D14850044BEC8 /* SettingsInfoTableViewCell.xib in Resources */,
 				50BB0F6C1EC001C200850FF4 /* Videos in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -945,6 +952,7 @@
 				50B511A71EFE144700ED1DF4 /* ReminderKindTableViewCell.swift in Sources */,
 				50E3F2CD1FF70D3B003245E3 /* CoreDataMigratorViewController.swift in Sources */,
 				50A3DF971EE3331D00F0B966 /* StyleExtensions.swift in Sources */,
+				5028190D200D14850044BEC8 /* SettingsInfoTableViewCell.swift in Sources */,
 				50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */,
 				50E3F2C91FF6EF35003245E3 /* ImageEmojiObject.swift in Sources */,
 				506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */,
