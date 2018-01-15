@@ -40,9 +40,36 @@ extension PurchaseThanksViewController {
     }
 }
 
+typealias PurchaseThanksCompletion = (UIViewController?) -> Void
+
 class PurchaseThanksViewController: UIViewController {
 
-    class func newVC(completion: @escaping PurchaseConfirmationCompletion) -> UIViewController {
+    class func newVC(for inFlight: InFlightTransaction, completion: @escaping PurchaseThanksCompletion) -> UIViewController? {
+        let alert: UIAlertController
+        switch inFlight.state {
+        case .cancelled:
+            return nil
+        case .success:
+            return PurchaseThanksViewController.newVC() { vc in
+                AppDelegate.shared.purchaseController?.finish(inFlight: inFlight)
+                completion(vc)
+            }
+        case .errorNetwork:
+            alert = UIAlertController(title: "Purchase Error", message: "A network error ocurred. Check your data connection and try and make the purchase again later.", preferredStyle: .alert)
+        case .errorNotAllowed:
+            alert = UIAlertController(title: "Purchase Error", message: "It looks like you're not allowed to buy in-app purchases. Thanks for trying though.", preferredStyle: .alert)
+        case .errorUnknown:
+            alert = UIAlertController(title: "Purchase Error", message: "An unknown error ocurred. Try and make the purchase again later.", preferredStyle: .alert)
+        }
+        let confirm = UIAlertAction(title: "Dismiss", style: .cancel) { _ in
+            AppDelegate.shared.purchaseController?.finish(inFlight: inFlight)
+            completion(nil)
+        }
+        alert.addAction(confirm)
+        return alert
+    }
+
+    private class func newVC(completion: @escaping PurchaseThanksCompletion) -> UIViewController {
         let sb = UIStoryboard(name: "PurchaseThanks", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let vc = sb.instantiateInitialViewController() as! ModalParentViewController
@@ -61,7 +88,7 @@ class PurchaseThanksViewController: UIViewController {
     @IBOutlet private weak var reviewButton: UIButton?
     @IBOutlet private weak var cancelButton: UIButton?
 
-    private var completionHandler: PurchaseConfirmationCompletion!
+    private var completionHandler: PurchaseThanksCompletion!
     private let cheerView: CheerView = {
         let v = CheerView()
         v.config.colors = [Style.Color.tint, Style.Color.tint, Style.Color.darkTintColor, Style.Color.darkTintColor]
