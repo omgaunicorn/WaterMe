@@ -24,6 +24,19 @@
 import WaterMeData
 import UIKit
 
+extension AppDelegate {
+    var buildNumberString: String {
+        let _build = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String
+        guard let build = _build else {
+            let message = "Could not retrieve build number from bundle"
+            log.error(message)
+            assertionFailure(message)
+            return "-1"
+        }
+        return build
+    }
+}
+
 extension MutableCollection {
     mutating func shuffle() {
         let c = count

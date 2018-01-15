@@ -24,19 +24,23 @@
 import WaterMeStore
 import WaterMeData
 import XCGLogger
+import Fabric
+import Crashlytics
 import UserNotifications
-import UserNotificationsUI
 import AVFoundation
+import StoreKit
 import UIKit
 
 let log = XCGLogger.default
 
 extension UIApplication {
     func openSettings(completion: ((Bool) -> Void)?) {
+        Analytics.log(viewOperation: .openSettings)
         let url = URL(string: UIApplicationOpenSettingsURLString)!
         self.open(url, options: [:], completionHandler: completion)
     }
     func openWriteReviewPage(completion: ((Bool) -> Void)?) {
+        Analytics.log(viewOperation: .openAppStore)
         self.open(PrivateKeys.kReviewAppURL, options: [:], completionHandler: completion)
     }
 }
@@ -97,6 +101,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        // these two closures are for checking if we should ask for a review
+        // When a new build is detected, we set a date
+        // Two weeks after that date, the user is eligible to be asked for a review
+        // Next time they water plants, they will be asked (assuming the system cooperates)
+        _ = {
+            // check the build and see if its new
+            let ud = UserDefaults.standard
+            let oldBuild = ud.lastBuildNumber
+            let currentBuild = self.buildNumberString
+            if oldBuild != currentBuild {
+                ud.lastBuildNumber = currentBuild
+                ud.requestReviewDate = Date()
+            }
+        }()
+        let checkForReview = {
+            let now = Date()
+            let ud = UserDefaults.standard
+            guard
+                let reviewDate = ud.requestReviewDate,
+                let forwardDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: reviewDate),
+                now >= forwardDate
+            else { return }
+            log.info("Requested App Review with SKStoreReviewController")
+            SKStoreReviewController.requestReview()
+            ud.requestReviewDate = nil // nil this out so they won't be asked again until next update
+        }
+
+        // Basic Controller error handling closure
+        // There is no easy way for my Dynamic Frameworks to be able to use Crashlytics
+        // So in the places where they can throw errors, I introduced a static var so we can see them here
+        BasicController.errorThrown = { error in
+            Crashlytics.sharedInstance().recordError(error)
+        }
+
+        // configure Crashlytics
+        Crashlytics.start(withAPIKey: WaterMeData.PrivateKeys.kFrabicAPIKey)
+
         // configure my notification delegate
         UNUserNotificationCenter.current().delegate = self.notificationUIDelegate
 
@@ -109,6 +150,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let result = BasicController.new(of: .local)
         let vc = ReminderMainViewController.newVC(basicRCResult: result, proController: nil)
         self.notifictionController = ReminderUserNotificationController(basicController: result.value)
+
+        result.value?.userDidPerformReminder = checkForReview
 
         if self.window == nil {
             self.window = UIWindow(frame: UIScreen.main.bounds)

@@ -208,7 +208,7 @@ extension SettingsMainViewController {
             NSLocalizedString("Email Developer",
                               comment: "Settings: Cell Title: Email Developer: When tapped, this opens an email screen to email the developer.")
         static let cellTitleTipJarFree =
-            NSLocalizedString("Leave Review on App Store",
+            NSLocalizedString("Write App Review",
                               comment: "Settings: Cell Title: Tip Jar Free: When tapped, this opens an screen to review the app.")
         static let cellPriceTipJarFree =
             NSLocalizedString("Free",
@@ -359,4 +359,19 @@ extension BasicController {
     static let starterDBNote =
         NSLocalizedString("Welcome to WaterMe! This is your first plant. Use the button below to edit this plant and make it your own. When you’re ready to add all your plants, tap the ‘Plants’ button at the top right of the screen.",
                           comment: "First Launch: When the user opens the app for the first time, there is one plant shown in the app. When the user taps on the plant, this is the note shown that tells them how to use the app.")
+}
+
+extension PurchaseThanksViewController {
+    enum LocalizedString {
+        static let title =
+            NSLocalizedString("Thank You!",
+                              comment: "Purchase Thanks: Title: A thank you to the user for supporting WaterMe via In-App Purchase.")
+        static let subtitle =
+            NSLocalizedString("In-App Purchase",
+                              comment: "Purchase Thanks: Subtitle: Reminding the user what we're thanking them for.")
+        static let body =
+            NSLocalizedString("Thank you for your purchase. Your support is critical to the continued development of WaterMe.",
+                              comment: "Purchase Thanks: Body: Body text thanking the user for their support.")
+
+    }
 }

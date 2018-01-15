@@ -60,6 +60,9 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        Analytics.log(viewOperation: .reminderVesselList)
+
         if let data = self.collectionVC?.data, case .failure(let error) = data {
             self.collectionVC?.data = nil
             let alert = UIAlertController(error: error, completion: nil)

@@ -59,6 +59,7 @@ class SettingsMainPurchaseDimmingViewController: SettingsMainViewController {
             }
         }
         pc?.fetchTipJarProducts() { [weak self] products in
+            guard let products = products else { Analytics.log(event: Analytics.IAPOperation.loadError); return; }
             self?.tableViewController?.products = products
         }
     }

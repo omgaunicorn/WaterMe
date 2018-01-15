@@ -48,6 +48,7 @@ class SettingsMainViewController: UIViewController {
         self.tableViewController?.settingsRowChosen = { [unowned self] chosen, deselectRowAnimated in
             switch chosen {
             case .emailDeveloper:
+                Analytics.log(viewOperation: .emailDeveloper)
                 let vc = EmailDeveloperViewController.newVC() { vc in
                     guard let vc = vc else { deselectRowAnimated?(true); return; }
                     vc.dismiss(animated: true, completion: { deselectRowAnimated?(true) })
@@ -57,6 +58,12 @@ class SettingsMainViewController: UIViewController {
                 UIApplication.shared.openSettings(completion: { _ in deselectRowAnimated?(true) })
             }
         }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        Analytics.log(viewOperation: .tipJar)
     }
 
     @IBAction func doneButtonTapped(_ sender: Any) {

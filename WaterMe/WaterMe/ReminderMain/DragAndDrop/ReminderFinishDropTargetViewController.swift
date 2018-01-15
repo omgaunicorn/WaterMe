@@ -87,7 +87,11 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        guard let results = self.basicRC?.appendNewPerformToReminders(with: session.reminderDrags) else { return }
+        let drags = session.reminderDrags
+        guard let results = self.basicRC?.appendNewPerformToReminders(with: drags) else { return }
+
+        Analytics.log(event: Analytics.CRUD_Op_R.performDrag, extras: Analytics.CRUD_Op_R.extras(count: drags.count))
+
         switch results {
         case .failure(let error):
             self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)

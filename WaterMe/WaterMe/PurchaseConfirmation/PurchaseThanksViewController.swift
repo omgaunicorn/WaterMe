@@ -25,21 +25,6 @@ import Cheers
 import WaterMeStore
 import UIKit
 
-extension PurchaseThanksViewController {
-    enum LocalizedString {
-        static let title =
-            NSLocalizedString("Thank You!",
-                              comment: "Purchase Thanks: Title: A thank you to the user for supporting WaterMe via In-App Purchase.")
-        static let subtitle =
-            NSLocalizedString("In-App Purchase",
-                              comment: "Purchase Thanks: Subtitle: Reminding the user what we're thanking them for.")
-        static let body =
-            NSLocalizedString("Thank you for your purchase. Your support is critical to the continued development of WaterMe.",
-                              comment: "Purchase Thanks: Body: Body text thanking the user for their support.")
-        
-    }
-}
-
 typealias PurchaseThanksCompletion = (UIViewController?) -> Void
 
 class PurchaseThanksViewController: UIViewController {
@@ -50,15 +35,19 @@ class PurchaseThanksViewController: UIViewController {
         case .cancelled:
             return nil
         case .success:
+            Analytics.log(event: Analytics.IAPOperation.buySuccess)
             return PurchaseThanksViewController.newVC() { vc in
                 AppDelegate.shared.purchaseController?.finish(inFlight: inFlight)
                 completion(vc)
             }
         case .errorNetwork:
+            Analytics.log(event: Analytics.IAPOperation.buyErrorNetwork)
             alert = UIAlertController(title: "Purchase Error", message: "A network error ocurred. Check your data connection and try and make the purchase again later.", preferredStyle: .alert)
         case .errorNotAllowed:
+            Analytics.log(event: Analytics.IAPOperation.buyErrorNotAllowed)
             alert = UIAlertController(title: "Purchase Error", message: "It looks like you're not allowed to buy in-app purchases. Thanks for trying though.", preferredStyle: .alert)
         case .errorUnknown:
+            Analytics.log(event: Analytics.IAPOperation.buyErrorUnknown)
             alert = UIAlertController(title: "Purchase Error", message: "An unknown error ocurred. Try and make the purchase again later.", preferredStyle: .alert)
         }
         let confirm = UIAlertAction(title: "Dismiss", style: .cancel) { _ in
@@ -118,6 +107,12 @@ class PurchaseThanksViewController: UIViewController {
                 self.cheerView.stop()
             }
         })
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        Analytics.log(viewOperation: .purchaseThanks)
     }
 
     private func configureAttributedText() {

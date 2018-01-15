@@ -79,6 +79,8 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        Analytics.log(viewOperation: .reminderList)
+
         if let error = self.applicationDidFinishLaunchingError {
             self.applicationDidFinishLaunchingError = nil
             let alert = UIAlertController(error: error, completion: nil)
@@ -208,6 +210,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                        within viewController: ReminderCollectionViewController)
     {
         guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
+        Analytics.log(viewOperation: .reminderVesselTap)
 
         // prepare information for the alert we're going to present
         let dueDateString = self.dueDateFormatter.string(from: reminder.nextPerformDate ?? Date())
@@ -252,6 +255,9 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             }
         }
         let performReminder = UIAlertAction(title: LocalizedString.buttonTitleReminderPerform, style: .default) { _ in
+
+            Analytics.log(event: Analytics.CRUD_Op_R.performLegacy)
+
             deselectAnimated(true)
             let result = basicRC.appendNewPerformToReminders(with: [identifier])
             switch result {

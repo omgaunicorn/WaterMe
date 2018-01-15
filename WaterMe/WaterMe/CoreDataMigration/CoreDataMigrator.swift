@@ -21,9 +21,10 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import WaterMeData
+import Crashlytics
 import CoreData
 import Foundation
-import WaterMeData
 
 protocol CoreDataMigratable {
     var progress: Progress { get }
@@ -64,6 +65,7 @@ class CoreDataMigrator: CoreDataMigratable {
         } catch {
             let message = "CoreDataError Fetching Count of old plants: \(error)"
             log.error(message)
+            Crashlytics.sharedInstance().recordError(error)
             assertionFailure(message)
             return nil
         }
@@ -81,9 +83,10 @@ class CoreDataMigrator: CoreDataMigratable {
         self.container.persistentStoreDescriptions.first?.isReadOnly = true
         self.container.loadPersistentStores() { _, error  in
             guard error == nil else {
-                let error = "Error Loading Core Data Model. This leaves the Migrator in an invalid state: \(error!)"
-                log.error(error)
-                assertionFailure(error)
+                let message = "Error Loading Core Data Model. This leaves the Migrator in an invalid state: \(error!)"
+                log.error(message)
+                Crashlytics.sharedInstance().recordError(error!)
+                assertionFailure(message)
                 return
             }
             let count = self.numberOfPlantsToMigrate
@@ -149,6 +152,13 @@ class CoreDataMigrator: CoreDataMigratable {
             }
             self.closeCoreDataStoresAndMoveUnderlyingFiles()
             DispatchQueue.main.async {
+                if migrated == count {
+                    Analytics.log(event: Analytics.CoreDataMigration.migrationComplete,
+                                  extras: Analytics.CoreDataMigration.extras(migrated: migrated, total: count))
+                } else {
+                    Analytics.log(event: Analytics.CoreDataMigration.migrationPartial,
+                                  extras: Analytics.CoreDataMigration.extras(migrated: migrated, total: count))
+                }
                 completion(migrated == count)
             }
         }
@@ -171,6 +181,7 @@ class CoreDataMigrator: CoreDataMigratable {
         } catch {
             let message = "Error Moving Core Data Store Files: \(error)"
             log.error(message)
+            Crashlytics.sharedInstance().recordError(error)
             assertionFailure(message)
         }
     }
@@ -181,6 +192,7 @@ class CoreDataMigrator: CoreDataMigratable {
         } catch {
             let message = "CoreDataError Fetching old plants: \(error)"
             log.error(message)
+            Crashlytics.sharedInstance().recordError(error)
             assertionFailure(message)
             return []
         }

@@ -42,12 +42,15 @@ internal extension Realm {
             return .success(())
         } catch {
             log.error(error)
+            BasicController.errorThrown?(error)
             return .failure(.writeError)
         }
     }
 }
 
 public class BasicController {
+
+    public static var errorThrown: ((Error) -> Void)?
     
     // MARK: Initialization
 
@@ -62,6 +65,7 @@ public class BasicController {
             return try .success(Realm(configuration: self.config))
         } catch {
             log.error(error)
+            type(of: self).errorThrown?(error)
             return .failure(.loadError)
         }
     }
@@ -71,6 +75,7 @@ public class BasicController {
             let bc = try BasicController(kind: kind)
             return .success(bc)
         } catch {
+            self.errorThrown?(error)
             return .failure(.createError)
         }
     }
@@ -93,7 +98,9 @@ public class BasicController {
     }
     
     // MARK: WaterMeClient API
-    
+
+    public var userDidPerformReminder: (() -> Void)?
+
     public func allVessels() -> Result<AnyRealmCollection<ReminderVessel>, RealmError> {
         return self.realm.map() { realm in
             let kp = #keyPath(ReminderVessel.displayName)
@@ -139,7 +146,9 @@ public class BasicController {
     }
 
     public func appendNewPerformToReminders(with identifiers: [Reminder.Identifier]) -> Result<Void, RealmError> {
-        return self.reminders(matching: identifiers).flatMap({ self.appendNewPerform(to: $0) })
+        let result = self.reminders(matching: identifiers).flatMap({ self.appendNewPerform(to: $0) })
+        self.userDidPerformReminder?()
+        return result
     }
 
     public func reminder(matching identifier: Reminder.Identifier) -> Result<Reminder, RealmError> {

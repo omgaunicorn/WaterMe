@@ -46,6 +46,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         vc.completionHandler = completionHandler
         switch purpose {
         case .new(let vessel):
+            Analytics.log(event: Analytics.CRUD_Op_R.create)
             vc.reminderResult = basicController?.newReminder(for: vessel)
         case .existing(let reminder):
             vc.reminderResult = .success(reminder)
@@ -77,6 +78,8 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        Analytics.log(viewOperation: .editReminder)
         
         if case .failure(let error) = self.reminderResult! {
             self.reminderResult = nil
@@ -153,6 +156,9 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         }
 
         let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .left(sender)) { confirmed in
+
+            Analytics.log(event: Analytics.CRUD_Op_R.delete)
+
             guard confirmed == true else { return }
             let deleteResult = basicRC.delete(reminder: reminder)
             switch deleteResult {
@@ -167,6 +173,9 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     @IBAction private func doneButtonTapped(_ _sender: Any) {
+
+        Analytics.log(event: Analytics.CRUD_Op_R.update)
+
         self.view.endEditing(false)
         guard let sender = _sender as? UIBarButtonItem, let reminder = self.reminderResult.value else {
             let message = "Expected UIBarButtonItem to call this method"

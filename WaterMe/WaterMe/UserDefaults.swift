@@ -31,6 +31,26 @@ extension UserDefaults {
         static let kReminderHour = "REMINDER_HOUR"
         static let kNumberOfReminderDays = "NUMBER_OF_REMINDER_DAYS"
         static let kIncreaseContrast = "INCREASE_CONTRAST"
+        static let kBuildNumberKey = "LAST_BUILD_NUMBER"
+        static let kRequestReviewDate = "REQUEST_REVIEW_DATE"
+    }
+
+    var requestReviewDate: Date? {
+        get {
+            return self.object(forKey: Constants.kRequestReviewDate) as? Date
+        }
+        set {
+            self.set(newValue, forKey: Constants.kRequestReviewDate)
+        }
+    }
+
+    var lastBuildNumber: String? {
+        get {
+            return self.object(forKey: Constants.kBuildNumberKey) as? String
+        }
+        set {
+            self.set(newValue, forKey: Constants.kBuildNumberKey)
+        }
     }
 
     var increaseContrast: Bool {

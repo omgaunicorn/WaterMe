@@ -44,6 +44,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         if let vessel = vessel {
             vc.vesselResult = .success(vessel)
         } else {
+            Analytics.log(event: Analytics.CRUD_Op_RV.create)
             vc.vesselResult = basicController?.newReminderVessel()
         }
         return navVC
@@ -80,6 +81,8 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
+        Analytics.log(viewOperation: .editReminderVessel)
         
         if case .failure(let error) = self.vesselResult! {
             self.vesselResult = nil
@@ -109,6 +112,9 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         }
         let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .left(sender)) { confirmed in
             guard confirmed == true else { return }
+
+            Analytics.log(event: Analytics.CRUD_Op_RV.delete)
+
             let deleteResult = basicRC.delete(vessel: vessel)
             switch deleteResult {
             case .success:
@@ -127,6 +133,8 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     @IBAction private func doneButtonTapped(_ sender: Any) {
         self.view.endEditing(false)
         guard let vessel = self.vesselResult.value else { assertionFailure("Missing ReminderVessel"); return; }
+
+        Analytics.log(event: Analytics.CRUD_Op_RV.update)
         
         let sender = sender as? UIBarButtonItem
         assert(sender != nil, "Expected UIBarButtonItem to call this method")

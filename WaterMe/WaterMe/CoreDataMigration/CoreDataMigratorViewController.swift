@@ -78,6 +78,12 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
         }, completion: nil)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        Analytics.log(viewOperation: .coreDataMigration)
+    }
+
     // swiftlint:disable:next function_body_length
     private func configureAttributedText() {
         // set things to all defaults
@@ -156,10 +162,12 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
     }
 
     @IBAction private func cancelButtonTapped(_ sender: Any) {
+        Analytics.log(event: Analytics.CoreDataMigration.migrationSkipped)
         self.completionHandler(self, false)
     }
 
     @IBAction private func deleteButtonTapped(_ sender: Any) {
+        Analytics.log(event: Analytics.CoreDataMigration.migrationDeleted)
         self.migrator.deleteCoreDataStoreWithoutMigrating()
         self.completionHandler(self, false)
     }

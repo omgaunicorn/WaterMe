@@ -2,6 +2,7 @@ target 'WaterMe' do
 	platform :ios, '11.0'
 	use_frameworks!
 	
+	pod 'Crashlytics', '~> 3.9.3'
 	pod 'Cheers', '~> 2.0.0'
 	pod 'CropViewController', '~> 2.3.6'
 	pod 'Result', '~> 3.2.2'
