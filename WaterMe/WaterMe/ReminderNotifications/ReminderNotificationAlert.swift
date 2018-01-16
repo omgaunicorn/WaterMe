@@ -68,18 +68,22 @@ extension UIAlertController {
             UNUserNotificationCenter.current().requestAuthorizationIfNeeded() { permitted in
                 switch permitted {
                 case true:
+                    Analytics.log(event: Analytics.Notifications.permissionGranted)
                     AppDelegate.shared.notifictionController?.notificationPermissionsMayHaveChanged()
                     selection?(.allowed)
                 case false:
+                    Analytics.log(event: Analytics.Notifications.permissionDenied)
                     selection?(.denied)
                 }
             }
         }
         let no = UIAlertAction(title: LocalizedString.newPermissionButtonTitleDontSendNotifications, style: .destructive) { _ in
+            Analytics.log(event: Analytics.Notifications.permissionDenied)
             UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = false
             selection?(.denied)
         }
         let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
+            Analytics.log(event: Analytics.Notifications.permissionIgnored)
             UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
             selection?(.cancel)
         }

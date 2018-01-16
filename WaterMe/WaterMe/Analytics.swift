@@ -50,7 +50,15 @@ enum Analytics {
         case delete = "CRUD.RV.Delete"
     }
 
-    // MARK: Unrecoverable Errors
+    // MARK: Notification Permissions
+
+    enum Notifications: String {
+        case permissionGranted = "Notify.PermissionGranted"
+        case permissionDenied = "Notify.PermissionDenied"
+        case permissionIgnored = "Notify.PermissionIgnored"
+    }
+
+    // MARK: Core Data Migration
 
     enum CoreDataMigration: String {
         case migrationComplete = "CDMigration.Complete"
