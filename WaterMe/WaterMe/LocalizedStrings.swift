@@ -292,25 +292,17 @@ extension ReminderEditViewController {
     }
 }
 
-// TODO: Convert to Localized String with Format
 extension ReminderUserNotificationController {
-    enum LocalizedStrings {
-        static func notificationBodyWithPlantNames(plantNames: [String?]) -> String {
-            switch plantNames.count {
-            case 0:
-                fatalError("Tried to create a notification for no plants")
-            case 1:
-                let name1 = plantNames[0] ?? ReminderVessel.LocalizedString.untitledPlant
-                return "\(name1) needs attention today."
-            case 2:
-                let name1 = plantNames[0] ?? ReminderVessel.LocalizedString.untitledPlant
-                let name2 = plantNames[1] ?? ReminderVessel.LocalizedString.untitledPlant
-                return "\(name1) & \(name2) need attention today."
-            default:
-                let name1 = plantNames[0] ?? ReminderVessel.LocalizedString.untitledPlant
-                return "\(name1) & \(plantNames.count - 1) more need attention today."
-            }
-        }
+    enum LocalizedString {
+        static let bodyOneItem =
+            NSLocalizedString("‘%@’ needs attention today.",
+                              comment: "")
+        static let bodyTwoItems =
+            NSLocalizedString("‘%@’ and ‘%@’ need attention today.",
+                              comment: "")
+        static let bodyManyItems =
+            NSLocalizedString("‘%@’ and %d more attention today.",
+                              comment: "")
     }
 }
 
