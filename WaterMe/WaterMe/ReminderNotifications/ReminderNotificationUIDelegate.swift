@@ -37,6 +37,21 @@ class ReminderNotificationUIDelegate: NSObject, UNUserNotificationCenterDelegate
         // that just happened to arrive while the user is using the app
         completionHandler([.alert, .badge, .sound])
     }
+
+    // called when the user taps a notification whether app is open or closed
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Swift.Void)
+    {
+        switch response.actionIdentifier {
+        case UNNotificationDismissActionIdentifier:
+            Analytics.log(event: Analytics.NotificationAction.dismissed)
+        case UNNotificationDefaultActionIdentifier:
+            Analytics.log(event: Analytics.NotificationAction.tapped)
+        default:
+            Analytics.log(event: Analytics.NotificationAction.other)
+        }
+    }
 }
 
 extension UNUserNotificationCenter {

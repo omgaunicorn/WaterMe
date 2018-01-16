@@ -52,7 +52,7 @@ enum Analytics {
 
     // MARK: Notification Permissions
 
-    enum Notifications: String {
+    enum NotificationPermission: String {
         case permissionGranted = "Notify.PermissionGranted"
         case permissionDenied = "Notify.PermissionDenied"
         case permissionIgnored = "Notify.PermissionIgnored"
@@ -72,6 +72,14 @@ enum Analytics {
                 "total" : NSNumber(value: total)
             ]
         }
+    }
+
+    // MARK: Notification Tapped
+
+    enum NotificationAction: String {
+        case tapped = "Notify.Tapped"
+        case dismissed = "Notify.Dismissed"
+        case other = "Notify.Other"
     }
 
     // MARK: In-App Purchases
@@ -100,9 +108,6 @@ enum Analytics {
         case openAppStore = "VCView.OpenAppStore"
         case errorAlertRealm = "VCView.ErrorAlert.Realm"
         case errorAlertPurchase = "VCView.ErrorAlert.Purchase"
-
-        // TODO: These
-        case notificationTapped = "VCView.NotificationTapped"
     }
 
     // MARK: Logging Functions
