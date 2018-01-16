@@ -35,7 +35,7 @@ public extension HasProController {
 }
 
 public class ProController {
-    
+    /*
     public let config: Realm.Configuration
     public var realm: Realm {
         return try! Realm(configuration: self.config)
@@ -49,4 +49,5 @@ public class ProController {
         realmConfig.syncConfiguration = SyncConfiguration(user: user, realmURL: url, enableSSLValidation: true)
         self.config = realmConfig
     }
+ */
 }

@@ -55,7 +55,7 @@ class SettingsMainViewController: UIViewController {
                 }
                 self.present(vc, animated: true, completion: nil)
             case .openSettings:
-                UIApplication.shared.openSettings(completion: { _ in deselectRowAnimated?(true) })
+                UIApplication.shared.openAppSettings(completion: { _ in deselectRowAnimated?(true) })
             }
         }
     }

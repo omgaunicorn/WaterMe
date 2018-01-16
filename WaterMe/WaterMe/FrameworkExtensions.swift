@@ -27,10 +27,19 @@ import UIKit
 
 extension UIApplication {
     func openSettings(completion: ((Bool) -> Void)?) {
+        // these don't seem to work any more in iOS 11
+        // but there are a lot more here
+        // https://github.com/phynet/iOS-URL-Schemes
+        let url = URL(string: "App-prefs:")!
+        self.open(url, options: [:], completionHandler: completion)
+    }
+
+    func openAppSettings(completion: ((Bool) -> Void)?) {
         Analytics.log(viewOperation: .openSettings)
         let url = URL(string: UIApplicationOpenSettingsURLString)!
         self.open(url, options: [:], completionHandler: completion)
     }
+
     func openWriteReviewPage(completion: ((Bool) -> Void)?) {
         Analytics.log(viewOperation: .openAppStore)
         self.open(PrivateKeys.kReviewAppURL, options: [:], completionHandler: completion)
@@ -190,7 +199,12 @@ extension UIAlertController {
         let cancelAction = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel, handler: { _ in completion?(.cancel) })
         self.addAction(cancelAction)
         if let actionTitle = error.actionTitle {
-            let errorAction = UIAlertAction(title: actionTitle, style: .default, handler: { _ in completion?(.error(error)) })
+            let errorAction = UIAlertAction(title: actionTitle, style: .default) { _ in
+                // TODO: Unsafe Assumption
+                // The only error that has a button title is to open Settings
+                UIApplication.shared.openSettings(completion: nil)
+                completion?(.error(error))
+            }
             self.addAction(errorAction)
         }
     }

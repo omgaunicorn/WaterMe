@@ -384,6 +384,40 @@ extension PurchaseThanksViewController {
         static let errorUnknownAlertMessage =
             NSLocalizedString("An unknown error ocurred during the purchase. Please try again later.",
                               comment: "Alert: Purchase Not Allowed Error: Message: Message when an unknown error ocurred during the purchase.")
+    }
+}
 
+extension RealmError {
+    enum LocalizedString {
+        static let deleteTitle =
+            NSLocalizedString("Error Deleting",
+                              comment: "Realm Error: Delete: Title: Unable to delete the last reminder associated with a plant.")
+        static let deleteMessage =
+            NSLocalizedString("Unable to delete this reminder because its the only reminder for this plant. Each plant must have at least one reminder.",
+                              comment: "Realm Error: Delete: Message: Unable to delete the last reminder associated with a plant.")
+        static let loadTitle =
+            NSLocalizedString("Error Loading",
+                              comment: "Realm Error: Loading: Title: Error loading the database from disk. The app is probably not usable with this error.")
+        static let loadMessage =
+            NSLocalizedString("Error loading save file. Check to make sure there is free space available on this device.",
+                              comment: "Realm Error: Loading: Message: Error loading the database from disk. The app is probably not usable with this error.")
+        static let saveImageTitle =
+            NSLocalizedString("Error Saving Photo",
+                              comment: "Realm Error: Save Image: Title: Error saving the photo the user took of their plant. User has to take another photo.")
+        static let saveImageMessage =
+            NSLocalizedString("The selected photo couldn't be saved. Please take a different photo or choose an emoji.",
+                              comment: "Realm Error: Save Image: Message: Error saving the photo the user took of their plant. User has to take another photo.")
+        static let saveTitle =
+            NSLocalizedString("Error Saving",
+                              comment: "Realm Error: Save: Title: There was an error saving changes. The app is probably not usable if this error happens.")
+        static let saveMessage =
+            NSLocalizedString("Error saving changes. Check to make sure there is free space available on this device.",
+                              comment: "Realm Error: Save: Message: There was an error saving changes. The app is probably not usable if this error happens.")
+        static let objectDeletedMessage =
+            NSLocalizedString("Unable to save changes because the item was deleted. Possibly from another device.",
+                              comment: "Realm Error: Object Deleted: Message: Error saving because the object that is being saved has already been deleted.")
+        static let buttonTitleManageStorage =
+            NSLocalizedString("Manage Storage",
+                              comment: "Realm Error: Button Title: Manage Store: Opens the setting app for the user.")
     }
 }
