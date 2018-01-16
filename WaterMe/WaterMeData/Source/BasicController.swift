@@ -357,7 +357,7 @@ extension BasicController {
             self.localRealmExists == false,
             self.legacyCoreDataStoreExists == false,
             let bundleURL = Bundle.main.url(forResource: "StarterRealm", withExtension: "realm")
-            else { return }
+        else { return }
         try FileManager.default.copyItem(at: bundleURL, to: self.localRealmFile)
     }
 }

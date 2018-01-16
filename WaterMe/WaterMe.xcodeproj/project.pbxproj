@@ -41,6 +41,7 @@
 		504A8D611EDB5A46002D928D /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */; };
 		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
 		5065AA1C200E872900C7F0CC /* LocalizedErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065AA1B200E872900C7F0CC /* LocalizedErrors.swift */; };
+		5065AA25200EC62F00C7F0CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5065AA27200EC62F00C7F0CC /* Localizable.strings */; };
 		506A6218200562AC008EF601 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506A6217200562AC008EF601 /* Settings.storyboard */; };
 		506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A6219200562B9008EF601 /* SettingsMainViewController.swift */; };
 		506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A621B200562C3008EF601 /* SettingsTableViewController.swift */; };
@@ -123,7 +124,6 @@
 		4B125E6363F6731C5C3C2000 /* Pods_WaterMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaterMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderMainViewController.swift; sourceTree = "<group>"; };
 		5015EEF51FF56FF200CAC7D7 /* DragTargetInstructionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragTargetInstructionalView.swift; sourceTree = "<group>"; };
-		5017BECE200850A6004105EE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/StarterRealm.realm; sourceTree = "<group>"; };
 		501A9AE41FE9682C0016160D /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WateringAnimationPlayerView.swift; sourceTree = "<group>"; };
 		501C0E881ECE5EFF00D4EE7C /* AdminConsole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdminConsole.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +156,8 @@
 		504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
 		505086AE1ECBD43200745012 /* RealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
 		5065AA1B200E872900C7F0CC /* LocalizedErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedErrors.swift; sourceTree = "<group>"; };
+		5065AA26200EC62F00C7F0CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5065AA29200EC73400C7F0CC /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/StarterRealm.realm; sourceTree = "<group>"; };
 		506A6217200562AC008EF601 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		506A6219200562B9008EF601 /* SettingsMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainViewController.swift; sourceTree = "<group>"; };
 		506A621B200562C3008EF601 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -426,6 +428,7 @@
 				5047B7A4200D6B6800F69C73 /* Analytics.swift */,
 				501A9AE41FE9682C0016160D /* LocalizedStrings.swift */,
 				5065AA1B200E872900C7F0CC /* LocalizedErrors.swift */,
+				5065AA27200EC62F00C7F0CC /* Localizable.strings */,
 				500679AD1F4BF3B700F8100D /* ReminderMain */,
 				50E8B1D21EDF79C600ACCDAF /* ReminderVesselMain */,
 				506A6215200561C6008EF601 /* Settings */,
@@ -643,6 +646,7 @@
 			files = (
 				508FFCB01EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib in Resources */,
 				506A6218200562AC008EF601 /* Settings.storyboard in Resources */,
+				5065AA25200EC62F00C7F0CC /* Localizable.strings in Resources */,
 				50BB0F691EC0011800850FF4 /* LaunchScreen.storyboard in Resources */,
 				507A64581F049CCA004E18C5 /* ReminderTableViewCell.xib in Resources */,
 				50E8B1E41EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard in Resources */,
@@ -1004,10 +1008,18 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		5065AA27200EC62F00C7F0CC /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5065AA26200EC62F00C7F0CC /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		50F7A362200844390063A1FC /* StarterRealm.realm */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5017BECE200850A6004105EE /* Base */,
+				5065AA29200EC73400C7F0CC /* en */,
 			);
 			name = StarterRealm.realm;
 			sourceTree = "<group>";
