@@ -372,6 +372,18 @@ extension PurchaseThanksViewController {
         static let body =
             NSLocalizedString("Thank you for your purchase. Your support is critical to the continued development of WaterMe.",
                               comment: "Purchase Thanks: Body: Body text thanking the user for their support.")
+        static let errorAlertTitle =
+            NSLocalizedString("Purchase Error",
+                              comment: "Alert: Purchase Error: Title: The title for all purchase error alerts.")
+        static let errorNetworkAlertMessage =
+            NSLocalizedString("A network error ocurred. Check your data connection and try to purchase again.",
+                              comment: "Alert: Purchase Network Error: Message: Message when there was a networking error during the purchase process.")
+        static let errorNotAllowedAlertMessage =
+            NSLocalizedString("You're not allowed to make purchases on this device. Thank you for the thought, though ❤️",
+                              comment: "Alert: Purchase Not Allowed Error: Message: Message when the user was not allowed to make a purchase.")
+        static let errorUnknownAlertMessage =
+            NSLocalizedString("An unknown error ocurred during the purchase. Please try again later.",
+                              comment: "Alert: Purchase Not Allowed Error: Message: Message when an unknown error ocurred during the purchase.")
 
     }
 }

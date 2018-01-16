@@ -42,15 +42,15 @@ class PurchaseThanksViewController: UIViewController {
             }
         case .errorNetwork:
             Analytics.log(event: Analytics.IAPOperation.buyErrorNetwork)
-            alert = UIAlertController(title: "Purchase Error", message: "A network error ocurred. Check your data connection and try and make the purchase again later.", preferredStyle: .alert)
+            alert = UIAlertController(title: LocalizedString.errorAlertTitle, message: LocalizedString.errorNetworkAlertMessage, preferredStyle: .alert)
         case .errorNotAllowed:
             Analytics.log(event: Analytics.IAPOperation.buyErrorNotAllowed)
-            alert = UIAlertController(title: "Purchase Error", message: "It looks like you're not allowed to buy in-app purchases. Thanks for trying though.", preferredStyle: .alert)
+            alert = UIAlertController(title: LocalizedString.errorAlertTitle, message: LocalizedString.errorNotAllowedAlertMessage, preferredStyle: .alert)
         case .errorUnknown:
             Analytics.log(event: Analytics.IAPOperation.buyErrorUnknown)
-            alert = UIAlertController(title: "Purchase Error", message: "An unknown error ocurred. Try and make the purchase again later.", preferredStyle: .alert)
+            alert = UIAlertController(title: LocalizedString.errorAlertTitle, message: LocalizedString.errorUnknownAlertMessage, preferredStyle: .alert)
         }
-        let confirm = UIAlertAction(title: "Dismiss", style: .cancel) { _ in
+        let confirm = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
             AppDelegate.shared.purchaseController?.finish(inFlight: inFlight)
             completion(nil)
         }
