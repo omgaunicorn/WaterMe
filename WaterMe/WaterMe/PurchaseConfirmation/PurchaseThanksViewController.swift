@@ -54,6 +54,7 @@ class PurchaseThanksViewController: UIViewController {
             AppDelegate.shared.purchaseController?.finish(inFlight: inFlight)
             completion(nil)
         }
+        Analytics.log(viewOperation: .errorAlertPurchase)
         alert.addAction(confirm)
         return alert
     }

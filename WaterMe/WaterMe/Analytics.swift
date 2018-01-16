@@ -98,10 +98,11 @@ enum Analytics {
         case tipJar = "VCView.TipJar"
         case openSettings = "VCView.OpenSettings"
         case openAppStore = "VCView.OpenAppStore"
+        case errorAlertRealm = "VCView.ErrorAlert.Realm"
+        case errorAlertPurchase = "VCView.ErrorAlert.Purchase"
 
         // TODO: These
         case notificationTapped = "VCView.NotificationTapped"
-        case errorAlert = "VCView.ErrorAlert"
     }
 
     // MARK: Logging Functions

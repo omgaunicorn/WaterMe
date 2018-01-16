@@ -185,7 +185,7 @@ extension UIAlertController {
     }
     
     convenience init<T>(error: T, completion: ((ErrorSelection<T>) -> Void)?) {
-        Analytics.log(viewOperation: .errorAlert)
+        Analytics.log(viewOperation: .errorAlertRealm)
         self.init(title: error.title, message: error.details, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel, handler: { _ in completion?(.cancel) })
         self.addAction(cancelAction)
@@ -204,7 +204,6 @@ extension UIAlertController {
     }
     
     private convenience init<T>(saveAnywayError error: T, completion: @escaping (SaveAnywayErrorSelection<T>) -> Void) {
-        Analytics.log(viewOperation: .errorAlert)
         self.init(title: error.title, message: error.details, preferredStyle: .alert)
         if let actionTitle = error.actionTitle {
             let fix = UIAlertAction(title: actionTitle, style: .default, handler: { _ in completion(.error(error)) })
@@ -217,7 +216,6 @@ extension UIAlertController {
     }
     
     private convenience init<T>(actionSheetWithActions actions: [UIAlertAction], cancelSaveCompletion completion: @escaping (SaveAnywayErrorSelection<T>) -> Void) {
-        Analytics.log(viewOperation: .errorAlert)
         self.init(title: nil, message: LocalizedString.titleUnsolvedIssues, preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: LocalizedString.buttonTitleCancel, style: .cancel, handler: { _ in completion(.cancel) })
         let save = UIAlertAction(title: LocalizedString.buttonTitleSaveAnyway, style: .destructive, handler: { _ in completion(.saveAnyway) })
@@ -262,7 +260,6 @@ extension UIAlertController {
     convenience init(localizedDeleteConfirmationAlertPresentedFrom sender: Either<UIBarButtonItem, UIView>?,
                      userConfirmationHandler confirmed: ((Bool) -> Void)?)
     {
-        Analytics.log(viewOperation: .errorAlert)
         let style: UIAlertControllerStyle = sender != nil ? .actionSheet : .alert
         self.init(title: nil, message: LocalizedString.deleteAlertMessage, preferredStyle: style)
         let delete = UIAlertAction(title: LocalizedString.buttonTitleDelete, style: .destructive) { _ in
