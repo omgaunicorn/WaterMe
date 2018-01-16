@@ -21,6 +21,8 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+/*
+
 public enum Level {
     case basic, pro
 }
@@ -53,3 +55,5 @@ internal extension Period {
         }
     }
 }
+
+ */

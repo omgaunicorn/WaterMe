@@ -23,6 +23,8 @@
 
 import Foundation
 
+/*
+
 public struct PurchasedSubscription {
     let period: Period
     let level: Level
@@ -42,3 +44,5 @@ public struct PurchasedSubscription {
         self.expirationDate = expirationDate
     }
 }
+
+ */
