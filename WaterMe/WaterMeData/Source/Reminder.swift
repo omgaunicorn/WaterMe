@@ -194,19 +194,5 @@ public extension Reminder {
     public enum Section: Int {
         case late, today, tomorrow, thisWeek, later
         public static let count = 5
-        public var localizedTitleString: String {
-            switch self {
-            case .late:
-                return "Late"
-            case .today:
-                return "Today"
-            case .tomorrow:
-                return "Tomorrow"
-            case .thisWeek:
-                return "This Week"
-            case .later:
-                return "Later"
-            }
-        }
     }
 }

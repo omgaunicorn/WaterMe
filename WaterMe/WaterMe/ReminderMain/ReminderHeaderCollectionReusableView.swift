@@ -55,3 +55,20 @@ class ReminderHeaderCollectionReusableView: UICollectionReusableView {
         }
     }
 }
+
+extension Reminder.Section {
+    var localizedTitleString: String {
+        switch self {
+        case .late:
+            return LocalizedString.late
+        case .today:
+            return LocalizedString.today
+        case .tomorrow:
+            return LocalizedString.tomorrow
+        case .thisWeek:
+            return LocalizedString.thisWeek
+        case .later:
+            return LocalizedString.later
+        }
+    }
+}

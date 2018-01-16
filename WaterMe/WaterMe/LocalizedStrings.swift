@@ -421,3 +421,23 @@ extension RealmError {
                               comment: "Realm Error: Button Title: Manage Store: Opens the setting app for the user.")
     }
 }
+
+extension Reminder.Section {
+    enum LocalizedString {
+        static let late =
+            NSLocalizedString("Late",
+                              comment: "Reminder Main List: Section Header: Title")
+        static let today =
+            NSLocalizedString("Today",
+                              comment: "Reminder Main List: Section Header: Title")
+        static let tomorrow =
+            NSLocalizedString("Tomorrow",
+                              comment: "Reminder Main List: Section Header: Title")
+        static let thisWeek =
+            NSLocalizedString("This Week",
+                              comment: "Reminder Main List: Section Header: Title")
+        static let later =
+            NSLocalizedString("Later",
+                              comment: "Reminder Main List: Section Header: Title")
+    }
+}
