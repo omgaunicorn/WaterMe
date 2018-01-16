@@ -21,8 +21,21 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import WaterMeStore
 import WaterMeData
 import UIKit
+
+extension UIApplication {
+    func openSettings(completion: ((Bool) -> Void)?) {
+        Analytics.log(viewOperation: .openSettings)
+        let url = URL(string: UIApplicationOpenSettingsURLString)!
+        self.open(url, options: [:], completionHandler: completion)
+    }
+    func openWriteReviewPage(completion: ((Bool) -> Void)?) {
+        Analytics.log(viewOperation: .openAppStore)
+        self.open(PrivateKeys.kReviewAppURL, options: [:], completionHandler: completion)
+    }
+}
 
 extension AppDelegate {
     var buildNumberString: String {

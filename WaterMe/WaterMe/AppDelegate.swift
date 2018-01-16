@@ -33,18 +33,6 @@ import UIKit
 
 let log = XCGLogger.default
 
-extension UIApplication {
-    func openSettings(completion: ((Bool) -> Void)?) {
-        Analytics.log(viewOperation: .openSettings)
-        let url = URL(string: UIApplicationOpenSettingsURLString)!
-        self.open(url, options: [:], completionHandler: completion)
-    }
-    func openWriteReviewPage(completion: ((Bool) -> Void)?) {
-        Analytics.log(viewOperation: .openAppStore)
-        self.open(PrivateKeys.kReviewAppURL, options: [:], completionHandler: completion)
-    }
-}
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
