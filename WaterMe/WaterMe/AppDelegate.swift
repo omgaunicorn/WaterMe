@@ -64,9 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         super.init()
         
         // configure logging
-        // TODO: Change this to no longer be debug when ready for release
-        log.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, showDate: true, writeToFile: true, fileLevel: .debug)
-        log.formatters = [LogSpreader()]
+        log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
         
         // as early as possible, configure standard defaults
         UserDefaults.standard.configure()
@@ -173,29 +171,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard let savedBuild = _savedBuild, let currentBuild = _currentBuild, currentBuild == savedBuild else { return false }
         return true
     }
-}
-
-class LogSpreader: NSObject, LogFormatterProtocol {
-
-    func format(logDetails: inout LogDetails, message: inout String) -> String {
-        // send the log to other services here
-        switch logDetails.level {
-        case .none:
-            break
-        case .verbose:
-            break
-        case .debug:
-            break
-        case .info:
-            break
-        case .warning:
-            break
-        case .error:
-            break
-        case .severe:
-            break
-        }
-        return ""
-    }
-
 }
