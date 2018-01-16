@@ -23,6 +23,8 @@
 
 import RealmSwift
 
+/*
+
 public class ReceiptController {
     
     public let user: SyncUser
@@ -132,3 +134,4 @@ public class ReceiptController {
       self.receiptToken?.invalidate()
     }
 }
+ */

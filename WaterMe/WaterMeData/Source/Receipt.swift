@@ -23,6 +23,7 @@
 
 import RealmSwift
 
+/*
 public class Receipt: Object {
     
     @objc internal(set) public dynamic var pkcs7Data: Data?
@@ -56,3 +57,4 @@ public extension Receipt {
         return newReceipt
     }
 }
+ */
