@@ -32,7 +32,7 @@ public protocol UserFacingError: Swift.Error {
 }
 
 public protocol UICompleteCheckable {
-    associatedtype E: UserFacingError
+    associatedtype E
     var isUIComplete: [E] { get }
 }
 
@@ -70,36 +70,8 @@ public class ReminderVessel: Object {
 
 extension ReminderVessel: UICompleteCheckable {
     
-    public enum Error: UserFacingError {
+    public enum Error {
         case missingIcon, missingName, noReminders
-        public var title: String {
-            switch self {
-            case .missingIcon:
-                return "Missing Photo"
-            case .missingName:
-                return "Missing Name"
-            case .noReminders:
-                return "Missing Reminders"
-            }
-        }
-        public var details: String? {
-            switch self {
-            case .missingIcon, .missingName:
-                return nil
-            case .noReminders:
-                return "Each plant can have many reminders. You may want one reminder to water your plant every 4 days. And a second reminder to fertilize your plant every 30 days."
-            }
-        }
-        public var actionTitle: String? {
-            switch self {
-            case .missingIcon:
-                return "Choose Photo"
-            case .missingName:
-                return "Enter Name"
-            case .noReminders:
-                return "Add Reminder"
-            }
-        }
     }
     
     public typealias E = Error

@@ -125,27 +125,8 @@ fileprivate extension Reminder {
 
 extension Reminder: UICompleteCheckable {
     
-    public enum Error: UserFacingError {
+    public enum Error {
         case missingMoveLocation, missingOtherDescription
-        public var title: String {
-            switch self {
-            case .missingMoveLocation:
-                return "Missing Location"
-            case .missingOtherDescription:
-                return "Missing Description"
-            }
-        }
-        public var details: String? {
-            return nil
-        }
-        public var actionTitle: String? {
-            switch self {
-            case .missingMoveLocation:
-                return "Enter Location"
-            case .missingOtherDescription:
-                return "Enter Description"
-            }
-        }
     }
     
     public typealias E = Error

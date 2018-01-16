@@ -441,3 +441,28 @@ extension Reminder.Section {
                               comment: "Reminder Main List: Section Header: Title")
     }
 }
+
+extension ReminderVessel.Error {
+    enum LocalizedString {
+        static let missingPhoto =
+            NSLocalizedString("Missing Photo",
+                              comment: "Error Saving: Plant: Missing Photo: If the user has not chosen a photo or an emoji for their plant and tries to save, an alert will warn them. This is the button title to fix the error.")
+        static let missingName =
+            NSLocalizedString("Missing Name",
+                              comment: "Error Saving: Plant: Missing Name: If the user has not a name for their plant and tries to save, an alert will warn them. This is the button title to fix the error.")
+        static let missingReminders =
+            NSLocalizedString("Missing Reminders",
+                              comment: "Error Saving: Plant: Missing Reminders: If the user has not added at least one reminder for their plant and tries to save, an alert will warn them. This is the button title to fix the error.")
+    }
+}
+
+extension Reminder.Error {
+    enum LocalizedString {
+        static let missingLocation =
+            NSLocalizedString("Missing Location",
+                              comment: "Error Saving: Reminder: Missing Location: If the user has no entered a location for their move reminder and tries to save, an alert will warn them. This is the button title to fix the error.")
+        static let missingDescription =
+            NSLocalizedString("Missing Description",
+                              comment: "Error Saving: Reminder: Missing Description: If the user has not entered a description for their other reminder and tries to save, an alert will warn them. This is the button title to fix the error.")
+    }
+}

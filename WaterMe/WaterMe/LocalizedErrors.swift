@@ -1,5 +1,5 @@
 //
-//  RealmError.swift
+//  LocalizedErrors.swift
 //  WaterMe
 //
 //  Created by Jeffrey Bergier on 16/1/18.
@@ -60,5 +60,41 @@ extension RealmError: UserFacingError {
         case .createError, .loadError, .readError, .writeError:
             return LocalizedString.buttonTitleManageStorage
         }
+    }
+}
+
+extension ReminderVessel.Error: UserFacingError {
+    public var title: String {
+        switch self {
+        case .missingIcon:
+            return LocalizedString.missingPhoto
+        case .missingName:
+            return LocalizedString.missingName
+        case .noReminders:
+            return LocalizedString.missingReminders
+        }
+    }
+    public var details: String? {
+        return nil
+    }
+    public var actionTitle: String? {
+        return nil
+    }
+}
+
+extension Reminder.Error: UserFacingError {
+    public var title: String {
+        switch self {
+        case .missingMoveLocation:
+            return LocalizedString.missingLocation
+        case .missingOtherDescription:
+            return LocalizedString.missingDescription
+        }
+    }
+    public var details: String? {
+        return nil
+    }
+    public var actionTitle: String? {
+        return nil
     }
 }
