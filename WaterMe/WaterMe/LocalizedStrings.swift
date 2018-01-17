@@ -296,13 +296,13 @@ extension ReminderUserNotificationController {
     enum LocalizedString {
         static let bodyOneItem =
             NSLocalizedString("‘%@’ needs attention today.",
-                              comment: "")
+                              comment: "Notification Body: 1 Item: When 1 plant needs to be taken care of in a day, this is the body text of the notification.")
         static let bodyTwoItems =
             NSLocalizedString("‘%@’ and ‘%@’ need attention today.",
-                              comment: "")
+                              comment: "Notification Body: 2 Items: When 2 plants needs to be taken care of in a day, this is the body text of the notification.")
         static let bodyManyItems =
             NSLocalizedString("‘%@’ and %d more attention today.",
-                              comment: "")
+                              comment: "Notification Body: Many Items: When more than 2 plants needs to be taken care of in a day, this is the body text of the notification.")
     }
 }
 

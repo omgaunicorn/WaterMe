@@ -1,5 +1,5 @@
 //
-//  LocalizedErrors.swift
+//  UserFacingErrors.swift
 //  WaterMe
 //
 //  Created by Jeffrey Bergier on 16/1/18.
