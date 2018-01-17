@@ -63,6 +63,7 @@ class TextFieldTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.textField?.delegate = self
         self.topConstraint?.constant = UITableViewCell.style_textFieldCellTopPadding
         self.bottomConstraint?.constant = UITableViewCell.style_textFieldCellBottomPadding
         self.leadingConstraint?.constant = UITableViewCell.style_textFieldCellLeadingPadding
@@ -77,5 +78,12 @@ class TextFieldTableViewCell: UITableViewCell {
         self.label?.attributedText = nil
         self.textChanged = nil
         self.label?.isHighlighted = true
+    }
+}
+
+extension TextFieldTableViewCell: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
     }
 }
