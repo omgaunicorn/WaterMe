@@ -79,6 +79,9 @@ extension ReminderMainViewController {
 
 extension UIAlertController {
     enum LocalizedString {
+        static let buttonTitleChoosePhoto =
+            NSLocalizedString("Choose a Photo",
+                              comment: "Button Title in an Alert that allows the user to open the Camera, Photo Picker, or Emoji Picker Screen.")
         static let buttonTitleEmoji =
             NSLocalizedString("Emoji",
                               comment: "Button Title in an Alert that allows the user to open a screen where they can choose from various emoji instead of a photo for their plant.")
