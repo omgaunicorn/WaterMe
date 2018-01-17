@@ -44,8 +44,8 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     private weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     private var applicationDidFinishLaunchingError: RealmError?
 
-    private lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(title: ReminderVesselMainViewController.LocalizedString.title, style: .done, target: self, action: #selector(self.plantsButtonTapped(_:)))
-    private lazy var settingsBBI: UIBarButtonItem = UIBarButtonItem(title: SettingsMainViewController.LocalizedString.title, style: .plain, target: self, action: #selector(self.settingsButtonTapped(_:)))
+    private lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedReminderVesselButtonWithTarget: self, action: #selector(self.plantsButtonTapped(_:)))
+    private lazy var settingsBBI: UIBarButtonItem = UIBarButtonItem(localizedSettingsButtonWithTarget: self, action: #selector(self.settingsButtonTapped(_:)))
 
     private let dueDateFormatter: DateFormatter = {
         let df = DateFormatter()
