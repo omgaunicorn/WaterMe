@@ -97,7 +97,7 @@ extension UIAlertController {
         self.init(title: LocalizedString.permissionDeniedAlertTitle,
                   message: LocalizedString.permissionDeniedAlertMessage,
                   preferredStyle: style)
-        let settings = UIAlertAction(title: SettingsMainViewController.LocalizedString.title, style: .default) { _ in
+        let settings = UIAlertAction(title: SettingsMainViewController.LocalizedString.settingsTitle, style: .default) { _ in
             UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
             UIApplication.shared.openSettings() { _ in
                 selection?(.cancel)

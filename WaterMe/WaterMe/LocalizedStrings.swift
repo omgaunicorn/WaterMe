@@ -198,10 +198,10 @@ extension ReminderVesselMainViewController {
 
 extension SettingsMainViewController {
     enum LocalizedString {
-        static let title =
+        static let settingsTitle =
             NSLocalizedString("Settings",
-                              comment: "Title of the settings screen. Also button title that opens both the in-app settings screen and the iOS settings screen for WaterMe.")
-        static let sectionTitleTipJar =
+                              comment: "Button title that opens both the in-app settings screen and the iOS settings screen for WaterMe.")
+        static let title =
             NSLocalizedString("Tip Jar",
                               comment: "Screen title for the settings screen. Also used for button titles to open the Settings screen.")
         static let cellTitleOpenSettings =

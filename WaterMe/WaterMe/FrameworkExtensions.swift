@@ -79,7 +79,7 @@ extension UIBarButtonItem {
         self.init(image: #imageLiteral(resourceName: "TipJar"), style: UIBarButtonItemStyle.plain, target: target, action: action)
         self.imageInsets.left = -18
         self.landscapeImagePhoneInsets.left = -24
-        self.accessibilityLabel = SettingsMainViewController.LocalizedString.title
+        self.accessibilityLabel = SettingsMainViewController.LocalizedString.settingsTitle
     }
     convenience init(localizedDeleteButtonWithTarget target: Any, action: Selector) {
         self.init(title: UIAlertController.LocalizedString.buttonTitleDelete, style: .plain, target: target, action: action)

@@ -155,9 +155,9 @@ extension SettingsTableViewController {
         var localizedTitle: String {
             switch self {
             case .settings:
-                return SettingsMainViewController.LocalizedString.title
+                return SettingsMainViewController.LocalizedString.settingsTitle
             case .tipJar:
-                return SettingsMainViewController.LocalizedString.sectionTitleTipJar
+                return SettingsMainViewController.LocalizedString.title
             }
         }
         static func sectionsAndRows(from indexPath: IndexPath) -> (Sections, Either<SettingsRows, TipJarRows>)? {

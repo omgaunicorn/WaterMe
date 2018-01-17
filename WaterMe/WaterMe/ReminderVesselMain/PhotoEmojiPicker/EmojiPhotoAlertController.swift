@@ -81,7 +81,7 @@ extension UIAlertController {
         let alertVC = UIAlertController(title: ReminderVesselEditViewController.LocalizedString.alertTitlePermissionDenied,
                                         message: ReminderVesselEditViewController.LocalizedString.alertBodyCameraDenied,
                                         preferredStyle: .alert)
-        let settings = UIAlertAction(title: SettingsMainViewController.LocalizedString.title, style: .default) { _ in
+        let settings = UIAlertAction(title: SettingsMainViewController.LocalizedString.settingsTitle, style: .default) { _ in
             UIApplication.shared.openAppSettings(completion: nil)
         }
         let cancel = UIAlertAction(title: LocalizedString.buttonTitleCancel, style: .cancel, handler: nil)
