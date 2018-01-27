@@ -44,7 +44,8 @@ class SettingsInfoTableViewCell: UITableViewCell {
         self.trailingConstraint?.constant = UITableViewCell.style_labelCellTrailingPadding
         self.topConstraint?.constant = UITableViewCell.style_labelCellTopPadding
         self.bottomConstraint?.constant = UITableViewCell.style_labelCellBottomPadding
-        self.emojiImageView?.ring = false
+        self.emojiImageView?.size = .small
+        self.emojiImageView?.ring = true
         self.prepareForReuse()
     }
 
