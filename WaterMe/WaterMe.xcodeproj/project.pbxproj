@@ -45,6 +45,7 @@
 		506A6218200562AC008EF601 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506A6217200562AC008EF601 /* Settings.storyboard */; };
 		506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A6219200562B9008EF601 /* SettingsMainViewController.swift */; };
 		506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A621B200562C3008EF601 /* SettingsTableViewController.swift */; };
+		506DFA4B201D351A007FEAB5 /* emojione-apple.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 506DFA4A201D351A007FEAB5 /* emojione-apple.ttf */; };
 		50702D11200589B0009EF952 /* SettingsTipJarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */; };
 		50702D13200591CC009EF952 /* EmailDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50702D12200591CC009EF952 /* EmailDeveloperViewController.swift */; };
 		50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */; };
@@ -161,6 +162,7 @@
 		506A6217200562AC008EF601 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		506A6219200562B9008EF601 /* SettingsMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainViewController.swift; sourceTree = "<group>"; };
 		506A621B200562C3008EF601 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		506DFA4A201D351A007FEAB5 /* emojione-apple.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "emojione-apple.ttf"; sourceTree = "<group>"; };
 		50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTipJarTableViewCell.swift; sourceTree = "<group>"; };
 		50702D12200591CC009EF952 /* EmailDeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailDeveloperViewController.swift; sourceTree = "<group>"; };
 		50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
 				50F7A362200844390063A1FC /* StarterRealm.realm */,
 				50BB0F6B1EC001C200850FF4 /* Videos */,
+				506DFA4A201D351A007FEAB5 /* emojione-apple.ttf */,
 				50BB0F651EBFF9A700850FF4 /* Settings.bundle */,
 				50BB0F671EC0011800850FF4 /* LaunchScreen.storyboard */,
 				50BB0F6F1EC00E8E00850FF4 /* WaterMe.entitlements */,
@@ -655,6 +658,7 @@
 				5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */,
 				50B511A51EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib in Resources */,
 				50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */,
+				506DFA4B201D351A007FEAB5 /* emojione-apple.ttf in Resources */,
 				5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */,
 				50F7A360200844390063A1FC /* StarterRealm.realm in Resources */,
 				508E61551F8ACC5E00B28DD8 /* ReminderMain.storyboard in Resources */,

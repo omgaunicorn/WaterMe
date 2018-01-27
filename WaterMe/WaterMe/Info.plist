@@ -49,5 +49,9 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>emojione-apple.ttf</string>
+	</array>
 </dict>
 </plist>

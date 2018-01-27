@@ -201,11 +201,11 @@ enum Style {
             ]
         case .emojiSmall(let accessibilityFontSizeEnabled):
             return [
-                .font : UIFont.systemFont(ofSize: accessibilityFontSizeEnabled ? 50 : 36)
+                .font : Font.emojiFont(ofSize: accessibilityFontSizeEnabled ? 50 : 36)
             ]
         case .emojiLarge(let accessibilityFontSizeEnabled):
             return [
-                .font : UIFont.systemFont(ofSize: accessibilityFontSizeEnabled ? 120 : 60)
+                .font : Font.emojiFont(ofSize: accessibilityFontSizeEnabled ? 120 : 60)
             ]
         case .textInputTableViewCell:
             return [
@@ -276,6 +276,9 @@ enum Style {
         }
         static var bodyMinusIgnoringDynamicType: UIFont {
             return UIFont.systemFont(ofSize: 14)
+        }
+        static func emojiFont(ofSize size: CGFloat) -> UIFont {
+            return UIFont(name: "AppleColorEmoj2", size: size)!
         }
     }
     
