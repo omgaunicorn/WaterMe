@@ -201,11 +201,13 @@ enum Style {
             ]
         case .emojiSmall(let accessibilityFontSizeEnabled):
             return [
-                .font : Font.emojiFont(ofSize: accessibilityFontSizeEnabled ? 50 : 36)
+                .font : Font.emojiFont(ofSize: accessibilityFontSizeEnabled ? 50 : 36),
+                .baselineOffset : NSNumber(value: accessibilityFontSizeEnabled ? -8 : -4)
             ]
         case .emojiLarge(let accessibilityFontSizeEnabled):
             return [
-                .font : Font.emojiFont(ofSize: accessibilityFontSizeEnabled ? 120 : 60)
+                .font : Font.emojiFont(ofSize: accessibilityFontSizeEnabled ? 120 : 60),
+                .baselineOffset : NSNumber(value: accessibilityFontSizeEnabled ? -10 : -5)
             ]
         case .textInputTableViewCell:
             return [
