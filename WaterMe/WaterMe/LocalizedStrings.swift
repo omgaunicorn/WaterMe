@@ -223,6 +223,20 @@ extension SettingsMainViewController {
     }
 }
 
+extension EmojiPickerFooterCollectionReusableView {
+    enum LocalizedString {
+        static let providedBy =
+            NSLocalizedString("Emoji Provided by ",
+                              comment: "EmojiPicker: Footer: Label: Explains the emoji are provided by EmojiOne")
+        static let emojiOne =
+            NSLocalizedString("EmojiOne",
+                              comment: "EmojiPicker: Footer: Button: Opens EmojiOne page when tapped.")
+        static let why =
+            NSLocalizedString("Why?",
+                              comment: "EmojiPicker: Footer: Button: Explains why the emoji are different when tapped.")
+    }
+}
+
 extension ReminderVesselEditViewController {
     enum LocalizedString {
         static let rowLabelInterval =

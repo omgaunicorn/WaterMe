@@ -71,9 +71,9 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
         self.stackView.addArrangedSubview(self.whyButton)
 
         // configure labels
-        self.providedByLabel.attributedText = NSAttributedString(string: "Emoji Provided by ", style: .sectionHeader(primarySection))
-        self.providedByButton.setAttributedTitle(NSAttributedString(string: "EmojiOne", style: .sectionHeader(Reminder.Section.today)), for: .normal)
-        self.whyButton.setAttributedTitle(NSAttributedString(string: "Why?", style: .sectionHeader(Reminder.Section.late)), for: .normal)
+        self.providedByLabel.attributedText = NSAttributedString(string: LocalizedString.providedBy, style: .sectionHeader(primarySection))
+        self.providedByButton.setAttributedTitle(NSAttributedString(string: LocalizedString.emojiOne, style: .sectionHeader(Reminder.Section.today)), for: .normal)
+        self.whyButton.setAttributedTitle(NSAttributedString(string: LocalizedString.why, style: .sectionHeader(Reminder.Section.late)), for: .normal)
 
         // configure targets
         self.providedByButton.addTarget(self, action: #selector(self.providedByButtonTapped(_:)), for: .touchUpInside)
@@ -90,8 +90,11 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
+
         self.stackView.removeArrangedSubview(self.providedByButton)
         self.stackView.removeArrangedSubview(self.providedByLabel)
+        self.stackView.removeArrangedSubview(self.spacerView)
+        self.stackView.removeArrangedSubview(self.whyButton)
         switch self.traitCollection.layoutDirection {
         case .leftToRight, .unspecified:
             self.stackView.addArrangedSubview(self.providedByLabel)
