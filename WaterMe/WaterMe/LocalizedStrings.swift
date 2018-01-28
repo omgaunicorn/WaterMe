@@ -237,12 +237,18 @@ extension EmojiPickerFooterCollectionReusableView {
         static let providedBy =
             NSLocalizedString("Emoji Provided by ",
                               comment: "EmojiPicker: Footer: Label: Explains the emoji are provided by EmojiOne")
+        static let providedByAccessibility =
+            NSLocalizedString("Emoji Provided by EmojiOne",
+                              comment: "EmojiPicker: Footer: Button Accessibility Label: Explains the emoji are provided by EmojiOne")
         static let emojiOne =
             NSLocalizedString("EmojiOne",
                               comment: "EmojiPicker: Footer: Button: Opens EmojiOne page when tapped.")
         static let why =
             NSLocalizedString("Why?",
                               comment: "EmojiPicker: Footer: Button: Explains why the emoji are different when tapped.")
+        static let whyAccessibility =
+            NSLocalizedString("Why Alternative Emoji?",
+                              comment: "EmojiPicker: Footer: Button Accessibility Label: Why Alernative Emoji")
     }
 }
 

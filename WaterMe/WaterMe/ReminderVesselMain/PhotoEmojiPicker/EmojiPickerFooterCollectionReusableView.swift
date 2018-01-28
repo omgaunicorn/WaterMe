@@ -87,6 +87,11 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
         self.providedByLabel.attributedText = NSAttributedString(string: LocalizedString.providedBy, style: .sectionHeaderRegular(primarySection))
         self.providedByButton.setAttributedTitle(NSAttributedString(string: LocalizedString.emojiOne, style: .sectionHeaderBold(Reminder.Section.today)), for: .normal)
         self.whyButton.setAttributedTitle(NSAttributedString(string: LocalizedString.why, style: .sectionHeaderRegular(primarySection)), for: .normal)
+
+        // add accessibility label for EmojiOne button
+        self.providedByButton.accessibilityLabel = LocalizedString.providedByAccessibility
+        self.whyButton.accessibilityLabel = LocalizedString.whyAccessibility
+        self.providedByLabel.isAccessibilityElement = false // turn this off since the button handles it all
     }
 
     @objc private func providedByButtonTapped(_ sender: Any) {
