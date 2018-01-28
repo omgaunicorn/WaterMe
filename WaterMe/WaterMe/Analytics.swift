@@ -106,6 +106,7 @@ enum Analytics {
         case tipJar = "VCView.TipJar"
         case openSettings = "VCView.OpenSettings"
         case openAppStore = "VCView.OpenAppStore"
+        case openEmojiOne = "VCView.EmojiOneSite"
         case errorAlertRealm = "VCView.ErrorAlert.Realm"
         case errorAlertPurchase = "VCView.ErrorAlert.Purchase"
     }

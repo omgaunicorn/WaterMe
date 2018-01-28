@@ -29,6 +29,9 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
     override class var reuseID: String { return "EmojiPickerFooterCollectionReusableView" }
     override class var kind: String { return UICollectionElementKindSectionFooter }
 
+    var providedByButtonTapped: (() -> Void)?
+    var whyButtonTapped: (() -> Void)?
+
     private let providedByLabel: UILabel = {
         let v = UILabel()
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -44,13 +47,23 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
     override func commonInit() {
         super.commonInit()
 
+        // color the colorview
         self.colorView.backgroundColor = Style.Color.color(for: Reminder.Section.later)
 
+        // add views to the stack view. This will get reset by trait collection changes
         self.stackView.addArrangedSubview(self.providedByLabel)
         self.stackView.addArrangedSubview(self.providedByButton)
 
+        // configure labels
         self.providedByLabel.attributedText = NSAttributedString(string: "Emoji Provided by ", style: .sectionHeader(Reminder.Section.later))
         self.providedByButton.setAttributedTitle(NSAttributedString(string: "EmojiOne", style: .sectionHeader(Reminder.Section.today)), for: .normal)
+
+        // configure targets
+        self.providedByButton.addTarget(self, action: #selector(self.providedByButtonTapped(_:)), for: .touchUpInside)
+    }
+
+    @objc private func providedByButtonTapped(_ sender: Any) {
+        self.providedByButtonTapped?()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import SafariServices
 import UIKit
 
 class EmojiPickerViewController: StandardCollectionViewController {
@@ -77,6 +78,10 @@ class EmojiPickerViewController: StandardCollectionViewController {
                                                                      withReuseIdentifier: EmojiPickerFooterCollectionReusableView.reuseID,
                                                                      for: indexPath)
         if let footer = footer as? EmojiPickerFooterCollectionReusableView {
+            footer.providedByButtonTapped = { [unowned self] in
+                Analytics.log(viewOperation: .openEmojiOne)
+                self.present(SFSafariViewController.newEmojiOneViewController(), animated: true, completion: nil)
+            }
         }
         return footer
     }
@@ -109,5 +114,13 @@ extension EmojiPickerViewController: UICollectionViewDelegateFlowLayout {
         case false:
             return CGSize(width: collectionView.availableContentSize.width, height: 40)
         }
+    }
+}
+
+fileprivate extension SFSafariViewController {
+    fileprivate class func newEmojiOneViewController() -> UIViewController {
+        let url = URL(string: "https://www.emojione.com")!
+        let vc = SFSafariViewController(url: url)
+        return vc
     }
 }
