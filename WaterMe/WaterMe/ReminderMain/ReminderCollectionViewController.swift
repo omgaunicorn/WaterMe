@@ -49,7 +49,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         self.collectionView?.dragDelegate = self
         self.collectionView?.register(ReminderCollectionViewCell.nib,
                                       forCellWithReuseIdentifier: ReminderCollectionViewCell.reuseID)
-        self.collectionView?.register(ReminderHeaderCollectionReusableView.nib,
+        self.collectionView?.register(ReminderHeaderCollectionReusableView.self,
                                       forSupplementaryViewOfKind: ReminderHeaderCollectionReusableView.kind,
                                       withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID)
         self.flow?.minimumInteritemSpacing = 0

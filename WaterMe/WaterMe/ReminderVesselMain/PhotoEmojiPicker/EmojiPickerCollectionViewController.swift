@@ -45,6 +45,9 @@ class EmojiPickerViewController: StandardCollectionViewController {
         self.collectionView?.backgroundColor = .white
         self.collectionView?.alwaysBounceVertical = true
         self.collectionView?.register(EmojiPickerCollectionViewCell.nib, forCellWithReuseIdentifier: EmojiPickerCollectionViewCell.reuseID)
+        self.collectionView?.register(ReminderHeaderCollectionReusableView.self,
+                                      forSupplementaryViewOfKind: ReminderHeaderCollectionReusableView.kind,
+                                      withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID)
         self.flow?.minimumInteritemSpacing = 0
     }
     
@@ -69,6 +72,15 @@ class EmojiPickerViewController: StandardCollectionViewController {
         return _cell
     }
 
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: ReminderHeaderCollectionReusableView.kind,
+                                                                     withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID,
+                                                                     for: indexPath)
+        if let header = header as? ReminderHeaderCollectionReusableView {
+        }
+        return header
+    }
+
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
         let width = self.collectionView?.availableContentSize.width ?? 0
         let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
@@ -85,6 +97,17 @@ class EmojiPickerViewController: StandardCollectionViewController {
             let columnCount = 2
             let itemHeight = floor((width) / CGFloat(columnCount))
             return (columnCount, itemHeight)
+        }
+    }
+}
+
+extension EmojiPickerViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        switch UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
+        case true:
+            return CGSize(width: collectionView.availableContentSize.width, height: 55)
+        case false:
+            return CGSize(width: collectionView.availableContentSize.width, height: 40)
         }
     }
 }
