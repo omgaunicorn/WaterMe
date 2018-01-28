@@ -36,33 +36,33 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
         let v = UIView()
         v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
+        v.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return v
     }()
 
     private let providedByLabel: UILabel = {
         let v = UILabel()
         v.translatesAutoresizingMaskIntoConstraints = false
+        v.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return v
     }()
 
     private let providedByButton: UIButton = {
         let v = UIButton()
         v.translatesAutoresizingMaskIntoConstraints = false
+        v.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         return v
     }()
 
     private let whyButton: UIButton = {
         let v = UIButton()
         v.translatesAutoresizingMaskIntoConstraints = false
+        v.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return v
     }()
 
     override func commonInit() {
         super.commonInit()
-
-        // color the colorview
-        let primarySection = Reminder.Section.later
-        self.colorView.backgroundColor = Style.Color.color(for: primarySection)
 
         // add views to the stack view. This will get reset by trait collection changes
         self.stackView.addArrangedSubview(self.providedByLabel)
@@ -71,13 +71,22 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
         self.stackView.addArrangedSubview(self.whyButton)
 
         // configure labels
-        self.providedByLabel.attributedText = NSAttributedString(string: LocalizedString.providedBy, style: .sectionHeader(primarySection))
-        self.providedByButton.setAttributedTitle(NSAttributedString(string: LocalizedString.emojiOne, style: .sectionHeader(Reminder.Section.today)), for: .normal)
-        self.whyButton.setAttributedTitle(NSAttributedString(string: LocalizedString.why, style: .sectionHeader(Reminder.Section.late)), for: .normal)
+        self.updateAttributedStrings()
 
         // configure targets
         self.providedByButton.addTarget(self, action: #selector(self.providedByButtonTapped(_:)), for: .touchUpInside)
         self.whyButton.addTarget(self, action: #selector(self.whyButtonTapped(_:)), for: .touchUpInside)
+    }
+
+    private func updateAttributedStrings() {
+        // color the colorview
+        let primarySection = Reminder.Section.later
+        self.colorView.backgroundColor = Style.Color.color(for: primarySection)
+
+        // configure labels
+        self.providedByLabel.attributedText = NSAttributedString(string: LocalizedString.providedBy, style: .sectionHeaderRegular(primarySection))
+        self.providedByButton.setAttributedTitle(NSAttributedString(string: LocalizedString.emojiOne, style: .sectionHeaderBold(Reminder.Section.today)), for: .normal)
+        self.whyButton.setAttributedTitle(NSAttributedString(string: LocalizedString.why, style: .sectionHeaderRegular(primarySection)), for: .normal)
     }
 
     @objc private func providedByButtonTapped(_ sender: Any) {
@@ -91,6 +100,10 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
 
+        // configure labels
+        self.updateAttributedStrings()
+
+        // make sure views are in the right order
         self.stackView.removeArrangedSubview(self.providedByButton)
         self.stackView.removeArrangedSubview(self.providedByLabel)
         self.stackView.removeArrangedSubview(self.spacerView)

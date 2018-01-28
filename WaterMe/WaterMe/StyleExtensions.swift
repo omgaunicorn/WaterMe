@@ -113,7 +113,8 @@ enum Style {
         return p.copy() as! NSParagraphStyle
     }()
 
-    case sectionHeader(Reminder.Section)
+    case sectionHeaderBold(Reminder.Section)
+    case sectionHeaderRegular(Reminder.Section)
     case selectableTableViewCell
     case selectableTableViewCellDisabled
     case selectableTableViewCellHelper
@@ -243,9 +244,14 @@ enum Style {
                 .font : Font.bodyMinusIgnoringDynamicType,
                 .foregroundColor : Color.textPrimary
             ]
-        case .sectionHeader(let section):
+        case .sectionHeaderBold(let section):
             return [
                 .font : Font.bodyPlusBold,
+                .foregroundColor : Color.color(for: section)
+            ]
+        case .sectionHeaderRegular(let section):
+            return [
+                .font : Font.body,
                 .foregroundColor : Color.color(for: section)
             ]
         }

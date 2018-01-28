@@ -41,7 +41,7 @@ class ReminderHeaderCollectionReusableView: BlurryBackgroundBottomLineCollection
     }
 
     func setSection(_ section: Reminder.Section) {
-        self.label.attributedText = NSAttributedString(string: section.localizedTitleString, style: .sectionHeader(section))
+        self.label.attributedText = NSAttributedString(string: section.localizedTitleString, style: .sectionHeaderBold(section))
         self.colorView.backgroundColor = Style.Color.color(for: section)
     }
 }
