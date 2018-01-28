@@ -27,8 +27,15 @@ import WaterMeData
 import UIKit
 
 extension SFSafariViewController {
-    class func newEmojiOneViewController() -> UIViewController {
+    class func newEmojiOneVC() -> UIViewController {
+        Analytics.log(viewOperation: .openEmojiOne)
         let url = URL(string: "https://www.emojione.com")!
+        let vc = SFSafariViewController(url: url)
+        return vc
+    }
+    class func newAppReviewGuidelinesVC() -> UIViewController {
+        Analytics.log(viewOperation: .openGuidelines)
+        let url = URL(string: "https://www.apple.com")!
         let vc = SFSafariViewController(url: url)
         return vc
     }
@@ -311,6 +318,25 @@ extension UIAlertController {
             self.popoverPresentationController?.sourceRect = type(of: self).sourceRect(from: view)
             self.popoverPresentationController?.permittedArrowDirections = [.up, .down]
         }
+    }
+}
+
+extension UIAlertController {
+    convenience init(localizedNonAppleEmojiExplainerAlertWithCompletion completion: ((UIViewController?) -> Void)?) {
+        Analytics.log(viewOperation: .openWhyEmojiAlert)
+        self.init(title: LocalizedString.nonAppleEmojiTitle, message: LocalizedString.nonAppleEmojiMessage, preferredStyle: .alert)
+        let guidelines = UIAlertAction(title: LocalizedString.nonAppleEmojiGuidelines, style: .default) { _ in
+            completion?(SFSafariViewController.newAppReviewGuidelinesVC())
+        }
+        let emojiOne = UIAlertAction(title: EmojiPickerFooterCollectionReusableView.LocalizedString.emojiOne, style: .default) { _ in
+            completion?(SFSafariViewController.newEmojiOneVC())
+        }
+        let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
+            completion?(nil)
+        }
+        self.addAction(guidelines)
+        self.addAction(emojiOne)
+        self.addAction(cancel)
     }
 }
 

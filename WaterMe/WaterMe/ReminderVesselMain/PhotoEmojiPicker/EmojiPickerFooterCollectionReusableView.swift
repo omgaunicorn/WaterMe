@@ -108,4 +108,11 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
             self.stackView.addArrangedSubview(self.providedByLabel)
         }
     }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        self.whyButtonTapped = nil
+        self.providedByButtonTapped = nil
+    }
 }

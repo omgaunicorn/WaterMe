@@ -145,6 +145,15 @@ extension UIAlertController {
         static let copyEmailAlertMessage: String =
             NSLocalizedString("Copy my email address into your clipboard, then paste it in your favorite email app.",
                               comment: "Alert: Email Copy: Message: Alert message that tells the user that they can copy my email address into their clipboard and paste it in their favorite email app.")
+        static let nonAppleEmojiMessage =
+            NSLocalizedString("Apple's App Review Guideline 5.2.5 does not allow apps to 'include' Apple Emoji. Because of this, Emoji in WaterMe are provided by EmojiOne.",
+                              comment: "Alert: Emoji Explanation: Message: Explains why alternative Emoji is used.")
+        static let nonAppleEmojiTitle =
+            NSLocalizedString("Alternative Emoji",
+                              comment: "Alert: Emoji Explanation: Title: Explains why alternative Emoji is used.")
+        static let nonAppleEmojiGuidelines =
+            NSLocalizedString("View Guidelines",
+                              comment: "Alert: Emoji Explanation: Button Title: When tapped, opens the App Review Guidelines page.")
     }
 }
 

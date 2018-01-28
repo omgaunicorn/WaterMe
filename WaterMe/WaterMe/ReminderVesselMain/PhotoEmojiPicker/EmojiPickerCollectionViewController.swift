@@ -80,11 +80,14 @@ class EmojiPickerViewController: StandardCollectionViewController {
         if let footer = footer as? EmojiPickerFooterCollectionReusableView {
             footer.providedByButtonTapped = { [unowned self] in
                 Analytics.log(viewOperation: .openEmojiOne)
-                self.present(SFSafariViewController.newEmojiOneViewController(), animated: true, completion: nil)
+                self.present(SFSafariViewController.newEmojiOneVC(), animated: true, completion: nil)
             }
             footer.whyButtonTapped = { [unowned self] in
-                // insert code to complain about apple review guidelines
-                print("open review guidelines alert")
+                let alert = UIAlertController(localizedNonAppleEmojiExplainerAlertWithCompletion: { vc in
+                    guard let vc = vc else { return }
+                    self.present(vc, animated: true, completion: nil)
+                })
+                self.present(alert, animated: true, completion: nil)
             }
         }
         return footer
