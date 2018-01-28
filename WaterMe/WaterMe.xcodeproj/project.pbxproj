@@ -46,6 +46,7 @@
 		506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A6219200562B9008EF601 /* SettingsMainViewController.swift */; };
 		506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A621B200562C3008EF601 /* SettingsTableViewController.swift */; };
 		506DFA4B201D351A007FEAB5 /* emojione-apple.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 506DFA4A201D351A007FEAB5 /* emojione-apple.ttf */; };
+		506DFA4D201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506DFA4C201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift */; };
 		50702D11200589B0009EF952 /* SettingsTipJarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */; };
 		50702D13200591CC009EF952 /* EmailDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50702D12200591CC009EF952 /* EmailDeveloperViewController.swift */; };
 		50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */; };
@@ -162,6 +163,7 @@
 		506A6219200562B9008EF601 /* SettingsMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainViewController.swift; sourceTree = "<group>"; };
 		506A621B200562C3008EF601 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		506DFA4A201D351A007FEAB5 /* emojione-apple.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "emojione-apple.ttf"; sourceTree = "<group>"; };
+		506DFA4C201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTipJarTableViewCell.swift; sourceTree = "<group>"; };
 		50702D12200591CC009EF952 /* EmailDeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailDeveloperViewController.swift; sourceTree = "<group>"; };
 		50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewTableViewCell.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 				508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */,
 				502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */,
 				50BDC03D1F9A3E21002281C3 /* BlurryBackgroundBottomLineCollectionReusableView.swift */,
+				506DFA4C201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift */,
 				50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */,
 				506A6216200561D5008EF601 /* DragAndDrop */,
 			);
@@ -968,6 +971,7 @@
 				5028190A200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift in Sources */,
 				50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */,
 				506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */,
+				506DFA4D201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift in Sources */,
 				5049D1A31FACFA1B0076565E /* ReminderUserNotificationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
