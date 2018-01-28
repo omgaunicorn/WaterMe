@@ -45,9 +45,9 @@ class EmojiPickerViewController: StandardCollectionViewController {
         self.collectionView?.backgroundColor = .white
         self.collectionView?.alwaysBounceVertical = true
         self.collectionView?.register(EmojiPickerCollectionViewCell.nib, forCellWithReuseIdentifier: EmojiPickerCollectionViewCell.reuseID)
-        self.collectionView?.register(ReminderHeaderCollectionReusableView.self,
-                                      forSupplementaryViewOfKind: ReminderHeaderCollectionReusableView.kind,
-                                      withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID)
+        self.collectionView?.register(EmojiPickerFooterCollectionReusableView.self,
+                                      forSupplementaryViewOfKind: EmojiPickerFooterCollectionReusableView.kind,
+                                      withReuseIdentifier: EmojiPickerFooterCollectionReusableView.reuseID)
         self.flow?.minimumInteritemSpacing = 0
     }
     
@@ -73,12 +73,12 @@ class EmojiPickerViewController: StandardCollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: ReminderHeaderCollectionReusableView.kind,
-                                                                     withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID,
+        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: EmojiPickerFooterCollectionReusableView.kind,
+                                                                     withReuseIdentifier: EmojiPickerFooterCollectionReusableView.reuseID,
                                                                      for: indexPath)
-        if let header = header as? ReminderHeaderCollectionReusableView {
+        if let footer = footer as? EmojiPickerFooterCollectionReusableView {
         }
-        return header
+        return footer
     }
 
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
@@ -102,7 +102,7 @@ class EmojiPickerViewController: StandardCollectionViewController {
 }
 
 extension EmojiPickerViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         switch UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
         case true:
             return CGSize(width: collectionView.availableContentSize.width, height: 55)
