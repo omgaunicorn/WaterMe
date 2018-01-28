@@ -327,7 +327,7 @@ extension ReminderUserNotificationController {
             NSLocalizedString("‘%@’ and ‘%@’ need attention today.",
                               comment: "Notification Body: 2 Items: When 2 plants needs to be taken care of in a day, this is the body text of the notification.")
         static let bodyManyItems =
-            NSLocalizedString("‘%@’ and %d more attention today.",
+            NSLocalizedString("‘%@’ and %d more plants need attention today.",
                               comment: "Notification Body: Many Items: When more than 2 plants needs to be taken care of in a day, this is the body text of the notification.")
     }
 }
