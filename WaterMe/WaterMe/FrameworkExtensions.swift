@@ -21,9 +21,18 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import SafariServices
 import WaterMeStore
 import WaterMeData
 import UIKit
+
+extension SFSafariViewController {
+    class func newEmojiOneViewController() -> UIViewController {
+        let url = URL(string: "https://www.emojione.com")!
+        let vc = SFSafariViewController(url: url)
+        return vc
+    }
+}
 
 extension UIApplication {
     func openSettings(completion: ((Bool) -> Void)?) {

@@ -82,6 +82,10 @@ class EmojiPickerViewController: StandardCollectionViewController {
                 Analytics.log(viewOperation: .openEmojiOne)
                 self.present(SFSafariViewController.newEmojiOneViewController(), animated: true, completion: nil)
             }
+            footer.whyButtonTapped = { [unowned self] in
+                // insert code to complain about apple review guidelines
+                print("open review guidelines alert")
+            }
         }
         return footer
     }
@@ -114,13 +118,5 @@ extension EmojiPickerViewController: UICollectionViewDelegateFlowLayout {
         case false:
             return CGSize(width: collectionView.availableContentSize.width, height: 40)
         }
-    }
-}
-
-fileprivate extension SFSafariViewController {
-    fileprivate class func newEmojiOneViewController() -> UIViewController {
-        let url = URL(string: "https://www.emojione.com")!
-        let vc = SFSafariViewController(url: url)
-        return vc
     }
 }
