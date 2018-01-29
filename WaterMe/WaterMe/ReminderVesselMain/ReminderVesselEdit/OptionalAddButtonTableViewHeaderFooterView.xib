@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,22 +20,23 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fLw-mO-ruh">
-                        <rect key="frame" x="282" y="2.5" width="30" height="45"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
-                        <state key="normal" title="+"/>
+                        <rect key="frame" x="117" y="6.5" width="187" height="33"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <state key="normal" title="Adddd Reemmmiiinderrr"/>
                         <connections>
                             <action selector="addButtonTapped:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="InB-G0-mqA"/>
                         </connections>
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="fLw-mO-ruh" secondAttribute="bottom" constant="-12" id="ahN-tl-efe"/>
+                    <constraint firstAttribute="bottom" secondItem="fLw-mO-ruh" secondAttribute="bottom" constant="4" id="C5i-7S-HsJ"/>
                     <constraint firstAttribute="trailingMargin" secondItem="fLw-mO-ruh" secondAttribute="trailing" id="n4j-3d-OrE"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="v85-iz-ly1"/>
             <connections>
                 <outlet property="addButton" destination="fLw-mO-ruh" id="376-yT-twt"/>
+                <outlet property="addButtonBottomConstraint" destination="C5i-7S-HsJ" id="bg1-LW-7yM"/>
             </connections>
         </tableViewCell>
     </objects>

@@ -134,6 +134,7 @@ enum Style {
     case migratorBodySmall
     case migratorPrimaryButton
     case migratorSecondaryButton
+    case tableHeaderActionButton
     case emojiSuperSmall
     case emojiSmall(accessibilityFontSizeEnabled: Bool)
     case emojiLarge(accessibilityFontSizeEnabled: Bool)
@@ -175,6 +176,11 @@ enum Style {
         case .migratorSecondaryButton:
             return [
                 .font : Font.body
+            ]
+        case .tableHeaderActionButton:
+            return [
+                .font : Font.bodyPlusBold,
+                .foregroundColor : Color.tint // fixes bug where button is not getting colored automatically
             ]
         case .dragInstructionalText(let color):
             return [

@@ -29,6 +29,7 @@ class OptionalAddButtonTableViewHeaderFooterView: UITableViewHeaderFooterView {
     class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
     
     @IBOutlet private weak var addButton: UIButton?
+    @IBOutlet private weak var addButtonBottomConstraint: NSLayoutConstraint?
     
     var isAddButtonHidden: Bool {
         get { return self.addButton?.isHidden ?? true }
@@ -36,6 +37,21 @@ class OptionalAddButtonTableViewHeaderFooterView: UITableViewHeaderFooterView {
     }
     
     var addButtonTapped: (() -> Void)?
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        // bottom alignment of apple's label changes based on accessibility text size
+        // also in accessibility sizes, a much shorter label is used
+        switch self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory {
+        case true:
+            self.addButtonBottomConstraint?.constant = 4
+            self.addButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.addReminderShort, style: .tableHeaderActionButton), for: .normal)
+        case false:
+            self.addButtonBottomConstraint?.constant = 0
+            self.addButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.addReminder, style: .tableHeaderActionButton), for: .normal)
+        }
+    }
     
     @IBAction private func addButtonTapped(_ sender: Any) {
         self.addButtonTapped?()

@@ -37,6 +37,17 @@ extension UIApplication {
     }
 }
 
+extension OptionalAddButtonTableViewHeaderFooterView {
+    enum LocalizedString {
+        static let addReminder =
+            NSLocalizedString("Add Reminder",
+                              comment: "Edit Plant: Button: Add Reminder: When tapped, a reminder is added to the current plant.")
+        static let addReminderShort =
+            NSLocalizedString("Add",
+                              comment: "Edit Plant: Button: Add Reminder: Accessible: When tapped, a reminder is added to the current plant. When very large font sizes are used, this much shorter string is used.")
+    }
+}
+
 extension ReminderVessel {
     enum LocalizedString {
         static let untitledPlant =
