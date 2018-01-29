@@ -59,12 +59,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // make re-usable closures for notifications I'll register for later
         let appearanceChanges = {
+            // if the window is not configured yet, bail
+            guard let window = self.window else { return }
+
             // need to rip the view hierarchy out of the window and put it back in
             // in order for the new UIAppearance to take effect
             UIApplication.style_configure()
-            let prevVC = self.window?.rootViewController
-            self.window?.rootViewController = nil
-            self.window?.rootViewController = prevVC
+            let prevVC = window.rootViewController
+            window.rootViewController = nil
+            window.rootViewController = prevVC
         }
         let notificationChanges = {
             self.notifictionController?.notificationPermissionsMayHaveChanged()
@@ -139,12 +142,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         result.value?.userDidPerformReminder = checkForReview
 
-        if self.window == nil {
-            self.window = UIWindow(frame: UIScreen.main.bounds)
-        }
-        self.window!.backgroundColor = .white
-        self.window!.rootViewController = vc
-        self.window!.makeKeyAndVisible()
+        // configure window
+        let window = self.window ?? UIWindow(frame: UIScreen.main.bounds)
+        window.backgroundColor = .white
+        window.rootViewController = vc
+
+        // show window
+        self.window = window
+        window.makeKeyAndVisible()
         
         return true
     }
