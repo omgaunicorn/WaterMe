@@ -129,6 +129,14 @@
 			<true/>
 		</dict>
 		<dict>
+			<key>File</key>
+			<string>Acknowledgements</string>
+			<key>Title</key>
+			<string>Acknowledgements</string>
+            <key>Type</key>
+            <string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>

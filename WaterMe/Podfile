@@ -31,6 +31,16 @@ target 'NoDeviceTests' do
 end
 
 post_install do |installer|
+
+  #
+  # Copy Acknowledgements to settings bundle
+  #
+  require 'fileutils'
+  FileUtils.cp_r('Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe-acknowledgements.plist', 'WaterMe/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
+  
+  #
+  # Do Realm Post-Install Hook
+  #
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings['SWIFT_VERSION'] = '4.0.3'
