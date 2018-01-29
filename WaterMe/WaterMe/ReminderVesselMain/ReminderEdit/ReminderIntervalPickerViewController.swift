@@ -39,7 +39,8 @@ class ReminderIntervalPickerViewController: UIViewController {
     
     @IBOutlet private weak var pickerView: UIPickerView?
     @IBOutlet private weak var titleItem: UINavigationItem?
-    
+    @IBOutlet private weak var grayView: UIView?
+
     private var completionHandler: CompletionHandler!
     private var existingValue: Int = Reminder.defaultInterval
     
@@ -54,6 +55,35 @@ class ReminderIntervalPickerViewController: UIViewController {
         
         let existingIndex = self.data.index(of: self.existingValue) ?? 0
         self.pickerView?.selectRow(existingIndex, inComponent: 0, animated: false)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // prepare for animation
+        self.grayView?.alpha = 0
+        self.grayView?.transform = CGAffineTransform(scaleX: 1, y: 0)
+
+        // animation closures
+        let animate = {
+            self.grayView?.transform = CGAffineTransform.identity
+            self.grayView?.alpha = 1
+        }
+        let completion = { }
+
+        // make sure we have a coordinator
+        guard let tc = self.transitionCoordinator else {
+            animate()
+            completion()
+            return
+        }
+
+        // coordinate
+        tc.animate(alongsideTransition: { _ in
+            animate()
+        }, completion: { _ in
+            completion()
+        })
     }
     
     @IBAction private func cancelButtonTapped(_ sender: Any) {

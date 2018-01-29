@@ -85,6 +85,10 @@
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tMR-Dp-DGg">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bUU-iz-FlW">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gke-to-w7O">
                                         <rect key="frame" x="-0.5" y="400.5" width="375" height="266.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -114,14 +118,18 @@
                                         </items>
                                     </navigationBar>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="gke-to-w7O" firstAttribute="top" secondItem="gEC-Bj-meU" secondAttribute="top" id="8Fo-GP-1lo"/>
+                                    <constraint firstItem="bUU-iz-FlW" firstAttribute="height" secondItem="tMR-Dp-DGg" secondAttribute="height" id="Aku-mE-ywE"/>
                                     <constraint firstItem="Yza-fM-hD0" firstAttribute="trailing" secondItem="gEC-Bj-meU" secondAttribute="trailing" id="H5O-OQ-ort"/>
                                     <constraint firstAttribute="bottom" secondItem="Yza-fM-hD0" secondAttribute="bottom" id="Hzc-dj-y7I"/>
                                     <constraint firstAttribute="trailing" secondItem="Yza-fM-hD0" secondAttribute="trailing" id="Kjh-Ly-ga7"/>
                                     <constraint firstItem="Yza-fM-hD0" firstAttribute="top" secondItem="gEC-Bj-meU" secondAttribute="bottom" id="QJK-YT-EpQ"/>
                                     <constraint firstItem="gke-to-w7O" firstAttribute="trailing" secondItem="Yza-fM-hD0" secondAttribute="trailing" id="RWm-C2-TuF"/>
+                                    <constraint firstAttribute="bottom" secondItem="bUU-iz-FlW" secondAttribute="bottom" id="XwR-Gc-9nD"/>
+                                    <constraint firstAttribute="trailing" secondItem="bUU-iz-FlW" secondAttribute="trailing" id="Zty-IZ-Fws"/>
+                                    <constraint firstItem="bUU-iz-FlW" firstAttribute="leading" secondItem="tMR-Dp-DGg" secondAttribute="leading" id="ga1-Yd-G8z"/>
                                     <constraint firstItem="gke-to-w7O" firstAttribute="leading" secondItem="Yza-fM-hD0" secondAttribute="leading" id="lYa-v6-u8N"/>
                                     <constraint firstItem="Yza-fM-hD0" firstAttribute="leading" secondItem="gEC-Bj-meU" secondAttribute="leading" id="qQX-OR-OyB"/>
                                     <constraint firstItem="Yza-fM-hD0" firstAttribute="height" secondItem="tMR-Dp-DGg" secondAttribute="height" multiplier="1/3" id="vZP-9y-ew8"/>
@@ -140,6 +148,7 @@
                         <viewLayoutGuide key="safeArea" id="aIA-TO-MSO"/>
                     </view>
                     <connections>
+                        <outlet property="grayView" destination="bUU-iz-FlW" id="UxI-hx-fzj"/>
                         <outlet property="pickerView" destination="Yza-fM-hD0" id="vhf-5D-5Oz"/>
                         <outlet property="titleItem" destination="x6Z-XC-Cmp" id="CHy-2G-BFY"/>
                     </connections>
