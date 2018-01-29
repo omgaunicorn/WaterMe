@@ -1,5 +1,5 @@
 PODS:
-  - Cheers (2.0.1)
+  - Cheers (2.0.2)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
   - CropViewController (2.3.6)
@@ -42,7 +42,7 @@ EXTERNAL SOURCES:
     :path: WaterMeStore
 
 SPEC CHECKSUMS:
-  Cheers: 996fb5f6a74d9cb90701d626db8d3a6ef3f23fd2
+  Cheers: 450bd0578e40182c73d813a545379450c9f16a4a
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
   CropViewController: e6d4bd512d15a1709e9ddf71fe7d98ffd05dda0f
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
