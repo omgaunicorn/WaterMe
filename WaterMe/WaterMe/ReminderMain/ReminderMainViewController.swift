@@ -76,23 +76,39 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         }
     }
 
+    private var viewDidAppearOnce = false
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         Analytics.log(viewOperation: .reminderList)
 
+        guard self.viewDidAppearOnce == false else { return }
+        self.viewDidAppearOnce = true
+        self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+    }
+
+    private func checkForErrorsAndOtherUnexpectedViewControllersToPresent() {
+        guard self.presentedViewController == nil else { return }
+        
         if let error = self.applicationDidFinishLaunchingError {
             self.applicationDidFinishLaunchingError = nil
-            let alert = UIAlertController(error: error, completion: nil)
+            let alert = UIAlertController(error: error) { _ in
+                self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+            }
             self.present(alert, animated: true, completion: nil)
         } else if let error = self.collectionVC?.reminders?.lastError {
             self.collectionVC?.reminders?.lastError = nil
-            let alert = UIAlertController(error: error, completion: nil)
+            let alert = UIAlertController(error: error) { _ in
+                self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+            }
             self.present(alert, animated: true, completion: nil)
         } else if let migrator = AppDelegate.shared.coreDataMigrator, let basicRC = self.basicRC {
             let vc = CoreDataMigratorViewController.newVC(migrator: migrator, basicRC: basicRC) { vc, _ in
                 AppDelegate.shared.coreDataMigrator = nil
-                vc.dismiss(animated: true, completion: nil)
+                vc.dismiss(animated: true) {
+                    self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+                }
             }
             self.present(vc, animated: true, completion: nil)
         } else {
@@ -102,11 +118,14 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
     private func checkForPurchasesInFlight() {
         guard self.presentedViewController == nil else { return }
+
         let pc = AppDelegate.shared.purchaseController
         guard let transaction = pc?.nextTransactionForPresentingToUser() else { return }
         let _vc = PurchaseThanksViewController.newVC(for: transaction) { vc in
             guard let vc = vc else { self.checkForPurchasesInFlight(); return; }
-            vc.dismiss(animated: true) { self.checkForPurchasesInFlight() }
+            vc.dismiss(animated: true) {
+                self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+            }
         }
         guard let vc = _vc else { return }
         self.present(vc, animated: true, completion: nil)
