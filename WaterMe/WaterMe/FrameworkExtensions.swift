@@ -35,7 +35,7 @@ extension SFSafariViewController {
     }
     class func newAppReviewGuidelinesVC() -> UIViewController {
         Analytics.log(viewOperation: .openGuidelines)
-        let url = URL(string: "https://www.apple.com")!
+        let url = URL(string: "https://developer.apple.com/app-store/review/guidelines/#intellectual-property")!
         let vc = SFSafariViewController(url: url)
         return vc
     }
