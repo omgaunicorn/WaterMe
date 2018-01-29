@@ -208,6 +208,7 @@ extension SettingsTableViewController {
         init?(row: TipJarRows, products: TipJarProducts?) {
             if case .free = row {
                 self = .free
+                return
             }
             guard let products = products else { return nil }
             switch row {
