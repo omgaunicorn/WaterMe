@@ -26,7 +26,7 @@
             </objects>
             <point key="canvasLocation" x="-1143" y="114"/>
         </scene>
-        <!--Edit Reminder-->
+        <!--Edddit Reemminder-->
         <scene sceneID="rPd-gj-6xU">
             <objects>
                 <viewController id="EzP-gR-dN4" customClass="ReminderEditViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -50,7 +50,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7Xd-ep-i2i"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Reminder" id="Z5c-bL-Vpf"/>
+                    <navigationItem key="navigationItem" title="Edddit Reemminder" id="Z5c-bL-Vpf"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fS0-h6-ZtP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -99,7 +99,7 @@
                                     <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEC-Bj-meU">
                                         <rect key="frame" x="-0.5" y="400.5" width="375" height="44"/>
                                         <items>
-                                            <navigationItem title="Reminder Interval" id="x6Z-XC-Cmp">
+                                            <navigationItem title="Reemminderrr Intervvvval" id="x6Z-XC-Cmp">
                                                 <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="nAu-GD-Zhk">
                                                     <connections>
                                                         <action selector="cancelButtonTapped:" destination="NwA-e7-GPw" id="iQp-EN-hNG"/>

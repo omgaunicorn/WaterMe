@@ -71,7 +71,7 @@
             </objects>
             <point key="canvasLocation" x="941.60000000000002" y="113.79310344827587"/>
         </scene>
-        <!--Edit Vessel-->
+        <!--Eddit Veessseel-->
         <scene sceneID="6V6-7E-D6Z">
             <objects>
                 <viewController id="hwy-bV-hUN" customClass="ReminderVesselEditViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -95,7 +95,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="eYA-NT-INK"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Edit Vessel" id="I5b-Wd-mrD"/>
+                    <navigationItem key="navigationItem" title="Eddit Veessseel" id="I5b-Wd-mrD"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jX6-mk-C8X" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

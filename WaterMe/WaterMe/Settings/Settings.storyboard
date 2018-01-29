@@ -25,7 +25,7 @@
             </objects>
             <point key="canvasLocation" x="-439" y="202"/>
         </scene>
-        <!--Seettings-->
+        <!--Seettingggs-->
         <scene sceneID="wDT-yd-JJH">
             <objects>
                 <viewController id="lkR-rR-nbN" customClass="SettingsMainPurchaseDimmingViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
@@ -49,7 +49,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="vyj-8i-fw3"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Seettings" id="is2-k7-Z8n">
+                    <navigationItem key="navigationItem" title="Seettingggs" id="is2-k7-Z8n">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="8Vp-nS-dJo">
                             <connections>
                                 <action selector="doneButtonTapped:" destination="lkR-rR-nbN" id="Ixs-In-MxE"/>
