@@ -113,6 +113,14 @@ enum Style {
         return p.copy() as! NSParagraphStyle
     }()
 
+    static let truncateMiddleStyle: NSParagraphStyle = {
+        // swiftlint:disable:next force_cast
+        let p = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
+        p.lineBreakMode = .byTruncatingMiddle
+        // swiftlint:disable:next force_cast
+        return p.copy() as! NSParagraphStyle
+    }()
+
     case sectionHeaderBold(Reminder.Section)
     case sectionHeaderRegular(Reminder.Section)
     case selectableTableViewCell
@@ -247,12 +255,14 @@ enum Style {
         case .sectionHeaderBold(let section):
             return [
                 .font : Font.bodyPlusBold,
-                .foregroundColor : Color.color(for: section)
+                .foregroundColor : Color.color(for: section),
+                .paragraphStyle : type(of: self).truncateMiddleStyle
             ]
         case .sectionHeaderRegular(let section):
             return [
                 .font : Font.body,
-                .foregroundColor : Color.color(for: section)
+                .foregroundColor : Color.color(for: section),
+                .paragraphStyle : type(of: self).truncateMiddleStyle
             ]
         }
     }

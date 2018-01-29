@@ -43,14 +43,14 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
     private let providedByLabel: UILabel = {
         let v = UILabel()
         v.translatesAutoresizingMaskIntoConstraints = false
-        v.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        v.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         return v
     }()
 
     private let providedByButton: UIButton = {
         let v = UIButton()
         v.translatesAutoresizingMaskIntoConstraints = false
-        v.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        v.setContentCompressionResistancePriority(.required, for: .horizontal)
         return v
     }()
 
@@ -70,8 +70,16 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
         self.stackView.addArrangedSubview(self.spacerView)
         self.stackView.addArrangedSubview(self.whyButton)
 
+        // set min width of spacer view
+        self.addConstraint(self.spacerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 4))
+
         // configure labels
         self.updateAttributedStrings()
+
+        // configure accessibility
+        self.providedByLabel.accessibilityLabel = LocalizedString.providedByAccessibility
+        self.providedByButton.accessibilityLabel = LocalizedString.providedByAccessibility
+        self.whyButton.accessibilityLabel = LocalizedString.whyAccessibility
 
         // configure targets
         self.providedByButton.addTarget(self, action: #selector(self.providedByButtonTapped(_:)), for: .touchUpInside)
@@ -87,11 +95,6 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
         self.providedByLabel.attributedText = NSAttributedString(string: LocalizedString.providedBy, style: .sectionHeaderRegular(primarySection))
         self.providedByButton.setAttributedTitle(NSAttributedString(string: LocalizedString.emojiOne, style: .sectionHeaderBold(Reminder.Section.today)), for: .normal)
         self.whyButton.setAttributedTitle(NSAttributedString(string: LocalizedString.why, style: .sectionHeaderRegular(primarySection)), for: .normal)
-
-        // add accessibility label for EmojiOne button
-        self.providedByButton.accessibilityLabel = LocalizedString.providedByAccessibility
-        self.whyButton.accessibilityLabel = LocalizedString.whyAccessibility
-        self.providedByLabel.isAccessibilityElement = false // turn this off since the button handles it all
     }
 
     @objc private func providedByButtonTapped(_ sender: Any) {
