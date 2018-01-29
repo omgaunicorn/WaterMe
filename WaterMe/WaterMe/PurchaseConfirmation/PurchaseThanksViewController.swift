@@ -100,13 +100,31 @@ class PurchaseThanksViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.transitionCoordinator!.animate(alongsideTransition: { _ in
+
+        // get closures ready
+        let transform = {
             self.contentView.transform = CGAffineTransform.identity
-        }, completion: { _ in
+        }
+        let completion = {
             self.cheerView.start()
             Timer.scheduledTimer(withTimeInterval: 7, repeats: false) { _ in
                 self.cheerView.stop()
             }
+        }
+
+        // make sure we have a coordinate
+        // if not, just do the closures
+        guard let tc = self.transitionCoordinator else {
+            transform()
+            completion()
+            return
+        }
+
+        // do the animation
+        tc.animate(alongsideTransition: { _ in
+            transform()
+        }, completion: { _ in
+            completion()
         })
     }
 
