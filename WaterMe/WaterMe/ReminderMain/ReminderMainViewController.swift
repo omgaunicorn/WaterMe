@@ -33,7 +33,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderMainViewController
-        vc.title = AppDelegate.LocalizedString.appTitle // set here because it works better in UITabBarController
+        vc.title = UIApplication.LocalizedString.appTitle // set here because it works better in UITabBarController
         vc.applicationDidFinishLaunchingError = basicRCResult.error
         vc.configure(with: basicRCResult.value)
         vc.configure(with: proController)
@@ -247,7 +247,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         // the reminder could be deleted or changed before the user makes a choice
         let identifier = Reminder.Identifier(reminder: reminder)
         // configure the alert to show
-        let editReminder = UIAlertAction(title: LocalizedString.buttonTitleReminderEdit, style: .default) { _ in
+        let editReminder = UIAlertAction(title: UIApplication.LocalizedString.editReminder, style: .default) { _ in
             let result = basicRC.reminder(matching: identifier)
             switch result {
             case .success(let reminder):
@@ -260,7 +260,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                 self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
             }
         }
-        let editVessel = UIAlertAction(title: LocalizedString.buttonTitleReminderVesselEdit, style: .default) { _ in
+        let editVessel = UIAlertAction(title: UIApplication.LocalizedString.editVessel, style: .default) { _ in
             let result = basicRC.reminder(matching: identifier)
             switch result {
             case .success(let reminder):

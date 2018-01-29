@@ -42,6 +42,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderEditViewController
+        vc.title = UIApplication.LocalizedString.editReminder
         vc.configure(with: basicController)
         vc.completionHandler = completionHandler
         switch purpose {

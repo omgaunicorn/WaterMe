@@ -39,6 +39,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderVesselEditViewController
+        vc.title = UIApplication.LocalizedString.editVessel
         vc.configure(with: basicController)
         vc.completionHandler = completionHandler
         if let vessel = vessel {

@@ -23,11 +23,17 @@
 
 import WaterMeData
 
-extension AppDelegate {
+extension UIApplication {
     enum LocalizedString {
         static let appTitle =
             NSLocalizedString("WaterMe",
                               comment: "Name of the app. Shows in various places like Navigation Bars and Alerts.")
+        static let editVessel =
+            NSLocalizedString("Edit Plant",
+                              comment: "Button Title in an Alert. Shows when the user taps on a reminder. After being selected, this will allow the user to edit the details of the plant that owns the reminder.")
+        static let editReminder =
+            NSLocalizedString("Edit Reminder",
+                              comment: "Button Title in an Alert. Shows when the user taps on a reminder. After being selected, this will allow the user to edit the details of the reminder.")
     }
 }
 
@@ -56,12 +62,6 @@ extension ReminderMainViewController {
         static let timeAgoLabelNever =
             NSLocalizedString("Never",
                               comment: "When a reminder has never been performed, this shows to the user rather than how long ago they last performed the reminder.")
-        static let buttonTitleReminderEdit =
-            NSLocalizedString("Edit Reminder",
-                              comment: "Button Title in an Alert. Shows when the user taps on a reminder. After being selected, this will allow the user to edit the details of the reminder.")
-        static let buttonTitleReminderVesselEdit =
-            NSLocalizedString("Edit Plant",
-                              comment: "Button Title in an Alert. Shows when the user taps on a reminder. After being selected, this will allow the user to edit the details of the plant that owns the reminder.")
         static let buttonTitleReminderPerform =
             NSLocalizedString("Mark Reminder as Done",
                               comment: "Button Title in an Alert. Shows when the user taps on a reminder. After being selected, this will mark the reminder as performed.")
