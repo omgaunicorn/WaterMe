@@ -124,6 +124,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         BasicController.errorThrown = { error in
             log.error(error)
             Crashlytics.sharedInstance().recordError(error)
+            Analytics.log(event: Analytics.Error.realmError)
         }
 
         // configure Crashlytics

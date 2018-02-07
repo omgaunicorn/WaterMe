@@ -28,6 +28,13 @@ import Foundation
 
 enum Analytics {
 
+    // MARK: Errors
+
+    enum Error: String {
+        case emojiLoadFail = "Error.EmojiAlt.Failed"
+        case realmError = "Error.Realm"
+    }
+
     // MARK: CRUD Operations
 
     enum CRUD_Op_R: String {
