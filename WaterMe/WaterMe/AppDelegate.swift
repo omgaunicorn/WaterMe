@@ -122,6 +122,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // There is no easy way for my Dynamic Frameworks to be able to use Crashlytics
         // So in the places where they can throw errors, I introduced a static var so we can see them here
         BasicController.errorThrown = { error in
+            log.error(error)
             Crashlytics.sharedInstance().recordError(error)
         }
 
