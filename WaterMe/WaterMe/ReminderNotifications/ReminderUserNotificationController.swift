@@ -25,7 +25,7 @@ import UserNotifications
 
 class ReminderUserNotificationController {
 
-    private let queue = DispatchQueue(label: String(describing: ReminderUserNotificationController.self) + "_SerialQueue", qos: .utility)
+    private let queue = DispatchQueue(label: String(describing: ReminderUserNotificationController.self) + "_SerialQueue_" + UUID().uuidString, qos: .utility)
 
     func updateScheduledNotifications(with reminders: [ReminderValue]) {
         // hop on a background queue to do the processing
@@ -95,15 +95,13 @@ class ReminderUserNotificationController {
         // convert the matches into one notification each
         // this makes it so the user only gets 1 notification per day at the time they requested
         let reminders = matches.flatMap() { reminderTime, matches -> UNNotificationRequest? in
-            let interval = reminderTime.timeIntervalSince(now)
-            let _content = UNMutableNotificationContent()
-            _content.badge = NSNumber(value: matches.count)
-
             // if the interval is less 0 or less, we don't want to schedule a notification
             // all that needs to happen in this case is the badge icon get updated, and that can be done elsewhere
+            let interval = reminderTime.timeIntervalSince(now)
             guard interval > 0 else { return nil }
 
             // construct the notification
+            let _content = UNMutableNotificationContent()
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
             // shuffle the names so that different plant names show in the notifications
             let plantNames = ReminderValue.uniqueParentPlantNames(from: matches).shuffled()
@@ -111,6 +109,7 @@ class ReminderUserNotificationController {
             // only the badge will update.
             _content.body = ReminderUserNotificationController.LocalizedString.localizedNotificationBody(from: plantNames)
             _content.sound = .default()
+            _content.badge = NSNumber(value: matches.count)
 
             // swiftlint:disable:next force_cast
             let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
