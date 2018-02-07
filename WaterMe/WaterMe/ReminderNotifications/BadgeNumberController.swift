@@ -23,11 +23,11 @@
 
 import UIKit
 
-class BadgeNumberController {
+enum BadgeNumberController {
 
-    private let queue = DispatchQueue(label: String(describing: BadgeNumberController.self) + "_SerialQueue_" + UUID().uuidString, qos: .utility)
+    private static let queue = DispatchQueue(label: String(describing: BadgeNumberController.self) + "_SerialQueue_" + UUID().uuidString, qos: .utility)
 
-    func updateBadgeNumber(with reminders: [ReminderValue]) {
+    static func updateBadgeNumber(with reminders: [ReminderValue]) {
         self.queue.async {
             let remindersThatNeedToBeDoneBeforeTomorrow = reminders.filter() { reminder -> Bool in
                 let cal = Calendar.current

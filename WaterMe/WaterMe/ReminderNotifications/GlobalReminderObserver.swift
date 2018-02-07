@@ -26,7 +26,7 @@ import RealmSwift
 
 class GlobalReminderObserver {
 
-    private let badgeNumberController = BadgeNumberController()
+    private let badgeNumberController = BadgeNumberController.self
     private let notificationController = ReminderUserNotificationController()
 
     private var data: AnyRealmCollection<Reminder>?
