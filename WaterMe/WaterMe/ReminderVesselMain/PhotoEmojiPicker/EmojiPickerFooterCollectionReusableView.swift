@@ -40,17 +40,10 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
         return v
     }()
 
-    private let providedByLabel: UILabel = {
-        let v = UILabel()
-        v.translatesAutoresizingMaskIntoConstraints = false
-        v.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        return v
-    }()
-
     private let providedByButton: UIButton = {
         let v = UIButton()
         v.translatesAutoresizingMaskIntoConstraints = false
-        v.setContentCompressionResistancePriority(.required, for: .horizontal)
+        v.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
         return v
     }()
 
@@ -65,7 +58,6 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
         super.commonInit()
 
         // add views to the stack view. This will get reset by trait collection changes
-        self.stackView.addArrangedSubview(self.providedByLabel)
         self.stackView.addArrangedSubview(self.providedByButton)
         self.stackView.addArrangedSubview(self.spacerView)
         self.stackView.addArrangedSubview(self.whyButton)
@@ -77,8 +69,6 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
         self.updateAttributedStrings()
 
         // configure accessibility
-        self.providedByLabel.accessibilityLabel = LocalizedString.providedByAccessibility
-        self.providedByButton.accessibilityLabel = LocalizedString.providedByAccessibility
         self.whyButton.accessibilityLabel = LocalizedString.whyAccessibility
 
         // configure targets
@@ -92,8 +82,11 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
         self.colorView.backgroundColor = Style.Color.color(for: primarySection)
 
         // configure labels
-        self.providedByLabel.attributedText = NSAttributedString(string: LocalizedString.providedBy, style: .sectionHeaderRegular(primarySection))
-        self.providedByButton.setAttributedTitle(NSAttributedString(string: LocalizedString.emojiOne, style: .sectionHeaderBold(Reminder.Section.today)), for: .normal)
+        let providedByString = NSAttributedString(stylingPrimaryString: LocalizedString.providedBy,
+                                                  withPrimaryStyle: .sectionHeaderRegular(primarySection),
+                                                  andSubString: LocalizedString.emojiOne,
+                                                  withSubstringStyle: .sectionHeaderBold(Reminder.Section.today))
+        self.providedByButton.setAttributedTitle(providedByString, for: .normal)
         self.whyButton.setAttributedTitle(NSAttributedString(string: LocalizedString.why, style: .sectionHeaderRegular(primarySection)), for: .normal)
     }
 
@@ -110,24 +103,6 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
 
         // configure labels
         self.updateAttributedStrings()
-
-        // make sure views are in the right order
-        self.stackView.removeArrangedSubview(self.providedByButton)
-        self.stackView.removeArrangedSubview(self.providedByLabel)
-        self.stackView.removeArrangedSubview(self.spacerView)
-        self.stackView.removeArrangedSubview(self.whyButton)
-        switch self.traitCollection.layoutDirection {
-        case .leftToRight, .unspecified:
-            self.stackView.addArrangedSubview(self.providedByLabel)
-            self.stackView.addArrangedSubview(self.providedByButton)
-            self.stackView.addArrangedSubview(self.spacerView)
-            self.stackView.addArrangedSubview(self.whyButton)
-        case .rightToLeft:
-            self.stackView.addArrangedSubview(self.whyButton)
-            self.stackView.addArrangedSubview(self.spacerView)
-            self.stackView.addArrangedSubview(self.providedByButton)
-            self.stackView.addArrangedSubview(self.providedByLabel)
-        }
     }
 
     override func prepareForReuse() {

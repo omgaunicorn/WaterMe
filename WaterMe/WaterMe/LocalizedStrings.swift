@@ -246,11 +246,8 @@ extension SettingsMainViewController {
 extension EmojiPickerFooterCollectionReusableView {
     enum LocalizedString {
         static let providedBy =
-            NSLocalizedString("Emoji Provided by ",
-                              comment: "EmojiPicker: Footer: Label: Explains the emoji are provided by EmojiOne")
-        static let providedByAccessibility =
             NSLocalizedString("Emoji Provided by EmojiOne",
-                              comment: "EmojiPicker: Footer: Button Accessibility Label: Explains the emoji are provided by EmojiOne")
+                              comment: "EmojiPicker: Footer: Label: Explains the emoji are provided by EmojiOne. Must contain one and only one instance of the  string under key 'EmojiOne' because its given a different font treatment.")
         static let emojiOne =
             NSLocalizedString("EmojiOne",
                               comment: "EmojiPicker: Footer: Button: Opens EmojiOne page when tapped.")
