@@ -44,7 +44,8 @@ public extension Calendar {
     public func endOfDay(for date: Date) -> Date {
         let plusOneDay = self.date(byAdding: .day, value: 1, to: date)!
         let startOfPlusOneDay = self.startOfDay(for: plusOneDay)
-        return startOfPlusOneDay
+        let oneSecondBeforeStartOfPlusOneDay = self.date(byAdding: .second, value: -1, to: startOfPlusOneDay)!
+        return oneSecondBeforeStartOfPlusOneDay
     }
 }
 
