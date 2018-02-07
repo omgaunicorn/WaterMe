@@ -21,8 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import WaterMeData
-import RealmSwift
 import UserNotifications
 
 class ReminderUserNotificationController {
@@ -123,13 +121,9 @@ class ReminderUserNotificationController {
         // done!
         return reminders
     }
-
-    private var token: NotificationToken?
-
-    deinit {
-        self.token?.invalidate()
-    }
 }
+
+import WaterMeData
 
 fileprivate extension ReminderUserNotificationController.LocalizedString {
     fileprivate static func localizedNotificationBody(from items: [String?]) -> String {
