@@ -188,6 +188,11 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         self.collectionVC?.collectionView?.contentInset = customInset
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.settingsBBI.style_updateSettingsButtonInsets(for: self.traitCollection)
+    }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         var hasBasic = segue.destination as? HasBasicController
         hasBasic?.configure(with: self.basicRC)
