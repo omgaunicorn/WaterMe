@@ -27,95 +27,34 @@ import UserNotifications
 
 class ReminderUserNotificationController {
 
-    private var data: AnyRealmCollection<Reminder>?
-
     private let queue = DispatchQueue(label: String(describing: ReminderUserNotificationController.self) + "_SerialQueue", qos: .utility)
 
-    private var timer: Timer?
+    func updateScheduledNotifications(with reminders: [ReminderValue]) {
+        // hop on a background queue to do the processing
+        self.queue.async {
+            // clear out all the old stuff before making new stuff
+            let center = UNUserNotificationCenter.current()
+            center.removeAllDeliveredNotifications()
+            center.removeAllPendingNotificationRequests()
 
-    init?(basicController: BasicController?) {
-        guard
-            let basicController = basicController,
-            let collection = basicController.allReminders().value
-        else {
-            let message = "Error Initializing: Error loading data from Realm."
-            log.error(message)
-            assertionFailure(message)
-            return nil
-        }
-        
-        self.token = collection.observe({ [weak self] in self?.dataChanged($0) })
-        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground(with:)), name: .UIApplicationDidEnterBackground, object: nil)
-    }
-
-    func notificationPermissionsMayHaveChanged() {
-        self.resetTimer()
-    }
-
-    private func resetTimer() {
-        self.timer?.invalidate()
-        self.timer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { timer in
-            timer.invalidate()
-            self.timer?.invalidate()
-            self.timer = nil
-            self.updateScheduledNotifications()
-        }
-    }
-
-    private func dataChanged(_ changes: RealmCollectionChange<AnyRealmCollection<Reminder>>) {
-        switch changes {
-        case .initial(let data):
-            self.data = data
-            self.resetTimer()
-            self.timer?.fire()
-        case .update:
-            self.resetTimer()
-        case .error(let error):
-            self.data = nil
-            self.token?.invalidate()
-            self.token = nil
-            self.updateScheduledNotifications()
-            log.error("Realm Error: \(error)")
-        }
-    }
-
-    @objc private func applicationDidEnterBackground(with notification: Notification?) {
-        self.timer?.fire()
-    }
-
-    private func updateScheduledNotifications() {
-        // clear out all the old stuff before making new stuff
-        let center = UNUserNotificationCenter.current()
-        center.removeAllDeliveredNotifications()
-        center.removeAllPendingNotificationRequests()
-        UIApplication.shared.applicationIconBadgeNumber = 0
-
-        // make sure we have data and its not empty
-        guard let data = self.data else {
-            let error = "Reminder data for notifications was NIL"
-            log.error(error)
-            assertionFailure(error)
-            return
-        }
-        guard data.isEmpty == false else {
-            log.debug("Data array was empty")
-            return
-        }
-
-        // make sure we're authorized to send notifications
-        center.authorized() { authorized in
-            guard authorized else {
-                log.info("Not authorized to schedule notifications")
+            // make sure we have data to work with before continuing
+            guard reminders.isEmpty == false else {
+                log.debug("Reminder array was empty")
                 return
             }
 
-            // generate notification object requests
-            self.notificationRequests() { requests in
+            // make sure we're authorized to send notifications
+            center.authorized() { authorized in
+                guard authorized else {
+                    log.info("Not authorized to schedule notifications")
+                    return
+                }
+                // generate notification object requests
+                let requests = type(of: self).notificationRequests(from: reminders)
                 guard requests.isEmpty == false else {
                     log.debug("No notifications to schedule")
                     return
                 }
-
                 // ask the notification center to schedule the notifications
                 for request in requests {
                     center.add(request) { error in
@@ -128,9 +67,9 @@ class ReminderUserNotificationController {
         }
     }
 
-    private func notificationRequests(completion: @escaping ([UNNotificationRequest]) -> Void) {
+    private class func notificationRequests(from reminders: [ReminderValue]) -> [UNNotificationRequest] {
         // make sure we have data to work with
-        guard let _data = self.data, _data.isEmpty == false else { completion([]); return; }
+        guard reminders.isEmpty == false else { return [] }
 
         // get preference values for reminder time and number of days to remind for
         let reminderHour = UserDefaults.standard.reminderHour
@@ -140,56 +79,50 @@ class ReminderUserNotificationController {
         let calendar = Calendar.current
         let now = Date()
 
-        // get immutable versions of the data
-        let data = Array(_data.map({ ReminderNotificationInformation(reminder: $0) }))
-
-        // hop on a background queue to do the processing
-        self.queue.async {
-            // loop through the number of days the user wants to be reminded for
-            // get all reminders that happened on or before the end of the day of `futureReminderTime`
-            let matches = (0 ..< reminderDays).flatMap() { i -> (Date, [ReminderNotificationInformation])? in
-                let _testDate = calendar.date(byAdding: .day, value: i, to: now)
-                guard let testDate = _testDate else { return nil }
-                let endOfDayInTestDate = calendar.endOfDay(for: testDate)
-                let matches = data.filter() { reminder -> Bool in
-                    let endOfDayInNextPerformDate = calendar.endOfDay(for: reminder.nextPerformDate ?? now)
-                    return endOfDayInNextPerformDate <= endOfDayInTestDate
-                }
-                guard matches.isEmpty == false else { return nil }
-                let reminderTimeInSameDayAsTestDate = calendar.dateWithExact(hour: reminderHour, onSameDayAs: testDate)
-                return (reminderTimeInSameDayAsTestDate, matches)
+        // loop through the number of days the user wants to be reminded for
+        // get all reminders that happened on or before the end of the day of `futureReminderTime`
+        let matches = (0 ..< reminderDays).flatMap() { i -> (Date, [ReminderValue])? in
+            let _testDate = calendar.date(byAdding: .day, value: i, to: now)
+            guard let testDate = _testDate else { return nil }
+            let endOfDayInTestDate = calendar.endOfDay(for: testDate)
+            let matches = reminders.filter() { reminder -> Bool in
+                let endOfDayInNextPerformDate = calendar.endOfDay(for: reminder.nextPerformDate ?? now)
+                return endOfDayInNextPerformDate <= endOfDayInTestDate
             }
-
-            // convert the matches into one notification each
-            // this makes it so the user only gets 1 notification per day at the time they requested
-            let reminders = matches.map() { reminderTime, matches -> UNNotificationRequest in
-                let interval = reminderTime.timeIntervalSince(now)
-                let _content = UNMutableNotificationContent()
-                _content.badge = NSNumber(value: matches.count)
-                let trigger: UNTimeIntervalNotificationTrigger?
-                if interval <= 0 {
-                    // if trigger is less than or equal to 0 we need to tell the system there is no trigger
-                    // this causes it to send the notification immediately
-                    trigger = nil
-                } else {
-                    trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
-                    // shuffle the names so that different plant names show in the notifications
-                    let plantNames = ReminderNotificationInformation.uniqueParentPlantNames(from: matches).shuffled()
-                    // only set the body if there is a trigger. this way a notification won't be shown to the user
-                    // only the badge will update.
-                    _content.body = ReminderUserNotificationController.LocalizedString.localizedNotificationBody(from: plantNames)
-                    _content.sound = .default()
-                }
-
-                // swiftlint:disable:next force_cast
-                let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
-                let request = UNNotificationRequest(identifier: reminderTime.description, content: content, trigger: trigger)
-                return request
-            }
-
-            // call the completion handler
-            completion(reminders)
+            guard matches.isEmpty == false else { return nil }
+            let reminderTimeInSameDayAsTestDate = calendar.dateWithExact(hour: reminderHour, onSameDayAs: testDate)
+            return (reminderTimeInSameDayAsTestDate, matches)
         }
+
+        // convert the matches into one notification each
+        // this makes it so the user only gets 1 notification per day at the time they requested
+        let reminders = matches.map() { reminderTime, matches -> UNNotificationRequest in
+            let interval = reminderTime.timeIntervalSince(now)
+            let _content = UNMutableNotificationContent()
+            _content.badge = NSNumber(value: matches.count)
+            let trigger: UNTimeIntervalNotificationTrigger?
+            if interval <= 0 {
+                // if trigger is less than or equal to 0 we need to tell the system there is no trigger
+                // this causes it to send the notification immediately
+                trigger = nil
+            } else {
+                trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+                // shuffle the names so that different plant names show in the notifications
+                let plantNames = ReminderValue.uniqueParentPlantNames(from: matches).shuffled()
+                // only set the body if there is a trigger. this way a notification won't be shown to the user
+                // only the badge will update.
+                _content.body = ReminderUserNotificationController.LocalizedString.localizedNotificationBody(from: plantNames)
+                _content.sound = .default()
+            }
+
+            // swiftlint:disable:next force_cast
+            let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
+            let request = UNNotificationRequest(identifier: reminderTime.description, content: content, trigger: trigger)
+            return request
+        }
+
+        // done!
+        return reminders
     }
 
     private var token: NotificationToken?
@@ -199,8 +132,8 @@ class ReminderUserNotificationController {
     }
 }
 
-extension ReminderUserNotificationController.LocalizedString {
-    static func localizedNotificationBody(from items: [String?]) -> String {
+fileprivate extension ReminderUserNotificationController.LocalizedString {
+    fileprivate static func localizedNotificationBody(from items: [String?]) -> String {
         switch items.count {
         case 1:
             let item1 = items[0] ?? ReminderVessel.LocalizedString.untitledPlant
@@ -216,23 +149,5 @@ extension ReminderUserNotificationController.LocalizedString {
             let string = String(format: self.bodyManyItems, item1, items.count - 1)
             return string
         }
-    }
-}
-
-private struct ReminderNotificationInformation {
-    var parentPlantUUID: String
-    var parentPlantName: String?
-    var nextPerformDate: Date?
-
-    init(reminder: Reminder) {
-        self.parentPlantUUID = reminder.vessel!.uuid
-        self.parentPlantName = reminder.vessel!.shortLabelSafeDisplayName
-        self.nextPerformDate = reminder.nextPerformDate
-    }
-
-    static func uniqueParentPlantNames(from reminders: [ReminderNotificationInformation]) -> [String?] {
-        let uniqueParents = Dictionary(grouping: reminders, by: { $0.parentPlantUUID })
-        let parentNames = uniqueParents.map({ $0.value.first?.parentPlantName })
-        return parentNames
     }
 }

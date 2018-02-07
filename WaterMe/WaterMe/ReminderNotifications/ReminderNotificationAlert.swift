@@ -69,7 +69,7 @@ extension UIAlertController {
                 switch permitted {
                 case true:
                     Analytics.log(event: Analytics.NotificationPermission.permissionGranted)
-                    AppDelegate.shared.notifictionController?.notificationPermissionsMayHaveChanged()
+                    AppDelegate.shared.reminderObserver?.notificationPermissionsMayHaveChanged()
                     selection?(.allowed)
                 case false:
                     Analytics.log(event: Analytics.NotificationPermission.permissionDenied)

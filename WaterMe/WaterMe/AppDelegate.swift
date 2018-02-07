@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // swiftlint:disable:next weak_delegate
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
-    private(set) var notifictionController: ReminderUserNotificationController?
+    private(set) var reminderObserver: GlobalReminderObserver?
 
     let purchaseController = PurchaseController()
     var coreDataMigrator = CoreDataMigrator()
@@ -70,7 +70,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window.rootViewController = prevVC
         }
         let notificationChanges = {
-            self.notifictionController?.notificationPermissionsMayHaveChanged()
+            self.reminderObserver?.notificationPermissionsMayHaveChanged()
         }
         // register for notifications about the increase contrast setting
         _ = NotificationCenter.default.addObserver(forName: .UIAccessibilityDarkerSystemColorsStatusDidChange, object: nil, queue: nil) { _ in
@@ -140,7 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let result = BasicController.new(of: .local)
         let vc = ReminderMainViewController.newVC(basicRCResult: result, proController: nil)
-        self.notifictionController = ReminderUserNotificationController(basicController: result.value)
+        self.reminderObserver = GlobalReminderObserver(basicController: result.value)
 
         result.value?.userDidPerformReminder = checkForReview
 

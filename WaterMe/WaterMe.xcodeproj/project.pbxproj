@@ -41,6 +41,7 @@
 		504A8D5F1EDB56AC002D928D /* ErrorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */; };
 		504A8D611EDB5A46002D928D /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */; };
 		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
+		5051F8FA202BA2BE00741FF9 /* GlobalReminderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */; };
 		5065AA1C200E872900C7F0CC /* UserFacingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065AA1B200E872900C7F0CC /* UserFacingError.swift */; };
 		5065AA25200EC62F00C7F0CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5065AA27200EC62F00C7F0CC /* Localizable.strings */; };
 		506A6218200562AC008EF601 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506A6217200562AC008EF601 /* Settings.storyboard */; };
@@ -158,6 +159,7 @@
 		504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewController.swift; sourceTree = "<group>"; };
 		504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
 		505086AE1ECBD43200745012 /* RealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
+		5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalReminderObserver.swift; sourceTree = "<group>"; };
 		5065AA1B200E872900C7F0CC /* UserFacingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFacingError.swift; sourceTree = "<group>"; };
 		5065AA26200EC62F00C7F0CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5065AA29200EC73400C7F0CC /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/StarterRealm.realm; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 		5049D1A11FACF9F30076565E /* ReminderNotifications */ = {
 			isa = PBXGroup;
 			children = (
+				5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */,
 				5049D1A21FACFA1B0076565E /* ReminderUserNotificationController.swift */,
 				507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */,
 				50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */,
@@ -937,6 +940,7 @@
 				5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */,
 				50F388E41FF6DA490031ED45 /* WaterMeData.xcdatamodeld in Sources */,
 				50281904200BB57D0044BEC8 /* ModalParentViewController.swift in Sources */,
+				5051F8FA202BA2BE00741FF9 /* GlobalReminderObserver.swift in Sources */,
 				50CB5AFA2001BAA900868F30 /* ReminderNotificationAlert.swift in Sources */,
 				50C30E541EFF490D006003A1 /* ReminderIntervalPickerViewController.swift in Sources */,
 				50BDC03F1F9A3E21002281C3 /* BlurryBackgroundBottomLineCollectionReusableView.swift in Sources */,
