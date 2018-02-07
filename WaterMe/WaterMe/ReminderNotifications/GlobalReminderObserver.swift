@@ -26,6 +26,7 @@ import RealmSwift
 
 class GlobalReminderObserver {
 
+    private let badgeNumberController = BadgeNumberController()
     private let notificationController = ReminderUserNotificationController()
 
     private var data: AnyRealmCollection<Reminder>?
@@ -69,6 +70,7 @@ class GlobalReminderObserver {
     private func dataChanged() {
         let data = Array(self.data?.map({ ReminderValue(reminder: $0) }) ?? [])
         self.notificationController.updateScheduledNotifications(with: data)
+        self.badgeNumberController.updateBadgeNumber(with: data)
     }
 
     private func resetTimer() {

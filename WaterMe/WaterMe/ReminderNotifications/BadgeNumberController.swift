@@ -22,3 +22,29 @@
 //
 
 import UIKit
+
+class BadgeNumberController {
+
+    private let queue = DispatchQueue(label: String(describing: BadgeNumberController.self) + "_SerialQueue_" + UUID().uuidString, qos: .utility)
+
+    func updateBadgeNumber(with reminders: [ReminderValue]) {
+        self.queue.async {
+            let remindersThatNeedToBeDoneBeforeTomorrow = reminders.filter() { reminder -> Bool in
+                let cal = Calendar.current
+                let now = Date()
+                let endOfToday = cal.endOfDay(for: now)
+                // if there is no nextPerformDate, it needs to be performed, so treat it as such
+                guard let testDate = reminder.nextPerformDate else { return true }
+                // otherwise check to see if the date is before the end of today
+                let interval = endOfToday.timeIntervalSince(testDate)
+                let test = interval >= 0
+                return test
+            }
+            let count = remindersThatNeedToBeDoneBeforeTomorrow.count
+            DispatchQueue.main.async {
+                UIApplication.shared.applicationIconBadgeNumber = count
+            }
+        }
+    }
+
+}
