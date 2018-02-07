@@ -96,24 +96,23 @@ class ReminderUserNotificationController {
 
         // convert the matches into one notification each
         // this makes it so the user only gets 1 notification per day at the time they requested
-        let reminders = matches.map() { reminderTime, matches -> UNNotificationRequest in
+        let reminders = matches.flatMap() { reminderTime, matches -> UNNotificationRequest? in
             let interval = reminderTime.timeIntervalSince(now)
             let _content = UNMutableNotificationContent()
             _content.badge = NSNumber(value: matches.count)
-            let trigger: UNTimeIntervalNotificationTrigger?
-            if interval <= 0 {
-                // if trigger is less than or equal to 0 we need to tell the system there is no trigger
-                // this causes it to send the notification immediately
-                trigger = nil
-            } else {
-                trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
-                // shuffle the names so that different plant names show in the notifications
-                let plantNames = ReminderValue.uniqueParentPlantNames(from: matches).shuffled()
-                // only set the body if there is a trigger. this way a notification won't be shown to the user
-                // only the badge will update.
-                _content.body = ReminderUserNotificationController.LocalizedString.localizedNotificationBody(from: plantNames)
-                _content.sound = .default()
-            }
+
+            // if the interval is less 0 or less, we don't want to schedule a notification
+            // all that needs to happen in this case is the badge icon get updated, and that can be done elsewhere
+            guard interval > 0 else { return nil }
+
+            // construct the notification
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+            // shuffle the names so that different plant names show in the notifications
+            let plantNames = ReminderValue.uniqueParentPlantNames(from: matches).shuffled()
+            // only set the body if there is a trigger. this way a notification won't be shown to the user
+            // only the badge will update.
+            _content.body = ReminderUserNotificationController.LocalizedString.localizedNotificationBody(from: plantNames)
+            _content.sound = .default()
 
             // swiftlint:disable:next force_cast
             let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
