@@ -111,6 +111,7 @@ enum Analytics {
         case openWhyEmojiAlert = "VCView.WhyEmojiAlert"
         case errorAlertRealm = "VCView.ErrorAlert.Realm"
         case errorAlertPurchase = "VCView.ErrorAlert.Purchase"
+        case reviewRequested = "VCView.ReviewRequested"
     }
 
     // MARK: Logging Functions
