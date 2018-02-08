@@ -71,9 +71,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         self.collectionVC?.collectionView?.contentInsetAdjustmentBehavior = .always
 
         // register to find out about purchases that come in at any time
-        AppDelegate.shared.purchaseController?.transactionsInFlightUpdated = { [weak self] in
-            self?.checkForPurchasesInFlight()
-        }
+        self.registerForPurchaseNotifications()
     }
 
     private var viewDidAppearOnce = false
@@ -86,6 +84,12 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         guard self.viewDidAppearOnce == false else { return }
         self.viewDidAppearOnce = true
         self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+    }
+
+    private func registerForPurchaseNotifications() {
+        AppDelegate.shared.purchaseController?.transactionsInFlightUpdated = { [weak self] in
+            self?.checkForPurchasesInFlight()
+        }
     }
 
     private func checkForErrorsAndOtherUnexpectedViewControllersToPresent() {
@@ -133,7 +137,9 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
     @IBAction private func plantsButtonTapped(_ sender: Any) {
         let vc = ReminderVesselMainViewController.newVC(basicController: self.basicRC, proController: self.proRC) { vc in
-            vc.dismiss(animated: true, completion: nil)
+            vc.dismiss(animated: true) {
+                self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+            }
         }
         self.present(vc, animated: true, completion: nil)
     }
@@ -142,10 +148,8 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         let vc = SettingsMainViewController.newVC() { vc in
             vc.dismiss(animated: true) {
                 // re-register to receive purchase updates
-                AppDelegate.shared.purchaseController?.transactionsInFlightUpdated = {
-                    self.checkForPurchasesInFlight()
-                }
-                self.checkForPurchasesInFlight()
+                self.registerForPurchaseNotifications()
+                self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
         }
         self.present(vc, animated: true, completion: nil)
@@ -255,6 +259,12 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         alert.popoverPresentationController?.sourceRect = CGRect(origin: origin, size: .zero)
         alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
 
+        // closure that needs to be executed whenever all the alerts have disappeared
+        let viewDidAppearActions = {
+            deselectAnimated(true)
+            self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+        }
+
         // need an idenfitier starting now because this is all async
         // the reminder could be deleted or changed before the user makes a choice
         let identifier = Reminder.Identifier(reminder: reminder)
@@ -264,12 +274,11 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             switch result {
             case .success(let reminder):
                 let vc = ReminderEditViewController.newVC(basicController: self.basicRC, purpose: .existing(reminder)) { vc in
-                    vc.dismiss(animated: true, completion: { deselectAnimated(true) })
+                    vc.dismiss(animated: true, completion: { viewDidAppearActions() })
                 }
                 self.present(vc, animated: true, completion: nil)
             case .failure(let error):
-                deselectAnimated(true)
-                self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
+                self.present(UIAlertController(error: error, completion: { _ in viewDidAppearActions() }), animated: true, completion: nil)
             }
         }
         let editVessel = UIAlertAction(title: UIApplication.LocalizedString.editVessel, style: .default) { _ in
@@ -277,30 +286,33 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             switch result {
             case .success(let reminder):
                 let vc = ReminderVesselEditViewController.newVC(basicController: self.basicRC, editVessel: reminder.vessel) { vc in
-                    vc.dismiss(animated: true, completion: { deselectAnimated(true) })
+                    vc.dismiss(animated: true, completion: { viewDidAppearActions() })
                 }
                 self.present(vc, animated: true, completion: nil)
             case .failure(let error):
-                deselectAnimated(true)
-                self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
+                self.present(UIAlertController(error: error, completion: { _ in viewDidAppearActions() }), animated: true, completion: nil)
             }
         }
         let performReminder = UIAlertAction(title: LocalizedString.buttonTitleReminderPerform, style: .default) { _ in
-
             Analytics.log(event: Analytics.CRUD_Op_R.performLegacy)
-
-            deselectAnimated(true)
             let result = basicRC.appendNewPerformToReminders(with: [identifier])
             switch result {
             case .failure(let error):
-                self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
+                self.present(UIAlertController(error: error, completion: { _ in viewDidAppearActions() }), animated: true, completion: nil)
             case .success:
-                let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .right(view), selectionCompletionHandler: nil)
-                guard let notificationPermissionVC = notPermVC else { return }
+                let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .right(view)) { _ in
+                    viewDidAppearActions()
+                }
+                guard let notificationPermissionVC = notPermVC else {
+                    viewDidAppearActions()
+                    return
+                }
                 self.present(notificationPermissionVC, animated: true, completion: nil)
             }
         }
-        let cancel = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleCancel, style: .cancel, handler: { _ in deselectAnimated(true) })
+        let cancel = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleCancel, style: .cancel) { _ in
+            viewDidAppearActions()
+        }
         alert.addAction(performReminder)
         alert.addAction(editReminder)
         alert.addAction(editVessel)
