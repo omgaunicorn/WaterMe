@@ -40,6 +40,12 @@ class DragTargetInstructionalView: UIView {
     }
 
     private func updateDynamicText() {
+        switch self.traitCollection.verticalSizeClass {
+        case .regular, .unspecified:
+            self.textLabel?.numberOfLines = 2
+        case .compact:
+            self.textLabel?.numberOfLines = 4
+        }
         self.textLabel?.attributedText = NSAttributedString(string: "Drag and Drop Here", style: .dragInstructionalText(self.tintColor))
     }
 
