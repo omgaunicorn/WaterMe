@@ -170,8 +170,10 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     }
 
     private func updateCollectionViewInsets() {
+        let verticalSizeClass = self.traitCollection.verticalSizeClass
+        let layoutDirection = self.traitCollection.layoutDirection
         let customInset: UIEdgeInsets
-        switch self.traitCollection.verticalSizeClass {
+        switch verticalSizeClass {
         case .regular, .unspecified:
             // get the width and set the custom inset
             let dragViewHeight = self.dropTargetViewController?.dropTargetViewHeight ?? 0
@@ -183,7 +185,12 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
             self.collectionVC?.collectionView?.scrollIndicatorInsets = .zero
             // get the width and set the custom inset
             let dragViewWidth = self.dropTargetViewController?.view.bounds.width ?? 0
-            customInset = UIEdgeInsets(top: 0, left: dragViewWidth, bottom: 0, right: 0)
+            switch layoutDirection {
+            case .leftToRight, .unspecified:
+                customInset = UIEdgeInsets(top: 0, left: dragViewWidth, bottom: 0, right: 0)
+            case .rightToLeft:
+                customInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: dragViewWidth)
+            }
         }
         self.collectionVC?.collectionView?.contentInset = customInset
     }
