@@ -43,6 +43,7 @@
 		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
 		5051F8FA202BA2BE00741FF9 /* GlobalReminderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */; };
 		5051F8FC202BAB1C00741FF9 /* BadgeNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8FB202BAB1C00741FF9 /* BadgeNumberController.swift */; };
+		5051F8FE202BCBE900741FF9 /* OtherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8FD202BCBE900741FF9 /* OtherTests.swift */; };
 		5065AA1C200E872900C7F0CC /* UserFacingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065AA1B200E872900C7F0CC /* UserFacingError.swift */; };
 		5065AA25200EC62F00C7F0CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5065AA27200EC62F00C7F0CC /* Localizable.strings */; };
 		506A6218200562AC008EF601 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506A6217200562AC008EF601 /* Settings.storyboard */; };
@@ -62,7 +63,6 @@
 		5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */; };
 		5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */; };
 		5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */; };
-		5087A9291EE50C670046E687 /* ImageProcessingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9281EE50C670046E687 /* ImageProcessingTests.swift */; };
 		508E61551F8ACC5E00B28DD8 /* ReminderMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 508E61541F8ACC5E00B28DD8 /* ReminderMain.storyboard */; };
 		508E61571F8AD57400B28DD8 /* ReminderCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508E61561F8AD57400B28DD8 /* ReminderCollectionViewController.swift */; };
 		508E615A1F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */; };
@@ -162,6 +162,7 @@
 		505086AE1ECBD43200745012 /* RealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
 		5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalReminderObserver.swift; sourceTree = "<group>"; };
 		5051F8FB202BAB1C00741FF9 /* BadgeNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeNumberController.swift; sourceTree = "<group>"; };
+		5051F8FD202BCBE900741FF9 /* OtherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherTests.swift; sourceTree = "<group>"; };
 		5065AA1B200E872900C7F0CC /* UserFacingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFacingError.swift; sourceTree = "<group>"; };
 		5065AA26200EC62F00C7F0CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5065AA29200EC73400C7F0CC /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/StarterRealm.realm; sourceTree = "<group>"; };
@@ -182,7 +183,6 @@
 		5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmojiPickerCollectionViewCell.xib; sourceTree = "<group>"; };
 		5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCropperViewController.swift; sourceTree = "<group>"; };
 		5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPhotoAlertController.swift; sourceTree = "<group>"; };
-		5087A9281EE50C670046E687 /* ImageProcessingTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageProcessingTests.swift; sourceTree = "<group>"; };
 		508E61541F8ACC5E00B28DD8 /* ReminderMain.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReminderMain.storyboard; sourceTree = "<group>"; };
 		508E61561F8AD57400B28DD8 /* ReminderCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCollectionViewController.swift; sourceTree = "<group>"; };
 		508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -462,7 +462,7 @@
 			isa = PBXGroup;
 			children = (
 				505086AE1ECBD43200745012 /* RealmTests.swift */,
-				5087A9281EE50C670046E687 /* ImageProcessingTests.swift */,
+				5051F8FD202BCBE900741FF9 /* OtherTests.swift */,
 				50C96A3B1EC2CFE8002802C1 /* Info.plist */,
 			);
 			path = NoDeviceTests;
@@ -618,6 +618,7 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = V6ESYGU6CV;
 						ProvisioningStyle = Automatic;
+						TestTargetID = 50BB0F4F1EBFCDE500850FF4;
 					};
 				};
 			};
@@ -992,7 +993,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5087A9291EE50C670046E687 /* ImageProcessingTests.swift in Sources */,
+				5051F8FE202BCBE900741FF9 /* OtherTests.swift in Sources */,
 				505086AF1ECBD43200745012 /* RealmTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1122,7 +1123,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1172,7 +1173,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1218,6 +1219,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D9A7F53C5A90226BBA75A77F /* Pods-NoDeviceTests.debug.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = NoDeviceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1225,6 +1227,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
 			};
 			name = Debug;
 		};
@@ -1232,6 +1235,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D34773B578BFF62486A3E66 /* Pods-NoDeviceTests.release.xcconfig */;
 			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = NoDeviceTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1239,6 +1243,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
 			};
 			name = Release;
 		};

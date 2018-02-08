@@ -36,7 +36,7 @@ extension NSString {
         return sequence(state: 0) { state -> NSRange? in
             // get the range using the state variable to know the beginning of where to search
             let range = copy.range(of: substring, range: NSRange(location: state, length: copy.length - state))
-            // populate the state variable with the end of the last find for the next iteration
+            // populate the state variable with the location of the last find for the next iteration
             state = NSMaxRange(range)
             // if we ever find NSNotFound for the location, its time to return NIL and end the collection
             return range.location != NSNotFound ? range : nil
