@@ -28,6 +28,14 @@ import Foundation
 
 enum Analytics {
 
+    // MARK: Events
+
+    enum Event: String {
+        case reviewRequested = "Event.ReviewRequested"
+        case stpReloadNotification = "Event.STPReload.Notification"
+        case stpReloadBackup = "Event.STPReload.Backup"
+    }
+
     // MARK: Errors
 
     enum Error: String {
@@ -118,7 +126,6 @@ enum Analytics {
         case openWhyEmojiAlert = "VCView.WhyEmojiAlert"
         case errorAlertRealm = "VCView.ErrorAlert.Realm"
         case errorAlertPurchase = "VCView.ErrorAlert.Purchase"
-        case reviewRequested = "VCView.ReviewRequested"
     }
 
     // MARK: Logging Functions

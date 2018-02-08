@@ -38,6 +38,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     var basicRC: BasicController?
 
     private(set) var reminders: ReminderGedeg?
+    private let significantTimePassedDetector = SignificantTimePassedDetector()
     
     weak var delegate: ReminderCollectionViewControllerDelegate?
 
@@ -54,6 +55,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
                                       withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID)
         self.flow?.minimumInteritemSpacing = 0
         self.flow?.minimumLineSpacing = 0
+        self.significantTimePassedDetector.delegate = self
         self.hardReloadData()
     }
     
@@ -192,5 +194,21 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 
     func collectionView(_ collectionView: UICollectionView, dragSessionDidEnd session: UIDragSession) {
         self.delegate?.dragSessionDidEnd(session, within: self)
+    }
+}
+
+extension ReminderCollectionViewController: SignificantTimePassedDetectorDelegate {
+    func significantTimePassed(with reason: SignificantTimePassedDetector.Reason) {
+        let event: Analytics.Event
+        switch reason {
+        case .BackupDetector:
+            event = .stpReloadBackup
+        case .STCNotification:
+            event = .stpReloadNotification
+        }
+        Analytics.log(event: event)
+        Analytics.log(event: Analytics.Event.stpReloadNotification)
+        log.info("Reloading Data: " + Analytics.Event.stpReloadBackup.rawValue)
+        self.hardReloadData()
     }
 }

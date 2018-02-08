@@ -113,7 +113,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 now >= forwardDate
             else { return }
             log.info("Requested App Review with SKStoreReviewController")
-            Analytics.log(viewOperation: .reviewRequested)
+            Analytics.log(event: Analytics.Event.reviewRequested)
             SKStoreReviewController.requestReview()
             ud.requestReviewDate = nil // nil this out so they won't be asked again until next update
         }
