@@ -384,10 +384,9 @@ extension NSAttributedString {
 
         // since we're using NSAttributedString, its easier to do this the old ObjC way
         let primaryString = primaryString as NSString
-        let range = primaryString.range(of: searchString)
-        if range.location != NSNotFound {
-            primaryAttributedString.addAttributes(searchStringStyle.attributes, range: range)
-        }
+        let ranges = primaryString.ranges(of: searchString)
+        ranges.forEach({ primaryAttributedString.addAttributes(searchStringStyle.attributes, range: $0) })
+
         // swiftlint:disable:next force_cast
         let _primaryAttributedString = primaryAttributedString.copy() as! NSAttributedString
         self.init(attributedString: _primaryAttributedString)
