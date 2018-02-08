@@ -81,7 +81,7 @@ class PurchaseThanksViewController: UIViewController {
     private var completionHandler: PurchaseThanksCompletion!
     private let cheerView: CheerView = {
         let v = CheerView()
-        v.config.colors = [Style.Color.tint, Style.Color.tint, Style.Color.darkTintColor, Style.Color.darkTintColor]
+        v.config.colors = [Style.Color.tint, Style.Color.darkTintColor]
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
