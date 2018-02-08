@@ -115,11 +115,8 @@ class EmojiPickerViewController: StandardCollectionViewController {
 
 extension EmojiPickerViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        switch UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
-        case true:
-            return CGSize(width: collectionView.availableContentSize.width, height: 55)
-        case false:
-            return CGSize(width: collectionView.availableContentSize.width, height: 40)
-        }
+        let kind = ReminderHeaderCollectionReusableView.self
+        let isAC = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+        return CGSize(width: collectionView.availableContentSize.width, height: kind.style_viewHeight(isAccessibilityCategory: isAC))
     }
 }

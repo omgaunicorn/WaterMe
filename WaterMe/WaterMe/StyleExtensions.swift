@@ -25,6 +25,17 @@ import CropViewController
 import WaterMeData
 import UIKit
 
+extension ReminderHeaderCollectionReusableView {
+    class func style_viewHeight(isAccessibilityCategory: Bool) -> CGFloat {
+        switch isAccessibilityCategory {
+        case true:
+            return 74
+        case false:
+            return 44
+        }
+    }
+}
+
 extension ModalParentViewController {
     enum Style {
         static let grayViewColor = UIColor.black.withAlphaComponent(0.5)
