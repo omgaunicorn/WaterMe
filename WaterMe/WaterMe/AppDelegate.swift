@@ -86,7 +86,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let token3 = UserDefaults.standard.observe(\.NUMBER_OF_REMINDER_DAYS) { _, _ in
             notificationChanges()
         }
-        self.userDefaultObserverTokens += [token1, token2, token3]
+        let token4 = UserDefaults.standard.observe(\.FIRST_RUN) { _, _ in
+            notificationChanges()
+        }
+        self.userDefaultObserverTokens += [token1, token2, token3, token4]
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
