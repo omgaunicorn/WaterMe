@@ -84,7 +84,11 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
 
-    private func userChoseEditReminder(with identifier: Reminder.Identifier, in _: UIAlertAction, basicRC: BasicController, completion: (() -> Void)?) {
+    private func userChoseEditReminder(with identifier: Reminder.Identifier,
+                                       in _: UIAlertAction,
+                                       basicRC: BasicController,
+                                       completion: (() -> Void)?)
+    {
         let result = basicRC.reminder(matching: identifier)
         switch result {
         case .success(let reminder):
@@ -97,7 +101,11 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         }
     }
 
-    private func userChoseEditVessel(withReminderIdentifier identifier: Reminder.Identifier, in _: UIAlertAction, basicRC: BasicController, completion: (() -> Void)?) {
+    private func userChoseEditVessel(withReminderIdentifier identifier: Reminder.Identifier,
+                                     in _: UIAlertAction,
+                                     basicRC: BasicController,
+                                     completion: (() -> Void)?)
+    {
         let result = basicRC.reminder(matching: identifier)
         switch result {
         case .success(let reminder):
@@ -110,7 +118,12 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         }
     }
 
-    private func userChosePerformReminder(with identifier: Reminder.Identifier, in _: UIAlertAction, from view: UIView, basicRC: BasicController, completion: (() -> Void)?) {
+    private func userChosePerformReminder(with identifier: Reminder.Identifier,
+                                          in _: UIAlertAction,
+                                          from view: UIView,
+                                          basicRC: BasicController,
+                                          completion: (() -> Void)?)
+    {
         let result = basicRC.appendNewPerformToReminders(with: [identifier])
         switch result {
         case .success:
