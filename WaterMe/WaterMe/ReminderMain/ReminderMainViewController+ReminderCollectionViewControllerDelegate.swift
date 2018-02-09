@@ -72,7 +72,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             self.userChoseEditVessel(withReminderIdentifier: identifier, in: action, basicRC: basicRC, completion: viewDidAppearActions)
         }
         let performReminder = UIAlertAction(title: LocalizedString.buttonTitleReminderPerform, style: .default) { action in
-            self.userChosePerformReminder(with: identifier, in: action, basicRC: basicRC, completion: viewDidAppearActions)
+            self.userChosePerformReminder(with: identifier, in: action, from: view, basicRC: basicRC, completion: viewDidAppearActions)
         }
         let cancel = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleCancel, style: .cancel) { _ in
             viewDidAppearActions()
@@ -110,7 +110,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         }
     }
 
-    private func userChosePerformReminder(with identifier: Reminder.Identifier, in _: UIAlertAction, basicRC: BasicController, completion: (() -> Void)?) {
+    private func userChosePerformReminder(with identifier: Reminder.Identifier, in _: UIAlertAction, from view: UIView, basicRC: BasicController, completion: (() -> Void)?) {
         let result = basicRC.appendNewPerformToReminders(with: [identifier])
         switch result {
         case .success:
