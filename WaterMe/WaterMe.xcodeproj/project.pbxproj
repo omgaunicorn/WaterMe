@@ -53,6 +53,7 @@
 		506DFA4D201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506DFA4C201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift */; };
 		50702D11200589B0009EF952 /* SettingsTipJarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */; };
 		50702D13200591CC009EF952 /* EmailDeveloperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50702D12200591CC009EF952 /* EmailDeveloperViewController.swift */; };
+		507318E7202D29BB00CF3737 /* ReminderMainViewController+ReminderCollectionViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507318E6202D29BB00CF3737 /* ReminderMainViewController+ReminderCollectionViewControllerDelegate.swift */; };
 		50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */; };
 		50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */; };
 		5075B48E1FF178DC007B42D8 /* ReminderDragPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */; };
@@ -173,6 +174,7 @@
 		506DFA4C201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderHeaderCollectionReusableView.swift; sourceTree = "<group>"; };
 		50702D10200589B0009EF952 /* SettingsTipJarTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTipJarTableViewCell.swift; sourceTree = "<group>"; };
 		50702D12200591CC009EF952 /* EmailDeveloperViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailDeveloperViewController.swift; sourceTree = "<group>"; };
+		507318E6202D29BB00CF3737 /* ReminderMainViewController+ReminderCollectionViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderMainViewController+ReminderCollectionViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewTableViewCell.swift; sourceTree = "<group>"; };
 		50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewTableViewCell.xib; sourceTree = "<group>"; };
 		5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderDragPreviewView.xib; sourceTree = "<group>"; };
@@ -275,6 +277,7 @@
 			children = (
 				508E61541F8ACC5E00B28DD8 /* ReminderMain.storyboard */,
 				500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */,
+				507318E6202D29BB00CF3737 /* ReminderMainViewController+ReminderCollectionViewControllerDelegate.swift */,
 				508E61561F8AD57400B28DD8 /* ReminderCollectionViewController.swift */,
 				508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */,
 				502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */,
@@ -931,6 +934,7 @@
 				50E8B1E21EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift in Sources */,
 				5015EEF61FF56FF300CAC7D7 /* DragTargetInstructionalView.swift in Sources */,
 				50702D13200591CC009EF952 /* EmailDeveloperViewController.swift in Sources */,
+				507318E7202D29BB00CF3737 /* ReminderMainViewController+ReminderCollectionViewControllerDelegate.swift in Sources */,
 				50F388E01FF6D9C10031ED45 /* CoreDataMigrator.swift in Sources */,
 				5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */,
 				502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */,

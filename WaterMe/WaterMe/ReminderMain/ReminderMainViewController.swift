@@ -44,19 +44,19 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     private weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     private var applicationDidFinishLaunchingError: RealmError?
 
-    private lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedReminderVesselButtonWithTarget: self, action: #selector(self.plantsButtonTapped(_:)))
-    private lazy var settingsBBI: UIBarButtonItem = UIBarButtonItem(localizedSettingsButtonWithTarget: self, action: #selector(self.settingsButtonTapped(_:)))
+    private(set) lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedReminderVesselButtonWithTarget: self, action: #selector(self.plantsButtonTapped(_:)))
+    private(set) lazy var settingsBBI: UIBarButtonItem = UIBarButtonItem(localizedSettingsButtonWithTarget: self, action: #selector(self.settingsButtonTapped(_:)))
 
-    private let dueDateFormatter: DateFormatter = {
+    var basicRC: BasicController?
+    var proRC: ProController?
+
+    let dueDateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateStyle = .full
         df.timeStyle = .none
         df.doesRelativeDateFormatting = true
         return df
     }()
-    
-    var basicRC: BasicController?
-    var proRC: ProController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,7 +92,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         }
     }
 
-    private func checkForErrorsAndOtherUnexpectedViewControllersToPresent() {
+    func checkForErrorsAndOtherUnexpectedViewControllersToPresent() {
         guard self.presentedViewController == nil else { return }
         
         if let error = self.applicationDidFinishLaunchingError {
@@ -222,102 +222,6 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 extension ReminderMainViewController: ReminderFinishDropTargetViewControllerDelegate {
     func animateAlongSideDropTargetViewResize(within: ReminderFinishDropTargetViewController) -> (() -> Void)? {
         return { self.updateCollectionViewInsets() }
-    }
-}
-
-extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
-
-    func dragSessionWillBegin(_ session: UIDragSession, within viewController: ReminderCollectionViewController) {
-        self.settingsBBI.isEnabled = false
-        self.plantsBBI.isEnabled = false
-    }
-
-    func dragSessionDidEnd(_ session: UIDragSession, within viewController: ReminderCollectionViewController) {
-        self.settingsBBI.isEnabled = true
-        self.plantsBBI.isEnabled = true
-    }
-
-    // this produces a warning and it is a really long function
-    // potential for refactor, but its nice how its so contained
-    func userDidSelect(reminder: Reminder,
-                       from view: UIView,
-                       deselectAnimated: @escaping (Bool) -> Void,
-                       within viewController: ReminderCollectionViewController)
-    {
-        guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
-        Analytics.log(viewOperation: .reminderVesselTap)
-
-        // prepare information for the alert we're going to present
-        let dueDateString = self.dueDateFormatter.string(from: reminder.nextPerformDate ?? Date())
-        let message = reminder.localizedAlertMessage(withLocalizedDateString: dueDateString)
-        let alert = UIAlertController(title: reminder.localizedAlertTitle, message: message, preferredStyle: .actionSheet)
-        
-        // configure popover presentation for ipad
-        // popoverPresentationController is NIL on iPhones
-        alert.popoverPresentationController?.sourceView = view
-        let origin = CGPoint(x: view.bounds.size.width / 2, y: view.bounds.size.height / 2)
-        alert.popoverPresentationController?.sourceRect = CGRect(origin: origin, size: .zero)
-        alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
-
-        // closure that needs to be executed whenever all the alerts have disappeared
-        let viewDidAppearActions = {
-            deselectAnimated(true)
-            self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
-        }
-
-        // need an idenfitier starting now because this is all async
-        // the reminder could be deleted or changed before the user makes a choice
-        let identifier = Reminder.Identifier(reminder: reminder)
-        // configure the alert to show
-        let editReminder = UIAlertAction(title: UIApplication.LocalizedString.editReminder, style: .default) { _ in
-            let result = basicRC.reminder(matching: identifier)
-            switch result {
-            case .success(let reminder):
-                let vc = ReminderEditViewController.newVC(basicController: self.basicRC, purpose: .existing(reminder)) { vc in
-                    vc.dismiss(animated: true, completion: { viewDidAppearActions() })
-                }
-                self.present(vc, animated: true, completion: nil)
-            case .failure(let error):
-                self.present(UIAlertController(error: error, completion: { _ in viewDidAppearActions() }), animated: true, completion: nil)
-            }
-        }
-        let editVessel = UIAlertAction(title: UIApplication.LocalizedString.editVessel, style: .default) { _ in
-            let result = basicRC.reminder(matching: identifier)
-            switch result {
-            case .success(let reminder):
-                let vc = ReminderVesselEditViewController.newVC(basicController: self.basicRC, editVessel: reminder.vessel) { vc in
-                    vc.dismiss(animated: true, completion: { viewDidAppearActions() })
-                }
-                self.present(vc, animated: true, completion: nil)
-            case .failure(let error):
-                self.present(UIAlertController(error: error, completion: { _ in viewDidAppearActions() }), animated: true, completion: nil)
-            }
-        }
-        let performReminder = UIAlertAction(title: LocalizedString.buttonTitleReminderPerform, style: .default) { _ in
-            Analytics.log(event: Analytics.CRUD_Op_R.performLegacy)
-            let result = basicRC.appendNewPerformToReminders(with: [identifier])
-            switch result {
-            case .failure(let error):
-                self.present(UIAlertController(error: error, completion: { _ in viewDidAppearActions() }), animated: true, completion: nil)
-            case .success:
-                let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .right(view)) { _ in
-                    viewDidAppearActions()
-                }
-                guard let notificationPermissionVC = notPermVC else {
-                    viewDidAppearActions()
-                    return
-                }
-                self.present(notificationPermissionVC, animated: true, completion: nil)
-            }
-        }
-        let cancel = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleCancel, style: .cancel) { _ in
-            viewDidAppearActions()
-        }
-        alert.addAction(performReminder)
-        alert.addAction(editReminder)
-        alert.addAction(editVessel)
-        alert.addAction(cancel)
-        self.present(alert, animated: true, completion: nil)
     }
 }
 
