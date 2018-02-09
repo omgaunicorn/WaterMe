@@ -68,6 +68,8 @@ enum Analytics {
     // MARK: Notification Permissions
 
     enum NotificationPermission: String {
+        case systemSettingDenied = "Notify.Sys.Denied"
+        case userdefaultsSettingDenied = "Notify.UD.Denied"
         case permissionGranted = "Notify.PermissionGranted"
         case permissionDenied = "Notify.PermissionDenied"
         case permissionIgnored = "Notify.PermissionIgnored"

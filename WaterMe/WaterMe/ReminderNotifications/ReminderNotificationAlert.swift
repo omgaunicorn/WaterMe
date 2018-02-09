@@ -36,7 +36,7 @@ extension UIAlertController {
         let nc = UNUserNotificationCenter.current()
         let ud = UserDefaults.standard
         let authorizationStatus = nc.settings.authorizationStatus
-        let userAskedToBeAsked = ud.userHasRequestedToBeAskedAboutNotificationPermissions
+        let userAskedToBeAsked = ud.notifications
         let style: UIAlertControllerStyle = sender != nil ? .actionSheet : .alert
         switch (authorizationStatus, userAskedToBeAsked) {
         case (.notDetermined, true):
@@ -63,8 +63,9 @@ extension UIAlertController {
         self.init(title: LocalizedString.newPermissionTitle,
                   message: LocalizedString.newPermissionMessage,
                   preferredStyle: style)
+        let ud = UserDefaults.standard
         let yes = UIAlertAction(title: LocalizedString.newPermissionButtonTitleSendNotifications, style: .default) { _ in
-            UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
+            ud.notifications = true
             UNUserNotificationCenter.current().requestAuthorizationIfNeeded() { permitted in
                 switch permitted {
                 case true:
@@ -79,12 +80,12 @@ extension UIAlertController {
         }
         let no = UIAlertAction(title: LocalizedString.newPermissionButtonTitleDontSendNotifications, style: .destructive) { _ in
             Analytics.log(event: Analytics.NotificationPermission.permissionDenied)
-            UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = false
+            ud.notifications = false
             selection?(.denied)
         }
         let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
             Analytics.log(event: Analytics.NotificationPermission.permissionIgnored)
-            UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
+            ud.notifications = true
             selection?(.cancel)
         }
         self.addAction(yes)
@@ -97,18 +98,19 @@ extension UIAlertController {
         self.init(title: LocalizedString.permissionDeniedAlertTitle,
                   message: LocalizedString.permissionDeniedAlertMessage,
                   preferredStyle: style)
+        let ud = UserDefaults.standard
         let settings = UIAlertAction(title: SettingsMainViewController.LocalizedString.settingsTitle, style: .default) { _ in
-            UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
+            ud.notifications = true
             UIApplication.shared.openSettings() { _ in
                 selection?(.cancel)
             }
         }
         let dontAsk = UIAlertAction(title: LocalizedString.permissionDeniedButtonTitleDontAskAgain, style: .destructive) { _ in
-            UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = false
+            ud.notifications = false
             selection?(.denied)
         }
         let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
-            UserDefaults.standard.userHasRequestedToBeAskedAboutNotificationPermissions = true
+            ud.notifications = true
             selection?(.cancel)
         }
         self.addAction(settings)

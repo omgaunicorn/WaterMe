@@ -69,7 +69,7 @@ extension UserDefaults {
         }
     }
     
-    var userHasRequestedToBeAskedAboutNotificationPermissions: Bool {
+    var notifications: Bool {
         get {
             guard let number = self.object(forKey: Constants.kFirstRun) as? NSNumber
                 else { fatalError("Must call configure() before accessing user defaults") }

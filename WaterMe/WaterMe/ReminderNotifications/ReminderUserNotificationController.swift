@@ -42,26 +42,30 @@ class ReminderUserNotificationController {
             }
 
             // make sure we're authorized to send notifications
-            center.authorized() { authorized in
-                guard authorized else {
-                    log.info("Not authorized to schedule notifications")
-                    return
-                }
-                // generate notification object requests
-                let requests = type(of: self).notificationRequests(from: reminders)
-                guard requests.isEmpty == false else {
-                    log.debug("No notifications to schedule")
-                    return
-                }
-                // ask the notification center to schedule the notifications
-                for request in requests {
-                    center.add(request) { error in
-                        guard let error = error else { return }
-                        log.error(error)
-                    }
-                }
-                log.debug("Scheduled Notifications: \(requests.count)")
+            guard UserDefaults.standard.notifications else {
+                log.info("User has turned UserDefaults notification toggle off")
+                Analytics.log(event: Analytics.NotificationPermission.userdefaultsSettingDenied)
+                return
             }
+            guard center.settings.authorizationStatus.boolValue else {
+                log.info("User has turned System notification toggle off")
+                Analytics.log(event: Analytics.NotificationPermission.systemSettingDenied)
+                return
+            }
+            // generate notification object requests
+            let requests = type(of: self).notificationRequests(from: reminders)
+            guard requests.isEmpty == false else {
+                log.debug("No notifications to schedule")
+                return
+            }
+            // ask the notification center to schedule the notifications
+            for request in requests {
+                center.add(request) { error in
+                    guard let error = error else { return }
+                    log.error(error)
+                }
+            }
+            log.debug("Scheduled Notifications: \(requests.count)")
         }
     }
 

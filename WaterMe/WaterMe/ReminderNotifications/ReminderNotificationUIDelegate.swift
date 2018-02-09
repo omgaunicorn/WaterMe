@@ -91,16 +91,6 @@ extension UNUserNotificationCenter {
     }
 }
 
-extension UNUserNotificationCenter {
-    func authorized(completion: @escaping (Bool) -> Void) {
-        self.getNotificationSettings() { settings in
-            DispatchQueue.main.async {
-                completion(settings.authorizationStatus.boolValue)
-            }
-        }
-    }
-}
-
 extension UNAuthorizationStatus {
     var boolValue: Bool {
         switch self {
