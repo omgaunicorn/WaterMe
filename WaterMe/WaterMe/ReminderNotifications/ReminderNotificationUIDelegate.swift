@@ -56,9 +56,30 @@ class ReminderNotificationUIDelegate: NSObject, UNUserNotificationCenterDelegate
 
 extension UNUserNotificationCenter {
     var settings: UNNotificationSettings {
+        return NotificationSettings.shared.settings
+    }
+}
+
+private class NotificationSettings {
+
+    static let shared = NotificationSettings()
+    private(set) var settings: UNNotificationSettings
+
+    init() {
+        self.settings = NotificationSettings.settings
+        NotificationCenter.default.addObserver(self, selector: #selector(self.appStateDidChange(_:)), name: .UIApplicationWillEnterForeground, object: nil)
+    }
+
+    @objc private func appStateDidChange(_ notification: Any) {
+        UNUserNotificationCenter.current().getNotificationSettings() { s in
+            self.settings = s
+        }
+    }
+
+    private class var settings: UNNotificationSettings {
         let semaphore = DispatchSemaphore(value: 0)
         var settings: UNNotificationSettings!
-        self.getNotificationSettings() { s in
+        UNUserNotificationCenter.current().getNotificationSettings() { s in
             settings = s
             semaphore.signal()
         }
