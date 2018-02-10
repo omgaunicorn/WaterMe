@@ -44,16 +44,17 @@ class ReminderUserNotificationController {
             // make sure we're authorized to send notifications
             guard UserDefaults.standard.notifications else {
                 log.info("User has turned UserDefaults notification toggle off")
-                Analytics.log(event: Analytics.NotificationPermission.userdefaultsSettingDenied)
+                Analytics.log(event: Analytics.NotificationPermission.scheduleDeniedByUser)
                 return
             }
             guard center.settings.authorizationStatus.boolValue else {
                 log.info("User has turned System notification toggle off")
-                Analytics.log(event: Analytics.NotificationPermission.systemSettingDenied)
+                Analytics.log(event: Analytics.NotificationPermission.scheduleDeniedBySystem)
                 return
             }
             // generate notification object requests
             let requests = type(of: self).notificationRequests(from: reminders)
+            Analytics.log(event: Analytics.NotificationPermission.scheduleSucceeded, extras: Analytics.NotificationPermission.extras(forCount: requests.count))
             guard requests.isEmpty == false else {
                 log.debug("No notifications to schedule")
                 return
@@ -63,6 +64,7 @@ class ReminderUserNotificationController {
                 center.add(request) { error in
                     guard let error = error else { return }
                     log.error(error)
+                    Analytics.log(error: error)
                 }
             }
             log.debug("Scheduled Notifications: \(requests.count)")

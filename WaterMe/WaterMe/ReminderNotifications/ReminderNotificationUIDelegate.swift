@@ -79,6 +79,7 @@ extension UNUserNotificationCenter {
                 self.requestAuthorization(options: [.alert, .badge, .sound]) { _, error in
                     if let error = error {
                         log.error("Error requesting notification authorization: \(error)")
+                        Analytics.log(error: error)
                     }
                     self.getNotificationSettings() { postSettings in
                         DispatchQueue.main.async {

@@ -68,11 +68,16 @@ enum Analytics {
     // MARK: Notification Permissions
 
     enum NotificationPermission: String {
-        case systemSettingDenied = "Notify.Sys.Denied"
-        case userdefaultsSettingDenied = "Notify.UD.Denied"
+        case scheduleSucceeded = "Notify.Sched.Success"
+        case scheduleDeniedBySystem = "Notify.Sched.Denied.Sys"
+        case scheduleDeniedByUser = "Notify.Sched.Denied.UD"
         case permissionGranted = "Notify.PermissionGranted"
         case permissionDenied = "Notify.PermissionDenied"
         case permissionIgnored = "Notify.PermissionIgnored"
+
+        static func extras(forCount count: Int) -> [String : Any] {
+            return ["NotifyCount" : NSNumber(value: count)]
+        }
     }
 
     // MARK: Core Data Migration
@@ -131,6 +136,10 @@ enum Analytics {
     }
 
     // MARK: Logging Functions
+
+    static func log(error: Swift.Error) {
+        Crashlytics.sharedInstance().recordError(error)
+    }
 
     static func log(viewOperation op: VCViewOperation) {
         Answers.logContentView(withName: op.rawValue, contentType: nil, contentId: nil, customAttributes: nil)

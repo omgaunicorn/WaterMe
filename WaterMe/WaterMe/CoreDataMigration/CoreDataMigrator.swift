@@ -22,7 +22,6 @@
 //
 
 import WaterMeData
-import Crashlytics
 import CoreData
 import Foundation
 
@@ -65,7 +64,7 @@ class CoreDataMigrator: CoreDataMigratable {
         } catch {
             let message = "CoreDataError Fetching Count of old plants: \(error)"
             log.error(message)
-            Crashlytics.sharedInstance().recordError(error)
+            Analytics.log(error: error)
             assertionFailure(message)
             return nil
         }
@@ -85,7 +84,7 @@ class CoreDataMigrator: CoreDataMigratable {
             guard error == nil else {
                 let message = "Error Loading Core Data Model. This leaves the Migrator in an invalid state: \(error!)"
                 log.error(message)
-                Crashlytics.sharedInstance().recordError(error!)
+                Analytics.log(error: error!)
                 assertionFailure(message)
                 return
             }
@@ -181,7 +180,7 @@ class CoreDataMigrator: CoreDataMigratable {
         } catch {
             let message = "Error Moving Core Data Store Files: \(error)"
             log.error(message)
-            Crashlytics.sharedInstance().recordError(error)
+            Analytics.log(error: error)
             assertionFailure(message)
         }
     }
@@ -192,7 +191,7 @@ class CoreDataMigrator: CoreDataMigratable {
         } catch {
             let message = "CoreDataError Fetching old plants: \(error)"
             log.error(message)
-            Crashlytics.sharedInstance().recordError(error)
+            Analytics.log(error: error)
             assertionFailure(message)
             return []
         }

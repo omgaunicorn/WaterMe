@@ -126,7 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // So in the places where they can throw errors, I introduced a static var so we can see them here
         BasicController.errorThrown = { error in
             log.error(error)
-            Crashlytics.sharedInstance().recordError(error)
+            Analytics.log(error: error)
             Analytics.log(event: Analytics.Error.realmError)
         }
 
