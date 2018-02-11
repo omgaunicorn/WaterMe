@@ -26,8 +26,13 @@ import RealmSwift
 
 class GlobalReminderObserver {
 
+    private enum DataKind {
+        case badge, notifications, both
+    }
+
     private let badgeNumberController = BadgeNumberController.self
     private let notificationController = ReminderUserNotificationController()
+    private let significantTimePassedDetector = SignificantTimePassedDetector()
 
     private var data: AnyRealmCollection<Reminder>?
     private var timer: Timer?
@@ -45,6 +50,8 @@ class GlobalReminderObserver {
 
         self.token = collection.observe({ [weak self] in self?.dataChanged($0) })
         NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground(with:)), name: .UIApplicationDidEnterBackground, object: nil)
+        self.significantTimePassedDetector.delegate = self
+
     }
 
     func notificationPermissionsMayHaveChanged() {
@@ -55,22 +62,29 @@ class GlobalReminderObserver {
         switch changes {
         case .initial(let data):
             self.data = data
-            self.dataChanged()
+            self.dataChanged(of: .both)
         case .update:
             self.resetTimer()
         case .error(let error):
             self.data = nil
             self.token?.invalidate()
             self.token = nil
-            self.dataChanged()
+            self.dataChanged(of: .both)
             log.error("Realm Error: \(error)")
         }
     }
 
-    private func dataChanged() {
+    private func dataChanged(of kind: DataKind) {
         let data = Array(self.data?.map({ ReminderValue(reminder: $0) }) ?? [])
-        self.notificationController.updateScheduledNotifications(with: data)
-        self.badgeNumberController.updateBadgeNumber(with: data)
+        switch kind {
+        case .notifications:
+            self.notificationController.updateScheduledNotifications(with: data)
+        case .badge:
+            self.badgeNumberController.updateBadgeNumber(with: data)
+        case .both:
+            self.notificationController.updateScheduledNotifications(with: data)
+            self.badgeNumberController.updateBadgeNumber(with: data)
+        }
     }
 
     private func resetTimer() {
@@ -79,7 +93,7 @@ class GlobalReminderObserver {
             timer.invalidate()
             self.timer?.invalidate()
             self.timer = nil
-            self.dataChanged()
+            self.dataChanged(of: .both)
         }
     }
 
@@ -91,6 +105,14 @@ class GlobalReminderObserver {
 
     deinit {
         self.token?.invalidate()
+    }
+}
+
+extension GlobalReminderObserver: SignificantTimePassedDetectorDelegate {
+
+    // when the data is stale because of significant time passing, we need to refresh the app icon
+    func significantTimeDidPass(with _: SignificantTimePassedDetector.Reason, detector _: SignificantTimePassedDetector) {
+        self.dataChanged(of: .badge)
     }
 }
 

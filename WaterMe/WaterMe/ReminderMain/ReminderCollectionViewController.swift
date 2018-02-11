@@ -195,7 +195,8 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 }
 
 extension ReminderCollectionViewController: SignificantTimePassedDetectorDelegate {
-    func significantTimePassed(with reason: SignificantTimePassedDetector.Reason) {
+    
+    func significantTimeDidPass(with reason: SignificantTimePassedDetector.Reason, detector _: SignificantTimePassedDetector) {
         let event: Analytics.Event
         switch reason {
         case .BackupDetector:

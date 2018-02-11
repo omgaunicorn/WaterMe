@@ -24,7 +24,7 @@
 import Foundation
 
 public protocol SignificantTimePassedDetectorDelegate: class {
-    func significantTimePassed(with reason: SignificantTimePassedDetector.Reason)
+    func significantTimeDidPass(with reason: SignificantTimePassedDetector.Reason, detector: SignificantTimePassedDetector)
 }
 
 public class SignificantTimePassedDetector {
@@ -73,6 +73,6 @@ public class SignificantTimePassedDetector {
 
     private func fire(with reason: SignificantTimePassedDetector.Reason) {
         self.lastTimeChangeEventDate = Date()
-        self.delegate?.significantTimePassed(with: reason)
+        self.delegate?.significantTimeDidPass(with: reason, detector: self)
     }
 }
