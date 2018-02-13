@@ -82,13 +82,6 @@ class EmojiPickerViewController: StandardCollectionViewController {
                 Analytics.log(viewOperation: .openEmojiOne)
                 self.present(SFSafariViewController.newEmojiOneVC(), animated: true, completion: nil)
             }
-            footer.whyButtonTapped = { [unowned self] in
-                let alert = UIAlertController(localizedNonAppleEmojiExplainerAlertWithCompletion: { vc in
-                    guard let vc = vc else { return }
-                    self.present(vc, animated: true, completion: nil)
-                })
-                self.present(alert, animated: true, completion: nil)
-            }
         }
         return footer
     }

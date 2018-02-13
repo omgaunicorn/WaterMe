@@ -30,50 +30,33 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
     override class var kind: String { return UICollectionElementKindSectionFooter }
 
     var providedByButtonTapped: (() -> Void)?
-    var whyButtonTapped: (() -> Void)?
 
+    // to leading align the label
     private let spacerView: UIView = {
         let v = UIView()
         v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
-        v.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return v
     }()
 
     private let providedByButton: UIButton = {
         let v = UIButton()
         v.translatesAutoresizingMaskIntoConstraints = false
-        v.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
-        return v
-    }()
-
-    private let whyButton: UIButton = {
-        let v = UIButton()
-        v.translatesAutoresizingMaskIntoConstraints = false
-        v.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return v
     }()
 
     override func commonInit() {
         super.commonInit()
 
-        // add views to the stack view. This will get reset by trait collection changes
+        // add views to the stack view.
         self.stackView.addArrangedSubview(self.providedByButton)
         self.stackView.addArrangedSubview(self.spacerView)
-        self.stackView.addArrangedSubview(self.whyButton)
-
-        // set min width of spacer view
-        self.addConstraint(self.spacerView.widthAnchor.constraint(greaterThanOrEqualToConstant: 4))
 
         // configure labels
         self.updateAttributedStrings()
 
-        // configure accessibility
-        self.whyButton.accessibilityLabel = LocalizedString.whyAccessibility
-
         // configure targets
         self.providedByButton.addTarget(self, action: #selector(self.providedByButtonTapped(_:)), for: .touchUpInside)
-        self.whyButton.addTarget(self, action: #selector(self.whyButtonTapped(_:)), for: .touchUpInside)
     }
 
     private func updateAttributedStrings() {
@@ -87,15 +70,10 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
                                                   andSubString: LocalizedString.emojiOne,
                                                   withSubstringStyle: .sectionHeaderBold(Reminder.Section.today))
         self.providedByButton.setAttributedTitle(providedByString, for: .normal)
-        self.whyButton.setAttributedTitle(NSAttributedString(string: LocalizedString.why, style: .sectionHeaderRegular(primarySection)), for: .normal)
     }
 
     @objc private func providedByButtonTapped(_ sender: Any) {
         self.providedByButtonTapped?()
-    }
-
-    @objc private func whyButtonTapped(_ sender: Any) {
-        self.whyButtonTapped?()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -108,7 +86,6 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
     override func prepareForReuse() {
         super.prepareForReuse()
 
-        self.whyButtonTapped = nil
         self.providedByButtonTapped = nil
     }
 }
