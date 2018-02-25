@@ -36,7 +36,7 @@ extension UIAlertController {
         let nc = UNUserNotificationCenter.current()
         let ud = UserDefaults.standard
         let authorizationStatus = nc.settings.authorizationStatus
-        let userAskedToBeAsked = ud.notifications
+        let userAskedToBeAsked = ud.askForNotifications
         let style: UIAlertControllerStyle = sender != nil ? .actionSheet : .alert
         switch (authorizationStatus, userAskedToBeAsked) {
         case (.notDetermined, true):
@@ -65,7 +65,7 @@ extension UIAlertController {
                   preferredStyle: style)
         let ud = UserDefaults.standard
         let yes = UIAlertAction(title: LocalizedString.newPermissionButtonTitleSendNotifications, style: .default) { _ in
-            ud.notifications = true
+            ud.askForNotifications = true
             UNUserNotificationCenter.current().requestAuthorizationIfNeeded() { permitted in
                 switch permitted {
                 case true:
@@ -80,12 +80,12 @@ extension UIAlertController {
         }
         let no = UIAlertAction(title: LocalizedString.newPermissionButtonTitleDontSendNotifications, style: .destructive) { _ in
             Analytics.log(event: Analytics.NotificationPermission.permissionDenied)
-            ud.notifications = false
+            ud.askForNotifications = false
             selection?(.denied)
         }
         let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
             Analytics.log(event: Analytics.NotificationPermission.permissionIgnored)
-            ud.notifications = true
+            ud.askForNotifications = true
             selection?(.cancel)
         }
         self.addAction(yes)
@@ -100,17 +100,17 @@ extension UIAlertController {
                   preferredStyle: style)
         let ud = UserDefaults.standard
         let settings = UIAlertAction(title: SettingsMainViewController.LocalizedString.settingsTitle, style: .default) { _ in
-            ud.notifications = true
+            ud.askForNotifications = true
             UIApplication.shared.openSettings() { _ in
                 selection?(.cancel)
             }
         }
         let dontAsk = UIAlertAction(title: LocalizedString.permissionDeniedButtonTitleDontAskAgain, style: .destructive) { _ in
-            ud.notifications = false
+            ud.askForNotifications = false
             selection?(.denied)
         }
         let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
-            ud.notifications = true
+            ud.askForNotifications = true
             selection?(.cancel)
         }
         self.addAction(settings)

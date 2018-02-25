@@ -73,7 +73,7 @@ extension UserDefaults {
         }
     }
     
-    var notifications: Bool {
+    var askForNotifications: Bool {
         get {
             guard let number = self.object(forKey: Constants.kFirstRun) as? NSNumber
                 else { fatalError("Must call configure() before accessing user defaults") }
@@ -116,7 +116,7 @@ extension UserDefaults {
 
         // fix bug where this toggle is always off in v1.0 and it needs to be on in 2.0
         if let build = self.lastBuildNumber, build < 200026 {
-            self.notifications = true
+            self.askForNotifications = true
         }
     }
 
