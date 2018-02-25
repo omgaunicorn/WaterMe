@@ -83,6 +83,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
     }
 
     func reminderVesselWasDeleted() {
+        self.remindersData = nil
         self.notificationToken?.invalidate()
         self.notificationToken = nil
     }
