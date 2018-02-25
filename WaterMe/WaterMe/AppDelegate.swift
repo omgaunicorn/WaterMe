@@ -98,33 +98,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // these two closures are for checking if we should ask for a review
-        // When a new build is detected, we set a date
-        // Two weeks after that date, the user is eligible to be asked for a review
-        // Next time they water plants, they will be asked (assuming the system cooperates)
+
+        // see if there is a new build
         _ = {
             // check the build and see if its new
             let ud = UserDefaults.standard
             let oldBuild = ud.lastBuildNumber
-            let currentBuild = self.buildNumberString
+            let currentBuild = self.buildNumber
             if oldBuild != currentBuild {
                 ud.lastBuildNumber = currentBuild
                 ud.requestReviewDate = Date()
             }
         }()
-        let checkForReview = {
-            let now = Date()
-            let ud = UserDefaults.standard
-            guard
-                let reviewDate = ud.requestReviewDate,
-                let forwardDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: reviewDate),
-                now >= forwardDate
-            else { return }
-            log.info("Requested App Review with SKStoreReviewController")
-            Analytics.log(event: Analytics.Event.reviewRequested)
-            SKStoreReviewController.requestReview()
-            ud.requestReviewDate = nil // nil this out so they won't be asked again until next update
-        }
 
         // Basic Controller error handling closure
         // There is no easy way for my Dynamic Frameworks to be able to use Crashlytics
@@ -151,7 +136,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let vc = ReminderMainViewController.newVC(basicRCResult: result, proController: nil)
         self.reminderObserver = GlobalReminderObserver(basicController: result.value)
 
-        result.value?.userDidPerformReminder = checkForReview
+        // When a new build is detected, we set a date
+        // Two weeks after that date, the user is eligible to be asked for a review
+        // Next time they water plants, they will be asked (assuming the system cooperates)
+        result.value?.userDidPerformReminder = {
+            let now = Date()
+            let ud = UserDefaults.standard
+            guard
+                let reviewDate = ud.requestReviewDate,
+                let forwardDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: reviewDate),
+                now >= forwardDate
+            else { return }
+            log.info("Requested App Review with SKStoreReviewController")
+            Analytics.log(event: Analytics.Event.reviewRequested)
+            SKStoreReviewController.requestReview()
+            ud.requestReviewDate = nil // nil this out so they won't be asked again until next update
+        }
 
         // configure window
         let window = self.window ?? UIWindow(frame: UIScreen.main.bounds)

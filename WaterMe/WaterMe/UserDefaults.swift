@@ -44,12 +44,16 @@ extension UserDefaults {
         }
     }
 
-    var lastBuildNumber: String? {
+    var lastBuildNumber: Int? {
         get {
-            return self.object(forKey: Constants.kBuildNumberKey) as? String
+            return (self.object(forKey: Constants.kBuildNumberKey) as? NSNumber)?.intValue
         }
         set {
-            self.set(newValue, forKey: Constants.kBuildNumberKey)
+            guard let newValue = newValue else {
+                self.set(nil, forKey: Constants.kBuildNumberKey)
+                return
+            }
+            self.set(NSNumber(value: newValue), forKey: Constants.kBuildNumberKey)
         }
     }
 
@@ -109,6 +113,11 @@ extension UserDefaults {
             Constants.kNumberOfReminderDays : 14,
             Constants.kIncreaseContrast : false
         ])
+
+        // fix bug where this toggle is always off in v1.0 and it needs to be on in 2.0
+        if let build = self.lastBuildNumber, build < 200026 {
+            self.notifications = true
+        }
     }
 
     // MARK: For KVO only, do not use

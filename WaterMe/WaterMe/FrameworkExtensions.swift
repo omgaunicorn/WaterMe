@@ -74,13 +74,19 @@ extension UIApplication {
 }
 
 extension AppDelegate {
-    var buildNumberString: String {
-        let _build = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String
-        guard let build = _build else {
+    var buildNumber: Int {
+        let __build = Bundle.main.infoDictionary?[kCFBundleVersionKey as String] as? String
+        guard let _build = __build else {
             let message = "Could not retrieve build number from bundle"
             log.error(message)
             assertionFailure(message)
-            return "-1"
+            return -2
+        }
+        guard let build = Int(_build) else {
+            let message = "Could not convert build number into Int"
+            log.error(message)
+            assertionFailure(message)
+            return -1
         }
         return build
     }
