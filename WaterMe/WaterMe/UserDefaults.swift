@@ -115,7 +115,8 @@ extension UserDefaults {
         ])
 
         // fix bug where this toggle is always off in v1.0 and it needs to be on in 2.0
-        if let build = self.lastBuildNumber, build < 200026 {
+        let build = self.lastBuildNumber ?? 0
+        if build < 200026 {
             self.askForNotifications = true
         }
     }
