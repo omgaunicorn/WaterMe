@@ -61,7 +61,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedSaveButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
 
     var basicRC: BasicController?
-    private var reminderResult: Result<Reminder, RealmError>!
+    private var reminderResult: Result<Reminder, RealmError>?
     private var completionHandler: CompletionHandler?
     
     override func viewDidLoad() {
@@ -109,7 +109,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     
     private func update(kind: Reminder.Kind? = nil, interval: Int? = nil, note: String? = nil, fromKeyboard: Bool = false) {
         // make sure we have the info we needed
-        guard let reminder = self.reminderResult.value, let basicRC = self.basicRC
+        guard let reminder = self.reminderResult?.value, let basicRC = self.basicRC
             else { assertionFailure("Missing Reminder or Realm Controller"); return; }
         
         // if this came from the keyboard stop notifications
@@ -137,7 +137,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     
     private func intervalChosen(_ deselectSelectedCell: @escaping () -> Void) {
         self.view.endEditing(false)
-        guard let existingValue = self.reminderResult.value?.interval
+        guard let existingValue = self.reminderResult?.value?.interval
             else { assertionFailure("No Reminder Present"); self.completionHandler?(self); return; }
         let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard, existingValue: existingValue) { vc, newValue in
             vc.dismiss(animated: true) {
@@ -152,7 +152,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     @IBAction private func deleteButtonTapped(_ sender: Any) {
         self.view.endEditing(false)
         guard
-            let reminder = self.reminderResult.value,
+            let reminder = self.reminderResult?.value,
             let basicRC = self.basicRC,
             let sender = sender as? UIBarButtonItem
         else {
@@ -183,7 +183,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         Analytics.log(event: Analytics.CRUD_Op_R.update)
 
         self.view.endEditing(false)
-        guard let sender = _sender as? UIBarButtonItem, let reminder = self.reminderResult.value else {
+        guard let sender = _sender as? UIBarButtonItem, let reminder = self.reminderResult?.value else {
             let message = "Expected UIBarButtonItem to call this method"
             log.error(message)
             assertionFailure(message)
@@ -215,7 +215,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     }
     
     private func startNotifications() {
-      self.notificationToken = self.reminderResult.value?.observe({ [weak self] in self?.reminderChanged($0) })
+      self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
     }
     
     private var notificationToken: NotificationToken?
