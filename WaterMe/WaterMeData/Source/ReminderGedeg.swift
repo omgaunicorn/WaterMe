@@ -67,6 +67,7 @@ open class ReminderGedeg: NSObject {
         case .update(_, deletions: let del, insertions: let ins, modifications: let mod):
             self.updateBatcher.appendUpdateExtendingTimer(Update(section: section, deletions: del, insertions: ins, modifications: mod))
         case .error(let error):
+            BasicController.errorThrown?(error)
             log.error(error)
         }
     }

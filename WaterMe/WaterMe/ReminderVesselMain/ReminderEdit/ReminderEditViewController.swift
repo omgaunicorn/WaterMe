@@ -95,7 +95,12 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         switch changes {
         case .change:
             self.tableViewController?.tableView.reloadData()
-        case .deleted, .error:
+        case .error(let error):
+            Analytics.log(error: error)
+            log.error(error)
+            fallthrough
+        case .deleted:
+            self.reminderResult = nil
             self.notificationToken?.invalidate()
             self.notificationToken = nil
             self.completionHandler?(self)

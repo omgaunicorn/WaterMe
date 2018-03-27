@@ -72,6 +72,7 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
                 self.collectionView?.reloadItems(at: mod.map({ IndexPath(row: $0, section: 0) }))
             }, completion: nil)
         case .error(let error):
+            Analytics.log(error: error)
             log.error(error)
         }
     }

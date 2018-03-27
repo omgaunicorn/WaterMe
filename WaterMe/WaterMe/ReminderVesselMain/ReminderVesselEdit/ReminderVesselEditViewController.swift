@@ -64,7 +64,11 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         switch changes {
         case .change:
             self.tableViewController?.reloadPhotoAndName()
-        case .deleted, .error:
+        case .error(let error):
+            Analytics.log(error: error)
+            log.error(error)
+            fallthrough
+        case .deleted:
             self.reminderVesselWasDeleted()
         }
     }

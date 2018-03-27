@@ -70,7 +70,8 @@ class GlobalReminderObserver {
             self.token?.invalidate()
             self.token = nil
             self.dataChanged(of: .both)
-            log.error("Realm Error: \(error)")
+            Analytics.log(error: error)
+            log.error(error)
         }
     }
 
