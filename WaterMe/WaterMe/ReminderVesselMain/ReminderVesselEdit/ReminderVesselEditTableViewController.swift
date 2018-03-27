@@ -180,6 +180,11 @@ class ReminderVesselEditTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+        // TODO: This is causing visual bugs as of iOS 11.2
+        // disable for now. Try to remove this later to re-enable swipe actions
+        return UISwipeActionsConfiguration(actions: [])
+
         guard let section = Section(rawValue: indexPath.section) else {
             assertionFailure("Unknown Section")
             return UISwipeActionsConfiguration(actions: [])
