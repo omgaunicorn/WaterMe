@@ -26,6 +26,8 @@ import WaterMeStore
 import WaterMeData
 import UIKit
 
+extension String: Swift.Error {}
+
 extension NSString {
     func ranges(of substring: String) -> [NSRange] {
         // make sure we have an immutable copy of the string
