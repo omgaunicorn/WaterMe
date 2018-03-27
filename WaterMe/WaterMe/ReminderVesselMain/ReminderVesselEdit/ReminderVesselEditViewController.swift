@@ -54,7 +54,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     /*@IBOutlet*/ private weak var tableViewController: ReminderVesselEditTableViewController?
 
     private lazy var deleteBBI: UIBarButtonItem = UIBarButtonItem(localizedDeleteButtonWithTarget: self, action: #selector(self.deleteButtonTapped(_:)))
-    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedSaveButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
+    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
     
     var basicRC: BasicController?
     private(set) var vesselResult: Result<ReminderVessel, RealmError>?

@@ -58,7 +58,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     /*@IBOutlet*/ private weak var tableViewController: ReminderEditTableViewController?
 
     private lazy var deleteBBI: UIBarButtonItem = UIBarButtonItem(localizedDeleteButtonWithTarget: self, action: #selector(self.deleteButtonTapped(_:)))
-    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedSaveButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
+    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
 
     var basicRC: BasicController?
     private var reminderResult: Result<Reminder, RealmError>?
