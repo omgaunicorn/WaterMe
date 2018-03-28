@@ -29,7 +29,7 @@ import UIKit
 protocol ReminderVesselEditTableViewControllerDelegate: class {
     var vesselResult: Result<ReminderVessel, RealmError>? { get }
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?)
-    func userChangedName(to: String, andDismissKeyboard: Bool, controller: ReminderVesselEditTableViewController?)
+    func userChangedName(to: String, controller: ReminderVesselEditTableViewController?)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
     func userChose(reminder: Reminder, deselectRowAnimated: ((Bool) -> Void)?, controller: ReminderVesselEditTableViewController?)
     func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController?) -> Bool
@@ -147,7 +147,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
             cell?.setTextField(text: self.delegate?.vesselResult?.value?.displayName)
             cell?.setLabelText(nil, andTextFieldPlaceHolderText: "Plant Name")
             cell?.textChanged = { [unowned self] newName in
-                self.delegate?.userChangedName(to: newName, andDismissKeyboard: false, controller: self)
+                self.delegate?.userChangedName(to: newName, controller: self)
             }
             return _cell
         case .photo:
