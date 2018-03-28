@@ -26,8 +26,6 @@ import WaterMeStore
 import WaterMeData
 import UIKit
 
-extension String: Swift.Error {}
-
 extension NSString {
     func ranges(of substring: String) -> [NSRange] {
         // make sure we have an immutable copy of the string
@@ -406,6 +404,15 @@ extension NSError {
         let userInfo: [String : Any] = [
             NSLocalizedFailureReasonErrorKey : message,
             NSDebugDescriptionErrorKey : keypaths
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    convenience init(reminderChangeFiredAfterListOrParentVesselWereSetToNil: Bool?) {
+        let code = 1002
+        let message = "Reminder change fired after list or parent vessel were set to NIL"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message,
         ]
         self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
     }

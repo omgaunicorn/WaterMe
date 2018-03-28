@@ -103,10 +103,10 @@ class ReminderVesselEditTableViewController: UITableViewController {
             self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
         case .update(_, let deletions, let insertions, let modifications):
             guard self.delegate?.vesselResult != nil, self.remindersData != nil else {
-                let message = "ReminderVesselEditTableViewController: Reminder update fired after vessel or reminderList were NIL."
-                assertionFailure(message)
-                Analytics.log(error: message)
-                self.reloadAll()
+                let error = NSError(reminderChangeFiredAfterListOrParentVesselWereSetToNil: nil)
+                assertionFailure(String(describing: error))
+                Analytics.log(error: error)
+                log.error(error)
                 return
             }
             self.tableView.beginUpdates()
