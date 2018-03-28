@@ -395,3 +395,18 @@ extension UIView {
 enum Either<T, U> {
     case left(T), right(U)
 }
+
+extension NSError {
+
+    private static let kDomain = "WaterMe"
+
+    convenience init(reminderVesselPropertyChangeUnknownCaseErrorWithChangedKeyPaths keypaths: [String]) {
+        let code = 1001
+        let message = "Unhandled case for ReminderVessel property changes."
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message,
+            NSDebugDescriptionErrorKey : keypaths
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+}

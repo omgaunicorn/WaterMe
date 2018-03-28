@@ -62,8 +62,46 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     
     private func vesselChanged(_ changes: ObjectChange) {
         switch changes {
-        case .change:
-            self.tableViewController?.reloadPhotoAndName()
+        case .change(let properties):
+            /*
+             BUGFIX: http://crashes.to/s/5a4715f46b9
+             I think this fixes this bug crash. Its caused because this change notification was telling the icon and name section to reload
+             But at the same time, the reminders section was getting its normal updates.
+             This could cause both to happen simultaneously and the sanity check of the section reload would fail because
+             the reminders section also changed at the same time
+
+             This fixes the problem by checking which properties changed and only reloads the icon/name section if the reminder section did not change
+            */
+            let changedDisplayName = ReminderVessel.propertyChangesContainDisplayName(properties)
+            let changedIconEmoji = ReminderVessel.propertyChangesContainIconEmoji(properties)
+            let changedReminders = ReminderVessel.propertyChangesContainReminders(properties)
+            let changedPointlessBloop = ReminderVessel.propertyChangesContainPointlessBloop(properties)
+
+            switch (changedDisplayName, changedIconEmoji, changedReminders, changedPointlessBloop) {
+            case (true, _, false, _),
+                 (_, true, false, _):
+                // changed icon or name but NOT reminders
+                self.tableViewController?.reloadPhotoAndName()
+            case (false, false, true, _),
+                // changed reminders but NOT displayName or Icon
+                // do nothing if reminders change because they handle themselves
+                (false, false, false, true):
+                // pointless bloop changed. This is a hack I use to make sure subobjects / parent objects are changed when their
+                // parents/children are changed. That way things refresh when needed
+                // so that collections are appropriately refreshed
+                // do nothing because only a parent or child changed and we don't show any of them
+                // except children reminders and they update their own display
+                break
+            default:
+                // error notification when unhandled changes happen. I want to know about these in analytics
+                // so I can troubleshoot this further if needed.
+                // if nothing happens here, I can remove this and the pointless bloop test.
+                let error = NSError(reminderVesselPropertyChangeUnknownCaseErrorWithChangedKeyPaths: properties.map({ $0.name }))
+                assertionFailure(String(describing: error))
+                Analytics.log(error: error)
+                log.warning(error)
+                self.tableViewController?.tableView?.reloadData()
+            }
         case .error(let error):
             Analytics.log(error: error)
             log.error(error)
