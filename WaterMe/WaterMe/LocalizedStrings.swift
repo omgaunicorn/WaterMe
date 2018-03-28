@@ -121,7 +121,7 @@ extension UIAlertController {
             NSLocalizedString("Cancel",
                               comment: "Button Title in an Alert to close the alert without saving any changes.")
         static let buttonTitleSaveAnyway =
-            NSLocalizedString("Close Anyway",
+            NSLocalizedString("Save Anyway",
                               comment: "Button Title in an Alert to save the reminder or plant even though all of the fields have not been filled in yet. Fields not yet filled in could include Name, Photo, Reminders.")
         static let titleUnsolvedIssues =
             NSLocalizedString("There are some issues you might want to resolve.",
