@@ -70,6 +70,7 @@ enum Analytics {
     enum NotificationPermission: String {
         case scheduleSucceeded = "Notify.Sched.Success"
         case scheduleDeniedBySystem = "Notify.Sched.Denied.Sys"
+        case scheduleBadgeIconDeniedBySystem = "Notify.Badge.Sched.Denied.Sys"
         case permissionGranted = "Notify.PermissionGranted"
         case permissionDenied = "Notify.PermissionDenied"
         case permissionIgnored = "Notify.PermissionIgnored"

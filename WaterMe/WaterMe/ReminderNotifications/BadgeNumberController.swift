@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import UserNotifications
 import UIKit
 
 enum BadgeNumberController {
@@ -28,6 +29,12 @@ enum BadgeNumberController {
     private static let queue = DispatchQueue(label: String(describing: BadgeNumberController.self) + "_SerialQueue_" + UUID().uuidString, qos: .utility)
 
     static func updateBadgeNumber(with reminders: [ReminderValue]) {
+        // make sure we're authorized to badge the icon
+        guard case .enabled = UNUserNotificationCenter.current().settings.badgeSetting else {
+            log.info("User has disabled badge allowance")
+            Analytics.log(event: Analytics.NotificationPermission.scheduleBadgeIconDeniedBySystem)
+            return
+        }
         self.queue.async {
             let remindersThatNeedToBeDoneBeforeTomorrow = reminders.filter() { reminder -> Bool in
                 let cal = Calendar.current
