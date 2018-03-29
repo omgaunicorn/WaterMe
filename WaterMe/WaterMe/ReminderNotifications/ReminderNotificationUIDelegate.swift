@@ -58,6 +58,9 @@ extension UNUserNotificationCenter {
     var settings: UNNotificationSettings {
         return NotificationSettings.shared.settings
     }
+    func forceCacheUpdate() {
+        NotificationSettings.shared.forceCacheUpdate()
+    }
 }
 
 private class NotificationSettings {
@@ -74,6 +77,10 @@ private class NotificationSettings {
         UNUserNotificationCenter.current().getNotificationSettings() { s in
             self.settings = s
         }
+    }
+
+    fileprivate func forceCacheUpdate() {
+        self.settings = type(of: self).settings
     }
 
     private class var settings: UNNotificationSettings {

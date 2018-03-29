@@ -23,6 +23,7 @@
 
 import WaterMeData
 import RealmSwift
+import UserNotifications
 
 class GlobalReminderObserver {
 
@@ -55,6 +56,7 @@ class GlobalReminderObserver {
     }
 
     func notificationPermissionsMayHaveChanged() {
+        UNUserNotificationCenter.current().forceCacheUpdate()
         self.resetTimer()
     }
 
