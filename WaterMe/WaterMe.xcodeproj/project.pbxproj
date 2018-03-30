@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		48F7855C589AC351B99403D7 /* Pods_WaterMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FFE95F5A79657FF5D4B788 /* Pods_WaterMe.framework */; };
 		500679AF1F4BF3DB00F8100D /* ReminderMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */; };
 		5015EEF61FF56FF300CAC7D7 /* DragTargetInstructionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015EEF51FF56FF200CAC7D7 /* DragTargetInstructionalView.swift */; };
 		501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A9AE41FE9682C0016160D /* LocalizedStrings.swift */; };
@@ -109,6 +110,8 @@
 		50F388E41FF6DA490031ED45 /* WaterMeData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50F388E11FF6DA490031ED45 /* WaterMeData.xcdatamodeld */; };
 		50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */; };
 		50F7A360200844390063A1FC /* StarterRealm.realm in Resources */ = {isa = PBXBuildFile; fileRef = 50F7A362200844390063A1FC /* StarterRealm.realm */; };
+		7AD39E7E8F6651EB9265B3BC /* Pods_AdminConsole.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0E505C0B77E65EAE70A7295D /* Pods_AdminConsole.framework */; };
+		B35A76C819803602926E1669 /* Pods_NoDeviceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 247E2D79B9D4D9074BDC1E93 /* Pods_NoDeviceTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +125,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0E505C0B77E65EAE70A7295D /* Pods_AdminConsole.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdminConsole.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C67F61CA78C7EC53A4ADEBE /* Pods-AdminConsole.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdminConsole.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole.debug.xcconfig"; sourceTree = "<group>"; };
+		247E2D79B9D4D9074BDC1E93 /* Pods_NoDeviceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoDeviceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2933E297424AFD3D592632F3 /* Pods-WaterMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.debug.xcconfig"; sourceTree = "<group>"; };
+		33281F613142C4570CC57E6F /* Pods-NoDeviceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderMainViewController.swift; sourceTree = "<group>"; };
 		5015EEF51FF56FF200CAC7D7 /* DragTargetInstructionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragTargetInstructionalView.swift; sourceTree = "<group>"; };
 		501A9AE41FE9682C0016160D /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
@@ -232,6 +240,10 @@
 		50F388E21FF6DA490031ED45 /* WaterMe_CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WaterMe_CoreData.xcdatamodel; sourceTree = "<group>"; };
 		50F388E31FF6DA490031ED45 /* WaterMe_CoreData 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WaterMe_CoreData 2.xcdatamodel"; sourceTree = "<group>"; };
 		50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderGedegDataSource.swift; sourceTree = "<group>"; };
+		80A550D3E782B077149E200B /* Pods-AdminConsole.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdminConsole.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole.release.xcconfig"; sourceTree = "<group>"; };
+		8C8A12C6CD9A0291610B7703 /* Pods-NoDeviceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.release.xcconfig"; sourceTree = "<group>"; };
+		C4FFE95F5A79657FF5D4B788 /* Pods_WaterMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaterMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F19EDC382556C1491994D74E /* Pods-WaterMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +251,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7AD39E7E8F6651EB9265B3BC /* Pods_AdminConsole.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +259,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48F7855C589AC351B99403D7 /* Pods_WaterMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,12 +267,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B35A76C819803602926E1669 /* Pods_NoDeviceTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E8E92414319C3734C1B5B7C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0E505C0B77E65EAE70A7295D /* Pods_AdminConsole.framework */,
+				247E2D79B9D4D9074BDC1E93 /* Pods_NoDeviceTests.framework */,
+				C4FFE95F5A79657FF5D4B788 /* Pods_WaterMe.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		41AC7A5BE6C2595CB897D2F9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1C67F61CA78C7EC53A4ADEBE /* Pods-AdminConsole.debug.xcconfig */,
+				80A550D3E782B077149E200B /* Pods-AdminConsole.release.xcconfig */,
+				33281F613142C4570CC57E6F /* Pods-NoDeviceTests.debug.xcconfig */,
+				8C8A12C6CD9A0291610B7703 /* Pods-NoDeviceTests.release.xcconfig */,
+				2933E297424AFD3D592632F3 /* Pods-WaterMe.debug.xcconfig */,
+				F19EDC382556C1491994D74E /* Pods-WaterMe.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		500679AD1F4BF3B700F8100D /* ReminderMain */ = {
 			isa = PBXGroup;
 			children = (
@@ -405,6 +443,8 @@
 				50C96A381EC2CFE8002802C1 /* NoDeviceTests */,
 				501C0E891ECE5EFF00D4EE7C /* AdminConsole */,
 				50BB0F511EBFCDE500850FF4 /* Products */,
+				41AC7A5BE6C2595CB897D2F9 /* Pods */,
+				0E8E92414319C3734C1B5B7C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -493,9 +533,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 501C0E971ECE5EFF00D4EE7C /* Build configuration list for PBXNativeTarget "AdminConsole" */;
 			buildPhases = (
+				47B6F020B384C0882C7FD0A2 /* [CP] Check Pods Manifest.lock */,
 				501C0E841ECE5EFF00D4EE7C /* Sources */,
 				501C0E851ECE5EFF00D4EE7C /* Frameworks */,
 				501C0E861ECE5EFF00D4EE7C /* Resources */,
+				1C3F796B4F01BE60ADDDEB03 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -510,10 +552,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50BB0F621EBFCDE500850FF4 /* Build configuration list for PBXNativeTarget "WaterMe" */;
 			buildPhases = (
+				155FEDF740365E43A4355667 /* [CP] Check Pods Manifest.lock */,
 				50BB0F7A1EC214AC00850FF4 /* Swiftlint */,
 				50BB0F4C1EBFCDE500850FF4 /* Sources */,
 				50BB0F4D1EBFCDE500850FF4 /* Frameworks */,
 				50BB0F4E1EBFCDE500850FF4 /* Resources */,
+				5742771164087FF67A5903B2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -528,9 +572,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50C96A3C1EC2CFE8002802C1 /* Build configuration list for PBXNativeTarget "NoDeviceTests" */;
 			buildPhases = (
+				CE94B8FAB96CEDE77B278E05 /* [CP] Check Pods Manifest.lock */,
 				50C96A331EC2CFE8002802C1 /* Sources */,
 				50C96A341EC2CFE8002802C1 /* Frameworks */,
 				50C96A351EC2CFE8002802C1 /* Resources */,
+				74A9DD4CCBD6C0B80C379A75 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -650,6 +696,72 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		155FEDF740365E43A4355667 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WaterMe-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1C3F796B4F01BE60ADDDEB03 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/WaterMeData/WaterMeData.framework",
+				"${BUILT_PRODUCTS_DIR}/WaterMeStore/WaterMeStore.framework",
+				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjcExceptionBridging.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeData.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeStore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		47B6F020B384C0882C7FD0A2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AdminConsole-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		50BB0F7A1EC214AC00850FF4 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -663,6 +775,88 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+		5742771164087FF67A5903B2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Cheers/Cheers.framework",
+				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/WaterMeData/WaterMeData.framework",
+				"${BUILT_PRODUCTS_DIR}/WaterMeStore/WaterMeStore.framework",
+				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cheers.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CropViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjcExceptionBridging.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeData.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeStore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		74A9DD4CCBD6C0B80C379A75 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
+				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
+				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
+				"${BUILT_PRODUCTS_DIR}/WaterMeData/WaterMeData.framework",
+				"${BUILT_PRODUCTS_DIR}/WaterMeStore/WaterMeStore.framework",
+				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjcExceptionBridging.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeData.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeStore.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CE94B8FAB96CEDE77B278E05 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NoDeviceTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -812,6 +1006,7 @@
 /* Begin XCBuildConfiguration section */
 		501C0E981ECE5EFF00D4EE7C /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1C67F61CA78C7EC53A4ADEBE /* Pods-AdminConsole.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
@@ -827,6 +1022,7 @@
 		};
 		501C0E991ECE5EFF00D4EE7C /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80A550D3E782B077149E200B /* Pods-AdminConsole.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
@@ -951,6 +1147,7 @@
 		};
 		50BB0F631EBFCDE500850FF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2933E297424AFD3D592632F3 /* Pods-WaterMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
@@ -967,6 +1164,7 @@
 		};
 		50BB0F641EBFCDE500850FF4 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F19EDC382556C1491994D74E /* Pods-WaterMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
@@ -983,6 +1181,7 @@
 		};
 		50C96A3D1EC2CFE8002802C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 33281F613142C4570CC57E6F /* Pods-NoDeviceTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
@@ -998,6 +1197,7 @@
 		};
 		50C96A3E1EC2CFE8002802C1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8C8A12C6CD9A0291610B7703 /* Pods-NoDeviceTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
