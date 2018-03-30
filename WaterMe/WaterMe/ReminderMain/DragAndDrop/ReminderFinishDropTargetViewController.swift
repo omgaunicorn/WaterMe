@@ -214,7 +214,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
 
 fileprivate extension UIDropSession {
     fileprivate var reminderDrags: [Reminder.Identifier] {
-        return self.localDragSession?.items.flatMap({ $0.localObject as? Reminder.Identifier }) ?? []
+        return self.localDragSession?.items.compactMap({ $0.localObject as? Reminder.Identifier }) ?? []
     }
 }
 

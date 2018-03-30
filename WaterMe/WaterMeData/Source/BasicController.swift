@@ -161,7 +161,7 @@ public class BasicController {
 
     internal func reminders(matching identifiers: [Reminder.Identifier]) -> Result<[Reminder], RealmError> {
         return self.realm.map() { realm in
-            return identifiers.flatMap({ realm.object(ofType: Reminder.self, forPrimaryKey: $0.reminderIdentifier) })
+            return identifiers.compactMap({ realm.object(ofType: Reminder.self, forPrimaryKey: $0.reminderIdentifier) })
         }
     }
 

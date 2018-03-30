@@ -81,7 +81,7 @@ extension ReminderVessel: UICompleteCheckable {
             self.icon == nil ? .missingIcon : nil,
             self.displayName == nil ? .missingName : nil,
             self.reminders.isEmpty ? .noReminders : nil
-        ].flatMap({ $0 })
+            ].compactMap({ $0 })
         return errors
     }
 }

@@ -167,11 +167,11 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
     }
 
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        return [self.dragItemForReminder(at: indexPath)].flatMap({ $0 })
+        return [self.dragItemForReminder(at: indexPath)].compactMap({ $0 })
     }
 
     func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
-        return [self.dragItemForReminder(at: indexPath)].flatMap({ $0 })
+        return [self.dragItemForReminder(at: indexPath)].compactMap({ $0 })
     }
 
     func collectionView(_ collectionView: UICollectionView, dragSessionIsRestrictedToDraggingApplication session: UIDragSession) -> Bool {
