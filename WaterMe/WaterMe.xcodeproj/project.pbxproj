@@ -40,6 +40,7 @@
 		504A8D5D1EDA8D41002D928D /* ReceiptVerifyingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */; };
 		504A8D5F1EDB56AC002D928D /* ErrorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */; };
 		504A8D611EDB5A46002D928D /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */; };
+		504B1BA7207332E20090CD7F /* CatcherCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 504B1BA6207332E20090CD7F /* CatcherCollectionViewController.m */; };
 		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
 		5051F8FA202BA2BE00741FF9 /* GlobalReminderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */; };
 		5051F8FC202BAB1C00741FF9 /* BadgeNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8FB202BAB1C00741FF9 /* BadgeNumberController.swift */; };
@@ -164,6 +165,9 @@
 		504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptVerifyingViewController.swift; sourceTree = "<group>"; };
 		504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewController.swift; sourceTree = "<group>"; };
 		504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
+		504B1BA4207332E10090CD7F /* WaterMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WaterMe-Bridging-Header.h"; sourceTree = "<group>"; };
+		504B1BA5207332E20090CD7F /* CatcherCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CatcherCollectionViewController.h; sourceTree = "<group>"; };
+		504B1BA6207332E20090CD7F /* CatcherCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CatcherCollectionViewController.m; sourceTree = "<group>"; };
 		505086AE1ECBD43200745012 /* RealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
 		5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalReminderObserver.swift; sourceTree = "<group>"; };
 		5051F8FB202BAB1C00741FF9 /* BadgeNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeNumberController.swift; sourceTree = "<group>"; };
@@ -309,6 +313,9 @@
 				50BDC03D1F9A3E21002281C3 /* BlurryBackgroundBottomLineCollectionReusableView.swift */,
 				506DFA4C201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift */,
 				50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */,
+				504B1BA5207332E20090CD7F /* CatcherCollectionViewController.h */,
+				504B1BA6207332E20090CD7F /* CatcherCollectionViewController.m */,
+				504B1BA4207332E10090CD7F /* WaterMe-Bridging-Header.h */,
 				506A6216200561D5008EF601 /* DragAndDrop */,
 			);
 			path = ReminderMain;
@@ -606,7 +613,7 @@
 					50BB0F4F1EBFCDE500850FF4 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = V6ESYGU6CV;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 0930;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -945,6 +952,7 @@
 				50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */,
 				506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */,
 				506DFA4D201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift in Sources */,
+				504B1BA7207332E20090CD7F /* CatcherCollectionViewController.m in Sources */,
 				5049D1A31FACFA1B0076565E /* ReminderUserNotificationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1150,12 +1158,15 @@
 			baseConfigurationReference = 2933E297424AFD3D592632F3 /* Pods-WaterMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WaterMe/ReminderMain/WaterMe-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1167,12 +1178,14 @@
 			baseConfigurationReference = F19EDC382556C1491994D74E /* Pods-WaterMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "WaterMe/ReminderMain/WaterMe-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
