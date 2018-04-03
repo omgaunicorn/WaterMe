@@ -110,54 +110,35 @@ extension ReminderGedegDataSource {
     // before doing the batch up. So that we can bail out and just do reloadData
     // to avoid having an exception thrown
     func sanityCheck(ins: [IndexPath], dels: [IndexPath], with cv: UICollectionView) -> NSError? {
-        var unmodifiedSection = Reminder.Section.rawValueSet
         let insCount = ins.sectionCountDictionary()
         let delsCount = dels.sectionCountDictionary()
+        for section in Reminder.Section.all {
+            let secRaw = section.rawValue
+            let insCount = insCount[secRaw, default: 0]
+            let delCount = delsCount[secRaw, default: 0]
+            let cvCount = cv.numberOfItems(inSection: secRaw)
+            let dataCount = self.numberOfItems(inSection: secRaw)
+            if insCount + delCount > 0 {
+                let test = cvCount + insCount - delCount == dataCount
+                log.debug("Sanity Check: Modified Section: \(section): \(test)")
+                if !test {
+                    return NSError(collectionViewSanityCheckFailedForModifiedSection: secRaw,
+                                                                             cvCount: cvCount,
+                                                                           dataCount: dataCount,
+                                                                                 ins: insCount,
+                                                                                dels: delCount)
+                }
+            } else {
+                let test = cvCount == dataCount
+                log.debug("Sanity Check: Unmodified Section: \(section): \(test)")
+                if !test {
+                    return NSError(collectionViewSanityCheckFailedForUnmodifiedSection: secRaw,
+                                                                               cvCount: cvCount,
+                                                                             dataCount: dataCount)
 
-        for (section, insCount) in insCount {
-            unmodifiedSection.remove(section)
-            let cvCount = cv.numberOfItems(inSection: section)
-            let dataCount = self.numberOfItems(inSection: section)
-            let delCount = delsCount[section, default: 0]
-            let shouldBe = cvCount + insCount - delCount
-            let test = dataCount == shouldBe
-            log.debug("Ins Section: \(section) – \(test)")
-            if !test {
-                return NSError(collectionViewInsertionsSanityCheckFailedForSection: section,
-                                                                           cvCount: cvCount,
-                                                                         dataCount: dataCount,
-                                                                               ins: insCount,
-                                                                              dels: delCount)
+                }
             }
         }
-        for (section, delCount) in delsCount {
-            unmodifiedSection.remove(section)
-            let cvCount = cv.numberOfItems(inSection: section)
-            let dataCount = self.numberOfItems(inSection: section)
-            let insCount = insCount[section, default: 0]
-            let shouldBe = cvCount - delCount + insCount
-            let test = dataCount == shouldBe
-            log.debug("Dels Section: \(section) – \(test)")
-            if !test {
-                return NSError(collectionViewDeletionsSanityCheckFailedForSection: section,
-                                                                          cvCount: cvCount,
-                                                                        dataCount: dataCount,
-                                                                              ins: insCount,
-                                                                             dels: delCount)
-            }
-        }
-        for section in unmodifiedSection {
-            let cvCount = cv.numberOfItems(inSection: section)
-            let dataCount = self.numberOfItems(inSection: section)
-            let test = dataCount == cvCount
-            log.debug("NoMod Section: \(section) – \(test)")
-            if !test {
-                return NSError(collectionViewSanityCheckFailedForUnmodifiedSection: section,
-                                                                           cvCount: cvCount,
-                                                                         dataCount: dataCount)
-            }
-        }
-
         return nil
     }
 }
