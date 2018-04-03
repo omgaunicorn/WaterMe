@@ -425,4 +425,31 @@ extension NSError {
         ]
         self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
     }
+
+    convenience init(collectionViewInsertionsSanityCheckFailedForSection section: Int, cvCount: Int, dataCount: Int, ins: Int, dels: Int) {
+        let code = 1004
+        let message = "CollectionView SanityCheck failed for Insertions in Section: \(section), cvCount: \(cvCount), dataCount: \(dataCount), insertions: \(ins), deletions: \(dels)"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    convenience init(collectionViewDeletionsSanityCheckFailedForSection section: Int, cvCount: Int, dataCount: Int, ins: Int, dels: Int) {
+        let code = 1005
+        let message = "CollectionView SanityCheck failed for Deletions in Section: \(section), cvCount: \(cvCount), dataCount: \(dataCount), insertions: \(ins), deletions: \(dels)"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    convenience init(collectionViewSanityCheckFailedForUnmodifiedSection section: Int, cvCount: Int, dataCount: Int) {
+        let code = 1006
+        let message = "CollectionView SanityCheck failed for Unmodified Section: \(section), cvCount: \(cvCount), dataCount: \(dataCount)"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
 }

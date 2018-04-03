@@ -64,6 +64,15 @@ class ReminderGedegDataSource: ReminderGedeg {
         }
         let allEmpty = ins.isEmpty && dels.isEmpty && mods.isEmpty
         guard allEmpty == false else { return }
+        // TODO: Move this to below the window check. Its only here so it runs more often during testing
+        let sanityError = self.sanityCheck(ins: ins, dels: dels, with: cv)
+        guard sanityError == nil else {
+            assertionFailure(String(describing: sanityError!))
+            Analytics.log(error: sanityError!)
+            log.error(sanityError!)
+            cv.reloadData()
+            return
+        }
         guard cv.window != nil else {
             // we're not in the view hierarchy
             // no need for animated stuff to happen
@@ -87,10 +96,74 @@ class ReminderGedegDataSource: ReminderGedeg {
             }
             let error = NSError(collectionViewBatchUpdateException: exception)
             Analytics.log(error: error)
+            log.error(sanityError!)
             return true
         }, finally: { exceptionWasCaught in
             guard exceptionWasCaught == true else { return }
             self.collectionViewReplacer?.collectionViewReplacementRecommended()
         })
+    }
+}
+
+extension ReminderGedegDataSource {
+    // this is an attempt to do the sanity check the collectionview does when doing a batch update
+    // before doing the batch up. So that we can bail out and just do reloadData
+    // to avoid having an exception thrown
+    func sanityCheck(ins: [IndexPath], dels: [IndexPath], with cv: UICollectionView) -> NSError? {
+        var unmodifiedSection = Reminder.Section.rawValueSet
+        let insCount = ins.sectionCountDictionary()
+        let delsCount = dels.sectionCountDictionary()
+
+        for (section, insCount) in insCount {
+            unmodifiedSection.remove(section)
+            let cvCount = cv.numberOfItems(inSection: section)
+            let dataCount = self.numberOfItems(inSection: section)
+            let delCount = delsCount[section, default: 0]
+            let shouldBe = cvCount + insCount - delCount
+            let test = dataCount == shouldBe
+            log.debug("Ins Section: \(section) – \(test)")
+            if !test {
+                return NSError(collectionViewInsertionsSanityCheckFailedForSection: section,
+                                                                           cvCount: cvCount,
+                                                                         dataCount: dataCount,
+                                                                               ins: insCount,
+                                                                              dels: delCount)
+            }
+        }
+        for (section, delCount) in delsCount {
+            unmodifiedSection.remove(section)
+            let cvCount = cv.numberOfItems(inSection: section)
+            let dataCount = self.numberOfItems(inSection: section)
+            let insCount = insCount[section, default: 0]
+            let shouldBe = cvCount - delCount + insCount
+            let test = dataCount == shouldBe
+            log.debug("Dels Section: \(section) – \(test)")
+            if !test {
+                return NSError(collectionViewDeletionsSanityCheckFailedForSection: section,
+                                                                          cvCount: cvCount,
+                                                                        dataCount: dataCount,
+                                                                              ins: insCount,
+                                                                             dels: delCount)
+            }
+        }
+        for section in unmodifiedSection {
+            let cvCount = cv.numberOfItems(inSection: section)
+            let dataCount = self.numberOfItems(inSection: section)
+            let test = dataCount == cvCount
+            log.debug("NoMod Section: \(section) – \(test)")
+            if !test {
+                return NSError(collectionViewSanityCheckFailedForUnmodifiedSection: section,
+                                                                           cvCount: cvCount,
+                                                                         dataCount: dataCount)
+            }
+        }
+
+        return nil
+    }
+}
+
+extension Sequence where Iterator.Element == IndexPath {
+    func sectionCountDictionary() -> [Int : Int] {
+        return self.reduce(into: [Int : Int](), { $0[$1.section, default: 0] += 1 })
     }
 }

@@ -175,5 +175,7 @@ public extension Reminder {
     public enum Section: Int {
         case late, today, tomorrow, thisWeek, later
         public static let count = 5
+        public static let rawValueSet = (0 ..< Reminder.Section.count).reduce(into: Set<Int>(), { $0.insert($1) })
+        public static let all = (0 ..< Reminder.Section.count).reduce(into: [Reminder.Section](), { $0.append(Reminder.Section(rawValue: $1)!) })
     }
 }
