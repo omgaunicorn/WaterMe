@@ -63,19 +63,26 @@ class ReminderGedegDataSource: ReminderGedeg {
             return
         }
         let allEmpty = ins.isEmpty && dels.isEmpty && mods.isEmpty
-        guard allEmpty == false else { return }
-        // TODO: Move this to below the window check. Its only here so it runs more often during testing
-        let sanityError = self.sanityCheck(ins: ins, dels: dels, with: cv)
-        guard sanityError == nil else {
-            assertionFailure(String(describing: sanityError!))
-            Analytics.log(error: sanityError!)
-            log.error(sanityError!)
-            cv.reloadData()
+        guard allEmpty == false else {
+            // there is nothing to be done, so bail out early
             return
         }
         guard cv.window != nil else {
             // we're not in the view hierarchy
             // no need for animated stuff to happen
+            cv.reloadData()
+            return
+        }
+        // sanity checking can only be done when the collectionview
+        // is in the window hierarchy. Otherwise its internal state
+        // does not update. So it will pass the first sanity check
+        // but after that its internal state is stale
+        // so it will fail them
+        let sanityError = self.sanityCheck(ins: ins, dels: dels, with: cv)
+        guard sanityError == nil else {
+            assertionFailure(String(describing: sanityError!))
+            Analytics.log(error: sanityError!)
+            log.error(sanityError!)
             cv.reloadData()
             return
         }
