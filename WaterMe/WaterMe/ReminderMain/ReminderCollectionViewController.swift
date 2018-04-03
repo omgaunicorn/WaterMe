@@ -30,6 +30,7 @@ protocol ReminderCollectionViewControllerDelegate: class {
     func userDidSelect(reminder: Reminder, from view: UIView, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController)
     func dragSessionWillBegin(_ session: UIDragSession, within viewController: ReminderCollectionViewController)
     func dragSessionDidEnd(_ session: UIDragSession, within viewController: ReminderCollectionViewController)
+    func forceUpdateCollectionViewInsets()
 }
 
 class ReminderCollectionViewController: StandardCollectionViewController, HasBasicController, HasProController {
@@ -39,28 +40,52 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
 
     private(set) var reminders: ReminderGedeg?
     private let significantTimePassedDetector = SignificantTimePassedDetector()
-    
     weak var delegate: ReminderCollectionViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.flow?.sectionHeadersPinToVisibleBounds = true
-        self.collectionView?.dragInteractionEnabled = true // needed for iphone
+        self.significantTimePassedDetector.delegate = self
+        self.replaceCollectionView()
+        self.configureCollectionView()
+        self.hardReloadData()
+    }
+
+    private func replaceCollectionView() {
+        let flow = self.collectionView?.collectionViewLayout ?? UICollectionViewFlowLayout()
+        // flow must be invalidated because it might have been in the middle of something
+        // when we replaced the collectionView
+        flow.invalidateLayout()
+        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: flow)
+    }
+
+    private func configureCollectionView() {
+        // needed so autoadjustment happens on both axes all the time
+        // the default is to only adjust on vertical axes
+        self.collectionView?.contentInsetAdjustmentBehavior = .always
+        // not sure why this is not the default
+        self.collectionView?.alwaysBounceVertical = true
+        // not sure why this is not the default
+        self.collectionView?.backgroundColor = .white
+        // disabled by default on iphone
+        self.collectionView?.dragInteractionEnabled = true
         self.collectionView?.dragDelegate = self
         self.collectionView?.register(ReminderCollectionViewCell.nib,
                                       forCellWithReuseIdentifier: ReminderCollectionViewCell.reuseID)
         self.collectionView?.register(ReminderHeaderCollectionReusableView.self,
                                       forSupplementaryViewOfKind: ReminderHeaderCollectionReusableView.kind,
                                       withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID)
+        // makes the section headers work like a tableview
+        self.flow?.sectionHeadersPinToVisibleBounds = true
+        // make everything as tight as possible on the screen
         self.flow?.minimumInteritemSpacing = 0
         self.flow?.minimumLineSpacing = 0
-        self.significantTimePassedDetector.delegate = self
-        self.hardReloadData()
     }
     
     private func hardReloadData() {
-        self.reminders = ReminderGedegDataSource(basicRC: self.basicRC, managedCollectionView: self.collectionView)
+        self.reminders = ReminderGedegDataSource(basicRC: self.basicRC,
+                                                 managedCollectionView: self.collectionView,
+                                                 collectionViewReplacer: self)
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -134,6 +159,15 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         case (.regular, .regular, true): // iPad w/ Accessibility
             return (2, 320)
         }
+    }
+}
+
+extension ReminderCollectionViewController: CollectionViewReplacer {
+    func collectionViewReplacementRecommended() {
+        self.replaceCollectionView()
+        self.configureCollectionView()
+        self.delegate?.forceUpdateCollectionViewInsets()
+        self.hardReloadData()
     }
 }
 

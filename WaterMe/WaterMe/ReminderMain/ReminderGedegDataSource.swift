@@ -24,13 +24,30 @@
 import WaterMeData
 import UIKit
 
+protocol CollectionViewReplacer: class {
+    func collectionViewReplacementRecommended()
+}
+
 class ReminderGedegDataSource: ReminderGedeg {
 
+    private weak var collectionViewReplacer: CollectionViewReplacer?
     private weak var collectionView: UICollectionView?
 
-    init?(basicRC: BasicController?, managedCollectionView: UICollectionView?) {
+    init?(basicRC: BasicController?,
+          managedCollectionView: UICollectionView?,
+          collectionViewReplacer: CollectionViewReplacer?)
+    {
+        self.collectionViewReplacer = collectionViewReplacer
         self.collectionView = managedCollectionView
         super.init(basicRC: basicRC)
+
+        /*
+        // Uncomment to test exception throwing
+        Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { _ in
+            print("___ CAUSING EXCEPTION ___")
+            self.batchedUpdates(ins: [], dels: [IndexPath(item: 0, section: 0)], mods: [])
+        }
+        */
     }
 
     override func allDataReady() {
@@ -53,15 +70,27 @@ class ReminderGedegDataSource: ReminderGedeg {
             cv.reloadData()
             return
         }
-        cv.performBatchUpdates({
-            cv.insertItems(at: ins)
-            cv.deleteItems(at: dels)
-            cv.reloadItems(at: mods)
-        }, completion: { success in
-            guard success == false else { return }
-            let message = "CollectionView failed to Reload Sections: This usually happens when data changes really fast"
-            log.warning(message)
-            cv.reloadData()
+        TCF.try({
+            cv.performBatchUpdates({
+                cv.insertItems(at: ins)
+                cv.deleteItems(at: dels)
+                cv.reloadItems(at: mods)
+            }, completion: { success in
+                guard success == false else { return }
+                let message = "CollectionView failed to Reload Sections: This usually happens when data changes really fast"
+                log.warning(message)
+                cv.reloadData()
+            })
+        }, shouldCatch: { exception in
+            guard case .internalInconsistencyException = exception.name else {
+                return false
+            }
+            let error = NSError(collectionViewBatchUpdateException: exception)
+            Analytics.log(error: error)
+            return true
+        }, finally: { exceptionWasCaught in
+            guard exceptionWasCaught == true else { return }
+            self.collectionViewReplacer?.collectionViewReplacementRecommended()
         })
     }
 }

@@ -412,7 +412,16 @@ extension NSError {
         let code = 1002
         let message = "Reminder change fired after list or parent vessel were set to NIL"
         let userInfo: [String : Any] = [
-            NSLocalizedFailureReasonErrorKey : message,
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    convenience init(collectionViewBatchUpdateException exception: NSException) {
+        let code = 1003
+        let message = exception.reason ?? "CollectionView Threw Exception During Batch Update"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
         ]
         self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
     }

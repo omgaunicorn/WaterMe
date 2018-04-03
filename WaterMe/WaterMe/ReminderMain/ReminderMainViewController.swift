@@ -65,10 +65,8 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         self.navigationItem.rightBarButtonItem = self.plantsBBI
         self.navigationItem.leftBarButtonItem = self.settingsBBI
 
+        // configure my childVC so it can tell me what the user does in the CollectionView
         self.collectionVC?.delegate = self
-        // custom behavior needed here, otherwise it only automatically adjusts along the scrolling direction
-        // we need it to automatically adjust in both axes
-        self.collectionVC?.collectionView?.contentInsetAdjustmentBehavior = .always
 
         // register to find out about purchases that come in at any time
         self.registerForPurchaseNotifications()
@@ -171,6 +169,11 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         if self.dropTargetViewController == nil {
             self.updateCollectionViewInsets()
         }
+    }
+
+    // Delegate from CollectionViewController
+    func forceUpdateCollectionViewInsets() {
+        self.updateCollectionViewInsets()
     }
 
     private func updateCollectionViewInsets() {

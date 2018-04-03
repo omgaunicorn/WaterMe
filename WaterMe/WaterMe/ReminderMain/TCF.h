@@ -1,6 +1,6 @@
 //
-//  WaterMe-Bridging-Header.h
-//  WaterMe
+//  TCF.h
+//  Catcher
 //
 //  Created by Jeffrey Bergier on 03/04/2018.
 //  Copyright © 2018 Saturday Apps.
@@ -21,8 +21,10 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-//
-//  Use this file to import your target's public headers that you would like to expose to Swift.
-//
+@import Foundation;
 
-#import "TCF.h"
+@interface TCF: NSObject
++ (void)    try: (void (^ _Nonnull)(void)) try
+    shouldCatch: (BOOL (^ _Nullable)(NSException* _Nonnull)) catch
+        finally: (void (^ _Nullable)(BOOL)) finally;
+@end
