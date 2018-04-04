@@ -199,6 +199,13 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
                 customInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: dragViewWidth)
             }
         }
+
+        // BUGFIX: http://crashes.to/s/254b2d6597f
+        // Sometimes the collectionview does not like having its inset changed
+        // without first invalidating the layout
+        // 🤞 fix as I've never seen this bug in person
+        // just listening to the message from Apple
+        self.collectionVC?.flow?.invalidateLayout()
         self.collectionVC?.collectionView?.contentInset = customInset
     }
 
