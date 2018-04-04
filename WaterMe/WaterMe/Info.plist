@@ -17,7 +17,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>2.0.3</string>
 	<key>CFBundleVersion</key>
-	<string>203001</string>
+	<string>203002</string>
 	<key>Fabric</key>
 	<dict>
 		<key>Kits</key>

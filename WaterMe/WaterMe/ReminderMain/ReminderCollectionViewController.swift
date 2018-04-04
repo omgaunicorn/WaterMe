@@ -89,7 +89,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return self.reminders?.numberOfSections() ?? 0
+        return self.reminders?.numberOfSections ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

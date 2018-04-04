@@ -78,11 +78,12 @@ class ReminderGedegDataSource: ReminderGedeg {
         // does not update. So it will pass the first sanity check
         // but after that its internal state is stale
         // so it will fail them
-        let sanityError = self.sanityCheck(ins: ins, dels: dels, with: cv)
-        guard sanityError == nil else {
-            assertionFailure(String(describing: sanityError!))
-            Analytics.log(error: sanityError!)
-            log.error(sanityError!)
+        let failureReason = ItemAndSectionSanityCheckFailureReason.check(lhs: cv, rhs: self, ins: ins, dels: dels)
+        guard failureReason == nil else {
+            let error = NSError(errorFromSanityCheckFailureReason: failureReason!)
+            assertionFailure(String(describing: error))
+            Analytics.log(error: error)
+            log.error(error)
             cv.reloadData()
             return
         }
@@ -103,55 +104,11 @@ class ReminderGedegDataSource: ReminderGedeg {
             }
             let error = NSError(collectionViewBatchUpdateException: exception)
             Analytics.log(error: error)
-            log.error(sanityError!)
+            log.error(error)
             return true
         }, finally: { exceptionWasCaught in
             guard exceptionWasCaught == true else { return }
             self.collectionViewReplacer?.collectionViewReplacementRecommended()
         })
-    }
-}
-
-extension ReminderGedegDataSource {
-    // this is an attempt to do the sanity check the collectionview does when doing a batch update
-    // before doing the batch up. So that we can bail out and just do reloadData
-    // to avoid having an exception thrown
-    func sanityCheck(ins: [IndexPath], dels: [IndexPath], with cv: UICollectionView) -> NSError? {
-        let insCount = ins.sectionCountDictionary()
-        let delsCount = dels.sectionCountDictionary()
-        for section in Reminder.Section.all {
-            let secRaw = section.rawValue
-            let insCount = insCount[secRaw, default: 0]
-            let delCount = delsCount[secRaw, default: 0]
-            let cvCount = cv.numberOfItems(inSection: secRaw)
-            let dataCount = self.numberOfItems(inSection: secRaw)
-            if insCount + delCount > 0 {
-                let test = cvCount + insCount - delCount == dataCount
-                log.debug("Sanity Check: Modified Section: \(section): \(test)")
-                if !test {
-                    return NSError(collectionViewSanityCheckFailedForModifiedSection: secRaw,
-                                                                             cvCount: cvCount,
-                                                                           dataCount: dataCount,
-                                                                                 ins: insCount,
-                                                                                dels: delCount)
-                }
-            } else {
-                let test = cvCount == dataCount
-                log.debug("Sanity Check: Unmodified Section: \(section): \(test)")
-                if !test {
-                    return NSError(collectionViewSanityCheckFailedForUnmodifiedSection: secRaw,
-                                                                               cvCount: cvCount,
-                                                                             dataCount: dataCount)
-
-                }
-            }
-        }
-        return nil
-    }
-}
-
-extension Sequence where Iterator.Element == IndexPath {
-    func sectionCountDictionary() -> [Int : Int] {
-        return self.reduce(into: [Int : Int](), { $0[$1.section, default: 0] += 1 })
     }
 }

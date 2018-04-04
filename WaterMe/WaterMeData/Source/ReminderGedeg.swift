@@ -76,7 +76,7 @@ open class ReminderGedeg: NSObject {
 
     open func batchedUpdates(ins: [IndexPath], dels: [IndexPath], mods: [IndexPath]) { }
 
-    public func numberOfSections() -> Int {
+    public var numberOfSections: Int {
         return self.reminders.count
     }
 

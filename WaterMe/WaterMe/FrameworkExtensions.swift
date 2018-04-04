@@ -426,7 +426,18 @@ extension NSError {
         self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
     }
 
-    convenience init(collectionViewSanityCheckFailedForModifiedSection section: Int, cvCount: Int, dataCount: Int, ins: Int, dels: Int) {
+    convenience init(errorFromSanityCheckFailureReason reason: ItemAndSectionSanityCheckFailureReason) {
+        switch reason {
+        case .modifiedSectionMismatch(let section, let cvCount, let dataCount, let insCount, let delsCount):
+            self.init(collectionViewSanityCheckFailedForModifiedSection: section, cvCount: cvCount, dataCount: dataCount, ins: insCount, dels: delsCount)
+        case .unmodifiedSectionMismatch(let section, let cvCount, let dataCount):
+            self.init(collectionViewSanityCheckFailedForUnmodifiedSection: section, cvCount: cvCount, dataCount: dataCount)
+        case .sectionCountMismatch(let cvSectionCount, let dataSectionCount):
+            self.init(collectionViewSanityCheckFailedForMismatchedSectionCount: cvSectionCount, dataSectionCount: dataSectionCount)
+        }
+    }
+
+    private convenience init(collectionViewSanityCheckFailedForModifiedSection section: Int, cvCount: Int, dataCount: Int, ins: Int, dels: Int) {
         let code = 1004
         let message = "CollectionView SanityCheck failed for Modifications in Section: \(section), cvCount: \(cvCount), dataCount: \(dataCount), insertions: \(ins), deletions: \(dels)"
         let userInfo: [String : Any] = [
@@ -435,12 +446,29 @@ extension NSError {
         self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
     }
 
-    convenience init(collectionViewSanityCheckFailedForUnmodifiedSection section: Int, cvCount: Int, dataCount: Int) {
+    private convenience init(collectionViewSanityCheckFailedForUnmodifiedSection section: Int, cvCount: Int, dataCount: Int) {
         let code = 1005
         let message = "CollectionView SanityCheck failed for Unmodified Section: \(section), cvCount: \(cvCount), dataCount: \(dataCount)"
         let userInfo: [String : Any] = [
             NSLocalizedFailureReasonErrorKey : message
         ]
         self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    private convenience init(collectionViewSanityCheckFailedForMismatchedSectionCount cvSectionCount: Int, dataSectionCount: Int) {
+        let code = 1006
+        let message = "SanityCheck failed for Mismatched CollectionView Section Count: \(cvSectionCount), Data Section Count: \(dataSectionCount)"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+}
+
+extension ReminderGedeg: ItemAndSectionable {}
+extension UICollectionView: ItemAndSectionable {}
+extension UITableView: ItemAndSectionable {
+    public func numberOfItems(inSection section: Int) -> Int {
+        return self.numberOfRows(inSection: section)
     }
 }
