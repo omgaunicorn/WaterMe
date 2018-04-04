@@ -80,7 +80,7 @@ class ReminderUserNotificationController {
 
         // loop through the number of days the user wants to be reminded for
         // get all reminders that happened on or before the end of the day of `futureReminderTime`
-        let matches = (0 ..< reminderDays).flatMap() { i -> (Date, [ReminderValue])? in
+        let matches = (0 ..< reminderDays).compactMap() { i -> (Date, [ReminderValue])? in
             let _testDate = calendar.date(byAdding: .day, value: i, to: now)
             guard let testDate = _testDate else { return nil }
             let endOfDayInTestDate = calendar.endOfDay(for: testDate)
@@ -95,7 +95,7 @@ class ReminderUserNotificationController {
 
         // convert the matches into one notification each
         // this makes it so the user only gets 1 notification per day at the time they requested
-        let reminders = matches.flatMap() { reminderTime, matches -> UNNotificationRequest? in
+        let reminders = matches.compactMap() { reminderTime, matches -> UNNotificationRequest? in
             // if the interval is less 0 or less, we don't want to schedule a notification
             // all that needs to happen in this case is the badge icon get updated, and that can be done elsewhere
             let interval = reminderTime.timeIntervalSince(now)
