@@ -1,5 +1,5 @@
 //
-//  RowAndSectionable.swift
+//  ItemAndSectionable.swift
 //  WaterMeData
 //
 //  Created by Jeffrey Bergier on 04/04/2018.
@@ -56,17 +56,20 @@ public enum ItemAndSectionSanityCheckFailureReason {
                                           ins: [IndexPath],
                                           dels: [IndexPath]) -> ItemAndSectionSanityCheckFailureReason?
     {
-        let insCounts = ins.sectionCountDictionary()
-        let delsCounts = dels.sectionCountDictionary()
+        let insCounts = ins.sectionCount
+        let delsCounts = dels.sectionCount
         for section in 0 ..< lhs.numberOfSections {
             let lhsCount = lhs.numberOfItems(inSection: section)
             let rhsCount = rhs.numberOfItems(inSection: section)
             let insCount = insCounts[section, default: 0]
             let delsCount = delsCounts[section, default: 0]
             if insCount + delsCount > 0 {
-                let test = lhsCount + insCount - delsCount == rhsCount
-                log.debug("Sanity Check: Modified Section: \(section): \(test)")
-                if !test {
+                // If either insCount or delsCount are more than 0,
+                // then there are insertions or deletions in the given section
+                // we need to make sure the math works out
+                let pass = lhsCount + insCount - delsCount == rhsCount
+                log.debug("Sanity Check: Modified Section: \(section): \(pass)")
+                if pass == false {
                     return .modifiedSectionMismatch(section: section,
                                                     lhsCount: lhsCount,
                                                     rhsCount: rhsCount,
@@ -74,9 +77,12 @@ public enum ItemAndSectionSanityCheckFailureReason {
                                                     delsCount: delsCount)
                 }
             } else {
-                let test = lhsCount == rhsCount
-                log.debug("Sanity Check: Unmodified Section: \(section): \(test)")
-                if !test {
+                // If either insCount and delsCount are both 0,
+                // then there are no changes in the section at hand
+                // we just need to make sure the lhs and rhs count in the section match
+                let pass = lhsCount == rhsCount
+                log.debug("Sanity Check: Unmodified Section: \(section): \(pass)")
+                if pass == false {
                     return .unmodifiedSectionMismatch(section: section,
                                                       lhsCount: lhsCount,
                                                       rhsCount: rhsCount)
@@ -97,7 +103,10 @@ public enum ItemAndSectionSanityCheckFailureReason {
 }
 
 public extension Sequence where Iterator.Element == IndexPath {
-    public func sectionCountDictionary() -> [Int : Int] {
+    // Counts the number of times items appear in a single section
+    // Key: Section
+    // Value: Number of times an items appeared from the key section
+    public var sectionCount: [Int : Int] {
         return self.reduce(into: [Int : Int](), { $0[$1.section, default: 0] += 1 })
     }
 }
