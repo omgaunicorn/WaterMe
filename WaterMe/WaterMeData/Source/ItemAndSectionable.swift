@@ -30,49 +30,47 @@ public protocol ItemAndSectionable {
 
 public enum ItemAndSectionSanityCheckFailureReason {
     
-    case sectionCountMismatch(lhsSectionCount: Int, rhsSectionCount: Int)
-    case modifiedSectionMismatch(section: Int, lhsCount: Int, rhsCount: Int, insCount: Int, delsCount: Int)
-    case unmodifiedSectionMismatch(section: Int, lhsCount: Int, rhsCount: Int)
+    case sectionCountMismatch(oldSectionCount: Int, newSectionCount: Int)
+    case modifiedSectionMismatch(section: Int, oldCount: Int, newCount: Int, insCount: Int, delsCount: Int)
+    case unmodifiedSectionMismatch(section: Int, oldCount: Int, newCount: Int)
 
     // this is an attempt to do the sanity check the collectionview does when doing a batch update
     // before doing the batch up. So that we can bail out and just do reloadData
     // to avoid having an exception thrown
-    public static func check(lhs: ItemAndSectionable,
-                             rhs: ItemAndSectionable,
-                             ins: [IndexPath],
-                             dels: [IndexPath]) -> ItemAndSectionSanityCheckFailureReason?
+    public static func check(old: ItemAndSectionable,
+                             new: ItemAndSectionable,
+                             delta: (ins: [IndexPath], dels: [IndexPath])) -> ItemAndSectionSanityCheckFailureReason?
     {
-        if let sectionCountMismatch = self.checkSectionMismatch(lhs: lhs, rhs: rhs) {
+        if let sectionCountMismatch = self.checkSectionMismatch(old: old, new: new) {
             return sectionCountMismatch
         }
-        if let rowCountMismatch = self.verifyEachSection(lhs: lhs, rhs: rhs, ins: ins, dels: dels) {
+        if let rowCountMismatch = self.verifyEachSection(old: old, new: new, delta: delta) {
             return rowCountMismatch
         }
         return nil
     }
 
-    private static func verifyEachSection(lhs: ItemAndSectionable,
-                                          rhs: ItemAndSectionable,
-                                          ins: [IndexPath],
-                                          dels: [IndexPath]) -> ItemAndSectionSanityCheckFailureReason?
+    private static func verifyEachSection(old: ItemAndSectionable,
+                                          new: ItemAndSectionable,
+                                          delta: (ins: [IndexPath], dels: [IndexPath])) -> ItemAndSectionSanityCheckFailureReason?
     {
-        let insCounts = ins.sectionCount
-        let delsCounts = dels.sectionCount
-        for section in 0 ..< lhs.numberOfSections {
-            let lhsCount = lhs.numberOfItems(inSection: section)
-            let rhsCount = rhs.numberOfItems(inSection: section)
+        let insCounts = delta.ins.sectionCount
+        let delsCounts = delta.dels.sectionCount
+        for section in 0 ..< old.numberOfSections {
+            let oldCount = old.numberOfItems(inSection: section)
+            let newCount = new.numberOfItems(inSection: section)
             let insCount = insCounts[section, default: 0]
             let delsCount = delsCounts[section, default: 0]
             if insCount + delsCount > 0 {
                 // If either insCount or delsCount are more than 0,
                 // then there are insertions or deletions in the given section
                 // we need to make sure the math works out
-                let pass = lhsCount + insCount - delsCount == rhsCount
+                let pass = oldCount + insCount - delsCount == newCount
                 log.debug("Sanity Check: Modified Section: \(section): \(pass)")
                 if pass == false {
                     return .modifiedSectionMismatch(section: section,
-                                                    lhsCount: lhsCount,
-                                                    rhsCount: rhsCount,
+                                                    oldCount: oldCount,
+                                                    newCount: newCount,
                                                     insCount: insCount,
                                                     delsCount: delsCount)
                 }
@@ -80,25 +78,25 @@ public enum ItemAndSectionSanityCheckFailureReason {
                 // If either insCount and delsCount are both 0,
                 // then there are no changes in the section at hand
                 // we just need to make sure the lhs and rhs count in the section match
-                let pass = lhsCount == rhsCount
+                let pass = oldCount == newCount
                 log.debug("Sanity Check: Unmodified Section: \(section): \(pass)")
                 if pass == false {
                     return .unmodifiedSectionMismatch(section: section,
-                                                      lhsCount: lhsCount,
-                                                      rhsCount: rhsCount)
+                                                      oldCount: oldCount,
+                                                      newCount: newCount)
                 }
             }
         }
         return nil
     }
 
-    private static func checkSectionMismatch(lhs: ItemAndSectionable,
-                                             rhs: ItemAndSectionable) -> ItemAndSectionSanityCheckFailureReason?
+    private static func checkSectionMismatch(old: ItemAndSectionable,
+                                             new: ItemAndSectionable) -> ItemAndSectionSanityCheckFailureReason?
     {
-        let lhsSectionCount = lhs.numberOfSections
-        let rhsSectionCount = rhs.numberOfSections
-        guard lhsSectionCount != rhsSectionCount else { return nil }
-        return .sectionCountMismatch(lhsSectionCount: lhsSectionCount, rhsSectionCount: rhsSectionCount)
+        let oldSectionCount = old.numberOfSections
+        let newSectionCount = new.numberOfSections
+        guard oldSectionCount != newSectionCount else { return nil }
+        return .sectionCountMismatch(oldSectionCount: oldSectionCount, newSectionCount: newSectionCount)
     }
 }
 

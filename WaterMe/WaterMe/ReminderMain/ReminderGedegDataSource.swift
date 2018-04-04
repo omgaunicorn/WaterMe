@@ -78,7 +78,7 @@ class ReminderGedegDataSource: ReminderGedeg {
         // does not update. So it will pass the first sanity check
         // but after that its internal state is stale
         // so it will fail them
-        let failureReason = ItemAndSectionSanityCheckFailureReason.check(lhs: cv, rhs: self, ins: ins, dels: dels)
+        let failureReason = ItemAndSectionSanityCheckFailureReason.check(old: cv, new: self, delta: (ins, dels))
         guard failureReason == nil else {
             let error = NSError(errorFromSanityCheckFailureReason: failureReason!)
             assertionFailure(String(describing: error))
