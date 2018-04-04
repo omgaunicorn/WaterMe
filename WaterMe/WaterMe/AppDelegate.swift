@@ -51,9 +51,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     override init() {
         super.init()
-        
+
         // configure logging
+        #if DEBUG
+        log.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .debug)
+        #else
         log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
+        #endif
         
         // as early as possible, configure standard defaults
         UserDefaults.standard.configure()
@@ -121,7 +125,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         // configure Crashlytics
+        #if RELEASE
         Crashlytics.start(withAPIKey: WaterMeData.PrivateKeys.kFrabicAPIKey)
+        #endif
 
         // configure my notification delegate
         UNUserNotificationCenter.current().delegate = self.notificationUIDelegate
