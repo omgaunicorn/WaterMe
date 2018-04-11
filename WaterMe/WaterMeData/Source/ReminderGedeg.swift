@@ -108,7 +108,7 @@ open class ReminderGedeg: NSObject {
             log.error(message)
             return nil
         }
-        // BUGFIX: http://crashes.to/s/12c6e5bfcd3
+        // BUGFIX: http://crashes.to/s/c5852da2c75
         // If the collectionview is too hasty when loading data
         // the data could still be NIl
         // previously this was force unwrapped
