@@ -81,13 +81,44 @@ open class ReminderGedeg: NSObject {
     }
 
     public func numberOfItems(inSection section: Int) -> Int {
-        let section = Reminder.Section(rawValue: section)!
-        return self.reminders[section]!.count
+        guard let section = Reminder.Section(rawValue: section) else {
+            let message = "Invalid Section Passed In"
+            assertionFailure(message)
+            log.error(message)
+            return 0
+        }
+        // BUGFIX: http://crashes.to/s/12c6e5bfcd3
+        // If the collectionview is too hasty when loading data
+        // the data could still be NIl
+        // previously this was force unwrapped
+        guard let count = self.reminders[section]?.count else {
+            let error = NSError(dataForSectionWasNilInNumberOfItemsInSection: section)
+            assertionFailure(String(describing: error))
+            BasicController.errorThrown?(error)
+            log.error(error)
+            return 0
+        }
+        return count
     }
 
-    public func reminder(at indexPath: IndexPath) -> Reminder {
-        let section = Reminder.Section(rawValue: indexPath.section)!
-        let reminder = self.reminders[section]![indexPath.row]
+    public func reminder(at indexPath: IndexPath) -> Reminder? {
+        guard let section = Reminder.Section(rawValue: indexPath.section) else {
+            let message = "Invalid Section Passed In"
+            assertionFailure(message)
+            log.error(message)
+            return nil
+        }
+        // BUGFIX: http://crashes.to/s/12c6e5bfcd3
+        // If the collectionview is too hasty when loading data
+        // the data could still be NIl
+        // previously this was force unwrapped
+        guard let reminder = self.reminders[section]?[indexPath.row] else {
+            let error = NSError(dataForSectionWasNilInReminderAtIndexPath: indexPath)
+            assertionFailure(String(describing: error))
+            BasicController.errorThrown?(error)
+            log.error(error)
+            return nil
+        }
         return reminder
     }
 

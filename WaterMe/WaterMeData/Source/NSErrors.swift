@@ -1,0 +1,113 @@
+//
+//  NSErrors.swift
+//  WaterMeData
+//
+//  Created by Jeffrey Bergier on 11/04/2018.
+//  Copyright © 2018 Saturday Apps.
+//
+//  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
+//
+//  WaterMe is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  WaterMe is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
+//
+
+import Foundation
+
+extension NSError {
+
+    private static let kDomain = "WaterMe"
+
+    public convenience init(reminderVesselPropertyChangeUnknownCaseErrorWithChangedKeyPaths keypaths: [String]) {
+        let code = 1001
+        let message = "Unhandled case for ReminderVessel property changes."
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message,
+            NSDebugDescriptionErrorKey : keypaths
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    public convenience init(reminderChangeFiredAfterListOrParentVesselWereSetToNil: Bool?) {
+        let code = 1002
+        let message = "Reminder change fired after list or parent vessel were set to NIL"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    public convenience init(collectionViewBatchUpdateException exception: NSException) {
+        let code = 1003
+        let message = exception.reason ?? "CollectionView Threw Exception During Batch Update"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    public convenience init(errorFromSanityCheckFailureReason reason: ItemAndSectionSanityCheckFailureReason) {
+        switch reason {
+        case .modifiedSectionMismatch(let section, let cvCount, let dataCount, let insCount, let delsCount):
+            self.init(collectionViewSanityCheckFailedForModifiedSection: section, cvCount: cvCount, dataCount: dataCount, ins: insCount, dels: delsCount)
+        case .unmodifiedSectionMismatch(let section, let cvCount, let dataCount):
+            self.init(collectionViewSanityCheckFailedForUnmodifiedSection: section, cvCount: cvCount, dataCount: dataCount)
+        case .sectionCountMismatch(let cvSectionCount, let dataSectionCount):
+            self.init(collectionViewSanityCheckFailedForMismatchedSectionCount: cvSectionCount, dataSectionCount: dataSectionCount)
+        }
+    }
+
+    private convenience init(collectionViewSanityCheckFailedForModifiedSection section: Int, cvCount: Int, dataCount: Int, ins: Int, dels: Int) {
+        let code = 1004
+        let message = "CollectionView SanityCheck failed for Modifications in Section: \(section), cvCount: \(cvCount), dataCount: \(dataCount), insertions: \(ins), deletions: \(dels)"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    private convenience init(collectionViewSanityCheckFailedForUnmodifiedSection section: Int, cvCount: Int, dataCount: Int) {
+        let code = 1005
+        let message = "CollectionView SanityCheck failed for Unmodified Section: \(section), cvCount: \(cvCount), dataCount: \(dataCount)"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    private convenience init(collectionViewSanityCheckFailedForMismatchedSectionCount cvSectionCount: Int, dataSectionCount: Int) {
+        let code = 1006
+        let message = "SanityCheck failed for Mismatched CollectionView Section Count: \(cvSectionCount), Data Section Count: \(dataSectionCount)"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    internal convenience init(dataForSectionWasNilInNumberOfItemsInSection section: Reminder.Section) {
+        let code = 1007
+        let message = "No Data was Present when getting numberOfItemsInSection for Section: \(section)"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    internal convenience init(dataForSectionWasNilInReminderAtIndexPath indexPath: IndexPath) {
+        let code = 1008
+        let message = "No Data was Present when getting reminderAtIndexPath for IndexPath: \(String(describing: indexPath))"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+}
