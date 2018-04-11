@@ -36,13 +36,6 @@ enum Analytics {
         case stpReloadBackup = "Event.STPReload.Backup"
     }
 
-    // MARK: Errors
-
-    enum Error: String {
-        case emojiLoadFail = "Error.EmojiAlt.Failed"
-        case realmError = "Error.Realm"
-    }
-
     // MARK: CRUD Operations
 
     enum CRUD_Op_R: String {
@@ -136,7 +129,13 @@ enum Analytics {
     // MARK: Logging Functions
 
     static func log(error: Swift.Error) {
+        let error = error as NSError
         Crashlytics.sharedInstance().recordError(error)
+        Answers.logCustomEvent(withName: "Error.ReportedNonFatal", customAttributes: [
+            "errorDomain" : error.domain,
+            "errorCode" : error.code,
+            "errorDescription" : error.localizedDescription
+            ])
     }
 
     static func log(viewOperation op: VCViewOperation) {

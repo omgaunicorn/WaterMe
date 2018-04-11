@@ -110,4 +110,13 @@ extension NSError {
         ]
         self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
     }
+
+    public convenience init(unableToLoadEmojiFont _: Bool) {
+        let code = 1009
+        let message = "Unable to load EmojiFont"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
 }
