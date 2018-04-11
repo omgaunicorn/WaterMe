@@ -128,14 +128,15 @@ enum Analytics {
 
     // MARK: Logging Functions
 
-    static func log(error: Swift.Error) {
+    static func log(error: Error) {
         let error = error as NSError
-        Crashlytics.sharedInstance().recordError(error)
-        Answers.logCustomEvent(withName: "Error.ReportedNonFatal", customAttributes: [
+        let userInfo: [String : Any] = [
             "errorDomain" : error.domain,
-            "errorCode" : error.code,
+            "errorCode" : NSNumber(value: error.code),
             "errorDescription" : error.localizedDescription
-            ])
+        ]
+        Answers.logCustomEvent(withName: "Error.ReportedNonFatal", customAttributes: userInfo)
+        Crashlytics.sharedInstance().recordError(error)
     }
 
     static func log(viewOperation op: VCViewOperation) {
