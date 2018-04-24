@@ -130,9 +130,9 @@ enum Analytics {
 
     static func log(error: Error) {
         let error = error as NSError
-        let userInfo: [String : Any] = [
+        let userInfo: [String : String] = [
             "errorDomain" : error.domain,
-            "errorCode" : NSNumber(value: error.code),
+            "errorCode" : String(describing: error.code), // Crashlytics interprets this incorrectly if passed as NSNumber
             "errorDescription" : error.localizedDescription
         ]
         Answers.logCustomEvent(withName: "Error.ReportedNonFatal", customAttributes: userInfo)
