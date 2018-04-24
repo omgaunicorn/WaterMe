@@ -38,14 +38,17 @@ open class ReminderGedeg: NSObject {
     private(set) var reminders: [Reminder.Section : AnyRealmCollection<Reminder>] = [:]
     public var lastError: RealmError?
 
+    var allSectionsFinishedLoading: Bool {
+        return self.reminders.count == self.tokens.count
+    }
+
     public init?(basicRC: BasicController?) {
         super.init()
         guard let basicRC = basicRC else { return nil }
         self.updateBatcher.batchFired = { [unowned self] changes in
             self.batchedUpdates(ins: changes.ins, dels: changes.dels, mods: changes.mods)
         }
-        for i in 0 ..< Reminder.Section.count {
-            let section = Reminder.Section(rawValue: i)!
+        for section in Reminder.Section.all {
             let result = basicRC.reminders(in: section, sorted: .nextPerformDate, ascending: true)
             switch result {
             case .success(let reminders):
@@ -61,7 +64,7 @@ open class ReminderGedeg: NSObject {
         switch changes {
         case .initial(let data):
             self.reminders[section] = data
-            if self.reminders.count == self.tokens.count {
+            if self.allSectionsFinishedLoading == true {
                 self.allDataReady()
             }
         case .update(_, deletions: let del, insertions: let ins, modifications: let mod):
@@ -77,7 +80,21 @@ open class ReminderGedeg: NSObject {
     open func batchedUpdates(ins: [IndexPath], dels: [IndexPath], mods: [IndexPath]) { }
 
     public var numberOfSections: Int {
-        return self.reminders.count
+        // if we haven't finished loading data, always return 0
+        guard self.allSectionsFinishedLoading == true else {
+            return 0
+        }
+        // do a sanity check just for Crashlytics
+        // check if the reminders.count matches the number of sections
+        // if this sanity check fails, something unexpected has happened
+        let reminderCount = self.reminders.count
+        if reminderCount != Reminder.Section.count {
+            let error = NSError(numberOfSectionsMistmatch: nil)
+            assertionFailure(String(describing: error))
+            BasicController.errorThrown?(error)
+            log.error(error)
+        }
+        return reminderCount
     }
 
     public func numberOfItems(inSection section: Int) -> Int {
@@ -89,7 +106,7 @@ open class ReminderGedeg: NSObject {
         }
         // BUGFIX: http://crashes.to/s/12c6e5bfcd3
         // If the collectionview is too hasty when loading data
-        // the data could still be NIl
+        // the data could still be NIL
         // previously this was force unwrapped
         guard let count = self.reminders[section]?.count else {
             let error = NSError(dataForSectionWasNilInNumberOfItemsInSection: section)
@@ -110,7 +127,7 @@ open class ReminderGedeg: NSObject {
         }
         // BUGFIX: http://crashes.to/s/c5852da2c75
         // If the collectionview is too hasty when loading data
-        // the data could still be NIl
+        // the data could still be NIL
         // previously this was force unwrapped
         guard let reminder = self.reminders[section]?[indexPath.row] else {
             let error = NSError(dataForSectionWasNilInReminderAtIndexPath: indexPath)
