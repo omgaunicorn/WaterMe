@@ -314,7 +314,7 @@ enum Style {
         }
         static func emojiFont(ofSize size: CGFloat) -> UIFont {
             guard let font = UIFont(name: "AppleColorEmoj2", size: size) else {
-                let error = NSError(unableToLoadEmojiFont: true)
+                let error = NSError(unableToLoadEmojiFont: nil)
                 assertionFailure(String(describing: error))
                 log.error(error)
                 Analytics.log(error: error)
