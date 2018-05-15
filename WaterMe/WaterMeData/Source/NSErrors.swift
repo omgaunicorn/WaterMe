@@ -23,7 +23,7 @@
 
 import Foundation
 
-extension NSError {
+public extension NSError {
 
     private static let kDomain = "WaterMe"
 
@@ -120,9 +120,27 @@ extension NSError {
         self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
     }
 
-    public convenience init(numberOfSectionsMistmatch _: Bool?) {
+    internal convenience init(numberOfSectionsMistmatch _: Bool?) {
         let code = 1010
         let message = "Total number of Sections did not match number of sections of loaded data."
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    public convenience init(underlyingObjectInvalidated _: Bool?) {
+        let code = 1011
+        let message = "The underlying REALM object was invalidated and was tried to be used again. This should not happen."
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
+
+    internal convenience init(outOfBoundsRowAtIndexPath indexPath: IndexPath) {
+        let code = 1012
+        let message = "Data requested out of bounds for IndexPath: \(String(describing: indexPath))"
         let userInfo: [String : Any] = [
             NSLocalizedFailureReasonErrorKey : message
         ]

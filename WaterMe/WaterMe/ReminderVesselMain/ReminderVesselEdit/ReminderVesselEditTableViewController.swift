@@ -133,7 +133,19 @@ class ReminderVesselEditTableViewController: UITableViewController {
         case .photo:
             return 1
         case .reminders:
-            return self.remindersData?.count ?? 0
+            // FIXME: Crasher Workaround - http://crashes.to/s/44d5e5cef85
+            // this was sometimes causing a crash because the underlying object was deleted
+            // But in reality the underlying object should always be set to NIL if it gets deleted
+            let data = self.remindersData
+            let invalidated = data?.isInvalidated ?? false
+            guard invalidated == false else {
+                let error = NSError(underlyingObjectInvalidated: nil)
+                assertionFailure(String(describing: error))
+                log.error(error)
+                Analytics.log(error: error)
+                return 0
+            }
+            return data?.count ?? 0
         }
     }
     

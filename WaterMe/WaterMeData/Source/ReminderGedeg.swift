@@ -125,11 +125,26 @@ open class ReminderGedeg: NSObject {
             log.error(message)
             return nil
         }
+
+        let reminders = self.reminders
+        let idx = indexPath.row
+
+        // FIXME: Crasher Workaround - http://crashes.to/s/ba8c0f6c9ad
+        // Sometimes this method is called when an index out of bounds.
+        // This should not happen, but this check works around it.
+        guard reminders.count > idx else {
+            let error = NSError(outOfBoundsRowAtIndexPath: indexPath)
+            assertionFailure(String(describing: error))
+            BasicController.errorThrown?(error)
+            log.error(error)
+            return nil
+        }
+
         // BUGFIX: http://crashes.to/s/c5852da2c75
         // If the collectionview is too hasty when loading data
         // the data could still be NIL
         // previously this was force unwrapped
-        guard let reminder = self.reminders[section]?[indexPath.row] else {
+        guard let reminder = reminders[section]?[idx] else {
             let error = NSError(dataForSectionWasNilInReminderAtIndexPath: indexPath)
             assertionFailure(String(describing: error))
             BasicController.errorThrown?(error)
