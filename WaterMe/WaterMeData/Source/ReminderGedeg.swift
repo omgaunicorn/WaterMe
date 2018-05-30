@@ -127,12 +127,24 @@ open class ReminderGedeg: NSObject {
         }
 
         let reminders = self.reminders
-        let idx = indexPath.row
+
+        // BUGFIX: http://crashes.to/s/c5852da2c75
+        // If the collectionview is too hasty when loading data
+        // the data could still be NIL
+        // previously this was force unwrapped
+        guard let data = reminders[section] else {
+            let error = NSError(dataForSectionWasNilInReminderAtIndexPath: indexPath)
+            assertionFailure(String(describing: error))
+            BasicController.errorThrown?(error)
+            log.error(error)
+            return nil
+        }
 
         // FIXME: Crasher Workaround - http://crashes.to/s/ba8c0f6c9ad
         // Sometimes this method is called when an index out of bounds.
         // This should not happen, but this check works around it.
-        guard reminders.count > idx else {
+        let row = indexPath.row
+        guard data.count > row else {
             let error = NSError(outOfBoundsRowAtIndexPath: indexPath)
             assertionFailure(String(describing: error))
             BasicController.errorThrown?(error)
@@ -140,18 +152,7 @@ open class ReminderGedeg: NSObject {
             return nil
         }
 
-        // BUGFIX: http://crashes.to/s/c5852da2c75
-        // If the collectionview is too hasty when loading data
-        // the data could still be NIL
-        // previously this was force unwrapped
-        guard let reminder = reminders[section]?[idx] else {
-            let error = NSError(dataForSectionWasNilInReminderAtIndexPath: indexPath)
-            assertionFailure(String(describing: error))
-            BasicController.errorThrown?(error)
-            log.error(error)
-            return nil
-        }
-        return reminder
+        return data[row]
     }
 
     private var tokens: [NotificationToken] = []
