@@ -313,16 +313,30 @@ enum Style {
             return UIFont.systemFont(ofSize: 14)
         }
         static func emojiFont(ofSize size: CGFloat) -> UIFont {
-            guard let font = UIFont(name: "AppleColorEmoj2", size: size) else {
+            // find the cached font
+            if let cachedFont = cachedEmojiFontWithSize[size] {
+                return cachedFont
+            }
+
+            // if its not found, make a new font, cache it and return it
+            // make a new font
+            let font: UIFont
+            if let _font = UIFont(name: "AppleColorEmoj2", size: size) {
+                font = _font
+            } else {
                 let error = NSError(unableToLoadEmojiFont: nil)
-                assertionFailure(String(describing: error))
                 log.error(error)
                 Analytics.log(error: error)
-                return UIFont.systemFont(ofSize: size)
+                font = UIFont.systemFont(ofSize: size)
             }
+            // cache it
+            cachedEmojiFontWithSize[size] = font
+            // return it
             return font
         }
     }
+
+    fileprivate static var cachedEmojiFontWithSize: [CGFloat : UIFont] = [:]
     
     enum Color {
         static var textSecondary: UIColor {

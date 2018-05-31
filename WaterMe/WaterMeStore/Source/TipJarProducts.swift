@@ -30,9 +30,10 @@ public struct TipJarProducts {
     public let large: SKProduct
 
     internal init?(products: [SKProduct]) {
-        let _small = products.first(where: { $0.productIdentifier == PrivateKeys.kConsumableTipJarSmall })
-        let _medium = products.first(where: { $0.productIdentifier == PrivateKeys.kConsumableTipJarMedium })
-        let _large = products.first(where: { $0.productIdentifier == PrivateKeys.kConsumableTipJarLarge })
+        guard let keys = PrivateKeys.kConsumableTipJar else { return nil }
+        let _small = products.first(where: { $0.productIdentifier == keys.small })
+        let _medium = products.first(where: { $0.productIdentifier == keys.medium })
+        let _large = products.first(where: { $0.productIdentifier == keys.large })
         guard let small = _small, let medium = _medium, let large = _large else { return nil }
         self.small = small
         self.medium = medium
@@ -45,11 +46,16 @@ internal class TipJarProductRequester: NSObject, SKProductsRequestDelegate {
     private var completion: ((TipJarProducts?) -> Void)?
 
     internal func fetchTipJarProducts(completion: @escaping (TipJarProducts?) -> Void) {
+        guard let keys = PrivateKeys.kConsumableTipJar else {
+            completion(nil)
+            return
+        }
+
         self.completion = completion
         let request = SKProductsRequest(productIdentifiers: [
-            PrivateKeys.kConsumableTipJarSmall,
-            PrivateKeys.kConsumableTipJarMedium,
-            PrivateKeys.kConsumableTipJarLarge
+            keys.small,
+            keys.medium,
+            keys.large
             ])
         request.delegate = self
         request.start()

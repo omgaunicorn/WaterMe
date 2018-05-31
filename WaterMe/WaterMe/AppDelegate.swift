@@ -124,9 +124,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         // configure Crashlytics
-        #if RELEASE
-        Crashlytics.start(withAPIKey: WaterMeData.PrivateKeys.kFrabicAPIKey)
-        #endif
+        if let key = WaterMeData.PrivateKeys.kFrabicAPIKey {
+            Crashlytics.start(withAPIKey: key)
+        }
 
         // configure my notification delegate
         UNUserNotificationCenter.current().delegate = self.notificationUIDelegate

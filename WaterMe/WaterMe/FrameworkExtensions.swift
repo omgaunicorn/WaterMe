@@ -68,8 +68,12 @@ extension UIApplication {
     }
 
     func openWriteReviewPage(completion: ((Bool) -> Void)?) {
+        guard let url = PrivateKeys.kReviewAppURL else {
+            completion?(false)
+            return
+        }
         Analytics.log(viewOperation: .openAppStore)
-        self.open(PrivateKeys.kReviewAppURL, options: [:], completionHandler: completion)
+        self.open(url, options: [:], completionHandler: completion)
     }
 }
 

@@ -228,7 +228,12 @@ extension SettingsTableViewController {
 
 extension URLSession {
     func downloadAvatar(completion: @escaping (ReminderVessel.Icon?) -> Void) {
-        let request = URLRequest(url: PrivateKeys.kAvatarURL)
+        guard let kAvatarURL = PrivateKeys.kAvatarURL else {
+            log.error("PrivateKeys.kAvatarURL was NIL")
+            completion(nil)
+            return
+        }
+        let request = URLRequest(url: kAvatarURL)
         let task = self.dataTask(with: request) { data, response, error in
             guard
                 error == nil,
