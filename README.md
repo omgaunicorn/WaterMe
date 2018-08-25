@@ -68,10 +68,9 @@ I am happy to have others contribute to WaterMe. Because WaterMe is a shipping a
 1. **Don't** break any App Store rules in your changes.
 1. **Don't** add a new Cocoapod or other third party code/assets unless its been discussed.
 
-## Top Issues
+## Check Existing Issues
 
-- [Feature Request: Add View Plant Image Screen enhancement](https://github.com/jeffreybergier/WaterMe2/issues/1)
-- [Feature Request: Set Last Water Date When Adding New Reminder](https://github.com/jeffreybergier/WaterMe2/issues/2)
+- [Existing Issues for WaterMe](https://github.com/jeffreybergier/WaterMe2/issues)
 
 ## How to Clone and Run
 
