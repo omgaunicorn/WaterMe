@@ -27,7 +27,7 @@ import UIKit
 extension UIAlertController {
     
     enum EmojiPhotoChoice {
-        case photos, camera, emoji, error(UIViewController)
+        case photos, camera, emoji, viewCurrentPhoto, error(UIViewController)
     }
         
     class var cameraLocalizedString: String {
@@ -39,11 +39,19 @@ extension UIAlertController {
         }
     }
     
-    class func emojiPhotoActionSheet(completionHandler: @escaping (EmojiPhotoChoice) -> Void) -> UIAlertController {
-        let alertVC = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        let emoji = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleEmoji, style: .default) { _ in completionHandler(.emoji) }
-        let photo = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitlePhotos, style: .default) { _ in completionHandler(.photos) }
-        let cancel = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleCancel, style: .cancel, handler: nil)
+    class func emojiPhotoActionSheet(withAlreadyChosenImage alreadyChosenImage: Bool,
+                                     completionHandler: @escaping (EmojiPhotoChoice) -> Void) -> UIAlertController
+    {
+        let message = alreadyChosenImage ?
+            UIAlertController.LocalizedString.titleNewEmojiPhotoExistingPhoto :
+            UIAlertController.LocalizedString.titleNewEmojiPhoto
+        let alertVC = UIAlertController(title: nil, message: message, preferredStyle: .actionSheet)
+        let emoji = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleEmoji,
+                                  style: .default) { _ in completionHandler(.emoji) }
+        let photo = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitlePhotos,
+                                  style: .default) { _ in completionHandler(.photos) }
+        let cancel = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleCancel,
+                                   style: .cancel, handler: nil)
         
         alertVC.addAction(emoji)
         let front = UIImagePickerController.isCameraDeviceAvailable(.front)
@@ -64,6 +72,11 @@ extension UIAlertController {
             alertVC.addAction(camera)
         }
         alertVC.addAction(photo)
+        if alreadyChosenImage {
+            let photoViewer = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleViewPhoto,
+                                            style: .default) { _ in completionHandler(.viewCurrentPhoto) }
+            alertVC.addAction(photoViewer)
+        }
         alertVC.addAction(cancel)
         return alertVC
     }

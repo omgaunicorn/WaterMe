@@ -57,8 +57,25 @@ public extension ReminderVessel {
             let resized = cropped.resize(toTargetSize: reducedSize)
             self = .image(resized)
         }
+
+        public var image: UIImage? {
+            switch self {
+            case .image(let image):
+                return image
+            case .emoji:
+                return nil
+            }
+        }
+
+        public var emoji: String? {
+            switch self {
+            case .image:
+                return nil
+            case .emoji(let string):
+                return string
+            }
+        }
     }
-    
 }
 
 internal extension ReminderVessel.Icon {

@@ -13,6 +13,7 @@ PODS:
   - RealmSwift (3.7.6):
     - Realm (= 3.7.6)
   - Result (4.0.0)
+  - SimpleImageViewer (1.1.1)
   - WaterMeData (1.0.0):
     - RealmSwift
     - Result
@@ -33,6 +34,7 @@ DEPENDENCIES:
   - RealmSwift (~> 3.7.6)
   - Result
   - Result (~> 4.0.0)
+  - SimpleImageViewer (~> 1.1.1)
   - WaterMeData (from `WaterMeData`)
   - WaterMeStore (from `WaterMeStore`)
   - XCGLogger
@@ -48,6 +50,7 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - Result
+    - SimpleImageViewer
     - XCGLogger
 
 EXTERNAL SOURCES:
@@ -65,10 +68,11 @@ SPEC CHECKSUMS:
   Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
   RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
+  SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
   WaterMeData: 825933d3d46c919e74802e925c209e8bec928664
   WaterMeStore: 93bd5273c31f719e2d85889c1a0ad3b528970a10
   XCGLogger: 4fc1bc0bdd5828cb8dc8da7a843536cda1bea8f3
 
-PODFILE CHECKSUM: 6c13d14f56371028878d998a1e72ad253ba3873d
+PODFILE CHECKSUM: 2be494810c6ff8139f179a7633d26d4deefdd380
 
 COCOAPODS: 1.5.3
