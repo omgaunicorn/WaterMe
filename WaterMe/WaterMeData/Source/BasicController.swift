@@ -92,6 +92,9 @@ public class BasicController {
             realmConfig.fileURL = type(of: self).localRealmFile
         case .sync(let user):
             let url = user.realmURL(withAppName: "WaterMeBasic")
+//            user.configuration(realmURL: url,
+//                               fullSynchronization: true,
+//                               enableSSLValidation: true)
             realmConfig.syncConfiguration = SyncConfiguration(user: user, realmURL: url, enableSSLValidation: true)
         }
         self.config = realmConfig
