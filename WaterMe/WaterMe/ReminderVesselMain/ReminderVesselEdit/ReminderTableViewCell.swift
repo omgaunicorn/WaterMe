@@ -49,7 +49,7 @@ class ReminderTableViewCell: UITableViewCell {
         
         // do stuff that is case specific
         switch reminder.kind {
-        case .water, .fertilize, .trim:
+        case .water, .fertilize, .trim, .mist:
             self.bottomLabel?.isHidden = true
         case .move(let location):
             let style: Style = location != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled

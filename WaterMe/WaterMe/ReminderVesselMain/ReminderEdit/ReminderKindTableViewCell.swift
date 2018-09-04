@@ -55,6 +55,8 @@ extension Reminder.Kind {
             return LocalizedString.fertilizeLong
         case .trim:
             return LocalizedString.trimLong
+        case .mist:
+            return LocalizedString.mistLong
         case .move:
             return LocalizedString.moveLong
         case .other:
@@ -69,12 +71,15 @@ extension Reminder.Kind {
             return LocalizedString.fertilizeShort
         case .trim:
             return LocalizedString.trimShort
+        case .mist:
+            return LocalizedString.mistShort
         case .move:
             return LocalizedString.moveShort
         case .other:
             return LocalizedString.other
         }
     }
+    // swiftlint:disable:next cyclomatic_complexity
     fileprivate func isSameKind(as other: Reminder.Kind) -> Bool {
         switch self {
         case .water:
@@ -85,6 +90,9 @@ extension Reminder.Kind {
             return true
         case .trim:
             guard case .trim = other else { return false }
+            return true
+        case .mist:
+            guard case .mist = other else { return false }
             return true
         case .move:
             guard case .move = other else { return false }
@@ -103,8 +111,10 @@ extension Reminder.Kind {
         case 2:
             self = .trim
         case 3:
-            self = .move(location: nil)
+            self = .mist
         case 4:
+            self = .move(location: nil)
+        case 5:
             self = .other(description: nil)
         default:
             fatalError("Too Many Rows in Section")

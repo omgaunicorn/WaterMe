@@ -174,25 +174,31 @@ extension Reminder.Kind {
                               comment: "Reminder Kind: Long Description: This type reminds the user to water their plant.")
         static let fertilizeLong =
             NSLocalizedString("Fertilize Soil",
-                              comment: "Reminder Kind: Long Description:  This type reminds the user to fertilize their plant.")
+                              comment: "Reminder Kind: Long Description: This type reminds the user to fertilize their plant.")
         static let trimLong =
             NSLocalizedString("Trim Plant",
-                              comment: "Reminder Kind: Long Description:  This type reminds the user to trim their plant.")
+                              comment: "Reminder Kind: Long Description: This type reminds the user to trim their plant.")
+        static let mistLong =
+            NSLocalizedString("Mist Plant",
+                              comment: "Reminder Kind: Long Description: This type reminds the user to mist their plant.")
         static let moveLong =
             NSLocalizedString("Move Plant",
-                              comment: "Reminder Kind: Long Description:  This type reminds the user to move their plant.")
+                              comment: "Reminder Kind: Long Description: This type reminds the user to move their plant.")
         static let waterShort =
             NSLocalizedString("Water",
                               comment: "Reminder Kind: Short Description: This type reminds the user to water their plant.")
         static let fertilizeShort =
             NSLocalizedString("Fertilize",
-                              comment: "Reminder Kind: Short Description:  This type reminds the user to fertilize their plant.")
+                              comment: "Reminder Kind: Short Description: This type reminds the user to fertilize their plant.")
         static let trimShort =
             NSLocalizedString("Trim",
-                              comment: "Reminder Kind: Short Description:  This type reminds the user to trim their plant.")
+                              comment: "Reminder Kind: Short Description: This type reminds the user to trim their plant.")
+        static let mistShort =
+            NSLocalizedString("Mist",
+                              comment: "Reminder Kind: Short Description: This type reminds the user to mist their plant.")
         static let moveShort =
             NSLocalizedString("Move",
-                              comment: "Reminder Kind: Short Description:  This type reminds the user to move their plant.")
+                              comment: "Reminder Kind: Short Description: This type reminds the user to move their plant.")
         static let other =
             NSLocalizedString("Other",
                               comment: "Reminder Kind: This type reminds the user to do something the user entered.")

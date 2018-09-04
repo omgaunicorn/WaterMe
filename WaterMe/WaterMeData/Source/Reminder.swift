@@ -32,8 +32,8 @@ public class Reminder: Object {
     public static let defaultInterval: Int = 7
     
     public enum Kind {
-        case water, fertilize, trim, move(location: String?), other(description: String?)
-        public static let count = 5
+        case water, fertilize, trim, mist, move(location: String?), other(description: String?)
+        public static let count = 6
     }
     
     // MARK: Public Interface
@@ -76,6 +76,7 @@ fileprivate extension Reminder {
     
     fileprivate static let kCaseWaterValue = "kReminderKindCaseWaterValue"
     fileprivate static let kCaseTrimValue = "kReminderKindCaseTrimValue"
+    fileprivate static let kCaseMistValue = "kReminderKindCaseMistValue"
     fileprivate static let kCaseFertilizeValue = "kReminderKindCaseFertilizeValue"
     fileprivate static let kCaseMoveValue = "kReminderKindCaseMoveValue"
     fileprivate static let kCaseOtherValue = "kReminderKindCaseOtherValue"
@@ -88,6 +89,8 @@ fileprivate extension Reminder {
             self.kindString = type(of: self).kCaseFertilizeValue
         case .trim:
             self.kindString = type(of: self).kCaseTrimValue
+        case .mist:
+            self.kindString = type(of: self).kCaseMistValue
         case .move(let location):
             self.kindString = type(of: self).kCaseMoveValue
             // check for new values to prevent being destructive
@@ -111,6 +114,8 @@ fileprivate extension Reminder {
             return .fertilize
         case type(of: self).kCaseTrimValue:
             return .trim
+        case type(of: self).kCaseMistValue:
+            return .mist
         case type(of: self).kCaseMoveValue:
             let description = self.descriptionString
             return .move(location: description)
@@ -133,7 +138,7 @@ extension Reminder: UICompleteCheckable {
     
     public var isUIComplete: [Error] {
         switch self.kind {
-        case .fertilize, .water, .trim:
+        case .fertilize, .water, .trim, .mist:
             return []
         case .move(let description):
             return description?.leadingTrailingWhiteSpaceTrimmedNonEmptyString == nil ? [.missingMoveLocation] : []

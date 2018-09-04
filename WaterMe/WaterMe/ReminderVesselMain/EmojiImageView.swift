@@ -146,6 +146,9 @@ class EmojiImageView: UIView {
             image = #imageLiteral(resourceName: "ReminderKindFertilize")
         case .trim:
             image = #imageLiteral(resourceName: "ReminderKindTrim")
+        case .mist:
+            // TODO: Add Image for Mist
+            image = nil
         case .move:
             image = #imageLiteral(resourceName: "ReminderKindMove")
         case .other:
