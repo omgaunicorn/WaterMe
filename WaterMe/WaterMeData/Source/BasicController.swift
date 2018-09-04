@@ -196,7 +196,7 @@ public class BasicController {
     public func newReminderVessel(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, reminders: [Reminder]? = nil) -> Result<ReminderVessel, RealmError> {
         return self.realm.flatMap() { realm in
             let v = ReminderVessel()
-            if let displayName = displayName?.leadingTrailingWhiteSpaceTrimmedNonEmptyString { // make sure the string is not empty
+            if let displayName = displayName?.nonEmptyString { // make sure the string is not empty
                 v.displayName = displayName
             }
             if let icon = icon {
@@ -221,7 +221,7 @@ public class BasicController {
             realm.beginWrite()
             if let displayName = displayName {
                 // make sure the string is not empty. If it is empty, set it to NIL
-                vessel.displayName = displayName.leadingTrailingWhiteSpaceTrimmedNonEmptyString
+                vessel.displayName = displayName.nonEmptyString
             }
             if let icon = icon {
                 vessel.icon = icon
@@ -255,7 +255,7 @@ public class BasicController {
             }
             if let note = note {
                 // make sure the string is not empty. If it is empty, set it to blank string
-                reminder.note = note.leadingTrailingWhiteSpaceTrimmedNonEmptyString
+                reminder.note = note.nonEmptyString
             }
             // trigger bloops so notifications fire
             reminder.vessel?.bloop = !(reminder.vessel?.bloop ?? true)

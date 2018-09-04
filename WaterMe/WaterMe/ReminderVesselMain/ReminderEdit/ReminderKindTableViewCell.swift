@@ -59,8 +59,8 @@ extension Reminder.Kind {
             return LocalizedString.mistLong
         case .move:
             return LocalizedString.moveLong
-        case .other:
-            return LocalizedString.other
+        case .other(let description):
+            return description ?? LocalizedString.other
         }
     }
     var localizedShortString: String {

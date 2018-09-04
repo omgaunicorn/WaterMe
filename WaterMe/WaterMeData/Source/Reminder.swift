@@ -93,16 +93,10 @@ fileprivate extension Reminder {
             self.kindString = type(of: self).kCaseMistValue
         case .move(let location):
             self.kindString = type(of: self).kCaseMoveValue
-            // check for new values to prevent being destructive
-            if let location = location {
-                self.descriptionString = location
-            }
+            self.descriptionString = location?.nonEmptyString
         case .other(let description):
             self.kindString = type(of: self).kCaseOtherValue
-            // check for new values to prevent being destructive
-            if let description = description {
-                self.descriptionString = description
-            }
+            self.descriptionString = description?.nonEmptyString
         }
     }
     
@@ -117,10 +111,10 @@ fileprivate extension Reminder {
         case type(of: self).kCaseMistValue:
             return .mist
         case type(of: self).kCaseMoveValue:
-            let description = self.descriptionString
+            let description = self.descriptionString?.nonEmptyString
             return .move(location: description)
         case type(of: self).kCaseOtherValue:
-            let description = self.descriptionString
+            let description = self.descriptionString?.nonEmptyString
             return .other(description: description)
         default:
             fatalError("Reminder.Kind: Invalid Case String Key")
@@ -141,9 +135,9 @@ extension Reminder: UICompleteCheckable {
         case .fertilize, .water, .trim, .mist:
             return []
         case .move(let description):
-            return description?.leadingTrailingWhiteSpaceTrimmedNonEmptyString == nil ? [.missingMoveLocation] : []
+            return description?.nonEmptyString == nil ? [.missingMoveLocation] : []
         case .other(let description):
-            return description?.leadingTrailingWhiteSpaceTrimmedNonEmptyString == nil ? [.missingOtherDescription] : []
+            return description?.nonEmptyString == nil ? [.missingOtherDescription] : []
         }
     }
 }
