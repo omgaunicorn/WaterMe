@@ -49,7 +49,8 @@ class ReminderUserNotificationController {
             }
             // generate notification object requests
             let requests = type(of: self).notificationRequests(from: reminders)
-            Analytics.log(event: Analytics.NotificationPermission.scheduleSucceeded, extras: Analytics.NotificationPermission.extras(forCount: requests.count))
+            Analytics.log(event: Analytics.NotificationPermission.scheduleSucceeded,
+                          extras: Analytics.NotificationPermission.extras(forCount: requests.count))
             guard requests.isEmpty == false else {
                 log.debug("No notifications to schedule")
                 return
