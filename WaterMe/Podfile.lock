@@ -1,39 +1,42 @@
 PODS:
-  - Cheers (2.0.2)
-  - Crashlytics (3.9.3):
-    - Fabric (~> 1.7.2)
-  - CropViewController (2.3.6)
-  - Fabric (1.7.6)
+  - Cheers (2.1.0)
+  - Crashlytics (3.10.7):
+    - Fabric (~> 1.7.11)
+  - CropViewController (2.3.8)
+  - Fabric (1.7.11)
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
-  - Realm (3.0.2):
-    - Realm/Headers (= 3.0.2)
-  - Realm/Headers (3.0.2)
-  - RealmSwift (3.0.2):
-    - Realm (= 3.0.2)
-  - Result (3.2.4)
+  - Realm (3.7.6):
+    - Realm/Headers (= 3.7.6)
+  - Realm/Headers (3.7.6)
+  - RealmSwift (3.7.6):
+    - Realm (= 3.7.6)
+  - Result (4.0.0)
   - WaterMeData (1.0.0):
-    - RealmSwift (~> 3.0.2)
-    - Result (~> 3.2.2)
-    - XCGLogger (~> 6.0.1)
+    - RealmSwift
+    - Result
+    - XCGLogger
   - WaterMeStore (1.0.0):
-    - Result (~> 3.2.2)
-    - XCGLogger (~> 6.0.1)
-  - XCGLogger (6.0.2):
-    - XCGLogger/Core (= 6.0.2)
-  - XCGLogger/Core (6.0.2):
+    - Result
+    - XCGLogger
+  - XCGLogger (6.0.4):
+    - XCGLogger/Core (= 6.0.4)
+  - XCGLogger/Core (6.0.4):
     - ObjcExceptionBridging
 
 DEPENDENCIES:
-  - Cheers (~> 2.0.0)
-  - Crashlytics (~> 3.9.3)
+  - Cheers (~> 2.1.0)
+  - Crashlytics (~> 3.10.7)
   - CropViewController (~> 2.3.6)
-  - RealmSwift (~> 3.0.2)
-  - Result (~> 3.2.2)
+  - RealmSwift
+  - RealmSwift (~> 3.7.6)
+  - Result
+  - Result (~> 4.0.0)
   - WaterMeData (from `WaterMeData`)
   - WaterMeStore (from `WaterMeStore`)
-  - XCGLogger (~> 6.0.1)
+  - XCGLogger
+  - XCGLogger (~> 6.0.4)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -54,18 +57,18 @@ EXTERNAL SOURCES:
     :path: WaterMeStore
 
 SPEC CHECKSUMS:
-  Cheers: 450bd0578e40182c73d813a545379450c9f16a4a
-  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
-  CropViewController: e6d4bd512d15a1709e9ddf71fe7d98ffd05dda0f
-  Fabric: f8d42c893bb187326a7968b62abe55c36a987a46
+  Cheers: 02d6335ac9ceb1ebf678df78d378bc71242a015e
+  Crashlytics: ccaac42660eb9351b9960c0d66106b0bcf99f4fa
+  CropViewController: 7be882b7d3fb3faef48a41924e80f689e9df2514
+  Fabric: f233c9492b3bbc1f04e3882986740f7988a58edb
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
-  Realm: 6f23fd1f178a09342eac21bfa7c2bf4312a7a180
-  RealmSwift: 695393add1b8f9d5fa75dd16e6355cf3935f71e2
-  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  WaterMeData: eca096df6530668bd5c3f3d3fd415af3caf5b5ad
-  WaterMeStore: ef6e382f66e84546d1792fd930863ff817e9241c
-  XCGLogger: c9601cae9a8912de34a58666ba931ed3d624dd31
+  Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
+  RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
+  Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
+  WaterMeData: 825933d3d46c919e74802e925c209e8bec928664
+  WaterMeStore: 93bd5273c31f719e2d85889c1a0ad3b528970a10
+  XCGLogger: 4fc1bc0bdd5828cb8dc8da7a843536cda1bea8f3
 
-PODFILE CHECKSUM: c4f89e1b140a864bc5aae4955970395ae3877b53
+PODFILE CHECKSUM: 6c13d14f56371028878d998a1e72ad253ba3873d
 
-COCOAPODS: 1.5.2
+COCOAPODS: 1.5.3

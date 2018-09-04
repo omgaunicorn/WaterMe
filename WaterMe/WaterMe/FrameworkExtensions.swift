@@ -118,7 +118,7 @@ extension UIBarButtonItem {
     }
     convenience init(localizedDeleteButtonWithTarget target: Any, action: Selector) {
         self.init(title: UIAlertController.LocalizedString.buttonTitleDelete, style: .plain, target: target, action: action)
-        self.tintColor = Style.Color.delete
+        self.tintColor = WaterMe.Style.Color.delete
     }
     convenience init(localizedDoneButtonWithTarget target: Any, action: Selector) {
         self.init(barButtonSystemItem: .done, target: target, action: action)

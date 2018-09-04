@@ -147,7 +147,7 @@ fileprivate extension UIImage {
         var compression: CGFloat = 0.5
         var compressedData: Data?
         while compressedData == nil && compression >= 0 {
-            let _data = UIImageJPEGRepresentation(self, compression)
+            let _data = self.jpegData(compressionQuality: compression)
             compression -= 0.1
             guard let data = _data, data.count < max else { continue }
             compressedData = data

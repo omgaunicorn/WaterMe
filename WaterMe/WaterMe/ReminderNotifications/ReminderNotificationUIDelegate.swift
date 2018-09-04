@@ -103,7 +103,7 @@ extension UNUserNotificationCenter {
                 DispatchQueue.main.async {
                     completion?(preSettings.authorizationStatus.boolValue)
                 }
-            case .notDetermined:
+            case .notDetermined, .provisional:
                 self.requestAuthorization(options: [.alert, .badge, .sound]) { _, error in
                     if let error = error {
                         log.error("Error requesting notification authorization: \(error)")
@@ -125,7 +125,7 @@ extension UNAuthorizationStatus {
         switch self {
         case .authorized:
             return true
-        case .notDetermined, .denied:
+        case .notDetermined, .denied, .provisional:
             return false
         }
     }
