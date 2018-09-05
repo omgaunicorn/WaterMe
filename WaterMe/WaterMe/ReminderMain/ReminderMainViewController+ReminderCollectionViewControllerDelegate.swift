@@ -35,12 +35,32 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         self.plantsBBI.isEnabled = true
     }
 
-    // this produces a warning and it is a really long function
-    // potential for refactor, but its nice how its so contained
     func userDidSelect(reminder: Reminder,
                        from view: UIView,
                        deselectAnimated: @escaping (Bool) -> Void,
                        within viewController: ReminderCollectionViewController)
+    {
+        guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
+        Analytics.log(viewOperation: .reminderVesselTap)
+
+        // prepare information for the alert we're going to present
+        let alert = ReminderSummaryViewController.newVC() { vc in
+            vc.dismiss(animated: true, completion: nil)
+        }
+
+        // configure popover presentation for ipad
+        // popoverPresentationController is NIL on iPhones
+        alert.popoverPresentationController?.sourceView = view
+        alert.popoverPresentationController?.sourceRect = UIAlertController.sourceRect(from: view)
+        alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func __OLD__userDidSelect(reminder: Reminder,
+                              from view: UIView,
+                              deselectAnimated: @escaping (Bool) -> Void,
+                              within viewController: ReminderCollectionViewController)
     {
         guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
         Analytics.log(viewOperation: .reminderVesselTap)
