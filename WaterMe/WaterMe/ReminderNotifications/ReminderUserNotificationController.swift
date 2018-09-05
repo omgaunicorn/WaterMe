@@ -104,7 +104,10 @@ class ReminderUserNotificationController {
 
             // construct the notification
             let _content = UNMutableNotificationContent()
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+            let dateComponents = calendar.userNotificationCompatibleDateComponents(with: reminderTime)
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+            // TODO: remove crasher once I know this is working well
+            precondition(trigger.nextTriggerDate() == reminderTime)
             // shuffle the names so that different plant names show in the notifications
             let plantNames = ReminderValue.uniqueParentPlantNames(from: matches).shuffled()
             // only set the body if there is a trigger. this way a notification won't be shown to the user
@@ -116,6 +119,7 @@ class ReminderUserNotificationController {
             // swiftlint:disable:next force_cast
             let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
             let request = UNNotificationRequest(identifier: reminderTime.description, content: content, trigger: trigger)
+
             return request
         }
 

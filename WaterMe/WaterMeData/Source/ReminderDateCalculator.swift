@@ -47,6 +47,9 @@ public extension Calendar {
         let oneSecondBeforeStartOfPlusOneDay = self.date(byAdding: .second, value: -1, to: startOfPlusOneDay)!
         return oneSecondBeforeStartOfPlusOneDay
     }
+    public func userNotificationCompatibleDateComponents(with date: Date) -> DateComponents {
+        return self.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+    }
 }
 
 enum ReminderDateCalculator {
