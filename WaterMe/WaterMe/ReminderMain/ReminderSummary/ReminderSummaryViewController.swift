@@ -25,7 +25,11 @@ import UIKit
 
 class ReminderSummaryViewController: UIViewController {
 
-    typealias Completion = (UIViewController) -> Void
+    enum Action {
+        case cancel, performReminder, editReminderVessel, editReminder
+    }
+
+    typealias Completion = (Action, UIViewController) -> Void
 
     class func newVC(completion: @escaping Completion) -> UIViewController {
         let sb = UIStoryboard(name: "ReminderSummary", bundle: Bundle(for: self))
@@ -44,49 +48,26 @@ class ReminderSummaryViewController: UIViewController {
         set { _preferredContentSize = newValue }
     }
 
+    private weak var tableViewController: ReminderSummaryTableViewController?
     private var completion: Completion?
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let dest = segue.destination as? ReminderSummaryTableViewController {
+            self.tableViewController = dest
+            dest.delegate = self
+        }
+    }
+}
+
+extension ReminderSummaryViewController: ReminderSummaryTableViewControllerDelegate {
+    func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController) {
+        self.completion?(action, self)
+    }
 }
 
 extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate {
     func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
-        self.completion?(self)
+        self.completion?(.cancel, self)
         return false
     }
-}
-
-class ReminderSummaryPopoverBackgroundView: UIPopoverBackgroundView {
-
-    override static func arrowHeight() -> CGFloat {
-        return 0
-    }
-
-    override static func contentViewInsets() -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    }
-
-    private var _arrowOffset: CGFloat = 0
-    override var arrowOffset: CGFloat {
-        get { return _arrowOffset }
-        set {
-            _arrowOffset = newValue
-            self.setNeedsLayout()
-        }
-    }
-
-    private var _arrowDirection: UIPopoverArrowDirection = .down
-    override var arrowDirection: UIPopoverArrowDirection {
-        get { return _arrowDirection }
-        set {
-            _arrowDirection = newValue
-            self.setNeedsLayout()
-        }
-    }
-
-    override func didMoveToWindow() {
-        super.didMoveToWindow()
-        self.backgroundColor = UIColor.white.withAlphaComponent(0.0)
-        self.alpha = 0.05
-    }
-
 }

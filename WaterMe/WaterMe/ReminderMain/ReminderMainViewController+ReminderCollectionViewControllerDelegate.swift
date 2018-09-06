@@ -43,9 +43,40 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
         Analytics.log(viewOperation: .reminderVesselTap)
 
-        // prepare information for the alert we're going to present
-        let alert = ReminderSummaryViewController.newVC() { vc in
-            vc.dismiss(animated: true, completion: nil)
+        // closure that needs to be executed whenever all the alerts have disappeared
+        let viewDidAppearActions = {
+            deselectAnimated(true)
+            self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+        }
+
+        // need an idenfitier starting now because this is all async
+        // the reminder could be deleted or changed before the user makes a choice
+        let identifier = Reminder.Identifier(reminder: reminder)
+
+        // create the summary view controller
+        let alert = ReminderSummaryViewController.newVC() { action, vc in
+            vc.dismiss(animated: true) {
+                switch action {
+                case .cancel:
+                    viewDidAppearActions()
+                case .editReminder:
+                    self.userChoseEditReminder(with: identifier,
+                                               in: nil,
+                                               basicRC: basicRC,
+                                               completion: viewDidAppearActions)
+                case .editReminderVessel:
+                    self.userChoseEditVessel(withReminderIdentifier: identifier,
+                                             in: nil,
+                                             basicRC: basicRC,
+                                             completion: viewDidAppearActions)
+                case .performReminder:
+                    self.userChosePerformReminder(with: identifier,
+                                                  in: nil,
+                                                  from: view,
+                                                  basicRC: basicRC,
+                                                  completion: viewDidAppearActions)
+                }
+            }
         }
 
         // configure popover presentation for ipad
@@ -105,7 +136,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
     }
 
     private func userChoseEditReminder(with identifier: Reminder.Identifier,
-                                       in _: UIAlertAction,
+                                       in _: UIAlertAction?,
                                        basicRC: BasicController,
                                        completion: (() -> Void)?)
     {
@@ -122,7 +153,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
     }
 
     private func userChoseEditVessel(withReminderIdentifier identifier: Reminder.Identifier,
-                                     in _: UIAlertAction,
+                                     in _: UIAlertAction?,
                                      basicRC: BasicController,
                                      completion: (() -> Void)?)
     {
@@ -139,7 +170,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
     }
 
     private func userChosePerformReminder(with identifier: Reminder.Identifier,
-                                          in _: UIAlertAction,
+                                          in _: UIAlertAction?,
                                           from view: UIView,
                                           basicRC: BasicController,
                                           completion: (() -> Void)?)

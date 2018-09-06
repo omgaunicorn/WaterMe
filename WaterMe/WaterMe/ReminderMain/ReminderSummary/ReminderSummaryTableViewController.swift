@@ -24,7 +24,13 @@
 import UIKit
 import WaterMeData
 
+protocol ReminderSummaryTableViewControllerDelegate: class {
+    func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController)
+}
+
 class ReminderSummaryTableViewController: UITableViewController {
+
+    weak var delegate: ReminderSummaryTableViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +55,37 @@ class ReminderSummaryTableViewController: UITableViewController {
         return tableView.dequeueReusableHeaderFooterView(withIdentifier: TransparentTableViewHeaderFooterView.reuseID)
     }
 
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        let section = Sections(indexPath)
+        switch section {
+        case .imageEmoji:
+            return nil
+        case .actions:
+            return indexPath
+        case .cancel:
+            return indexPath
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = Sections(indexPath)
+        switch section {
+        case .imageEmoji:
+            fatalError()
+        case .actions(let row):
+            switch row {
+            case .editReminder:
+                self.delegate?.userChose(action: .editReminder, within: self)
+            case .editReminderVessel:
+                self.delegate?.userChose(action: .editReminderVessel, within: self)
+            case .performReminder:
+                self.delegate?.userChose(action: .performReminder, within: self)
+            }
+        case .cancel:
+            self.delegate?.userChose(action: .cancel, within: self)
+        }
+    }
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = Sections(indexPath)
         switch section {
@@ -59,21 +96,29 @@ class ReminderSummaryTableViewController: UITableViewController {
             return cell
         case .actions(let row):
             let cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell", for: indexPath) as! ButtonTableViewCell
-            cell.label?.attributedText = NSAttributedString(string: "Do Me Please!",
-                                                            style: .reminderSummaryActionButton)
             switch row {
             case .performReminder:
                 cell.locationInGroup = .top
+                cell.label?.attributedText =
+                    NSAttributedString(string: ReminderMainViewController.LocalizedString.buttonTitleReminderPerform,
+                                       style: .reminderSummaryActionButton)
             case .editReminder:
                 cell.locationInGroup = .middle
+                cell.label?.attributedText =
+                    NSAttributedString(string: UIApplication.LocalizedString.editReminder,
+                                       style: .reminderSummaryActionButton)
             case .editReminderVessel:
                 cell.locationInGroup = .bottom
+                cell.label?.attributedText =
+                    NSAttributedString(string: UIApplication.LocalizedString.editVessel,
+                                       style: .reminderSummaryActionButton)
             }
             return cell
         case .cancel:
             let cell = tableView.dequeueReusableCell(withIdentifier: "CancelCell", for: indexPath) as! ButtonTableViewCell
-            cell.label?.attributedText = NSAttributedString(string: "Cancel",
-                                                            style: .reminderSummaryCancelButton)
+            cell.label?.attributedText =
+                NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleCancel,
+                                   style: .reminderSummaryCancelButton)
             cell.locationInGroup = .alone
             return cell
         }

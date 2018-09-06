@@ -1,5 +1,5 @@
 //
-//  TransparentTableViewHeaderFooterView.swift
+//  ReminderSummaryPopoverBackgroundView.swift
 //  WaterMe
 //
 //  Created by Jeffrey Bergier on 9/5/18.
@@ -23,12 +23,38 @@
 
 import UIKit
 
-class TransparentTableViewHeaderFooterView: UITableViewHeaderFooterView {
+class ReminderSummaryPopoverBackgroundView: UIPopoverBackgroundView {
 
-    static let reuseID = "TransparentTableViewHeaderFooterView"
+    override static func arrowHeight() -> CGFloat {
+        return 0
+    }
+
+    override static func contentViewInsets() -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+
+    private var _arrowOffset: CGFloat = 0
+    override var arrowOffset: CGFloat {
+        get { return _arrowOffset }
+        set {
+            _arrowOffset = newValue
+            self.setNeedsLayout()
+        }
+    }
+
+    private var _arrowDirection: UIPopoverArrowDirection = .down
+    override var arrowDirection: UIPopoverArrowDirection {
+        get { return _arrowDirection }
+        set {
+            _arrowDirection = newValue
+            self.setNeedsLayout()
+        }
+    }
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        self.backgroundView?.alpha = 0
+        self.backgroundColor = UIColor.white.withAlphaComponent(0.0)
+        self.alpha = 0.05
     }
+
 }
