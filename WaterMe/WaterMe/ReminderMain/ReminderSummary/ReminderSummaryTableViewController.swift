@@ -43,11 +43,11 @@ class ReminderSummaryTableViewController: UITableViewController {
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return Sections.numberOfSections
+        return Sections.numberOfSections(withNote: self.reminderHasNote)
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Sections.numberOfRows(inSection: section)
+        return Sections.numberOfRows(inSection: section, withNote: self.reminderHasNote)
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -64,21 +64,21 @@ class ReminderSummaryTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        let section = Sections(indexPath)
+        let section = Sections(indexPath, withNote: self.reminderHasNote)
         switch section {
         case .imageEmoji:
             return nil
-        case .actions:
-            return indexPath
-        case .cancel:
+        case .note:
+            return nil
+        case .actions, .cancel:
             return indexPath
         }
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let section = Sections(indexPath)
+        let section = Sections(indexPath, withNote: self.reminderHasNote)
         switch section {
-        case .imageEmoji:
+        case .imageEmoji, .note:
             fatalError()
         case .actions(let row):
             switch row {
@@ -95,12 +95,19 @@ class ReminderSummaryTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let section = Sections(indexPath)
+        let section = Sections(indexPath, withNote: self.reminderHasNote)
         switch section {
         case .imageEmoji:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReminderVesselIconTableViewCell.reuseID,
                                                      for: indexPath) as! ReminderVesselIconTableViewCell
             cell.configure(with: self.delegate?.reminderResult.value?.vessel?.icon)
+            return cell
+        case .note:
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! ButtonTableViewCell
+            cell.locationInGroup = .alone
+            cell.label?.attributedText =
+                NSAttributedString(string: self.delegate?.reminderResult.value?.note ?? "",
+                                   style: .migratorBody)
             return cell
         case .actions(let row):
             let cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell", for: indexPath) as! ButtonTableViewCell
@@ -134,35 +141,73 @@ class ReminderSummaryTableViewController: UITableViewController {
 }
 
 extension ReminderSummaryTableViewController {
+
+    var reminderHasNote: Bool {
+        return self.delegate?.reminderResult.value?.note != nil
+    }
+
     private enum Sections {
         case imageEmoji
+        case note
         case actions(ActionRows)
         case cancel
 
-        static let numberOfSections = 3
-        static func numberOfRows(inSection section: Int) -> Int {
-            switch section {
-            case 0:
-                return 1
-            case 1:
-                return ActionRows.allCases.count
-            case 2:
-                return 1
-            default:
-                fatalError()
+        static func numberOfSections(withNote: Bool) -> Int {
+            return withNote ? 4 : 3
+        }
+        static func numberOfRows(inSection section: Int, withNote: Bool) -> Int {
+            if withNote {
+                switch section {
+                case 0:
+                    return 1
+                case 1:
+                    return 1
+                case 2:
+                    return ActionRows.allCases.count
+                case 3:
+                    return 1
+                default:
+                    fatalError()
+                }
+            } else {
+                switch section {
+                case 0:
+                    return 1
+                case 1:
+                    return ActionRows.allCases.count
+                case 2:
+                    return 1
+                default:
+                    fatalError()
+                }
             }
         }
 
-        init(_ indexPath: IndexPath) {
-            switch (indexPath.section, indexPath.row) {
-            case (0, _):
-                self = .imageEmoji
-            case (1, _):
-                self = .actions(ActionRows(rawValue: indexPath.row)!)
-            case (2, _):
-                self = .cancel
-            default:
-                fatalError()
+        init(_ indexPath: IndexPath, withNote: Bool) {
+            if withNote {
+                switch (indexPath.section, indexPath.row) {
+                case (0, _):
+                    self = .imageEmoji
+                case (1, _):
+                    self = .note
+                case (2, _):
+                    self = .actions(ActionRows(rawValue: indexPath.row)!)
+                case (3, _):
+                    self = .cancel
+                default:
+                    fatalError()
+                }
+            } else {
+                switch (indexPath.section, indexPath.row) {
+                case (0, _):
+                    self = .imageEmoji
+                case (1, _):
+                    self = .actions(ActionRows(rawValue: indexPath.row)!)
+                case (2, _):
+                    self = .cancel
+                default:
+                    fatalError()
+                }
             }
         }
     }
