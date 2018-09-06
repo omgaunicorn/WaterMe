@@ -34,7 +34,6 @@ class ReminderSummaryViewController: UIViewController {
         vc.modalPresentationStyle = .popover
         vc.popoverPresentationController?.delegate = vc
         vc.popoverPresentationController?.popoverBackgroundViewClass = ReminderSummaryPopoverBackgroundView.self
-//        vc.popoverPresentationController?.backgroundColor = UIColor.white.withAlphaComponent(0.85)
         vc.completion = completion
         return vc
     }
@@ -69,18 +68,25 @@ class ReminderSummaryPopoverBackgroundView: UIPopoverBackgroundView {
     private var _arrowOffset: CGFloat = 0
     override var arrowOffset: CGFloat {
         get { return _arrowOffset }
-        set { _arrowOffset = newValue }
+        set {
+            _arrowOffset = newValue
+            self.setNeedsLayout()
+        }
     }
 
-    private var _arrowDirection: UIPopoverArrowDirection = .up
+    private var _arrowDirection: UIPopoverArrowDirection = .down
     override var arrowDirection: UIPopoverArrowDirection {
         get { return _arrowDirection }
-        set { _arrowDirection = newValue }
+        set {
+            _arrowDirection = newValue
+            self.setNeedsLayout()
+        }
     }
 
     override func didMoveToWindow() {
         super.didMoveToWindow()
-        self.alpha = 0
+        self.backgroundColor = UIColor.white.withAlphaComponent(0.0)
+        self.alpha = 0.05
     }
 
 }

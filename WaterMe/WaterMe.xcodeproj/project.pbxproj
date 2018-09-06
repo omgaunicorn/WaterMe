@@ -30,7 +30,8 @@
 		5028190D200D14850044BEC8 /* SettingsInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028190B200D14850044BEC8 /* SettingsInfoTableViewCell.swift */; };
 		5028190E200D14850044BEC8 /* SettingsInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5028190C200D14850044BEC8 /* SettingsInfoTableViewCell.xib */; };
 		50299E651FED926400363EF3 /* DragAndDropPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */; };
-		5029E0942140A158005285F5 /* SingleLabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029E0932140A158005285F5 /* SingleLabelTableViewCell.swift */; };
+		5029E0942140A158005285F5 /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029E0932140A158005285F5 /* ButtonTableViewCell.swift */; };
+		5029E0962140CE42005285F5 /* TransparentTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029E0952140CE42005285F5 /* TransparentTableViewHeaderFooterView.swift */; };
 		502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */; };
 		502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */; };
 		503F74491ED3BB64005EF5F2 /* UserSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503F74481ED3BB64005EF5F2 /* UserSummaryViewController.swift */; };
@@ -159,7 +160,8 @@
 		5028190B200D14850044BEC8 /* SettingsInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInfoTableViewCell.swift; sourceTree = "<group>"; };
 		5028190C200D14850044BEC8 /* SettingsInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsInfoTableViewCell.xib; sourceTree = "<group>"; };
 		50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropPlayerManager.swift; sourceTree = "<group>"; };
-		5029E0932140A158005285F5 /* SingleLabelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleLabelTableViewCell.swift; sourceTree = "<group>"; };
+		5029E0932140A158005285F5 /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
+		5029E0952140CE42005285F5 /* TransparentTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderCollectionViewCell.xib; sourceTree = "<group>"; };
 		502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFinishDropTargetViewController.swift; sourceTree = "<group>"; };
 		503F74481ED3BB64005EF5F2 /* UserSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSummaryViewController.swift; sourceTree = "<group>"; };
@@ -336,7 +338,8 @@
 				5010C22D213F779F00D1832C /* ReminderSummary.storyboard */,
 				5010C22F213F77B200D1832C /* ReminderSummaryViewController.swift */,
 				5010C231213F806500D1832C /* ReminderSummaryTableViewController.swift */,
-				5029E0932140A158005285F5 /* SingleLabelTableViewCell.swift */,
+				5029E0932140A158005285F5 /* ButtonTableViewCell.swift */,
+				5029E0952140CE42005285F5 /* TransparentTableViewHeaderFooterView.swift */,
 			);
 			path = ReminderSummary;
 			sourceTree = "<group>";
@@ -975,10 +978,11 @@
 				5010C230213F77B200D1832C /* ReminderSummaryViewController.swift in Sources */,
 				5028190A200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift in Sources */,
 				50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */,
+				5029E0962140CE42005285F5 /* TransparentTableViewHeaderFooterView.swift in Sources */,
 				506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */,
 				506DFA4D201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift in Sources */,
 				504B1BA7207332E20090CD7F /* TCF.m in Sources */,
-				5029E0942140A158005285F5 /* SingleLabelTableViewCell.swift in Sources */,
+				5029E0942140A158005285F5 /* ButtonTableViewCell.swift in Sources */,
 				5049D1A31FACFA1B0076565E /* ReminderUserNotificationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

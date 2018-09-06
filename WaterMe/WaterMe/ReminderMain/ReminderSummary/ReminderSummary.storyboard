@@ -43,18 +43,26 @@
         <scene sceneID="v0S-4M-Mbu">
             <objects>
                 <tableViewController id="qHn-tg-dfP" customClass="ReminderSummaryTableViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uBY-ER-faq">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uBY-ER-faq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderVesselIconTableViewCell" rowHeight="180" id="93v-73-QgQ" customClass="ReminderVesselIconTableViewCell" customModule="WaterMe" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderVesselIconTableViewCell" rowHeight="180" id="93v-73-QgQ" customClass="ReminderSummaryReminderVesselIconTableViewCell" customModule="WaterMe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="180"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="93v-73-QgQ" id="IWG-YL-vdB">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="179.5"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="93v-73-QgQ" id="IWG-YL-vdB">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P4d-0g-nOS">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="180.5"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="lpX-jj-JTj">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="180.5"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </view>
+                                            <blurEffect style="extraLight"/>
+                                        </visualEffectView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7FB-6r-OdL" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
                                             <rect key="frame" x="117.5" y="20.5" width="140" height="140"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -66,24 +74,38 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="P4d-0g-nOS" secondAttribute="bottom" id="G6Y-L3-Ear"/>
                                         <constraint firstAttribute="bottom" secondItem="7FB-6r-OdL" secondAttribute="bottom" constant="20" symbolic="YES" id="Gs7-qF-ajs"/>
+                                        <constraint firstItem="P4d-0g-nOS" firstAttribute="top" secondItem="IWG-YL-vdB" secondAttribute="top" id="HoK-3p-EF3"/>
                                         <constraint firstItem="7FB-6r-OdL" firstAttribute="top" secondItem="IWG-YL-vdB" secondAttribute="top" constant="20" symbolic="YES" id="W0h-ZL-Xna"/>
+                                        <constraint firstAttribute="trailing" secondItem="P4d-0g-nOS" secondAttribute="trailing" id="iPT-Yq-RTr"/>
                                         <constraint firstItem="7FB-6r-OdL" firstAttribute="centerX" secondItem="IWG-YL-vdB" secondAttribute="centerX" id="ioy-bb-Ecg"/>
+                                        <constraint firstItem="P4d-0g-nOS" firstAttribute="leading" secondItem="IWG-YL-vdB" secondAttribute="leading" id="pXc-qZ-9Ny"/>
+                                        <constraint firstItem="P4d-0g-nOS" firstAttribute="centerY" secondItem="7FB-6r-OdL" secondAttribute="centerY" placeholder="YES" id="uqt-Gj-bJ6"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
+                                    <outlet property="cornerRadiusView" destination="P4d-0g-nOS" id="DzE-6w-qcb"/>
                                     <outlet property="emojiImageView" destination="7FB-6r-OdL" id="yIM-7g-SGO"/>
                                     <outlet property="emojiImageViewHeightConstraint" destination="lhb-Mp-TSz" id="oH2-xS-ysc"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ActionCell" rowHeight="72" id="tBT-LD-nQ4" customClass="SingleLabelTableViewCell" customModule="WaterMe" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ActionCell" rowHeight="72" id="tBT-LD-nQ4" customClass="ButtonTableViewCell" customModule="WaterMe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="208" width="375" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tBT-LD-nQ4" id="WnK-IU-0FY">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="71.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4D3-Vs-ffm">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="71"/>
+                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="EY1-Op-J6V">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="71"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            </view>
+                                            <blurEffect style="extraLight"/>
+                                        </visualEffectView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Button Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DYd-GO-Ms5">
                                             <rect key="frame" x="16" y="15" width="343" height="42"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -93,22 +115,27 @@
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="4D3-Vs-ffm" secondAttribute="trailing" id="7nB-wT-ngp"/>
+                                        <constraint firstItem="4D3-Vs-ffm" firstAttribute="leading" secondItem="WnK-IU-0FY" secondAttribute="leading" id="BND-50-xIx"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="DYd-GO-Ms5" secondAttribute="trailing" id="J0z-AS-oe0"/>
+                                        <constraint firstItem="4D3-Vs-ffm" firstAttribute="top" secondItem="WnK-IU-0FY" secondAttribute="top" id="LbK-t2-qAO"/>
                                         <constraint firstItem="DYd-GO-Ms5" firstAttribute="leading" secondItem="WnK-IU-0FY" secondAttribute="leadingMargin" id="jVn-aw-xdf"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="DYd-GO-Ms5" secondAttribute="bottom" constant="4" id="njP-Ab-AiD"/>
                                         <constraint firstItem="DYd-GO-Ms5" firstAttribute="top" secondItem="WnK-IU-0FY" secondAttribute="topMargin" constant="4" id="o4k-AZ-Xgt"/>
+                                        <constraint firstAttribute="bottom" secondItem="4D3-Vs-ffm" secondAttribute="bottom" constant="1" id="pbe-pa-SAv"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
+                                    <outlet property="cornerRadiusView" destination="4D3-Vs-ffm" id="QyK-DZ-dPd"/>
                                     <outlet property="label" destination="DYd-GO-Ms5" id="5vm-dl-ccj"/>
                                 </connections>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CancelCell" rowHeight="72" id="RFT-nB-LQK" customClass="SingleLabelTableViewCell" customModule="WaterMe" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CancelCell" rowHeight="72" id="RFT-nB-LQK" customClass="ButtonTableViewCell" customModule="WaterMe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="280" width="375" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RFT-nB-LQK" id="GQg-5m-ej1">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="71.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W73-2L-oTa">
@@ -141,6 +168,7 @@
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <connections>
+                                    <outlet property="cornerRadiusView" destination="W73-2L-oTa" id="wqc-AH-3Xc"/>
                                     <outlet property="label" destination="esk-bE-q64" id="Zfb-7S-n5F"/>
                                 </connections>
                             </tableViewCell>

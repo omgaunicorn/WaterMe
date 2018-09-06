@@ -28,6 +28,8 @@ class ReminderSummaryTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.register(TransparentTableViewHeaderFooterView.self,
+                                forHeaderFooterViewReuseIdentifier: TransparentTableViewHeaderFooterView.reuseID)
         self.tableView.tableFooterView = UIView()
     }
 
@@ -39,22 +41,40 @@ class ReminderSummaryTableViewController: UITableViewController {
         return Sections.numberOfRows(inSection: section)
     }
 
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 8
+    }
+
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return tableView.dequeueReusableHeaderFooterView(withIdentifier: TransparentTableViewHeaderFooterView.reuseID)
+    }
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let section = Sections(indexPath)
         switch section {
         case .imageEmoji:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ReminderVesselIconTableViewCell.reuseID, for: indexPath) as! ReminderVesselIconTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReminderVesselIconTableViewCell.reuseID,
+                                                     for: indexPath) as! ReminderVesselIconTableViewCell
             cell.configure(with: ReminderVessel.Icon.emoji("🤷‍♀️"))
             return cell
         case .actions(let row):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell", for: indexPath) as! SingleLabelTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell", for: indexPath) as! ButtonTableViewCell
             cell.label?.attributedText = NSAttributedString(string: "Do Me Please!",
                                                             style: .reminderSummaryActionButton)
+            switch row {
+            case .performReminder:
+                cell.locationInGroup = .top
+            case .editReminder:
+                cell.locationInGroup = .middle
+            case .editReminderVessel:
+                cell.locationInGroup = .bottom
+            }
             return cell
         case .cancel:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CancelCell", for: indexPath) as! SingleLabelTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CancelCell", for: indexPath) as! ButtonTableViewCell
             cell.label?.attributedText = NSAttributedString(string: "Cancel",
                                                             style: .reminderSummaryCancelButton)
+            cell.locationInGroup = .alone
             return cell
         }
     }
