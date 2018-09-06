@@ -77,6 +77,73 @@
                                     <outlet property="emojiImageViewHeightConstraint" destination="lhb-Mp-TSz" id="oH2-xS-ysc"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ActionCell" rowHeight="72" id="tBT-LD-nQ4" customClass="SingleLabelTableViewCell" customModule="WaterMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="208" width="375" height="72"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tBT-LD-nQ4" id="WnK-IU-0FY">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="71.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Button Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DYd-GO-Ms5">
+                                            <rect key="frame" x="16" y="15" width="343" height="42"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="DYd-GO-Ms5" secondAttribute="trailing" id="J0z-AS-oe0"/>
+                                        <constraint firstItem="DYd-GO-Ms5" firstAttribute="leading" secondItem="WnK-IU-0FY" secondAttribute="leadingMargin" id="jVn-aw-xdf"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="DYd-GO-Ms5" secondAttribute="bottom" constant="4" id="njP-Ab-AiD"/>
+                                        <constraint firstItem="DYd-GO-Ms5" firstAttribute="top" secondItem="WnK-IU-0FY" secondAttribute="topMargin" constant="4" id="o4k-AZ-Xgt"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="label" destination="DYd-GO-Ms5" id="5vm-dl-ccj"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CancelCell" rowHeight="72" id="RFT-nB-LQK" customClass="SingleLabelTableViewCell" customModule="WaterMe" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="280" width="375" height="72"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RFT-nB-LQK" id="GQg-5m-ej1">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="71.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W73-2L-oTa">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="71.5"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="30"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Button Text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="esk-bE-q64">
+                                            <rect key="frame" x="16" y="15" width="343" height="42"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottomMargin" secondItem="esk-bE-q64" secondAttribute="bottom" constant="4" id="0N8-KH-UcC"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="esk-bE-q64" secondAttribute="trailing" id="2NA-f1-38P"/>
+                                        <constraint firstItem="W73-2L-oTa" firstAttribute="top" secondItem="GQg-5m-ej1" secondAttribute="top" id="8SC-3r-UTK"/>
+                                        <constraint firstItem="esk-bE-q64" firstAttribute="top" secondItem="GQg-5m-ej1" secondAttribute="topMargin" constant="4" id="Qg8-JH-CB3"/>
+                                        <constraint firstAttribute="trailing" secondItem="W73-2L-oTa" secondAttribute="trailing" id="dXj-9p-ULL"/>
+                                        <constraint firstItem="W73-2L-oTa" firstAttribute="leading" secondItem="GQg-5m-ej1" secondAttribute="leading" id="kZp-4b-s5f"/>
+                                        <constraint firstAttribute="bottom" secondItem="W73-2L-oTa" secondAttribute="bottom" id="lHE-R9-CcA"/>
+                                        <constraint firstItem="esk-bE-q64" firstAttribute="leading" secondItem="GQg-5m-ej1" secondAttribute="leadingMargin" id="s7F-LG-XMB"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="label" destination="esk-bE-q64" id="Zfb-7S-n5F"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <sections/>
                         <connections>
@@ -87,7 +154,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vhg-yZ-dM9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="852" y="143"/>
+            <point key="canvasLocation" x="852" y="142.57871064467767"/>
         </scene>
     </scenes>
 </document>

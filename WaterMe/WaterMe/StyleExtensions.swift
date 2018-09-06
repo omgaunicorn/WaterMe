@@ -145,6 +145,8 @@ enum Style {
     case migratorBodySmall
     case migratorPrimaryButton
     case migratorSecondaryButton
+    case reminderSummaryCancelButton
+    case reminderSummaryActionButton
     case tableHeaderActionButton
     case emojiSuperSmall
     case emojiSmall(accessibilityFontSizeEnabled: Bool)
@@ -158,6 +160,18 @@ enum Style {
     case dragInstructionalText(UIColor)
     var attributes: [NSAttributedStringKey : Any] {
         switch self {
+        case .reminderSummaryCancelButton:
+            return [
+                .font : Font.bodyPlusBold,
+                .foregroundColor : Color.tint,
+                .paragraphStyle : type(of: self).centerStyle
+            ]
+        case .reminderSummaryActionButton:
+            return [
+                .font : Font.bodyPlus,
+                .foregroundColor : Color.tint,
+                .paragraphStyle : type(of: self).centerStyle
+            ]
         case .migratorTitle:
             return [
                 .font : Font.bodyPlusPlusPlus,
@@ -328,6 +342,7 @@ enum Style {
                 log.error(error)
                 Analytics.log(error: error)
                 font = UIFont.systemFont(ofSize: size)
+                assertionFailure()
             }
             // cache it
             cachedEmojiFontWithSize[size] = font
