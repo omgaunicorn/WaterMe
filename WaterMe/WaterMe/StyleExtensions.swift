@@ -147,6 +147,9 @@ enum Style {
     case migratorSecondaryButton
     case reminderSummaryCancelButton
     case reminderSummaryActionButton
+    case reminderSummaryPrimaryLabel
+    case reminderSummaryPrimaryLabelValueNIL
+    case reminderSummarySublabel
     case tableHeaderActionButton
     case emojiSuperSmall
     case emojiSmall(accessibilityFontSizeEnabled: Bool)
@@ -171,6 +174,21 @@ enum Style {
                 .font : Font.bodyPlus,
                 .foregroundColor : Color.tint,
                 .paragraphStyle : type(of: self).centerStyle
+            ]
+        case .reminderSummaryPrimaryLabel:
+            return [
+                .font : Font.body,
+                .foregroundColor : Color.textPrimary
+            ]
+        case .reminderSummaryPrimaryLabelValueNIL:
+            return [
+                .font : Font.body,
+                .foregroundColor : Color.textSecondary
+            ]
+        case .reminderSummarySublabel:
+            return [
+                .font : Font.bodyMinus,
+                .foregroundColor : Color.textSecondary
             ]
         case .migratorTitle:
             return [

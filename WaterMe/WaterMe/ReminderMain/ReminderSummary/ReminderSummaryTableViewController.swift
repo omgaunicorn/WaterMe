@@ -110,10 +110,12 @@ class ReminderSummaryTableViewController: UITableViewController {
             let cell = _cell as? InfoTableViewCell
             let vesselName = self.delegate?.reminderResult.value?.vessel?.displayName
             let vesselNameStyle = vesselName != nil ?
-                Style.reminderVesselCollectionViewCellPrimary(nil) :
-                Style.reminderVesselCollectionViewCellPrimaryDisabled
+                Style.reminderSummaryPrimaryLabel :
+                Style.reminderSummaryPrimaryLabelValueNIL
             cell?.vesselNameLabel?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
                                                                        style: vesselNameStyle)
+            cell?.vesselNameSublabel?.attributedText = NSAttributedString(string: "Plant",
+                                                                       style: .reminderSummarySublabel)
             return _cell
         case .note:
             let _cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath)
