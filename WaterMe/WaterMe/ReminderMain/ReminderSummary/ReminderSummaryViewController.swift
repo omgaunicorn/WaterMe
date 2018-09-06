@@ -55,7 +55,7 @@ class ReminderSummaryViewController: UIViewController {
         return vc
     }
 
-    private var _preferredContentSize = CGSize(width: 320, height: 320)
+    private var _preferredContentSize = CGSize(width: 320, height: 1024)
     override var preferredContentSize: CGSize {
         get { return _preferredContentSize }
         set { _preferredContentSize = newValue }

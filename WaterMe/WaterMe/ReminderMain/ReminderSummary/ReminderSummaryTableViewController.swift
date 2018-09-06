@@ -63,12 +63,15 @@ class ReminderSummaryTableViewController: UITableViewController {
         return tableView.dequeueReusableHeaderFooterView(withIdentifier: TransparentTableViewHeaderFooterView.reuseID)
     }
 
+    override func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+        let idxPath = self.tableView(tableView, willSelectRowAt: indexPath)
+        return idxPath != nil ? true : false
+    }
+
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let section = Sections(indexPath, withNote: self.reminderHasNote)
         switch section {
-        case .imageEmoji:
-            return nil
-        case .note:
+        case .imageEmoji, .note, .info:
             return nil
         case .actions, .cancel:
             return indexPath
@@ -78,7 +81,7 @@ class ReminderSummaryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = Sections(indexPath, withNote: self.reminderHasNote)
         switch section {
-        case .imageEmoji, .note:
+        case .imageEmoji, .note, .info:
             fatalError()
         case .actions(let row):
             switch row {
@@ -98,44 +101,67 @@ class ReminderSummaryTableViewController: UITableViewController {
         let section = Sections(indexPath, withNote: self.reminderHasNote)
         switch section {
         case .imageEmoji:
-            let cell = tableView.dequeueReusableCell(withIdentifier: ReminderVesselIconTableViewCell.reuseID,
-                                                     for: indexPath) as! ReminderVesselIconTableViewCell
-            cell.configure(with: self.delegate?.reminderResult.value?.vessel?.icon)
-            return cell
+            let _cell = tableView.dequeueReusableCell(withIdentifier: ReminderVesselIconTableViewCell.reuseID, for: indexPath)
+            let cell = _cell as? ReminderVesselIconTableViewCell
+            cell?.configure(with: self.delegate?.reminderResult.value?.vessel?.icon)
+            return _cell
+        case .info(let rows):
+            let _cell = tableView.dequeueReusableCell(withIdentifier: "InfoCell", for: indexPath)
+            let cell = _cell as? ButtonTableViewCell
+            switch rows {
+            case .reminderVesselName:
+                cell?.locationInGroup = .top
+                let vesselName = self.delegate?.reminderResult.value?.vessel?.displayName
+                let vesselNameStyle = vesselName != nil ?
+                    Style.reminderVesselCollectionViewCellPrimary(nil) :
+                    Style.reminderVesselCollectionViewCellPrimaryDisabled
+                cell?.label?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
+                                                                   style: vesselNameStyle)
+            case .reminderKind:
+                cell?.locationInGroup = .middle
+            case .lastPerformedDate:
+                cell?.locationInGroup = .middle
+            case .nextPerformDate:
+                cell?.locationInGroup = .bottom
+            }
+            return _cell
         case .note:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) as! ButtonTableViewCell
-            cell.locationInGroup = .alone
-            cell.label?.attributedText =
+            let _cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath)
+            let cell = _cell as? ButtonTableViewCell
+            cell?.locationInGroup = .alone
+            cell?.label?.attributedText =
                 NSAttributedString(string: self.delegate?.reminderResult.value?.note ?? "",
                                    style: .migratorBody)
-            return cell
+            return _cell
         case .actions(let row):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell", for: indexPath) as! ButtonTableViewCell
+            let _cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell", for: indexPath)
+            let cell = _cell as? ButtonTableViewCell
             switch row {
             case .performReminder:
-                cell.locationInGroup = .top
-                cell.label?.attributedText =
+                cell?.locationInGroup = .top
+                cell?.label?.attributedText =
                     NSAttributedString(string: ReminderMainViewController.LocalizedString.buttonTitleReminderPerform,
                                        style: .reminderSummaryActionButton)
             case .editReminder:
-                cell.locationInGroup = .middle
-                cell.label?.attributedText =
+                cell?.locationInGroup = .middle
+                cell?.label?.attributedText =
                     NSAttributedString(string: UIApplication.LocalizedString.editReminder,
                                        style: .reminderSummaryActionButton)
             case .editReminderVessel:
-                cell.locationInGroup = .bottom
-                cell.label?.attributedText =
+                cell?.locationInGroup = .bottom
+                cell?.label?.attributedText =
                     NSAttributedString(string: UIApplication.LocalizedString.editVessel,
                                        style: .reminderSummaryActionButton)
             }
-            return cell
+            return _cell
         case .cancel:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "CancelCell", for: indexPath) as! ButtonTableViewCell
-            cell.label?.attributedText =
+            let _cell = tableView.dequeueReusableCell(withIdentifier: "CancelCell", for: indexPath)
+            let cell = _cell as? ButtonTableViewCell
+            cell?.label?.attributedText =
                 NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleCancel,
                                    style: .reminderSummaryCancelButton)
-            cell.locationInGroup = .alone
-            return cell
+            cell?.locationInGroup = .alone
+            return _cell
         }
     }
 }
@@ -148,38 +174,23 @@ extension ReminderSummaryTableViewController {
 
     private enum Sections {
         case imageEmoji
+        case info(InfoRows)
         case note
         case actions(ActionRows)
         case cancel
 
         static func numberOfSections(withNote: Bool) -> Int {
-            return withNote ? 4 : 3
+            return withNote ? 5 : 4
         }
         static func numberOfRows(inSection section: Int, withNote: Bool) -> Int {
-            if withNote {
-                switch section {
-                case 0:
-                    return 1
-                case 1:
-                    return 1
-                case 2:
-                    return ActionRows.allCases.count
-                case 3:
-                    return 1
-                default:
-                    fatalError()
-                }
-            } else {
-                switch section {
-                case 0:
-                    return 1
-                case 1:
-                    return ActionRows.allCases.count
-                case 2:
-                    return 1
-                default:
-                    fatalError()
-                }
+            let value = Sections(IndexPath(row: 0, section: section), withNote: withNote)
+            switch value {
+            case .imageEmoji, .note, .cancel:
+                return 1
+            case .actions(let rows):
+                return type(of: rows).allCases.count
+            case .info(let rows):
+                return type(of: rows).allCases.count
             }
         }
 
@@ -189,10 +200,12 @@ extension ReminderSummaryTableViewController {
                 case (0, _):
                     self = .imageEmoji
                 case (1, _):
-                    self = .note
+                    self = .info(InfoRows(rawValue: indexPath.row)!)
                 case (2, _):
-                    self = .actions(ActionRows(rawValue: indexPath.row)!)
+                    self = .note
                 case (3, _):
+                    self = .actions(ActionRows(rawValue: indexPath.row)!)
+                case (4, _):
                     self = .cancel
                 default:
                     fatalError()
@@ -202,8 +215,10 @@ extension ReminderSummaryTableViewController {
                 case (0, _):
                     self = .imageEmoji
                 case (1, _):
-                    self = .actions(ActionRows(rawValue: indexPath.row)!)
+                    self = .info(InfoRows(rawValue: indexPath.row)!)
                 case (2, _):
+                    self = .actions(ActionRows(rawValue: indexPath.row)!)
+                case (3, _):
                     self = .cancel
                 default:
                     fatalError()
@@ -214,5 +229,9 @@ extension ReminderSummaryTableViewController {
 
     private enum ActionRows: Int, CaseIterable {
         case performReminder, editReminder, editReminderVessel
+    }
+
+    private enum InfoRows: Int, CaseIterable {
+        case reminderVesselName, reminderKind, lastPerformedDate, nextPerformDate
     }
 }
