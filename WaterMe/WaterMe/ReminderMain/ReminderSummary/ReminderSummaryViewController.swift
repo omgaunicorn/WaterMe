@@ -22,16 +22,18 @@
 //
 
 import UIKit
+import WaterMeData
+import Result
+import RealmSwift
 
 class ReminderSummaryViewController: UIViewController {
 
+    typealias Completion = (Action, Reminder.Identifier, UIViewController) -> Void
     enum Action {
         case cancel, performReminder, editReminderVessel, editReminder
     }
 
-    typealias Completion = (Action, UIViewController) -> Void
-
-    class func newVC(completion: @escaping Completion) -> UIViewController {
+    class func newVC(reminderID: Reminder.Identifier, basicController: BasicController, completion: @escaping Completion) -> UIViewController {
         let sb = UIStoryboard(name: "ReminderSummary", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let vc = sb.instantiateInitialViewController() as! ReminderSummaryViewController
@@ -39,6 +41,8 @@ class ReminderSummaryViewController: UIViewController {
         vc.popoverPresentationController?.delegate = vc
         vc.popoverPresentationController?.popoverBackgroundViewClass = ReminderSummaryPopoverBackgroundView.self
         vc.completion = completion
+        vc.reminderResult = basicController.reminder(matching: reminderID)
+        vc.reminderID = reminderID
         return vc
     }
 
@@ -48,8 +52,27 @@ class ReminderSummaryViewController: UIViewController {
         set { _preferredContentSize = newValue }
     }
 
-    private weak var tableViewController: ReminderSummaryTableViewController?
-    private var completion: Completion?
+    var reminderResult: Result<Reminder, RealmError>!
+    private var completion: Completion!
+    private var reminderID: Reminder.Identifier!
+    private weak var tableViewController: ReminderSummaryTableViewController!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
+    }
+
+    private func reminderChanged(_ changes: ObjectChange) {
+        switch changes {
+        case .change:
+            guard let reminder = self.reminderResult.value else { return }
+            self.reminderID = Reminder.Identifier(reminder: reminder)
+            self.tableViewController.tableView.reloadData()
+        case .deleted, .error:
+            self.completion(.cancel, self.reminderID, self)
+        }
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let dest = segue.destination as? ReminderSummaryTableViewController {
@@ -57,17 +80,22 @@ class ReminderSummaryViewController: UIViewController {
             dest.delegate = self
         }
     }
+
+    private var notificationToken: NotificationToken?
+    deinit {
+        self.notificationToken?.invalidate()
+    }
 }
 
 extension ReminderSummaryViewController: ReminderSummaryTableViewControllerDelegate {
     func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController) {
-        self.completion?(action, self)
+        self.completion(action, self.reminderID, self)
     }
 }
 
 extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate {
     func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
-        self.completion?(.cancel, self)
+        self.completion(.cancel, self.reminderID, self)
         return false
     }
 }

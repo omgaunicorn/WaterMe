@@ -23,8 +23,11 @@
 
 import UIKit
 import WaterMeData
+import RealmSwift
+import Result
 
 protocol ReminderSummaryTableViewControllerDelegate: class {
+    var reminderResult: Result<Reminder, RealmError>! { get }
     func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController)
 }
 
@@ -48,7 +51,12 @@ class ReminderSummaryTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 8
+        switch section {
+        case 0:
+            return 0
+        default:
+            return 8
+        }
     }
 
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -92,7 +100,7 @@ class ReminderSummaryTableViewController: UITableViewController {
         case .imageEmoji:
             let cell = tableView.dequeueReusableCell(withIdentifier: ReminderVesselIconTableViewCell.reuseID,
                                                      for: indexPath) as! ReminderVesselIconTableViewCell
-            cell.configure(with: ReminderVessel.Icon.emoji("🤷‍♀️"))
+            cell.configure(with: self.delegate?.reminderResult.value?.vessel?.icon)
             return cell
         case .actions(let row):
             let cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell", for: indexPath) as! ButtonTableViewCell

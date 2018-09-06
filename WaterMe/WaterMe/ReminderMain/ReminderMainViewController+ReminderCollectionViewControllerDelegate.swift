@@ -35,7 +35,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         self.plantsBBI.isEnabled = true
     }
 
-    func userDidSelect(reminder: Reminder,
+    func userDidSelect(reminderID: Reminder.Identifier,
                        from view: UIView,
                        deselectAnimated: @escaping (Bool) -> Void,
                        within viewController: ReminderCollectionViewController)
@@ -49,12 +49,9 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         }
 
-        // need an idenfitier starting now because this is all async
-        // the reminder could be deleted or changed before the user makes a choice
-        let identifier = Reminder.Identifier(reminder: reminder)
-
         // create the summary view controller
-        let alert = ReminderSummaryViewController.newVC() { action, vc in
+        let alert = ReminderSummaryViewController.newVC(reminderID: reminderID, basicController: basicRC)
+        { action, identifier, vc in
             vc.dismiss(animated: true) {
                 switch action {
                 case .cancel:
