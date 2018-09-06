@@ -30,7 +30,7 @@
 		5028190D200D14850044BEC8 /* SettingsInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5028190B200D14850044BEC8 /* SettingsInfoTableViewCell.swift */; };
 		5028190E200D14850044BEC8 /* SettingsInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5028190C200D14850044BEC8 /* SettingsInfoTableViewCell.xib */; };
 		50299E651FED926400363EF3 /* DragAndDropPlayerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */; };
-		5029E0942140A158005285F5 /* ButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029E0932140A158005285F5 /* ButtonTableViewCell.swift */; };
+		5029E0942140A158005285F5 /* ReminderSummaryTableViewCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029E0932140A158005285F5 /* ReminderSummaryTableViewCells.swift */; };
 		5029E0962140CE42005285F5 /* TransparentTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029E0952140CE42005285F5 /* TransparentTableViewHeaderFooterView.swift */; };
 		5029E0982140D941005285F5 /* ReminderSummaryPopoverBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5029E0972140D941005285F5 /* ReminderSummaryPopoverBackgroundView.swift */; };
 		502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */; };
@@ -161,7 +161,7 @@
 		5028190B200D14850044BEC8 /* SettingsInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInfoTableViewCell.swift; sourceTree = "<group>"; };
 		5028190C200D14850044BEC8 /* SettingsInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsInfoTableViewCell.xib; sourceTree = "<group>"; };
 		50299E641FED926400363EF3 /* DragAndDropPlayerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragAndDropPlayerManager.swift; sourceTree = "<group>"; };
-		5029E0932140A158005285F5 /* ButtonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonTableViewCell.swift; sourceTree = "<group>"; };
+		5029E0932140A158005285F5 /* ReminderSummaryTableViewCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSummaryTableViewCells.swift; sourceTree = "<group>"; };
 		5029E0952140CE42005285F5 /* TransparentTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransparentTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		5029E0972140D941005285F5 /* ReminderSummaryPopoverBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSummaryPopoverBackgroundView.swift; sourceTree = "<group>"; };
 		502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -341,7 +341,7 @@
 				5010C22F213F77B200D1832C /* ReminderSummaryViewController.swift */,
 				5010C231213F806500D1832C /* ReminderSummaryTableViewController.swift */,
 				5029E0972140D941005285F5 /* ReminderSummaryPopoverBackgroundView.swift */,
-				5029E0932140A158005285F5 /* ButtonTableViewCell.swift */,
+				5029E0932140A158005285F5 /* ReminderSummaryTableViewCells.swift */,
 				5029E0952140CE42005285F5 /* TransparentTableViewHeaderFooterView.swift */,
 			);
 			path = ReminderSummary;
@@ -986,7 +986,7 @@
 				506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */,
 				506DFA4D201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift in Sources */,
 				504B1BA7207332E20090CD7F /* TCF.m in Sources */,
-				5029E0942140A158005285F5 /* ButtonTableViewCell.swift in Sources */,
+				5029E0942140A158005285F5 /* ReminderSummaryTableViewCells.swift in Sources */,
 				5049D1A31FACFA1B0076565E /* ReminderUserNotificationController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

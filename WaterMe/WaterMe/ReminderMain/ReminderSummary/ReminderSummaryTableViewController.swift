@@ -105,25 +105,15 @@ class ReminderSummaryTableViewController: UITableViewController {
             let cell = _cell as? ReminderVesselIconTableViewCell
             cell?.configure(with: self.delegate?.reminderResult.value?.vessel?.icon)
             return _cell
-        case .info(let rows):
+        case .info:
             let _cell = tableView.dequeueReusableCell(withIdentifier: "InfoCell", for: indexPath)
-            let cell = _cell as? ButtonTableViewCell
-            switch rows {
-            case .reminderVesselName:
-                cell?.locationInGroup = .top
-                let vesselName = self.delegate?.reminderResult.value?.vessel?.displayName
-                let vesselNameStyle = vesselName != nil ?
-                    Style.reminderVesselCollectionViewCellPrimary(nil) :
-                    Style.reminderVesselCollectionViewCellPrimaryDisabled
-                cell?.label?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
-                                                                   style: vesselNameStyle)
-            case .reminderKind:
-                cell?.locationInGroup = .middle
-            case .lastPerformedDate:
-                cell?.locationInGroup = .middle
-            case .nextPerformDate:
-                cell?.locationInGroup = .bottom
-            }
+            let cell = _cell as? InfoTableViewCell
+            let vesselName = self.delegate?.reminderResult.value?.vessel?.displayName
+            let vesselNameStyle = vesselName != nil ?
+                Style.reminderVesselCollectionViewCellPrimary(nil) :
+                Style.reminderVesselCollectionViewCellPrimaryDisabled
+            cell?.vesselNameLabel?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
+                                                                       style: vesselNameStyle)
             return _cell
         case .note:
             let _cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath)
@@ -174,7 +164,7 @@ extension ReminderSummaryTableViewController {
 
     private enum Sections {
         case imageEmoji
-        case info(InfoRows)
+        case info
         case note
         case actions(ActionRows)
         case cancel
@@ -185,11 +175,9 @@ extension ReminderSummaryTableViewController {
         static func numberOfRows(inSection section: Int, withNote: Bool) -> Int {
             let value = Sections(IndexPath(row: 0, section: section), withNote: withNote)
             switch value {
-            case .imageEmoji, .note, .cancel:
+            case .imageEmoji, .note, .cancel, .info:
                 return 1
             case .actions(let rows):
-                return type(of: rows).allCases.count
-            case .info(let rows):
                 return type(of: rows).allCases.count
             }
         }
@@ -200,7 +188,7 @@ extension ReminderSummaryTableViewController {
                 case (0, _):
                     self = .imageEmoji
                 case (1, _):
-                    self = .info(InfoRows(rawValue: indexPath.row)!)
+                    self = .info
                 case (2, _):
                     self = .note
                 case (3, _):
@@ -215,7 +203,7 @@ extension ReminderSummaryTableViewController {
                 case (0, _):
                     self = .imageEmoji
                 case (1, _):
-                    self = .info(InfoRows(rawValue: indexPath.row)!)
+                    self = .info
                 case (2, _):
                     self = .actions(ActionRows(rawValue: indexPath.row)!)
                 case (3, _):
