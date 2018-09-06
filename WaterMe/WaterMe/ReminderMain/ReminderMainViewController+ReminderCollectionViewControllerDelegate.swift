@@ -50,7 +50,9 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         }
 
         // create the summary view controller
-        let alert = ReminderSummaryViewController.newVC(reminderID: reminderID, basicController: basicRC)
+        let alert = ReminderSummaryViewController.newVC(reminderID: reminderID,
+                                                        basicController: basicRC,
+                                                        sourceView: view)
         { action, identifier, vc in
             vc.dismiss(animated: true) {
                 switch action {
@@ -75,13 +77,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                 }
             }
         }
-
-        // configure popover presentation for ipad
-        // popoverPresentationController is NIL on iPhones
-        alert.popoverPresentationController?.sourceView = view
-        alert.popoverPresentationController?.sourceRect = UIAlertController.sourceRect(from: view)
-        alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
-
+        // present the new VC
         self.present(alert, animated: true, completion: nil)
     }
 

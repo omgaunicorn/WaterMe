@@ -33,13 +33,22 @@ class ReminderSummaryViewController: UIViewController {
         case cancel, performReminder, editReminderVessel, editReminder
     }
 
-    class func newVC(reminderID: Reminder.Identifier, basicController: BasicController, completion: @escaping Completion) -> UIViewController {
+    class func newVC(reminderID: Reminder.Identifier,
+                     basicController: BasicController,
+                     sourceView: UIView,
+                     completion: @escaping Completion) -> UIViewController
+    {
         let sb = UIStoryboard(name: "ReminderSummary", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let vc = sb.instantiateInitialViewController() as! ReminderSummaryViewController
+        // configure presentation
         vc.modalPresentationStyle = .popover
         vc.popoverPresentationController?.delegate = vc
         vc.popoverPresentationController?.popoverBackgroundViewClass = ReminderSummaryPopoverBackgroundView.self
+        vc.popoverPresentationController?.sourceView = sourceView
+        vc.popoverPresentationController?.sourceRect = UIAlertController.sourceRect(from: sourceView)
+        vc.popoverPresentationController?.permittedArrowDirections = [.up, .down]
+        // configure needed properties
         vc.completion = completion
         vc.reminderResult = basicController.reminder(matching: reminderID)
         vc.reminderID = reminderID
