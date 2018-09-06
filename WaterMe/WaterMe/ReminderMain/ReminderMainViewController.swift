@@ -50,13 +50,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     var basicRC: BasicController?
     var proRC: ProController?
 
-    let dueDateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.dateStyle = .full
-        df.timeStyle = .none
-        df.doesRelativeDateFormatting = true
-        return df
-    }()
+    let dueDateFormatter = Formatter.newDueDateFormatter
 
     override func viewDidLoad() {
         super.viewDidLoad()

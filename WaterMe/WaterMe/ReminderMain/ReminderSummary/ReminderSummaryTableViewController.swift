@@ -33,6 +33,9 @@ protocol ReminderSummaryTableViewControllerDelegate: class {
 
 class ReminderSummaryTableViewController: UITableViewController {
 
+    private let timeAgoDateFormatter = Formatter.newTimeAgoFormatter
+    private let dueDateFormatter = Formatter.newDueDateFormatter
+
     weak var delegate: ReminderSummaryTableViewControllerDelegate?
 
     override func viewDidLoad() {
@@ -108,14 +111,39 @@ class ReminderSummaryTableViewController: UITableViewController {
         case .info:
             let _cell = tableView.dequeueReusableCell(withIdentifier: "InfoCell", for: indexPath)
             let cell = _cell as? InfoTableViewCell
-            let vesselName = self.delegate?.reminderResult.value?.vessel?.displayName
-            let vesselNameStyle = vesselName != nil ?
-                Style.reminderSummaryPrimaryLabel :
-                Style.reminderSummaryPrimaryLabelValueNIL
-            cell?.vesselNameLabel?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
-                                                                       style: vesselNameStyle)
-            cell?.vesselNameSublabel?.attributedText = NSAttributedString(string: "Plant",
-                                                                       style: .reminderSummarySublabel)
+            _ = {
+                let vesselName = self.delegate?.reminderResult.value?.vessel?.displayName
+                let vesselNameStyle = vesselName != nil ?
+                    Style.reminderSummaryPrimaryLabel :
+                    Style.reminderSummaryPrimaryLabelValueNIL
+                cell?.vesselNameLabel?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
+                                                                           style: vesselNameStyle)
+                cell?.vesselNameSublabel?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadPlantName,
+                                                                              style: .reminderSummarySublabel)
+            }()
+            _ = {
+                guard let reminderName = self.delegate?.reminderResult.value?.kind.localizedLongString else { return }
+                cell?.reminderKindLabel?.attributedText = NSAttributedString(string: reminderName,
+                                                                           style: .reminderSummaryPrimaryLabel)
+                cell?.reminderKindSublabel?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadReminderKind,
+                                                                              style: .reminderSummarySublabel)
+            }()
+            _ = {
+                let nextPerformDate = self.delegate?.reminderResult.value?.nextPerformDate ?? Date()
+                let dueDateString = self.dueDateFormatter.string(from: nextPerformDate)
+                cell?.nextPerformDateLabel?.attributedText = NSAttributedString(string: dueDateString,
+                                                                           style: .reminderSummaryPrimaryLabel)
+                cell?.nextPerformDateSublabel?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadNextPerformDate,
+                                                                              style: .reminderSummarySublabel)
+            }()
+            _ = {
+                let lastPerformedDate = self.delegate?.reminderResult.value?.performed.last?.date
+                let dateString = self.timeAgoDateFormatter.timeAgoString(for: lastPerformedDate)
+                cell?.lastPerformDateLabel?.attributedText = NSAttributedString(string: dateString,
+                                                                                style: .reminderSummaryPrimaryLabel)
+                cell?.lastPerformDateSublabel?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadLastPerformDate,
+                                                                                   style: .reminderSummarySublabel)
+            }()
             return _cell
         case .note:
             let _cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath)

@@ -223,6 +223,19 @@ extension ReminderVesselMainViewController {
     }
 }
 
+extension ReminderSummaryViewController {
+    enum LocalizedString {
+        static let subheadPlantName =
+            NSLocalizedString("Plant", comment: "")
+        static let subheadReminderKind =
+            NSLocalizedString("Reminder", comment: "")
+        static let subheadNextPerformDate =
+            NSLocalizedString("Due Next", comment: "")
+        static let subheadLastPerformDate =
+            NSLocalizedString("Last Performed", comment: "")
+    }
+}
+
 extension SettingsMainViewController {
     enum LocalizedString {
         static let settingsTitle =

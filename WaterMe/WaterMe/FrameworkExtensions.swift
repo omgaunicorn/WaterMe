@@ -234,6 +234,13 @@ extension Formatter {
         f.doesRelativeDateFormatting = true
         return f
     }
+    class var newDueDateFormatter: DateFormatter {
+        let df = DateFormatter()
+        df.dateStyle = .full
+        df.timeStyle = .none
+        df.doesRelativeDateFormatting = true
+        return df
+    }
 }
 
 extension DateFormatter {

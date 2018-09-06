@@ -187,7 +187,7 @@ enum Style {
             ]
         case .reminderSummarySublabel:
             return [
-                .font : Font.bodyMinus,
+                .font : Font.bodyMinusBold,
                 .foregroundColor : Color.textSecondary
             ]
         case .migratorTitle:
