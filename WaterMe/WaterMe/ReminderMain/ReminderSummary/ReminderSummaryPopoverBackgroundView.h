@@ -25,19 +25,5 @@
 
 @interface ReminderSummaryPopoverBackgroundView : UIPopoverBackgroundView
 
-// MARK: Required of Implementers
-
-@property (nonatomic, readwrite) CGFloat arrowOffset;
-@property (nonatomic, readwrite) UIPopoverArrowDirection arrowDirection;
-@property(class, nonatomic, readonly) BOOL wantsDefaultContentAppearance;
-
-+ (CGFloat)arrowBase;
-+ (UIEdgeInsets)contentViewInsets;
-+ (CGFloat)arrowHeight;
-
-// MARK: Sneakiness to get desired look
-
-- (CGFloat)_shadowOpacity;
-
 @end
 

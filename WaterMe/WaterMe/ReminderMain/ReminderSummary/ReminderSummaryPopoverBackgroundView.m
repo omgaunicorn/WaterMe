@@ -29,6 +29,13 @@
     UIPopoverArrowDirection _arrowDirection;
 }
 
+// MARK: Required to Implement for UIKit
+@property (nonatomic) CGFloat arrowOffset;
+@property (nonatomic) UIPopoverArrowDirection arrowDirection;
+@property (class, nonatomic, readonly) UIEdgeInsets contentViewInsets;
+@property (class, nonatomic, readonly) CGFloat arrowHeight;
+@property (class, nonatomic, readonly) CGFloat arrowBase;
+
 @property (nonatomic, weak, nullable) UIView* myArrowView;
 @property (nonatomic, weak, nullable) CALayer* myArrowViewMaskLayer;
 @property (nonatomic, weak, nullable) NSLayoutConstraint* horizontalArrowConstraint;
@@ -42,63 +49,17 @@
 
 @implementation ReminderSummaryPopoverBackgroundView
 
-@dynamic arrowOffset, arrowDirection, wantsDefaultContentAppearance;
-
-// MARK: Required of Implementers
-
-+ (UIEdgeInsets)contentViewInsets;
-{
-    return UIEdgeInsetsMake(0, 0, 0, 0);
-}
-+ (CGFloat)arrowHeight;
-{
-    return 30;
-}
-+ (CGFloat)arrowBase;
-{
-    return 50;
-}
-+ (BOOL)wantsDefaultContentAppearance;
-{
-    return NO;
-}
-- (CGFloat)arrowOffset;
-{
-    return _arrowOffset;
-}
-- (void)setArrowOffset:(CGFloat)arrowOffset;
-{
-    _arrowOffset = arrowOffset;
-    [self updateArrowConstraintsForOffset];
-}
-- (UIPopoverArrowDirection)arrowDirection;
-{
-    return _arrowDirection;
-}
-- (void)setArrowDirection:(UIPopoverArrowDirection)arrowDirection;
-{
-    _arrowDirection = arrowDirection;
-    [self enableDisableConstraintsForArrowDirection];
-}
-
-// MARK: Sneakiness to get desired look
-
-- (CGFloat)_shadowOpacity;
-{
-    return 0.1;
-}
+@dynamic arrowOffset, arrowDirection, contentViewInsets, arrowHeight, arrowBase;
 
 - (void)didMoveToWindow;
 {
     [super didMoveToWindow];
     if (![self myArrowView]) {
         [self configureArrowViewConstraints];
-        [self updateArrowConstraintsForOffset];
         [self configureArrowMaskLayer];
+        [self updateArrowConstraintsForOffset];
         [self enableDisableConstraintsForArrowDirection];
     }
-    [[self layer] setBorderColor:[[UIColor blackColor] CGColor]];
-    [[self layer] setBorderWidth:1];
 }
 
 - (void)configureArrowViewConstraints;
@@ -112,8 +73,10 @@
 
     // Configure height and width constraints
     // And add them. These never change
-    NSLayoutConstraint* arrowWidthConstraint = [[view widthAnchor] constraintEqualToConstant:[self aB]];
-    NSLayoutConstraint* arrowHeightConstraint = [[view heightAnchor] constraintEqualToConstant:[self aH]];
+    CGFloat height = [ReminderSummaryPopoverBackgroundView arrowHeight];
+    CGFloat width = [ReminderSummaryPopoverBackgroundView arrowBase];
+    NSLayoutConstraint* arrowWidthConstraint = [[view widthAnchor] constraintEqualToConstant:width];
+    NSLayoutConstraint* arrowHeightConstraint = [[view heightAnchor] constraintEqualToConstant:height];
     [self addConstraints:@[arrowWidthConstraint, arrowHeightConstraint]];
 
     // Configure left/right/top/bottom attachments
@@ -144,8 +107,6 @@
     [self removeConstraints:[self downConstraints]];
     [self removeConstraints:[self leadingConstraints]];
     [self removeConstraints:[self trailingConstraints]];
-    CGAffineTransform leftRightRotation;
-    CGAffineTransform leftRightRotationAndTranslation;
     switch ([self arrowDirection]) {
         case UIPopoverArrowDirectionAny:
         case UIPopoverArrowDirectionUnknown:
@@ -161,17 +122,25 @@
             [self addConstraints:[self downConstraints]];
             break;
         case UIPopoverArrowDirectionLeft:
-            leftRightRotation = CGAffineTransformMakeRotation((-90 * M_PI) / 180.0);
-            leftRightRotationAndTranslation = CGAffineTransformTranslate(leftRightRotation, 0, ([self aH] - [self aB])/2);
-            [[self myArrowView] setTransform:leftRightRotationAndTranslation];
+        {
+            CGFloat height = [ReminderSummaryPopoverBackgroundView arrowHeight];
+            CGFloat width = [ReminderSummaryPopoverBackgroundView arrowBase];
+            CGAffineTransform rotation = CGAffineTransformMakeRotation((-90*M_PI)/180.0);
+            CGAffineTransform rotationAndTranslation = CGAffineTransformTranslate(rotation, 0, (height-width)/2);
+            [[self myArrowView] setTransform:rotationAndTranslation];
             [self addConstraints:[self leadingConstraints]];
             break;
+        }
         case UIPopoverArrowDirectionRight:
-            leftRightRotation = CGAffineTransformMakeRotation((90 * M_PI) / 180.0);
-            leftRightRotationAndTranslation = CGAffineTransformTranslate(leftRightRotation, 0, ([self aH] - [self aB])/2);
-            [[self myArrowView] setTransform:leftRightRotationAndTranslation];
+        {
+            CGFloat height = [ReminderSummaryPopoverBackgroundView arrowHeight];
+            CGFloat width = [ReminderSummaryPopoverBackgroundView arrowBase];
+            CGAffineTransform rotation = CGAffineTransformMakeRotation((-90*M_PI)/180.0);
+            CGAffineTransform rotationAndTranslation = CGAffineTransformTranslate(rotation, 0, (height-width)/2);
+            [[self myArrowView] setTransform:rotationAndTranslation];
             [self addConstraints:[self trailingConstraints]];
             break;
+        }
     }
 }
 
@@ -185,33 +154,60 @@
 {
     [[self myArrowViewMaskLayer] removeFromSuperlayer];
     [self setMyArrowViewMaskLayer:nil];
+    CGFloat gap = 4;
+    CGFloat height = [ReminderSummaryPopoverBackgroundView arrowHeight];
+    CGFloat width = [ReminderSummaryPopoverBackgroundView arrowBase];
     UIBezierPath* path = [[UIBezierPath alloc] init];
-    [path moveToPoint:CGPointMake([self aG], [self aH])];
-    [path addLineToPoint:CGPointMake([self aB] / 2, [self aG])];
-    [path addLineToPoint:CGPointMake([self aB], [self aH])];
+    [path moveToPoint:CGPointMake(gap, height - gap)];
+    [path addLineToPoint:CGPointMake(width / 2, gap)];
+    [path addLineToPoint:CGPointMake(width - gap, height - gap)];
+    [path moveToPoint:CGPointMake(gap, height - gap)];
     [path closePath];
     CAShapeLayer* mask = [[CAShapeLayer alloc] init];
     [mask setPath:[path CGPath]];
-    [mask setFillColor:[[UIColor blackColor] CGColor]];
-    [mask setFillRule:kCAFillRuleNonZero];
     [[[self myArrowView] layer] setMask:mask];
+    [mask setPosition:[[[self myArrowView] layer] position]];
     [self setMyArrowViewMaskLayer:mask];
-    [mask setPosition: [[[self myArrowView] layer] position]];
 }
 
-- (CGFloat)aG;
+// MARK: Required of Implementers
+
++ (UIEdgeInsets)contentViewInsets;
 {
-    return 2;
+    return UIEdgeInsetsMake(0, 0, 0, 0);
+}
++ (CGFloat)arrowHeight;
+{
+    return 50;
+}
++ (CGFloat)arrowBase;
+{
+    return 120;
+}
+- (CGFloat)arrowOffset;
+{
+    return _arrowOffset;
+}
+- (UIPopoverArrowDirection)arrowDirection;
+{
+    return _arrowDirection;
+}
+- (void)setArrowOffset:(CGFloat)arrowOffset;
+{
+    _arrowOffset = arrowOffset;
+    [self updateArrowConstraintsForOffset];
+}
+- (void)setArrowDirection:(UIPopoverArrowDirection)arrowDirection;
+{
+    _arrowDirection = arrowDirection;
+    [self enableDisableConstraintsForArrowDirection];
 }
 
-- (CGFloat)aH;
-{
-    return [ReminderSummaryPopoverBackgroundView arrowHeight] - [self aG];
-}
+// MARK: Sneakiness to get desired look
 
-- (CGFloat)aB;
+- (CGFloat)_shadowOpacity;
 {
-    return [ReminderSummaryPopoverBackgroundView arrowBase] - [self aG];
+    return 0.2;
 }
 
 @end
