@@ -29,8 +29,13 @@
     UIPopoverArrowDirection _arrowDirection;
 }
 
-@property (nonatomic, weak) UIView* myArrowView;
-@property (nonatomic, weak) NSLayoutConstraint* myArrowHorizontalOffsetConstraint;
+@property (nonatomic, weak) UIView*_Nullable myArrowView;
+@property (nonatomic, weak) NSLayoutConstraint*_Nullable horizontalArrowConstraint;
+@property (nonatomic, weak) NSLayoutConstraint*_Nullable verticalArrowConstraint;
+@property (nonatomic, strong) NSArray<NSLayoutConstraint*>*_Nonnull upConstraints;
+@property (nonatomic, strong) NSArray<NSLayoutConstraint*>*_Nonnull downConstraints;
+@property (nonatomic, strong) NSArray<NSLayoutConstraint*>*_Nonnull leadingConstraints;
+@property (nonatomic, strong) NSArray<NSLayoutConstraint*>*_Nonnull trailingConstraints;
 
 @end
 
@@ -63,8 +68,7 @@
 - (void)setArrowOffset:(CGFloat)arrowOffset;
 {
     _arrowOffset = arrowOffset;
-    [[self myArrowHorizontalOffsetConstraint] setConstant:arrowOffset];
-    [self setNeedsLayout];
+    [self updateArrowConstraintsForOffset];
 }
 - (UIPopoverArrowDirection)arrowDirection;
 {
@@ -73,6 +77,7 @@
 - (void)setArrowDirection:(UIPopoverArrowDirection)arrowDirection;
 {
     _arrowDirection = arrowDirection;
+    [self enableDisableConstraintsForArrowDirection];
 }
 
 // MARK: Sneakiness to get desired look
@@ -87,6 +92,8 @@
     [super didMoveToWindow];
     if (![self myArrowView]) {
         [self configureMyArrowView];
+        [self enableDisableConstraintsForArrowDirection];
+        [self updateArrowConstraintsForOffset];
     }
     [[self layer] setBorderColor:[[UIColor blackColor] CGColor]];
     [[self layer] setBorderWidth:1];
@@ -99,14 +106,57 @@
     [self setMyArrowView:view];
     [view setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addSubview:view];
-    NSLayoutConstraint* horizontalOffsetConstraint = [[view centerXAnchor] constraintEqualToAnchor:[self centerXAnchor] constant:[self arrowOffset]];
-    [self setMyArrowHorizontalOffsetConstraint:horizontalOffsetConstraint];
     [self addConstraints:@[
                            [[view widthAnchor] constraintEqualToConstant:40],
                            [[view heightAnchor] constraintEqualToConstant:40],
-                           horizontalOffsetConstraint,
-                           [[view topAnchor] constraintEqualToAnchor:[self topAnchor] constant:0]
                            ]];
+    NSLayoutConstraint* upDownSlide = [[view centerXAnchor] constraintEqualToAnchor:[self centerXAnchor]];
+    NSLayoutConstraint* leftRightSlide = [[view centerYAnchor] constraintEqualToAnchor:[self centerYAnchor]];
+    NSLayoutConstraint* upAttach = [[view topAnchor] constraintEqualToAnchor:[self topAnchor]];
+    NSLayoutConstraint* downAttach = [[view bottomAnchor] constraintEqualToAnchor:[self bottomAnchor]];
+    NSLayoutConstraint* leadAttach = [[view leadingAnchor] constraintEqualToAnchor:[self leadingAnchor]];
+    NSLayoutConstraint* trailAttach = [[view trailingAnchor] constraintEqualToAnchor:[self trailingAnchor]];
+    [self setUpConstraints:@[upDownSlide, upAttach]];
+    [self setDownConstraints:@[upDownSlide, downAttach]];
+    [self setLeadingConstraints:@[leadAttach, leftRightSlide]];
+    [self setTrailingConstraints:@[trailAttach, leftRightSlide]];
+    [self setHorizontalArrowConstraint:leftRightSlide];
+    [self setVerticalArrowConstraint:upDownSlide];
+}
+
+- (void)enableDisableConstraintsForArrowDirection;
+{
+    // if the arrow view has not been configured yet, bail
+    if (![self myArrowView]) { return; }
+
+    [self removeConstraints:[self upConstraints]];
+    [self removeConstraints:[self downConstraints]];
+    [self removeConstraints:[self leadingConstraints]];
+    [self removeConstraints:[self trailingConstraints]];
+    switch ([self arrowDirection]) {
+        case UIPopoverArrowDirectionAny:
+        case UIPopoverArrowDirectionUnknown:
+            assert(NO);
+            break;
+        case UIPopoverArrowDirectionUp:
+            [self addConstraints:[self upConstraints]];
+            break;
+        case UIPopoverArrowDirectionDown:
+            [self addConstraints:[self downConstraints]];
+            break;
+        case UIPopoverArrowDirectionLeft:
+            [self addConstraints:[self leadingConstraints]];
+            break;
+        case UIPopoverArrowDirectionRight:
+            [self addConstraints:[self trailingConstraints]];
+            break;
+    }
+}
+
+- (void)updateArrowConstraintsForOffset;
+{
+    [[self horizontalArrowConstraint] setConstant:[self arrowOffset]];
+    [[self verticalArrowConstraint] setConstant:[self arrowOffset]];
 }
 
 @end
