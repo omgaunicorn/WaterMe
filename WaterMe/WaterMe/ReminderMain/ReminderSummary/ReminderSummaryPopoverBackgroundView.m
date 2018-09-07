@@ -135,7 +135,7 @@
         {
             CGFloat height = [ReminderSummaryPopoverBackgroundView arrowHeight];
             CGFloat width = [ReminderSummaryPopoverBackgroundView arrowBase];
-            CGAffineTransform rotation = CGAffineTransformMakeRotation((-90*M_PI)/180.0);
+            CGAffineTransform rotation = CGAffineTransformMakeRotation((90*M_PI)/180.0);
             CGAffineTransform rotationAndTranslation = CGAffineTransformTranslate(rotation, 0, (height-width)/2);
             [[self myArrowView] setTransform:rotationAndTranslation];
             [self addConstraints:[self trailingConstraints]];
@@ -154,17 +154,22 @@
 {
     [[self myArrowViewMaskLayer] removeFromSuperlayer];
     [self setMyArrowViewMaskLayer:nil];
-    CGFloat gap = 4;
+    CGFloat strokeWidth = 8;
+    CGFloat gap = 4 + (strokeWidth / 2);
     CGFloat height = [ReminderSummaryPopoverBackgroundView arrowHeight];
     CGFloat width = [ReminderSummaryPopoverBackgroundView arrowBase];
     UIBezierPath* path = [[UIBezierPath alloc] init];
     [path moveToPoint:CGPointMake(gap, height - gap)];
     [path addLineToPoint:CGPointMake(width / 2, gap)];
     [path addLineToPoint:CGPointMake(width - gap, height - gap)];
-    [path moveToPoint:CGPointMake(gap, height - gap)];
+    [path addLineToPoint:CGPointMake(gap, height - gap)];
     [path closePath];
     CAShapeLayer* mask = [[CAShapeLayer alloc] init];
     [mask setPath:[path CGPath]];
+    [mask setLineJoin:kCALineJoinRound];
+    [mask setLineCap:kCALineCapRound];
+    [mask setLineWidth:strokeWidth];
+    [mask setStrokeColor:[[UIColor blackColor] CGColor]];
     [[[self myArrowView] layer] setMask:mask];
     [mask setPosition:[[[self myArrowView] layer] position]];
     [self setMyArrowViewMaskLayer:mask];
@@ -182,7 +187,7 @@
 }
 + (CGFloat)arrowBase;
 {
-    return 120;
+    return 80;
 }
 - (CGFloat)arrowOffset;
 {
@@ -207,7 +212,7 @@
 
 - (CGFloat)_shadowOpacity;
 {
-    return 0.2;
+    return 0.1;
 }
 
 @end

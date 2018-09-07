@@ -47,7 +47,6 @@ class ReminderSummaryViewController: UIViewController {
         vc.popoverPresentationController?.popoverBackgroundViewClass = ReminderSummaryPopoverBackgroundView.self
         vc.popoverPresentationController?.sourceView = sourceView
         vc.popoverPresentationController?.sourceRect = UIAlertController.sourceRect(from: sourceView)
-        vc.popoverPresentationController?.permittedArrowDirections = [.up, .down]
         // configure needed properties
         vc.completion = completion
         vc.reminderResult = basicController.reminder(matching: reminderID)
