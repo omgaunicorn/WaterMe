@@ -420,3 +420,16 @@ extension UITableView: ItemAndSectionable {
         return IndexPath(row: lastRow, section: lastSection)
     }
 }
+
+extension UIView {
+    func maxCornerRadius(withDesiredRadius desiredRadius: CGFloat) -> CGFloat {
+        let height = self.frame.height
+        let radius: CGFloat
+        if height / 2 > desiredRadius {
+            radius = desiredRadius
+        } else {
+            radius = height / 2
+        }
+        return radius
+    }
+}

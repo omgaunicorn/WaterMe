@@ -60,7 +60,7 @@ extension ReminderVessel {
 extension UIApplication {
     static let style_animationDurationLong: TimeInterval = 1.2
     static let style_animationDurationNormal: TimeInterval = 0.3
-    static let style_cornerRadius: CGFloat = 8
+    static let style_cornerRadius: CGFloat = 12
     class func style_configure() {
         UIView.appearance().tintColor = Style.Color.tint
         UIView.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = nil
@@ -68,6 +68,17 @@ extension UIApplication {
         UIVisualEffectView.appearance(whenContainedInInstancesOf: [CropViewController.self]).backgroundColor = nil
         UIVisualEffectView.appearance().backgroundColor = Style.Color.visuelEffectViewBackground
     }
+}
+
+extension UIView {
+    var style_maxCornerRadius: CGFloat {
+        return self.maxCornerRadius(withDesiredRadius: UIApplication.style_cornerRadius)
+    }
+}
+
+extension ReminderSummaryViewController {
+    static let style_leadingTrailingPadding: CGFloat = 8
+    static let style_tableViewSectionGap: CGFloat = 4
 }
 
 extension DragTargetInstructionalView {

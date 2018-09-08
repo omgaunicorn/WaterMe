@@ -55,18 +55,19 @@ class ReminderSummaryViewController: UIViewController {
     }
 
     @IBOutlet private weak var darkBackgroundView: UIView?
-    private var isPresentedAsPopover = false
     @IBOutlet var tableViewControllerLeadingTrailingConstraints: [NSLayoutConstraint]?
+    
+    private var isPresentedAsPopover = false
     private var tableViewControllerEdgeInsets: UIEdgeInsets {
         let number = self.tableViewControllerLeadingTrailingConstraintConstant
-        return UIEdgeInsets(top: 0, left: 0, bottom: number, right: 0)
+        return UIEdgeInsets(top: number, left: 0, bottom: number, right: 0)
     }
     private var tableViewControllerLeadingTrailingConstraintConstant: CGFloat {
         switch self.isPresentedAsPopover {
         case true:
             return 0
         case false:
-            return 8
+            return type(of: self).style_leadingTrailingPadding
         }
     }
     private var darkBackgroundViewAlpha: CGFloat {
@@ -92,31 +93,23 @@ class ReminderSummaryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
-        self.darkBackgroundView?.alpha = 0
-        self.tableViewController!.tableView!.contentInset = self.tableViewControllerEdgeInsets
-        self.tableViewController!.tableView!.scrollIndicatorInsets = self.tableViewControllerEdgeInsets
-        self.tableViewControllerLeadingTrailingConstraints!.forEach() { c in
-            c.constant = self.tableViewControllerLeadingTrailingConstraintConstant
-        }
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        UIView.style_animateNormal() {
-            self.darkBackgroundView?.alpha = self.darkBackgroundViewAlpha
-        }
+        self.updateViewForPresentation()
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { _ in
-            self.darkBackgroundView?.alpha = self.darkBackgroundViewAlpha
-            self.tableViewController!.tableView!.contentInset = self.tableViewControllerEdgeInsets
-            self.tableViewController!.tableView!.scrollIndicatorInsets = self.tableViewControllerEdgeInsets
-            self.tableViewControllerLeadingTrailingConstraints!.forEach() { c in
-                c.constant = self.tableViewControllerLeadingTrailingConstraintConstant
-            }
+            self.updateViewForPresentation()
         }, completion: nil)
+    }
+
+    private func updateViewForPresentation() {
+        self.darkBackgroundView?.alpha = self.darkBackgroundViewAlpha
+        self.tableViewController?.tableView?.contentInset = self.tableViewControllerEdgeInsets
+        self.tableViewController?.tableView?.scrollIndicatorInsets = self.tableViewControllerEdgeInsets
+        self.tableViewControllerLeadingTrailingConstraints?.forEach() { c in
+            c.constant = self.tableViewControllerLeadingTrailingConstraintConstant
+        }
     }
 
     private func reminderChanged(_ changes: ObjectChange) {
@@ -156,11 +149,13 @@ extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate
     }
 
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        switch traitCollection.horizontalSizeClass {
-        case .compact:
+        switch (traitCollection.horizontalSizeClass, traitCollection.verticalSizeClass) {
+        case (.compact, _),
+             (.regular, .compact):
             self.isPresentedAsPopover = false
             return .overFullScreen
-        case .regular, .unspecified:
+        case (.regular, _),
+             (.unspecified, _):
             self.isPresentedAsPopover = true
             return controller.presentedViewController.modalPresentationStyle
         }

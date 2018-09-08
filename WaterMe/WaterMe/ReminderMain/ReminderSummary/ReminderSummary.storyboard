@@ -23,7 +23,10 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.12759524828767124" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqe-eg-XH3">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="8" y="0.0" width="359" height="667"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="414" id="dGX-cW-h7q"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="qHn-tg-dfP" kind="embed" id="hoq-BQ-lhm"/>
                                 </connections>
@@ -33,24 +36,15 @@
                         <constraints>
                             <constraint firstItem="KYc-XF-kSZ" firstAttribute="top" secondItem="rD6-Rw-Yu3" secondAttribute="top" id="Bgl-gc-kfY"/>
                             <constraint firstItem="KYc-XF-kSZ" firstAttribute="trailing" secondItem="rD6-Rw-Yu3" secondAttribute="trailing" id="CGU-LQ-tjV"/>
-                            <constraint firstAttribute="trailing" secondItem="wqe-eg-XH3" secondAttribute="trailing" id="L1T-9G-zCX"/>
+                            <constraint firstAttribute="trailing" secondItem="wqe-eg-XH3" secondAttribute="trailing" priority="750" constant="8" id="L1T-9G-zCX"/>
                             <constraint firstItem="KYc-XF-kSZ" firstAttribute="bottom" secondItem="rD6-Rw-Yu3" secondAttribute="bottom" id="LS9-Ca-czr"/>
                             <constraint firstItem="wqe-eg-XH3" firstAttribute="top" secondItem="rD6-Rw-Yu3" secondAttribute="top" id="bGB-1F-2b3"/>
                             <constraint firstAttribute="bottom" secondItem="wqe-eg-XH3" secondAttribute="bottom" id="cNC-pI-Wjc"/>
                             <constraint firstItem="KYc-XF-kSZ" firstAttribute="leading" secondItem="rD6-Rw-Yu3" secondAttribute="leading" id="fU2-D2-GaF"/>
-                            <constraint firstItem="wqe-eg-XH3" firstAttribute="leading" secondItem="rD6-Rw-Yu3" secondAttribute="leading" id="n25-8E-4aP"/>
+                            <constraint firstItem="wqe-eg-XH3" firstAttribute="leading" secondItem="rD6-Rw-Yu3" secondAttribute="leading" priority="750" constant="8" id="n25-8E-4aP"/>
+                            <constraint firstItem="wqe-eg-XH3" firstAttribute="centerX" secondItem="rD6-Rw-Yu3" secondAttribute="centerX" id="ybf-IH-QwC"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KXe-q8-z2a"/>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="KYc-XF-kSZ"/>
-                            </mask>
-                        </variation>
-                        <variation key="widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="KYc-XF-kSZ"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="darkBackgroundView" destination="KYc-XF-kSZ" id="YSQ-qd-Cg4"/>
@@ -67,15 +61,15 @@
             <objects>
                 <tableViewController id="qHn-tg-dfP" customClass="ReminderSummaryTableViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uBY-ER-faq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="359" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderVesselIconTableViewCell" rowHeight="180" id="93v-73-QgQ" customClass="ReminderSummaryReminderVesselIconTableViewCell" customModule="WaterMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="180"/>
+                                <rect key="frame" x="0.0" y="28" width="359" height="180"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="93v-73-QgQ" id="IWG-YL-vdB">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="359" height="180"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P4d-0g-nOS">
@@ -115,10 +109,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="InfoCell" rowHeight="269" id="AHa-gZ-yVa" customClass="InfoTableViewCell" customModule="WaterMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="208" width="375" height="269"/>
+                                <rect key="frame" x="0.0" y="208" width="359" height="269"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AHa-gZ-yVa" id="H7r-BY-79Y">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="269"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="359" height="269"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cTE-ry-zj7">
@@ -233,10 +227,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoteCell" rowHeight="72" id="tBT-LD-nQ4" customClass="ButtonTableViewCell" customModule="WaterMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="477" width="375" height="72"/>
+                                <rect key="frame" x="0.0" y="477" width="359" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tBT-LD-nQ4" id="WnK-IU-0FY">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="359" height="72"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4D3-Vs-ffm">
@@ -273,10 +267,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ActionCell" rowHeight="72" id="uLw-Kh-tyG" customClass="ButtonTableViewCell" customModule="WaterMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="549" width="375" height="72"/>
+                                <rect key="frame" x="0.0" y="549" width="359" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="uLw-Kh-tyG" id="7m3-mO-soX">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="359" height="72"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O8u-wo-2KD">
@@ -313,10 +307,10 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CancelCell" rowHeight="72" id="RFT-nB-LQK" customClass="ButtonTableViewCell" customModule="WaterMe" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="621" width="375" height="72"/>
+                                <rect key="frame" x="0.0" y="621" width="359" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RFT-nB-LQK" id="GQg-5m-ej1">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="72"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="359" height="72"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W73-2L-oTa">

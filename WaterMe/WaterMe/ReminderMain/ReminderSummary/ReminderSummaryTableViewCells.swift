@@ -30,14 +30,16 @@ class RoundedBackgroundViewTableViewCell: UITableViewCell {
 
     override func layoutSubviews() {
         if let crv = self.cornerRadiusView {
-            let height = crv.frame.height
-            let desiredRadius = UIApplication.style_cornerRadius
-            crv.layer.cornerRadius = minMaxCornerRadius(withViewHeight: height,
-                                                        desiredRadius: desiredRadius)
+            crv.layer.cornerRadius = crv.style_maxCornerRadius
             crv.clipsToBounds = true
             self.locationInGroup.configureCornerMask(on: crv.layer)
         }
         super.layoutSubviews()
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.locationInGroup = .alone
     }
 
 }
@@ -46,6 +48,10 @@ class ButtonTableViewCell: RoundedBackgroundViewTableViewCell {
 
     @IBOutlet private(set) weak var label: UILabel?
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.label?.text = nil
+    }
 }
 
 class InfoTableViewCell: RoundedBackgroundViewTableViewCell {
@@ -62,9 +68,13 @@ class InfoTableViewCell: RoundedBackgroundViewTableViewCell {
     @IBOutlet private(set) weak var nextPerformDateLabel: UILabel?
     @IBOutlet private(set) weak var nextPerformDateSublabel: UILabel?
 
-    override func didMoveToWindow() {
-        super.didMoveToWindow()
-        self.locationInGroup = .alone
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.vesselNameLabel?.text = nil
+        self.vesselNameSublabel?.text = nil
+        self.reminderKindSublabel?.text = nil
+        self.lastPerformDateLabel?.text = nil
+        self.nextPerformDateSublabel?.text = nil
     }
 }
 
@@ -77,13 +87,15 @@ class ReminderSummaryReminderVesselIconTableViewCell: ReminderVesselIconTableVie
         super.layoutSubviews()
 
         if let crv = self.cornerRadiusView {
-            let height = crv.frame.height
-            let desiredRadius = UIApplication.style_cornerRadius
-            crv.layer.cornerRadius = minMaxCornerRadius(withViewHeight: height,
-                                                        desiredRadius: desiredRadius)
+            crv.layer.cornerRadius = crv.style_maxCornerRadius
             crv.clipsToBounds = true
             self.locationInGroup.configureCornerMask(on: crv.layer)
         }
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.locationInGroup = .alone
     }
 }
 
@@ -114,14 +126,4 @@ enum VerticalLocationInGroup {
             ]
         }
     }
-}
-
-func minMaxCornerRadius(withViewHeight height: CGFloat, desiredRadius: CGFloat) -> CGFloat {
-    let radius: CGFloat
-    if height / 2 > desiredRadius {
-        radius = desiredRadius
-    } else {
-        radius = height / 2
-    }
-    return radius
 }

@@ -59,7 +59,7 @@ class ReminderSummaryTableViewController: UITableViewController {
         case 0:
             return 0
         default:
-            return 8
+            return ReminderSummaryViewController.style_tableViewSectionGap
         }
     }
 
