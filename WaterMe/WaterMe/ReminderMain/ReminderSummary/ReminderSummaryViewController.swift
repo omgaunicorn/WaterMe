@@ -55,7 +55,28 @@ class ReminderSummaryViewController: UIViewController {
     }
 
     @IBOutlet private weak var darkBackgroundView: UIView?
-    private(set) var isPresentedAsPopover = false
+    private var isPresentedAsPopover = false
+    @IBOutlet var tableViewControllerLeadingTrailingConstraints: [NSLayoutConstraint]?
+    private var tableViewControllerEdgeInsets: UIEdgeInsets {
+        let number = self.tableViewControllerLeadingTrailingConstraintConstant
+        return UIEdgeInsets(top: 0, left: 0, bottom: number, right: 0)
+    }
+    private var tableViewControllerLeadingTrailingConstraintConstant: CGFloat {
+        switch self.isPresentedAsPopover {
+        case true:
+            return 0
+        case false:
+            return 8
+        }
+    }
+    private var darkBackgroundViewAlpha: CGFloat {
+        switch self.isPresentedAsPopover {
+        case true:
+            return 0
+        case false:
+            return 1
+        }
+    }
 
     private var _preferredContentSize = CGSize(width: 320, height: 1024)
     override var preferredContentSize: CGSize {
@@ -70,21 +91,31 @@ class ReminderSummaryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.darkBackgroundView?.alpha = 0
         self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
+        self.darkBackgroundView?.alpha = 0
+        self.tableViewController!.tableView!.contentInset = self.tableViewControllerEdgeInsets
+        self.tableViewController!.tableView!.scrollIndicatorInsets = self.tableViewControllerEdgeInsets
+        self.tableViewControllerLeadingTrailingConstraints!.forEach() { c in
+            c.constant = self.tableViewControllerLeadingTrailingConstraintConstant
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         UIView.style_animateNormal() {
-            self.darkBackgroundView?.alpha = self.isPresentedAsPopover ? 0 : 1
+            self.darkBackgroundView?.alpha = self.darkBackgroundViewAlpha
         }
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { _ in
-            self.darkBackgroundView?.alpha = self.isPresentedAsPopover ? 0 : 1
+            self.darkBackgroundView?.alpha = self.darkBackgroundViewAlpha
+            self.tableViewController!.tableView!.contentInset = self.tableViewControllerEdgeInsets
+            self.tableViewController!.tableView!.scrollIndicatorInsets = self.tableViewControllerEdgeInsets
+            self.tableViewControllerLeadingTrailingConstraints!.forEach() { c in
+                c.constant = self.tableViewControllerLeadingTrailingConstraintConstant
+            }
         }, completion: nil)
     }
 

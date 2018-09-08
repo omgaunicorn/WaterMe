@@ -31,14 +31,14 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="KYc-XF-kSZ" firstAttribute="top" secondItem="rD6-Rw-Yu3" secondAttribute="top" id="Bgl-gc-kfY"/>
+                            <constraint firstItem="KYc-XF-kSZ" firstAttribute="trailing" secondItem="rD6-Rw-Yu3" secondAttribute="trailing" id="CGU-LQ-tjV"/>
                             <constraint firstAttribute="trailing" secondItem="wqe-eg-XH3" secondAttribute="trailing" id="L1T-9G-zCX"/>
-                            <constraint firstItem="KYc-XF-kSZ" firstAttribute="centerX" secondItem="wqe-eg-XH3" secondAttribute="centerX" id="NPR-Hu-Xah"/>
-                            <constraint firstItem="KYc-XF-kSZ" firstAttribute="width" secondItem="wqe-eg-XH3" secondAttribute="width" id="ZnR-EZ-gIB"/>
+                            <constraint firstItem="KYc-XF-kSZ" firstAttribute="bottom" secondItem="rD6-Rw-Yu3" secondAttribute="bottom" id="LS9-Ca-czr"/>
                             <constraint firstItem="wqe-eg-XH3" firstAttribute="top" secondItem="rD6-Rw-Yu3" secondAttribute="top" id="bGB-1F-2b3"/>
                             <constraint firstAttribute="bottom" secondItem="wqe-eg-XH3" secondAttribute="bottom" id="cNC-pI-Wjc"/>
-                            <constraint firstItem="KYc-XF-kSZ" firstAttribute="centerY" secondItem="wqe-eg-XH3" secondAttribute="centerY" id="d6B-qQ-tnh"/>
+                            <constraint firstItem="KYc-XF-kSZ" firstAttribute="leading" secondItem="rD6-Rw-Yu3" secondAttribute="leading" id="fU2-D2-GaF"/>
                             <constraint firstItem="wqe-eg-XH3" firstAttribute="leading" secondItem="rD6-Rw-Yu3" secondAttribute="leading" id="n25-8E-4aP"/>
-                            <constraint firstItem="KYc-XF-kSZ" firstAttribute="height" secondItem="wqe-eg-XH3" secondAttribute="height" id="oz2-dX-7mn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KXe-q8-z2a"/>
                         <variation key="default">
@@ -54,6 +54,8 @@
                     </view>
                     <connections>
                         <outlet property="darkBackgroundView" destination="KYc-XF-kSZ" id="YSQ-qd-Cg4"/>
+                        <outletCollection property="tableViewControllerLeadingTrailingConstraints" destination="L1T-9G-zCX" collectionClass="NSMutableArray" id="av8-Rw-bva"/>
+                        <outletCollection property="tableViewControllerLeadingTrailingConstraints" destination="n25-8E-4aP" collectionClass="NSMutableArray" id="Ae2-ut-O9H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FMG-73-CFq" userLabel="First Responder" sceneMemberID="firstResponder"/>
