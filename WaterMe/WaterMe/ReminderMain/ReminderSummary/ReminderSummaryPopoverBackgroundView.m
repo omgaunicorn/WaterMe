@@ -162,12 +162,10 @@
     [path moveToPoint:CGPointMake(gap, height - gap)];
     [path addLineToPoint:CGPointMake(width / 2, gap)];
     [path addLineToPoint:CGPointMake(width - gap, height - gap)];
-    [path addLineToPoint:CGPointMake(gap, height - gap)];
     [path closePath];
     CAShapeLayer* mask = [[CAShapeLayer alloc] init];
     [mask setPath:[path CGPath]];
     [mask setLineJoin:kCALineJoinRound];
-    [mask setLineCap:kCALineCapRound];
     [mask setLineWidth:strokeWidth];
     [mask setStrokeColor:[[UIColor blackColor] CGColor]];
     [[[self myArrowView] layer] setMask:mask];

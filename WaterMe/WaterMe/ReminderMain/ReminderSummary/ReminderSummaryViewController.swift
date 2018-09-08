@@ -54,6 +54,9 @@ class ReminderSummaryViewController: UIViewController {
         return vc
     }
 
+    @IBOutlet private weak var darkBackgroundView: UIView?
+    private(set) var isPresentedAsPopover = false
+
     private var _preferredContentSize = CGSize(width: 320, height: 1024)
     override var preferredContentSize: CGSize {
         get { return _preferredContentSize }
@@ -67,8 +70,22 @@ class ReminderSummaryViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.darkBackgroundView?.alpha = 0
         self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIView.style_animateNormal() {
+            self.darkBackgroundView?.alpha = self.isPresentedAsPopover ? 0 : 1
+        }
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { _ in
+            self.darkBackgroundView?.alpha = self.isPresentedAsPopover ? 0 : 1
+        }, completion: nil)
     }
 
     private func reminderChanged(_ changes: ObjectChange) {
@@ -105,5 +122,16 @@ extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate
     func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
         self.completion(.cancel, self.reminderID, self)
         return false
+    }
+
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        switch traitCollection.horizontalSizeClass {
+        case .compact:
+            self.isPresentedAsPopover = false
+            return .overFullScreen
+        case .regular, .unspecified:
+            self.isPresentedAsPopover = true
+            return controller.presentedViewController.modalPresentationStyle
+        }
     }
 }

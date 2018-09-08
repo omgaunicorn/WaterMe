@@ -18,8 +18,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KYc-XF-kSZ">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.12759524828767124" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wqe-eg-XH3">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <connections>
                                     <segue destination="qHn-tg-dfP" kind="embed" id="hoq-BQ-lhm"/>
                                 </connections>
@@ -27,13 +31,30 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="KXe-q8-z2a" firstAttribute="trailing" secondItem="wqe-eg-XH3" secondAttribute="trailing" id="L1T-9G-zCX"/>
-                            <constraint firstItem="wqe-eg-XH3" firstAttribute="top" secondItem="KXe-q8-z2a" secondAttribute="top" id="bGB-1F-2b3"/>
-                            <constraint firstItem="KXe-q8-z2a" firstAttribute="bottom" secondItem="wqe-eg-XH3" secondAttribute="bottom" id="cNC-pI-Wjc"/>
-                            <constraint firstItem="wqe-eg-XH3" firstAttribute="leading" secondItem="KXe-q8-z2a" secondAttribute="leading" id="n25-8E-4aP"/>
+                            <constraint firstAttribute="trailing" secondItem="wqe-eg-XH3" secondAttribute="trailing" id="L1T-9G-zCX"/>
+                            <constraint firstItem="KYc-XF-kSZ" firstAttribute="centerX" secondItem="wqe-eg-XH3" secondAttribute="centerX" id="NPR-Hu-Xah"/>
+                            <constraint firstItem="KYc-XF-kSZ" firstAttribute="width" secondItem="wqe-eg-XH3" secondAttribute="width" id="ZnR-EZ-gIB"/>
+                            <constraint firstItem="wqe-eg-XH3" firstAttribute="top" secondItem="rD6-Rw-Yu3" secondAttribute="top" id="bGB-1F-2b3"/>
+                            <constraint firstAttribute="bottom" secondItem="wqe-eg-XH3" secondAttribute="bottom" id="cNC-pI-Wjc"/>
+                            <constraint firstItem="KYc-XF-kSZ" firstAttribute="centerY" secondItem="wqe-eg-XH3" secondAttribute="centerY" id="d6B-qQ-tnh"/>
+                            <constraint firstItem="wqe-eg-XH3" firstAttribute="leading" secondItem="rD6-Rw-Yu3" secondAttribute="leading" id="n25-8E-4aP"/>
+                            <constraint firstItem="KYc-XF-kSZ" firstAttribute="height" secondItem="wqe-eg-XH3" secondAttribute="height" id="oz2-dX-7mn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="KXe-q8-z2a"/>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="KYc-XF-kSZ"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="KYc-XF-kSZ"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="darkBackgroundView" destination="KYc-XF-kSZ" id="YSQ-qd-Cg4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FMG-73-CFq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -44,7 +65,7 @@
             <objects>
                 <tableViewController id="qHn-tg-dfP" customClass="ReminderSummaryTableViewController" customModule="WaterMe" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="uBY-ER-faq">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="647"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>

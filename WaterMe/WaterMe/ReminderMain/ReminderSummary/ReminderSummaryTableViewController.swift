@@ -27,6 +27,7 @@ import RealmSwift
 import Result
 
 protocol ReminderSummaryTableViewControllerDelegate: class {
+    var isPresentedAsPopover: Bool { get }
     var reminderResult: Result<Reminder, RealmError>! { get }
     func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController)
 }
@@ -36,13 +37,33 @@ class ReminderSummaryTableViewController: UITableViewController {
     private let timeAgoDateFormatter = Formatter.newTimeAgoFormatter
     private let dueDateFormatter = Formatter.newDueDateFormatter
 
+    private let footerView = UIView()
+    private let headerView = UIView()
+
     weak var delegate: ReminderSummaryTableViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.register(TransparentTableViewHeaderFooterView.self,
                                 forHeaderFooterViewReuseIdentifier: TransparentTableViewHeaderFooterView.reuseID)
-        self.tableView.tableFooterView = UIView()
+        self.tableView.tableFooterView = self.footerView
+        self.tableView.tableHeaderView = self.headerView
+        self.footerView.frame.size.height = self.delegate!.isPresentedAsPopover ? 0 : 20
+        self.headerView.frame.size.height = self.delegate!.isPresentedAsPopover ? 0 : 20
+        guard let lastIndexPath = self.tableView.lastIndexPath else { return }
+        self.tableView.scrollToRow(at: lastIndexPath, at: .top, animated: false)
+    }
+
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        coordinator.animate(alongsideTransition: { _ in
+            self.footerView.frame.size.height = self.delegate!.isPresentedAsPopover ? 0 : 20
+            self.headerView.frame.size.height = self.delegate!.isPresentedAsPopover ? 0 : 20
+        }, completion: { _ in
+            self.tableView.reloadData()
+            guard let lastIndexPath = self.tableView.lastIndexPath else { return }
+            self.tableView.scrollToRow(at: lastIndexPath, at: .top, animated: false)
+        })
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {

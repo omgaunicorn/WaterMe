@@ -411,4 +411,12 @@ extension UITableView: ItemAndSectionable {
     public func numberOfItems(inSection section: Int) -> Int {
         return self.numberOfRows(inSection: section)
     }
+
+    public var lastIndexPath: IndexPath? {
+        let lastSection = self.numberOfSections - 1
+        guard lastSection >= 0 else { return nil }
+        let lastRow = self.numberOfRows(inSection: lastSection) - 1
+        guard lastRow >= 0 else { return nil }
+        return IndexPath(row: lastRow, section: lastSection)
+    }
 }
