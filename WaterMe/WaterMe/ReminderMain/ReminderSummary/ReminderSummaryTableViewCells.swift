@@ -30,7 +30,7 @@ class RoundedBackgroundViewTableViewCell: UITableViewCell {
 
     override func layoutSubviews() {
         if let crv = self.cornerRadiusView {
-            crv.layer.cornerRadius = crv.style_maxCornerRadius
+            crv.style_setCornerRadius()
             crv.clipsToBounds = true
             self.locationInGroup.configureCornerMask(on: crv.layer)
         }
@@ -87,7 +87,7 @@ class ReminderSummaryReminderVesselIconTableViewCell: ReminderVesselIconTableVie
         super.layoutSubviews()
 
         if let crv = self.cornerRadiusView {
-            crv.layer.cornerRadius = crv.style_maxCornerRadius
+            crv.style_setCornerRadius()
             crv.clipsToBounds = true
             self.locationInGroup.configureCornerMask(on: crv.layer)
         }

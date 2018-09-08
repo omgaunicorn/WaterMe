@@ -71,8 +71,8 @@ extension UIApplication {
 }
 
 extension UIView {
-    var style_maxCornerRadius: CGFloat {
-        return self.maxCornerRadius(withDesiredRadius: UIApplication.style_cornerRadius)
+    func style_setCornerRadius() {
+        self.layer.cornerRadius = self.maxCornerRadius(withDesiredRadius: UIApplication.style_cornerRadius)
     }
 }
 
@@ -121,7 +121,7 @@ extension ReminderVesselIconTableViewCell {
 }
 
 extension UICollectionReusableView {
-    static let style_backgroundViewCornerRadius: CGFloat = 6
+    static let style_backgroundViewCornerRadius: CGFloat = UIApplication.style_cornerRadius //6
 }
 
 enum Style {

@@ -423,13 +423,14 @@ extension UITableView: ItemAndSectionable {
 
 extension UIView {
     func maxCornerRadius(withDesiredRadius desiredRadius: CGFloat) -> CGFloat {
+        let width = self.frame.width
         let height = self.frame.height
-        let radius: CGFloat
-        if height / 2 > desiredRadius {
-            radius = desiredRadius
+        let restrictingDimension = width < height ? width : height
+        let halfRestrictingDimension = restrictingDimension / 2
+        if halfRestrictingDimension > desiredRadius {
+            return desiredRadius
         } else {
-            radius = height / 2
+            return halfRestrictingDimension
         }
-        return radius
     }
 }

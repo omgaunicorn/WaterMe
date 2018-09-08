@@ -46,8 +46,8 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         self.smallEmojiImageView?.size = .small
         self.smallEmojiImageView?.ring = false
         self.emojiImageWidthConstraint?.constant = type(of: self).style_emojiImageViewWidth
-        self.selectedBackgroundView?.layer.cornerRadius = UIApplication.style_cornerRadius
-        self.justPerformedView?.layer.cornerRadius = UIApplication.style_cornerRadius
+        self.selectedBackgroundView?.style_setCornerRadius()
+        self.justPerformedView?.style_setCornerRadius()
         
         self.reset()
     }

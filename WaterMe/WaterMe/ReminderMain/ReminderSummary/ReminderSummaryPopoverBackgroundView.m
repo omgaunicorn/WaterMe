@@ -154,7 +154,7 @@
 {
     [[self myArrowViewMaskLayer] removeFromSuperlayer];
     [self setMyArrowViewMaskLayer:nil];
-    CGFloat strokeWidth = 8;
+    CGFloat strokeWidth = 12;
     CGFloat gap = 4 + (strokeWidth / 2);
     CGFloat height = [ReminderSummaryPopoverBackgroundView arrowHeight];
     CGFloat width = [ReminderSummaryPopoverBackgroundView arrowBase];

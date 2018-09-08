@@ -88,7 +88,7 @@ class PurchaseThanksViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.contentView.layer.cornerRadius = UIApplication.style_cornerRadius
+        self.contentView.style_setCornerRadius()
         self.contentView.addSubview(self.cheerView)
         self.contentView.addConstraints([
             self.contentView.leadingAnchor.constraint(equalTo: self.cheerView.leadingAnchor, constant: 0),

@@ -65,7 +65,7 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.contentView?.layer.cornerRadius = UIApplication.style_cornerRadius
+        self.contentView?.style_setCornerRadius()
         self.progressView?.observedProgress = self.migrator.progress
         self.contentView?.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
     }
