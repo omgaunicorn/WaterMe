@@ -92,15 +92,6 @@ class ReminderSummaryViewController: UIViewController {
         self.updateViewForPresentation()
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        // give time for the tableview to layout
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
-            self.tableViewController.updateBottomContentAlignment()
-            self.tableViewController.tableView.scrollToBottom(false)
-        }
-    }
-
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { _ in

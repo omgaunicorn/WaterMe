@@ -78,6 +78,8 @@ extension UIView {
 
 extension ReminderSummaryViewController {
     static let style_leadingTrailingPadding: CGFloat = 8
+    static let style_bottomPadding: CGFloat = style_leadingTrailingPadding
+    static let style_topPadding: CGFloat = style_bottomPadding / 2
     static let style_tableViewSectionGap: CGFloat = 4
 }
 
