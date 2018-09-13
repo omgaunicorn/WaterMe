@@ -28,47 +28,14 @@ import Result
 
 protocol ReminderSummaryTableViewControllerDelegate: class {
     var reminderResult: Result<Reminder, RealmError>! { get }
+    var isPresentedAsPopover: Bool { get }
     func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController)
 }
 
 class ReminderSummaryTableViewController: UITableViewController {
 
-    internal func updateBottomContentAlignment() {
-        // get edge insets to update the tableview with
-        var contentInsets: UIEdgeInsets?
-
-        _ = {
-            // find out if we need to artifically "lower" the content to be bottom aligned
-            let allRowsVisible = self.tableView.allRowsVisible
-            let safeAreaHeight = self.view.safeAreaLayoutGuide.layoutFrame.height
-            let tableContentsHeight = self.tableView.visibleRowsSize.height
-            guard allRowsVisible && safeAreaHeight > tableContentsHeight else { return }
-            let diff = safeAreaHeight - tableContentsHeight
-            contentInsets = UIEdgeInsets(top: diff, left: 0, bottom: 0, right: 0)
-        }()
-
-        _ = {
-            // find out if the OS is already providing bottom and top insets
-            let bottomInset = self.tableView.adjustedContentInset.bottom
-            guard bottomInset == 0 else { return }
-            if var existingInsets = contentInsets {
-                existingInsets.top -= ReminderSummaryViewController.style_bottomPadding
-                existingInsets.bottom += ReminderSummaryViewController.style_bottomPadding
-                contentInsets = existingInsets
-            } else {
-                contentInsets = UIEdgeInsets(top: ReminderSummaryViewController.style_topPadding,
-                                             left: 0,
-                                             bottom: ReminderSummaryViewController.style_bottomPadding,
-                                             right: 0)
-            }
-        }()
-        
-        self.additionalSafeAreaInsets = contentInsets ?? .zero
-    }
-
     private let timeAgoDateFormatter = Formatter.newTimeAgoFormatter
     private let dueDateFormatter = Formatter.newDueDateFormatter
-    private var viewDidLayoutOnce = false
 
     weak var delegate: ReminderSummaryTableViewControllerDelegate?
 
@@ -78,14 +45,6 @@ class ReminderSummaryTableViewController: UITableViewController {
                                 forHeaderFooterViewReuseIdentifier: TransparentTableViewHeaderFooterView.reuseID)
         self.tableView.contentInsetAdjustmentBehavior = .always
         self.tableView.tableFooterView = UIView()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        guard self.viewDidLayoutOnce == false else { return }
-        self.viewDidLayoutOnce = true
-        self.updateBottomContentAlignment()
-        self.tableView.scrollToBottom(false)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {

@@ -57,7 +57,7 @@ class ReminderSummaryViewController: UIViewController {
     @IBOutlet private weak var darkBackgroundView: UIView?
     @IBOutlet var tableViewControllerLeadingTrailingConstraints: [NSLayoutConstraint]?
     
-    private var isPresentedAsPopover = false
+    private(set) var isPresentedAsPopover = false
     private var tableViewControllerLeadingTrailingConstraintConstant: CGFloat {
         switch self.isPresentedAsPopover {
         case true:
@@ -75,10 +75,12 @@ class ReminderSummaryViewController: UIViewController {
         }
     }
 
-    private var _preferredContentSize = CGSize(width: 320, height: 1024)
     override var preferredContentSize: CGSize {
-        get { return _preferredContentSize }
-        set { _preferredContentSize = newValue }
+        get {
+            let size = self.tableViewController?.tableView.visibleRowsSize
+            return size ?? .zero
+        }
+        set { assertionFailure("Not sure why this was set") }
     }
 
     var reminderResult: Result<Reminder, RealmError>!
