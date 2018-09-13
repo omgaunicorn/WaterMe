@@ -408,6 +408,7 @@ enum Either<T, U> {
 extension ReminderGedeg: ItemAndSectionable {}
 extension UICollectionView: ItemAndSectionable {}
 extension UITableView: ItemAndSectionable {
+
     public func numberOfItems(inSection section: Int) -> Int {
         return self.numberOfRows(inSection: section)
     }
@@ -418,6 +419,47 @@ extension UITableView: ItemAndSectionable {
         let lastRow = self.numberOfRows(inSection: lastSection) - 1
         guard lastRow >= 0 else { return nil }
         return IndexPath(row: lastRow, section: lastSection)
+    }
+
+    public var allRowsVisible: Bool {
+        let visibleIndexPaths = self.indexPathsForVisibleRows ?? []
+        guard visibleIndexPaths.isEmpty == false else { return false }
+        let numberOfSections = self.dataSource?.numberOfSections?(in: self) ?? 0
+        guard numberOfSections > 0 else { return false }
+        let numberOfRows = (0..<numberOfSections).reduce(0, +)
+        return numberOfRows == visibleIndexPaths.count
+    }
+
+    public var visibleRowsSize: CGSize {
+        let visibleIndexPaths = self.indexPathsForVisibleRows ?? []
+        guard visibleIndexPaths.isEmpty == false else { return .zero }
+        let sections = Set(visibleIndexPaths.map({ return $0.section }))
+        let sectionHeaderHeights = sections.reduce(0)
+        { (lastValue, section) -> CGFloat in
+            let _sectionView = self.headerView(forSection: section)
+            guard let sectionView = _sectionView else { return lastValue }
+            return lastValue + sectionView.frame.height
+        }
+        let sectionFooterHeights = sections.reduce(0)
+        { (lastValue, section) -> CGFloat in
+            let _sectionView = self.footerView(forSection: section)
+            guard let sectionView = _sectionView else { return lastValue }
+            return lastValue + sectionView.frame.height
+        }
+        let rowHeights = visibleIndexPaths.reduce(0)
+        { (lastValue, indexPath) -> CGFloat in
+            let _cellView = self.cellForRow(at: indexPath)
+            guard let cellView = _cellView else { return lastValue }
+            return lastValue + cellView.frame.height
+        }
+        let width = self.frame.width
+        let height = sectionHeaderHeights + sectionFooterHeights + rowHeights
+        return CGSize(width: width, height: height)
+    }
+
+    public func scrollToBottom(_ animated: Bool) {
+        guard let lastIndexPath = self.lastIndexPath else { return }
+        self.scrollToRow(at: lastIndexPath, at: .top, animated: animated)
     }
 }
 

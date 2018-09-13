@@ -58,10 +58,6 @@ class ReminderSummaryViewController: UIViewController {
     @IBOutlet var tableViewControllerLeadingTrailingConstraints: [NSLayoutConstraint]?
     
     private var isPresentedAsPopover = false
-    private var tableViewControllerEdgeInsets: UIEdgeInsets {
-        let number = self.tableViewControllerLeadingTrailingConstraintConstant
-        return UIEdgeInsets(top: number, left: 0, bottom: number, right: 0)
-    }
     private var tableViewControllerLeadingTrailingConstraintConstant: CGFloat {
         switch self.isPresentedAsPopover {
         case true:
@@ -96,6 +92,15 @@ class ReminderSummaryViewController: UIViewController {
         self.updateViewForPresentation()
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        // give time for the tableview to layout
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            self.tableViewController.updateBottomContentAlignment()
+            self.tableViewController.tableView.scrollToBottom(false)
+        }
+    }
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         coordinator.animate(alongsideTransition: { _ in
@@ -105,8 +110,6 @@ class ReminderSummaryViewController: UIViewController {
 
     private func updateViewForPresentation() {
         self.darkBackgroundView?.alpha = self.darkBackgroundViewAlpha
-        self.tableViewController?.tableView?.contentInset = self.tableViewControllerEdgeInsets
-        self.tableViewController?.tableView?.scrollIndicatorInsets = self.tableViewControllerEdgeInsets
         self.tableViewControllerLeadingTrailingConstraints?.forEach() { c in
             c.constant = self.tableViewControllerLeadingTrailingConstraintConstant
         }

@@ -33,6 +33,16 @@ protocol ReminderSummaryTableViewControllerDelegate: class {
 
 class ReminderSummaryTableViewController: UITableViewController {
 
+    internal func updateBottomContentAlignment() {
+        let allRowsVisible = self.tableView.allRowsVisible
+        let safeAreaHeight = self.view.safeAreaLayoutGuide.layoutFrame.height
+        let tableContentsHeight = self.tableView.visibleRowsSize.height
+        if allRowsVisible && safeAreaHeight > tableContentsHeight {
+            let diff = safeAreaHeight - tableContentsHeight
+            self.tableView.contentInset = UIEdgeInsets(top: diff, left: 0, bottom: 0, right: 0)
+        }
+    }
+
     private let timeAgoDateFormatter = Formatter.newTimeAgoFormatter
     private let dueDateFormatter = Formatter.newDueDateFormatter
 
