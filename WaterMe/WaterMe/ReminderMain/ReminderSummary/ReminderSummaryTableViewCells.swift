@@ -25,6 +25,7 @@ import UIKit
 
 class RoundedBackgroundViewTableViewCell: UITableViewCell {
 
+    @IBOutlet private(set) weak var highlightView: UIView?
     @IBOutlet private(set) weak var cornerRadiusView: UIView?
     @IBOutlet private(set) weak var hairlineView: UIView?
 
@@ -44,11 +45,46 @@ class RoundedBackgroundViewTableViewCell: UITableViewCell {
         self.prepareForReuse()
     }
 
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        let change = {
+            self.highlightView?.alpha = highlighted ?
+                ReminderSummaryViewController.style_tableViewHighlightAlpha : 0
+        }
+        guard animated else {
+            change()
+            return
+        }
+        UIView.style_animateNormal {
+            change()
+        }
+        super.setHighlighted(highlighted, animated: animated)
+    }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        let change = {
+            self.highlightView?.alpha = selected ?
+                ReminderSummaryViewController.style_tableViewHighlightAlpha : 0
+        }
+        guard animated else {
+            change()
+            return
+        }
+        UIView.style_animateNormal {
+            change()
+        }
+        super.setSelected(selected, animated: animated)
+    }
+
     override func layoutSubviews() {
         if let crv = self.cornerRadiusView {
             crv.style_setCornerRadius()
             crv.clipsToBounds = true
             self.locationInGroup.configureCornerMask(on: crv.layer)
+        }
+        if let hlv = self.highlightView {
+            hlv.style_setCornerRadius()
+            hlv.clipsToBounds = true
+            self.locationInGroup.configureCornerMask(on: hlv.layer)
         }
         super.layoutSubviews()
     }
@@ -57,6 +93,8 @@ class RoundedBackgroundViewTableViewCell: UITableViewCell {
         super.prepareForReuse()
         self.locationInGroup = .alone
         self.hairlineView?.backgroundColor = .clear
+        self.highlightView?.backgroundColor = .black
+        self.highlightView?.alpha = 0
     }
 
 }
