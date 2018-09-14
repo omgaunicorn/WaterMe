@@ -149,11 +149,14 @@ class ReminderSummaryTableViewController: UITableViewController {
             return _cell
         case .note:
             let _cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath)
-            let cell = _cell as? ButtonTableViewCell
+            let cell = _cell as? InfoTableViewCell
             cell?.locationInGroup = .alone
-            cell?.label?.attributedText =
+            cell?.noteLabel?.attributedText =
                 NSAttributedString(string: self.delegate?.reminderResult.value?.note ?? "",
-                                   style: .migratorBody)
+                                   style: .textInputTableViewCell)
+            cell?.noteSublabel?.attributedText =
+                NSAttributedString(string: ReminderEditViewController.LocalizedString.sectionTitleNotes,
+                                   style: .reminderSummarySublabel)
             return _cell
         case .actions(let row):
             let _cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell", for: indexPath)

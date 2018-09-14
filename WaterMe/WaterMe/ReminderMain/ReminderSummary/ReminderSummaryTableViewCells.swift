@@ -85,6 +85,9 @@ class InfoTableViewCell: RoundedBackgroundViewTableViewCell {
     @IBOutlet private(set) weak var nextPerformDateLabel: UILabel?
     @IBOutlet private(set) weak var nextPerformDateSublabel: UILabel?
 
+    @IBOutlet private(set) weak var noteLabel: UILabel?
+    @IBOutlet private(set) weak var noteSublabel: UILabel?
+
     override func prepareForReuse() {
         super.prepareForReuse()
         self.vesselNameLabel?.text = nil
@@ -92,6 +95,8 @@ class InfoTableViewCell: RoundedBackgroundViewTableViewCell {
         self.reminderKindSublabel?.text = nil
         self.lastPerformDateLabel?.text = nil
         self.nextPerformDateSublabel?.text = nil
+        self.noteLabel?.text = nil
+        self.noteSublabel?.text = nil
     }
 }
 
