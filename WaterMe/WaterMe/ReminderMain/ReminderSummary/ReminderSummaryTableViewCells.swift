@@ -25,8 +25,24 @@ import UIKit
 
 class RoundedBackgroundViewTableViewCell: UITableViewCell {
 
-    var locationInGroup: VerticalLocationInGroup = .alone
-    @IBOutlet weak var cornerRadiusView: UIView?
+    @IBOutlet private(set) weak var cornerRadiusView: UIView?
+    @IBOutlet private(set) weak var hairlineView: UIView?
+
+    var locationInGroup: VerticalLocationInGroup = .alone {
+        didSet {
+            switch self.locationInGroup {
+            case .alone, .bottom:
+                self.hairlineView?.isHidden = true
+            case .top, .middle:
+                self.hairlineView?.isHidden = false
+            }
+        }
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.prepareForReuse()
+    }
 
     override func layoutSubviews() {
         if let crv = self.cornerRadiusView {
@@ -40,6 +56,7 @@ class RoundedBackgroundViewTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         self.locationInGroup = .alone
+        self.hairlineView?.backgroundColor = .clear
     }
 
 }

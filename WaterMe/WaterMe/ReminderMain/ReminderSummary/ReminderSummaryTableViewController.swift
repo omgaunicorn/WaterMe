@@ -175,6 +175,7 @@ class ReminderSummaryTableViewController: UITableViewController {
                     NSAttributedString(string: UIApplication.LocalizedString.editVessel,
                                        style: .reminderSummaryActionButton)
             }
+            cell?.hairlineView?.backgroundColor = ReminderSummaryViewController.style_actionButtonSeparatorColor
             return _cell
         case .cancel:
             let _cell = tableView.dequeueReusableCell(withIdentifier: "CancelCell", for: indexPath)
