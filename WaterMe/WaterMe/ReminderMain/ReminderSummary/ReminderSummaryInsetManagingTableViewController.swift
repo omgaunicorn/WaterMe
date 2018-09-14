@@ -42,44 +42,43 @@ class ReminderSummaryInsetManagingTableViewController: ReminderSummaryTableViewC
     }
 
     private func updateAdditionalSafeAreaInsets() {
-        // get ready to configure the `additionalSafeAreaInsets` property
-        var contentInsets: UIEdgeInsets?
-        defer {
-            self.additionalSafeAreaInsets = contentInsets ?? .zero
-        }
+        self.additionalSafeAreaInsets = self.calculateNeededInsets() ?? .zero
+    }
 
+    private func calculateNeededInsets() -> UIEdgeInsets? {
         // if we're a popover, we're not doing any of this
-        guard self.delegate?.isPresentedAsPopover == false else { return }
+        guard self.delegate?.isPresentedAsPopover == false else { return nil }
 
-        // find out if we need to artifically "lower" the content to be bottom aligned
-        _ = {
-            guard self.tableView.allRowsVisible else { return }
-            let safeAreaHeight = self.view.safeAreaLayoutGuide.layoutFrame.height
-            let tableContentsHeight = self.tableView.visibleRowsSize.height
-            guard safeAreaHeight > tableContentsHeight else { return }
-            let diff = safeAreaHeight - tableContentsHeight
-            contentInsets = UIEdgeInsets(top: diff,
-                                         left: 0,
-                                         bottom: 0,
-                                         right: 0)
-        }()
+        // get top and bottom insets
+        let bottomInset = self.tableView.adjustedContentInset.bottom
+        let topInset = self.tableView.adjustedContentInset.top
+        let neededBottomInset = bottomInset == 0 ? ReminderSummaryViewController.style_bottomPadding : 0
 
-        // find out if the OS is already providing bottom insets
-        _ = {
-            let bottomInset = self.tableView.adjustedContentInset.bottom
-            guard bottomInset == 0 else { return }
-            if var existingInsets = contentInsets {
-                existingInsets.top -= ReminderSummaryViewController.style_bottomPadding
-                existingInsets.bottom += ReminderSummaryViewController.style_bottomPadding
-                contentInsets = existingInsets
-            } else {
-                let top = ReminderSummaryViewController.style_topPadding
-                let bottom = ReminderSummaryViewController.style_bottomPadding
-                contentInsets = UIEdgeInsets(top: top,
-                                             left: 0,
-                                             bottom: bottom,
-                                             right: 0)
-            }
-        }()
+        if let additionalTopInset = self.calculateTableViewHeightVsSafeAreaHeight() {
+            // the top inset is specified by the table calculated
+            // now we need to see if we need to use a bottom inset
+            return UIEdgeInsets(top: additionalTopInset - neededBottomInset,
+                                left: 0,
+                                bottom: neededBottomInset,
+                                right: 0)
+        } else {
+            // the tableview exceeds the size of the screen
+            // now we need to check if we need top inset and include the bottom inset
+            let neededTopInset = topInset == 0 ?
+                ReminderSummaryViewController.style_bottomPadding :
+                ReminderSummaryViewController.style_topPadding
+            return UIEdgeInsets(top: neededTopInset,
+                                left: 0,
+                                bottom: neededBottomInset,
+                                right: 0)
+        }
+    }
+
+    private func calculateTableViewHeightVsSafeAreaHeight() -> CGFloat? {
+        guard self.tableView.allRowsVisible else { return nil }
+        let safeAreaHeight = self.view.safeAreaLayoutGuide.layoutFrame.height
+        let tableContentsHeight = self.tableView.visibleRowsSize.height
+        guard safeAreaHeight > tableContentsHeight else { return nil }
+        return safeAreaHeight - tableContentsHeight
     }
 }
