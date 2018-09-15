@@ -230,6 +230,10 @@
                                     <outlet property="reminderKindSublabel" destination="j7o-Pp-YuD" id="qNa-gG-hQa"/>
                                     <outlet property="vesselNameLabel" destination="NhU-sa-wrm" id="hQX-0O-jMA"/>
                                     <outlet property="vesselNameSublabel" destination="lVx-uJ-qEJ" id="c0T-4g-qA9"/>
+                                    <outletCollection property="stackViews" destination="sgr-Pf-uWX" collectionClass="NSMutableArray" id="KPC-vA-tfQ"/>
+                                    <outletCollection property="stackViews" destination="cQe-ge-s2K" collectionClass="NSMutableArray" id="R4b-zW-xOZ"/>
+                                    <outletCollection property="stackViews" destination="Q7k-gD-tct" collectionClass="NSMutableArray" id="qjY-4l-4Mc"/>
+                                    <outletCollection property="stackViews" destination="gPL-m8-MCr" collectionClass="NSMutableArray" id="czH-cw-xuN"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="NoteCell" rowHeight="102" id="tBT-LD-nQ4" customClass="InfoTableViewCell" customModule="WaterMe" customModuleProvider="target">
@@ -282,6 +286,7 @@
                                     <outlet property="cornerRadiusView" destination="4D3-Vs-ffm" id="QyK-DZ-dPd"/>
                                     <outlet property="noteLabel" destination="DYd-GO-Ms5" id="O2e-gQ-akh"/>
                                     <outlet property="noteSublabel" destination="EcR-wV-f7r" id="cLa-KO-mwi"/>
+                                    <outletCollection property="stackViews" destination="mC7-Uu-A8v" collectionClass="NSMutableArray" id="SYD-p2-2xJ"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="ActionCell" rowHeight="72" id="uLw-Kh-tyG" customClass="ButtonTableViewCell" customModule="WaterMe" customModuleProvider="target">
@@ -348,7 +353,7 @@
                                 <rect key="frame" x="0.0" y="651" width="359" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RFT-nB-LQK" id="GQg-5m-ej1">
-                                    <rect key="frame" x="0.0" y="0.0" width="359" height="71.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="359" height="72"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W73-2L-oTa">
