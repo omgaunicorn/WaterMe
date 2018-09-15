@@ -30,6 +30,7 @@ protocol ReminderSummaryTableViewControllerDelegate: class {
     var reminderResult: Result<Reminder, RealmError>! { get }
     var isPresentedAsPopover: Bool { get }
     func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController)
+    func userChose(toViewImage image: UIImage, rowDeselectionHandler: @escaping () -> Void, within: ReminderSummaryTableViewController)
 }
 
 class ReminderSummaryTableViewController: UITableViewController {
@@ -76,8 +77,10 @@ class ReminderSummaryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let section = Sections(indexPath, withNote: self.reminderHasNote)
         switch section {
-        case .imageEmoji, .note, .info:
+        case .note, .info:
             return nil
+        case .imageEmoji:
+            return self.delegate?.reminderResult?.value?.vessel?.icon?.image != nil ? indexPath : nil
         case .actions, .cancel:
             return indexPath
         }
@@ -86,8 +89,17 @@ class ReminderSummaryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = Sections(indexPath, withNote: self.reminderHasNote)
         switch section {
-        case .imageEmoji, .note, .info:
-            fatalError()
+        case .note, .info:
+            assertionFailure()
+        case .imageEmoji:
+            let deselect = {
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
+            guard let image = self.delegate?.reminderResult?.value?.vessel?.icon?.image else {
+                deselect()
+                return
+            }
+            self.delegate?.userChose(toViewImage: image, rowDeselectionHandler: deselect, within: self)
         case .actions(let row):
             switch row {
             case .editReminder:

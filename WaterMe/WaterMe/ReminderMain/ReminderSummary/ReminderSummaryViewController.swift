@@ -22,6 +22,7 @@
 //
 
 import UIKit
+import SimpleImageViewer
 import WaterMeData
 import Result
 import RealmSwift
@@ -133,6 +134,18 @@ class ReminderSummaryViewController: UIViewController {
 }
 
 extension ReminderSummaryViewController: ReminderSummaryTableViewControllerDelegate {
+    func userChose(toViewImage image: UIImage,
+                   rowDeselectionHandler: @escaping () -> Void,
+                   within: ReminderSummaryTableViewController)
+    {
+        let config = DismissHandlingImageViewerConfiguration(image: image) { vc in
+            vc.dismiss(animated: true) {
+                rowDeselectionHandler()
+            }
+        }
+        let vc = DismissHandlingImageViewerController(configuration: config)
+        self.present(vc, animated: true, completion: nil)
+    }
     func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController) {
         self.completion(action, self.reminderID, self)
     }

@@ -89,6 +89,10 @@
                                                 <constraint firstAttribute="height" constant="140" id="lhb-Mp-TSz"/>
                                             </constraints>
                                         </view>
+                                        <view alpha="0.40000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HWQ-su-2WK">
+                                            <rect key="frame" x="0.0" y="0.0" width="359" height="180"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
@@ -98,8 +102,12 @@
                                         <constraint firstItem="7FB-6r-OdL" firstAttribute="top" secondItem="IWG-YL-vdB" secondAttribute="top" constant="20" symbolic="YES" id="W0h-ZL-Xna"/>
                                         <constraint firstAttribute="trailing" secondItem="P4d-0g-nOS" secondAttribute="trailing" id="iPT-Yq-RTr"/>
                                         <constraint firstItem="7FB-6r-OdL" firstAttribute="centerX" secondItem="IWG-YL-vdB" secondAttribute="centerX" id="ioy-bb-Ecg"/>
+                                        <constraint firstItem="HWQ-su-2WK" firstAttribute="centerX" secondItem="P4d-0g-nOS" secondAttribute="centerX" id="lCs-Ds-lNf"/>
+                                        <constraint firstItem="HWQ-su-2WK" firstAttribute="centerY" secondItem="P4d-0g-nOS" secondAttribute="centerY" id="n0K-em-cNe"/>
+                                        <constraint firstItem="HWQ-su-2WK" firstAttribute="height" secondItem="P4d-0g-nOS" secondAttribute="height" id="oTO-8p-qd1"/>
                                         <constraint firstItem="P4d-0g-nOS" firstAttribute="leading" secondItem="IWG-YL-vdB" secondAttribute="leading" id="pXc-qZ-9Ny"/>
                                         <constraint firstItem="P4d-0g-nOS" firstAttribute="centerY" secondItem="7FB-6r-OdL" secondAttribute="centerY" placeholder="YES" id="uqt-Gj-bJ6"/>
+                                        <constraint firstItem="HWQ-su-2WK" firstAttribute="width" secondItem="P4d-0g-nOS" secondAttribute="width" id="vJ5-Mz-uQH"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -107,6 +115,7 @@
                                     <outlet property="cornerRadiusView" destination="P4d-0g-nOS" id="DzE-6w-qcb"/>
                                     <outlet property="emojiImageView" destination="7FB-6r-OdL" id="yIM-7g-SGO"/>
                                     <outlet property="emojiImageViewHeightConstraint" destination="lhb-Mp-TSz" id="oH2-xS-ysc"/>
+                                    <outlet property="highlightView" destination="HWQ-su-2WK" id="6eH-0k-Hpq"/>
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="InfoCell" rowHeight="269" id="AHa-gZ-yVa" customClass="InfoTableViewCell" customModule="WaterMe" customModuleProvider="target">
@@ -339,7 +348,7 @@
                                 <rect key="frame" x="0.0" y="651" width="359" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="RFT-nB-LQK" id="GQg-5m-ej1">
-                                    <rect key="frame" x="0.0" y="0.0" width="359" height="72"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="359" height="71.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W73-2L-oTa">

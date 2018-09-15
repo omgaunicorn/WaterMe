@@ -242,9 +242,7 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
                 self.present(vc, animated: true, completion: nil)
             case .viewCurrentPhoto:
                 guard let image = self.vesselResult?.value?.icon?.image else { return }
-                let config = ImageViewerConfiguration() { config in
-                    config.image = image
-                }
+                let config = ImageViewerConfiguration(image: image)
                 let vc = ImageViewerController(configuration: config)
                 self.present(vc, animated: true, completion: nil)
             case .error(let errorVC):

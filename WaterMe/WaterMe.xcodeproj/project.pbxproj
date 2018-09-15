@@ -43,6 +43,7 @@
 		504732D6214ACCFC00814E7D /* ReminderSummaryInsetManagingTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504732D5214ACCFC00814E7D /* ReminderSummaryInsetManagingTableViewController.swift */; };
 		5047B7A5200D6B6800F69C73 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5047B7A4200D6B6800F69C73 /* Analytics.swift */; };
 		5049D1A31FACFA1B0076565E /* ReminderUserNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5049D1A21FACFA1B0076565E /* ReminderUserNotificationController.swift */; };
+		504A36FB214C7ECC009543C0 /* SimpleImageViewerSubclass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */; };
 		504A8D511ED6A04F002D928D /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D501ED6A04F002D928D /* UserTableViewCell.swift */; };
 		504A8D5B1EDA8C76002D928D /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5A1EDA8C76002D928D /* LoadingViewController.swift */; };
 		504A8D5D1EDA8D41002D928D /* ReceiptVerifyingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */; };
@@ -176,6 +177,7 @@
 		504732D5214ACCFC00814E7D /* ReminderSummaryInsetManagingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSummaryInsetManagingTableViewController.swift; sourceTree = "<group>"; };
 		5047B7A4200D6B6800F69C73 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		5049D1A21FACFA1B0076565E /* ReminderUserNotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderUserNotificationController.swift; sourceTree = "<group>"; };
+		504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleImageViewerSubclass.swift; sourceTree = "<group>"; };
 		504A8D501ED6A04F002D928D /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
 		504A8D5A1EDA8C76002D928D /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptVerifyingViewController.swift; sourceTree = "<group>"; };
@@ -502,6 +504,7 @@
 				50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */,
 				50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */,
 				50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */,
+				504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */,
 				50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */,
 				5047B7A4200D6B6800F69C73 /* Analytics.swift */,
 				5065AA1B200E872900C7F0CC /* UserFacingError.swift */,
@@ -936,6 +939,7 @@
 				502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */,
 				50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */,
 				50B61EE11F2FB904004654B4 /* EmojiImageView.swift in Sources */,
+				504A36FB214C7ECC009543C0 /* SimpleImageViewerSubclass.swift in Sources */,
 				5029E09B214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m in Sources */,
 				501A9AE71FEB15C20016160D /* WateringAnimationPlayerView.swift in Sources */,
 				50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */,
