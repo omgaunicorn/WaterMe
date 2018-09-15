@@ -434,17 +434,13 @@ extension UITableView: ItemAndSectionable {
         let visibleIndexPaths = self.indexPathsForVisibleRows ?? []
         guard visibleIndexPaths.isEmpty == false else { return .zero }
         let sections = Set(visibleIndexPaths.map({ return $0.section }))
-        let sectionHeaderHeights = sections.reduce(0)
+        let sectionHeaderFooterHeights = sections.reduce(0)
         { (lastValue, section) -> CGFloat in
-            let _sectionView = self.headerView(forSection: section)
-            guard let sectionView = _sectionView else { return lastValue }
-            return lastValue + sectionView.frame.height
-        }
-        let sectionFooterHeights = sections.reduce(0)
-        { (lastValue, section) -> CGFloat in
-            let _sectionView = self.footerView(forSection: section)
-            guard let sectionView = _sectionView else { return lastValue }
-            return lastValue + sectionView.frame.height
+            let headerView = self.headerView(forSection: section)
+            let footerView = self.footerView(forSection: section)
+            return lastValue +
+                (headerView?.frame.height ?? 0)  +
+                (footerView?.frame.height ?? 0)
         }
         let rowHeights = visibleIndexPaths.reduce(0)
         { (lastValue, indexPath) -> CGFloat in
@@ -452,8 +448,13 @@ extension UITableView: ItemAndSectionable {
             guard let cellView = _cellView else { return lastValue }
             return lastValue + cellView.frame.height
         }
+        let tableHeaderFooterHeights = { () -> CGFloat in
+            let headerView = self.tableHeaderView
+            let footerView = self.tableFooterView
+            return (headerView?.frame.height ?? 0) + (footerView?.frame.height ?? 0)
+        }()
         let width = self.frame.width
-        let height = sectionHeaderHeights + sectionFooterHeights + rowHeights
+        let height = sectionHeaderFooterHeights + rowHeights + tableHeaderFooterHeights
         return CGSize(width: width, height: height)
     }
 
