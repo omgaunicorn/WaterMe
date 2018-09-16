@@ -35,9 +35,6 @@ protocol ReminderSummaryTableViewControllerDelegate: class {
 
 class ReminderSummaryTableViewController: UITableViewController {
 
-    private let timeAgoDateFormatter = Formatter.newTimeAgoFormatter
-    private let dueDateFormatter = Formatter.newDueDateFormatter
-
     weak var delegate: ReminderSummaryTableViewControllerDelegate?
 
     override func viewDidLoad() {
@@ -124,88 +121,25 @@ class ReminderSummaryTableViewController: UITableViewController {
         let section = Sections(indexPath, withNote: self.reminderHasNote)
         switch section {
         case .imageEmoji:
-            let _cell = tableView.dequeueReusableCell(withIdentifier: ReminderVesselIconTableViewCell.reuseID, for: indexPath)
-            let cell = _cell as? ReminderVesselIconTableViewCell
-            cell?.configure(with: self.delegate?.reminderResult.value?.vessel?.icon)
-            return _cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ReminderVesselIconTableViewCell.reuseID, for: indexPath)
+            (cell as? ReminderVesselIconTableViewCell)?.configure(with: self.delegate?.reminderResult.value?.vessel?.icon)
+            return cell
         case .info:
-            let _cell = tableView.dequeueReusableCell(withIdentifier: "InfoCell", for: indexPath)
-            let cell = _cell as? InfoTableViewCell
-            _ = {
-                let vesselName = self.delegate?.reminderResult.value?.vessel?.displayName
-                let vesselNameStyle = vesselName != nil ?
-                    Style.reminderSummaryPrimaryLabel :
-                    Style.reminderSummaryPrimaryLabelValueNIL
-                cell?.vesselNameLabel?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
-                                                                           style: vesselNameStyle)
-                cell?.vesselNameSublabel?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadPlantName,
-                                                                              style: .reminderSummarySublabel)
-            }()
-            _ = {
-                guard let reminderName = self.delegate?.reminderResult.value?.kind.localizedLongString else { return }
-                cell?.reminderKindLabel?.attributedText = NSAttributedString(string: reminderName,
-                                                                           style: .reminderSummaryPrimaryLabel)
-                cell?.reminderKindSublabel?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadReminderKind,
-                                                                              style: .reminderSummarySublabel)
-            }()
-            _ = {
-                let nextPerformDate = self.delegate?.reminderResult.value?.nextPerformDate ?? Date()
-                let dueDateString = self.dueDateFormatter.string(from: nextPerformDate)
-                cell?.nextPerformDateLabel?.attributedText = NSAttributedString(string: dueDateString,
-                                                                           style: .reminderSummaryPrimaryLabel)
-                cell?.nextPerformDateSublabel?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadNextPerformDate,
-                                                                              style: .reminderSummarySublabel)
-            }()
-            _ = {
-                let lastPerformedDate = self.delegate?.reminderResult.value?.performed.last?.date
-                let dateString = self.timeAgoDateFormatter.timeAgoString(for: lastPerformedDate)
-                cell?.lastPerformDateLabel?.attributedText = NSAttributedString(string: dateString,
-                                                                                style: .reminderSummaryPrimaryLabel)
-                cell?.lastPerformDateSublabel?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadLastPerformDate,
-                                                                                   style: .reminderSummarySublabel)
-            }()
-            return _cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDInfoCell, for: indexPath)
+            (cell as? InfoTableViewCell)?.configure(with: self.delegate?.reminderResult?.value)
+            return cell
         case .note:
-            let _cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath)
-            let cell = _cell as? InfoTableViewCell
-            cell?.locationInGroup = .alone
-            cell?.noteLabel?.attributedText =
-                NSAttributedString(string: self.delegate?.reminderResult.value?.note ?? "",
-                                   style: .textInputTableViewCell)
-            cell?.noteSublabel?.attributedText =
-                NSAttributedString(string: ReminderEditViewController.LocalizedString.sectionTitleNotes,
-                                   style: .reminderSummarySublabel)
-            return _cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDNoteCell, for: indexPath)
+            (cell as? InfoTableViewCell)?.configure(withNoteString: self.delegate?.reminderResult.value?.note)
+            return cell
         case .actions(let row):
-            let _cell = tableView.dequeueReusableCell(withIdentifier: "ActionCell", for: indexPath)
-            let cell = _cell as? ButtonTableViewCell
-            switch row {
-            case .performReminder:
-                cell?.locationInGroup = .top
-                cell?.label?.attributedText =
-                    NSAttributedString(string: ReminderMainViewController.LocalizedString.buttonTitleReminderPerform,
-                                       style: .reminderSummaryActionButton)
-            case .editReminder:
-                cell?.locationInGroup = .middle
-                cell?.label?.attributedText =
-                    NSAttributedString(string: UIApplication.LocalizedString.editReminder,
-                                       style: .reminderSummaryActionButton)
-            case .editReminderVessel:
-                cell?.locationInGroup = .bottom
-                cell?.label?.attributedText =
-                    NSAttributedString(string: UIApplication.LocalizedString.editVessel,
-                                       style: .reminderSummaryActionButton)
-            }
-            cell?.hairlineView?.backgroundColor = ReminderSummaryViewController.style_actionButtonSeparatorColor
-            return _cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ButtonTableViewCell.reuseIDActionCell, for: indexPath)
+            (cell as? ButtonTableViewCell)?.configure(for: row)
+            return cell
         case .cancel:
-            let _cell = tableView.dequeueReusableCell(withIdentifier: "CancelCell", for: indexPath)
-            let cell = _cell as? ButtonTableViewCell
-            cell?.label?.attributedText =
-                NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleCancel,
-                                   style: .reminderSummaryCancelButton)
-            cell?.locationInGroup = .alone
-            return _cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: ButtonTableViewCell.reuseIDCancelCell, for: indexPath)
+            (cell as? ButtonTableViewCell)?.configureAsCancelButton()
+            return cell
         }
     }
 
@@ -221,7 +155,7 @@ extension ReminderSummaryTableViewController {
         return self.delegate?.reminderResult.value?.note != nil
     }
 
-    private enum Sections {
+    enum Sections {
         case imageEmoji
         case info
         case note
@@ -241,6 +175,7 @@ extension ReminderSummaryTableViewController {
             }
         }
 
+        // swiftlint:disable:next cyclomatic_complexity
         init(_ indexPath: IndexPath, withNote: Bool) {
             if withNote {
                 switch (indexPath.section, indexPath.row) {
@@ -274,11 +209,11 @@ extension ReminderSummaryTableViewController {
         }
     }
 
-    private enum ActionRows: Int, CaseIterable {
+    enum ActionRows: Int, CaseIterable {
         case performReminder, editReminder, editReminderVessel
     }
 
-    private enum InfoRows: Int, CaseIterable {
+    enum InfoRows: Int, CaseIterable {
         case reminderVesselName, reminderKind, lastPerformedDate, nextPerformDate
     }
 }

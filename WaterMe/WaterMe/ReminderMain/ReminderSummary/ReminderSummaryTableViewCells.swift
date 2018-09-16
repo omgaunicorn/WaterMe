@@ -105,6 +105,9 @@ class RoundedBackgroundViewTableViewCell: UITableViewCell {
 
 class ButtonTableViewCell: RoundedBackgroundViewTableViewCell {
 
+    static let reuseIDActionCell = "ActionCell"
+    static let reuseIDCancelCell = "CancelCell"
+
     @IBOutlet private(set) weak var label: UILabel?
 
     override func prepareForReuse() {
@@ -114,6 +117,12 @@ class ButtonTableViewCell: RoundedBackgroundViewTableViewCell {
 }
 
 class InfoTableViewCell: RoundedBackgroundViewTableViewCell {
+
+    static let reuseIDInfoCell = "InfoCell"
+    static let reuseIDNoteCell = "NoteCell"
+
+    let dueDateFormatter = Formatter.newDueDateFormatter
+    let timeAgoDateFormatter = Formatter.newTimeAgoFormatter
 
     @IBOutlet private(set) weak var vesselNameLabel: UILabel?
     @IBOutlet private(set) weak var vesselNameSublabel: UILabel?
