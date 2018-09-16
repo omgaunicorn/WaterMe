@@ -426,8 +426,13 @@ extension UITableView: ItemAndSectionable {
         guard visibleIndexPaths.isEmpty == false else { return false }
         let numberOfSections = self.dataSource?.numberOfSections?(in: self) ?? 0
         guard numberOfSections > 0 else { return false }
-        let numberOfRows = (0..<numberOfSections).reduce(0, +)
-        return numberOfRows == visibleIndexPaths.count
+        let numberOfRows = (0..<numberOfSections).reduce(0)
+        { (prevValue, section) -> Int in
+            let numberOfRows = self.dataSource?.tableView(self, numberOfRowsInSection: section) ?? 0
+            return numberOfRows + prevValue
+        }
+        let test = numberOfRows == visibleIndexPaths.count
+        return test
     }
 
     public var visibleRowsSize: CGSize {
