@@ -26,9 +26,16 @@ import UIKit
 
 enum BadgeNumberController {
 
-    private static let queue = DispatchQueue(label: String(describing: BadgeNumberController.self) + "_SerialQueue_" + UUID().uuidString, qos: .utility)
+    private static let taskName = String(describing: BadgeNumberController.self) + "_SerialQueue_" + UUID().uuidString
+    private static let queue = DispatchQueue(label: taskName, qos: .utility)
+    private static var backgroundTaskID: UIBackgroundTaskIdentifier?
 
     static func updateBadgeNumber(with reminders: [ReminderValue]) {
+        // make sure there isn't already a background task in progress
+        guard self.backgroundTaskID == nil else {
+            log.info("Background task already in progress. Bailing.")
+            return
+        }
         // make sure we're authorized to badge the icon
         guard case .enabled = UNUserNotificationCenter.current().settings.badgeSetting else {
             log.info("User has disabled badge allowance")
@@ -36,6 +43,8 @@ enum BadgeNumberController {
             return
         }
         self.queue.async {
+            self.backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: self.taskName,
+                                                                             expirationHandler: nil)
             let remindersThatNeedToBeDoneBeforeTomorrow = reminders.filter() { reminder -> Bool in
                 let cal = Calendar.current
                 let now = Date()
@@ -50,6 +59,10 @@ enum BadgeNumberController {
             let count = remindersThatNeedToBeDoneBeforeTomorrow.count
             DispatchQueue.main.async {
                 UIApplication.shared.applicationIconBadgeNumber = count
+                // end the background task
+                guard let id = self.backgroundTaskID else { return }
+                self.backgroundTaskID = nil
+                UIApplication.shared.endBackgroundTask(id)
             }
         }
     }

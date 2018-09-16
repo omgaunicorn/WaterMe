@@ -25,9 +25,19 @@ import UserNotifications
 
 class ReminderUserNotificationController {
 
-    private let queue = DispatchQueue(label: String(describing: ReminderUserNotificationController.self) + "_SerialQueue_" + UUID().uuidString, qos: .utility)
+    private let taskName = String(describing: ReminderUserNotificationController.self) + "_SerialQueue_" + UUID().uuidString
+    private lazy var queue = DispatchQueue(label: taskName, qos: .utility)
+    private var backgroundTaskID: UIBackgroundTaskIdentifier?
 
     func updateScheduledNotifications(with reminders: [ReminderValue]) {
+        // make sure there isn't already a background task in progress
+        guard self.backgroundTaskID == nil else {
+            log.info("Background task already in progress. Bailing.")
+            return
+        }
+        // tell the OS I'm running a background task
+        self.backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: self.taskName,
+                                                                         expirationHandler: nil)
         // hop on a background queue to do the processing
         self.queue.async {
             // clear out all the old stuff before making new stuff
@@ -64,6 +74,11 @@ class ReminderUserNotificationController {
                 }
             }
             log.debug("Scheduled Notifications: \(requests.count)")
+
+            // tell the OS I'm done with the background task
+            guard let id = self.backgroundTaskID else { return }
+            self.backgroundTaskID = nil
+            UIApplication.shared.endBackgroundTask(id)
         }
     }
 
