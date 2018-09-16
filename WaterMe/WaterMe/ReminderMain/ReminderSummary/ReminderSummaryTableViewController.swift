@@ -92,25 +92,31 @@ class ReminderSummaryTableViewController: UITableViewController {
         case .note, .info:
             assertionFailure()
         case .imageEmoji:
-            let deselect = {
-                tableView.deselectRow(at: indexPath, animated: true)
+            __super_hack_dispatchClosureToSolveTableViewSelectionBug() {
+                let deselect = {
+                    tableView.deselectRow(at: indexPath, animated: true)
+                }
+                guard let image = self.delegate?.reminderResult?.value?.vessel?.icon?.image else {
+                    deselect()
+                    return
+                }
+                self.delegate?.userChose(toViewImage: image, rowDeselectionHandler: deselect, within: self)
             }
-            guard let image = self.delegate?.reminderResult?.value?.vessel?.icon?.image else {
-                deselect()
-                return
-            }
-            self.delegate?.userChose(toViewImage: image, rowDeselectionHandler: deselect, within: self)
         case .actions(let row):
-            switch row {
-            case .editReminder:
-                self.delegate?.userChose(action: .editReminder, within: self)
-            case .editReminderVessel:
-                self.delegate?.userChose(action: .editReminderVessel, within: self)
-            case .performReminder:
-                self.delegate?.userChose(action: .performReminder, within: self)
+            __super_hack_dispatchClosureToSolveTableViewSelectionBug() {
+                switch row {
+                case .editReminder:
+                    self.delegate?.userChose(action: .editReminder, within: self)
+                case .editReminderVessel:
+                    self.delegate?.userChose(action: .editReminderVessel, within: self)
+                case .performReminder:
+                    self.delegate?.userChose(action: .performReminder, within: self)
+                }
             }
         case .cancel:
-            self.delegate?.userChose(action: .cancel, within: self)
+            __super_hack_dispatchClosureToSolveTableViewSelectionBug() {
+                self.delegate?.userChose(action: .cancel, within: self)
+            }
         }
     }
 
@@ -201,6 +207,11 @@ class ReminderSummaryTableViewController: UITableViewController {
             cell?.locationInGroup = .alone
             return _cell
         }
+    }
+
+    // TODO: Fix super hack - Maybe file a radar?
+    private func __super_hack_dispatchClosureToSolveTableViewSelectionBug(_ closure: @escaping () -> Void) {
+        DispatchQueue.main.async(execute: closure)
     }
 }
 
