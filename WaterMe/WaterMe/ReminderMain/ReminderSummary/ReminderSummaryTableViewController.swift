@@ -144,8 +144,19 @@ class ReminderSummaryTableViewController: UITableViewController {
     }
 
     // TODO: Fix super hack - Maybe file a radar?
+    // This is needed because of a bug with UITableView
+    // When the cell's selection style is set to .none
+    // And didSelectRowAtIndexPath does certain things
+    // (I'm not sure what things, but dismissing/presenting
+    // VC's seems to cause the bug)
+    // Then when a user selects a cell, it can take several seconds
+    // for the acton to happen
     private func __super_hack_dispatchClosureToSolveTableViewSelectionBug(_ closure: @escaping () -> Void) {
-        DispatchQueue.main.async(execute: closure)
+        // Dispatching ASYNC to the main queue resolves the issue
+        // But the cell selection can't be seen before the action happens
+        // So adding a delay causes the desired cell selection effect
+        // Before the action happens
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: closure)
     }
 }
 
