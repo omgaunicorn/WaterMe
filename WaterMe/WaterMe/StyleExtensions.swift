@@ -319,7 +319,7 @@ enum Style {
             ]
         case .sectionHeaderBold(let section):
             return [
-                .font : Font.bodyPlusBold,
+                .font : Font.bodyBold,
                 .foregroundColor : Color.color(for: section),
                 .paragraphStyle : type(of: self).truncateMiddleStyle
             ]
