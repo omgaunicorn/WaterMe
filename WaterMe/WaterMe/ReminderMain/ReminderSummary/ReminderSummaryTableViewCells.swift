@@ -124,30 +124,18 @@ class InfoTableViewCell: RoundedBackgroundViewTableViewCell {
     let dueDateFormatter = Formatter.newDueDateFormatter
     let timeAgoDateFormatter = Formatter.newTimeAgoFormatter
 
-    @IBOutlet private(set) weak var vesselNameLabel: UILabel?
-    @IBOutlet private(set) weak var vesselNameSublabel: UILabel?
+    @IBOutlet private(set) weak var label0: UILabel?
+    @IBOutlet private(set) weak var sublabel0: UILabel?
 
-    @IBOutlet private(set) weak var reminderKindLabel: UILabel?
-    @IBOutlet private(set) weak var reminderKindSublabel: UILabel?
-
-    @IBOutlet private(set) weak var lastPerformDateLabel: UILabel?
-    @IBOutlet private(set) weak var lastPerformDateSublabel: UILabel?
-
-    @IBOutlet private(set) weak var nextPerformDateLabel: UILabel?
-    @IBOutlet private(set) weak var nextPerformDateSublabel: UILabel?
-
-    @IBOutlet private(set) weak var noteLabel: UILabel?
-    @IBOutlet private(set) weak var noteSublabel: UILabel?
+    @IBOutlet private(set) weak var label1: UILabel?
+    @IBOutlet private(set) weak var sublabel1: UILabel?
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.vesselNameLabel?.text = nil
-        self.vesselNameSublabel?.text = nil
-        self.reminderKindSublabel?.text = nil
-        self.lastPerformDateLabel?.text = nil
-        self.nextPerformDateSublabel?.text = nil
-        self.noteLabel?.text = nil
-        self.noteSublabel?.text = nil
+        self.label0?.text = nil
+        self.sublabel0?.text = nil
+        self.label1?.text = nil
+        self.sublabel1?.text = nil
     }
 }
 

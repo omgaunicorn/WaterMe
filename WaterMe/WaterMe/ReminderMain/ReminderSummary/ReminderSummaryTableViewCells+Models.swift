@@ -56,47 +56,50 @@ extension ButtonTableViewCell {
 extension InfoTableViewCell {
     func configure(withNoteString noteString: String?) {
         self.locationInGroup = .alone
-        self.noteLabel?.attributedText =
+        self.label0?.attributedText =
             NSAttributedString(string: noteString ?? "",
                                style: .textInputTableViewCell)
-        self.noteSublabel?.attributedText =
+        self.sublabel0?.attributedText =
             NSAttributedString(string: ReminderEditViewController.LocalizedString.sectionTitleNotes,
                                style: .reminderSummarySublabel)
     }
     
-    func configure(with reminder: Reminder?) {
+    func configureUnimportant(with reminder: Reminder?) {
         _ = {
             let vesselName = reminder?.vessel?.displayName
             let vesselNameStyle = vesselName != nil ?
                 Style.reminderSummaryPrimaryLabel :
                 Style.reminderSummaryPrimaryLabelValueNIL
-            self.vesselNameLabel?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
+            self.label0?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
                                                                       style: vesselNameStyle)
-            self.vesselNameSublabel?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadPlantName,
+            self.sublabel0?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadPlantName,
                                                                          style: .reminderSummarySublabel)
-        }()
-        _ = {
-            guard let reminderName = reminder?.kind.localizedLongString else { return }
-            self.reminderKindLabel?.attributedText = NSAttributedString(string: reminderName,
-                                                                        style: .reminderSummaryPrimaryLabel)
-            self.reminderKindSublabel?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadReminderKind,
-                                                                           style: .reminderSummarySublabel)
-        }()
-        _ = {
-            let nextPerformDate = reminder?.nextPerformDate ?? Date()
-            let dueDateString = self.dueDateFormatter.string(from: nextPerformDate)
-            self.nextPerformDateLabel?.attributedText = NSAttributedString(string: dueDateString,
-                                                                           style: .reminderSummaryPrimaryLabel)
-            self.nextPerformDateSublabel?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadNextPerformDate,
-                                                                              style: .reminderSummarySublabel)
         }()
         _ = {
             let lastPerformedDate = reminder?.performed.last?.date
             let dateString = self.timeAgoDateFormatter.timeAgoString(for: lastPerformedDate)
-            self.lastPerformDateLabel?.attributedText = NSAttributedString(string: dateString,
+            self.label1?.attributedText = NSAttributedString(string: dateString,
                                                                            style: .reminderSummaryPrimaryLabel)
-            self.lastPerformDateSublabel?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadLastPerformDate,
+            self.sublabel1?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadLastPerformDate,
                                                                               style: .reminderSummarySublabel)
+        }()
+    }
+
+    func configureImportant(with reminder: Reminder?) {
+        _ = {
+            guard let reminderName = reminder?.kind.localizedLongString else { return }
+            self.label0?.attributedText = NSAttributedString(string: reminderName,
+                                                             style: .reminderSummaryPrimaryLabel)
+            self.sublabel0?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadReminderKind,
+                                                                style: .reminderSummarySublabel)
+        }()
+        _ = {
+            let nextPerformDate = reminder?.nextPerformDate ?? Date()
+            let dueDateString = self.dueDateFormatter.string(from: nextPerformDate)
+            self.label1?.attributedText = NSAttributedString(string: dueDateString,
+                                                             style: .reminderSummaryPrimaryLabel)
+            self.sublabel1?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadNextPerformDate,
+                                                                style: .reminderSummarySublabel)
         }()
     }
 }

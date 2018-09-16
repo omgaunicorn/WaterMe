@@ -74,7 +74,7 @@ class ReminderSummaryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         let section = Sections(indexPath, withNote: self.reminderHasNote)
         switch section {
-        case .note, .info:
+        case .note, .unimportantInfo, .importantInfo:
             return nil
         case .imageEmoji:
             return self.delegate?.reminderResult?.value?.vessel?.icon?.image != nil ? indexPath : nil
@@ -86,7 +86,7 @@ class ReminderSummaryTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = Sections(indexPath, withNote: self.reminderHasNote)
         switch section {
-        case .note, .info:
+        case .note, .unimportantInfo, .importantInfo:
             assertionFailure()
         case .imageEmoji:
             __super_hack_dispatchClosureToSolveTableViewSelectionBug() {
@@ -124,13 +124,17 @@ class ReminderSummaryTableViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: ReminderVesselIconTableViewCell.reuseID, for: indexPath)
             (cell as? ReminderVesselIconTableViewCell)?.configure(with: self.delegate?.reminderResult.value?.vessel?.icon)
             return cell
-        case .info:
+        case .unimportantInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDInfoCell, for: indexPath)
-            (cell as? InfoTableViewCell)?.configure(with: self.delegate?.reminderResult?.value)
+            (cell as? InfoTableViewCell)?.configureUnimportant(with: self.delegate?.reminderResult?.value)
             return cell
         case .note:
             let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDNoteCell, for: indexPath)
             (cell as? InfoTableViewCell)?.configure(withNoteString: self.delegate?.reminderResult.value?.note)
+            return cell
+        case .importantInfo:
+            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDInfoCell, for: indexPath)
+            (cell as? InfoTableViewCell)?.configureImportant(with: self.delegate?.reminderResult?.value)
             return cell
         case .actions(let row):
             let cell = tableView.dequeueReusableCell(withIdentifier: ButtonTableViewCell.reuseIDActionCell, for: indexPath)
@@ -168,18 +172,20 @@ extension ReminderSummaryTableViewController {
 
     enum Sections {
         case imageEmoji
-        case info
+        case unimportantInfo
         case note
+        case importantInfo
         case actions(ActionRows)
         case cancel
 
         static func numberOfSections(withNote: Bool) -> Int {
-            return withNote ? 5 : 4
+            return withNote ? 6 : 5
         }
         static func numberOfRows(inSection section: Int, withNote: Bool) -> Int {
             let value = Sections(IndexPath(row: 0, section: section), withNote: withNote)
             switch value {
-            case .imageEmoji, .note, .cancel, .info:
+            case .imageEmoji, .note, .cancel, .unimportantInfo, .importantInfo
+                :
                 return 1
             case .actions(let rows):
                 return type(of: rows).allCases.count
@@ -193,12 +199,14 @@ extension ReminderSummaryTableViewController {
                 case (0, _):
                     self = .imageEmoji
                 case (1, _):
-                    self = .info
+                    self = .unimportantInfo
                 case (2, _):
                     self = .note
                 case (3, _):
-                    self = .actions(ActionRows(rawValue: indexPath.row)!)
+                    self = .importantInfo
                 case (4, _):
+                    self = .actions(ActionRows(rawValue: indexPath.row)!)
+                case (5, _):
                     self = .cancel
                 default:
                     fatalError()
@@ -208,10 +216,12 @@ extension ReminderSummaryTableViewController {
                 case (0, _):
                     self = .imageEmoji
                 case (1, _):
-                    self = .info
+                    self = .unimportantInfo
                 case (2, _):
-                    self = .actions(ActionRows(rawValue: indexPath.row)!)
+                    self = .importantInfo
                 case (3, _):
+                    self = .actions(ActionRows(rawValue: indexPath.row)!)
+                case (4, _):
                     self = .cancel
                 default:
                     fatalError()
