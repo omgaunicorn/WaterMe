@@ -94,11 +94,17 @@ class ReminderUserNotificationController {
         let calendar = Calendar.current
         let now = Date()
 
+        // find the last reminder time and how many days away it is
+        let numberOfDaysToLastReminder = reminders.last?.nextPerformDate.map() { endDate -> Int in
+            return calendar.numberOfDaysBetween(startDate: now, endDate: endDate)
+        }
+        // add that to the number of extra days the user requested
+        let totalReminderDays = (numberOfDaysToLastReminder ?? 0) + reminderDays
+
         // loop through the number of days the user wants to be reminded for
         // get all reminders that happened on or before the end of the day of `futureReminderTime`
-        let matches = (0 ..< reminderDays).compactMap() { i -> (Date, [ReminderValue])? in
-            let _testDate = calendar.date(byAdding: .day, value: i, to: now)
-            guard let testDate = _testDate else { return nil }
+        let matches = (0 ..< totalReminderDays).compactMap() { i -> (Date, [ReminderValue])? in
+            let testDate = calendar.date(byAdding: .day, value: i, to: now)!
             let endOfDayInTestDate = calendar.endOfDay(for: testDate)
             let matches = reminders.filter() { reminder -> Bool in
                 let endOfDayInNextPerformDate = calendar.endOfDay(for: reminder.nextPerformDate ?? now)
@@ -121,8 +127,7 @@ class ReminderUserNotificationController {
             let _content = UNMutableNotificationContent()
             let dateComponents = calendar.userNotificationCompatibleDateComponents(with: reminderTime)
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-            // TODO: remove crasher once I know this is working well
-            precondition(trigger.nextTriggerDate() == reminderTime)
+
             // shuffle the names so that different plant names show in the notifications
             let plantNames = ReminderValue.uniqueParentPlantNames(from: matches).shuffled()
             // only set the body if there is a trigger. this way a notification won't be shown to the user

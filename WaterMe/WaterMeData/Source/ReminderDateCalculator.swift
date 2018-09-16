@@ -24,6 +24,20 @@
 import Foundation
 
 public extension Calendar {
+    public func numberOfDaysBetween(startDate: Date, endDate: Date, stopCountingAfterMaxDays maxDays: Int = 365) -> Int {
+        var numberOfDays = 0
+        var stop = false
+        while !stop && numberOfDays < maxDays {
+            let testDate = self.date(byAdding: .day, value: numberOfDays, to: startDate)!
+            let test = self.isDate(testDate, inSameDayAs: endDate)
+            guard test == false else {
+                stop = true
+                break
+            }
+            numberOfDays += 1
+        }
+        return numberOfDays
+    }
     public func dateWithExact(hour desiredHour: Int, onSameDayAs inputDate: Date) -> Date {
         // get the start of the day
         let start = self.startOfDay(for: inputDate)
