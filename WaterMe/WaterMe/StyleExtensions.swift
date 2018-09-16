@@ -81,7 +81,7 @@ extension ReminderSummaryViewController {
     static let style_bottomPadding: CGFloat = style_leadingTrailingPadding
     static let style_topPadding: CGFloat = style_bottomPadding / 2
     static let style_tableViewSectionGap: CGFloat = 8
-    static let style_tableViewHighlightAlpha: CGFloat = 0.08
+    static let style_tableViewHighlightAlpha: CGFloat = 0.1
     static let style_actionButtonSeparatorColor: UIColor = Style.Color.tint.withAlphaComponent(0.2)
     static let style_primaryLabelSublabelSpacing: CGFloat = 4
 }
