@@ -86,6 +86,14 @@ class ReminderUserNotificationController {
         // make sure we have data to work with
         guard reminders.isEmpty == false else { return [] }
 
+        // TODO: Remove this crasher once this is confirmed to be true
+        // this verifies realm is sorting the reminders correctly
+        _ = {
+            let nonNilReminders = reminders.filter({ $0.nextPerformDate != nil })
+            let sorted = nonNilReminders.sorted(by: { $0.nextPerformDate! <= $1.nextPerformDate! })
+            precondition(sorted == nonNilReminders)
+        }()
+
         // get preference values for reminder time and number of days to remind for
         let reminderHour = UserDefaults.standard.reminderHour
         let reminderDays = UserDefaults.standard.reminderDays
@@ -127,7 +135,8 @@ class ReminderUserNotificationController {
             let _content = UNMutableNotificationContent()
             let dateComponents = calendar.userNotificationCompatibleDateComponents(with: reminderTime)
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-
+            // TODO: remove crasher once I know this is working well
+            precondition(trigger.nextTriggerDate() == reminderTime)
             // shuffle the names so that different plant names show in the notifications
             let plantNames = ReminderValue.uniqueParentPlantNames(from: matches).shuffled()
             // only set the body if there is a trigger. this way a notification won't be shown to the user

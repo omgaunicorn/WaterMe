@@ -137,7 +137,8 @@ extension GlobalReminderObserver: SignificantTimePassedDetectorDelegate {
     }
 }
 
-struct ReminderValue {
+// TODO: Remove equatable when its not needed
+struct ReminderValue: Equatable {
     var parentPlantUUID: String
     var parentPlantName: String?
     var nextPerformDate: Date?
