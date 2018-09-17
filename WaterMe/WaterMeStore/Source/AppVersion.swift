@@ -30,7 +30,8 @@ public struct AppVersion: Equatable {
     init?(versionString: String) {
         let rawArray = versionString.components(separatedBy: ".")
         guard rawArray.count == 3 else { return nil }
-        let intArray = rawArray.compactMap({ Int($0) })
+        let uintArray = rawArray.compactMap({ UInt($0) })
+        let intArray = uintArray.compactMap({ Int($0) })
         guard intArray.count == 3 else { return nil }
         self.major = intArray[0]
         self.minor = intArray[1]
@@ -43,10 +44,12 @@ extension AppVersion: Comparable {
         if rhs.major > lhs.major {
             return true
         }
-        if rhs.minor > lhs.minor {
+        let majorGreaterOrEqual = rhs.major >= lhs.major
+        if majorGreaterOrEqual && rhs.major > lhs.major {
             return true
         }
-        if rhs.bug > lhs.bug {
+        let minorGreaterOrEqual = rhs.minor >= lhs.minor
+        if majorGreaterOrEqual && minorGreaterOrEqual && rhs.bug > lhs.bug {
             return true
         }
         return false
