@@ -65,6 +65,11 @@ public extension AppVersion {
 
 public extension AppVersion {
     public static func fetchFromAppStore(_ completion: @escaping (AppVersion?) -> Void) {
+        // TODO: This is for dev only - take it out ASAP
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            completion(AppVersion(versionString: "2.1.0")!)
+        }
+        return
         guard let url = PrivateKeys.kAppInfoJSONURL else {
             completion(nil)
             return
