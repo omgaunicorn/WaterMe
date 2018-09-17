@@ -105,7 +105,7 @@ extension UIAlertController {
                 selection?(.cancel)
             }
         }
-        let dontAsk = UIAlertAction(title: LocalizedString.permissionDeniedButtonTitleDontAskAgain, style: .destructive) { _ in
+        let dontAsk = UIAlertAction(title: LocalizedString.buttonTitleDontAskAgain, style: .destructive) { _ in
             ud.askForNotifications = false
             selection?(.denied)
         }

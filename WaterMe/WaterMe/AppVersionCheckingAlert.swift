@@ -41,28 +41,31 @@ extension UIAlertController {
                     completion(nil)
                     return
                 }
-                let alert = UIAlertController(title: "Testflight Update", message: "Something!", preferredStyle: .alert)
-                let update = UIAlertAction(title: "Open App Store", style: .default) { action in
-
-                }
-                let cancel = UIAlertAction(title: "Caaaannnncel", style: .cancel, handler: nil)
-                alert.addAction(update)
-                alert.addAction(cancel)
+                let alert = UIAlertController(newUpdateAvailableAlertForTestFlight: true)
                 completion(alert)
             } else {
                 guard appStoreVersion > currentVersion else {
                     completion(nil)
                     return
                 }
-                let alert = UIAlertController(title: "Update", message: "Something!", preferredStyle: .alert)
-                let update = UIAlertAction(title: "Open App Store", style: .default) { action in
-
-                }
-                let cancel = UIAlertAction(title: "Caaaannnncel", style: .cancel, handler: nil)
-                alert.addAction(update)
-                alert.addAction(cancel)
+                let alert = UIAlertController(newUpdateAvailableAlertForTestFlight: false)
                 completion(alert)
             }
         }
+    }
+
+    private convenience init(newUpdateAvailableAlertForTestFlight forTestFlight: Bool) {
+        switch forTestFlight {
+        case true:
+            self.init(title: "Update Available", message: "Thank you for beta testing WaterMe! A newer version of this application is now available on the App Store.", preferredStyle: .alert)
+        case false:
+            self.init(title: "Update Available", message: "Thank you for using WaterMe! A newer version of this application is now available on the App Store.", preferredStyle: .alert)
+        }
+        let appStore = UIAlertAction(title: "Open App Store", style: .default, handler: nil)
+        let dontAsk = UIAlertAction(title: LocalizedString.buttonTitleDontAskAgain, style: .destructive, handler: nil)
+        let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel, handler: nil)
+        self.addAction(appStore)
+        self.addAction(dontAsk)
+        self.addAction(cancel)
     }
 }
