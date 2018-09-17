@@ -42,6 +42,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
     private weak var collectionVC: ReminderCollectionViewController?
     private weak var dropTargetViewController: ReminderFinishDropTargetViewController?
+    private var appUpdateAvailableVC: UIViewController?
     private var applicationDidFinishLaunchingError: RealmError?
 
     private(set) lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedReminderVesselButtonWithTarget: self, action: #selector(self.plantsButtonTapped(_:)))
@@ -54,6 +55,9 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        // check if there are app store updates available
+        self.checkForUpdates()
 
         // configure toolbar buttons
         self.navigationItem.rightBarButtonItem = self.plantsBBI
@@ -84,6 +88,26 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         }
     }
 
+    private func checkForUpdates() {
+        UIAlertController.newAppVersionCheckAlert({ controller in
+            self.appUpdateAvailableVC = controller
+            guard controller != nil, self.viewDidAppearOnce else { return }
+            self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+        }, { selection in
+            switch selection {
+            case .dontAsk:
+                UserDefaults.standard.checkForUpdatesOnLaunch = false
+                fallthrough
+            case .cancel:
+                self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+            case .update:
+                UIApplication.shared.openAppStorePage() { _ in
+                    self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+                }
+            }
+        })
+    }
+
     func checkForErrorsAndOtherUnexpectedViewControllersToPresent() {
         guard self.presentedViewController == nil else { return }
         
@@ -107,8 +131,8 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
                 }
             }
             self.present(vc, animated: true, completion: nil)
-        } else if let updateAlert = AppDelegate.shared.appUpdateAvailableVC {
-            AppDelegate.shared.appUpdateAvailableVC = nil
+        } else if let updateAlert = self.appUpdateAvailableVC {
+            self.appUpdateAvailableVC = nil
             self.present(updateAlert, animated: true, completion: nil)
         } else {
             self.checkForPurchasesInFlight()

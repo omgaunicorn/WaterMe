@@ -72,6 +72,15 @@ extension UIApplication {
             completion?(false)
             return
         }
+        Analytics.log(viewOperation: .openAppStoreReview)
+        self.open(url, options: [:], completionHandler: completion)
+    }
+
+    func openAppStorePage(completion: ((Bool) -> Void)?) {
+        guard let url = PrivateKeys.kAppStoreURL else {
+            completion?(false)
+            return
+        }
         Analytics.log(viewOperation: .openAppStore)
         self.open(url, options: [:], completionHandler: completion)
     }

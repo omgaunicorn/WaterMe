@@ -46,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     let purchaseController = PurchaseController()
     var coreDataMigrator = CoreDataMigrator()
-    var appUpdateAvailableVC: UIAlertController?
     var window: UIWindow?
     var userDefaultObserverTokens: [NSKeyValueObservation] = []
 
@@ -167,11 +166,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // show window
         self.window = window
         window.makeKeyAndVisible()
-
-        // check if there are app store updates available
-        UIAlertController.newAppVersionCheckAlert() { controller in
-            self.appUpdateAvailableVC = controller
-        }
         
         return true
     }

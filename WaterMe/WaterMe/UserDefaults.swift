@@ -33,6 +33,18 @@ extension UserDefaults {
         static let kIncreaseContrast = "INCREASE_CONTRAST"
         static let kBuildNumberKey = "LAST_BUILD_NUMBER"
         static let kRequestReviewDate = "REQUEST_REVIEW_DATE"
+        static let kCheckForUpdatesOnLaunch = "CHECK_FOR_UPDATES"
+    }
+
+    var checkForUpdatesOnLaunch: Bool {
+        get {
+            guard let number = self.object(forKey: Constants.kCheckForUpdatesOnLaunch) as? NSNumber
+                else { fatalError("Must call configure() before accessing user defaults") }
+            return number.boolValue
+        }
+        set {
+            self.set(NSNumber(value: newValue), forKey: Constants.kCheckForUpdatesOnLaunch)
+        }
     }
 
     var requestReviewDate: Date? {
@@ -111,7 +123,8 @@ extension UserDefaults {
             Constants.kFirstRun : true,
             Constants.kReminderHour : 8,
             Constants.kNumberOfReminderDays : 14,
-            Constants.kIncreaseContrast : false
+            Constants.kIncreaseContrast : false,
+            Constants.kCheckForUpdatesOnLaunch : true
         ])
 
         // fix bug where this toggle is always off in v1.0 and it needs to be on in 2.0

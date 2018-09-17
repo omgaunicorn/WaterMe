@@ -120,6 +120,7 @@ enum Analytics {
         case emailDeveloper = "VCView.EmailDeveloper"
         case tipJar = "VCView.TipJar"
         case openSettings = "VCView.OpenSettings"
+        case openAppStoreReview = "VCView.OpenAppStoreReview"
         case openAppStore = "VCView.OpenAppStore"
         case openEmojiOne = "VCView.OpenEmojiOneSite"
         case errorAlertRealm = "VCView.ErrorAlert.Realm"

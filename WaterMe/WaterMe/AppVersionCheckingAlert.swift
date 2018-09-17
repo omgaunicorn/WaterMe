@@ -25,7 +25,18 @@ import UIKit
 import WaterMeStore
 
 extension UIAlertController {
-    class func newAppVersionCheckAlert(_ completion: @escaping (UIAlertController?) -> Void) {
+
+    enum UpdateAction {
+        case update, dontAsk, cancel
+    }
+
+    class func newAppVersionCheckAlert(_ completion: @escaping (UIViewController?) -> Void,
+                                       _ actionHandler: @escaping (UpdateAction) -> Void)
+    {
+        guard UserDefaults.standard.checkForUpdatesOnLaunch else {
+            completion(nil)
+            return
+        }
         let bundle = Bundle(for: AppDelegate.self)
         guard let currentVersion = AppVersion.fetchFromBundle() else {
             completion(nil)
@@ -41,29 +52,37 @@ extension UIAlertController {
                     completion(nil)
                     return
                 }
-                let alert = UIAlertController(newUpdateAvailableAlertForTestFlight: true)
+                let alert = UIAlertController(newUpdateAvailableAlertForTestFlight: true, actionHandler: actionHandler)
                 completion(alert)
             } else {
                 guard appStoreVersion > currentVersion else {
                     completion(nil)
                     return
                 }
-                let alert = UIAlertController(newUpdateAvailableAlertForTestFlight: false)
+                let alert = UIAlertController(newUpdateAvailableAlertForTestFlight: false, actionHandler: actionHandler)
                 completion(alert)
             }
         }
     }
 
-    private convenience init(newUpdateAvailableAlertForTestFlight forTestFlight: Bool) {
+    private convenience init(newUpdateAvailableAlertForTestFlight forTestFlight: Bool,
+                             actionHandler: @escaping (UpdateAction) -> Void)
+    {
         switch forTestFlight {
         case true:
             self.init(title: "Update Available", message: "Thank you for beta testing WaterMe! A newer version of this application is now available on the App Store.", preferredStyle: .alert)
         case false:
             self.init(title: "Update Available", message: "Thank you for using WaterMe! A newer version of this application is now available on the App Store.", preferredStyle: .alert)
         }
-        let appStore = UIAlertAction(title: "Open App Store", style: .default, handler: nil)
-        let dontAsk = UIAlertAction(title: LocalizedString.buttonTitleDontAskAgain, style: .destructive, handler: nil)
-        let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel, handler: nil)
+        let appStore = UIAlertAction(title: "Open App Store",
+                                     style: .default,
+                                     handler: { _ in actionHandler(.update) })
+        let dontAsk = UIAlertAction(title: LocalizedString.buttonTitleDontAskAgain,
+                                    style: .destructive,
+                                    handler: { _ in actionHandler(.dontAsk) })
+        let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss,
+                                   style: .cancel,
+                                   handler: { _ in actionHandler(.cancel) })
         self.addAction(appStore)
         self.addAction(dontAsk)
         self.addAction(cancel)
