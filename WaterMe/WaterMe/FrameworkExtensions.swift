@@ -118,9 +118,6 @@ extension MutableCollection {
 }
 
 extension UIBarButtonItem {
-    convenience init(localizedReminderVesselButtonWithTarget target: Any, action: Selector) {
-        self.init(title: ReminderVesselMainViewController.LocalizedString.title, style: .done, target: target, action: action)
-    }
     convenience init(localizedSettingsButtonWithTarget target: Any, action: Selector) {
         self.init(image: #imageLiteral(resourceName: "TipJar"), style: UIBarButtonItemStyle.plain, target: target, action: action)
         self.accessibilityLabel = SettingsMainViewController.LocalizedString.settingsTitle
@@ -134,7 +131,10 @@ extension UIBarButtonItem {
         self.style = .done
     }
     convenience init(localizedAddReminderVesselBBIButtonWithTarget target: Any, action: Selector) {
-        self.init(title: UIAlertController.LocalizedString.buttonTitleNewPlant, style: .plain, target: target, action: action)
+        self.init(title: UIAlertController.LocalizedString.buttonTitleAddPlant, style: .done, target: target, action: action)
+    }
+    convenience init(__legacy_localizedAddReminderVesselBBIButtonWithTarget target: Any, action: Selector) {
+        self.init(title: UIAlertController.LocalizedString.buttonTitleAddPlant, style: .plain, target: target, action: action)
     }
     func style_updateSettingsButtonInsets(for traitCollection: UITraitCollection) {
         // style values

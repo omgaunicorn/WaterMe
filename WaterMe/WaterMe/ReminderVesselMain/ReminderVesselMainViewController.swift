@@ -43,8 +43,10 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
     
     /*@IBOutlet*/ private weak var collectionVC: ReminderVesselCollectionViewController?
 
-    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
-    private lazy var addReminderVesselBBI: UIBarButtonItem = UIBarButtonItem(localizedAddReminderVesselBBIButtonWithTarget: self, action: #selector(self.addReminderVesselButtonTapped(_:)))
+    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self,
+                                                                action: #selector(self.doneButtonTapped(_:)))
+    private lazy var addReminderVesselBBI: UIBarButtonItem = UIBarButtonItem(__legacy_localizedAddReminderVesselBBIButtonWithTarget: self,
+                                                                             action: #selector(self.addReminderVesselButtonTapped(_:)))
     
     var basicRC: BasicController?
     var proRC: ProController?

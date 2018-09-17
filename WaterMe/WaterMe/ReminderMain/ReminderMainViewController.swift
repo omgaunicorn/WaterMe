@@ -45,8 +45,10 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     private var appUpdateAvailableVC: UIViewController?
     private var applicationDidFinishLaunchingError: RealmError?
 
-    private(set) lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedReminderVesselButtonWithTarget: self, action: #selector(self.plantsButtonTapped(_:)))
-    private(set) lazy var settingsBBI: UIBarButtonItem = UIBarButtonItem(localizedSettingsButtonWithTarget: self, action: #selector(self.settingsButtonTapped(_:)))
+    private(set) lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedAddReminderVesselBBIButtonWithTarget: self,
+                                                                       action: #selector(self.addPlantButtonTapped(_:)))
+    private(set) lazy var settingsBBI: UIBarButtonItem = UIBarButtonItem(localizedSettingsButtonWithTarget: self,
+                                                                         action: #selector(self.settingsButtonTapped(_:)))
 
     var basicRC: BasicController?
     var proRC: ProController?
@@ -154,13 +156,14 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         self.present(vc, animated: true, completion: nil)
     }
 
-    @IBAction private func plantsButtonTapped(_ sender: Any) {
-        let vc = ReminderVesselMainViewController.newVC(basicController: self.basicRC, proController: self.proRC) { vc in
+    @IBAction private func addPlantButtonTapped(_ sender: Any) {
+        guard let basicRC = self.basicRC else { return }
+        let editVC = ReminderVesselEditViewController.newVC(basicController: basicRC, editVessel: nil) { vc in
             vc.dismiss(animated: true) {
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
         }
-        self.present(vc, animated: true, completion: nil)
+        self.present(editVC, animated: true, completion: nil)
     }
 
     @IBAction private func settingsButtonTapped(_ sender: Any) {

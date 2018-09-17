@@ -118,8 +118,8 @@ extension UIAlertController {
         static let buttonTitleDelete =
             NSLocalizedString("Delete",
                               comment: "Button that allows the user to delete a reminder or a plant.")
-        static let buttonTitleNewPlant =
-            NSLocalizedString("New Plant",
+        static let buttonTitleAddPlant =
+            NSLocalizedString("Add Plant",
                               comment: "Button that allows the user to add a new plant.")
         static let buttonTitleDismiss =
             NSLocalizedString("Dismiss",
