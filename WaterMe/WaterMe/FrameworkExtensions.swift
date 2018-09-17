@@ -482,3 +482,18 @@ extension UIView {
         }
     }
 }
+
+internal extension Bundle {
+    internal var testFlightInstall: Bool {
+        #if DEBUG
+        return false
+        #else
+        guard let receiptURL = self.appStoreReceiptURL else { return false }
+        if receiptURL.lastPathComponent == "sandboxReceipt" {
+            return true
+        } else {
+            return false
+        }
+        #endif
+    }
+}
