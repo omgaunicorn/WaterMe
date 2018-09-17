@@ -69,7 +69,7 @@ class EmojiImageView: UIView {
         self.imageViewMaskLayer = maskLayer
         self.imageView = imageView
         self.label = label
-        self.backgroundColor = .clear
+        self.backgroundColor = .white
     }
 
     enum Size {
@@ -99,7 +99,6 @@ class EmojiImageView: UIView {
     private weak var imageViewMaskLayer: CAShapeLayer?
 
     func setIcon(_ icon: ReminderVessel.Icon?, for controlState: UIControlState = .normal) {
-        self.backgroundColor = .clear
 
         guard let icon = icon else {
             self.alpha = 0.4
@@ -127,7 +126,6 @@ class EmojiImageView: UIView {
     }
 
     func setKind(_ kind: Reminder.Kind?, for controlState: UIControlState = .normal) {
-        self.backgroundColor = .white
 
         guard let kind = kind else {
             self.alpha = 0.4

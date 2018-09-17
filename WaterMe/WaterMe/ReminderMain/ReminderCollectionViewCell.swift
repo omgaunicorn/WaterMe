@@ -78,13 +78,17 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         super.traitCollectionDidChange(previousTraitCollection)
         switch UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
         case true:
-            self.emojiImageWidthConstraint!.constant = type(of: self).style_emojiImageViewWidthAccessibility
+            self.emojiImageWidthConstraint?.constant = type(of: self).style_emojiImageViewWidthAccessibility
         case false:
-            self.emojiImageWidthConstraint!.constant = type(of: self).style_emojiImageViewWidth
+            self.emojiImageWidthConstraint?.constant = type(of: self).style_emojiImageViewWidth
         }
     }
 
     func willDisplay() {
+        self.pulseCellIfReminderRecentlyPerformed()
+    }
+
+    private func pulseCellIfReminderRecentlyPerformed() {
         guard let lastPerformedDate = self.lastPerformedDate else { return }
         let interval = lastPerformedDate.timeIntervalSinceNow
         guard interval >= -1 && interval <= 0 else { return }
