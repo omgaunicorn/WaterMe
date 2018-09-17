@@ -484,7 +484,7 @@ extension UIView {
 }
 
 internal extension Bundle {
-    internal var testFlightInstall: Bool {
+    internal var isTestFlightInstall: Bool {
         #if DEBUG
         return false
         #else

@@ -67,30 +67,32 @@ public extension AppVersion {
             return
         }
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                log.error("Request Failed with Error: \(error)")
-                completion(nil)
-                return
+            DispatchQueue.main.async {
+                if let error = error {
+                    log.error("Request Failed with Error: \(error)")
+                    completion(nil)
+                    return
+                }
+                let response = response as? HTTPURLResponse
+                guard response?.successfulStatusCode == true else {
+                    log.error("Invalid Response: \(response?.statusCode ?? -1)")
+                    completion(nil)
+                    return
+                }
+                guard
+                    let data = data,
+                    let _json = try? JSONSerialization.jsonObject(with: data, options: []),
+                    let json = _json as? NSDictionary,
+                    let versionArray = json.value(forKeyPath: "results.version") as? NSArray,
+                    let versionString = versionArray.firstObject as? String,
+                    let version = AppVersion(versionString: versionString)
+                else {
+                    log.error("Invalid Data")
+                    completion(nil)
+                    return
+                }
+                completion(version)
             }
-            let response = response as? HTTPURLResponse
-            guard response?.successfulStatusCode == true else {
-                log.error("Invalid Response: \(response?.statusCode ?? -1)")
-                completion(nil)
-                return
-            }
-            guard
-                let data = data,
-                let _json = try? JSONSerialization.jsonObject(with: data, options: []),
-                let json = _json as? NSDictionary,
-                let versionArray = json.value(forKeyPath: "results.version") as? NSArray,
-                let versionString = versionArray.firstObject as? String,
-                let version = AppVersion(versionString: versionString)
-            else {
-                log.error("Invalid Data")
-                completion(nil)
-                return
-            }
-            completion(version)
         }
         task.resume()
     }
