@@ -166,6 +166,19 @@ extension UIAlertController {
         static let copyEmailAlertMessage: String =
             NSLocalizedString("Copy my email address into your clipboard, then paste it in your favorite email app.",
                               comment: "Alert: Email Copy: Message: Alert message that tells the user that they can copy my email address into their clipboard and paste it in their favorite email app.")
+        static let updateAvailableAlertTitle: String =
+            NSLocalizedString("App Update Available",
+                              comment: "Alert: App Update: Title: Alert title that tells the user that an update is available for WaterMe")
+        static let updateAvailableAlertMessage: String =
+            NSLocalizedString("Thank you for using WaterMe! A newer version is now available on the App Store. There's no rush, you can update now or at a later time.",
+                              comment: "Alert: App Update: Message: Alert title that tells the user that an update is available for WaterMe")
+        static let updateAvailableTestFlightAlertMessage: String =
+            NSLocalizedString("Thank you for beta testing WaterMe! A newer version is now available on the App Store. There's no rush, you can update now or at a later time.",
+                              comment: "Alert: App Update: Message: Alert title that tells TestFlight beta users that an update is available for WaterMe")
+        static let updateAvailableButtonTitleOpenAppStore: String =
+            NSLocalizedString("Open App Store",
+                              comment: "Alert: App Update: Button Title: Button title that allows the user to open the app store in order to update WaterMe.")
+
     }
 }
 

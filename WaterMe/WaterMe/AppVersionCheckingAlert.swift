@@ -52,14 +52,16 @@ extension UIAlertController {
                     completion(nil)
                     return
                 }
-                let alert = UIAlertController(newUpdateAvailableAlertForTestFlight: true, actionHandler: actionHandler)
+                let alert = UIAlertController(newUpdateAvailableAlertForTestFlight: true,
+                                              actionHandler: actionHandler)
                 completion(alert)
             } else {
                 guard appStoreVersion > currentVersion else {
                     completion(nil)
                     return
                 }
-                let alert = UIAlertController(newUpdateAvailableAlertForTestFlight: false, actionHandler: actionHandler)
+                let alert = UIAlertController(newUpdateAvailableAlertForTestFlight: false,
+                                              actionHandler: actionHandler)
                 completion(alert)
             }
         }
@@ -70,11 +72,15 @@ extension UIAlertController {
     {
         switch forTestFlight {
         case true:
-            self.init(title: "Update Available", message: "Thank you for beta testing WaterMe! A newer version of this application is now available on the App Store.", preferredStyle: .alert)
+            self.init(title: LocalizedString.updateAvailableAlertTitle,
+                      message: LocalizedString.updateAvailableTestFlightAlertMessage,
+                      preferredStyle: .alert)
         case false:
-            self.init(title: "Update Available", message: "Thank you for using WaterMe! A newer version of this application is now available on the App Store.", preferredStyle: .alert)
+            self.init(title: LocalizedString.updateAvailableAlertTitle,
+                      message: LocalizedString.updateAvailableAlertMessage,
+                      preferredStyle: .alert)
         }
-        let appStore = UIAlertAction(title: "Open App Store",
+        let appStore = UIAlertAction(title: LocalizedString.updateAvailableButtonTitleOpenAppStore,
                                      style: .default,
                                      handler: { _ in actionHandler(.update) })
         let dontAsk = UIAlertAction(title: LocalizedString.buttonTitleDontAskAgain,
