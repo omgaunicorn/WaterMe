@@ -83,6 +83,14 @@ extension InfoTableViewCell {
             self.sublabel1?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadLastPerformDate,
                                                                               style: .reminderSummarySublabel)
         }()
+        _ = {
+            guard let interval = reminder?.interval else { return }
+            let intervalString = self.intervalFormatter.string(forDayInterval: interval)
+            self.label2?.attributedText = NSAttributedString(string: intervalString,
+                                                             style: .reminderSummaryPrimaryLabel)
+            self.sublabel2?.attributedText = NSAttributedString(string: ReminderEditViewController.LocalizedString.sectionTitleInterval,
+                                                                style: .reminderSummarySublabel)
+        }()
     }
 
     func configureImportant(with reminder: Reminder?) {

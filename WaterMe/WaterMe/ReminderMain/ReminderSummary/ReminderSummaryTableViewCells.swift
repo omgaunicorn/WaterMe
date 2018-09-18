@@ -118,11 +118,13 @@ class ButtonTableViewCell: RoundedBackgroundViewTableViewCell {
 
 class InfoTableViewCell: RoundedBackgroundViewTableViewCell {
 
-    static let reuseIDInfoCell = "InfoCell"
+    static let reuseIDUnimportantInfoCell = "UnimportantInfoCell"
+    static let reuseIDImportantInfoCell = "ImportantInfoCell"
     static let reuseIDNoteCell = "NoteCell"
 
-    let dueDateFormatter = Formatter.newDueDateFormatter
-    let timeAgoDateFormatter = Formatter.newTimeAgoFormatter
+    private(set) lazy var dueDateFormatter = Formatter.newDueDateFormatter
+    private(set) lazy var timeAgoDateFormatter = Formatter.newTimeAgoFormatter
+    private(set) lazy var intervalFormatter = DateComponentsFormatter.newReminderIntervalFormatter
 
     @IBOutlet private(set) weak var label0: UILabel?
     @IBOutlet private(set) weak var sublabel0: UILabel?
@@ -130,12 +132,17 @@ class InfoTableViewCell: RoundedBackgroundViewTableViewCell {
     @IBOutlet private(set) weak var label1: UILabel?
     @IBOutlet private(set) weak var sublabel1: UILabel?
 
+    @IBOutlet private(set) weak var label2: UILabel?
+    @IBOutlet private(set) weak var sublabel2: UILabel?
+
     override func prepareForReuse() {
         super.prepareForReuse()
         self.label0?.text = nil
         self.sublabel0?.text = nil
         self.label1?.text = nil
         self.sublabel1?.text = nil
+        self.label2?.text = nil
+        self.sublabel2?.text = nil
     }
 }
 

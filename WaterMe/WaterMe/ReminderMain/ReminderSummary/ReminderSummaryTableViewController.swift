@@ -125,7 +125,7 @@ class ReminderSummaryTableViewController: UITableViewController {
             (cell as? ReminderVesselIconTableViewCell)?.configure(with: self.delegate?.reminderResult.value?.vessel?.icon)
             return cell
         case .unimportantInfo:
-            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDInfoCell, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDUnimportantInfoCell, for: indexPath)
             (cell as? InfoTableViewCell)?.configureUnimportant(with: self.delegate?.reminderResult?.value)
             return cell
         case .note:
@@ -133,7 +133,7 @@ class ReminderSummaryTableViewController: UITableViewController {
             (cell as? InfoTableViewCell)?.configure(withNoteString: self.delegate?.reminderResult.value?.note)
             return cell
         case .importantInfo:
-            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDInfoCell, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDImportantInfoCell, for: indexPath)
             (cell as? InfoTableViewCell)?.configureImportant(with: self.delegate?.reminderResult?.value)
             return cell
         case .actions(let row):
