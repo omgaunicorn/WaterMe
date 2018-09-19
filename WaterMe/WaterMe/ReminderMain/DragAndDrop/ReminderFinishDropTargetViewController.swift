@@ -37,8 +37,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     @IBOutlet private weak var dropTargetVisualEffectView: UIVisualEffectView? {
         didSet {
             self.dropTargetVisualEffectView?.clipsToBounds = true
-            // TODO: Decide how to do this corner radius. Should it be separate or shared with UIApplication.style_cornerRadius
-            self.dropTargetVisualEffectView?.layer.cornerRadius = ReminderHeaderCollectionReusableView.style_backgroundViewCornerRadius
+            self.dropTargetVisualEffectView?.layer.cornerRadius = UIApplication.style_cornerRadius
         }
     }
 

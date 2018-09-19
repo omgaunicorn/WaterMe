@@ -86,13 +86,13 @@ class ReminderUserNotificationController {
         // make sure we have data to work with
         guard reminders.isEmpty == false else { return [] }
 
-        // TODO: Remove this crasher once this is confirmed to be true
         // this verifies realm is sorting the reminders correctly
-        _ = {
+        // Using assert so that this is not executed in release
+        assert({
             let nonNilReminders = reminders.filter({ $0.nextPerformDate != nil })
             let sorted = nonNilReminders.sorted(by: { $0.nextPerformDate! <= $1.nextPerformDate! })
-            precondition(sorted == nonNilReminders)
-        }()
+            return sorted == nonNilReminders
+        }())
 
         // get preference values for reminder time and number of days to remind for
         let reminderHour = UserDefaults.standard.reminderHour

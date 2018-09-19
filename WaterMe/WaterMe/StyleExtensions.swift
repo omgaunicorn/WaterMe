@@ -125,10 +125,6 @@ extension ReminderVesselIconTableViewCell {
     static let style_iconButtonHeightAccessibilityTextSizeDisabled: CGFloat = 140
 }
 
-extension UICollectionReusableView {
-    static let style_backgroundViewCornerRadius: CGFloat = UIApplication.style_cornerRadius //6
-}
-
 enum Style {
 
     static let centerStyle: NSParagraphStyle = {

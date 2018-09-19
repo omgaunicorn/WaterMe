@@ -1,4 +1,3 @@
-
 //
 //  SimpleImageViewerSubclass.swift
 //  WaterMe
