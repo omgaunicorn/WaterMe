@@ -484,6 +484,16 @@
 			path = DragAndDrop;
 			sourceTree = "<group>";
 		};
+		50B779CA2154138D00AC6240 /* Miscellaneous  */ = {
+			isa = PBXGroup;
+			children = (
+				504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */,
+				5065AA1B200E872900C7F0CC /* UserFacingError.swift */,
+				5089D124214F458200140F68 /* AppVersionCheckingAlert.swift */,
+			);
+			path = "Miscellaneous ";
+			sourceTree = "<group>";
+		};
 		50BB0F471EBFCDE500850FF4 = {
 			isa = PBXGroup;
 			children = (
@@ -512,11 +522,8 @@
 				50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */,
 				50BB0F741EC01B8E00850FF4 /* UserDefaults.swift */,
 				50C96A311EC2BB03002802C1 /* FrameworkExtensions.swift */,
-				504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */,
 				50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */,
 				5047B7A4200D6B6800F69C73 /* Analytics.swift */,
-				5065AA1B200E872900C7F0CC /* UserFacingError.swift */,
-				5089D124214F458200140F68 /* AppVersionCheckingAlert.swift */,
 				501A9AE41FE9682C0016160D /* LocalizedStrings.swift */,
 				5065AA27200EC62F00C7F0CC /* Localizable.strings */,
 				500679AD1F4BF3B700F8100D /* ReminderMain */,
@@ -524,6 +531,7 @@
 				506A6215200561C6008EF601 /* Settings */,
 				50402387200ABD8F004C7FA7 /* PurchaseConfirmation */,
 				5049D1A11FACF9F30076565E /* ReminderNotifications */,
+				50B779CA2154138D00AC6240 /* Miscellaneous  */,
 				50F388DE1FF6D9870031ED45 /* CoreDataMigration */,
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
 				50F7A362200844390063A1FC /* StarterRealm.realm */,
