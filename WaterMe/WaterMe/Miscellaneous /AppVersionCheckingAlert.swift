@@ -27,7 +27,7 @@ import WaterMeStore
 extension UIAlertController {
 
     enum UpdateAction {
-        case update, dontAsk, cancel
+        case update, cancel
     }
 
     class func newAppVersionCheckAlert(_ completion: @escaping (UIViewController?) -> Void,
@@ -38,7 +38,7 @@ extension UIAlertController {
             return
         }
         let bundle = Bundle(for: AppDelegate.self)
-        guard let currentVersion = AppVersion.fetchFromBundle() else {
+        guard let bundleVersion = AppVersion.fetchFromBundle() else {
             completion(nil)
             return
         }
@@ -47,27 +47,56 @@ extension UIAlertController {
                 completion(nil)
                 return
             }
-            if bundle.isTestFlightInstall {
-                guard appStoreVersion >= currentVersion else {
+            let shownDates = UserDefaults.standard.updateDisplayDates(forAppStoreVersion: appStoreVersion)
+            switch shownDates.count {
+            case 1:
+                guard
+                    let originallyShownDate = shownDates.first,
+                    Calendar.current.enoughTimeHasElapsedSinceOriginallyShownDate(originallyShownDate)
+                else {
                     completion(nil)
                     return
                 }
-                let alert = UIAlertController(newUpdateAvailableAlertForTestFlight: true,
-                                              actionHandler: actionHandler)
-                completion(alert)
-            } else {
-                guard appStoreVersion > currentVersion else {
-                    completion(nil)
-                    return
+                fallthrough
+            case 0:
+                let preActionHandler = {
+                    UserDefaults.standard.markUpdateDisplayed(forAppStoreVersion: appStoreVersion)
                 }
-                let alert = UIAlertController(newUpdateAvailableAlertForTestFlight: false,
-                                              actionHandler: actionHandler)
+                let alert = self.updateAvailableAlertByComparing(appStoreVersion: appStoreVersion,
+                                                                 bundleVersion: bundleVersion,
+                                                                 isTestFlightInstall: bundle.isTestFlightInstall,
+                                                                 preActionHandler: preActionHandler,
+                                                                 actionHandler: actionHandler)
                 completion(alert)
+                return
+            default:
+                completion(nil)
+                return
             }
         }
     }
 
+    private class func updateAvailableAlertByComparing(appStoreVersion: AppVersion,
+                                                       bundleVersion: AppVersion,
+                                                       isTestFlightInstall: Bool,
+                                                       preActionHandler: @escaping () -> Void,
+                                                       actionHandler: @escaping (UpdateAction) -> Void) -> UIAlertController?
+    {
+        if isTestFlightInstall {
+            guard appStoreVersion >= bundleVersion else { return nil }
+            return UIAlertController(newUpdateAvailableAlertForTestFlight: true,
+                                     preActionHandler: preActionHandler,
+                                     actionHandler: actionHandler)
+        } else {
+            guard appStoreVersion > bundleVersion else { return nil }
+            return UIAlertController(newUpdateAvailableAlertForTestFlight: false,
+                                     preActionHandler: preActionHandler,
+                                     actionHandler: actionHandler)
+        }
+    }
+
     private convenience init(newUpdateAvailableAlertForTestFlight forTestFlight: Bool,
+                             preActionHandler: @escaping () -> Void,
                              actionHandler: @escaping (UpdateAction) -> Void)
     {
         switch forTestFlight {
@@ -80,17 +109,51 @@ extension UIAlertController {
                       message: LocalizedString.updateAvailableAlertMessage,
                       preferredStyle: .alert)
         }
-        let appStore = UIAlertAction(title: LocalizedString.updateAvailableButtonTitleOpenAppStore,
-                                     style: .default,
-                                     handler: { _ in actionHandler(.update) })
-        let dontAsk = UIAlertAction(title: LocalizedString.buttonTitleDontAskAgain,
-                                    style: .destructive,
-                                    handler: { _ in actionHandler(.dontAsk) })
-        let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss,
-                                   style: .cancel,
-                                   handler: { _ in actionHandler(.cancel) })
+        let appStore = UIAlertAction(title: LocalizedString.updateAvailableButtonTitleOpenAppStore, style: .default)
+        { _ in
+            preActionHandler()
+            actionHandler(.update)
+        }
+        let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel)
+        { _ in
+            preActionHandler()
+            actionHandler(.cancel)
+        }
         self.addAction(appStore)
-        self.addAction(dontAsk)
         self.addAction(cancel)
+    }
+}
+
+fileprivate extension UserDefaults {
+
+    fileprivate static let kAppVersionDisplayDatePrefix = "kAppVersionDisplayDatePrefixKey"
+
+    private static func key(for version: AppVersion) -> String {
+        return kAppVersionDisplayDatePrefix + ":" + version.versionString
+    }
+
+    fileprivate func updateDisplayDates(forAppStoreVersion version: AppVersion) -> [Date] {
+        let key = type(of: self).key(for: version)
+        let dates = self.object(forKey: key) as? [Date]
+        return dates ?? []
+    }
+
+    fileprivate func markUpdateDisplayed(forAppStoreVersion version: AppVersion) {
+        let existingDates = self.updateDisplayDates(forAppStoreVersion: version)
+        let key = type(of: self).key(for: version)
+        self.set(existingDates + [Date()], forKey: key)
+    }
+}
+
+fileprivate extension Calendar {
+    func enoughTimeHasElapsedSinceOriginallyShownDate(_ originallyShownDate: Date) -> Bool {
+        let now = Date()
+        guard
+            let oneWeekAfterShownDate = self.date(byAdding: .weekOfYear,
+                                                    value: 1,
+                                                    to: originallyShownDate),
+            now >= oneWeekAfterShownDate
+        else { return false }
+        return true
     }
 }

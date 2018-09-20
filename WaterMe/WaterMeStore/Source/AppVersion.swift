@@ -24,10 +24,10 @@
 import Foundation
 
 public struct AppVersion: Equatable {
-    var major: Int
-    var minor: Int
-    var bug: Int
-    init?(versionString: String) {
+    public var major: Int
+    public var minor: Int
+    public var bug: Int
+    internal init?(versionString: String) {
         let rawArray = versionString.components(separatedBy: ".")
         guard rawArray.count == 3 else { return nil }
         let uintArray = rawArray.compactMap({ UInt($0) })
@@ -36,6 +36,9 @@ public struct AppVersion: Equatable {
         self.major = intArray[0]
         self.minor = intArray[1]
         self.bug = intArray[2]
+    }
+    public var versionString: String {
+        return "\(self.major).\(self.minor).\(self.bug)"
     }
 }
 
@@ -67,7 +70,7 @@ public extension AppVersion {
     public static func fetchFromAppStore(_ completion: @escaping (AppVersion?) -> Void) {
         // TODO: This is for dev only - take it out ASAP
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            completion(AppVersion(versionString: "2.1.0")!)
+            completion(AppVersion(versionString: "2.1.2")!)
         }
         return
         guard let url = PrivateKeys.kAppInfoJSONURL else {

@@ -97,9 +97,6 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
             self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         }, { selection in
             switch selection {
-            case .dontAsk:
-                UserDefaults.standard.checkForUpdatesOnLaunch = false
-                fallthrough
             case .cancel:
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             case .update:
