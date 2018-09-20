@@ -281,10 +281,12 @@ extension UIAlertController {
         self.init(title: error.title, message: error.details, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel, handler: { _ in completion?(.cancel) })
         self.addAction(cancelAction)
-        if let actionTitle = error.actionTitle {
+        switch error.recoveryActions {
+        case .none:
+            break
+        case .openWaterMeSettings:
+            let actionTitle = RealmError.LocalizedString.buttonTitleManageStorage
             let errorAction = UIAlertAction(title: actionTitle, style: .default) { _ in
-                // TODO: Unsafe Assumption
-                // The only error that has a button title is to open Settings
                 UIApplication.shared.openSettings(completion: nil)
                 completion?(.error(error))
             }
@@ -302,7 +304,11 @@ extension UIAlertController {
     
     private convenience init<T>(saveAnywayError error: T, completion: @escaping (SaveAnywayErrorSelection<T>) -> Void) {
         self.init(title: error.title, message: error.details, preferredStyle: .alert)
-        if let actionTitle = error.actionTitle {
+        switch error.recoveryActions {
+        case .none:
+            break
+        case .openWaterMeSettings:
+            let actionTitle = RealmError.LocalizedString.buttonTitleManageStorage
             let fix = UIAlertAction(title: actionTitle, style: .default, handler: { _ in completion(.error(error)) })
             self.addAction(fix)
         }

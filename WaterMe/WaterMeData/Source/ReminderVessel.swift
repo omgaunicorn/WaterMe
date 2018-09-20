@@ -25,10 +25,14 @@ import Result
 import UIKit
 import RealmSwift
 
+public enum UserFacingErrorRecoveryActions {
+    case openWaterMeSettings, none
+}
+
 public protocol UserFacingError: Swift.Error {
     var title: String { get }
     var details: String? { get }
-    var actionTitle: String? { get }
+    var recoveryActions: UserFacingErrorRecoveryActions { get }
 }
 
 public protocol UICompleteCheckable {

@@ -53,12 +53,12 @@ extension RealmError: UserFacingError {
         }
     }
 
-    public var actionTitle: String? {
+    public var recoveryActions: UserFacingErrorRecoveryActions {
         switch self {
         case .objectDeleted, .unableToDeleteLastReminder, .imageCouldntBeCompressedEnough:
-            return nil
+            return .none
         case .createError, .loadError, .readError, .writeError:
-            return LocalizedString.buttonTitleManageStorage
+            return .openWaterMeSettings
         }
     }
 }
@@ -77,8 +77,8 @@ extension ReminderVessel.Error: UserFacingError {
     public var details: String? {
         return nil
     }
-    public var actionTitle: String? {
-        return nil
+    public var recoveryActions: UserFacingErrorRecoveryActions {
+        return .none
     }
 }
 
@@ -94,7 +94,7 @@ extension Reminder.Error: UserFacingError {
     public var details: String? {
         return nil
     }
-    public var actionTitle: String? {
-        return nil
+    public var recoveryActions: UserFacingErrorRecoveryActions {
+        return .none
     }
 }
