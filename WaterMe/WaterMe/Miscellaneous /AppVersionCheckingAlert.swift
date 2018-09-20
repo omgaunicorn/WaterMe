@@ -33,23 +33,35 @@ extension UIAlertController {
     class func newAppVersionCheckAlert(_ completion: @escaping (UIViewController?) -> Void,
                                        _ actionHandler: @escaping (UpdateAction) -> Void)
     {
+        // Step 1: Make sure the user has not disabled update checking from Settings.app
         guard UserDefaults.standard.checkForUpdatesOnLaunch else {
             completion(nil)
             return
         }
+
+        // Step 2: Get the Bundle Version of the App
         let bundle = Bundle(for: AppDelegate.self)
         guard let bundleVersion = AppVersion.fetchFromBundle() else {
             completion(nil)
             return
         }
+
+        // Step 3: Get the App Store Version of the App
         AppVersion.fetchFromAppStore() { appStoreVersion in
             guard let appStoreVersion = appStoreVersion else {
                 completion(nil)
                 return
             }
+
+            // Step 4: See how many times we have presented an alert for this
+            // App Store version before. We only want to show the alert twice
+            // for any given version.
             let shownDates = UserDefaults.standard.updateDisplayDates(forAppStoreVersion: appStoreVersion)
             switch shownDates.count {
             case 1:
+                // If we have already shown the alert one time, then we need to make sure
+                // we don't show it again for at least a week from the original showing.
+                // if it is over a week since we last showed it, fallthrough to the 0 case
                 guard
                     let originallyShownDate = shownDates.first,
                     Calendar.current.enoughTimeHasElapsedSinceOriginallyShownDate(originallyShownDate)
@@ -59,17 +71,20 @@ extension UIAlertController {
                 }
                 fallthrough
             case 0:
+                // If we have shown it 0 times, then create the alert and show it
                 let preActionHandler = {
                     UserDefaults.standard.markUpdateDisplayed(forAppStoreVersion: appStoreVersion)
                 }
+                let isTestFlightInstall = bundle.isTestFlightInstall
                 let alert = self.updateAvailableAlertByComparing(appStoreVersion: appStoreVersion,
                                                                  bundleVersion: bundleVersion,
-                                                                 isTestFlightInstall: bundle.isTestFlightInstall,
+                                                                 isTestFlightInstall: isTestFlightInstall,
                                                                  preActionHandler: preActionHandler,
                                                                  actionHandler: actionHandler)
                 completion(alert)
                 return
             default:
+                // if we have shown the alert more than 2 times, then we don't want to show it any more
                 completion(nil)
                 return
             }
@@ -83,11 +98,19 @@ extension UIAlertController {
                                                        actionHandler: @escaping (UpdateAction) -> Void) -> UIAlertController?
     {
         if isTestFlightInstall {
+            // If the currently running app is a TestFlight build
+            // Then we need to alert the user if the AppStore version
+            // EXCEEDS -OR- MATCHES the bundle version.
+            //
+            // Because that means the version is out of beta and should
+            // be moved off of testflight
             guard appStoreVersion >= bundleVersion else { return nil }
             return UIAlertController(newUpdateAvailableAlertForTestFlight: true,
                                      preActionHandler: preActionHandler,
                                      actionHandler: actionHandler)
         } else {
+            // If its not a testflight build, then we only care if the appstore
+            // version EXCEEDS the bundle version
             guard appStoreVersion > bundleVersion else { return nil }
             return UIAlertController(newUpdateAvailableAlertForTestFlight: false,
                                      preActionHandler: preActionHandler,
