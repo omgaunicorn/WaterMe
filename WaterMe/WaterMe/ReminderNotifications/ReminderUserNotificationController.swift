@@ -135,10 +135,13 @@ class ReminderUserNotificationController {
             let _content = UNMutableNotificationContent()
             let dateComponents = calendar.userNotificationCompatibleDateComponents(with: reminderTime)
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-            // TODO: remove crasher once I know this is working well
-            precondition(trigger.nextTriggerDate() == reminderTime)
+
+            // crash in debug if this doesn't match my expectations
+            assert(trigger.nextTriggerDate() == reminderTime)
+
             // shuffle the names so that different plant names show in the notifications
             let plantNames = ReminderValue.uniqueParentPlantNames(from: matches).shuffled()
+
             // only set the body if there is a trigger. this way a notification won't be shown to the user
             // only the badge will update.
             _content.body = ReminderUserNotificationController.LocalizedString.localizedNotificationBody(from: plantNames)
@@ -146,7 +149,7 @@ class ReminderUserNotificationController {
             _content.badge = NSNumber(value: matches.count)
 
             // swiftlint:disable:next force_cast
-            let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
+            let content = _content.copy() as! UNNotificationContent
             let request = UNNotificationRequest(identifier: reminderTime.description, content: content, trigger: trigger)
 
             return request

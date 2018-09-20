@@ -125,8 +125,8 @@ extension ReminderVesselIconTableViewCell {
     static let style_iconButtonHeightAccessibilityTextSizeDisabled: CGFloat = 140
 }
 
+//swiftlint:disable:next type_body_length
 enum Style {
-
     static let centerStyle: NSParagraphStyle = {
         // swiftlint:disable:next force_cast
         let p = NSParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle

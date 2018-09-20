@@ -90,12 +90,9 @@ public class BasicController {
             try type(of: self).createLocalRealmDirectoryIfNeeded()
             try type(of: self).copyRealmFromBundleIfNeeded()
             realmConfig.fileURL = type(of: self).localRealmFile
-        case .sync(let user):
-            let url = user.realmURL(withAppName: "WaterMeBasic")
-//            user.configuration(realmURL: url,
-//                               fullSynchronization: true,
-//                               enableSSLValidation: true)
-            realmConfig.syncConfiguration = SyncConfiguration(user: user, realmURL: url, enableSSLValidation: true)
+        case .sync: /*(let user)*/
+            // let url = user.realmURL(withAppName: "WaterMeBasic")
+            fatalError("Syncing Realms are Not Implemented for WaterMe Yet")
         }
         self.config = realmConfig
     }
