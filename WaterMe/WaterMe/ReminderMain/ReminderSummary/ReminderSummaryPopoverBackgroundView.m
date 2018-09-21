@@ -29,6 +29,9 @@
     UIPopoverArrowDirection _arrowDirection;
 }
 
+// MARK: Safety Net for Shadow Opacity
+@property (nonatomic) BOOL shadowOpacityWasCalled;
+
 // MARK: Required to Implement for UIKit
 @property (nonatomic) CGFloat arrowOffset;
 @property (nonatomic) UIPopoverArrowDirection arrowDirection;
@@ -54,11 +57,22 @@
 - (void)didMoveToWindow;
 {
     [super didMoveToWindow];
+    [self setShadowOpacityWasCalled:NO];
     if (![self myArrowView]) {
         [self configureArrowViewConstraints];
         [self configureArrowMaskLayer];
         [self updateArrowConstraintsForOffset];
         [self enableDisableConstraintsForArrowDirection];
+    }
+}
+
+- (void)layoutSubviews;
+{
+    [super layoutSubviews];
+    if (![self shadowOpacityWasCalled]) {
+        [self setAlpha:0.1];
+    } else {
+        [self setAlpha:1.0];
     }
 }
 
@@ -210,6 +224,7 @@
 
 - (CGFloat)_shadowOpacity;
 {
+    [self setShadowOpacityWasCalled:YES];
     return 0.1;
 }
 
