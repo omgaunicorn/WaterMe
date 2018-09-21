@@ -43,8 +43,8 @@ fileprivate extension NSString {
 
 extension NSAttributedString {
 
-    convenience init(string: String, style: Font) {
-        self.init(string: string, attributes: style.attributes)
+    convenience init(string: String, font: Font) {
+        self.init(string: string, attributes: font.attributes)
     }
 
     convenience init(stylingPrimaryString primaryString: String,
@@ -53,7 +53,7 @@ extension NSAttributedString {
                      withSubstringStyle searchStringStyle: Font)
     {
         // make a mutable attributed string to play with
-        let primaryAttributedString = NSMutableAttributedString(string: primaryString, style: primaryStyle)
+        let primaryAttributedString = NSMutableAttributedString(string: primaryString, font: primaryStyle)
 
         // since we're using NSAttributedString, its easier to do this the old ObjC way
         let primaryString = primaryString as NSString

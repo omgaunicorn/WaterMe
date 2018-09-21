@@ -31,24 +31,24 @@ extension ButtonTableViewCell {
             self.locationInGroup = .middle
             self.label?.attributedText =
                 NSAttributedString(string: UIApplication.LocalizedString.editReminder,
-                                   style: .reminderSummaryActionButton)
+                                   font: .reminderSummaryActionButton)
         case .editReminderVessel:
             self.locationInGroup = .bottom
             self.label?.attributedText =
                 NSAttributedString(string: UIApplication.LocalizedString.editVessel,
-                                   style: .reminderSummaryActionButton)
+                                   font: .reminderSummaryActionButton)
         case .performReminder:
             self.locationInGroup = .top
             self.label?.attributedText =
                 NSAttributedString(string: ReminderMainViewController.LocalizedString.buttonTitleReminderPerform,
-                                   style: .reminderSummaryActionButton)
+                                   font: .reminderSummaryActionButton)
         }
     }
     
     func configureAsCancelButton() {
         self.label?.attributedText =
             NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleCancel,
-                               style: .reminderSummaryCancelButton)
+                               font: .reminderSummaryCancelButton)
         self.locationInGroup = .alone
     }
 }
@@ -58,10 +58,10 @@ extension InfoTableViewCell {
         self.locationInGroup = .alone
         self.label0?.attributedText =
             NSAttributedString(string: noteString ?? "",
-                               style: .textInputTableViewCell)
+                               font: .textInputTableViewCell)
         self.sublabel0?.attributedText =
             NSAttributedString(string: ReminderEditViewController.LocalizedString.sectionTitleNotes,
-                               style: .reminderSummarySublabel)
+                               font: .reminderSummarySublabel)
     }
     
     func configureUnimportant(with reminder: Reminder?) {
@@ -71,25 +71,25 @@ extension InfoTableViewCell {
                 Font.reminderSummaryPrimaryLabel :
                 Font.reminderSummaryPrimaryLabelValueNIL
             self.label0?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
-                                                                      style: vesselNameStyle)
+                                                                      font: vesselNameStyle)
             self.sublabel0?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadPlantName,
-                                                                         style: .reminderSummarySublabel)
+                                                                         font: .reminderSummarySublabel)
         }()
         _ = {
             let lastPerformedDate = reminder?.performed.last?.date
             let dateString = self.timeAgoDateFormatter.timeAgoString(for: lastPerformedDate)
             self.label1?.attributedText = NSAttributedString(string: dateString,
-                                                                           style: .reminderSummaryPrimaryLabel)
+                                                                           font: .reminderSummaryPrimaryLabel)
             self.sublabel1?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadLastPerformDate,
-                                                                              style: .reminderSummarySublabel)
+                                                                              font: .reminderSummarySublabel)
         }()
         _ = {
             guard let interval = reminder?.interval else { return }
             let intervalString = self.intervalFormatter.string(forDayInterval: interval)
             self.label2?.attributedText = NSAttributedString(string: intervalString,
-                                                             style: .reminderSummaryPrimaryLabel)
+                                                             font: .reminderSummaryPrimaryLabel)
             self.sublabel2?.attributedText = NSAttributedString(string: ReminderEditViewController.LocalizedString.sectionTitleInterval,
-                                                                style: .reminderSummarySublabel)
+                                                                font: .reminderSummarySublabel)
         }()
     }
 
@@ -97,17 +97,17 @@ extension InfoTableViewCell {
         _ = {
             guard let reminderName = reminder?.kind.localizedLongString else { return }
             self.label0?.attributedText = NSAttributedString(string: reminderName,
-                                                             style: .reminderSummaryPrimaryLabel)
+                                                             font: .reminderSummaryPrimaryLabel)
             self.sublabel0?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadReminderKind,
-                                                                style: .reminderSummarySublabel)
+                                                                font: .reminderSummarySublabel)
         }()
         _ = {
             let nextPerformDate = reminder?.nextPerformDate ?? Date()
             let dueDateString = self.dueDateFormatter.string(from: nextPerformDate)
             self.label1?.attributedText = NSAttributedString(string: dueDateString,
-                                                             style: .reminderSummaryPrimaryLabel)
+                                                             font: .reminderSummaryPrimaryLabel)
             self.sublabel1?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadNextPerformDate,
-                                                                style: .reminderSummarySublabel)
+                                                                font: .reminderSummarySublabel)
         }()
     }
 }

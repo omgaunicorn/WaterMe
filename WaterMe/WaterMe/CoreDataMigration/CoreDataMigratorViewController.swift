@@ -87,12 +87,12 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
     // swiftlint:disable:next function_body_length
     private func configureAttributedText() {
         // set things to all defaults
-        self.titleLabel?.attributedText = NSAttributedString(string: LocalizedString.title, style: .migratorTitle)
-        self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.subtitle, style: .migratorSubtitle)
-        self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.body, style: .migratorBody)
-        self.migrateButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.migrateButtonTitle, style: .migratorPrimaryButton), for: .normal)
-        self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.cancelButtonTitle, style: .migratorSecondaryButton), for: .normal)
-        self.deleteButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.deleteButtonTitle, style: .migratorSecondaryButton), for: .normal)
+        self.titleLabel?.attributedText = NSAttributedString(string: LocalizedString.title, font: .migratorTitle)
+        self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.subtitle, font: .migratorSubtitle)
+        self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.body, font: .migratorBody)
+        self.migrateButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.migrateButtonTitle, font: .migratorPrimaryButton), for: .normal)
+        self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.cancelButtonTitle, font: .migratorSecondaryButton), for: .normal)
+        self.deleteButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.deleteButtonTitle, font: .migratorSecondaryButton), for: .normal)
         self.progressView?.isHidden = false
         self.bodyLabel?.isHidden = false
         self.migrateButton?.alpha = 0 // setting alpha to 0 improves animations
@@ -117,21 +117,21 @@ class CoreDataMigratorViewController: UIViewController, HasBasicController {
             self.migrateButton?.alpha = disableAlpha
             self.cancelButton?.isHidden = true
             self.deleteButton?.isHidden = true
-            self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodyMigrating, style: .migratorBodySmall)
-            self.migrateButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.migratingButtonTitle, style: .migratorPrimaryButton), for: .normal)
+            self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodyMigrating, font: .migratorBodySmall)
+            self.migrateButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.migratingButtonTitle, font: .migratorPrimaryButton), for: .normal)
         case .success:
             self.progressView?.isHidden = true
             self.migrateButton?.isHidden = true
             self.deleteButton?.isHidden = true
             self.cancelButton?.alpha = 1
-            self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodySuccess, style: .migratorBody)
-            self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.doneButtonTitle, style: .migratorPrimaryButton), for: .normal)
+            self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodySuccess, font: .migratorBody)
+            self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.doneButtonTitle, font: .migratorPrimaryButton), for: .normal)
         case .error:
             self.cancelButton?.alpha = 1
             self.migrateButton?.isHidden = true
             self.deleteButton?.isHidden = true
-            self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodyFailure, style: .migratorBody)
-            self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.doneButtonTitle, style: .migratorPrimaryButton), for: .normal)
+            self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodyFailure, font: .migratorBody)
+            self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.doneButtonTitle, font: .migratorPrimaryButton), for: .normal)
         }
     }
 

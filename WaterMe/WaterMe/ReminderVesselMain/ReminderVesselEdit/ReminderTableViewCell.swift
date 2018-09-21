@@ -40,10 +40,10 @@ class ReminderTableViewCell: UITableViewCell {
         guard let reminder = reminder else { self.reset(); return; }
         
         // do stuff that is the same for all cases
-        self.topLabel?.attributedText = NSAttributedString(string: reminder.kind.localizedShortString, style: .selectableTableViewCell)
-        let interval = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval), style: .selectableTableViewCell)
+        self.topLabel?.attributedText = NSAttributedString(string: reminder.kind.localizedShortString, font: .selectableTableViewCell)
+        let interval = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval), font: .selectableTableViewCell)
         let helper = NSAttributedString(string: ReminderVesselEditViewController.LocalizedString.rowLabelInterval,
-                                        style: .selectableTableViewCellHelper)
+                                        font: .selectableTableViewCellHelper)
         self.middleLabel?.attributedText = helper + interval
         self.emojiImageView?.setKind(reminder.kind)
         
@@ -54,15 +54,15 @@ class ReminderTableViewCell: UITableViewCell {
         case .move(let location):
             let style: Font = location != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
             let helper = NSAttributedString(string: ReminderVesselEditViewController.LocalizedString.rowLabelLocation,
-                                            style: .selectableTableViewCellHelper)
-            let location = NSAttributedString(string: location ?? ReminderVesselEditViewController.LocalizedString.rowValueLabelLocationNoValue, style: style)
+                                            font: .selectableTableViewCellHelper)
+            let location = NSAttributedString(string: location ?? ReminderVesselEditViewController.LocalizedString.rowValueLabelLocationNoValue, font: style)
             self.bottomLabel?.attributedText = helper + location
         case .other(let description):
             let style: Font = description != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
             let helper = NSAttributedString(string: ReminderVesselEditViewController.LocalizedString.rowLabelDescription,
-                                            style: .selectableTableViewCellHelper)
+                                            font: .selectableTableViewCellHelper)
             let description = NSAttributedString(string: description ?? ReminderVesselEditViewController.LocalizedString.rowValueLabelDescriptionNoValue,
-                                                 style: style)
+                                                 font: style)
             self.bottomLabel?.attributedText = helper + description
         }
     }

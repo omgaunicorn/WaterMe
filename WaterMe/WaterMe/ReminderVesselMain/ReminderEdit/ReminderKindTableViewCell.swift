@@ -35,7 +35,7 @@ class ReminderKindTableViewCell: SimpleLabelTableViewCell {
     
     func configure(rowNumber: Int, compareWith compare: Reminder.Kind) {
         let id = Reminder.Kind(row: rowNumber)
-        self.label.attributedText = NSAttributedString(string: id.localizedShortString, style: Font.selectableTableViewCell)
+        self.label.attributedText = NSAttributedString(string: id.localizedShortString, font: .selectableTableViewCell)
         self.accessoryType = id.isSameKind(as: compare) ? .checkmark : .none
     }
     

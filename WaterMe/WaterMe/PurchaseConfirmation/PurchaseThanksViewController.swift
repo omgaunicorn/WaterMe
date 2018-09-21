@@ -135,11 +135,11 @@ class PurchaseThanksViewController: UIViewController {
     }
 
     private func configureAttributedText() {
-        self.titleLabel?.attributedText = NSAttributedString(string: LocalizedString.title, style: .migratorTitle)
-        self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.subtitle, style: .migratorSubtitle)
-        self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.body, style: .migratorBody)
-        self.reviewButton?.setAttributedTitle(NSAttributedString(string: SettingsMainViewController.LocalizedString.cellTitleTipJarFree, style: .migratorPrimaryButton), for: .normal)
-        self.cancelButton?.setAttributedTitle(NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleDismiss, style: .migratorSecondaryButton), for: .normal)
+        self.titleLabel?.attributedText = NSAttributedString(string: LocalizedString.title, font: .migratorTitle)
+        self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.subtitle, font: .migratorSubtitle)
+        self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.body, font: .migratorBody)
+        self.reviewButton?.setAttributedTitle(NSAttributedString(string: SettingsMainViewController.LocalizedString.cellTitleTipJarFree, font: .migratorPrimaryButton), for: .normal)
+        self.cancelButton?.setAttributedTitle(NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleDismiss, font: .migratorSecondaryButton), for: .normal)
     }
 
     @IBAction private func reviewButtonTapped(_ sender: Any) {

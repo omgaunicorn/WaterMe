@@ -73,7 +73,7 @@ class SettingsTableViewController: UITableViewController {
         case .left(let row):
             let _cell = tableView.dequeueReusableCell(withIdentifier: SimpleLabelTableViewCell.reuseID, for: indexPath)
             guard let cell = _cell as? SimpleLabelTableViewCell else { return _cell }
-            cell.label.attributedText = NSAttributedString(string: row.localizedTitle, style: .selectableTableViewCell)
+            cell.label.attributedText = NSAttributedString(string: row.localizedTitle, font: .selectableTableViewCell)
             cell.accessoryType = .disclosureIndicator
             return cell
         case .right(let row):

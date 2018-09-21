@@ -46,7 +46,7 @@ class DragTargetInstructionalView: UIView {
         case .compact:
             self.textLabel?.numberOfLines = 4
         }
-        self.textLabel?.attributedText = NSAttributedString(string: "Drag and Drop Here", style: .dragInstructionalText(self.tintColor))
+        self.textLabel?.attributedText = NSAttributedString(string: "Drag and Drop Here", font: .dragInstructionalText(self.tintColor))
     }
 
     private enum AnimState {
