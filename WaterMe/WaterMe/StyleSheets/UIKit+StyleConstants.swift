@@ -139,5 +139,3 @@ extension ReminderVesselIconTableViewCell {
     static let style_iconButtonHeightAccessibilityTextSizeEnabled: CGFloat = 280
     static let style_iconButtonHeightAccessibilityTextSizeDisabled: CGFloat = 140
 }
-
-

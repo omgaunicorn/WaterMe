@@ -140,6 +140,7 @@ open class ReminderGedeg: NSObject {
             return nil
         }
 
+        // swiftlint:disable:next todo
         // FIXME: Crasher Workaround - http://crashes.to/s/ba8c0f6c9ad
         // Sometimes this method is called when an index out of bounds.
         // This should not happen, but this check works around it.

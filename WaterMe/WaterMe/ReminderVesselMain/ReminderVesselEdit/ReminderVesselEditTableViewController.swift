@@ -133,6 +133,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
         case .photo:
             return 1
         case .reminders:
+            // swiftlint:disable:next todo
             // FIXME: Crasher Workaround - http://crashes.to/s/44d5e5cef85
             // this was sometimes causing a crash because the underlying object was deleted
             // But in reality the underlying object should always be set to NIL if it gets deleted

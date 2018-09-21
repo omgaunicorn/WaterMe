@@ -24,7 +24,6 @@
 import WaterMeData
 import UIKit
 
-//swiftlint:disable:next type_body_length
 enum Font {
     case sectionHeaderBold(Reminder.Section)
     case sectionHeaderRegular(Reminder.Section)

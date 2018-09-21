@@ -147,7 +147,8 @@ class ReminderSummaryTableViewController: UITableViewController {
         }
     }
 
-    // TODO: Fix super hack - Maybe file a radar?
+    // swiftlint:disable:next todo
+    // FIXME: Fix super hack - Maybe file a radar?
     // This is needed because of a bug with UITableView
     // When the cell's selection style is set to .none
     // And didSelectRowAtIndexPath does certain things
