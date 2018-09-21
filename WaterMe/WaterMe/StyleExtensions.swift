@@ -25,106 +25,6 @@ import CropViewController
 import WaterMeData
 import UIKit
 
-extension ReminderHeaderCollectionReusableView {
-    class func style_viewHeight(isAccessibilityCategory: Bool) -> CGFloat {
-        switch isAccessibilityCategory {
-        case true:
-            return 74
-        case false:
-            return 44
-        }
-    }
-}
-
-extension ModalParentViewController {
-    enum Style {
-        static let grayViewColor = UIColor.black.withAlphaComponent(0.5)
-    }
-}
-
-extension ReminderVessel {
-    var shortLabelSafeDisplayName: String? {
-        let name = self.displayName ?? ""
-        let characterLimit = 20
-        guard name.count > characterLimit else { return self.displayName }
-        let endIndex = name.index(name.startIndex, offsetBy: characterLimit)
-        let substring = String(self.displayName![..<endIndex])
-        if let trimmed = substring.nonEmptyString {
-            return trimmed + "…"
-        } else {
-            return nil
-        }
-    }
-}
-
-extension UIApplication {
-    static let style_animationDurationLong: TimeInterval = 1.2
-    static let style_animationDurationNormal: TimeInterval = 0.3
-    static let style_cornerRadius: CGFloat = 12
-    class func style_configure() {
-        UIView.appearance().tintColor = Style.Color.tint
-        UIView.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = nil
-        UIImageView.appearance(whenContainedInInstancesOf: [ReminderTableViewCell.self]).tintColor = Style.Color.textSecondary
-        UIVisualEffectView.appearance(whenContainedInInstancesOf: [CropViewController.self]).backgroundColor = nil
-        UIVisualEffectView.appearance().backgroundColor = Style.Color.visuelEffectViewBackground
-    }
-}
-
-extension UIView {
-    func style_setCornerRadius() {
-        self.layer.cornerRadius = self.maxCornerRadius(withDesiredRadius: UIApplication.style_cornerRadius)
-    }
-}
-
-extension ReminderSummaryViewController {
-    static let style_leadingTrailingPadding: CGFloat = 8
-    static let style_bottomPadding: CGFloat = style_leadingTrailingPadding
-    static let style_topPadding: CGFloat = style_bottomPadding / 2
-    static let style_tableViewSectionGap: CGFloat = 8
-    static let style_tableViewHighlightAlpha: CGFloat = 0.1
-    static let style_actionButtonSeparatorColor: UIColor = Style.Color.tint.withAlphaComponent(0.2)
-    static let style_primaryLabelSublabelSpacing: CGFloat = 4
-}
-
-extension DragTargetInstructionalView {
-    static let style_animationDurationLong: TimeInterval = 2
-    static let style_animationDurationNormal: TimeInterval = 1
-    static let style_animationDelayLong: TimeInterval = 4
-    static let style_animationDelayNormal: TimeInterval = 1
-}
-
-extension ReminderFinishDropTargetViewController {
-    static let style_dropTargetViewCompactHeight: CGFloat = 88
-    static let style_dropTargetViewCompactHeightAccessibilityTextSizeEnabled: CGFloat = 132
-}
-
-extension ReminderCollectionViewCell {
-    static let style_emojiImageViewWidth: CGFloat = 100
-    static let style_emojiImageViewWidthAccessibility: CGFloat = 170
-}
-
-extension UITableViewCell {
-    static let style_labelCellTopPadding: CGFloat = 12
-    static let style_labelCellBottomPadding: CGFloat = 10
-    static let style_labelCellLeadingPadding: CGFloat = 20
-    static let style_labelCellTrailingPadding: CGFloat = 20
-    
-    static let style_textFieldCellTopPadding: CGFloat = 8
-    static let style_textFieldCellBottomPadding: CGFloat = 6
-    static let style_textFieldCellLeadingPadding: CGFloat = 20
-    static let style_textFieldCellTrailingPadding: CGFloat = 20
-}
-
-extension TextViewTableViewCell {
-    static let style_cellHeightAccessibilityTextSizeEnabled: CGFloat = 400
-    static let style_cellHeightAccessibilityTextSizeDisabled: CGFloat = 200
-}
-
-extension ReminderVesselIconTableViewCell {
-    static let style_iconButtonHeightAccessibilityTextSizeEnabled: CGFloat = 280
-    static let style_iconButtonHeightAccessibilityTextSizeDisabled: CGFloat = 140
-}
-
 //swiftlint:disable:next type_body_length
 enum Style {
     static let centerStyle: NSParagraphStyle = {
@@ -443,6 +343,24 @@ enum Style {
     }
 }
 
+fileprivate extension NSString {
+    fileprivate func ranges(of substring: String) -> [NSRange] {
+        // make sure we have an immutable copy of the string
+        // swiftlint:disable:next force_cast
+        let copy = self.copy() as! NSString
+
+        // make a sequence, return NIL to complete the sequence
+        return sequence(state: 0) { state -> NSRange? in
+            // get the range using the state variable to know the beginning of where to search
+            let range = copy.range(of: substring, range: NSRange(location: state, length: copy.length - state))
+            // populate the state variable with the location of the last find for the next iteration
+            state = NSMaxRange(range)
+            // if we ever find NSNotFound for the location, its time to return NIL and end the collection
+            return range.location != NSNotFound ? range : nil
+            }.map({ $0 })
+    }
+}
+
 extension NSAttributedString {
 
     convenience init(string: String, style: Style) {
@@ -477,4 +395,135 @@ extension NSAttributedString {
     static func + (lhs: NSAttributedString, rhs: NSAttributedString) -> NSAttributedString {
         return lhs.appending(rhs)
     }
+}
+
+extension UIView {
+    class func style_animateNormal(_ animations: @escaping () -> Void, completion: @escaping ((Bool) -> Void)) {
+        self.animate(withDuration: UIApplication.style_animationDurationNormal,
+                     delay: 0,
+                     options: [],
+                     animations: animations,
+                     completion: completion)
+    }
+    class func style_animateNormal(_ animations: @escaping () -> Void) {
+        self.animate(withDuration: UIApplication.style_animationDurationNormal,
+                     delay: 0,
+                     options: [],
+                     animations: animations,
+                     completion: nil)
+    }
+    class func style_animateLong(_ animations: @escaping () -> Void, completion: @escaping ((Bool) -> Void)) {
+        self.animate(withDuration: UIApplication.style_animationDurationLong,
+                     delay: 0,
+                     options: [],
+                     animations: animations,
+                     completion: completion)
+    }
+    class func style_animateLong(_ animations: @escaping () -> Void) {
+        self.animate(withDuration: UIApplication.style_animationDurationLong,
+                     delay: 0,
+                     options: [],
+                     animations: animations,
+                     completion: nil)
+    }
+}
+
+extension ReminderHeaderCollectionReusableView {
+    class func style_viewHeight(isAccessibilityCategory: Bool) -> CGFloat {
+        switch isAccessibilityCategory {
+        case true:
+            return 74
+        case false:
+            return 44
+        }
+    }
+}
+
+extension ModalParentViewController {
+    enum Style {
+        static let grayViewColor = UIColor.black.withAlphaComponent(0.5)
+    }
+}
+
+extension ReminderVessel {
+    var shortLabelSafeDisplayName: String? {
+        let name = self.displayName ?? ""
+        let characterLimit = 20
+        guard name.count > characterLimit else { return self.displayName }
+        let endIndex = name.index(name.startIndex, offsetBy: characterLimit)
+        let substring = String(self.displayName![..<endIndex])
+        if let trimmed = substring.nonEmptyString {
+            return trimmed + "…"
+        } else {
+            return nil
+        }
+    }
+}
+
+extension UIApplication {
+    static let style_animationDurationLong: TimeInterval = 1.2
+    static let style_animationDurationNormal: TimeInterval = 0.3
+    static let style_cornerRadius: CGFloat = 12
+    class func style_configure() {
+        UIView.appearance().tintColor = Style.Color.tint
+        UIView.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = nil
+        UIImageView.appearance(whenContainedInInstancesOf: [ReminderTableViewCell.self]).tintColor = Style.Color.textSecondary
+        UIVisualEffectView.appearance(whenContainedInInstancesOf: [CropViewController.self]).backgroundColor = nil
+        UIVisualEffectView.appearance().backgroundColor = Style.Color.visuelEffectViewBackground
+    }
+}
+
+extension UIView {
+    func style_setCornerRadius() {
+        self.layer.cornerRadius = self.maxCornerRadius(withDesiredRadius: UIApplication.style_cornerRadius)
+    }
+}
+
+extension ReminderSummaryViewController {
+    static let style_leadingTrailingPadding: CGFloat = 8
+    static let style_bottomPadding: CGFloat = style_leadingTrailingPadding
+    static let style_topPadding: CGFloat = style_bottomPadding / 2
+    static let style_tableViewSectionGap: CGFloat = 8
+    static let style_tableViewHighlightAlpha: CGFloat = 0.1
+    static let style_actionButtonSeparatorColor: UIColor = Style.Color.tint.withAlphaComponent(0.2)
+    static let style_primaryLabelSublabelSpacing: CGFloat = 4
+}
+
+extension DragTargetInstructionalView {
+    static let style_animationDurationLong: TimeInterval = 2
+    static let style_animationDurationNormal: TimeInterval = 1
+    static let style_animationDelayLong: TimeInterval = 4
+    static let style_animationDelayNormal: TimeInterval = 1
+}
+
+extension ReminderFinishDropTargetViewController {
+    static let style_dropTargetViewCompactHeight: CGFloat = 88
+    static let style_dropTargetViewCompactHeightAccessibilityTextSizeEnabled: CGFloat = 132
+}
+
+extension ReminderCollectionViewCell {
+    static let style_emojiImageViewWidth: CGFloat = 100
+    static let style_emojiImageViewWidthAccessibility: CGFloat = 170
+}
+
+extension UITableViewCell {
+    static let style_labelCellTopPadding: CGFloat = 12
+    static let style_labelCellBottomPadding: CGFloat = 10
+    static let style_labelCellLeadingPadding: CGFloat = 20
+    static let style_labelCellTrailingPadding: CGFloat = 20
+
+    static let style_textFieldCellTopPadding: CGFloat = 8
+    static let style_textFieldCellBottomPadding: CGFloat = 6
+    static let style_textFieldCellLeadingPadding: CGFloat = 20
+    static let style_textFieldCellTrailingPadding: CGFloat = 20
+}
+
+extension TextViewTableViewCell {
+    static let style_cellHeightAccessibilityTextSizeEnabled: CGFloat = 400
+    static let style_cellHeightAccessibilityTextSizeDisabled: CGFloat = 200
+}
+
+extension ReminderVesselIconTableViewCell {
+    static let style_iconButtonHeightAccessibilityTextSizeEnabled: CGFloat = 280
+    static let style_iconButtonHeightAccessibilityTextSizeDisabled: CGFloat = 140
 }

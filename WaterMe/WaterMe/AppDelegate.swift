@@ -108,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // check the build and see if its new
             let ud = UserDefaults.standard
             let oldBuild = ud.lastBuildNumber
-            let currentBuild = self.buildNumber
+            let currentBuild = Bundle.main.buildNumber
             if oldBuild != currentBuild {
                 ud.lastBuildNumber = currentBuild
                 ud.requestReviewDate = Date()

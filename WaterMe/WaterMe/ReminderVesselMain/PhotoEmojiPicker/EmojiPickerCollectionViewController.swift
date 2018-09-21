@@ -113,3 +113,11 @@ extension EmojiPickerViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: collectionView.availableContentSize.width, height: kind.style_viewHeight(isAccessibilityCategory: isAC))
     }
 }
+
+fileprivate extension SFSafariViewController {
+    fileprivate class func newEmojiOneVC() -> UIViewController {
+        let url = URL(string: "https://www.emojione.com")!
+        let vc = SFSafariViewController(url: url)
+        return vc
+    }
+}
