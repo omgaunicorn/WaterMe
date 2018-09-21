@@ -37,7 +37,7 @@ class LastPerformedTableViewCell: SimpleLabelTableViewCell {
     
     func configureWith(lastPerformedDate: Date?) {
         let dateString = self.formatter.timeAgoString(for: lastPerformedDate)
-        self.label.attributedText = NSAttributedString(string: dateString, style: Style.readOnlyTableViewCell)
+        self.label.attributedText = NSAttributedString(string: dateString, style: Font.readOnlyTableViewCell)
     }
     
     override func prepareForReuse() {

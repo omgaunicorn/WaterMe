@@ -37,7 +37,7 @@ class EmailDeveloperViewController: MFMailComposeViewController, MFMailComposeVi
             vc.setSubject(LocalizedString.subject)
             vc.setToRecipients([PrivateKeys.kEmailAddress])
             vc.completion = completion
-            vc.view.tintColor = Style.Color.tint // hack because the MFMailComposeVC does not do this automatically for Cancel/Send buttons
+            vc.view.tintColor = Color.tint // hack because the MFMailComposeVC does not do this automatically for Cancel/Send buttons
             return vc
         } else {
             let vc = UIAlertController(copyEmailAlertWithAddress: PrivateKeys.kEmailAddressURL) {

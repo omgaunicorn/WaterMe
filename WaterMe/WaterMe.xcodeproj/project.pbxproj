@@ -82,8 +82,12 @@
 		508FFCB01EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */; };
 		5096D191215474E1006E1019 /* UIApplication+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D190215474E1006E1019 /* UIApplication+WaterMe.swift */; };
 		5096D19321547659006E1019 /* UIView+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D19221547658006E1019 /* UIView+WaterMe.swift */; };
+		5096D1962154775D006E1019 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D1952154775D006E1019 /* Font.swift */; };
+		5096D19821547764006E1019 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D19721547764006E1019 /* Color.swift */; };
+		5096D19A215478FF006E1019 /* UIFont+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D199215478FF006E1019 /* UIFont+Font.swift */; };
+		5096D19C21547991006E1019 /* NSAttributedString+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D19B21547991006E1019 /* NSAttributedString+Font.swift */; };
+		5096D19E21547BE5006E1019 /* UIKit+StyleConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D19D21547BE5006E1019 /* UIKit+StyleConstants.swift */; };
 		50A3BAC8214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3BAC7214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift */; };
-		50A3DF971EE3331D00F0B966 /* StyleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */; };
 		50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */; };
 		50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */; };
 		50AA4A4A1F00AFE600D81831 /* SimpleLabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AA4A491F00AFE600D81831 /* SimpleLabelTableViewCell.swift */; };
@@ -230,8 +234,12 @@
 		508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionalAddButtonTableViewHeaderFooterView.xib; sourceTree = "<group>"; };
 		5096D190215474E1006E1019 /* UIApplication+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+WaterMe.swift"; sourceTree = "<group>"; };
 		5096D19221547658006E1019 /* UIView+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+WaterMe.swift"; sourceTree = "<group>"; };
+		5096D1952154775D006E1019 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		5096D19721547764006E1019 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		5096D199215478FF006E1019 /* UIFont+Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Font.swift"; sourceTree = "<group>"; };
+		5096D19B21547991006E1019 /* NSAttributedString+Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Font.swift"; sourceTree = "<group>"; };
+		5096D19D21547BE5006E1019 /* UIKit+StyleConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit+StyleConstants.swift"; sourceTree = "<group>"; };
 		50A3BAC7214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSummaryReminderVesselIconTableViewCell.swift; sourceTree = "<group>"; };
-		50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleExtensions.swift; sourceTree = "<group>"; };
 		50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPickerCollectionViewController.swift; sourceTree = "<group>"; };
 		50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastPerformedTableViewCell.swift; sourceTree = "<group>"; };
 		50AA4A491F00AFE600D81831 /* SimpleLabelTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleLabelTableViewCell.swift; sourceTree = "<group>"; };
@@ -500,6 +508,18 @@
 			path = DragAndDrop;
 			sourceTree = "<group>";
 		};
+		5096D1942154773D006E1019 /* StyleSheets */ = {
+			isa = PBXGroup;
+			children = (
+				5096D1952154775D006E1019 /* Font.swift */,
+				5096D19721547764006E1019 /* Color.swift */,
+				5096D199215478FF006E1019 /* UIFont+Font.swift */,
+				5096D19B21547991006E1019 /* NSAttributedString+Font.swift */,
+				5096D19D21547BE5006E1019 /* UIKit+StyleConstants.swift */,
+			);
+			path = StyleSheets;
+			sourceTree = "<group>";
+		};
 		50B779CA2154138D00AC6240 /* Miscellaneous  */ = {
 			isa = PBXGroup;
 			children = (
@@ -553,7 +573,6 @@
 			isa = PBXGroup;
 			children = (
 				50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */,
-				50A3DF961EE3331D00F0B966 /* StyleExtensions.swift */,
 				5047B7A4200D6B6800F69C73 /* Analytics.swift */,
 				501A9AE41FE9682C0016160D /* LocalizedStrings.swift */,
 				5065AA27200EC62F00C7F0CC /* Localizable.strings */,
@@ -562,6 +581,7 @@
 				506A6215200561C6008EF601 /* Settings */,
 				50402387200ABD8F004C7FA7 /* PurchaseConfirmation */,
 				5049D1A11FACF9F30076565E /* ReminderNotifications */,
+				5096D1942154773D006E1019 /* StyleSheets */,
 				50B779CB21546FE200AC6240 /* Categories */,
 				50B779CA2154138D00AC6240 /* Miscellaneous  */,
 				50F388DE1FF6D9870031ED45 /* CoreDataMigration */,
@@ -991,10 +1011,13 @@
 				50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */,
 				50B61EE11F2FB904004654B4 /* EmojiImageView.swift in Sources */,
 				504A36FB214C7ECC009543C0 /* SimpleImageViewerSubclass.swift in Sources */,
+				5096D1962154775D006E1019 /* Font.swift in Sources */,
 				5029E09B214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m in Sources */,
 				5089D125214F458200140F68 /* AppVersionCheckingAlert.swift in Sources */,
 				501A9AE71FEB15C20016160D /* WateringAnimationPlayerView.swift in Sources */,
 				50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */,
+				5096D19821547764006E1019 /* Color.swift in Sources */,
+				5096D19C21547991006E1019 /* NSAttributedString+Font.swift in Sources */,
 				50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */,
 				50457C6C201D54130043EB20 /* EmojiPickerFooterCollectionReusableView.swift in Sources */,
 				5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */,
@@ -1028,6 +1051,7 @@
 				5051F8FC202BAB1C00741FF9 /* BadgeNumberController.swift in Sources */,
 				5010C232213F806500D1832C /* ReminderSummaryTableViewController.swift in Sources */,
 				508FFCAF1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift in Sources */,
+				5096D19E21547BE5006E1019 /* UIKit+StyleConstants.swift in Sources */,
 				5075B4901FF178EA007B42D8 /* ReminderDragPreviewView.swift in Sources */,
 				50299E651FED926400363EF3 /* DragAndDropPlayerManager.swift in Sources */,
 				5096D19321547659006E1019 /* UIView+WaterMe.swift in Sources */,
@@ -1039,9 +1063,9 @@
 				50E8B1DF1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift in Sources */,
 				50B511A71EFE144700ED1DF4 /* ReminderKindTableViewCell.swift in Sources */,
 				50E3F2CD1FF70D3B003245E3 /* CoreDataMigratorViewController.swift in Sources */,
-				50A3DF971EE3331D00F0B966 /* StyleExtensions.swift in Sources */,
 				5028190D200D14850044BEC8 /* SettingsInfoTableViewCell.swift in Sources */,
 				50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */,
+				5096D19A215478FF006E1019 /* UIFont+Font.swift in Sources */,
 				50E3F2C91FF6EF35003245E3 /* ImageEmojiObject.swift in Sources */,
 				506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */,
 				501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */,

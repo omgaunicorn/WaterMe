@@ -38,17 +38,17 @@ class TextFieldTableViewCell: UITableViewCell {
     var textChanged: ((String) -> Void)?
     
     func setTextField(text: String?) {
-        self.textField?.attributedText = NSAttributedString(string: text ?? "", style: Style.textInputTableViewCell)
+        self.textField?.attributedText = NSAttributedString(string: text ?? "", style: Font.textInputTableViewCell)
     }
     
     func setLabelText(_ labelText: String?, andTextFieldPlaceHolderText placeHolderText: String) {
-        self.textField?.attributedPlaceholder = NSAttributedString(string: placeHolderText, style: Style.readOnlyTableViewCell)
+        self.textField?.attributedPlaceholder = NSAttributedString(string: placeHolderText, style: Font.readOnlyTableViewCell)
         if let labelText = labelText {
             self.label?.isHidden = false
-            self.label?.attributedText = NSAttributedString(string: labelText, style: Style.readOnlyTableViewCell)
+            self.label?.attributedText = NSAttributedString(string: labelText, style: Font.readOnlyTableViewCell)
         } else {
             self.label?.isHidden = true
-            self.label?.attributedText = NSAttributedString(string: "", style: Style.readOnlyTableViewCell)
+            self.label?.attributedText = NSAttributedString(string: "", style: Font.readOnlyTableViewCell)
         }
     }
     

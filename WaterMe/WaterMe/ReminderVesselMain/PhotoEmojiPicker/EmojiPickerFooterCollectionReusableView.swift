@@ -62,7 +62,7 @@ class EmojiPickerFooterCollectionReusableView: BlurryBackgroundBottomLineCollect
     private func updateAttributedStrings() {
         // color the colorview
         let primarySection = Reminder.Section.later
-        self.colorView.backgroundColor = Style.Color.color(for: primarySection)
+        self.colorView.backgroundColor = Color.color(for: primarySection)
 
         // configure labels
         let providedByString = NSAttributedString(stylingPrimaryString: LocalizedString.providedBy,

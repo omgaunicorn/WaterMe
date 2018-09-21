@@ -68,8 +68,8 @@ extension InfoTableViewCell {
         _ = {
             let vesselName = reminder?.vessel?.displayName
             let vesselNameStyle = vesselName != nil ?
-                Style.reminderSummaryPrimaryLabel :
-                Style.reminderSummaryPrimaryLabelValueNIL
+                Font.reminderSummaryPrimaryLabel :
+                Font.reminderSummaryPrimaryLabelValueNIL
             self.label0?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
                                                                       style: vesselNameStyle)
             self.sublabel0?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadPlantName,

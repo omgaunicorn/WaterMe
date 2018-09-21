@@ -35,7 +35,7 @@ class TextViewTableViewCell: UITableViewCell {
     
     func configure(with text: String?) {
         // the " " is needed or else the textfield ignores the text attributes when there is an empty string present
-        self.textView?.attributedText = NSAttributedString(string: text ?? " ", style: Style.textInputTableViewCell)
+        self.textView?.attributedText = NSAttributedString(string: text ?? " ", style: Font.textInputTableViewCell)
         self.textView?.scrollRectToVisible(.zero, animated: false)
     }
     

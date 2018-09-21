@@ -78,13 +78,13 @@ class EmojiImageView: UIView {
             let accessibility = ignoreAccessibilitySizes ? false : UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
             switch self {
             case .superSmall:
-                let style = Style.emojiSuperSmall
+                let style = Font.emojiSuperSmall
                 return NSAttributedString(string: string, style: style)
             case .small:
-                let style = Style.emojiSmall(accessibilityFontSizeEnabled: accessibility)
+                let style = Font.emojiSmall(accessibilityFontSizeEnabled: accessibility)
                 return NSAttributedString(string: string, style: style)
             case .large:
-                let style = Style.emojiLarge(accessibilityFontSizeEnabled: accessibility)
+                let style = Font.emojiLarge(accessibilityFontSizeEnabled: accessibility)
                 return NSAttributedString(string: string, style: style)
             }
         }

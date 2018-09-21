@@ -52,13 +52,13 @@ class ReminderTableViewCell: UITableViewCell {
         case .water, .fertilize, .trim, .mist:
             self.bottomLabel?.isHidden = true
         case .move(let location):
-            let style: Style = location != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
+            let style: Font = location != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
             let helper = NSAttributedString(string: ReminderVesselEditViewController.LocalizedString.rowLabelLocation,
                                             style: .selectableTableViewCellHelper)
             let location = NSAttributedString(string: location ?? ReminderVesselEditViewController.LocalizedString.rowValueLabelLocationNoValue, style: style)
             self.bottomLabel?.attributedText = helper + location
         case .other(let description):
-            let style: Style = description != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
+            let style: Font = description != nil ? .selectableTableViewCell : .selectableTableViewCellDisabled
             let helper = NSAttributedString(string: ReminderVesselEditViewController.LocalizedString.rowLabelDescription,
                                             style: .selectableTableViewCellHelper)
             let description = NSAttributedString(string: description ?? ReminderVesselEditViewController.LocalizedString.rowValueLabelDescriptionNoValue,
