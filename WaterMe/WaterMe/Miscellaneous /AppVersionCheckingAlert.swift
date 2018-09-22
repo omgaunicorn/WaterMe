@@ -47,13 +47,25 @@ extension UIAlertController {
         }
 
         // Step 3: Get the App Store Version of the App
-        AppVersion.fetchFromAppStore() { appStoreVersion in
-            guard let appStoreVersion = appStoreVersion else {
+        AppVersion.fetchFromAppStore() { tuple in
+            guard let tuple = tuple else {
+                completion(nil)
+                return
+            }
+            let (appStoreVersion, minimumOSVersion) = tuple
+
+            // Step 4: Make sure the minimum OS version is lower than the current system
+            // Otherwise its rude and annoying to show update alerts because
+            // the user literally can't get the update.
+            guard
+                let bundleOSVersion = AppVersion(versionString: UIDevice.current.systemVersion),
+                bundleOSVersion >= minimumOSVersion
+            else {
                 completion(nil)
                 return
             }
 
-            // Step 4: See how many times we have presented an alert for this
+            // Step 5: See how many times we have presented an alert for this
             // App Store version before. We only want to show the alert twice
             // for any given version.
             let shownDates = UserDefaults.standard.updateDisplayDates(forAppStoreVersion: appStoreVersion)

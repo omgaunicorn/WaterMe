@@ -27,9 +27,14 @@ public struct AppVersion: Equatable {
     public var major: Int
     public var minor: Int
     public var bug: Int
-    internal init?(versionString: String) {
-        let rawArray = versionString.components(separatedBy: ".")
-        guard rawArray.count == 3 else { return nil }
+    public init?(versionString: String) {
+        var rawArray = versionString.components(separatedBy: ".")
+        while rawArray.count < 3 {
+            rawArray.append("0")
+        }
+        guard rawArray.count == 3 else {
+            return nil
+        }
         let uintArray = rawArray.compactMap({ UInt($0) })
         let intArray = uintArray.compactMap({ Int($0) })
         guard intArray.count == 3 else { return nil }
@@ -47,12 +52,12 @@ extension AppVersion: Comparable {
         if rhs.major > lhs.major {
             return true
         }
-        let majorGreaterOrEqual = rhs.major >= lhs.major
-        if majorGreaterOrEqual && rhs.major > lhs.major {
+        let majorEqual = rhs.major == lhs.major
+        if majorEqual && (rhs.minor > lhs.minor) {
             return true
         }
-        let minorGreaterOrEqual = rhs.minor >= lhs.minor
-        if majorGreaterOrEqual && minorGreaterOrEqual && rhs.bug > lhs.bug {
+        let minorEqual = rhs.minor == lhs.minor
+        if majorEqual && minorEqual && (rhs.bug > lhs.bug) {
             return true
         }
         return false
@@ -67,12 +72,7 @@ public extension AppVersion {
 }
 
 public extension AppVersion {
-    public static func fetchFromAppStore(_ completion: @escaping (AppVersion?) -> Void) {
-        // TODO: This is for dev only - take it out ASAP
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            completion(AppVersion(versionString: "2.1.3")!)
-        }
-        return
+    public static func fetchFromAppStore(_ completion: @escaping ((appStoreVersion: AppVersion, minimumOSVersion: AppVersion)?) -> Void) {
         guard let url = PrivateKeys.kAppInfoJSONURL else {
             completion(nil)
             return
@@ -94,15 +94,18 @@ public extension AppVersion {
                     let data = data,
                     let _json = try? JSONSerialization.jsonObject(with: data, options: []),
                     let json = _json as? NSDictionary,
-                    let versionArray = json.value(forKeyPath: "results.version") as? NSArray,
-                    let versionString = versionArray.firstObject as? String,
-                    let version = AppVersion(versionString: versionString)
+                    let appVersionArray = json.value(forKeyPath: "results.version") as? NSArray,
+                    let osVersionArray = json.value(forKeyPath: "results.minimumOsVersion") as? NSArray,
+                    let appVersionString = appVersionArray.firstObject as? String,
+                    let osVersionString = osVersionArray.firstObject as? String,
+                    let appVersion = AppVersion(versionString: appVersionString),
+                    let osVersion = AppVersion(versionString: osVersionString)
                 else {
                     log.error("Invalid Data")
                     completion(nil)
                     return
                 }
-                completion(version)
+                completion((appStoreVersion: appVersion, minimumOSVersion: osVersion))
             }
         }
         task.resume()
