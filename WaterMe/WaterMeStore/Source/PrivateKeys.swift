@@ -28,8 +28,19 @@ public enum PrivateKeys {
         log.warning("These are the IAP product identifiers for the Tip Jar.")
         return nil
     }
-    public static var kReviewAppURL: URL? {
+    private static var kWaterMeAppStoreUUID: String {
+        fatalError("You Need your own Store UUID")
+    }
+    public static var kAppStoreURL: URL? {
         log.warning("This is a URL that points to the App Store link of the app.")
+        return nil
+    }
+    public static var kReviewAppURL: URL? {
+        log.warning("This is a URL that points to the App Store link of the app. With write-review appended.")
+        return nil
+    }
+    public static var kAppInfoJSONURL: URL? {
+        log.warning("This is a URL that points to the JSON URL of the App Listing on iTunes")
         return nil
     }
     public static var kAvatarURL: URL? {
@@ -37,3 +48,4 @@ public enum PrivateKeys {
         return nil
     }
 }
+
