@@ -35,6 +35,23 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         self.plantsBBI.isEnabled = true
     }
 
+    func userDidPerformDrop(with reminders: [Reminder.Identifier], onTargetZoneWithin: ReminderFinishDropTargetViewController) {
+        let haptic = UINotificationFeedbackGenerator()
+        haptic.prepare()
+        guard let results = self.basicRC?.appendNewPerformToReminders(with: reminders) else { return }
+        switch results {
+        case .failure(let error):
+            haptic.notificationOccurred(.error)
+            self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
+        case .success:
+            haptic.notificationOccurred(.success)
+            Analytics.log(event: Analytics.CRUD_Op_R.performDrag, extras: Analytics.CRUD_Op_R.extras(count: reminders.count))
+            let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: nil, selectionCompletionHandler: nil)
+            guard let notificationPermissionVC = notPermVC else { return }
+            self.present(notificationPermissionVC, animated: true, completion: nil)
+        }
+    }
+
     func userDidSelect(reminderID: Reminder.Identifier,
                        from view: UIView,
                        deselectAnimated: @escaping (Bool) -> Void,
@@ -121,11 +138,17 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                                           basicRC: BasicController,
                                           completion: (() -> Void)?)
     {
+        // prepare haptics on supported devices
+        let haptic = UINotificationFeedbackGenerator()
+        haptic.prepare()
+        // update the database
         let result = basicRC.appendNewPerformToReminders(with: [identifier])
         switch result {
         case .success:
             // they performed the reminder, now analytics it
             Analytics.log(event: Analytics.CRUD_Op_R.performLegacy)
+            // perform the haptic for success
+            haptic.notificationOccurred(.success)
             // next we need to see if they are allowing / want to give us permission to send push notifications
             let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .right(view)) { _ in
                 completion?()
@@ -138,6 +161,9 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             }
             self.present(notificationPermissionVC, animated: true, completion: nil)
         case .failure(let error):
+            // perform the haptic for error
+            haptic.notificationOccurred(.error)
+            // present the alert for the error
             self.present(error: error, with: completion)
         }
     }
