@@ -81,53 +81,6 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
 
-    func __OLD__userDidSelect(reminder: Reminder,
-                              from view: UIView,
-                              deselectAnimated: @escaping (Bool) -> Void,
-                              within viewController: ReminderCollectionViewController)
-    {
-        guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
-        Analytics.log(viewOperation: .reminderVesselTap)
-
-        // prepare information for the alert we're going to present
-        let dueDateString = self.dueDateFormatter.string(from: reminder.nextPerformDate ?? Date())
-        let message = reminder.localizedAlertMessage(withLocalizedDateString: dueDateString)
-        let alert = UIAlertController(title: reminder.localizedAlertTitle, message: message, preferredStyle: .actionSheet)
-
-        // configure popover presentation for ipad
-        // popoverPresentationController is NIL on iPhones
-        alert.popoverPresentationController?.sourceView = view
-        alert.popoverPresentationController?.sourceRect = type(of: alert).sourceRect(from: view)
-        alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
-
-        // closure that needs to be executed whenever all the alerts have disappeared
-        let viewDidAppearActions = {
-            deselectAnimated(true)
-            self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
-        }
-
-        // need an idenfitier starting now because this is all async
-        // the reminder could be deleted or changed before the user makes a choice
-        let identifier = Reminder.Identifier(reminder: reminder)
-        let editReminder = UIAlertAction(title: UIApplication.LocalizedString.editReminder, style: .default) { action in
-            self.userChoseEditReminder(with: identifier, in: action, basicRC: basicRC, completion: viewDidAppearActions)
-        }
-        let editVessel = UIAlertAction(title: UIApplication.LocalizedString.editVessel, style: .default) { action in
-            self.userChoseEditVessel(withReminderIdentifier: identifier, in: action, basicRC: basicRC, completion: viewDidAppearActions)
-        }
-        let performReminder = UIAlertAction(title: LocalizedString.buttonTitleReminderPerform, style: .default) { action in
-            self.userChosePerformReminder(with: identifier, in: action, from: view, basicRC: basicRC, completion: viewDidAppearActions)
-        }
-        let cancel = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleCancel, style: .cancel) { _ in
-            viewDidAppearActions()
-        }
-        alert.addAction(performReminder)
-        alert.addAction(editReminder)
-        alert.addAction(editVessel)
-        alert.addAction(cancel)
-        self.present(alert, animated: true, completion: nil)
-    }
-
     private func userChoseEditReminder(with identifier: Reminder.Identifier,
                                        in _: UIAlertAction?,
                                        basicRC: BasicController,
