@@ -52,6 +52,9 @@ class ReminderSummaryViewController: UIViewController {
         vc.completion = completion
         vc.reminderResult = basicController.reminder(matching: reminderID)
         vc.reminderID = reminderID
+        vc.userActivity = NSUserActivity(kind: .viewReminder)
+        // TODO: This shouldn't be needed
+        vc.userActivity?.becomeCurrent()
         return vc
     }
 
@@ -167,6 +170,23 @@ extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate
              (.unspecified, _):
             self.isPresentedAsPopover = true
             return controller.presentedViewController.modalPresentationStyle
+        }
+    }
+}
+
+import MobileCoreServices
+import CoreSpotlight
+
+extension ReminderSummaryViewController: NSUserActivityDelegate {
+    override func updateUserActivityState(_ activity: NSUserActivity) {
+        guard let reminder = self.reminderResult.value, let vesselName = reminder.vessel?.displayName else { return }
+        let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
+        attributes.relatedUniqueIdentifier = reminder.uuid
+        activity.contentAttributeSet = attributes
+        activity.title = "View reminder to \(reminder.kind.localizedShortString) '\(vesselName)'"
+        if #available(iOS 12.0, *) {
+            activity.persistentIdentifier = reminder.uuid
+            activity.suggestedInvocationPhrase = "\(reminder.kind.localizedShortString) \(vesselName)"
         }
     }
 }

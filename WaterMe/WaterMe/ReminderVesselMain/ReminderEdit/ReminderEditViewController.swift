@@ -52,6 +52,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         case .existing(let reminder):
             vc.reminderResult = .success(reminder)
         }
+        vc.userActivity = NSUserActivity(kind: .editReminder)
         return navVC
     }
     

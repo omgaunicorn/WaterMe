@@ -21,7 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-
+import Intents
 import Foundation
 
 extension NSUserActivity {
@@ -39,9 +39,20 @@ extension NSUserActivity {
         case editReminder = "com.saturdayapps.waterme.activity.edit.reminder"
         case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
         case viewReminder = "com.saturdayapps.waterme.activity.view.reminder"
+        case viewReminders = "com.saturdayapps.waterme.activity.view.reminders"
         case editReminderVesselIcon = "com.saturdayapps.waterme.activity.edit.remindervessel.icon"
         case editReminderVesselIconCamera = "com.saturdayapps.waterme.activity.edit.remindervessel.icon.camera"
         case editReminderVesselIconLibrary = "com.saturdayapps.waterme.activity.edit.remindervessel.icon.library"
         case editReminderVesselIconEmoji = "com.saturdayapps.waterme.activity.edit.remindervessel.icon.emoji"
+    }
+
+    convenience init(kind: Kind) {
+        self.init(activityType: kind.rawValue)
+        self.isEligibleForHandoff = true
+        self.isEligibleForSearch = true
+        if #available(iOS 12.0, *) {
+            self.isEligibleForPrediction = true
+        }
+        self.needsSave = true
     }
 }

@@ -37,6 +37,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         vc.applicationDidFinishLaunchingError = basicRCResult.error
         vc.configure(with: basicRCResult.value)
         vc.configure(with: proController)
+        vc.userActivity = NSUserActivity(kind: .viewReminders)
         return navVC
     }
 
@@ -246,6 +247,16 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         } else if let destVC = segue.destination as? ReminderFinishDropTargetViewController {
             destVC.delegate = self
             self.dropTargetViewController = destVC
+        }
+    }
+}
+
+// MARK: NSUserActivityDelegate
+extension ReminderMainViewController {
+    override func updateUserActivityState(_ activity: NSUserActivity) {
+        activity.title = "Open WaterMe"
+        if #available(iOS 12.0, *) {
+            activity.suggestedInvocationPhrase = "Open WaterMe"
         }
     }
 }

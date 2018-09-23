@@ -49,6 +49,9 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
             Analytics.log(event: Analytics.CRUD_Op_RV.create)
             vc.vesselResult = basicController?.newReminderVessel()
         }
+        vc.userActivity = NSUserActivity(kind: .editReminderVessel)
+        // TODO: This shouldn't be needed
+        vc.userActivity?.becomeCurrent()
         return navVC
     }
     
@@ -311,5 +314,15 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     
     deinit {
       self.notificationToken?.invalidate()
+    }
+}
+
+extension ReminderVesselEditViewController {
+    override func updateUserActivityState(_ activity: NSUserActivity) {
+        let reminderVessel = self.vesselResult!.value!
+        activity.title = "Edit \(reminderVessel.displayName!)"
+        if #available(iOS 12.0, *) {
+            activity.suggestedInvocationPhrase = "Edit \(reminderVessel.displayName!)"
+        }
     }
 }
