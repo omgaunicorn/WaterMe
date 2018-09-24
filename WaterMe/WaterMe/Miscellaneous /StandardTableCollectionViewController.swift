@@ -41,6 +41,14 @@ class StandardCollectionViewController: UICollectionViewController {
                                                object: nil)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // TODO: Hacky workaround for RDAR:44727935
+        // https://openradar.appspot.com/radar?id=4999954644860928
+        self.userActivity?.needsSave = true
+        self.userActivity?.becomeCurrent()
+    }
+
     @objc private func contentSizeCategoryDidChange(_ aNotification: Any) {
         // TableViewControllers do this automatically
         // Whenever the text size is changed by the user, just reload the collection view
@@ -63,5 +71,16 @@ class StandardCollectionViewController: UICollectionViewController {
         // calculate column width based on usable width of collectionview
         let division = width / columnCount
         self.flow?.itemSize = CGSize(width: floor(division), height: itemHeight)
+    }
+}
+
+class StandardTableViewController: UITableViewController {
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // TODO: Hacky workaround for RDAR:44727935
+        // https://openradar.appspot.com/radar?id=4999954644860928
+        self.userActivity?.needsSave = true
+        self.userActivity?.becomeCurrent()
     }
 }

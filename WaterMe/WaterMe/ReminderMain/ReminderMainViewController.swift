@@ -254,6 +254,8 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 // MARK: NSUserActivityDelegate
 extension ReminderMainViewController {
     override func updateUserActivityState(_ activity: NSUserActivity) {
+        super.updateUserActivityState(activity)
+        print("ReminderMainViewController: updateUserActivityState:")
         activity.title = "Open WaterMe"
         if #available(iOS 12.0, *) {
             activity.suggestedInvocationPhrase = "Open WaterMe"

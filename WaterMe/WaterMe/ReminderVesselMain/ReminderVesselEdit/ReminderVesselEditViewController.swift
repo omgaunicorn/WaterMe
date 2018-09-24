@@ -319,6 +319,8 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
 
 extension ReminderVesselEditViewController {
     override func updateUserActivityState(_ activity: NSUserActivity) {
+        super.updateUserActivityState(activity)
+        print("ReminderVesselEditViewController: updateUserActivityState:")
         let reminderVessel = self.vesselResult!.value!
         activity.title = "Edit \(reminderVessel.displayName!)"
         if #available(iOS 12.0, *) {

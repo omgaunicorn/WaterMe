@@ -25,7 +25,7 @@ import Result
 import WaterMeData
 import UIKit
 
-class ReminderEditTableViewController: UITableViewController {
+class ReminderEditTableViewController: StandardTableViewController {
     
     var reminder: (() -> Result<Reminder, RealmError>?)?
     var kindChanged: ((Reminder.Kind, Bool) -> Void)?

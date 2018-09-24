@@ -35,7 +35,7 @@ protocol ReminderVesselEditTableViewControllerDelegate: class {
     func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController?) -> Bool
 }
 
-class ReminderVesselEditTableViewController: UITableViewController {
+class ReminderVesselEditTableViewController: StandardTableViewController {
     
     private enum Section: Int {
         case photo = 0, name, reminders

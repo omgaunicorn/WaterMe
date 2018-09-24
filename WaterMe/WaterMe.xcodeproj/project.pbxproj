@@ -98,7 +98,7 @@
 		50B779CD2154700A00AC6240 /* UIAlertController+UserFacingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779CC2154700A00AC6240 /* UIAlertController+UserFacingError.swift */; };
 		50B779CF215470B300AC6240 /* UIBarButtonItem+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779CE215470B300AC6240 /* UIBarButtonItem+WaterMe.swift */; };
 		50B779D1215470FE00AC6240 /* NSFormatter+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779D0215470FE00AC6240 /* NSFormatter+WaterMe.swift */; };
-		50B779D32154716E00AC6240 /* StandardCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779D22154716E00AC6240 /* StandardCollectionViewController.swift */; };
+		50B779D32154716E00AC6240 /* StandardTableCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779D22154716E00AC6240 /* StandardTableCollectionViewController.swift */; };
 		50B779D52154724000AC6240 /* UITableCollectionView+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779D42154724000AC6240 /* UITableCollectionView+WaterMe.swift */; };
 		50B779D7215473F100AC6240 /* NSBundle+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779D6215473F100AC6240 /* NSBundle+WaterMe.swift */; };
 		50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F531EBFCDE500850FF4 /* AppDelegate.swift */; };
@@ -251,7 +251,7 @@
 		50B779CC2154700A00AC6240 /* UIAlertController+UserFacingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+UserFacingError.swift"; sourceTree = "<group>"; };
 		50B779CE215470B300AC6240 /* UIBarButtonItem+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+WaterMe.swift"; sourceTree = "<group>"; };
 		50B779D0215470FE00AC6240 /* NSFormatter+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSFormatter+WaterMe.swift"; sourceTree = "<group>"; };
-		50B779D22154716E00AC6240 /* StandardCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardCollectionViewController.swift; sourceTree = "<group>"; };
+		50B779D22154716E00AC6240 /* StandardTableCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardTableCollectionViewController.swift; sourceTree = "<group>"; };
 		50B779D42154724000AC6240 /* UITableCollectionView+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableCollectionView+WaterMe.swift"; sourceTree = "<group>"; };
 		50B779D6215473F100AC6240 /* NSBundle+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSBundle+WaterMe.swift"; sourceTree = "<group>"; };
 		50BB0F501EBFCDE500850FF4 /* WaterMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaterMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -528,7 +528,7 @@
 				504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */,
 				5065AA1B200E872900C7F0CC /* UserFacingError.swift */,
 				5089D124214F458200140F68 /* AppVersionCheckingAlert.swift */,
-				50B779D22154716E00AC6240 /* StandardCollectionViewController.swift */,
+				50B779D22154716E00AC6240 /* StandardTableCollectionViewController.swift */,
 				50C96A311EC2BB03002802C1 /* Either.swift */,
 			);
 			path = "Miscellaneous ";
@@ -1024,7 +1024,7 @@
 				50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */,
 				50457C6C201D54130043EB20 /* EmojiPickerFooterCollectionReusableView.swift in Sources */,
 				5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */,
-				50B779D32154716E00AC6240 /* StandardCollectionViewController.swift in Sources */,
+				50B779D32154716E00AC6240 /* StandardTableCollectionViewController.swift in Sources */,
 				5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */,
 				50F388E41FF6DA490031ED45 /* WaterMeData.xcdatamodeld in Sources */,
 				50281904200BB57D0044BEC8 /* ModalParentViewController.swift in Sources */,

@@ -33,7 +33,7 @@ protocol ReminderSummaryTableViewControllerDelegate: class {
     func userChose(toViewImage image: UIImage, rowDeselectionHandler: @escaping () -> Void, within: ReminderSummaryTableViewController)
 }
 
-class ReminderSummaryTableViewController: UITableViewController {
+class ReminderSummaryTableViewController: StandardTableViewController {
 
     weak var delegate: ReminderSummaryTableViewControllerDelegate?
 

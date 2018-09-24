@@ -179,6 +179,8 @@ import CoreSpotlight
 
 extension ReminderSummaryViewController: NSUserActivityDelegate {
     override func updateUserActivityState(_ activity: NSUserActivity) {
+        super.updateUserActivityState(activity)
+        print("ReminderSummaryViewController: updateUserActivityState:")
         guard let reminder = self.reminderResult.value, let vesselName = reminder.vessel?.displayName else { return }
         let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
         attributes.relatedUniqueIdentifier = reminder.uuid
