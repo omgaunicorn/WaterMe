@@ -173,22 +173,3 @@ extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate
         }
     }
 }
-
-import MobileCoreServices
-import CoreSpotlight
-
-extension ReminderSummaryViewController: NSUserActivityDelegate {
-    override func updateUserActivityState(_ activity: NSUserActivity) {
-        super.updateUserActivityState(activity)
-        print("ReminderSummaryViewController: updateUserActivityState:")
-        guard let reminder = self.reminderResult.value, let vesselName = reminder.vessel?.displayName else { return }
-        let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-        attributes.relatedUniqueIdentifier = reminder.uuid
-        activity.contentAttributeSet = attributes
-        activity.title = "View reminder to \(reminder.kind.localizedShortString) '\(vesselName)'"
-        if #available(iOS 12.0, *) {
-            activity.persistentIdentifier = reminder.uuid
-            activity.suggestedInvocationPhrase = "\(reminder.kind.localizedShortString) \(vesselName)"
-        }
-    }
-}
