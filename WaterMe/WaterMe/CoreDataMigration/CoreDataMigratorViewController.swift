@@ -24,7 +24,7 @@
 import WaterMeData
 import UIKit
 
-class CoreDataMigratorViewController: UIViewController, HasBasicController {
+class CoreDataMigratorViewController: StandardViewController, HasBasicController {
 
     enum UIState {
         case launch, migrating, success, error

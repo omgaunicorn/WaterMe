@@ -29,7 +29,7 @@ protocol ReminderFinishDropTargetViewControllerDelegate: class {
     func userDidPerformDrop(with reminders: [Reminder.Identifier], onTargetZoneWithin: ReminderFinishDropTargetViewController)
 }
 
-class ReminderFinishDropTargetViewController: UIViewController, HasBasicController, HasProController, UIDropInteractionDelegate {
+class ReminderFinishDropTargetViewController: StandardViewController, HasBasicController, HasProController, UIDropInteractionDelegate {
 
     @IBOutlet private weak var instructionalView: DragTargetInstructionalView?
     @IBOutlet private weak var animationView: WateringAnimationPlayerView?

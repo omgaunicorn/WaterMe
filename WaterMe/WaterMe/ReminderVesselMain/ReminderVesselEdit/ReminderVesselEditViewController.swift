@@ -27,7 +27,7 @@ import WaterMeData
 import SimpleImageViewer
 import UIKit
 
-class ReminderVesselEditViewController: UIViewController, HasBasicController, ReminderVesselEditTableViewControllerDelegate {
+class ReminderVesselEditViewController: StandardViewController, HasBasicController, ReminderVesselEditTableViewControllerDelegate {
     
     typealias CompletionHandler = (UIViewController) -> Void
     

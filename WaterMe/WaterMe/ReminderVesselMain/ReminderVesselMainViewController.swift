@@ -24,7 +24,7 @@
 import WaterMeData
 import UIKit
 
-class ReminderVesselMainViewController: UIViewController, HasProController, HasBasicController {
+class ReminderVesselMainViewController: StandardViewController, HasProController, HasBasicController {
 
     class func newVC(basicController: BasicController?,
                      proController: ProController? = nil,

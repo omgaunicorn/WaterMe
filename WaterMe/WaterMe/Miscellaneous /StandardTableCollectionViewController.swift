@@ -75,7 +75,16 @@ class StandardCollectionViewController: UICollectionViewController {
 }
 
 class StandardTableViewController: UITableViewController {
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        // TODO: Hacky workaround for RDAR:44727935
+        // https://openradar.appspot.com/radar?id=4999954644860928
+        self.userActivity?.needsSave = true
+        self.userActivity?.becomeCurrent()
+    }
+}
 
+class StandardViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // TODO: Hacky workaround for RDAR:44727935

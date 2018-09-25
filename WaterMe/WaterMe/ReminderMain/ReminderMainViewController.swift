@@ -25,7 +25,7 @@ import Result
 import WaterMeData
 import UIKit
 
-class ReminderMainViewController: UIViewController, HasProController, HasBasicController {
+class ReminderMainViewController: StandardViewController, HasProController, HasBasicController {
     
     class func newVC(basicRCResult: Result<BasicController, RealmError>, proController: ProController? = nil) -> UINavigationController {
         let sb = UIStoryboard(name: "ReminderMain", bundle: Bundle(for: self))

@@ -26,7 +26,7 @@ import WaterMeData
 import RealmSwift
 import UIKit
 
-class ReminderEditViewController: UIViewController, HasBasicController {
+class ReminderEditViewController: StandardViewController, HasBasicController {
     
     enum Purpose {
         case new(ReminderVessel), existing(Reminder)

@@ -27,7 +27,7 @@ import UIKit
 
 typealias PurchaseThanksCompletion = (UIViewController?) -> Void
 
-class PurchaseThanksViewController: UIViewController {
+class PurchaseThanksViewController: StandardViewController {
 
     class func newVC(for inFlight: InFlightTransaction, completion: @escaping PurchaseThanksCompletion) -> UIViewController? {
         let alert: UIAlertController

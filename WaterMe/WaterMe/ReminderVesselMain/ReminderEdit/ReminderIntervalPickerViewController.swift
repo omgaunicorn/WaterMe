@@ -24,7 +24,7 @@
 import WaterMeData
 import UIKit
 
-class ReminderIntervalPickerViewController: UIViewController {
+class ReminderIntervalPickerViewController: StandardViewController {
     
     typealias CompletionHandler = (UIViewController, Int?) -> Void
     

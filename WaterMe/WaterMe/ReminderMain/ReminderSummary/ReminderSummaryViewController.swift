@@ -27,7 +27,7 @@ import WaterMeData
 import Result
 import RealmSwift
 
-class ReminderSummaryViewController: UIViewController {
+class ReminderSummaryViewController: StandardViewController {
 
     typealias Completion = (Action, Reminder.Identifier, UIViewController) -> Void
     enum Action {

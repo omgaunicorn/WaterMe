@@ -23,7 +23,7 @@
 
 import UIKit
 
-class ModalParentViewController: UIViewController {
+class ModalParentViewController: StandardViewController {
 
     @IBOutlet private weak var childVCContainerView: UIView!
     private var currentConstraints = [NSLayoutConstraint]()

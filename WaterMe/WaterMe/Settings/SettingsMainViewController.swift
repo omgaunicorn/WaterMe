@@ -23,7 +23,7 @@
 
 import UIKit
 
-class SettingsMainViewController: UIViewController {
+class SettingsMainViewController: StandardViewController {
 
     typealias Completion = ((UIViewController) -> Void)
 
