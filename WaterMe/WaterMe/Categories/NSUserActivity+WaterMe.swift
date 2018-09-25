@@ -26,6 +26,18 @@ import MobileCoreServices
 import CoreSpotlight
 import Intents
 
+enum RestoredUserActivity {
+    case editReminder(reminderUUID: String)
+    case editReminderVessel(reminderVesselUUID: String)
+    case viewReminder(reminderUUID: String)
+    case viewReminders
+    case editReminderVesselIcon(reminderVesselUUID: String)
+    case editReminderVesselIconCamera(reminderVesselUUID: String)
+    case editReminderVesselIconLibrary(reminderVesselUUID: String)
+    case editReminderVesselIconEmoji(reminderVesselUUID: String)
+    case error
+}
+
 extension NSUserActivity {
     enum Kind: String {
 //        <key>NSUserActivityTypes</key>
@@ -57,10 +69,45 @@ extension NSUserActivity {
         }
         self.needsSave = true
     }
+
+    var restoredUserActivity: RestoredUserActivity? {
+        guard let kind = Kind(rawValue: self.activityType) else {
+            assertionFailure()
+            return nil
+        }
+
+        let uuid = self.userInfo?[self.activityType] as? String
+        switch kind {
+        case .editReminder:
+            guard let uuid = uuid else { return nil }
+            return .editReminder(reminderUUID: uuid)
+        case .editReminderVessel:
+            guard let uuid = uuid else { return nil }
+            return .editReminderVessel(reminderVesselUUID: uuid)
+        case .editReminderVesselIcon:
+            guard let uuid = uuid else { return nil }
+            return .editReminderVesselIcon(reminderVesselUUID: uuid)
+        case .editReminderVesselIconCamera:
+            guard let uuid = uuid else { return nil }
+            return .editReminderVesselIconCamera(reminderVesselUUID: uuid)
+        case .editReminderVesselIconEmoji:
+            guard let uuid = uuid else { return nil }
+            return .editReminderVesselIconEmoji(reminderVesselUUID: uuid)
+        case .editReminderVesselIconLibrary:
+            guard let uuid = uuid else { return nil }
+            return .editReminderVesselIconLibrary(reminderVesselUUID: uuid)
+        case .viewReminder:
+            guard let uuid = uuid else { return nil }
+            return .viewReminder(reminderUUID: uuid)
+        case .viewReminders:
+            return .viewReminders
+        }
+    }
 }
 
 extension ReminderVesselEditViewController {
     override func updateUserActivityState(_ activity: NSUserActivity) {
+        assert(activity.activityType == NSUserActivity.Kind.editReminderVessel.rawValue)
         print("ReminderVesselEditViewController: updateUserActivityState:")
         defer { super.updateUserActivityState(activity) }
         guard #available(iOS 12.0, *) else { return }
@@ -83,12 +130,13 @@ extension ReminderVesselEditViewController {
 
 extension ReminderMainViewController {
     override func updateUserActivityState(_ activity: NSUserActivity) {
+        assert(activity.activityType == NSUserActivity.Kind.viewReminders.rawValue)
         print("ReminderMainViewController: updateUserActivityState:")
         defer { super.updateUserActivityState(activity) }
         guard #available(iOS 12.0, *) else { return }
 
         let uuid = String(describing: ReminderMainViewController.self)
-        let title = NSString.deferredLocalizedIntentsString(with: "View all reminders.") as String
+        let title = NSString.deferredLocalizedIntentsString(with: "View all reminders") as String
         let phrase = NSString.deferredLocalizedIntentsString(with: "Garden Time") as String
         let description = NSString.deferredLocalizedIntentsString(with: "Manage all of your plants and reminders in WaterMe") as String
         activity.title = title
@@ -105,6 +153,7 @@ extension ReminderMainViewController {
 
 extension ReminderSummaryViewController: NSUserActivityDelegate {
     override func updateUserActivityState(_ activity: NSUserActivity) {
+        assert(activity.activityType == NSUserActivity.Kind.viewReminder.rawValue)
         print("ReminderSummaryViewController: updateUserActivityState:")
         defer { super.updateUserActivityState(activity) }
         guard #available(iOS 12.0, *) else { return }

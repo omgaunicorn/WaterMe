@@ -156,6 +156,15 @@ open class ReminderGedeg: NSObject {
         return data[row]
     }
 
+    public func indexPathOfReminder(withUUID uuid: String) -> IndexPath? {
+        var indexPath: IndexPath?
+        for (section, collection) in self.reminders {
+            guard let row = collection.index(matching: "uuid = %@", uuid) else { continue }
+            indexPath = IndexPath(row: row, section: section.rawValue)
+        }
+        return indexPath
+    }
+
     private var tokens: [NotificationToken] = []
 
     deinit {

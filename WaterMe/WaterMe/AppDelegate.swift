@@ -49,6 +49,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var userDefaultObserverTokens: [NSKeyValueObservation] = []
 
+    private var rootVC: ReminderMainViewController? {
+        let navVC = self.window?.rootViewController as? UINavigationController
+        let vc = navVC?.viewControllers.first as? ReminderMainViewController
+        assert(vc != nil)
+        return vc
+    }
+
     override init() {
         super.init()
 
@@ -171,21 +178,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
-        guard let kind = NSUserActivity.Kind(rawValue: userActivityType) else {
-            // TODO: Remove FatalError here
-            fatalError()
+        guard NSUserActivity.Kind(rawValue: userActivityType) != nil else {
+            assertionFailure()
             return false
         }
         return true
     }
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+        guard let activity = userActivity.restoredUserActivity else {
+            assertionFailure()
+            return false
+        }
+        self.rootVC?.userActivityToContinue = activity
+        self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         return true
     }
 
     func application(_ application: UIApplication, didFailToContinueUserActivityWithType userActivityType: String, error: Error) {
-        // TODO: Remove FatalError here
-        fatalError()
+        let error = error as NSError
+        guard error.code != NSUserCancelledError else {
+            return
+        }
+        self.rootVC?.userActivityToContinue = .error
+        self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
     }
     
     func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {

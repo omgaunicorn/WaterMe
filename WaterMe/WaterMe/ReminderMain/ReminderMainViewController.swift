@@ -45,6 +45,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     private weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     private var appUpdateAvailableVC: UIViewController?
     private var applicationDidFinishLaunchingError: RealmError?
+    var userActivityToContinue: RestoredUserActivity?
 
     private(set) lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedAddReminderVesselBBIButtonWithTarget: self,
                                                                        action: #selector(self.addPlantButtonTapped(_:)))
@@ -109,7 +110,12 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     }
 
     func checkForErrorsAndOtherUnexpectedViewControllersToPresent() {
-        guard self.presentedViewController == nil else { return }
+        guard self.presentedViewController == nil else {
+            // user activities are allowed to continue even if the user is doing something else
+            guard let activity = self.userActivityToContinue else { return }
+            self.continueUserActivity(activity)
+            return
+        }
         
         if let error = self.applicationDidFinishLaunchingError {
             self.applicationDidFinishLaunchingError = nil
@@ -134,6 +140,8 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         } else if let updateAlert = self.appUpdateAvailableVC {
             self.appUpdateAvailableVC = nil
             self.present(updateAlert, animated: true, completion: nil)
+        } else if let activity = self.userActivityToContinue {
+            self.continueUserActivity(activity)
         } else {
             self.checkForPurchasesInFlight()
         }
@@ -152,6 +160,39 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         }
         guard let vc = _vc else { return }
         self.present(vc, animated: true, completion: nil)
+    }
+
+    private func continueUserActivity(_ activity: RestoredUserActivity) {
+        switch activity {
+        case .editReminder(let uuid):
+            break
+        case .editReminderVessel(let uuid):
+            break
+        case .editReminderVesselIcon(let uuid):
+            break
+        case .editReminderVesselIconEmoji(let uuid):
+            break
+        case .editReminderVesselIconCamera(let uuid):
+            break
+        case .editReminderVesselIconLibrary(let uuid):
+            break
+        case .viewReminder(let uuid):
+            guard let indexPath = self.collectionVC?.reminders?.indexPathOfReminder(withUUID: uuid) else { return }
+            let perform = {
+                self.collectionVC?.collectionView(self.collectionVC!.collectionView!, didSelectItemAt: indexPath)
+            }
+            if self.presentedViewController != nil {
+                self.dismiss(animated: true) { perform() }
+            } else {
+                perform()
+            }
+        case .viewReminders:
+            self.dismiss(animated: true) {
+                self.collectionVC?.collectionView?.deselectAllItems(animated: true)
+            }
+        case .error:
+            break
+        }
     }
 
     @IBAction private func addPlantButtonTapped(_ sender: Any) {
