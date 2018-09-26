@@ -120,14 +120,14 @@ extension ReminderCollectionViewCell {
 
 extension UITableViewCell {
     static let style_labelCellTopPadding: CGFloat = 12
-    static let style_labelCellBottomPadding: CGFloat = 10
-    static let style_labelCellLeadingPadding: CGFloat = 20
-    static let style_labelCellTrailingPadding: CGFloat = 20
+    static let style_labelCellBottomPadding: CGFloat = 12
+    static let style_labelCellLeadingPadding: CGFloat = 16
+    static let style_labelCellTrailingPadding: CGFloat = 16
 
-    static let style_textFieldCellTopPadding: CGFloat = 8
+    static let style_textFieldCellTopPadding: CGFloat = 6
     static let style_textFieldCellBottomPadding: CGFloat = 6
-    static let style_textFieldCellLeadingPadding: CGFloat = 20
-    static let style_textFieldCellTrailingPadding: CGFloat = 20
+    static let style_textFieldCellLeadingPadding: CGFloat = 16
+    static let style_textFieldCellTrailingPadding: CGFloat = 16
 }
 
 extension TextViewTableViewCell {

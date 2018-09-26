@@ -33,6 +33,12 @@ class ReminderTableViewCell: UITableViewCell {
     @IBOutlet private weak var middleLabel: UILabel?
     @IBOutlet private weak var bottomLabel: UILabel?
     @IBOutlet private weak var emojiImageView: EmojiImageView?
+
+    @IBOutlet private weak var leadingConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var trailingConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var topConstraint: NSLayoutConstraint?
+    @IBOutlet private weak var bottomConstraint: NSLayoutConstraint?
+
     
     fileprivate let formatter = DateComponentsFormatter.newReminderIntervalFormatter
     
@@ -71,6 +77,11 @@ class ReminderTableViewCell: UITableViewCell {
         super.awakeFromNib()
         self.emojiImageView?.size = .small
         self.emojiImageView?.ring = false
+        self.leadingConstraint?.constant = UITableViewCell.style_labelCellLeadingPadding
+        self.trailingConstraint?.constant = UITableViewCell.style_labelCellTrailingPadding
+        self.topConstraint?.constant = UITableViewCell.style_labelCellTopPadding
+        self.bottomConstraint?.constant = UITableViewCell.style_labelCellBottomPadding
+
         self.reset()
     }
     
