@@ -31,8 +31,10 @@ protocol ReminderVesselEditTableViewControllerDelegate: class {
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?)
     func userChangedName(to: String, controller: ReminderVesselEditTableViewController?)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
-    func userChose(reminder: Reminder, deselectRowAnimated: ((Bool) -> Void)?, controller: ReminderVesselEditTableViewController?)
-    func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController?) -> Bool
+    func userChose(reminder: Reminder, deselectRowAnimated: ((Bool) -> Void)?,
+                   controller: ReminderVesselEditTableViewController?)
+    func userDeleted(reminder: Reminder,
+                     controller: ReminderVesselEditTableViewController?) -> Bool
 }
 
 class ReminderVesselEditTableViewController: StandardTableViewController {
@@ -55,21 +57,29 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
     weak var delegate: ReminderVesselEditTableViewControllerDelegate?
     
     func reloadPhotoAndName() {
-        self.tableView.reloadSections(IndexSet([Section.photo.rawValue, Section.name.rawValue]), with: .automatic)
+        self.tableView.reloadSections(IndexSet([Section.photo.rawValue,
+                                                Section.name.rawValue]),
+                                      with: .automatic)
     }
     
     func reloadAll() {
         self.notificationToken?.invalidate()
         self.remindersData = nil
         self.tableView.reloadData()
-        self.notificationToken = self.delegate?.vesselResult?.value?.reminders.observe({ [weak self] in self?.remindersChanged($0) })
+        self.notificationToken = self.delegate?.vesselResult?.value?.reminders.observe()
+            { [weak self] in
+                self?.remindersChanged($0)
+            }
     }
     
     func reloadReminders() {
         self.notificationToken?.invalidate()
         self.remindersData = nil
         self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
-        self.notificationToken = self.delegate?.vesselResult?.value?.reminders.observe({ [weak self] in self?.remindersChanged($0) })
+        self.notificationToken = self.delegate?.vesselResult?.value?.reminders.observe()
+            { [weak self] in
+                self?.remindersChanged($0)
+            }
     }
     
     func nameTextFieldBecomeFirstResponder() {
@@ -86,9 +96,12 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         super.viewDidLoad()
 
         self.clearsSelectionOnViewWillAppear = false
-        self.tableView.register(ReminderTableViewCell.nib, forCellReuseIdentifier: ReminderTableViewCell.reuseID)
-        self.tableView.register(TextFieldTableViewCell.nib, forCellReuseIdentifier: TextFieldTableViewCell.reuseID)
-        self.tableView.register(OptionalAddButtonTableViewHeaderFooterView.nib, forHeaderFooterViewReuseIdentifier: OptionalAddButtonTableViewHeaderFooterView.reuseID)
+        self.tableView.register(ReminderTableViewCell.nib,
+                                forCellReuseIdentifier: ReminderTableViewCell.reuseID)
+        self.tableView.register(TextFieldTableViewCell.nib,
+                                forCellReuseIdentifier: TextFieldTableViewCell.reuseID)
+        self.tableView.register(OptionalAddButtonTableViewHeaderFooterView.nib,
+                                forHeaderFooterViewReuseIdentifier: OptionalAddButtonTableViewHeaderFooterView.reuseID)
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 40
         self.reloadAll()
@@ -110,9 +123,12 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 return
             }
             self.tableView.beginUpdates()
-            self.tableView.insertRows(at: insertions.map({ IndexPath(row: $0, section: Section.reminders.rawValue) }), with: .automatic)
-            self.tableView.deleteRows(at: deletions.map({ IndexPath(row: $0, section: Section.reminders.rawValue)}), with: .automatic)
-            self.tableView.reloadRows(at: modifications.map({ IndexPath(row: $0, section: Section.reminders.rawValue) }), with: .automatic)
+            let ins = insertions.map({ IndexPath(row: $0, section: Section.reminders.rawValue) })
+            let dels = deletions.map({ IndexPath(row: $0, section: Section.reminders.rawValue)})
+            let mods = modifications.map({ IndexPath(row: $0, section: Section.reminders.rawValue) })
+            self.tableView.insertRows(at: ins, with: .automatic)
+            self.tableView.deleteRows(at: dels, with: .automatic)
+            self.tableView.reloadRows(at: mods, with: .automatic)
             self.tableView.endUpdates()
         case .error(let error):
             Analytics.log(error: error)
@@ -125,8 +141,13 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         return Section.count
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let section = Section(rawValue: section) else { assertionFailure("Unknown Section"); return 0; }
+    override func tableView(_ tableView: UITableView,
+                            numberOfRowsInSection section: Int) -> Int
+    {
+        guard let section = Section(rawValue: section) else {
+            assertionFailure("Unknown Section")
+            return 0
+        }
         switch section {
         case .name:
             return 1
@@ -151,7 +172,10 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let section = Section(rawValue: indexPath.section) else { assertionFailure("Unknown Section"); return UITableViewCell(); }
+        guard let section = Section(rawValue: indexPath.section) else {
+            assertionFailure("Unknown Section")
+            return UITableViewCell()
+        }
         switch section {
         case .name:
             let id = TextFieldTableViewCell.reuseID
@@ -181,8 +205,13 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let section = Section(rawValue: indexPath.section) else { assertionFailure("Unknown Section"); return; }
+    override func tableView(_ tableView: UITableView,
+                            didSelectRowAt indexPath: IndexPath)
+    {
+        guard let section = Section(rawValue: indexPath.section) else {
+            assertionFailure("Unknown Section")
+            return
+        }
         switch section {
         case .name, .photo:
         break // ignore
@@ -194,8 +223,9 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-
+    override func tableView(_ tableView: UITableView,
+                            trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
+    {
         // TODO: This is causing visual bugs as of iOS 12.0 GM
         // disable for now. Try to remove this later to re-enable swipe actions
         return UISwipeActionsConfiguration(actions: [])
@@ -222,7 +252,9 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         }
     }
     
-    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView,
+                            viewForHeaderInSection section: Int) -> UIView?
+    {
         guard let section = Section(rawValue: section) else {
             assertionFailure("Unknown Section")
             return nil
@@ -247,7 +279,9 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         self.view.endEditing(false)
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView,
+                            titleForHeaderInSection section: Int) -> String?
+    {
         guard let section = Section(rawValue: section) else {
             assertionFailure("Unknown Section")
             return nil
@@ -255,7 +289,9 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         return section.localizedTitle
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView,
+                            heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
         return UITableViewAutomaticDimension
     }
     
