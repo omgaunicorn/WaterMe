@@ -111,6 +111,8 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         case .deleted:
             self.reminderVesselWasDeleted()
         }
+        // All changes should dirty the User Activity
+        self.userDirtiedUserActivity()
     }
     
     override func viewDidLoad() {
@@ -206,8 +208,10 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     }
     
     private func updateIcon(_ icon: ReminderVessel.Icon) {
-        guard let vessel = self.vesselResult?.value, let basicRC = self.basicRC
-            else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
+        guard let vessel = self.vesselResult?.value, let basicRC = self.basicRC else {
+            assertionFailure("Missing ReminderVessel or Realm Controller")
+            return
+        }
         let updateResult = basicRC.update(icon: icon, in: vessel)
         guard case .failure(let error) = updateResult else { return }
         let alert = UIAlertController(error: error, completion: nil)
@@ -254,8 +258,10 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     }
     
     func userChangedName(to newName: String, controller: ReminderVesselEditTableViewController?) {
-        guard let vessel = self.vesselResult?.value, let basicRC = self.basicRC
-            else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
+        guard let vessel = self.vesselResult?.value, let basicRC = self.basicRC else {
+            assertionFailure("Missing ReminderVessel or Realm Controller")
+            return
+        }
         self.notificationToken?.invalidate() // stop the update notifications from causing the tableview to reload
         let updateResult = basicRC.update(displayName: newName, in: vessel)
         if case .failure(let error) = updateResult {
@@ -263,11 +269,16 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             self.present(alert, animated: true, completion: nil)
         }
         self.startNotifications()
+        // Item changed outside of the change block, time to dirty
+        self.userDirtiedUserActivity()
     }
     
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?) {
         self.view.endEditing(false)
-        guard let vessel = self.vesselResult?.value else { assertionFailure("Missing ReminderVessel"); return; }
+        guard let vessel = self.vesselResult?.value else {
+            assertionFailure("Missing ReminderVessel")
+            return
+        }
         let addReminderVC = ReminderEditViewController.newVC(basicController: basicRC, purpose: .new(vessel)) { vc in
             vc.dismiss(animated: true, completion: nil)
         }
@@ -276,7 +287,9 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     
     func userChose(reminder: Reminder, deselectRowAnimated: ((Bool) -> Void)?, controller: ReminderVesselEditTableViewController?) {
         self.view.endEditing(false)
-        let editReminderVC = ReminderEditViewController.newVC(basicController: basicRC, purpose: .existing(reminder)) { vc in
+        let editReminderVC = ReminderEditViewController.newVC(basicController: basicRC,
+                                                              purpose: .existing(reminder))
+        { vc in
             vc.dismiss(animated: true, completion: { deselectRowAnimated?(true) })
         }
         self.present(editReminderVC, animated: true, completion: nil)
@@ -284,7 +297,10 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     
     func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController?) -> Bool {
         self.view.endEditing(false)
-        guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller."); return false; }
+        guard let basicRC = self.basicRC else {
+            assertionFailure("Missing Realm Controller.")
+            return false
+        }
         let deleteResult = basicRC.delete(reminder: reminder)
         switch deleteResult {
         case .success:
@@ -296,6 +312,10 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         }
     }
 
+    private func userDirtiedUserActivity() {
+        self.userActivity?.needsSave = true
+    }
+
     private func reminderVesselWasDeleted() {
         self.vesselResult = nil
         self.notificationToken?.invalidate()
@@ -305,12 +325,13 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     }
     
     private func startNotifications() {
-      self.notificationToken = self.vesselResult?.value?.observe({ [weak self] in self?.vesselChanged($0) })
+        self.notificationToken =
+            self.vesselResult?.value?.observe({ [weak self] in self?.vesselChanged($0) })
     }
     
     private var notificationToken: NotificationToken?
     
     deinit {
-      self.notificationToken?.invalidate()
+        self.notificationToken?.invalidate()
     }
 }

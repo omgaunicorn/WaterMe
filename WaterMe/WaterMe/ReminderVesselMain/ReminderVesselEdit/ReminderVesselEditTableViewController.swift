@@ -168,7 +168,9 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? ReminderVesselIconTableViewCell
             cell?.configure(with: self.delegate?.vesselResult?.value?.icon)
-            cell?.iconButtonTapped = { [unowned self] in self.delegate?.userChosePhotoChange(controller: self) }
+            cell?.iconButtonTapped = { [unowned self] in
+                self.delegate?.userChosePhotoChange(controller: self)
+            }
             return _cell
         case .reminders:
             let id = ReminderTableViewCell.reuseID
@@ -206,7 +208,9 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         case .name, .photo:
             return UISwipeActionsConfiguration(actions: [])
         case .reminders:
-            let deleteAction = UIContextualAction(style: .destructive, title: UIAlertController.LocalizedString.buttonTitleDelete) { [unowned self] _, _, successfullyDeleted in
+            let deleteAction = UIContextualAction(style: .destructive,
+                                                  title: UIAlertController.LocalizedString.buttonTitleDelete)
+            { [unowned self] _, _, successfullyDeleted in
                 guard let reminder = self.remindersData?[indexPath.row] else {
                     successfullyDeleted(false)
                     return
@@ -219,16 +223,22 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let section = Section(rawValue: section) else { assertionFailure("Unknown Section"); return nil; }
+        guard let section = Section(rawValue: section) else {
+            assertionFailure("Unknown Section")
+            return nil
+        }
         let id = OptionalAddButtonTableViewHeaderFooterView.reuseID
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: id) as? OptionalAddButtonTableViewHeaderFooterView
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: id)
+            as? OptionalAddButtonTableViewHeaderFooterView
         switch section {
         case .name, .photo:
             view?.isAddButtonHidden = true
             view?.addButtonTapped = nil
         case .reminders:
             view?.isAddButtonHidden = false
-            view?.addButtonTapped = { [unowned self] in self.delegate?.userChoseAddReminder(controller: self) }
+            view?.addButtonTapped = { [unowned self] in
+                self.delegate?.userChoseAddReminder(controller: self)
+            }
         }
         return view
     }
@@ -238,7 +248,10 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let section = Section(rawValue: section) else { assertionFailure("Unknown Section"); return nil; }
+        guard let section = Section(rawValue: section) else {
+            assertionFailure("Unknown Section")
+            return nil
+        }
         return section.localizedTitle
     }
     
