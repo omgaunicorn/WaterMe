@@ -31,39 +31,17 @@ protocol ReminderVesselEditTableViewControllerDelegate: class {
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?)
     func userChangedName(to: String, controller: ReminderVesselEditTableViewController?)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
-    func userChose(reminder: Reminder, deselectRowAnimated: ((Bool) -> Void)?,
+    func userChose(reminder: Reminder,
+                   deselectRowAnimated: ((Bool) -> Void)?,
+                   controller: ReminderVesselEditTableViewController?)
+    func userChose(siriShortcut: ReminderVesselEditTableViewController.SiriShortcut,
+                   deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
     func userDeleted(reminder: Reminder,
                      controller: ReminderVesselEditTableViewController?) -> Bool
 }
 
 class ReminderVesselEditTableViewController: StandardTableViewController {
-    
-    private enum Section: Int, CaseIterable {
-        case photo = 0, name, reminders, siriShortcuts
-        var localizedTitle: String {
-            switch self {
-            case .photo:
-                return ReminderVessel.LocalizedString.photo
-            case .name:
-                return ReminderVessel.LocalizedString.name
-            case .reminders:
-                return ReminderVessel.LocalizedString.reminders
-            case .siriShortcuts:
-                return "Siri Shortcuts"
-            }
-        }
-    }
-
-    enum SiriShortcut: Int, CaseIterable {
-        case editReminderVessel
-        var localizedTitle: String {
-            switch self {
-            case .editReminderVessel:
-                return "Edit This Plant"
-            }
-        }
-    }
     
     weak var delegate: ReminderVesselEditTableViewControllerDelegate?
     
@@ -250,7 +228,10 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 tableView.deselectRow(at: indexPath, animated: anim)
             }, controller: self)
         case .siriShortcuts:
-            break
+            guard let row = ReminderVesselEditTableViewController.SiriShortcut(rawValue: indexPath.row) else { return }
+            self.delegate?.userChose(siriShortcut: row, deselectRowAnimated: { anim in
+                tableView.deselectRow(at: indexPath, animated: anim)
+            }, controller: self)
         }
     }
     
@@ -332,5 +313,33 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
     
     deinit {
         self.notificationToken?.invalidate()
+    }
+}
+
+extension ReminderVesselEditTableViewController {
+    private enum Section: Int, CaseIterable {
+        case photo = 0, name, reminders, siriShortcuts
+        var localizedTitle: String {
+            switch self {
+            case .photo:
+                return ReminderVessel.LocalizedString.photo
+            case .name:
+                return ReminderVessel.LocalizedString.name
+            case .reminders:
+                return ReminderVessel.LocalizedString.reminders
+            case .siriShortcuts:
+                return "Siri Shortcuts"
+            }
+        }
+    }
+
+    enum SiriShortcut: Int, CaseIterable {
+        case editReminderVessel
+        var localizedTitle: String {
+            switch self {
+            case .editReminderVessel:
+                return "Edit This Plant"
+            }
+        }
     }
 }

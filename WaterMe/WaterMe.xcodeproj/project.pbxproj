@@ -53,6 +53,7 @@
 		504A8D611EDB5A46002D928D /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */; };
 		504B1BA7207332E20090CD7F /* TCF.m in Sources */ = {isa = PBXBuildFile; fileRef = 504B1BA6207332E20090CD7F /* TCF.m */; };
 		504B8369215BE0DA00359C04 /* SiriShortcutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504B8368215BE0DA00359C04 /* SiriShortcutTableViewCell.swift */; };
+		504B8389215BF98300359C04 /* ClosureDelegatingAddVoiceShortcutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504B8388215BF98300359C04 /* ClosureDelegatingAddVoiceShortcutViewController.swift */; };
 		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
 		5051F8FA202BA2BE00741FF9 /* GlobalReminderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */; };
 		5051F8FC202BAB1C00741FF9 /* BadgeNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8FB202BAB1C00741FF9 /* BadgeNumberController.swift */; };
@@ -207,6 +208,7 @@
 		504B1BA5207332E20090CD7F /* TCF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCF.h; sourceTree = "<group>"; };
 		504B1BA6207332E20090CD7F /* TCF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCF.m; sourceTree = "<group>"; };
 		504B8368215BE0DA00359C04 /* SiriShortcutTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriShortcutTableViewCell.swift; sourceTree = "<group>"; };
+		504B8388215BF98300359C04 /* ClosureDelegatingAddVoiceShortcutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosureDelegatingAddVoiceShortcutViewController.swift; sourceTree = "<group>"; };
 		505086AE1ECBD43200745012 /* RealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
 		5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalReminderObserver.swift; sourceTree = "<group>"; };
 		5051F8FB202BAB1C00741FF9 /* BadgeNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeNumberController.swift; sourceTree = "<group>"; };
@@ -436,7 +438,6 @@
 				50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */,
 				50C30E551EFF9349006003A1 /* ReminderIntervalTableViewCell.swift */,
 				50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */,
-				50AA4A491F00AFE600D81831 /* SimpleLabelTableViewCell.swift */,
 			);
 			path = ReminderEdit;
 			sourceTree = "<group>";
@@ -469,7 +470,6 @@
 				507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */,
 				508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */,
 				508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */,
-				504B8368215BE0DA00359C04 /* SiriShortcutTableViewCell.swift */,
 			);
 			path = ReminderVesselEdit;
 			sourceTree = "<group>";
@@ -535,6 +535,9 @@
 				5089D124214F458200140F68 /* AppVersionCheckingAlert.swift */,
 				50B779D22154716E00AC6240 /* StandardTableCollectionViewController.swift */,
 				50C96A311EC2BB03002802C1 /* Either.swift */,
+				504B8388215BF98300359C04 /* ClosureDelegatingAddVoiceShortcutViewController.swift */,
+				504B8368215BE0DA00359C04 /* SiriShortcutTableViewCell.swift */,
+				50AA4A491F00AFE600D81831 /* SimpleLabelTableViewCell.swift */,
 			);
 			path = "Miscellaneous ";
 			sourceTree = "<group>";
@@ -1055,6 +1058,7 @@
 				50281906200BD6110044BEC8 /* PurchaseThanksViewController.swift in Sources */,
 				5027C1D7202F5E26007B5FB8 /* NotificationSettingsChangeObserver.swift in Sources */,
 				5047B7A5200D6B6800F69C73 /* Analytics.swift in Sources */,
+				504B8389215BF98300359C04 /* ClosureDelegatingAddVoiceShortcutViewController.swift in Sources */,
 				50BB0F751EC01B8E00850FF4 /* UserDefaults+WaterMe.swift in Sources */,
 				50AA4A4A1F00AFE600D81831 /* SimpleLabelTableViewCell.swift in Sources */,
 				5051F8FC202BAB1C00741FF9 /* BadgeNumberController.swift in Sources */,

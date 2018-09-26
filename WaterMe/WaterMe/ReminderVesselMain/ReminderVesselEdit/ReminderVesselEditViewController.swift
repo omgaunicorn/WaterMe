@@ -25,6 +25,7 @@ import Result
 import RealmSwift
 import WaterMeData
 import SimpleImageViewer
+import IntentsUI
 import UIKit
 
 class ReminderVesselEditViewController: StandardViewController, HasBasicController, ReminderVesselEditTableViewControllerDelegate {
@@ -285,7 +286,10 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         self.present(addReminderVC, animated: true, completion: nil)
     }
     
-    func userChose(reminder: Reminder, deselectRowAnimated: ((Bool) -> Void)?, controller: ReminderVesselEditTableViewController?) {
+    func userChose(reminder: Reminder,
+                   deselectRowAnimated: ((Bool) -> Void)?,
+                   controller: ReminderVesselEditTableViewController?)
+    {
         self.view.endEditing(false)
         let editReminderVC = ReminderEditViewController.newVC(basicController: basicRC,
                                                               purpose: .existing(reminder))
@@ -293,6 +297,28 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             vc.dismiss(animated: true, completion: { deselectRowAnimated?(true) })
         }
         self.present(editReminderVC, animated: true, completion: nil)
+    }
+
+    func userChose(siriShortcut: ReminderVesselEditTableViewController.SiriShortcut,
+                   deselectRowAnimated: ((Bool) -> Void)?,
+                   controller: ReminderVesselEditTableViewController?)
+    {
+        guard #available(iOS 12.0, *) else { return }
+        guard
+            let activity = self.userActivity,
+            activity.activityType == NSUserActivity.Kind.editReminderVessel.rawValue
+        else {
+            assertionFailure("Unexpected User Activity")
+            return
+        }
+        let shortcut = INShortcut(userActivity: activity)
+        let vc = ClosureDelegatingAddVoiceShortcutViewController(shortcut: shortcut)
+        vc.completion = { vc, result in
+            vc.dismiss(animated: true) {
+                deselectRowAnimated?(true)
+            }
+        }
+        self.present(vc, animated: true, completion: nil)
     }
     
     func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController?) -> Bool {

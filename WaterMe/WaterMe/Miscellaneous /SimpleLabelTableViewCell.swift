@@ -44,10 +44,14 @@ class SimpleLabelTableViewCell: UITableViewCell {
         self.label.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(self.label)
         self.contentView.addConstraints([
-            self.label.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UITableViewCell.style_labelCellLeadingPadding),
-            self.contentView.trailingAnchor.constraint(equalTo: self.label.trailingAnchor, constant: UITableViewCell.style_labelCellTrailingPadding),
-            self.label.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: UITableViewCell.style_labelCellTopPadding),
-            self.contentView.bottomAnchor.constraint(equalTo: self.label.bottomAnchor, constant: UITableViewCell.style_labelCellBottomPadding)
+            self.label.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor,
+                                                constant: UITableViewCell.style_labelCellLeadingPadding),
+            self.contentView.trailingAnchor.constraint(equalTo: self.label.trailingAnchor,
+                                                       constant: UITableViewCell.style_labelCellTrailingPadding),
+            self.label.topAnchor.constraint(equalTo: self.contentView.topAnchor,
+                                            constant: UITableViewCell.style_labelCellTopPadding),
+            self.contentView.bottomAnchor.constraint(equalTo: self.label.bottomAnchor,
+                                                     constant: UITableViewCell.style_labelCellBottomPadding)
             ])
     }
 }
