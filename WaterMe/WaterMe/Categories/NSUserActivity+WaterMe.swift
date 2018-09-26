@@ -40,16 +40,6 @@ enum RestoredUserActivity {
 
 extension NSUserActivity {
     enum Kind: String {
-//        <key>NSUserActivityTypes</key>
-//        <array>
-//        <string>com.saturdayapps.waterme.activity.edit.reminder</string>
-//        <string>com.saturdayapps.waterme.activity.edit.remindervessel</string>
-//        <string>com.saturdayapps.waterme.activity.view.reminder</string>
-//        <string>com.saturdayapps.waterme.activity.edit.remindervessel.icon</string>
-//        <string>com.saturdayapps.waterme.activity.edit.remindervessel.icon.camera</string>
-//        <string>com.saturdayapps.waterme.activity.edit.remindervessel.icon.library</string>
-//        <string>com.saturdayapps.waterme.activity.edit.remindervessel.icon.emoji</string>
-//        </array>
         case editReminder = "com.saturdayapps.waterme.activity.edit.reminder"
         case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
         case viewReminder = "com.saturdayapps.waterme.activity.view.reminder"
@@ -103,28 +93,36 @@ extension NSUserActivity {
             return .viewReminders
         }
     }
+
+    func update(uuid: String, title: String, phrase: String, description: String) {
+        self.title = title
+        if #available(iOS 12.0, *) {
+            self.suggestedInvocationPhrase = phrase
+            self.persistentIdentifier = uuid
+        }
+        self.requiredUserInfoKeys = [self.activityType]
+        self.addUserInfoEntries(from: [self.activityType: uuid])
+        let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
+        attributes.relatedUniqueIdentifier = uuid
+        attributes.contentDescription = description
+        self.contentAttributeSet = attributes
+    }
 }
 
 extension ReminderVesselEditViewController {
     override func updateUserActivityState(_ activity: NSUserActivity) {
         assert(activity.activityType == NSUserActivity.Kind.editReminderVessel.rawValue)
         print("ReminderVesselEditViewController: updateUserActivityState:")
-        defer { super.updateUserActivityState(activity) }
         guard #available(iOS 12.0, *) else { return }
+
         guard let reminderVessel = self.vesselResult?.value else { return }
         let uuid = reminderVessel.uuid
         let vesselName = reminderVessel.displayName ?? ReminderVessel.LocalizedString.untitledPlant
         let title = NSString.deferredLocalizedIntentsString(with: "Edit “%@”", vesselName) as String
         let description = NSString.deferredLocalizedIntentsString(with: "Change your plant's name, photo, and reminders.") as String
-        activity.title = title
-        activity.suggestedInvocationPhrase = title
-        activity.persistentIdentifier = uuid
-        activity.requiredUserInfoKeys = [activity.activityType]
-        activity.addUserInfoEntries(from: [activity.activityType: uuid])
-        let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-        attributes.relatedUniqueIdentifier = uuid
-        attributes.contentDescription = description
-        activity.contentAttributeSet = attributes
+
+        activity.update(uuid: uuid, title: title, phrase: title, description: description)
+        super.updateUserActivityState(activity)
     }
 }
 
@@ -132,22 +130,15 @@ extension ReminderMainViewController {
     override func updateUserActivityState(_ activity: NSUserActivity) {
         assert(activity.activityType == NSUserActivity.Kind.viewReminders.rawValue)
         print("ReminderMainViewController: updateUserActivityState:")
-        defer { super.updateUserActivityState(activity) }
         guard #available(iOS 12.0, *) else { return }
 
         let uuid = String(describing: ReminderMainViewController.self)
         let title = NSString.deferredLocalizedIntentsString(with: "View all reminders") as String
         let phrase = NSString.deferredLocalizedIntentsString(with: "Garden Time") as String
         let description = NSString.deferredLocalizedIntentsString(with: "Manage all of your plants and reminders in WaterMe") as String
-        activity.title = title
-        activity.suggestedInvocationPhrase = phrase
-        activity.persistentIdentifier = uuid
-        activity.requiredUserInfoKeys = [activity.activityType]
-        activity.addUserInfoEntries(from: [activity.activityType: uuid])
-        let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-        attributes.relatedUniqueIdentifier = uuid
-        attributes.contentDescription = description
-        activity.contentAttributeSet = attributes
+
+        activity.update(uuid: uuid, title: title, phrase: phrase, description: description)
+        super.updateUserActivityState(activity)
     }
 }
 
@@ -155,7 +146,6 @@ extension ReminderSummaryViewController: NSUserActivityDelegate {
     override func updateUserActivityState(_ activity: NSUserActivity) {
         assert(activity.activityType == NSUserActivity.Kind.viewReminder.rawValue)
         print("ReminderSummaryViewController: updateUserActivityState:")
-        defer { super.updateUserActivityState(activity) }
         guard #available(iOS 12.0, *) else { return }
 
         guard let reminder = self.reminderResult.value else { return }
@@ -163,15 +153,9 @@ extension ReminderSummaryViewController: NSUserActivityDelegate {
         let vesselName = reminder.vessel?.displayName ?? ReminderVessel.LocalizedString.untitledPlant
         let title = NSString.deferredLocalizedIntentsString(with: "View %@ “%@” reminder", reminder.kind.localizedShortString, vesselName) as String
         let description = NSString.deferredLocalizedIntentsString(with: "Mark the reminder as done, edit your plant, or edit your reminder.") as String
-        activity.title = title
-        activity.suggestedInvocationPhrase = title
-        activity.persistentIdentifier = uuid
-        activity.requiredUserInfoKeys = [activity.activityType]
-        activity.addUserInfoEntries(from: [activity.activityType: uuid])
-        let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-        attributes.relatedUniqueIdentifier = uuid
-        attributes.contentDescription = description
-        activity.contentAttributeSet = attributes
+
+        activity.update(uuid: uuid, title: title, phrase: title, description: description)
+        super.updateUserActivityState(activity)
     }
 }
 
@@ -179,7 +163,6 @@ extension ReminderEditViewController: NSUserActivityDelegate {
     override func updateUserActivityState(_ activity: NSUserActivity) {
         assert(activity.activityType == NSUserActivity.Kind.editReminder.rawValue)
         print("ReminderEditViewController: updateUserActivityState:")
-        defer { super.updateUserActivityState(activity) }
         guard #available(iOS 12.0, *) else { return }
 
         guard let reminder = self.reminderResult?.value else { return }
@@ -187,14 +170,8 @@ extension ReminderEditViewController: NSUserActivityDelegate {
         let vesselName = reminder.vessel?.displayName ?? ReminderVessel.LocalizedString.untitledPlant
         let title = NSString.deferredLocalizedIntentsString(with: "Edit the %@ “%@” reminder", reminder.kind.localizedShortString, vesselName) as String
         let description = NSString.deferredLocalizedIntentsString(with: "Change how often or the kind of reminder in WaterMe.") as String
-        activity.title = title
-        activity.suggestedInvocationPhrase = title
-        activity.persistentIdentifier = uuid
-        activity.requiredUserInfoKeys = [activity.activityType]
-        activity.addUserInfoEntries(from: [activity.activityType: uuid])
-        let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-        attributes.relatedUniqueIdentifier = uuid
-        attributes.contentDescription = description
-        activity.contentAttributeSet = attributes
+
+        activity.update(uuid: uuid, title: title, phrase: title, description: description)
+        super.updateUserActivityState(activity)
     }
 }
