@@ -81,7 +81,6 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                                                completion: viewDidAppearActions)
                 case .editReminderVessel:
                     self.userChoseEditVessel(withReminderIdentifier: identifier,
-                                             in: nil,
                                              basicRC: basicRC,
                                              completion: viewDidAppearActions)
                 case .performReminder:
@@ -113,10 +112,9 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         }
     }
 
-    private func userChoseEditVessel(withReminderIdentifier identifier: Reminder.Identifier,
-                                     in _: UIAlertAction?,
-                                     basicRC: BasicController,
-                                     completion: (() -> Void)?)
+    func userChoseEditVessel(withReminderIdentifier identifier: Reminder.Identifier,
+                             basicRC: BasicController,
+                             completion: (() -> Void)?)
     {
         let result = basicRC.reminder(matching: identifier)
         switch result {

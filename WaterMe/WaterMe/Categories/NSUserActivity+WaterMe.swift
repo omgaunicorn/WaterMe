@@ -28,13 +28,13 @@ import Intents
 
 enum RestoredUserActivity {
     case editReminder(Reminder.Identifier)
-    case editReminderVessel(reminderVesselUUID: String)
+    case editReminderVessel(Reminder.Identifier)
     case viewReminder(Reminder.Identifier)
     case viewReminders
-    case editReminderVesselIcon(reminderVesselUUID: String)
-    case editReminderVesselIconCamera(reminderVesselUUID: String)
-    case editReminderVesselIconLibrary(reminderVesselUUID: String)
-    case editReminderVesselIconEmoji(reminderVesselUUID: String)
+    case editReminderVesselIcon(Reminder.Identifier)
+    case editReminderVesselIconCamera(Reminder.Identifier)
+    case editReminderVesselIconLibrary(Reminder.Identifier)
+    case editReminderVesselIconEmoji(Reminder.Identifier)
     case error
 }
 
@@ -57,7 +57,6 @@ extension NSUserActivity {
         if #available(iOS 12.0, *) {
             self.isEligibleForPrediction = true
         }
-        self.needsSave = true
     }
 
     var restoredUserActivity: RestoredUserActivity? {
@@ -73,19 +72,19 @@ extension NSUserActivity {
             return .editReminder(.init(rawValue: uuid))
         case .editReminderVessel:
             guard let uuid = uuid else { return nil }
-            return .editReminderVessel(reminderVesselUUID: uuid)
+            return .editReminderVessel(.init(rawValue: uuid))
         case .editReminderVesselIcon:
             guard let uuid = uuid else { return nil }
-            return .editReminderVesselIcon(reminderVesselUUID: uuid)
+            return .editReminderVesselIcon(.init(rawValue: uuid))
         case .editReminderVesselIconCamera:
             guard let uuid = uuid else { return nil }
-            return .editReminderVesselIconCamera(reminderVesselUUID: uuid)
+            return .editReminderVesselIconCamera(.init(rawValue: uuid))
         case .editReminderVesselIconEmoji:
             guard let uuid = uuid else { return nil }
-            return .editReminderVesselIconEmoji(reminderVesselUUID: uuid)
+            return .editReminderVesselIconEmoji(.init(rawValue: uuid))
         case .editReminderVesselIconLibrary:
             guard let uuid = uuid else { return nil }
-            return .editReminderVesselIconLibrary(reminderVesselUUID: uuid)
+            return .editReminderVesselIconLibrary(.init(rawValue: uuid))
         case .viewReminder:
             guard let uuid = uuid else { return nil }
             return .viewReminder(.init(rawValue: uuid))
