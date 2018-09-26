@@ -56,7 +56,6 @@ extension NSUserActivity {
             assertionFailure()
             return nil
         }
-
         let uuid = self.userInfo?[self.activityType] as? String
         switch kind {
         case .editReminder:
@@ -74,15 +73,16 @@ extension NSUserActivity {
     }
 
     func update(uuid: String, title: String, phrase: String, description: String) {
+        let persistentIdentifier = self.activityType + "::" + uuid
         self.title = title
         if #available(iOS 12.0, *) {
             self.suggestedInvocationPhrase = phrase
-            self.persistentIdentifier = uuid
+            self.persistentIdentifier = persistentIdentifier
         }
         self.requiredUserInfoKeys = [self.activityType]
         self.addUserInfoEntries(from: [self.activityType: uuid])
         let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-        attributes.relatedUniqueIdentifier = uuid
+        attributes.relatedUniqueIdentifier = persistentIdentifier
         attributes.contentDescription = description
         self.contentAttributeSet = attributes
     }
@@ -98,9 +98,10 @@ extension ReminderVesselEditViewController {
         let uuid = reminderVessel.uuid
         let vesselName = reminderVessel.displayName ?? ReminderVessel.LocalizedString.untitledPlant
         let title = NSString.deferredLocalizedIntentsString(with: "Edit “%@”", vesselName) as String
+        let phrase = NSString.deferredLocalizedIntentsString(with: "Edit %@", vesselName) as String
         let description = NSString.deferredLocalizedIntentsString(with: "Change your plant's name, photo, and reminders.") as String
 
-        activity.update(uuid: uuid, title: title, phrase: title, description: description)
+        activity.update(uuid: uuid, title: title, phrase: phrase, description: description)
         super.updateUserActivityState(activity)
     }
 }
@@ -131,9 +132,10 @@ extension ReminderSummaryViewController: NSUserActivityDelegate {
         let uuid = reminder.uuid
         let vesselName = reminder.vessel?.displayName ?? ReminderVessel.LocalizedString.untitledPlant
         let title = NSString.deferredLocalizedIntentsString(with: "View %@ “%@” reminder", reminder.kind.localizedShortString, vesselName) as String
+        let phrase = NSString.deferredLocalizedIntentsString(with: "View notes for %@", vesselName) as String
         let description = NSString.deferredLocalizedIntentsString(with: "Mark the reminder as done, edit your plant, or edit your reminder.") as String
 
-        activity.update(uuid: uuid, title: title, phrase: title, description: description)
+        activity.update(uuid: uuid, title: title, phrase: phrase, description: description)
         super.updateUserActivityState(activity)
     }
 }
