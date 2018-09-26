@@ -39,9 +39,8 @@ protocol ReminderVesselEditTableViewControllerDelegate: class {
 
 class ReminderVesselEditTableViewController: StandardTableViewController {
     
-    private enum Section: Int {
-        case photo = 0, name, reminders
-        static let count = 3
+    private enum Section: Int, CaseIterable {
+        case photo = 0, name, reminders, siriShortcuts
         var localizedTitle: String {
             switch self {
             case .photo:
@@ -50,6 +49,18 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 return ReminderVessel.LocalizedString.name
             case .reminders:
                 return ReminderVessel.LocalizedString.reminders
+            case .siriShortcuts:
+                return "Siri Shortcuts"
+            }
+        }
+    }
+
+    enum SiriShortcut: Int, CaseIterable {
+        case editReminderVessel
+        var localizedTitle: String {
+            switch self {
+            case .editReminderVessel:
+                return "Edit This Plant"
             }
         }
     }
@@ -100,6 +111,8 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                                 forCellReuseIdentifier: ReminderTableViewCell.reuseID)
         self.tableView.register(TextFieldTableViewCell.nib,
                                 forCellReuseIdentifier: TextFieldTableViewCell.reuseID)
+        self.tableView.register(SiriShortcutTableViewCell.self,
+                                forCellReuseIdentifier: SiriShortcutTableViewCell.reuseID)
         self.tableView.register(OptionalAddButtonTableViewHeaderFooterView.nib,
                                 forHeaderFooterViewReuseIdentifier: OptionalAddButtonTableViewHeaderFooterView.reuseID)
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -138,7 +151,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return Section.count
+        return Section.allCases.count
     }
     
     override func tableView(_ tableView: UITableView,
@@ -168,10 +181,14 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 return 0
             }
             return data?.count ?? 0
+        case .siriShortcuts:
+            return SiriShortcut.allCases.count
         }
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
         guard let section = Section(rawValue: indexPath.section) else {
             assertionFailure("Unknown Section")
             return UITableViewCell()
@@ -202,6 +219,18 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
             let cell = _cell as? ReminderTableViewCell
             cell?.configure(with: self.remindersData?[indexPath.row])
             return _cell
+        case .siriShortcuts:
+            let id = SiriShortcutTableViewCell.reuseID
+            let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
+            guard
+                let cell = _cell as? SiriShortcutTableViewCell,
+                let row = SiriShortcut(rawValue: indexPath.row)
+            else { return _cell }
+            switch row {
+            case .editReminderVessel:
+                cell.configure(with: row)
+            }
+            return cell
         }
     }
     
@@ -214,12 +243,14 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         }
         switch section {
         case .name, .photo:
-        break // ignore
+            break
         case .reminders:
             guard let reminder = self.remindersData?[indexPath.row] else { return }
             self.delegate?.userChose(reminder: reminder, deselectRowAnimated: { anim in
                 tableView.deselectRow(at: indexPath, animated: anim)
             }, controller: self)
+        case .siriShortcuts:
+            break
         }
     }
     
@@ -249,6 +280,8 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 successfullyDeleted(deleted)
             }
             return UISwipeActionsConfiguration(actions: [deleteAction])
+        case .siriShortcuts:
+            return UISwipeActionsConfiguration(actions: [])
         }
     }
     
@@ -263,7 +296,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: id)
             as? OptionalAddButtonTableViewHeaderFooterView
         switch section {
-        case .name, .photo:
+        case .name, .photo, .siriShortcuts:
             view?.isAddButtonHidden = true
             view?.addButtonTapped = nil
         case .reminders:

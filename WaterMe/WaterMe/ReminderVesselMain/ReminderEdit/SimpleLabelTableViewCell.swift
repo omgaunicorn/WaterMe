@@ -40,6 +40,7 @@ class SimpleLabelTableViewCell: UITableViewCell {
     }
     
     func setup() {
+        self.label.numberOfLines = 0
         self.label.translatesAutoresizingMaskIntoConstraints = false
         self.contentView.addSubview(self.label)
         self.contentView.addConstraints([
