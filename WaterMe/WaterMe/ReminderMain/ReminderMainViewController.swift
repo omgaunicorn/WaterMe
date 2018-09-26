@@ -186,17 +186,21 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         case .editReminderVessel(let identifier):
             sharedWork(identifier) { basicRC, completion in
                 self.userChoseEditVessel(withReminderIdentifier: identifier,
+                                         subActivity: .none,
                                          basicRC: basicRC,
                                          completion: completion)
             }
-        case .editReminderVesselIcon(let identifier):
-            break
-        case .editReminderVesselIconEmoji(let identifier):
-            break
-        case .editReminderVesselIconCamera(let identifier):
-            break
-        case .editReminderVesselIconLibrary(let identifier):
-            break
+        case .editReminderVesselIcon(let identifier),
+             .editReminderVesselIconEmoji(let identifier),
+             .editReminderVesselIconCamera(let identifier),
+             .editReminderVesselIconLibrary(let identifier):
+            let subActivity = ReminderVesselEditViewController.SubActivity(from: activity)
+            sharedWork(identifier) { basicRC, completion in
+                self.userChoseEditVessel(withReminderIdentifier: identifier,
+                                         subActivity: subActivity,
+                                         basicRC: basicRC,
+                                         completion: completion)
+            }
         case .viewReminder(let identifier):
             self.dismissAnimatedIfNeeded() {
                 self.collectionVC?.programaticallySimulateSelectionOfReminder(with: identifier)
@@ -212,7 +216,10 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
 
     @IBAction private func addPlantButtonTapped(_ sender: Any) {
         guard let basicRC = self.basicRC else { return }
-        let editVC = ReminderVesselEditViewController.newVC(basicController: basicRC, editVessel: nil) { vc in
+        let editVC = ReminderVesselEditViewController.newVC(basicController: basicRC,
+                                                            editVessel: nil,
+                                                            subActivity: .none)
+        { vc in
             vc.dismiss(animated: true) {
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }

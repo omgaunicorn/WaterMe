@@ -109,6 +109,24 @@ extension NSUserActivity {
 }
 
 extension ReminderVesselEditViewController {
+    enum SubActivity {
+        case none, icon, iconCamera, iconLibrary, iconEmoji
+        init(from restored: RestoredUserActivity) {
+            switch restored {
+            case .editReminderVesselIcon:
+                self = .icon
+            case .editReminderVesselIconCamera:
+                self = .iconCamera
+            case .editReminderVesselIconEmoji:
+                self = .iconEmoji
+            case .editReminderVesselIconLibrary:
+                self = .iconLibrary
+            case .editReminder, .editReminderVessel, .error, .viewReminder, .viewReminders:
+                assertionFailure("Unsupported Activity")
+                self = .none
+            }
+        }
+    }
     override func updateUserActivityState(_ activity: NSUserActivity) {
         assert(activity.activityType == NSUserActivity.Kind.editReminderVessel.rawValue)
         print("ReminderVesselEditViewController: updateUserActivityState:")

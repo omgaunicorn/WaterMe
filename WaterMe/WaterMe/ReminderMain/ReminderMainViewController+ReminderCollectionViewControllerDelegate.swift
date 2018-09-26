@@ -90,6 +90,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                                                completion: viewDidAppearActions)
                 case .editReminderVessel:
                     self.userChoseEditVessel(withReminderIdentifier: identifier,
+                                             subActivity: .none,
                                              basicRC: basicRC,
                                              completion: viewDidAppearActions)
                 case .performReminder:
@@ -124,6 +125,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
     }
 
     func userChoseEditVessel(withReminderIdentifier identifier: Reminder.Identifier,
+                             subActivity: ReminderVesselEditViewController.SubActivity,
                              basicRC: BasicController,
                              completion: (() -> Void)?)
     {
@@ -131,7 +133,8 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         switch result {
         case .success(let reminder):
             let vc = ReminderVesselEditViewController.newVC(basicController: self.basicRC,
-                                                            editVessel: reminder.vessel)
+                                                            editVessel: reminder.vessel,
+                                                            subActivity: subActivity)
             { vc in
                 vc.dismiss(animated: true, completion: { completion?() })
             }
