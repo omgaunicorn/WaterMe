@@ -25,17 +25,23 @@ import WaterMeData
 
 extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
 
-    func dragSessionWillBegin(_ session: UIDragSession, within viewController: ReminderCollectionViewController) {
+    func dragSessionWillBegin(_ session: UIDragSession,
+                              within viewController: ReminderCollectionViewController)
+    {
         self.settingsBBI.isEnabled = false
         self.plantsBBI.isEnabled = false
     }
 
-    func dragSessionDidEnd(_ session: UIDragSession, within viewController: ReminderCollectionViewController) {
+    func dragSessionDidEnd(_ session: UIDragSession,
+                           within viewController: ReminderCollectionViewController)
+    {
         self.settingsBBI.isEnabled = true
         self.plantsBBI.isEnabled = true
     }
 
-    func userDidPerformDrop(with reminders: [Reminder.Identifier], onTargetZoneWithin: ReminderFinishDropTargetViewController) {
+    func userDidPerformDrop(with reminders: [Reminder.Identifier],
+                            onTargetZoneWithin: ReminderFinishDropTargetViewController)
+    {
         let haptic = UINotificationFeedbackGenerator()
         haptic.prepare()
         guard let results = self.basicRC?.appendNewPerformToReminders(with: reminders) else { return }
@@ -57,7 +63,10 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                        deselectAnimated: @escaping (Bool) -> Void,
                        within viewController: ReminderCollectionViewController)
     {
-        guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
+        guard let basicRC = self.basicRC else {
+            assertionFailure("Missing Realm Controller")
+            return
+        }
         Analytics.log(viewOperation: .reminderVesselTap)
 
         // closure that needs to be executed whenever all the alerts have disappeared
@@ -103,7 +112,9 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         let result = basicRC.reminder(matching: identifier)
         switch result {
         case .success(let reminder):
-            let vc = ReminderEditViewController.newVC(basicController: self.basicRC, purpose: .existing(reminder)) { vc in
+            let vc = ReminderEditViewController.newVC(basicController: self.basicRC,
+                                                      purpose: .existing(reminder))
+            { vc in
                 vc.dismiss(animated: true, completion: { completion?() })
             }
             self.present(vc, animated: true, completion: nil)
@@ -119,7 +130,9 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         let result = basicRC.reminder(matching: identifier)
         switch result {
         case .success(let reminder):
-            let vc = ReminderVesselEditViewController.newVC(basicController: self.basicRC, editVessel: reminder.vessel) { vc in
+            let vc = ReminderVesselEditViewController.newVC(basicController: self.basicRC,
+                                                            editVessel: reminder.vessel)
+            { vc in
                 vc.dismiss(animated: true, completion: { completion?() })
             }
             self.present(vc, animated: true, completion: nil)
@@ -146,7 +159,8 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             // perform the haptic for success
             haptic.notificationOccurred(.success)
             // next we need to see if they are allowing / want to give us permission to send push notifications
-            let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .right(view)) { _ in
+            let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .right(view))
+            { _ in
                 completion?()
             }
             // if we got a VC to present, then we need to show it
