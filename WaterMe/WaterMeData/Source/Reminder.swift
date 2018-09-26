@@ -148,6 +148,9 @@ public extension Reminder {
         public init(reminder: Reminder) {
             self.reminderIdentifier = reminder.uuid
         }
+        public init(rawValue: String) {
+            self.reminderIdentifier = rawValue
+        }
     }
 }
 

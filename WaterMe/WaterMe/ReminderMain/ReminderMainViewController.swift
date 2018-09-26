@@ -166,8 +166,16 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
 
     private func continueUserActivity(_ activity: RestoredUserActivity) {
         switch activity {
-        case .editReminder(let uuid):
-            break
+        case .editReminder(let identifier):
+            guard
+                let completion = self.collectionVC?.programmaticalySelectReminder(with: identifier),
+                let basicRC = self.basicRC
+            else { return }
+            self.dismissAnimatedIfNeeded() {
+                self.userChoseEditReminder(with: identifier,
+                                           basicRC: basicRC,
+                                           completion: completion)
+            }
         case .editReminderVessel(let uuid):
             break
         case .editReminderVesselIcon(let uuid):
@@ -178,9 +186,9 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             break
         case .editReminderVesselIconLibrary(let uuid):
             break
-        case .viewReminder(let uuid):
+        case .viewReminder(let identifier):
             self.dismissAnimatedIfNeeded() {
-                self.collectionVC?.programaticallySimulateSelectionOfReminder(withUUID: uuid)
+                self.collectionVC?.programaticallySimulateSelectionOfReminder(with: identifier)
             }
         case .viewReminders:
             self.dismissAnimatedIfNeeded() {

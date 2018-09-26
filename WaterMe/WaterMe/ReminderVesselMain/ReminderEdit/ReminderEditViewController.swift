@@ -62,7 +62,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
 
     var basicRC: BasicController?
-    private var reminderResult: Result<Reminder, RealmError>?
+    private(set) var reminderResult: Result<Reminder, RealmError>?
     private var completionHandler: CompletionHandler?
     
     override func viewDidLoad() {
