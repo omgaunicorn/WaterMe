@@ -50,8 +50,6 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             vc.vesselResult = basicController?.newReminderVessel()
         }
         vc.userActivity = NSUserActivity(kind: .editReminderVessel)
-        // TODO: This shouldn't be needed
-        vc.userActivity?.becomeCurrent()
         return navVC
     }
     

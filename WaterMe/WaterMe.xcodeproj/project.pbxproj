@@ -13,6 +13,7 @@
 		5010C230213F77B200D1832C /* ReminderSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5010C22F213F77B200D1832C /* ReminderSummaryViewController.swift */; };
 		5010C232213F806500D1832C /* ReminderSummaryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5010C231213F806500D1832C /* ReminderSummaryTableViewController.swift */; };
 		5015EEF61FF56FF300CAC7D7 /* DragTargetInstructionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5015EEF51FF56FF200CAC7D7 /* DragTargetInstructionalView.swift */; };
+		50163F96215B0CAB002DD849 /* UIViewController+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50163F95215B0CAB002DD849 /* UIViewController+WaterMe.swift */; };
 		501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A9AE41FE9682C0016160D /* LocalizedStrings.swift */; };
 		501A9AE71FEB15C20016160D /* WateringAnimationPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */; };
 		501C0E8B1ECE5EFF00D4EE7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */; };
@@ -160,6 +161,7 @@
 		5010C22F213F77B200D1832C /* ReminderSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSummaryViewController.swift; sourceTree = "<group>"; };
 		5010C231213F806500D1832C /* ReminderSummaryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSummaryTableViewController.swift; sourceTree = "<group>"; };
 		5015EEF51FF56FF200CAC7D7 /* DragTargetInstructionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DragTargetInstructionalView.swift; sourceTree = "<group>"; };
+		50163F95215B0CAB002DD849 /* UIViewController+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+WaterMe.swift"; sourceTree = "<group>"; };
 		501A9AE41FE9682C0016160D /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WateringAnimationPlayerView.swift; sourceTree = "<group>"; };
 		501C0E881ECE5EFF00D4EE7C /* AdminConsole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdminConsole.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -546,6 +548,7 @@
 				5096D19221547658006E1019 /* UIView+WaterMe.swift */,
 				50BB0F741EC01B8E00850FF4 /* UserDefaults+WaterMe.swift */,
 				50246117215805D200DA8B94 /* NSUserActivity+WaterMe.swift */,
+				50163F95215B0CAB002DD849 /* UIViewController+WaterMe.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1053,6 +1056,7 @@
 				50AA4A4A1F00AFE600D81831 /* SimpleLabelTableViewCell.swift in Sources */,
 				5051F8FC202BAB1C00741FF9 /* BadgeNumberController.swift in Sources */,
 				5010C232213F806500D1832C /* ReminderSummaryTableViewController.swift in Sources */,
+				50163F96215B0CAB002DD849 /* UIViewController+WaterMe.swift in Sources */,
 				508FFCAF1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift in Sources */,
 				5096D19E21547BE5006E1019 /* UIKit+StyleConstants.swift in Sources */,
 				5075B4901FF178EA007B42D8 /* ReminderDragPreviewView.swift in Sources */,

@@ -113,6 +113,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         guard self.presentedViewController == nil else {
             // user activities are allowed to continue even if the user is doing something else
             guard let activity = self.userActivityToContinue else { return }
+            self.userActivityToContinue = nil
             self.continueUserActivity(activity)
             return
         }
@@ -141,6 +142,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             self.appUpdateAvailableVC = nil
             self.present(updateAlert, animated: true, completion: nil)
         } else if let activity = self.userActivityToContinue {
+            self.userActivityToContinue = nil
             self.continueUserActivity(activity)
         } else {
             self.checkForPurchasesInFlight()
@@ -177,17 +179,11 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         case .editReminderVesselIconLibrary(let uuid):
             break
         case .viewReminder(let uuid):
-            guard let indexPath = self.collectionVC?.reminders?.indexPathOfReminder(withUUID: uuid) else { return }
-            let perform = {
-                self.collectionVC?.collectionView(self.collectionVC!.collectionView!, didSelectItemAt: indexPath)
-            }
-            if self.presentedViewController != nil {
-                self.dismiss(animated: true) { perform() }
-            } else {
-                perform()
+            self.dismissAnimatedIfNeeded() {
+                self.collectionVC?.programaticallySimulateSelectionOfReminder(withUUID: uuid)
             }
         case .viewReminders:
-            self.dismiss(animated: true) {
+            self.dismissAnimatedIfNeeded() {
                 self.collectionVC?.collectionView?.deselectAllItems(animated: true)
             }
         case .error:

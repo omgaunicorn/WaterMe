@@ -88,6 +88,15 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
                                                  collectionViewReplacer: self)
     }
 
+    func programaticallySimulateSelectionOfReminder(withUUID uuid: String) {
+        guard
+            let collectionView = self.collectionView,
+            let indexPath = self.reminders?.indexPathOfReminder(withUUID: uuid)
+        else { return }
+        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
+        self.collectionView(collectionView, didSelectItemAt: indexPath)
+    }
+
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return self.reminders?.numberOfSections ?? 0
     }

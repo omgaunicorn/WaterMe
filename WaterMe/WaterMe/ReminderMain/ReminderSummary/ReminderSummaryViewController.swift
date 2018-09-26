@@ -53,8 +53,6 @@ class ReminderSummaryViewController: StandardViewController {
         vc.reminderResult = basicController.reminder(matching: reminderID)
         vc.reminderID = reminderID
         vc.userActivity = NSUserActivity(kind: .viewReminder)
-        // TODO: This shouldn't be needed
-        vc.userActivity?.becomeCurrent()
         return vc
     }
 
