@@ -36,22 +36,30 @@ class ReminderEditTableViewController: StandardTableViewController {
         super.viewDidLoad()
 
         self.clearsSelectionOnViewWillAppear = false
-        self.tableView.register(TextViewTableViewCell.nib, forCellReuseIdentifier: TextViewTableViewCell.reuseID)
-        self.tableView.register(TextFieldTableViewCell.nib, forCellReuseIdentifier: TextFieldTableViewCell.reuseID)
-        self.tableView.register(ReminderKindTableViewCell.self, forCellReuseIdentifier: ReminderKindTableViewCell.reuseID)
-        self.tableView.register(ReminderIntervalTableViewCell.self, forCellReuseIdentifier: ReminderIntervalTableViewCell.reuseID)
-        self.tableView.register(LastPerformedTableViewCell.self, forCellReuseIdentifier: LastPerformedTableViewCell.reuseID)
+        self.tableView.register(TextViewTableViewCell.nib,
+                                forCellReuseIdentifier: TextViewTableViewCell.reuseID)
+        self.tableView.register(TextFieldTableViewCell.nib,
+                                forCellReuseIdentifier: TextFieldTableViewCell.reuseID)
+        self.tableView.register(ReminderKindTableViewCell.self,
+                                forCellReuseIdentifier: ReminderKindTableViewCell.reuseID)
+        self.tableView.register(ReminderIntervalTableViewCell.self,
+                                forCellReuseIdentifier: ReminderIntervalTableViewCell.reuseID)
+        self.tableView.register(LastPerformedTableViewCell.self,
+                                forCellReuseIdentifier: LastPerformedTableViewCell.reuseID)
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 40
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return; }
+        guard let reminder = self.reminder?()?.value else {
+            assertionFailure("Missing Reminder Object")
+            return
+        }
         let section = Section(section: indexPath.section, for: reminder.kind)
         switch section {
         case .kind:
             self.tableView.deselectRow(at: indexPath, animated: true)
-            // let the deslection happen before changing the tableview
+            // let the deselection happen before changing the tableview
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                 let new = Reminder.Kind(row: indexPath.row)
                 self.kindChanged?(new, false)
@@ -71,13 +79,19 @@ class ReminderEditTableViewController: StandardTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return 0; }
+        guard let reminder = self.reminder?()?.value else {
+            assertionFailure("Missing Reminder Object")
+            return 0
+        }
         let section = Section(section: section, for: reminder.kind)
         return section.numberOfRows(for: reminder.kind)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return UITableViewCell(); }
+        guard let reminder = self.reminder?()?.value else {
+            assertionFailure("Missing Reminder Object")
+            return UITableViewCell()
+        }
         let section = Section(section: indexPath.section, for: reminder.kind)
         switch section {
         case .kind:
@@ -120,7 +134,10 @@ class ReminderEditTableViewController: StandardTableViewController {
     }
     
     func nameTextFieldBecomeFirstResponder() {
-        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return; }
+        guard let reminder = self.reminder?()?.value else {
+            assertionFailure("Missing Reminder Object")
+            return
+        }
         let reminderKind = reminder.kind
         switch reminderKind {
         case .other, .move:
@@ -156,7 +173,10 @@ class ReminderEditTableViewController: StandardTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return nil; }
+        guard let reminder = self.reminder?()?.value else {
+            assertionFailure("Missing Reminder Object")
+            return nil
+        }
         let section = Section(section: section, for: reminder.kind)
         return section.localizedString
     }

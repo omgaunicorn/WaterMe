@@ -58,8 +58,10 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     
     /*@IBOutlet*/ private weak var tableViewController: ReminderEditTableViewController?
 
-    private lazy var deleteBBI: UIBarButtonItem = UIBarButtonItem(localizedDeleteButtonWithTarget: self, action: #selector(self.deleteButtonTapped(_:)))
-    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
+    private lazy var deleteBBI: UIBarButtonItem = UIBarButtonItem(localizedDeleteButtonWithTarget: self,
+                                                                  action: #selector(self.deleteButtonTapped(_:)))
+    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self,
+                                                                action: #selector(self.doneButtonTapped(_:)))
 
     var basicRC: BasicController?
     private(set) var reminderResult: Result<Reminder, RealmError>?
@@ -71,18 +73,24 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         self.navigationItem.leftBarButtonItem = self.deleteBBI
         self.navigationItem.rightBarButtonItem = self.doneBBI
         
-        self.tableViewController?.reminder = { [unowned self] in return self.reminderResult }
-        self.tableViewController?.kindChanged = { [unowned self] in self.update(kind: $0, fromKeyboard: $1) }
-        self.tableViewController?.noteChanged = { [unowned self] in self.update(note: $0, fromKeyboard: true) }
-        self.tableViewController?.intervalChosen = { [unowned self] in self.intervalChosen($0) }
+        self.tableViewController?.reminder = { [unowned self] in
+            return self.reminderResult
+        }
+        self.tableViewController?.kindChanged = { [unowned self] in
+            self.update(kind: $0, fromKeyboard: $1)
+        }
+        self.tableViewController?.noteChanged = { [unowned self] in
+            self.update(note: $0, fromKeyboard: true)
+        }
+        self.tableViewController?.intervalChosen = { [unowned self] in
+            self.intervalChosen($0)
+        }
         self.startNotifications()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         Analytics.log(viewOperation: .editReminder)
-        
         if case .failure(let error) = self.reminderResult! {
             self.reminderResult = nil
             let alert = UIAlertController(error: error) { _ in
@@ -106,29 +114,42 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             self.notificationToken = nil
             self.completionHandler?(self)
         }
+        // dirty the user activity because the item changed
+        self.userDirtiedUserActivity()
     }
     
-    private func update(kind: Reminder.Kind? = nil, interval: Int? = nil, note: String? = nil, fromKeyboard: Bool = false) {
+    private func update(kind: Reminder.Kind? = nil,
+                        interval: Int? = nil,
+                        note: String? = nil,
+                        fromKeyboard: Bool = false)
+    {
         // make sure we have the info we needed
-        guard let reminder = self.reminderResult?.value, let basicRC = self.basicRC
-            else { assertionFailure("Missing Reminder or Realm Controller"); return; }
-        
+        guard
+            let reminder = self.reminderResult?.value,
+            let basicRC = self.basicRC
+        else {
+            assertionFailure("Missing Reminder or Realm Controller")
+            return
+        }
         // if this came from the keyboard stop notifications
         // so the keyboard doesn't get dismissed because of tableview reloads
         if fromKeyboard == true {
           self.notificationToken?.invalidate()
         }
-        
         // after we exit this scope, we need to turn notifications back on
         // again, only if the from keyboard variable is true
         defer {
             if fromKeyboard == true {
                 self.startNotifications()
+                // item was changed outside of notification block
+                self.userDirtiedUserActivity()
             }
         }
-        
         // update the Reminder in Realm
-        let updateResult = basicRC.update(kind: kind, interval: interval, note: note, in: reminder)
+        let updateResult = basicRC.update(kind: kind,
+                                          interval: interval,
+                                          note: note,
+                                          in: reminder)
         
         // show the user errors that may have ocurred
         guard case .failure(let error) = updateResult else { return }
@@ -138,9 +159,14 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     
     private func intervalChosen(_ deselectSelectedCell: @escaping () -> Void) {
         self.view.endEditing(false)
-        guard let existingValue = self.reminderResult?.value?.interval
-            else { assertionFailure("No Reminder Present"); self.completionHandler?(self); return; }
-        let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard, existingValue: existingValue) { vc, newValue in
+        guard let existingValue = self.reminderResult?.value?.interval else {
+            assertionFailure("No Reminder Present")
+            self.completionHandler?(self)
+            return
+        }
+        let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard,
+                                                            existingValue: existingValue)
+        { vc, newValue in
             vc.dismiss(animated: true) {
                 deselectSelectedCell()
                 guard let newValue = newValue else { return }
@@ -162,10 +188,9 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             return
         }
 
-        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .left(sender)) { confirmed in
-
+        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .left(sender))
+        { confirmed in
             Analytics.log(event: Analytics.CRUD_Op_R.delete)
-
             guard confirmed == true else { return }
             let deleteResult = basicRC.delete(reminder: reminder)
             switch deleteResult {
@@ -180,11 +205,12 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     }
     
     @IBAction private func doneButtonTapped(_ _sender: Any) {
-
         Analytics.log(event: Analytics.CRUD_Op_R.update)
-
         self.view.endEditing(false)
-        guard let sender = _sender as? UIBarButtonItem, let reminder = self.reminderResult?.value else {
+        guard
+            let sender = _sender as? UIBarButtonItem,
+            let reminder = self.reminderResult?.value
+        else {
             let message = "Expected UIBarButtonItem to call this method"
             log.error(message)
             assertionFailure(message)
@@ -196,7 +222,10 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         case true:
             self.completionHandler?(self)
         case false:
-            UIAlertController.presentAlertVC(for: errors, over: self, from: sender) { selection in
+            UIAlertController.presentAlertVC(for: errors,
+                                             over: self,
+                                             from: sender)
+            { selection in
                 switch selection {
                 case .cancel:
                     break
@@ -213,6 +242,10 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         if let tableVC = segue.destination as? ReminderEditTableViewController {
             self.tableViewController = tableVC
         }
+    }
+
+    private func userDirtiedUserActivity() {
+        self.userActivity?.needsSave = true
     }
     
     private func startNotifications() {
