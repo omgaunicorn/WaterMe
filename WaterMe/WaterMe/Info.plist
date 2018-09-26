@@ -59,10 +59,6 @@
 		<string>com.saturdayapps.waterme.activity.edit.remindervessel</string>
 		<string>com.saturdayapps.waterme.activity.view.reminder</string>
 		<string>com.saturdayapps.waterme.activity.view.reminders</string>
-		<string>com.saturdayapps.waterme.activity.edit.remindervessel.icon</string>
-		<string>com.saturdayapps.waterme.activity.edit.remindervessel.icon.camera</string>
-		<string>com.saturdayapps.waterme.activity.edit.remindervessel.icon.library</string>
-		<string>com.saturdayapps.waterme.activity.edit.remindervessel.icon.emoji</string>
 	</array>
 </dict>
 </plist>

@@ -33,7 +33,6 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     
     class func newVC(basicController: BasicController?,
                      editVessel vessel: ReminderVessel? = nil,
-                     subActivity: SubActivity,
                      completionHandler: @escaping CompletionHandler) -> UIViewController
     {
         let sb = UIStoryboard(name: "ReminderVesselEdit", bundle: Bundle(for: self))
@@ -44,7 +43,6 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         vc.title = UIApplication.LocalizedString.editVessel
         vc.configure(with: basicController)
         vc.completionHandler = completionHandler
-        vc.subActivity = subActivity
         if let vessel = vessel {
             vc.vesselResult = .success(vessel)
         } else {
@@ -63,8 +61,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     var basicRC: BasicController?
     private(set) var vesselResult: Result<ReminderVessel, RealmError>?
     private var completionHandler: CompletionHandler!
-    private var subActivity = SubActivity.none
-    
+
     private func vesselChanged(_ changes: ObjectChange) {
         switch changes {
         case .change(let properties):

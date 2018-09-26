@@ -31,10 +31,6 @@ enum RestoredUserActivity {
     case editReminderVessel(Reminder.Identifier)
     case viewReminder(Reminder.Identifier)
     case viewReminders
-    case editReminderVesselIcon(Reminder.Identifier)
-    case editReminderVesselIconCamera(Reminder.Identifier)
-    case editReminderVesselIconLibrary(Reminder.Identifier)
-    case editReminderVesselIconEmoji(Reminder.Identifier)
     case error
 }
 
@@ -44,10 +40,6 @@ extension NSUserActivity {
         case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
         case viewReminder = "com.saturdayapps.waterme.activity.view.reminder"
         case viewReminders = "com.saturdayapps.waterme.activity.view.reminders"
-        case editReminderVesselIcon = "com.saturdayapps.waterme.activity.edit.remindervessel.icon"
-        case editReminderVesselIconCamera = "com.saturdayapps.waterme.activity.edit.remindervessel.icon.camera"
-        case editReminderVesselIconLibrary = "com.saturdayapps.waterme.activity.edit.remindervessel.icon.library"
-        case editReminderVesselIconEmoji = "com.saturdayapps.waterme.activity.edit.remindervessel.icon.emoji"
     }
 
     convenience init(kind: Kind) {
@@ -73,18 +65,6 @@ extension NSUserActivity {
         case .editReminderVessel:
             guard let uuid = uuid else { return nil }
             return .editReminderVessel(.init(rawValue: uuid))
-        case .editReminderVesselIcon:
-            guard let uuid = uuid else { return nil }
-            return .editReminderVesselIcon(.init(rawValue: uuid))
-        case .editReminderVesselIconCamera:
-            guard let uuid = uuid else { return nil }
-            return .editReminderVesselIconCamera(.init(rawValue: uuid))
-        case .editReminderVesselIconEmoji:
-            guard let uuid = uuid else { return nil }
-            return .editReminderVesselIconEmoji(.init(rawValue: uuid))
-        case .editReminderVesselIconLibrary:
-            guard let uuid = uuid else { return nil }
-            return .editReminderVesselIconLibrary(.init(rawValue: uuid))
         case .viewReminder:
             guard let uuid = uuid else { return nil }
             return .viewReminder(.init(rawValue: uuid))
@@ -109,24 +89,6 @@ extension NSUserActivity {
 }
 
 extension ReminderVesselEditViewController {
-    enum SubActivity {
-        case none, icon, iconCamera, iconLibrary, iconEmoji
-        init(from restored: RestoredUserActivity) {
-            switch restored {
-            case .editReminderVesselIcon:
-                self = .icon
-            case .editReminderVesselIconCamera:
-                self = .iconCamera
-            case .editReminderVesselIconEmoji:
-                self = .iconEmoji
-            case .editReminderVesselIconLibrary:
-                self = .iconLibrary
-            case .editReminder, .editReminderVessel, .error, .viewReminder, .viewReminders:
-                assertionFailure("Unsupported Activity")
-                self = .none
-            }
-        }
-    }
     override func updateUserActivityState(_ activity: NSUserActivity) {
         assert(activity.activityType == NSUserActivity.Kind.editReminderVessel.rawValue)
         print("ReminderVesselEditViewController: updateUserActivityState:")
