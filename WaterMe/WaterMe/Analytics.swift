@@ -69,6 +69,7 @@ enum Analytics {
         case permissionGranted = "Notify.PermissionGranted"
         case permissionDenied = "Notify.PermissionDenied"
         case permissionIgnored = "Notify.PermissionIgnored"
+        case scheduleAlreadyInProgress = "Notify.SchedulingAlreadyInProgress"
 
         static func extras(forCount count: Int) -> [String : Any] {
             return ["NotifyCount" : NSNumber(value: count)]

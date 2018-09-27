@@ -32,7 +32,7 @@ class ReminderUserNotificationController {
     func updateScheduledNotifications(with reminders: [ReminderValue]) {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
-            log.info("Background task already in progress. Bailing.")
+            Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
             return
         }
         // tell the OS I'm running a background task
