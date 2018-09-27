@@ -54,6 +54,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     var proRC: ProController?
 
     let dueDateFormatter = Formatter.newDueDateFormatter
+    let haptic = UINotificationFeedbackGenerator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
