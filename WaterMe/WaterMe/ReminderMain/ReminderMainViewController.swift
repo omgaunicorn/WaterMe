@@ -132,6 +132,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
             self.present(vc, animated: true, completion: nil)
         } else if let updateAlert = self.appUpdateAvailableVC {
             self.appUpdateAvailableVC = nil
+            Analytics.log(viewOperation: .alertUpdateAvailable)
             self.present(updateAlert, animated: true, completion: nil)
         } else {
             self.checkForPurchasesInFlight()

@@ -24,7 +24,6 @@
 import Result
 import RealmSwift
 import WaterMeData
-import SimpleImageViewer
 import UIKit
 
 class ReminderVesselEditViewController: UIViewController, HasBasicController, ReminderVesselEditTableViewControllerDelegate {
@@ -242,8 +241,10 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
                 self.present(vc, animated: true, completion: nil)
             case .viewCurrentPhoto:
                 guard let image = self.vesselResult?.value?.icon?.image else { return }
-                let config = ImageViewerConfiguration(image: image)
-                let vc = ImageViewerController(configuration: config)
+                let config = DismissHandlingImageViewerConfiguration(image: image) { vc in
+                    vc.dismiss(animated: true, completion: nil)
+                }
+                let vc = DismissHandlingImageViewerController(configuration: config)
                 self.present(vc, animated: true, completion: nil)
             case .error(let errorVC):
                 self.present(errorVC, animated: true, completion: nil)

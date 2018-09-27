@@ -45,5 +45,6 @@ class DismissHandlingImageViewerConfiguration: ImageViewerConfiguration {
     {
         self.completion = completion
         super.init(image: image, imageView: imageView, imageBlock: imageBlock)
+        Analytics.log(viewOperation: .viewReminderVesselPhoto)
     }
 }

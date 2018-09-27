@@ -94,11 +94,11 @@ extension UIAlertController {
             NSLocalizedString("Choose a Photo",
                               comment: "Button Title in an Alert that allows the user to open the Camera, Photo Picker, or Emoji Picker Screen.")
         static let titleNewEmojiPhotoExistingPhoto =
-            NSLocalizedString("Choose a new Emoji or Photo for your plant, or view the current photo.",
+            NSLocalizedString("View the current photo or choose a new photo or emoji for your plant.",
                               comment: "Title of an Alert that tells the user that they can choose a new photo or emoji for their plant or they can view the current photo for their plant.")
 
         static let titleNewEmojiPhoto =
-            NSLocalizedString("Choose a new Emoji or Photo for your plant.",
+            NSLocalizedString("Choose a new emoji or photo for your plant.",
                               comment: "Title of an Alert that tells the user that they can choose a new photo or emoji for their plant.")
         static let buttonTitleEmoji =
             NSLocalizedString("Emoji",

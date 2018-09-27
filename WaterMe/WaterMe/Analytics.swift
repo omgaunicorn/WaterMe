@@ -34,6 +34,8 @@ enum Analytics {
         case reviewRequested = "Event.ReviewRequested"
         case stpReloadNotification = "Event.STPReload.Notification"
         case stpReloadBackup = "Event.STPReload.Backup"
+        case updateAvailableDismiss = "Event.UpdateAvailable.Dismiss"
+        case updateAvailableAppStore = "Event.UpdateAvailable.AppStore"
     }
 
     // MARK: CRUD Operations
@@ -125,6 +127,8 @@ enum Analytics {
         case openEmojiOne = "VCView.OpenEmojiOneSite"
         case errorAlertRealm = "VCView.ErrorAlert.Realm"
         case errorAlertPurchase = "VCView.ErrorAlert.Purchase"
+        case alertUpdateAvailable = "VCView.Alert.UpdatedAvailable"
+        case viewReminderVesselPhoto = "VCView.ReminderVesselPhoto"
     }
 
     // MARK: Logging Functions
