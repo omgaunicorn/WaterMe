@@ -93,7 +93,6 @@
 		50AA4A4A1F00AFE600D81831 /* SimpleLabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AA4A491F00AFE600D81831 /* SimpleLabelTableViewCell.swift */; };
 		50B511A51EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B511A41EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib */; };
 		50B511A71EFE144700ED1DF4 /* ReminderKindTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B511A61EFE144700ED1DF4 /* ReminderKindTableViewCell.swift */; };
-		50B61EE11F2FB904004654B4 /* EmojiImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B61EE01F2FB904004654B4 /* EmojiImageView.swift */; };
 		50B779CD2154700A00AC6240 /* UIAlertController+UserFacingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779CC2154700A00AC6240 /* UIAlertController+UserFacingError.swift */; };
 		50B779CF215470B300AC6240 /* UIBarButtonItem+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779CE215470B300AC6240 /* UIBarButtonItem+WaterMe.swift */; };
 		50B779D1215470FE00AC6240 /* NSFormatter+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779D0215470FE00AC6240 /* NSFormatter+WaterMe.swift */; };
@@ -113,6 +112,7 @@
 		50C30E561EFF9349006003A1 /* ReminderIntervalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C30E551EFF9349006003A1 /* ReminderIntervalTableViewCell.swift */; };
 		50C96A321EC2BB03002802C1 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A311EC2BB03002802C1 /* Either.swift */; };
 		50CB5AFA2001BAA900868F30 /* ReminderNotificationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */; };
+		50DD7A38215D6BBF00047B0C /* EmojiImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B61EE01F2FB904004654B4 /* EmojiImageView.swift */; };
 		50DFA8B31ED7A08E000D2956 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */; };
 		50DFA8B51ED7A352000D2956 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */; };
 		50DFA8B71ED7B27F000D2956 /* SynchronizingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */; };
@@ -120,11 +120,6 @@
 		50E3F2C91FF6EF35003245E3 /* ImageEmojiObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E3F2C81FF6EF35003245E3 /* ImageEmojiObject.swift */; };
 		50E3F2CB1FF70D27003245E3 /* CoreDataMigration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */; };
 		50E3F2CD1FF70D3B003245E3 /* CoreDataMigratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */; };
-		50E8B1D51EDF79E700ACCDAF /* ReminderVesselMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E8B1D31EDF79E700ACCDAF /* ReminderVesselMain.storyboard */; };
-		50E8B1D61EDF79E700ACCDAF /* ReminderVesselMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1D41EDF79E700ACCDAF /* ReminderVesselMainViewController.swift */; };
-		50E8B1DF1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1DD1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift */; };
-		50E8B1E01EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E8B1DE1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib */; };
-		50E8B1E21EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E11EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift */; };
 		50E8B1E41EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E8B1E31EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard */; };
 		50E8B1E61EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E51EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift */; };
 		50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */; };
@@ -277,11 +272,6 @@
 		50E3F2C81FF6EF35003245E3 /* ImageEmojiObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEmojiObject.swift; sourceTree = "<group>"; };
 		50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CoreDataMigration.storyboard; sourceTree = "<group>"; };
 		50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMigratorViewController.swift; sourceTree = "<group>"; };
-		50E8B1D31EDF79E700ACCDAF /* ReminderVesselMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReminderVesselMain.storyboard; sourceTree = "<group>"; };
-		50E8B1D41EDF79E700ACCDAF /* ReminderVesselMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselMainViewController.swift; sourceTree = "<group>"; };
-		50E8B1DD1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselCollectionViewCell.swift; sourceTree = "<group>"; };
-		50E8B1DE1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderVesselCollectionViewCell.xib; sourceTree = "<group>"; };
-		50E8B1E11EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselCollectionViewController.swift; sourceTree = "<group>"; };
 		50E8B1E31EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReminderVesselEdit.storyboard; sourceTree = "<group>"; };
 		50E8B1E51EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselEditViewController.swift; sourceTree = "<group>"; };
 		50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselEditTableViewController.swift; sourceTree = "<group>"; };
@@ -528,6 +518,7 @@
 				5089D124214F458200140F68 /* AppVersionCheckingAlert.swift */,
 				50B779D22154716E00AC6240 /* StandardCollectionViewController.swift */,
 				50C96A311EC2BB03002802C1 /* Either.swift */,
+				50B61EE01F2FB904004654B4 /* EmojiImageView.swift */,
 			);
 			path = "Miscellaneous ";
 			sourceTree = "<group>";
@@ -610,12 +601,6 @@
 		50E8B1D21EDF79C600ACCDAF /* ReminderVesselMain */ = {
 			isa = PBXGroup;
 			children = (
-				50E8B1D31EDF79E700ACCDAF /* ReminderVesselMain.storyboard */,
-				50E8B1D41EDF79E700ACCDAF /* ReminderVesselMainViewController.swift */,
-				50E8B1E11EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift */,
-				50E8B1DD1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift */,
-				50E8B1DE1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib */,
-				50B61EE01F2FB904004654B4 /* EmojiImageView.swift */,
 				5045CBA71EFCC8B6008E6D6A /* ReminderVesselEdit */,
 				5045CBA61EFCC833008E6D6A /* PhotoEmojiPicker */,
 				5045CBA51EFCC810008E6D6A /* ReminderEdit */,
@@ -778,7 +763,6 @@
 				507A64581F049CCA004E18C5 /* ReminderTableViewCell.xib in Resources */,
 				50E8B1E41EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard in Resources */,
 				502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */,
-				50E8B1E01EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.xib in Resources */,
 				5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */,
 				50B511A51EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib in Resources */,
 				50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */,
@@ -786,7 +770,6 @@
 				5010C22E213F779F00D1832C /* ReminderSummary.storyboard in Resources */,
 				50F7A360200844390063A1FC /* StarterRealm.realm in Resources */,
 				508E61551F8ACC5E00B28DD8 /* ReminderMain.storyboard in Resources */,
-				50E8B1D51EDF79E700ACCDAF /* ReminderVesselMain.storyboard in Resources */,
 				50281908200BE7C80044BEC8 /* PurchaseThanks.storyboard in Resources */,
 				50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */,
 				50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */,
@@ -999,7 +982,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50E8B1E21EDF89A400ACCDAF /* ReminderVesselCollectionViewController.swift in Sources */,
 				5015EEF61FF56FF300CAC7D7 /* DragTargetInstructionalView.swift in Sources */,
 				50702D13200591CC009EF952 /* EmailDeveloperViewController.swift in Sources */,
 				50B779D1215470FE00AC6240 /* NSFormatter+WaterMe.swift in Sources */,
@@ -1009,7 +991,6 @@
 				5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */,
 				502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */,
 				50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */,
-				50B61EE11F2FB904004654B4 /* EmojiImageView.swift in Sources */,
 				504A36FB214C7ECC009543C0 /* SimpleImageViewerSubclass.swift in Sources */,
 				5096D1962154775D006E1019 /* Font.swift in Sources */,
 				5029E09B214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m in Sources */,
@@ -1018,6 +999,7 @@
 				50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */,
 				5096D19821547764006E1019 /* Color.swift in Sources */,
 				5096D19C21547991006E1019 /* NSAttributedString+Font.swift in Sources */,
+				50DD7A38215D6BBF00047B0C /* EmojiImageView.swift in Sources */,
 				50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */,
 				50457C6C201D54130043EB20 /* EmojiPickerFooterCollectionReusableView.swift in Sources */,
 				5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */,
@@ -1038,7 +1020,6 @@
 				50C96A321EC2BB03002802C1 /* Either.swift in Sources */,
 				50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */,
 				505B8C28214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift in Sources */,
-				50E8B1D61EDF79E700ACCDAF /* ReminderVesselMainViewController.swift in Sources */,
 				5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */,
 				5065AA1C200E872900C7F0CC /* UserFacingError.swift in Sources */,
 				504732D6214ACCFC00814E7D /* ReminderSummaryInsetManagingTableViewController.swift in Sources */,
@@ -1060,7 +1041,6 @@
 				50B779D52154724000AC6240 /* UITableCollectionView+WaterMe.swift in Sources */,
 				50B779CF215470B300AC6240 /* UIBarButtonItem+WaterMe.swift in Sources */,
 				50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */,
-				50E8B1DF1EDF890D00ACCDAF /* ReminderVesselCollectionViewCell.swift in Sources */,
 				50B511A71EFE144700ED1DF4 /* ReminderKindTableViewCell.swift in Sources */,
 				50E3F2CD1FF70D3B003245E3 /* CoreDataMigratorViewController.swift in Sources */,
 				5028190D200D14850044BEC8 /* SettingsInfoTableViewCell.swift in Sources */,

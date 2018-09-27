@@ -115,7 +115,7 @@ enum Analytics {
         case purchaseThanks = "VCView.PurchaseThanks"
         case coreDataMigration = "VCView.CoreDataMigration"
         case reminderList = "VCView.ReminderList"
-        case reminderVesselList = "VCView.ReminderVesselList"
+//        case reminderVesselList = "VCView.ReminderVesselList"
         case reminderVesselTap = "VCView.ReminderVesselTap"
         case editReminderVessel = "VCView.EditReminderVessel"
         case editReminder = "VCView.EditReminder"
