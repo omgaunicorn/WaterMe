@@ -64,6 +64,7 @@ extension UNUserNotificationCenter {
         }
         _ = semaphore.wait(timeout: .now() + 2)
         guard let settings = _settings else {
+            Analytics.log(event: Analytics.Event.notificationSettingsFail)
             assertionFailure("Failed to get settings in time")
             return nil
         }

@@ -36,6 +36,7 @@ enum Analytics {
         case stpReloadBackup = "Event.STPReload.Backup"
         case updateAvailableDismiss = "Event.UpdateAvailable.Dismiss"
         case updateAvailableAppStore = "Event.UpdateAvailable.AppStore"
+        case notificationSettingsFail = "Error.NotifySettingsLoadFailure"
     }
 
     // MARK: CRUD Operations
