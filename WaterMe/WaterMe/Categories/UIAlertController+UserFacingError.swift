@@ -42,7 +42,7 @@ extension UIAlertController {
         case .openWaterMeSettings:
             let actionTitle = RealmError.LocalizedString.buttonTitleManageStorage
             let errorAction = UIAlertAction(title: actionTitle, style: .default) { _ in
-                UIApplication.shared.openSettings(completion: nil)
+                UIApplication.shared.openAppSettings(completion: nil)
                 completion?(.error(error))
             }
             self.addAction(errorAction)

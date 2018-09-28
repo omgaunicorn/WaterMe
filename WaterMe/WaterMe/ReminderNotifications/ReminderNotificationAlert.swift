@@ -101,7 +101,7 @@ extension UIAlertController {
         let ud = UserDefaults.standard
         let settings = UIAlertAction(title: SettingsMainViewController.LocalizedString.settingsTitle, style: .default) { _ in
             ud.askForNotifications = true
-            UIApplication.shared.openSettings() { _ in
+            UIApplication.shared.openAppSettings() { _ in
                 selection?(.cancel)
             }
         }
