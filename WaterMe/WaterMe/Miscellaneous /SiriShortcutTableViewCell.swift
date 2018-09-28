@@ -43,9 +43,8 @@ class SiriShortcutTableViewCell: SimpleLabelTableViewCell {
         self.accessoryView = self.plusButton
     }
 
-    func configure(with shortcut: ReminderVesselEditTableViewController.SiriShortcut) {
-        let shortcutString = shortcut.localizedTitle
-        self.label.attributedText = NSAttributedString(string: shortcutString,
+    func configure(withLocalizedTitle localizedTitle: String) {
+        self.label.attributedText = NSAttributedString(string: localizedTitle,
                                                        font: .selectableTableViewCell)
         self.plusButton.setImage(#imageLiteral(resourceName: "PlusIcon"), for: .normal)
         self.plusButton.sizeToFit()

@@ -52,6 +52,8 @@ class ReminderEditTableViewController: StandardTableViewController {
                                 forCellReuseIdentifier: ReminderKindTableViewCell.reuseID)
         self.tableView.register(ReminderIntervalTableViewCell.self,
                                 forCellReuseIdentifier: ReminderIntervalTableViewCell.reuseID)
+        self.tableView.register(SiriShortcutTableViewCell.self,
+                                forCellReuseIdentifier: SiriShortcutTableViewCell.reuseID)
         self.tableView.register(LastPerformedTableViewCell.self,
                                 forCellReuseIdentifier: LastPerformedTableViewCell.reuseID)
         self.tableView.rowHeight = UITableViewAutomaticDimension
@@ -134,6 +136,18 @@ class ReminderEditTableViewController: StandardTableViewController {
                 self.delegate?.userChangedNote(toNewNote: newText, within: self)
             }
             return _cell
+        case .siriShortcuts:
+            let id = SiriShortcutTableViewCell.reuseID
+            let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
+            guard
+                let cell = _cell as? SiriShortcutTableViewCell,
+                let row = SiriShortcut(rawValue: indexPath.row)
+            else { return _cell }
+            switch row {
+            case .editReminder:
+                cell.configure(withLocalizedTitle: row.localizedTitle)
+            }
+            return cell
         case .performed:
             let id = LastPerformedTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
@@ -194,13 +208,13 @@ class ReminderEditTableViewController: StandardTableViewController {
     }
     
     private enum Section {
-        case kind, details, interval, notes, performed
+        case kind, details, interval, notes, siriShortcuts, performed
         static func count(for kind: Reminder.Kind) -> Int {
             switch kind {
             case .fertilize, .water, .trim, .mist:
-                return 4
-            case .other, .move:
                 return 5
+            case .other, .move:
+                return 6
             }
         }
         // swiftlint:disable:next cyclomatic_complexity
@@ -215,6 +229,8 @@ class ReminderEditTableViewController: StandardTableViewController {
                 case 2:
                     self = .notes
                 case 3:
+                    self = .siriShortcuts
+                case 4:
                     self = .performed
                 default:
                     fatalError("Invalid Section")
@@ -230,6 +246,8 @@ class ReminderEditTableViewController: StandardTableViewController {
                 case 3:
                     self = .notes
                 case 4:
+                    self = .siriShortcuts
+                case 5:
                     self = .performed
                 default:
                     fatalError("Invalid Section")
@@ -246,6 +264,8 @@ class ReminderEditTableViewController: StandardTableViewController {
                 return ReminderEditViewController.LocalizedString.sectionTitleInterval
             case .notes:
                 return ReminderEditViewController.LocalizedString.sectionTitleNotes
+            case .siriShortcuts:
+                return "Siri Shortcuts"
             case .performed:
                 return ReminderEditViewController.LocalizedString.sectionTitleLastPerformed
             }
@@ -254,8 +274,20 @@ class ReminderEditTableViewController: StandardTableViewController {
             switch self {
             case .kind:
                 return type(of: kind).count
+            case .siriShortcuts:
+                return SiriShortcut.allCases.count
             case .details, .performed, .interval, .notes:
                 return 1
+            }
+        }
+    }
+
+    private enum SiriShortcut: Int, CaseIterable {
+        case editReminder
+        var localizedTitle: String {
+            switch self {
+            case .editReminder:
+                return "Edit Reminder"
             }
         }
     }

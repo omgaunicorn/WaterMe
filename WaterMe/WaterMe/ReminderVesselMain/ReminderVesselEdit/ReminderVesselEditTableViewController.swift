@@ -206,7 +206,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
             else { return _cell }
             switch row {
             case .editReminderVessel:
-                cell.configure(with: row)
+                cell.configure(withLocalizedTitle: row.localizedTitle)
             }
             return cell
         }
