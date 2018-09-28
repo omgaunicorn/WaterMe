@@ -25,12 +25,20 @@ import Result
 import WaterMeData
 import UIKit
 
+protocol ReminderEditTableViewControllerDelegate: class {
+    var reminderResult: Result<Reminder, RealmError>? { get }
+    func userChangedKind(to newKind: Reminder.Kind,
+                         byUsingKeyboard usingKeyboard: Bool,
+                         within: ReminderEditTableViewController)
+    func userDidSelectChangeInterval(_ deselectHandler: @escaping () -> Void,
+                                     within: ReminderEditTableViewController)
+    func userChangedNote(toNewNote newNote: String,
+                         within: ReminderEditTableViewController)
+}
+
 class ReminderEditTableViewController: StandardTableViewController {
-    
-    var reminder: (() -> Result<Reminder, RealmError>?)?
-    var kindChanged: ((Reminder.Kind, Bool) -> Void)?
-    var intervalChosen: ((@escaping () -> Void) -> Void)?
-    var noteChanged: ((String) -> Void)?
+
+    weak var delegate: ReminderEditTableViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +59,7 @@ class ReminderEditTableViewController: StandardTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let reminder = self.reminder?()?.value else {
+        guard let reminder = self.delegate?.reminderResult?.value else {
             assertionFailure("Missing Reminder Object")
             return
         }
@@ -62,24 +70,26 @@ class ReminderEditTableViewController: StandardTableViewController {
             // let the deselection happen before changing the tableview
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                 let new = Reminder.Kind(row: indexPath.row)
-                self.kindChanged?(new, false)
+                self.delegate?.userChangedKind(to: new,
+                                               byUsingKeyboard: false,
+                                               within: self)
             }
         case .interval:
-            self.intervalChosen?() {
+            self.delegate?.userDidSelectChangeInterval({
                 tableView.deselectRow(at: indexPath, animated: true)
-            }
+            }, within: self)
         default:
             break // ignore
         }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        guard let reminder = self.reminder?()?.value else { return 0 }
+        guard let reminder = self.delegate?.reminderResult?.value else { return 0 }
         return Section.count(for: reminder.kind)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let reminder = self.reminder?()?.value else {
+        guard let reminder = self.delegate?.reminderResult?.value else {
             assertionFailure("Missing Reminder Object")
             return 0
         }
@@ -88,7 +98,7 @@ class ReminderEditTableViewController: StandardTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let reminder = self.reminder?()?.value else {
+        guard let reminder = self.delegate?.reminderResult?.value else {
             assertionFailure("Missing Reminder Object")
             return UITableViewCell()
         }
@@ -121,7 +131,7 @@ class ReminderEditTableViewController: StandardTableViewController {
             let cell = _cell as? TextViewTableViewCell
             cell?.configure(with: reminder.note)
             cell?.textChanged = { [unowned self] newText in
-                self.noteChanged?(newText)
+                self.delegate?.userChangedNote(toNewNote: newText, within: self)
             }
             return _cell
         case .performed:
@@ -134,7 +144,7 @@ class ReminderEditTableViewController: StandardTableViewController {
     }
     
     func nameTextFieldBecomeFirstResponder() {
-        guard let reminder = self.reminder?()?.value else {
+        guard let reminder = self.delegate?.reminderResult?.value else {
             assertionFailure("Missing Reminder Object")
             return
         }
@@ -160,7 +170,9 @@ class ReminderEditTableViewController: StandardTableViewController {
     private func updated(text newText: String, for oldKind: Reminder.Kind) {
         let newKind: Reminder.Kind
         defer {
-            self.kindChanged?(newKind, true)
+            self.delegate?.userChangedKind(to: newKind,
+                                           byUsingKeyboard: true,
+                                           within: self)
         }
         switch oldKind {
         case .move:
@@ -173,7 +185,7 @@ class ReminderEditTableViewController: StandardTableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let reminder = self.reminder?()?.value else {
+        guard let reminder = self.delegate?.reminderResult?.value else {
             assertionFailure("Missing Reminder Object")
             return nil
         }

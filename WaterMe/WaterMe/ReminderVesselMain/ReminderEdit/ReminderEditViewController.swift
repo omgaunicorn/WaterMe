@@ -72,19 +72,8 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
 
         self.navigationItem.leftBarButtonItem = self.deleteBBI
         self.navigationItem.rightBarButtonItem = self.doneBBI
-        
-        self.tableViewController?.reminder = { [unowned self] in
-            return self.reminderResult
-        }
-        self.tableViewController?.kindChanged = { [unowned self] in
-            self.update(kind: $0, fromKeyboard: $1)
-        }
-        self.tableViewController?.noteChanged = { [unowned self] in
-            self.update(note: $0, fromKeyboard: true)
-        }
-        self.tableViewController?.intervalChosen = { [unowned self] in
-            self.intervalChosen($0)
-        }
+
+        self.tableViewController?.delegate = self
         self.startNotifications()
     }
     
@@ -256,5 +245,27 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     
     deinit {
       self.notificationToken?.invalidate()
+    }
+}
+
+extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
+
+    func userChangedKind(to newKind: Reminder.Kind,
+                         byUsingKeyboard usingKeyboard: Bool,
+                         within: ReminderEditTableViewController)
+    {
+        self.update(kind: newKind, fromKeyboard: usingKeyboard)
+    }
+
+    func userChangedNote(toNewNote newNote: String,
+                         within: ReminderEditTableViewController)
+    {
+        self.update(note: newNote, fromKeyboard: true)
+    }
+
+    func userDidSelectChangeInterval(_ deselectHandler: @escaping () -> Void,
+                                     within: ReminderEditTableViewController)
+    {
+        self.intervalChosen(deselectHandler)
     }
 }
