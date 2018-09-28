@@ -52,7 +52,7 @@ class ReminderUserNotificationController {
             }
 
             // make sure we're authorized to send notifications
-            guard center.settings.authorizationStatus.boolValue else {
+            guard center.notificationAuthorizationStatus.boolValue else {
                 log.info("User has turned System notification toggle off")
                 Analytics.log(event: Analytics.NotificationPermission.scheduleDeniedBySystem)
                 return

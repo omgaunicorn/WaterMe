@@ -55,43 +55,29 @@ class ReminderNotificationUIDelegate: NSObject, UNUserNotificationCenterDelegate
 }
 
 extension UNUserNotificationCenter {
-    var settings: UNNotificationSettings {
-        return NotificationSettings.shared.settings
-    }
-    func forceCacheUpdate() {
-        NotificationSettings.shared.forceCacheUpdate()
-    }
-}
-
-private class NotificationSettings {
-
-    static let shared = NotificationSettings()
-    private(set) var settings: UNNotificationSettings
-
-    init() {
-        self.settings = NotificationSettings.settings
-        NotificationCenter.default.addObserver(self, selector: #selector(self.appStateDidChange(_:)), name: .UIApplicationWillEnterForeground, object: nil)
-    }
-
-    @objc private func appStateDidChange(_ notification: Any) {
-        UNUserNotificationCenter.current().getNotificationSettings() { s in
-            self.settings = s
-        }
-    }
-
-    fileprivate func forceCacheUpdate() {
-        self.settings = type(of: self).settings
-    }
-
-    private class var settings: UNNotificationSettings {
+    private var settings: UNNotificationSettings? {
         let semaphore = DispatchSemaphore(value: 0)
-        var settings: UNNotificationSettings!
+        var _settings: UNNotificationSettings?
         UNUserNotificationCenter.current().getNotificationSettings() { s in
-            settings = s
+            _settings = s
             semaphore.signal()
         }
-        semaphore.wait()
+        _ = semaphore.wait(timeout: .now() + 2)
+        guard let settings = _settings else {
+            assertionFailure("Failed to get settings in time")
+            return nil
+        }
         return settings
+    }
+
+    var notificationAuthorizationStatus: UNAuthorizationStatus {
+        let settings = self.settings
+        return settings?.authorizationStatus ?? .authorized
+    }
+
+    var notificationBadgeStatus: UNNotificationSetting {
+        let settings = self.settings
+        return settings?.badgeSetting ?? .enabled
     }
 }
 

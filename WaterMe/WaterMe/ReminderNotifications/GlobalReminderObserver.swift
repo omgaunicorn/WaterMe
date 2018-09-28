@@ -62,7 +62,6 @@ class GlobalReminderObserver {
     }
 
     func notificationPermissionsMayHaveChanged() {
-        UNUserNotificationCenter.current().forceCacheUpdate()
         self.resetTimer()
     }
 

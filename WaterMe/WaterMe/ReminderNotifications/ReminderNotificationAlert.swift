@@ -35,7 +35,7 @@ extension UIAlertController {
     {
         let nc = UNUserNotificationCenter.current()
         let ud = UserDefaults.standard
-        let authorizationStatus = nc.settings.authorizationStatus
+        let authorizationStatus = nc.notificationAuthorizationStatus
         let userAskedToBeAsked = ud.askForNotifications
         let style: UIAlertControllerStyle = sender != nil ? .actionSheet : .alert
         switch (authorizationStatus, userAskedToBeAsked) {

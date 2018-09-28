@@ -38,7 +38,7 @@ enum BadgeNumberController {
             return
         }
         // make sure we're authorized to badge the icon
-        guard case .enabled = UNUserNotificationCenter.current().settings.badgeSetting else {
+        guard case .enabled = UNUserNotificationCenter.current().notificationBadgeStatus else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleBadgeIconDeniedBySystem)
             log.info("User has disabled badge allowance")
             return

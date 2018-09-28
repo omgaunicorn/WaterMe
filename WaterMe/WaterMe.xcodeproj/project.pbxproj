@@ -22,7 +22,6 @@
 		501C0E951ECE5EFF00D4EE7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E931ECE5EFF00D4EE7C /* LaunchScreen.storyboard */; };
 		501C0E9B1ECE602400D4EE7C /* PrivateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */; };
 		501EBEFB20BFBF7E00601654 /* emojione-apple.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 501EBEFA20BFBF7D00601654 /* emojione-apple.ttf */; };
-		5027C1D7202F5E26007B5FB8 /* NotificationSettingsChangeObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5027C1D6202F5E26007B5FB8 /* NotificationSettingsChangeObserver.swift */; };
 		50281904200BB57D0044BEC8 /* ModalParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50281903200BB57D0044BEC8 /* ModalParentViewController.swift */; };
 		50281906200BD6110044BEC8 /* PurchaseThanksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50281905200BD6110044BEC8 /* PurchaseThanksViewController.swift */; };
 		50281908200BE7C80044BEC8 /* PurchaseThanks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50281907200BE7C80044BEC8 /* PurchaseThanks.storyboard */; };
@@ -165,7 +164,6 @@
 		501C0E961ECE5EFF00D4EE7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKeys.swift; sourceTree = "<group>"; };
 		501EBEFA20BFBF7D00601654 /* emojione-apple.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "emojione-apple.ttf"; sourceTree = "<group>"; };
-		5027C1D6202F5E26007B5FB8 /* NotificationSettingsChangeObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationSettingsChangeObserver.swift; sourceTree = "<group>"; };
 		50281903200BB57D0044BEC8 /* ModalParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalParentViewController.swift; sourceTree = "<group>"; };
 		50281905200BD6110044BEC8 /* PurchaseThanksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseThanksViewController.swift; sourceTree = "<group>"; };
 		50281907200BE7C80044BEC8 /* PurchaseThanks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PurchaseThanks.storyboard; sourceTree = "<group>"; };
@@ -465,7 +463,6 @@
 				5049D1A21FACFA1B0076565E /* ReminderUserNotificationController.swift */,
 				507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */,
 				50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */,
-				5027C1D6202F5E26007B5FB8 /* NotificationSettingsChangeObserver.swift */,
 			);
 			path = ReminderNotifications;
 			sourceTree = "<group>";
@@ -1025,7 +1022,6 @@
 				504732D6214ACCFC00814E7D /* ReminderSummaryInsetManagingTableViewController.swift in Sources */,
 				5045CBAB1EFCCB50008E6D6A /* ReminderEditViewController.swift in Sources */,
 				50281906200BD6110044BEC8 /* PurchaseThanksViewController.swift in Sources */,
-				5027C1D7202F5E26007B5FB8 /* NotificationSettingsChangeObserver.swift in Sources */,
 				5047B7A5200D6B6800F69C73 /* Analytics.swift in Sources */,
 				50BB0F751EC01B8E00850FF4 /* UserDefaults+WaterMe.swift in Sources */,
 				50AA4A4A1F00AFE600D81831 /* SimpleLabelTableViewCell.swift in Sources */,
