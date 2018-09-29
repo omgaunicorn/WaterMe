@@ -305,7 +305,13 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
     {
-        guard #available(iOS 12.0, *) else { return }
+        guard #available(iOS 12.0, *) else {
+            let vc = UIAlertController(localizedSiriShortcutsUnavailableAlertWithCompletionHandler: {
+                deselectRowAnimated?(true)
+            })
+            self.present(vc, animated: true, completion: nil)
+            return
+        }
         guard
             let activity = self.userActivity,
             activity.activityType == NSUserActivity.Kind.editReminderVessel.rawValue

@@ -34,6 +34,10 @@ protocol ReminderEditTableViewControllerDelegate: class {
                                      within: ReminderEditTableViewController)
     func userChangedNote(toNewNote newNote: String,
                          within: ReminderEditTableViewController)
+
+    func userDidSelect(siriShortcut: ReminderEditTableViewController.SiriShortcut,
+                       deselectRowAnimated: ((Bool) -> Void)?,
+                       within: ReminderEditTableViewController)
 }
 
 class ReminderEditTableViewController: StandardTableViewController {
@@ -80,8 +84,16 @@ class ReminderEditTableViewController: StandardTableViewController {
             self.delegate?.userDidSelectChangeInterval({
                 tableView.deselectRow(at: indexPath, animated: true)
             }, within: self)
-        default:
-            break // ignore
+        case .siriShortcuts:
+            guard let shortcut = SiriShortcut(rawValue: indexPath.row) else { return }
+            let closure = { (anim: Bool) -> Void in
+                tableView.deselectRow(at: indexPath, animated: anim)
+            }
+            self.delegate?.userDidSelect(siriShortcut: shortcut,
+                                         deselectRowAnimated: closure,
+                                         within: self)
+        case .details, .notes, .performed:
+            assertionFailure("User was allowed to select unselectable row")
         }
     }
     
@@ -210,7 +222,7 @@ class ReminderEditTableViewController: StandardTableViewController {
 }
 
 extension ReminderEditTableViewController {
-    private enum SiriShortcut: Int, CaseIterable {
+    enum SiriShortcut: Int, CaseIterable {
         case editReminder
         var localizedTitle: String {
             switch self {

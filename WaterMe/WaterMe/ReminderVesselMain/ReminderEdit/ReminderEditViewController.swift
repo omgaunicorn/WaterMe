@@ -24,6 +24,7 @@
 import Result
 import WaterMeData
 import RealmSwift
+import IntentsUI
 import UIKit
 
 class ReminderEditViewController: StandardViewController, HasBasicController {
@@ -270,5 +271,36 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
                                      within: ReminderEditTableViewController)
     {
         self.intervalChosen(deselectHandler)
+    }
+
+    func userDidSelect(siriShortcut: ReminderEditTableViewController.SiriShortcut,
+                       deselectRowAnimated: ((Bool) -> Void)?,
+                       within: ReminderEditTableViewController)
+    {
+        guard #available(iOS 12.0, *) else {
+            let vc = UIAlertController(localizedSiriShortcutsUnavailableAlertWithCompletionHandler: {
+                deselectRowAnimated?(true)
+            })
+            self.present(vc, animated: true, completion: nil)
+            return
+        }
+        switch siriShortcut {
+        case .editReminder:
+            guard
+                let activity = self.userActivity,
+                activity.activityType == NSUserActivity.Kind.editReminder.rawValue
+            else {
+                assertionFailure("Unexpected User Activity")
+                return
+            }
+            let shortcut = INShortcut(userActivity: activity)
+            let vc = ClosureDelegatingAddVoiceShortcutViewController(shortcut: shortcut)
+            vc.completion = { vc, result in
+                vc.dismiss(animated: true) {
+                    deselectRowAnimated?(true)
+                }
+            }
+            self.present(vc, animated: true, completion: nil)
+        }
     }
 }
