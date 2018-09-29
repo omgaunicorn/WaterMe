@@ -39,7 +39,6 @@ class ReminderTableViewCell: UITableViewCell {
     @IBOutlet private weak var topConstraint: NSLayoutConstraint?
     @IBOutlet private weak var bottomConstraint: NSLayoutConstraint?
 
-    
     fileprivate let formatter = DateComponentsFormatter.newReminderIntervalFormatter
     
     func configure(with reminder: Reminder?) {

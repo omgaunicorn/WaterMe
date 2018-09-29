@@ -98,7 +98,8 @@ class ReminderEditTableViewController: StandardTableViewController {
         let section = Section(section: section, for: reminder.kind)
         return section.numberOfRows(for: reminder.kind)
     }
-    
+
+    //swiftlint:disable:next function_body_length
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let reminder = self.delegate?.reminderResult?.value else {
             assertionFailure("Missing Reminder Object")
