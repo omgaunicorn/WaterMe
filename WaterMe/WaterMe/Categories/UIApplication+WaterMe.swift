@@ -25,13 +25,6 @@ import WaterMeStore
 import UIKit
 
 extension UIApplication {
-    func openSettings(completion: ((Bool) -> Void)?) {
-        // these don't seem to work any more in iOS 11
-        // but there are a lot more here
-        // https://github.com/phynet/iOS-URL-Schemes
-        let url = URL(string: "App-prefs:")!
-        self.open(url, options: [:], completionHandler: completion)
-    }
 
     func openAppSettings(completion: ((Bool) -> Void)?) {
         Analytics.log(viewOperation: .openSettings)

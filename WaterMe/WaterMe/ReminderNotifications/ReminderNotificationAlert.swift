@@ -35,7 +35,7 @@ extension UIAlertController {
     {
         let nc = UNUserNotificationCenter.current()
         let ud = UserDefaults.standard
-        let authorizationStatus = nc.settings.authorizationStatus
+        let authorizationStatus = nc.notificationAuthorizationStatus
         let userAskedToBeAsked = ud.askForNotifications
         let style: UIAlertControllerStyle = sender != nil ? .actionSheet : .alert
         switch (authorizationStatus, userAskedToBeAsked) {
@@ -99,9 +99,11 @@ extension UIAlertController {
                   message: LocalizedString.permissionDeniedAlertMessage,
                   preferredStyle: style)
         let ud = UserDefaults.standard
-        let settings = UIAlertAction(title: SettingsMainViewController.LocalizedString.settingsTitle, style: .default) { _ in
+        let settings = UIAlertAction(title: SettingsMainViewController.LocalizedString.cellTitleOpenSettings,
+                                     style: .default)
+        { _ in
             ud.askForNotifications = true
-            UIApplication.shared.openSettings() { _ in
+            UIApplication.shared.openAppSettings() { _ in
                 selection?(.cancel)
             }
         }

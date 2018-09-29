@@ -56,6 +56,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     var proRC: ProController?
 
     let dueDateFormatter = Formatter.newDueDateFormatter
+    let haptic = UINotificationFeedbackGenerator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,6 +141,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             self.present(vc, animated: true, completion: nil)
         } else if let updateAlert = self.appUpdateAvailableVC {
             self.appUpdateAvailableVC = nil
+            Analytics.log(viewOperation: .alertUpdateAvailable)
             self.present(updateAlert, animated: true, completion: nil)
         } else if let activity = self.userActivityToContinue {
             self.userActivityToContinue = nil

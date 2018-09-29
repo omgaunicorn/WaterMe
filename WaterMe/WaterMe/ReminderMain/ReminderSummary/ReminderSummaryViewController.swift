@@ -36,6 +36,7 @@ class ReminderSummaryViewController: StandardViewController {
 
     class func newVC(reminderID: Reminder.Identifier,
                      basicController: BasicController,
+                     hapticGenerator: UIFeedbackGenerator,
                      sourceView: UIView,
                      completion: @escaping Completion) -> UIViewController
     {
@@ -52,7 +53,7 @@ class ReminderSummaryViewController: StandardViewController {
         vc.completion = completion
         vc.reminderResult = basicController.reminder(matching: reminderID)
         vc.reminderID = reminderID
-        vc.userActivity = NSUserActivity(kind: .viewReminder)
+        vc.haptic = hapticGenerator
         return vc
     }
 
@@ -89,6 +90,7 @@ class ReminderSummaryViewController: StandardViewController {
     private var completion: Completion!
     private var reminderID: Reminder.Identifier!
     private weak var tableViewController: ReminderSummaryTableViewController!
+    private weak var haptic: UIFeedbackGenerator?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -148,6 +150,9 @@ extension ReminderSummaryViewController: ReminderSummaryTableViewControllerDeleg
         self.present(vc, animated: true, completion: nil)
     }
     func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController) {
+        if case .performReminder = action {
+            self.haptic?.prepare()
+        }
         self.completion(action, self.reminderID, self)
     }
 }

@@ -34,6 +34,9 @@ enum Analytics {
         case reviewRequested = "Event.ReviewRequested"
         case stpReloadNotification = "Event.STPReload.Notification"
         case stpReloadBackup = "Event.STPReload.Backup"
+        case updateAvailableDismiss = "Event.UpdateAvailable.Dismiss"
+        case updateAvailableAppStore = "Event.UpdateAvailable.AppStore"
+        case notificationSettingsFail = "Error.NotifySettingsLoadFailure"
     }
 
     // MARK: CRUD Operations
@@ -67,6 +70,7 @@ enum Analytics {
         case permissionGranted = "Notify.PermissionGranted"
         case permissionDenied = "Notify.PermissionDenied"
         case permissionIgnored = "Notify.PermissionIgnored"
+        case scheduleAlreadyInProgress = "Notify.SchedulingAlreadyInProgress"
 
         static func extras(forCount count: Int) -> [String : Any] {
             return ["NotifyCount" : NSNumber(value: count)]
@@ -113,8 +117,7 @@ enum Analytics {
         case purchaseThanks = "VCView.PurchaseThanks"
         case coreDataMigration = "VCView.CoreDataMigration"
         case reminderList = "VCView.ReminderList"
-        case reminderVesselList = "VCView.ReminderVesselList"
-        case reminderVesselTap = "VCView.ReminderVesselTap"
+        case reminderSummary = "VCView.ReminderSummary"
         case editReminderVessel = "VCView.EditReminderVessel"
         case editReminder = "VCView.EditReminder"
         case emailDeveloper = "VCView.EmailDeveloper"
@@ -125,6 +128,8 @@ enum Analytics {
         case openEmojiOne = "VCView.OpenEmojiOneSite"
         case errorAlertRealm = "VCView.ErrorAlert.Realm"
         case errorAlertPurchase = "VCView.ErrorAlert.Purchase"
+        case alertUpdateAvailable = "VCView.Alert.UpdatedAvailable"
+        case viewReminderVesselPhoto = "VCView.ReminderVesselPhoto"
     }
 
     // MARK: Logging Functions

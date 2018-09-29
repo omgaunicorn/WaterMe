@@ -30,6 +30,7 @@ extension UIAlertController {
         case update, cancel
     }
 
+    //swiftlint:disable:next function_body_length
     class func newAppVersionCheckAlert(_ completion: @escaping (UIViewController?) -> Void,
                                        _ actionHandler: @escaping (UpdateAction) -> Void)
     {
@@ -146,11 +147,13 @@ extension UIAlertController {
         }
         let appStore = UIAlertAction(title: LocalizedString.updateAvailableButtonTitleOpenAppStore, style: .default)
         { _ in
+            Analytics.log(event: Analytics.Event.updateAvailableAppStore)
             preActionHandler()
             actionHandler(.update)
         }
         let cancel = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel)
         { _ in
+            Analytics.log(event: Analytics.Event.updateAvailableDismiss)
             preActionHandler()
             actionHandler(.cancel)
         }

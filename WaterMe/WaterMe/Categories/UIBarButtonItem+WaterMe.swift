@@ -24,23 +24,46 @@
 import UIKit
 
 extension UIBarButtonItem {
-    convenience init(localizedSettingsButtonWithTarget target: Any, action: Selector) {
-        self.init(image: #imageLiteral(resourceName: "TipJar"), style: UIBarButtonItemStyle.plain, target: target, action: action)
+    convenience init(localizedSettingsButtonWithTarget target: Any,
+                     action: Selector)
+    {
+        self.init(image: #imageLiteral(resourceName: "TipJar"), style: UIBarButtonItemStyle.plain,
+                  target: target,
+                  action: action)
         self.accessibilityLabel = SettingsMainViewController.LocalizedString.settingsTitle
     }
-    convenience init(localizedDeleteButtonWithTarget target: Any, action: Selector) {
-        self.init(title: UIAlertController.LocalizedString.buttonTitleDelete, style: .plain, target: target, action: action)
+    convenience init(localizedDeleteButtonWithTarget target: Any,
+                     action: Selector)
+    {
+        self.init(title: UIAlertController.LocalizedString.buttonTitleDelete,
+                  style: .plain,
+                  target: target,
+                  action: action)
         self.tintColor = Color.delete
     }
-    convenience init(localizedDoneButtonWithTarget target: Any, action: Selector) {
-        self.init(barButtonSystemItem: .done, target: target, action: action)
+    convenience init(localizedDoneButtonWithTarget target: Any,
+                     action: Selector)
+    {
+        self.init(barButtonSystemItem: .done,
+                  target: target,
+                  action: action)
         self.style = .done
     }
-    convenience init(localizedAddReminderVesselBBIButtonWithTarget target: Any, action: Selector) {
-        self.init(title: UIAlertController.LocalizedString.buttonTitleAddPlant, style: .done, target: target, action: action)
+    convenience init(localizedAddReminderVesselBBIButtonWithTarget target: Any,
+                     action: Selector)
+    {
+        self.init(title: UIAlertController.LocalizedString.buttonTitleAddPlant,
+                  style: .done,
+                  target: target,
+                  action: action)
     }
-    convenience init(__legacy_localizedAddReminderVesselBBIButtonWithTarget target: Any, action: Selector) {
-        self.init(title: UIAlertController.LocalizedString.buttonTitleAddPlant, style: .plain, target: target, action: action)
+    convenience init(__legacy_localizedAddReminderVesselBBIButtonWithTarget target: Any,
+                     action: Selector)
+    {
+        self.init(title: UIAlertController.LocalizedString.buttonTitleAddPlant,
+                  style: .plain,
+                  target: target,
+                  action: action)
     }
     func style_updateSettingsButtonInsets(for traitCollection: UITraitCollection) {
         // style values

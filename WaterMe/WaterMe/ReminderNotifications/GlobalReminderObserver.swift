@@ -62,7 +62,6 @@ class GlobalReminderObserver {
     }
 
     func notificationPermissionsMayHaveChanged() {
-        UNUserNotificationCenter.current().forceCacheUpdate()
         self.resetTimer()
     }
 
@@ -86,6 +85,7 @@ class GlobalReminderObserver {
     private func dataChanged(of kind: DataKind) {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
+            Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
             log.info("Background task already in progress. Bailing.")
             return
         }

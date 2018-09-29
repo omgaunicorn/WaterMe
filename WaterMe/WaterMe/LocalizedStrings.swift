@@ -78,7 +78,7 @@ extension ReminderMainViewController {
                               comment: "Button Title in an Alert. Shows when the user taps on a reminder. After being selected, this will mark the reminder as performed.")
         static let reminderAlertTitle =
             NSLocalizedString("%@ – %@",
-                              comment: "ReminderMainViewController: Select Reminder Alert Title: 2 Arguments: When the user taps on a reminder, this is the title of the alert if the plant has a name. It tells the user the kind of reminder and the name of the plant. e.g. 'Water Plant - My Cool Plant'")
+                              comment: "ReminderMainViewController: Select Reminder Alert Title: 2 Arguments: When the user taps on a reminder, this is the title of the alert if the plant has a name. It tells the user the kind of reminder and the name of the plant. e.g. ‘Water Plant - My Cool Plant’")
         static let reminderAlertMessage1Arg =
             NSLocalizedString("Due: %@",
                               comment: "ReminderMainViewController: Select Reminder Alert Message: 1 Argument: When the user taps on a reminder, this is the message of the alert when the reminder does not have a note. It tells the user the Due date of the reminder. The due date is provided by the system already localized.")
@@ -94,11 +94,11 @@ extension UIAlertController {
             NSLocalizedString("Choose a Photo",
                               comment: "Button Title in an Alert that allows the user to open the Camera, Photo Picker, or Emoji Picker Screen.")
         static let titleNewEmojiPhotoExistingPhoto =
-            NSLocalizedString("Choose a new Emoji or Photo for your plant, or view the current photo.",
+            NSLocalizedString("View the current photo or choose a new photo or emoji for your plant.",
                               comment: "Title of an Alert that tells the user that they can choose a new photo or emoji for their plant or they can view the current photo for their plant.")
 
         static let titleNewEmojiPhoto =
-            NSLocalizedString("Choose a new Emoji or Photo for your plant.",
+            NSLocalizedString("Choose a new emoji or photo for your plant.",
                               comment: "Title of an Alert that tells the user that they can choose a new photo or emoji for their plant.")
         static let buttonTitleEmoji =
             NSLocalizedString("Emoji",
@@ -125,7 +125,7 @@ extension UIAlertController {
             NSLocalizedString("Dismiss",
                               comment: "Button Title in an Alert to close the alert. This button title normally only appears when there are no other options in the alert.")
         static let buttonTitleDontDelete =
-            NSLocalizedString("Don't Delete",
+            NSLocalizedString("Don’t Delete",
                               comment: "Alert: Delete Confirmation: Button Title: When the user is being asked to confirm to delete an item, this button lets them not delete it.")
         static let buttonTitleCancel =
             NSLocalizedString("Cancel",
@@ -146,17 +146,17 @@ extension UIAlertController {
             NSLocalizedString("Send Notifications",
                               comment: "Alert: New Permission: Button Title: Send Notifications: Title of the button that will result in the user being presented the system dialog to grant notification permissions.")
         static let newPermissionButtonTitleDontSendNotifications: String =
-            NSLocalizedString("Don't Send Notifications",
-                              comment: "Alert: New Permission: Button Title: Don't Send Notifications: Title of the button that will result in the user not being asked for permissions ever again.")
+            NSLocalizedString("Don’t Send Notifications",
+                              comment: "Alert: New Permission: Button Title: Don’t Send Notifications: Title of the button that will result in the user not being asked for permissions ever again.")
         static let permissionDeniedAlertTitle =
-            NSLocalizedString("Can't Send Push Notifications",
+            NSLocalizedString("Can’t Send Push Notifications",
                               comment: "Alert: Permission Denied: Title: Title of the alert that tells the user that notification permissions are denied.")
         static let permissionDeniedAlertMessage =
-            NSLocalizedString("Permissions to send notifications have been denied. If you would like to receive notifications when your plants need to be attened to, tap the Settings button below.",
+            NSLocalizedString("Permissions to send notifications have been denied. If you would like to receive notifications when your plants need to be attened to, tap the ‘Open Settings’ button below.",
                               comment: "Alert: Permission Denied: Message: Message of the alert that tells the user that notification permissions are denied. It asks the user to open Settings.")
         static let buttonTitleDontAskAgain: String =
-            NSLocalizedString("Don't Ask Again",
-                              comment: "Alert: New Permission: Button Title: Don't Ask Again: Button title that will stop the app from asking the user to do this action again in the future.")
+            NSLocalizedString("Don’t Ask Again",
+                              comment: "Alert: New Permission: Button Title: Don’t Ask Again: Button title that will stop the app from asking the user to do this action again in the future.")
         static let deleteAlertMessage: String =
             NSLocalizedString("Are you sure you want to delete this?",
                               comment: "Alert: Delete: Message: Message of the alert that asks the user if they want to delete this item.")
@@ -170,10 +170,10 @@ extension UIAlertController {
             NSLocalizedString("Update Available",
                               comment: "Alert: App Update: Title: Alert title that tells the user that an update is available for WaterMe")
         static let updateAvailableAlertMessage: String =
-            NSLocalizedString("Thank you for using WaterMe. A newer version is now available on the App Store. There's no rush, you can update now or later.",
+            NSLocalizedString("Thank you for using WaterMe. A newer version is now available on the App Store. There’s no rush, you can update now or later.",
                               comment: "Alert: App Update: Message: Alert title that tells the user that an update is available for WaterMe")
         static let updateAvailableTestFlightAlertMessage: String =
-            NSLocalizedString("Thank you for beta testing WaterMe. A newer version is now available on the App Store. There's no rush, you can update now or later.",
+            NSLocalizedString("Thank you for beta testing WaterMe. A newer version is now available on the App Store. There’s no rush, you can update now or later.",
                               comment: "Alert: App Update: Message: Alert title that tells TestFlight beta users that an update is available for WaterMe")
         static let updateAvailableButtonTitleOpenAppStore: String =
             NSLocalizedString("Open App Store",
@@ -228,14 +228,6 @@ extension Reminder.Kind {
     }
 }
 
-extension ReminderVesselMainViewController {
-    enum LocalizedString {
-        static let title =
-            NSLocalizedString("Plants",
-                              comment: "Title of the screen where the user can manage their plants. Also, title of the button that opens this screen.")
-    }
-}
-
 extension ReminderSummaryViewController {
     enum LocalizedString {
         static let subheadPlantName =
@@ -270,7 +262,7 @@ extension SettingsMainViewController {
             NSLocalizedString("Free",
                               comment: "Settings: Cell Price: Price of leaving a review on the app store... Free")
         static let cellTitleInfo =
-            NSLocalizedString("I'm Jeff, a professional iOS Developer and UX Designer. I like making small and polished apps in my spare time. If you find WaterMe useful and would like to fund its development, consider supporting the app with the buttons below.",
+            NSLocalizedString("I’m Jeff, a professional iOS Developer and UX Designer. I like making small and polished apps in my spare time. If you find WaterMe useful and would like to fund its development, consider supporting the app with the buttons below.",
                               comment: "Settings: Info Cell: Title: Text in the tip jar area that explains why someone should give money.")
 
     }
@@ -280,10 +272,10 @@ extension EmojiPickerFooterCollectionReusableView {
     enum LocalizedString {
         static let providedBy =
             NSLocalizedString("Emoji Provided by EmojiOne",
-                              comment: "EmojiPicker: Footer: Label: Explains the emoji are provided by EmojiOne. Must contain one and only one instance of the  string under key 'EmojiOne' because its given a different font treatment.")
+                              comment: "EmojiPicker: Footer: Label: Explains the emoji are provided by EmojiOne. Must contain one and only one instance of the  string under key ‘EmojiOne’ because its given a different font treatment.")
         static let emojiOne =
             NSLocalizedString("EmojiOne",
-                              comment: "EmojiPicker: Footer: Used to style the 'Emoji Provided by EmojiOne' key.")
+                              comment: "EmojiPicker: Footer: Used to style the ‘Emoji Provided by EmojiOne’ key.")
     }
 }
 
@@ -306,16 +298,16 @@ extension ReminderVesselEditViewController {
                               comment: "Data Value: Description not entered: This is the placeholder value if the user does not enter a description for what they want to be reminded to do to their plant.")
         static let alertTitleCameraRestricted =
             NSLocalizedString("Camera Restricted",
-                              comment: "Alert Title: Camera Restricted: We can't access the camera because it is not allowed by an IT policy / parent control.")
+                              comment: "Alert Title: Camera Restricted: We can’t access the camera because it is not allowed by an IT policy / parent control.")
         static let alertBodyCameraRestricted =
-            NSLocalizedString("WaterMe cannot access your camera. This feature has been restricted by this device's administrator.",
-                              comment: "Alert Body: Camera Restricted: We can't access the camera because it is not allowed by an IT policy / parent control. This text needs to explain the problem.")
+            NSLocalizedString("WaterMe cannot access your camera. This feature has been restricted by this device’s administrator.",
+                              comment: "Alert Body: Camera Restricted: We can’t access the camera because it is not allowed by an IT policy / parent control. This text needs to explain the problem.")
         static let alertTitlePermissionDenied =
             NSLocalizedString("Permission Denied",
-                              comment: "Alert Title: Permission Denied: We can't access a feature of the device because the user has denied permission.")
+                              comment: "Alert Title: Permission Denied: We can’t access a feature of the device because the user has denied permission.")
         static let alertBodyCameraDenied =
             NSLocalizedString("WaterMe cannot access your camera. You can grant access in Settings",
-                              comment: "Alert Body: Camera Denied: We can't access the camera because it has been denied by the user. The text needs to explain they can fix this by tapping the Settings button on the alert.")
+                              comment: "Alert Body: Camera Denied: We can’t access the camera because it has been denied by the user. The text needs to explain they can fix this by tapping the Settings button on the alert.")
     }
 }
 
@@ -385,7 +377,7 @@ extension CoreDataMigratorViewController {
             NSLocalizedString("In order to upgrade to WaterMe 2, a one time data migration is required.",
                               comment: "MigratorScreen: Body: Body text that explains the one time migration needed to upgrade to the new WaterMe.")
         static let bodyMigrating =
-            NSLocalizedString("Migrating… Don't switch to a different app or lock the screen.",
+            NSLocalizedString("Migrating… Don’t switch to a different app or lock the screen.",
                               comment: "MigratorScreen: Body: Body text that explains that the user should not lock the screen or switch apps until the migration is complete.")
         static let bodySuccess =
             NSLocalizedString("Success! Your plants have been migrated.",
@@ -406,7 +398,7 @@ extension CoreDataMigratorViewController {
             NSLocalizedString("Continue",
                               comment: "MigratorScreen: Done Button Title: After migrtion has failed or succeeded this button is shown to the user. When they tap it, it closes the migrator screen and brings them to the main app.")
         static let deleteButtonTitle =
-            NSLocalizedString("Don't Migrate My Plants",
+            NSLocalizedString("Don’t Migrate My Plants",
                               comment: "MigratorScreen: Delete Button Title: When the user clicks this button, the screen is dismissed and it will never appear again and they will not have access to their previous plants. This action is destructive.")
     }
 }
@@ -416,7 +408,7 @@ extension BasicController {
         NSLocalizedString("Tap on Me",
                           comment: "First Launch: When the user opens the app for the first time, there is one plant shown in the app. It is called something that will make the user tap on it.")
     static let starterDBNote =
-        NSLocalizedString("Welcome to WaterMe! This is your first plant. Use the button below to edit this plant and make it your own. When you’re ready to add all your plants, tap the ‘Plants’ button at the top right of the screen.",
+        NSLocalizedString("Welcome to WaterMe! This is your first plant. Use the button below to edit this plant and make it your own. When you’re ready to add all your plants, tap the ‘Add Plant’ button at the top right of the screen.",
                           comment: "First Launch: When the user opens the app for the first time, there is one plant shown in the app. When the user taps on the plant, this is the note shown that tells them how to use the app.")
 }
 
@@ -427,7 +419,7 @@ extension PurchaseThanksViewController {
                               comment: "Purchase Thanks: Title: A thank you to the user for supporting WaterMe via In-App Purchase.")
         static let subtitle =
             NSLocalizedString("In-App Purchase",
-                              comment: "Purchase Thanks: Subtitle: Reminding the user what we're thanking them for.")
+                              comment: "Purchase Thanks: Subtitle: Reminding the user what we’re thanking them for.")
         static let body =
             NSLocalizedString("Thank you for your purchase. Your support is critical to the continued development of WaterMe.",
                               comment: "Purchase Thanks: Body: Body text thanking the user for their support.")
@@ -438,7 +430,7 @@ extension PurchaseThanksViewController {
             NSLocalizedString("A network error ocurred. Check your data connection and try to purchase again.",
                               comment: "Alert: Purchase Network Error: Message: Message when there was a networking error during the purchase process.")
         static let errorNotAllowedAlertMessage =
-            NSLocalizedString("You're not allowed to make purchases on this device. Thank you for the thought, though ❤️",
+            NSLocalizedString("You’re not allowed to make purchases on this device. Thank you for the thought, though ❤️",
                               comment: "Alert: Purchase Not Allowed Error: Message: Message when the user was not allowed to make a purchase.")
         static let errorUnknownAlertMessage =
             NSLocalizedString("An unknown error ocurred during the purchase. Please try again later.",
@@ -464,7 +456,7 @@ extension RealmError {
             NSLocalizedString("Error Saving Photo",
                               comment: "Realm Error: Save Image: Title: Error saving the photo the user took of their plant. User has to take another photo.")
         static let saveImageMessage =
-            NSLocalizedString("The selected photo couldn't be saved. Please take a different photo or choose an emoji.",
+            NSLocalizedString("The selected photo couldn’t be saved. Please take a different photo or choose an emoji.",
                               comment: "Realm Error: Save Image: Message: Error saving the photo the user took of their plant. User has to take another photo.")
         static let saveTitle =
             NSLocalizedString("Error Saving",

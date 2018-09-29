@@ -32,7 +32,7 @@ class ReminderUserNotificationController {
     func updateScheduledNotifications(with reminders: [ReminderValue]) {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
-            log.info("Background task already in progress. Bailing.")
+            Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
             return
         }
         // tell the OS I'm running a background task
@@ -52,7 +52,7 @@ class ReminderUserNotificationController {
             }
 
             // make sure we're authorized to send notifications
-            guard center.settings.authorizationStatus.boolValue else {
+            guard center.notificationAuthorizationStatus.boolValue else {
                 log.info("User has turned System notification toggle off")
                 Analytics.log(event: Analytics.NotificationPermission.scheduleDeniedBySystem)
                 return
