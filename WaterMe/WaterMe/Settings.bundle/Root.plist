@@ -118,23 +118,33 @@
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Increase Contrast</string>
-            <key>Key</key>
-            <string>INCREASE_CONTRAST</string>
-            <key>DefaultValue</key>
-            <false/>
-        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Check for Updates</string>
+			<key>Key</key>
+			<string>CHECK_FOR_UPDATES</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Increase Contrast</string>
+			<key>Key</key>
+			<string>INCREASE_CONTRAST</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
 		<dict>
 			<key>File</key>
 			<string>Acknowledgements</string>
 			<key>Title</key>
 			<string>Acknowledgements</string>
-            <key>Type</key>
-            <string>PSChildPaneSpecifier</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>Type</key>

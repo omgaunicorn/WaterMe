@@ -27,7 +27,7 @@ import WaterMeData
 import UIKit
 
 protocol ReminderCollectionViewControllerDelegate: class {
-    func userDidSelect(reminder: Reminder, from view: UIView, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController)
+    func userDidSelect(reminderID: Reminder.Identifier, from view: UIView, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController)
     func dragSessionWillBegin(_ session: UIDragSession, within viewController: ReminderCollectionViewController)
     func dragSessionDidEnd(_ session: UIDragSession, within viewController: ReminderCollectionViewController)
     func forceUpdateCollectionViewInsets()
@@ -123,7 +123,8 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let reminder = self.reminders?.reminder(at: indexPath), let cell = collectionView.cellForItem(at: indexPath) else { return }
-        self.delegate?.userDidSelect(reminder: reminder,
+        let identifier = Reminder.Identifier(reminder: reminder)
+        self.delegate?.userDidSelect(reminderID: identifier,
                                      from: cell,
                                      deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) },
                                      within: self)

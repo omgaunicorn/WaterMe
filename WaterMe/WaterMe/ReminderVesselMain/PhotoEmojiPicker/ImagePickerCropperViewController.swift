@@ -126,10 +126,10 @@ extension CropViewController {
         self.toolbar.doneTextButton.setTitleColor(nil, for: .normal)
         self.toolbar.cancelIconButton.setTitleColor(nil, for: .normal)
         self.toolbar.cancelIconButton.setTitleColor(nil, for: .normal)
-        self.toolbar.doneIconButton.tintColor = Style.Color.tint
-        self.toolbar.doneTextButton.tintColor = Style.Color.tint
-        self.toolbar.cancelIconButton.tintColor = Style.Color.delete
-        self.toolbar.cancelIconButton.tintColor = Style.Color.delete
+        self.toolbar.doneIconButton.tintColor = Color.tint
+        self.toolbar.doneTextButton.tintColor = Color.tint
+        self.toolbar.cancelIconButton.tintColor = Color.delete
+        self.toolbar.cancelIconButton.tintColor = Color.delete
     }
 }
 

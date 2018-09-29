@@ -26,6 +26,7 @@ import UIKit
 
 protocol ReminderFinishDropTargetViewControllerDelegate: class {
     func animateAlongSideDropTargetViewResize(within: ReminderFinishDropTargetViewController) -> (() -> Void)?
+    func userDidPerformDrop(with reminders: [Reminder.Identifier], onTargetZoneWithin: ReminderFinishDropTargetViewController)
 }
 
 class ReminderFinishDropTargetViewController: UIViewController, HasBasicController, HasProController, UIDropInteractionDelegate {
@@ -37,7 +38,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     @IBOutlet private weak var dropTargetVisualEffectView: UIVisualEffectView? {
         didSet {
             self.dropTargetVisualEffectView?.clipsToBounds = true
-            self.dropTargetVisualEffectView?.layer.cornerRadius = ReminderHeaderCollectionReusableView.style_backgroundViewCornerRadius
+            self.dropTargetVisualEffectView?.layer.cornerRadius = UIApplication.style_cornerRadius
         }
     }
 
@@ -88,18 +89,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
 
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
         let drags = session.reminderDrags
-        guard let results = self.basicRC?.appendNewPerformToReminders(with: drags) else { return }
-
-        Analytics.log(event: Analytics.CRUD_Op_R.performDrag, extras: Analytics.CRUD_Op_R.extras(count: drags.count))
-
-        switch results {
-        case .failure(let error):
-            self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
-        case .success:
-            let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: nil, selectionCompletionHandler: nil)
-            guard let notificationPermissionVC = notPermVC else { return }
-            self.present(notificationPermissionVC, animated: true, completion: nil)
-        }
+        self.delegate?.userDidPerformDrop(with: drags, onTargetZoneWithin: self)
     }
 
     // MARK: Handle View Layouts

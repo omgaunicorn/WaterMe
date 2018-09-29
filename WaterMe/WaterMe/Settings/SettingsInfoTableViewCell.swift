@@ -50,7 +50,7 @@ class SettingsInfoTableViewCell: UITableViewCell {
     }
 
     func configure(with icon: ReminderVessel.Icon?, and text: String) {
-        self.label?.attributedText = NSAttributedString(string: text, style: .selectableTableViewCell)
+        self.label?.attributedText = NSAttributedString(string: text, font: .selectableTableViewCell)
         guard let icon = icon else { return }
         self.emojiImageView?.setIcon(icon)
     }

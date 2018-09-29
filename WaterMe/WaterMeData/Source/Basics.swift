@@ -54,7 +54,7 @@ internal extension URL {
 }
 
 public extension CKContainer {
-    public func token(completionHandler: ((Result<CKRecordID, AnyError>) -> Void)?) {
+    public func token(completionHandler: ((Result<CKRecord.ID, AnyError>) -> Void)?) {
         self.fetchUserRecordID { id, error in
             if let id = id {
                 completionHandler?(.success(id))
@@ -66,7 +66,7 @@ public extension CKContainer {
 }
 
 public extension SyncUser {
-    public static func cloudKitUser(with cloudKitID: CKRecordID, completionHandler: ((Result<SyncUser, AnyError>) -> Void)?) {
+    public static func cloudKitUser(with cloudKitID: CKRecord.ID, completionHandler: ((Result<SyncUser, AnyError>) -> Void)?) {
         let server = PrivateKeys.kRealmServer
         let credential = SyncCredentials.cloudKit(token: cloudKitID.recordName)
         SyncUser.logIn(with: credential, server: server) { user, error in
@@ -81,7 +81,7 @@ public extension SyncUser {
 }
 
 public extension String {
-    public var leadingTrailingWhiteSpaceTrimmedNonEmptyString: String? {
+    public var nonEmptyString: String? {
         let stripped = self.trimmingCharacters(in: .whitespacesAndNewlines)
         guard stripped.isEmpty == false else { return nil }
         return stripped

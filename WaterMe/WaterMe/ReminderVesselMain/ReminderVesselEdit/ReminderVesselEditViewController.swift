@@ -214,7 +214,9 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?) {
         self.view.endEditing(false)
-        let vc = UIAlertController.emojiPhotoActionSheet() { choice in
+        let imageAlreadyChosen = self.vesselResult?.value?.icon?.image != nil
+        let vc = UIAlertController.emojiPhotoActionSheet(withAlreadyChosenImage: imageAlreadyChosen)
+        { choice in
             switch choice {
             case .camera:
                 let vc = ImagePickerCropperViewController.newCameraVC() { image, vc in
@@ -236,6 +238,13 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
                     guard let emoji = emoji else { return }
                     self.updateIcon(.emoji(emoji))
                 }
+                self.present(vc, animated: true, completion: nil)
+            case .viewCurrentPhoto:
+                guard let image = self.vesselResult?.value?.icon?.image else { return }
+                let config = DismissHandlingImageViewerConfiguration(image: image) { vc in
+                    vc.dismiss(animated: true, completion: nil)
+                }
+                let vc = DismissHandlingImageViewerController(configuration: config)
                 self.present(vc, animated: true, completion: nil)
             case .error(let errorVC):
                 self.present(errorVC, animated: true, completion: nil)

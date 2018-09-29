@@ -65,13 +65,14 @@ class ReminderDragPreviewView: UIView {
         // vessel name style
         let vesselName = reminder.vessel?.displayName
         let vesselNameStyle = vesselName != nil ?
-            Style.reminderVesselDragPreviewViewPrimary :
-            Style.reminderVesselDragPreviewViewPrimaryDisabled
+            Font.reminderVesselDragPreviewViewPrimary :
+            Font.reminderVesselDragPreviewViewPrimaryDisabled
         self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
-                                                           style: vesselNameStyle)
+                                                           font: vesselNameStyle)
 
         // other stuff
-        self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.localizedLongString, style: .reminderVesselDragPreviewViewSecondary)
+        self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.localizedLongString,
+                                                           font: .reminderVesselDragPreviewViewSecondary)
         self.largeEmojiImageView?.setIcon(reminder.vessel?.icon)
         self.smallEmojiImageView?.setKind(reminder.kind)
     }

@@ -46,10 +46,10 @@ class OptionalAddButtonTableViewHeaderFooterView: UITableViewHeaderFooterView {
         switch self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory {
         case true:
             self.addButtonBottomConstraint?.constant = 4
-            self.addButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.addReminderShort, style: .tableHeaderActionButton), for: .normal)
+            self.addButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.addReminderShort, font: .tableHeaderActionButton), for: .normal)
         case false:
             self.addButtonBottomConstraint?.constant = 0
-            self.addButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.addReminder, style: .tableHeaderActionButton), for: .normal)
+            self.addButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.addReminder, font: .tableHeaderActionButton), for: .normal)
         }
     }
     

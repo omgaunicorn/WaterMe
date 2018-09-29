@@ -39,11 +39,11 @@ public class SignificantTimePassedDetector {
     public init() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.significantTimeChanged(_:)),
-                                               name: .UIApplicationSignificantTimeChange,
+                                               name: UIApplication.significantTimeChangeNotification,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.didBecomeActive(_:)),
-                                               name: .UIApplicationDidBecomeActive,
+                                               name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
     }
 

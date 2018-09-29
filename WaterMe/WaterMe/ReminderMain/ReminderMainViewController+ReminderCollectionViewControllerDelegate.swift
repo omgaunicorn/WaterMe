@@ -26,6 +26,7 @@ import WaterMeData
 extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
 
     func dragSessionWillBegin(_ session: UIDragSession, within viewController: ReminderCollectionViewController) {
+        self.haptic.prepare()
         self.settingsBBI.isEnabled = false
         self.plantsBBI.isEnabled = false
     }
@@ -35,26 +36,28 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         self.plantsBBI.isEnabled = true
     }
 
-    // this produces a warning and it is a really long function
-    // potential for refactor, but its nice how its so contained
-    func userDidSelect(reminder: Reminder,
+    func userDidPerformDrop(with reminders: [Reminder.Identifier], onTargetZoneWithin: ReminderFinishDropTargetViewController) {
+        guard let results = self.basicRC?.appendNewPerformToReminders(with: reminders) else { return }
+        switch results {
+        case .failure(let error):
+            self.haptic.notificationOccurred(.error)
+            self.present(UIAlertController(error: error, completion: nil), animated: true, completion: nil)
+        case .success:
+            self.haptic.notificationOccurred(.success)
+            Analytics.log(event: Analytics.CRUD_Op_R.performDrag, extras: Analytics.CRUD_Op_R.extras(count: reminders.count))
+            let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: nil, selectionCompletionHandler: nil)
+            guard let notificationPermissionVC = notPermVC else { return }
+            self.present(notificationPermissionVC, animated: true, completion: nil)
+        }
+    }
+
+    func userDidSelect(reminderID: Reminder.Identifier,
                        from view: UIView,
                        deselectAnimated: @escaping (Bool) -> Void,
                        within viewController: ReminderCollectionViewController)
     {
         guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller"); return; }
-        Analytics.log(viewOperation: .reminderVesselTap)
-
-        // prepare information for the alert we're going to present
-        let dueDateString = self.dueDateFormatter.string(from: reminder.nextPerformDate ?? Date())
-        let message = reminder.localizedAlertMessage(withLocalizedDateString: dueDateString)
-        let alert = UIAlertController(title: reminder.localizedAlertTitle, message: message, preferredStyle: .actionSheet)
-
-        // configure popover presentation for ipad
-        // popoverPresentationController is NIL on iPhones
-        alert.popoverPresentationController?.sourceView = view
-        alert.popoverPresentationController?.sourceRect = type(of: alert).sourceRect(from: view)
-        alert.popoverPresentationController?.permittedArrowDirections = [.up, .down]
+        Analytics.log(viewOperation: .reminderSummary)
 
         // closure that needs to be executed whenever all the alerts have disappeared
         let viewDidAppearActions = {
@@ -62,30 +65,41 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         }
 
-        // need an idenfitier starting now because this is all async
-        // the reminder could be deleted or changed before the user makes a choice
-        let identifier = Reminder.Identifier(reminder: reminder)
-        let editReminder = UIAlertAction(title: UIApplication.LocalizedString.editReminder, style: .default) { action in
-            self.userChoseEditReminder(with: identifier, in: action, basicRC: basicRC, completion: viewDidAppearActions)
+        // create the summary view controller
+        let alert = ReminderSummaryViewController.newVC(reminderID: reminderID,
+                                                        basicController: basicRC,
+                                                        hapticGenerator: self.haptic,
+                                                        sourceView: view)
+        { action, identifier, vc in
+            vc.dismiss(animated: true) {
+                switch action {
+                case .cancel:
+                    viewDidAppearActions()
+                case .editReminder:
+                    self.userChoseEditReminder(with: identifier,
+                                               in: nil,
+                                               basicRC: basicRC,
+                                               completion: viewDidAppearActions)
+                case .editReminderVessel:
+                    self.userChoseEditVessel(withReminderIdentifier: identifier,
+                                             in: nil,
+                                             basicRC: basicRC,
+                                             completion: viewDidAppearActions)
+                case .performReminder:
+                    self.userChosePerformReminder(with: identifier,
+                                                  in: nil,
+                                                  from: view,
+                                                  basicRC: basicRC,
+                                                  completion: viewDidAppearActions)
+                }
+            }
         }
-        let editVessel = UIAlertAction(title: UIApplication.LocalizedString.editVessel, style: .default) { action in
-            self.userChoseEditVessel(withReminderIdentifier: identifier, in: action, basicRC: basicRC, completion: viewDidAppearActions)
-        }
-        let performReminder = UIAlertAction(title: LocalizedString.buttonTitleReminderPerform, style: .default) { action in
-            self.userChosePerformReminder(with: identifier, in: action, from: view, basicRC: basicRC, completion: viewDidAppearActions)
-        }
-        let cancel = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleCancel, style: .cancel) { _ in
-            viewDidAppearActions()
-        }
-        alert.addAction(performReminder)
-        alert.addAction(editReminder)
-        alert.addAction(editVessel)
-        alert.addAction(cancel)
+        // present the new VC
         self.present(alert, animated: true, completion: nil)
     }
 
     private func userChoseEditReminder(with identifier: Reminder.Identifier,
-                                       in _: UIAlertAction,
+                                       in _: UIAlertAction?,
                                        basicRC: BasicController,
                                        completion: (() -> Void)?)
     {
@@ -102,7 +116,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
     }
 
     private func userChoseEditVessel(withReminderIdentifier identifier: Reminder.Identifier,
-                                     in _: UIAlertAction,
+                                     in _: UIAlertAction?,
                                      basicRC: BasicController,
                                      completion: (() -> Void)?)
     {
@@ -119,28 +133,35 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
     }
 
     private func userChosePerformReminder(with identifier: Reminder.Identifier,
-                                          in _: UIAlertAction,
+                                          in _: UIAlertAction?,
                                           from view: UIView,
                                           basicRC: BasicController,
                                           completion: (() -> Void)?)
     {
+        // update the database
         let result = basicRC.appendNewPerformToReminders(with: [identifier])
         switch result {
         case .success:
             // they performed the reminder, now analytics it
             Analytics.log(event: Analytics.CRUD_Op_R.performLegacy)
+            // perform the haptic for success
+            self.haptic.notificationOccurred(.success)
             // next we need to see if they are allowing / want to give us permission to send push notifications
-            let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .right(view)) { _ in
+            let _notificationPermissionVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .right(view))
+            { _ in
                 completion?()
             }
             // if we got a VC to present, then we need to show it
             // otherwise, just call the completion handler
-            guard let notificationPermissionVC = notPermVC else {
+            guard let notificationPermissionVC = _notificationPermissionVC else {
                 completion?()
                 return
             }
             self.present(notificationPermissionVC, animated: true, completion: nil)
         case .failure(let error):
+            // perform the haptic for error
+            self.haptic.notificationOccurred(.error)
+            // present the alert for the error
             self.present(error: error, with: completion)
         }
     }

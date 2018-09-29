@@ -41,7 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // swiftlint:disable:next weak_delegate
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
-    private let notificationSettingsChangedObserver = NotificationSettingsChangeObserver()
     private(set) var reminderObserver: GlobalReminderObserver?
 
     let purchaseController = PurchaseController()
@@ -77,10 +76,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let notificationChanges = {
             self.reminderObserver?.notificationPermissionsMayHaveChanged()
         }
-        // use my custom object to tell me when the user changed notification settings
-        self.notificationSettingsChangedObserver.changed = {
-            notificationChanges()
-        }
         // register for notifications about the increase contrast setting
         _ = NotificationCenter.default.addObserver(forName: .UIAccessibilityDarkerSystemColorsStatusDidChange, object: nil, queue: nil) { _ in
             appearanceChanges()
@@ -108,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // check the build and see if its new
             let ud = UserDefaults.standard
             let oldBuild = ud.lastBuildNumber
-            let currentBuild = self.buildNumber
+            let currentBuild = Bundle.main.buildNumber
             if oldBuild != currentBuild {
                 ud.lastBuildNumber = currentBuild
                 ud.requestReviewDate = Date()

@@ -36,7 +36,7 @@ class ReminderIntervalTableViewCell: SimpleLabelTableViewCell {
     }
     
     func configure(with interval: Int) {
-        self.label.attributedText = NSAttributedString(string: self.formatter.string(forDayInterval: interval), style: Style.selectableTableViewCell)
+        self.label.attributedText = NSAttributedString(string: self.formatter.string(forDayInterval: interval), font: .selectableTableViewCell)
     }
     
     override func prepareForReuse() {

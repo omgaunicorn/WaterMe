@@ -81,14 +81,14 @@ class PurchaseThanksViewController: UIViewController {
     private var completionHandler: PurchaseThanksCompletion!
     private let cheerView: CheerView = {
         let v = CheerView()
-        v.config.colors = [Style.Color.tint, Style.Color.darkTintColor]
+        v.config.colors = [Color.tint, Color.darkTintColor]
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.contentView.layer.cornerRadius = UIApplication.style_cornerRadius
+        self.contentView.style_setCornerRadius()
         self.contentView.addSubview(self.cheerView)
         self.contentView.addConstraints([
             self.contentView.leadingAnchor.constraint(equalTo: self.cheerView.leadingAnchor, constant: 0),
@@ -135,11 +135,11 @@ class PurchaseThanksViewController: UIViewController {
     }
 
     private func configureAttributedText() {
-        self.titleLabel?.attributedText = NSAttributedString(string: LocalizedString.title, style: .migratorTitle)
-        self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.subtitle, style: .migratorSubtitle)
-        self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.body, style: .migratorBody)
-        self.reviewButton?.setAttributedTitle(NSAttributedString(string: SettingsMainViewController.LocalizedString.cellTitleTipJarFree, style: .migratorPrimaryButton), for: .normal)
-        self.cancelButton?.setAttributedTitle(NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleDismiss, style: .migratorSecondaryButton), for: .normal)
+        self.titleLabel?.attributedText = NSAttributedString(string: LocalizedString.title, font: .migratorTitle)
+        self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.subtitle, font: .migratorSubtitle)
+        self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.body, font: .migratorBody)
+        self.reviewButton?.setAttributedTitle(NSAttributedString(string: SettingsMainViewController.LocalizedString.cellTitleTipJarFree, font: .migratorPrimaryButton), for: .normal)
+        self.cancelButton?.setAttributedTitle(NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleDismiss, font: .migratorSecondaryButton), for: .normal)
     }
 
     @IBAction private func reviewButtonTapped(_ sender: Any) {

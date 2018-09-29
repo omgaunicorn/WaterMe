@@ -28,3 +28,14 @@ internal let log = XCGLogger.default
 public protocol Resettable {
     func reset()
 }
+
+internal extension HTTPURLResponse {
+    internal var successfulStatusCode: Bool {
+        switch self.statusCode {
+        case 200..<400:
+            return true
+        default:
+            return false
+        }
+    }
+}

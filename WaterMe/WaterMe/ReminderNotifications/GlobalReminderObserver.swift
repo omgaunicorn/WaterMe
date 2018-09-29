@@ -38,6 +38,9 @@ class GlobalReminderObserver {
     private var data: AnyRealmCollection<Reminder>?
     private var timer: Timer?
 
+    private let taskName = String(describing: GlobalReminderObserver.self) + UUID().uuidString
+    private var backgroundTaskID: UIBackgroundTaskIdentifier?
+
     init?(basicController: BasicController?) {
         guard
             let basicController = basicController,
@@ -50,13 +53,15 @@ class GlobalReminderObserver {
         }
 
         self.token = collection.observe({ [weak self] in self?.dataChanged($0) })
-        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationDidEnterBackground(with:)), name: .UIApplicationDidEnterBackground, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(self.applicationDidEnterBackground(with:)),
+                                               name: .UIApplicationDidEnterBackground,
+                                               object: nil)
         self.significantTimePassedDetector.delegate = self
 
     }
 
     func notificationPermissionsMayHaveChanged() {
-        UNUserNotificationCenter.current().forceCacheUpdate()
         self.resetTimer()
     }
 
@@ -78,6 +83,15 @@ class GlobalReminderObserver {
     }
 
     private func dataChanged(of kind: DataKind) {
+        // make sure there isn't already a background task in progress
+        guard self.backgroundTaskID == nil else {
+            Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
+            log.info("Background task already in progress. Bailing.")
+            return
+        }
+        // start a background task
+        self.backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: self.taskName,
+                                                                         expirationHandler: nil)
         let data = Array(self.data?.map({ ReminderValue(reminder: $0) }) ?? [])
         switch kind {
         case .notifications:
@@ -88,6 +102,10 @@ class GlobalReminderObserver {
             self.notificationController.updateScheduledNotifications(with: data)
             self.badgeNumberController.updateBadgeNumber(with: data)
         }
+        // end the background task
+        guard let id = self.backgroundTaskID else { return }
+        self.backgroundTaskID = nil
+        UIApplication.shared.endBackgroundTask(id)
     }
 
     private func resetTimer() {
@@ -119,7 +137,7 @@ extension GlobalReminderObserver: SignificantTimePassedDetectorDelegate {
     }
 }
 
-struct ReminderValue {
+struct ReminderValue: Equatable {
     var parentPlantUUID: String
     var parentPlantName: String?
     var nextPerformDate: Date?

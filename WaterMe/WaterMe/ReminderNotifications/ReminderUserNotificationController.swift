@@ -25,9 +25,19 @@ import UserNotifications
 
 class ReminderUserNotificationController {
 
-    private let queue = DispatchQueue(label: String(describing: ReminderUserNotificationController.self) + "_SerialQueue_" + UUID().uuidString, qos: .utility)
+    private let taskName = String(describing: ReminderUserNotificationController.self) + "_SerialQueue_" + UUID().uuidString
+    private lazy var queue = DispatchQueue(label: taskName, qos: .utility)
+    private var backgroundTaskID: UIBackgroundTaskIdentifier?
 
     func updateScheduledNotifications(with reminders: [ReminderValue]) {
+        // make sure there isn't already a background task in progress
+        guard self.backgroundTaskID == nil else {
+            Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
+            return
+        }
+        // tell the OS I'm running a background task
+        self.backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: self.taskName,
+                                                                         expirationHandler: nil)
         // hop on a background queue to do the processing
         self.queue.async {
             // clear out all the old stuff before making new stuff
@@ -42,14 +52,15 @@ class ReminderUserNotificationController {
             }
 
             // make sure we're authorized to send notifications
-            guard center.settings.authorizationStatus.boolValue else {
+            guard center.notificationAuthorizationStatus.boolValue else {
                 log.info("User has turned System notification toggle off")
                 Analytics.log(event: Analytics.NotificationPermission.scheduleDeniedBySystem)
                 return
             }
             // generate notification object requests
             let requests = type(of: self).notificationRequests(from: reminders)
-            Analytics.log(event: Analytics.NotificationPermission.scheduleSucceeded, extras: Analytics.NotificationPermission.extras(forCount: requests.count))
+            Analytics.log(event: Analytics.NotificationPermission.scheduleSucceeded,
+                          extras: Analytics.NotificationPermission.extras(forCount: requests.count))
             guard requests.isEmpty == false else {
                 log.debug("No notifications to schedule")
                 return
@@ -63,12 +74,25 @@ class ReminderUserNotificationController {
                 }
             }
             log.debug("Scheduled Notifications: \(requests.count)")
+
+            // tell the OS I'm done with the background task
+            guard let id = self.backgroundTaskID else { return }
+            self.backgroundTaskID = nil
+            UIApplication.shared.endBackgroundTask(id)
         }
     }
 
     private class func notificationRequests(from reminders: [ReminderValue]) -> [UNNotificationRequest] {
         // make sure we have data to work with
         guard reminders.isEmpty == false else { return [] }
+
+        // this verifies realm is sorting the reminders correctly
+        // Using assert so that this is not executed in release
+        assert({
+            let nonNilReminders = reminders.filter({ $0.nextPerformDate != nil })
+            let sorted = nonNilReminders.sorted(by: { $0.nextPerformDate! <= $1.nextPerformDate! })
+            return sorted == nonNilReminders
+        }())
 
         // get preference values for reminder time and number of days to remind for
         let reminderHour = UserDefaults.standard.reminderHour
@@ -78,11 +102,17 @@ class ReminderUserNotificationController {
         let calendar = Calendar.current
         let now = Date()
 
+        // find the last reminder time and how many days away it is
+        let numberOfDaysToLastReminder = reminders.last?.nextPerformDate.map() { endDate -> Int in
+            return calendar.numberOfDaysBetween(startDate: now, endDate: endDate)
+        }
+        // add that to the number of extra days the user requested
+        let totalReminderDays = (numberOfDaysToLastReminder ?? 0) + reminderDays
+
         // loop through the number of days the user wants to be reminded for
         // get all reminders that happened on or before the end of the day of `futureReminderTime`
-        let matches = (0 ..< reminderDays).compactMap() { i -> (Date, [ReminderValue])? in
-            let _testDate = calendar.date(byAdding: .day, value: i, to: now)
-            guard let testDate = _testDate else { return nil }
+        let matches = (0 ..< totalReminderDays).compactMap() { i -> (Date, [ReminderValue])? in
+            let testDate = calendar.date(byAdding: .day, value: i, to: now)!
             let endOfDayInTestDate = calendar.endOfDay(for: testDate)
             let matches = reminders.filter() { reminder -> Bool in
                 let endOfDayInNextPerformDate = calendar.endOfDay(for: reminder.nextPerformDate ?? now)
@@ -103,9 +133,15 @@ class ReminderUserNotificationController {
 
             // construct the notification
             let _content = UNMutableNotificationContent()
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval, repeats: false)
+            let dateComponents = calendar.userNotificationCompatibleDateComponents(with: reminderTime)
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+
+            // crash in debug if this doesn't match my expectations
+            assert(trigger.nextTriggerDate() == reminderTime)
+
             // shuffle the names so that different plant names show in the notifications
             let plantNames = ReminderValue.uniqueParentPlantNames(from: matches).shuffled()
+
             // only set the body if there is a trigger. this way a notification won't be shown to the user
             // only the badge will update.
             _content.body = ReminderUserNotificationController.LocalizedString.localizedNotificationBody(from: plantNames)
@@ -113,8 +149,9 @@ class ReminderUserNotificationController {
             _content.badge = NSNumber(value: matches.count)
 
             // swiftlint:disable:next force_cast
-            let content = _content.copy() as! UNNotificationContent // if this crashes something really bad is happening
+            let content = _content.copy() as! UNNotificationContent
             let request = UNNotificationRequest(identifier: reminderTime.description, content: content, trigger: trigger)
+
             return request
         }
 

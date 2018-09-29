@@ -69,7 +69,7 @@ class EmojiImageView: UIView {
         self.imageViewMaskLayer = maskLayer
         self.imageView = imageView
         self.label = label
-        self.backgroundColor = .clear
+        self.backgroundColor = .white
     }
 
     enum Size {
@@ -78,14 +78,14 @@ class EmojiImageView: UIView {
             let accessibility = ignoreAccessibilitySizes ? false : UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
             switch self {
             case .superSmall:
-                let style = Style.emojiSuperSmall
-                return NSAttributedString(string: string, style: style)
+                let style = Font.emojiSuperSmall
+                return NSAttributedString(string: string, font: style)
             case .small:
-                let style = Style.emojiSmall(accessibilityFontSizeEnabled: accessibility)
-                return NSAttributedString(string: string, style: style)
+                let style = Font.emojiSmall(accessibilityFontSizeEnabled: accessibility)
+                return NSAttributedString(string: string, font: style)
             case .large:
-                let style = Style.emojiLarge(accessibilityFontSizeEnabled: accessibility)
-                return NSAttributedString(string: string, style: style)
+                let style = Font.emojiLarge(accessibilityFontSizeEnabled: accessibility)
+                return NSAttributedString(string: string, font: style)
             }
         }
     }
@@ -99,7 +99,6 @@ class EmojiImageView: UIView {
     private weak var imageViewMaskLayer: CAShapeLayer?
 
     func setIcon(_ icon: ReminderVessel.Icon?, for controlState: UIControlState = .normal) {
-        self.backgroundColor = .clear
 
         guard let icon = icon else {
             self.alpha = 0.4
@@ -127,7 +126,6 @@ class EmojiImageView: UIView {
     }
 
     func setKind(_ kind: Reminder.Kind?, for controlState: UIControlState = .normal) {
-        self.backgroundColor = .white
 
         guard let kind = kind else {
             self.alpha = 0.4
@@ -146,6 +144,8 @@ class EmojiImageView: UIView {
             image = #imageLiteral(resourceName: "ReminderKindFertilize")
         case .trim:
             image = #imageLiteral(resourceName: "ReminderKindTrim")
+        case .mist:
+            image = #imageLiteral(resourceName: "ReminderKindMist")
         case .move:
             image = #imageLiteral(resourceName: "ReminderKindMove")
         case .other:

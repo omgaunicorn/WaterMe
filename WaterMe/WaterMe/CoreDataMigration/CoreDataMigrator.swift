@@ -103,6 +103,8 @@ class CoreDataMigrator: CoreDataMigratable {
     // Finally it shuts down the core data stack and moves the underlying files
     // Moving the files means the data is not lost but its not detected on next boot
     // Which means it won't try to migrate again.
+    
+    // swiftlint:disable:next function_body_length
     func start(with basicRC: BasicController, completion: @escaping (Bool) -> Void) {
         let count = self.numberOfPlantsToMigrate ?? -1
         self.progress.totalUnitCount = Int64(count)

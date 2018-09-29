@@ -82,8 +82,8 @@ class SettingsTipJarTableViewCell: UITableViewCell {
                 price = "–"
             }
         }
-        let leadingString = NSAttributedString(string: title, style: .selectableTableViewCell)
-        let trailingString = NSAttributedString(string: price, style: .selectableTableViewCellDisabled)
+        let leadingString = NSAttributedString(string: title, font: .selectableTableViewCell)
+        let trailingString = NSAttributedString(string: price, font: .selectableTableViewCellDisabled)
         self.leadingLabel.attributedText = leadingString
         self.trailingLabel.attributedText = trailingString
     }

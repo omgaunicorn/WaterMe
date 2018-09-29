@@ -39,7 +39,7 @@ class BlurryBackgroundBottomLineCollectionReusableView: UICollectionReusableView
 
     let backgroundView: UIVisualEffectView = {
         let v = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
-        v.layer.cornerRadius = UICollectionReusableView.style_backgroundViewCornerRadius
+        v.layer.cornerRadius = UIApplication.style_cornerRadius
         v.clipsToBounds = true
         v.translatesAutoresizingMaskIntoConstraints = false
         return v

@@ -46,8 +46,8 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         self.smallEmojiImageView?.size = .small
         self.smallEmojiImageView?.ring = false
         self.emojiImageWidthConstraint?.constant = type(of: self).style_emojiImageViewWidth
-        self.selectedBackgroundView?.layer.cornerRadius = UIApplication.style_cornerRadius
-        self.justPerformedView?.layer.cornerRadius = UIApplication.style_cornerRadius
+        self.selectedBackgroundView?.style_setCornerRadius()
+        self.justPerformedView?.style_setCornerRadius()
         
         self.reset()
     }
@@ -61,13 +61,13 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         // vessel name style
         let vesselName = reminder.vessel?.displayName
         let vesselNameStyle = vesselName != nil ?
-            Style.reminderVesselCollectionViewCellPrimary(nil) :
-            Style.reminderVesselCollectionViewCellPrimaryDisabled
+            Font.reminderVesselCollectionViewCellPrimary(nil) :
+            Font.reminderVesselCollectionViewCellPrimaryDisabled
         self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
-                                                           style: vesselNameStyle)
+                                                           font: vesselNameStyle)
 
         // other stuff
-        self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.localizedLongString, style: .reminderVesselCollectionViewCellSecondary)
+        self.labelTwo?.attributedText = NSAttributedString(string: reminder.kind.localizedLongString, font: .reminderVesselCollectionViewCellSecondary)
         self.largeEmojiImageView?.setIcon(reminder.vessel?.icon)
         self.smallEmojiImageView?.setKind(reminder.kind)
         self.largeEmojiImageView?.ring = true
@@ -78,13 +78,17 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         super.traitCollectionDidChange(previousTraitCollection)
         switch UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
         case true:
-            self.emojiImageWidthConstraint!.constant = type(of: self).style_emojiImageViewWidthAccessibility
+            self.emojiImageWidthConstraint?.constant = type(of: self).style_emojiImageViewWidthAccessibility
         case false:
-            self.emojiImageWidthConstraint!.constant = type(of: self).style_emojiImageViewWidth
+            self.emojiImageWidthConstraint?.constant = type(of: self).style_emojiImageViewWidth
         }
     }
 
     func willDisplay() {
+        self.pulseCellIfReminderRecentlyPerformed()
+    }
+
+    private func pulseCellIfReminderRecentlyPerformed() {
         guard let lastPerformedDate = self.lastPerformedDate else { return }
         let interval = lastPerformedDate.timeIntervalSinceNow
         guard interval >= -1 && interval <= 0 else { return }

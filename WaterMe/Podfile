@@ -2,12 +2,13 @@ target 'WaterMe' do
 	platform :ios, '11.0'
 	use_frameworks!
 	
-	pod 'Crashlytics', '~> 3.9.3'
-	pod 'Cheers', '~> 2.0.0'
+  pod 'SimpleImageViewer', '~> 1.1.1'
+	pod 'Crashlytics', '~> 3.10.7'
+	pod 'Cheers', '~> 2.1.0'
 	pod 'CropViewController', '~> 2.3.6'
-	pod 'Result', '~> 3.2.2'
-	pod 'RealmSwift', '~> 3.0.2'
-	pod 'XCGLogger', '~> 6.0.1'
+	pod 'Result', '~> 4.0.0'
+	pod 'RealmSwift', '~> 3.7.6'
+	pod 'XCGLogger', '~> 6.0.4'
 	pod 'WaterMeData', :path => 'WaterMeData'
 	pod 'WaterMeStore', :path => 'WaterMeStore'
 end
@@ -16,9 +17,9 @@ target 'AdminConsole' do
 	platform :ios, '11.0'
 	use_frameworks!
 	
-	pod 'Result', '~> 3.2.2'
-	pod 'RealmSwift', '~> 3.0.2'
-	pod 'XCGLogger', '~> 6.0.1'
+	pod 'Result'
+	pod 'RealmSwift'
+	pod 'XCGLogger'
 	pod 'WaterMeData', :path => 'WaterMeData'
     pod 'WaterMeStore', :path => 'WaterMeStore'
 end
@@ -43,7 +44,7 @@ post_install do |installer|
   #
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings['SWIFT_VERSION'] = '4.1'
+      config.build_settings['SWIFT_VERSION'] = '4.2'
     end
   end
 end

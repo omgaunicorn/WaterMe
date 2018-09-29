@@ -133,6 +133,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
         case .photo:
             return 1
         case .reminders:
+            // swiftlint:disable:next todo
             // FIXME: Crasher Workaround - http://crashes.to/s/44d5e5cef85
             // this was sometimes causing a crash because the underlying object was deleted
             // But in reality the underlying object should always be set to NIL if it gets deleted
@@ -193,7 +194,7 @@ class ReminderVesselEditTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 
-        // TODO: This is causing visual bugs as of iOS 11.2
+        // TODO: This is causing visual bugs as of iOS 12.0 GM
         // disable for now. Try to remove this later to re-enable swipe actions
         return UISwipeActionsConfiguration(actions: [])
 
