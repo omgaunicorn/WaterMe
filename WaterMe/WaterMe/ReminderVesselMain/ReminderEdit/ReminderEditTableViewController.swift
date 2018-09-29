@@ -158,7 +158,7 @@ class ReminderEditTableViewController: StandardTableViewController {
         }
     }
     
-    func nameTextFieldBecomeFirstResponder() {
+    func forceTextFieldToBecomeFirstResponder() {
         guard let reminder = self.delegate?.reminderResult?.value else {
             assertionFailure("Missing Reminder Object")
             return
@@ -207,7 +207,18 @@ class ReminderEditTableViewController: StandardTableViewController {
         let section = Section(section: section, for: reminder.kind)
         return section.localizedString
     }
-    
+}
+
+extension ReminderEditTableViewController {
+    private enum SiriShortcut: Int, CaseIterable {
+        case editReminder
+        var localizedTitle: String {
+            switch self {
+            case .editReminder:
+                return "Edit Reminder"
+            }
+        }
+    }
     private enum Section {
         case kind, details, interval, notes, siriShortcuts, performed
         static func count(for kind: Reminder.Kind) -> Int {
@@ -279,16 +290,6 @@ class ReminderEditTableViewController: StandardTableViewController {
                 return SiriShortcut.allCases.count
             case .details, .performed, .interval, .notes:
                 return 1
-            }
-        }
-    }
-
-    private enum SiriShortcut: Int, CaseIterable {
-        case editReminder
-        var localizedTitle: String {
-            switch self {
-            case .editReminder:
-                return "Edit Reminder"
             }
         }
     }

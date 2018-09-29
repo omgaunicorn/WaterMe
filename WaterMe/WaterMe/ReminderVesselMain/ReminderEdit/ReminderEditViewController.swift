@@ -218,8 +218,11 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
                 switch selection {
                 case .cancel:
                     break
-                case .error:
-                    self.tableViewController?.nameTextFieldBecomeFirstResponder()
+                case .error(let error):
+                    switch error {
+                    case .missingMoveLocation, .missingOtherDescription:
+                        self.tableViewController?.forceTextFieldToBecomeFirstResponder()
+                    }
                 case .saveAnyway:
                     self.completionHandler?(self)
                 }

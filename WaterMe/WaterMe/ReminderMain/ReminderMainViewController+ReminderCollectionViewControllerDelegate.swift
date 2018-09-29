@@ -25,7 +25,9 @@ import WaterMeData
 
 extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
 
-    func dragSessionWillBegin(_ session: UIDragSession, within viewController: ReminderCollectionViewController) {
+    func dragSessionWillBegin(_ session: UIDragSession,
+                              within viewController: ReminderCollectionViewController)
+    {
         self.haptic.prepare()
         self.settingsBBI.isEnabled = false
         self.plantsBBI.isEnabled = false
