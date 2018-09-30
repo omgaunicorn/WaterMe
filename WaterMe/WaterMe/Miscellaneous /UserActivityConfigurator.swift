@@ -66,7 +66,6 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
             }
         }
         if Thread.isMainThread {
-            assertionFailure("userActivityWillSave: called on main thread. This is unusual.")
             workItem()
         } else {
             DispatchQueue.main.sync() {

@@ -156,10 +156,7 @@ class ReminderEditTableViewController: StandardTableViewController {
                 let cell = _cell as? SiriShortcutTableViewCell,
                 let row = SiriShortcut(rawValue: indexPath.row)
             else { return _cell }
-            switch row {
-            case .editReminder:
-                cell.configure(withLocalizedTitle: row.localizedTitle)
-            }
+            cell.configure(withLocalizedTitle: row.localizedTitle)
             return cell
         case .performed:
             let id = LastPerformedTableViewCell.reuseID
@@ -223,11 +220,13 @@ class ReminderEditTableViewController: StandardTableViewController {
 
 extension ReminderEditTableViewController {
     enum SiriShortcut: Int, CaseIterable {
-        case editReminder
+        case editReminder, viewReminder
         var localizedTitle: String {
             switch self {
             case .editReminder:
                 return "Edit Reminder"
+            case .viewReminder:
+                return "View Summary of Reminder"
             }
         }
     }
