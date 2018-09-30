@@ -37,7 +37,8 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         vc.applicationDidFinishLaunchingError = basicRCResult.error
         vc.configure(with: basicRCResult.value)
         vc.configure(with: proController)
-        vc.userActivity = NSUserActivity(kind: .viewReminders)
+        vc.userActivity = NSUserActivity(kind: .viewReminders,
+                                         delegate: vc.userActivityDelegate)
         return navVC
     }
 
@@ -57,6 +58,8 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
 
     let dueDateFormatter = Formatter.newDueDateFormatter
     let haptic = UINotificationFeedbackGenerator()
+    //swiftlint:disable:next weak_delegate
+    private let userActivityDelegate: UserActivityConfiguratorProtocol = UserActivityConfigurator()
 
     override func viewDidLoad() {
         super.viewDidLoad()

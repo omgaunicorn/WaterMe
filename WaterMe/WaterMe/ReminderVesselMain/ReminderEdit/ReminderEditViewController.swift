@@ -53,7 +53,8 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         case .existing(let reminder):
             vc.reminderResult = .success(reminder)
         }
-        vc.userActivity = NSUserActivity(kind: .editReminder)
+        vc.userActivity = NSUserActivity(kind: .editReminder,
+                                         delegate: vc.userActivityDelegate)
         return navVC
     }
     
@@ -67,6 +68,8 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     var basicRC: BasicController?
     private(set) var reminderResult: Result<Reminder, RealmError>?
     private var completionHandler: CompletionHandler?
+    //swiftlint:disable:next weak_delegate
+    private let userActivityDelegate: UserActivityConfiguratorProtocol = UserActivityConfigurator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +79,12 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
 
         self.tableViewController?.delegate = self
         self.startNotifications()
+        self.userActivityDelegate.currentReminder = { [weak self] in
+            // should be unowned because this object should not exist longer
+            // than the view controller. But since NIL is a possible return value
+            // it just seems safer to go with weak
+            return self?.reminderResult?.value
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

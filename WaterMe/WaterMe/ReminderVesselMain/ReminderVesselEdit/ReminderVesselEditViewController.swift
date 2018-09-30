@@ -50,7 +50,8 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             Analytics.log(event: Analytics.CRUD_Op_RV.create)
             vc.vesselResult = basicController?.newReminderVessel()
         }
-        vc.userActivity = NSUserActivity(kind: .editReminderVessel)
+        vc.userActivity = NSUserActivity(kind: .editReminderVessel,
+                                         delegate: vc.userActivityDelegate)
         return navVC
     }
     
@@ -62,6 +63,8 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     var basicRC: BasicController?
     private(set) var vesselResult: Result<ReminderVessel, RealmError>?
     private var completionHandler: CompletionHandler!
+    //swiftlint:disable:next weak_delegate
+    private let userActivityDelegate: UserActivityConfiguratorProtocol = UserActivityConfigurator()
 
     private func vesselChanged(_ changes: ObjectChange) {
         switch changes {
@@ -123,6 +126,12 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         self.navigationItem.rightBarButtonItem = self.doneBBI
 
         self.startNotifications()
+        self.userActivityDelegate.currentReminderVessel = { [weak self] in
+            // should be unowned because this object should not exist longer
+            // than the view controller. But since NIL is a possible return value
+            // it just seems safer to go with weak
+            return self?.vesselResult?.value
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

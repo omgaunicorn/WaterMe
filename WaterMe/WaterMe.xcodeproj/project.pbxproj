@@ -91,6 +91,7 @@
 		509A0865215FFEDF00389339 /* SimpleLabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509A0864215FFEDF00389339 /* SimpleLabelTableViewCell.swift */; };
 		509A0867215FFEF700389339 /* SiriShortcutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509A0866215FFEF700389339 /* SiriShortcutTableViewCell.swift */; };
 		509A0869215FFF1C00389339 /* ClosureDelegatingAddVoiceShortcutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509A0868215FFF1C00389339 /* ClosureDelegatingAddVoiceShortcutViewController.swift */; };
+		509A086B21606DBF00389339 /* UserActivityConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509A086A21606DBF00389339 /* UserActivityConfigurator.swift */; };
 		50A3BAC8214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3BAC7214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift */; };
 		50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */; };
 		50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */; };
@@ -241,6 +242,7 @@
 		509A0864215FFEDF00389339 /* SimpleLabelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleLabelTableViewCell.swift; sourceTree = "<group>"; };
 		509A0866215FFEF700389339 /* SiriShortcutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiriShortcutTableViewCell.swift; sourceTree = "<group>"; };
 		509A0868215FFF1C00389339 /* ClosureDelegatingAddVoiceShortcutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosureDelegatingAddVoiceShortcutViewController.swift; sourceTree = "<group>"; };
+		509A086A21606DBF00389339 /* UserActivityConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserActivityConfigurator.swift; path = "WaterMe/Miscellaneous /UserActivityConfigurator.swift"; sourceTree = SOURCE_ROOT; };
 		50A3BAC7214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSummaryReminderVesselIconTableViewCell.swift; sourceTree = "<group>"; };
 		50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPickerCollectionViewController.swift; sourceTree = "<group>"; };
 		50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastPerformedTableViewCell.swift; sourceTree = "<group>"; };
@@ -517,6 +519,7 @@
 		50B779CA2154138D00AC6240 /* Miscellaneous  */ = {
 			isa = PBXGroup;
 			children = (
+				509A086A21606DBF00389339 /* UserActivityConfigurator.swift */,
 				509A0864215FFEDF00389339 /* SimpleLabelTableViewCell.swift */,
 				509A0866215FFEF700389339 /* SiriShortcutTableViewCell.swift */,
 				504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */,
@@ -1007,6 +1010,7 @@
 				5089D125214F458200140F68 /* AppVersionCheckingAlert.swift in Sources */,
 				501A9AE71FEB15C20016160D /* WateringAnimationPlayerView.swift in Sources */,
 				50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */,
+				509A086B21606DBF00389339 /* UserActivityConfigurator.swift in Sources */,
 				5096D19821547764006E1019 /* Color.swift in Sources */,
 				509A0867215FFEF700389339 /* SiriShortcutTableViewCell.swift in Sources */,
 				5096D19C21547991006E1019 /* NSAttributedString+Font.swift in Sources */,

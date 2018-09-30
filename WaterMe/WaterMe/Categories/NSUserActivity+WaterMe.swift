@@ -42,8 +42,9 @@ extension NSUserActivity {
         case viewReminders = "com.saturdayapps.waterme.activity.view.reminders"
     }
 
-    convenience init(kind: Kind) {
+    convenience init(kind: Kind, delegate: NSUserActivityDelegate) {
         self.init(activityType: kind.rawValue)
+        self.delegate = delegate
         self.isEligibleForHandoff = true
         self.isEligibleForSearch = true
         if #available(iOS 12.0, *) {
@@ -85,74 +86,5 @@ extension NSUserActivity {
         attributes.relatedUniqueIdentifier = persistentIdentifier
         attributes.contentDescription = description
         self.contentAttributeSet = attributes
-    }
-}
-
-extension ReminderVesselEditViewController {
-    override func updateUserActivityState(_ activity: NSUserActivity) {
-        assert(activity.activityType == NSUserActivity.Kind.editReminderVessel.rawValue)
-        print("ReminderVesselEditViewController: updateUserActivityState:")
-        guard #available(iOS 12.0, *) else { return }
-
-        guard let reminderVessel = self.vesselResult?.value else { return }
-        let uuid = reminderVessel.uuid
-        let vesselName = reminderVessel.displayName ?? ReminderVessel.LocalizedString.untitledPlant
-        let title = NSString.deferredLocalizedIntentsString(with: "Edit “%@”", vesselName) as String
-        let phrase = NSString.deferredLocalizedIntentsString(with: "Edit %@", vesselName) as String
-        let description = NSString.deferredLocalizedIntentsString(with: "Change your plant's name, photo, and reminders.") as String
-
-        activity.update(uuid: uuid, title: title, phrase: phrase, description: description)
-        super.updateUserActivityState(activity)
-    }
-}
-
-extension ReminderMainViewController {
-    override func updateUserActivityState(_ activity: NSUserActivity) {
-        assert(activity.activityType == NSUserActivity.Kind.viewReminders.rawValue)
-        print("ReminderMainViewController: updateUserActivityState:")
-        guard #available(iOS 12.0, *) else { return }
-
-        let uuid = String(describing: ReminderMainViewController.self)
-        let title = NSString.deferredLocalizedIntentsString(with: "View all reminders") as String
-        let phrase = NSString.deferredLocalizedIntentsString(with: "Garden Time") as String
-        let description = NSString.deferredLocalizedIntentsString(with: "Manage all of your plants and reminders in WaterMe") as String
-
-        activity.update(uuid: uuid, title: title, phrase: phrase, description: description)
-        super.updateUserActivityState(activity)
-    }
-}
-
-extension ReminderSummaryViewController: NSUserActivityDelegate {
-    override func updateUserActivityState(_ activity: NSUserActivity) {
-        assert(activity.activityType == NSUserActivity.Kind.viewReminder.rawValue)
-        print("ReminderSummaryViewController: updateUserActivityState:")
-        guard #available(iOS 12.0, *) else { return }
-
-        guard let reminder = self.reminderResult.value else { return }
-        let uuid = reminder.uuid
-        let vesselName = reminder.vessel?.displayName ?? ReminderVessel.LocalizedString.untitledPlant
-        let title = NSString.deferredLocalizedIntentsString(with: "View %@ “%@” reminder", reminder.kind.localizedShortString, vesselName) as String
-        let phrase = NSString.deferredLocalizedIntentsString(with: "View notes for %@", vesselName) as String
-        let description = NSString.deferredLocalizedIntentsString(with: "Mark the reminder as done, edit your plant, or edit your reminder.") as String
-
-        activity.update(uuid: uuid, title: title, phrase: phrase, description: description)
-        super.updateUserActivityState(activity)
-    }
-}
-
-extension ReminderEditViewController: NSUserActivityDelegate {
-    override func updateUserActivityState(_ activity: NSUserActivity) {
-        assert(activity.activityType == NSUserActivity.Kind.editReminder.rawValue)
-        print("ReminderEditViewController: updateUserActivityState:")
-        guard #available(iOS 12.0, *) else { return }
-
-        guard let reminder = self.reminderResult?.value else { return }
-        let uuid = reminder.uuid
-        let vesselName = reminder.vessel?.displayName ?? ReminderVessel.LocalizedString.untitledPlant
-        let title = NSString.deferredLocalizedIntentsString(with: "Edit the %@ “%@” reminder", reminder.kind.localizedShortString, vesselName) as String
-        let description = NSString.deferredLocalizedIntentsString(with: "Change how often or the kind of reminder in WaterMe.") as String
-
-        activity.update(uuid: uuid, title: title, phrase: title, description: description)
-        super.updateUserActivityState(activity)
     }
 }

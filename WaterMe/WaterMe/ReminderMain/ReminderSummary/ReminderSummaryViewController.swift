@@ -54,6 +54,8 @@ class ReminderSummaryViewController: StandardViewController {
         vc.reminderResult = basicController.reminder(matching: reminderID)
         vc.reminderID = reminderID
         vc.haptic = hapticGenerator
+        vc.userActivity = NSUserActivity(kind: .viewReminder,
+                                         delegate: vc.userActivityDelegate)
         return vc
     }
 
@@ -91,11 +93,19 @@ class ReminderSummaryViewController: StandardViewController {
     private var reminderID: Reminder.Identifier!
     private weak var tableViewController: ReminderSummaryTableViewController!
     private weak var haptic: UIFeedbackGenerator?
+    //swiftlint:disable:next weak_delegate
+    private let userActivityDelegate: UserActivityConfiguratorProtocol = UserActivityConfigurator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
         self.updateViewForPresentation()
+        self.userActivityDelegate.currentReminder = { [weak self] in
+            // should be unowned because this object should not exist longer
+            // than the view controller. But since NIL is a possible return value
+            // it just seems safer to go with weak
+            return self?.reminderResult?.value
+        }
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
