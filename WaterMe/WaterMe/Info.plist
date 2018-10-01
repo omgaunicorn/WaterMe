@@ -38,7 +38,7 @@
 	<string>Assign photos to your plants.</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>emojione-apple.ttf</string>
+		<string>emojione-apple.ttc</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
