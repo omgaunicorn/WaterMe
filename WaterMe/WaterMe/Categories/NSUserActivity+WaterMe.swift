@@ -35,6 +35,9 @@ enum RestoredUserActivity {
 }
 
 extension NSUserActivity {
+
+    static let kIsConfigured = "kIsConfiguredKey"
+
     enum Kind: String {
         case editReminder = "com.saturdayapps.waterme.activity.edit.reminder"
         case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
@@ -42,13 +45,14 @@ extension NSUserActivity {
         case viewReminders = "com.saturdayapps.waterme.activity.view.reminders"
     }
 
-    convenience init(kind: Kind, delegate: NSUserActivityDelegate) {
-        self.init(activityType: kind.rawValue)
-        self.delegate = delegate
-        self.isEligibleForHandoff = true
-        self.isEligibleForSearch = true
-        if #available(iOS 12.0, *) {
-            self.isEligibleForPrediction = true
+    private(set) var isConfigured: Bool {
+        get {
+            let _configured = self.userInfo?[NSUserActivity.kIsConfigured] as? NSNumber
+            guard let configured = _configured else { return false }
+            return configured.boolValue
+        }
+        set {
+            self.userInfo?[NSUserActivity.kIsConfigured] = NSNumber(value: newValue)
         }
     }
 
@@ -73,6 +77,16 @@ extension NSUserActivity {
         }
     }
 
+    convenience init(kind: Kind, delegate: NSUserActivityDelegate) {
+        self.init(activityType: kind.rawValue)
+        self.delegate = delegate
+        self.isEligibleForHandoff = true
+        self.isEligibleForSearch = true
+        if #available(iOS 12.0, *) {
+            self.isEligibleForPrediction = true
+        }
+    }
+
     func update(uuid: String, title: String, phrase: String, description: String) {
         let persistentIdentifier = self.activityType + "::" + uuid
         self.title = title
@@ -86,5 +100,6 @@ extension NSUserActivity {
         attributes.relatedUniqueIdentifier = persistentIdentifier
         attributes.contentDescription = description
         self.contentAttributeSet = attributes
+        self.isConfigured = true
     }
 }

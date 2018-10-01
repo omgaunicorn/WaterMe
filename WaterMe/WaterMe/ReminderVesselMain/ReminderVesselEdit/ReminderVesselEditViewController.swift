@@ -323,6 +323,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         }
         guard
             let activity = self.userActivity,
+            activity.isConfigured == true,
             activity.activityType == NSUserActivity.Kind.editReminderVessel.rawValue
         else {
             assertionFailure("Unexpected User Activity")
