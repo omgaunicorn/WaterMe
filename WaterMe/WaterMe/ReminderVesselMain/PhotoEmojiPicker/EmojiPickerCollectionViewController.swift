@@ -46,9 +46,6 @@ class EmojiPickerViewController: StandardCollectionViewController {
         self.collectionView?.backgroundColor = .white
         self.collectionView?.alwaysBounceVertical = true
         self.collectionView?.register(EmojiPickerCollectionViewCell.nib, forCellWithReuseIdentifier: EmojiPickerCollectionViewCell.reuseID)
-        self.collectionView?.register(EmojiPickerFooterCollectionReusableView.self,
-                                      forSupplementaryViewOfKind: EmojiPickerFooterCollectionReusableView.kind,
-                                      withReuseIdentifier: EmojiPickerFooterCollectionReusableView.reuseID)
         self.flow?.minimumInteritemSpacing = 0
     }
     
@@ -73,19 +70,6 @@ class EmojiPickerViewController: StandardCollectionViewController {
         return _cell
     }
 
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let footer = collectionView.dequeueReusableSupplementaryView(ofKind: EmojiPickerFooterCollectionReusableView.kind,
-                                                                     withReuseIdentifier: EmojiPickerFooterCollectionReusableView.reuseID,
-                                                                     for: indexPath)
-        if let footer = footer as? EmojiPickerFooterCollectionReusableView {
-            footer.providedByButtonTapped = { [unowned self] in
-                Analytics.log(viewOperation: .openEmojiOne)
-                self.present(SFSafariViewController.newEmojiOneVC(), animated: true, completion: nil)
-            }
-        }
-        return footer
-    }
-
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
         let width = self.collectionView?.availableContentSize.width ?? 0
         let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
@@ -103,21 +87,5 @@ class EmojiPickerViewController: StandardCollectionViewController {
             let itemHeight = floor((width) / CGFloat(columnCount))
             return (columnCount, itemHeight)
         }
-    }
-}
-
-extension EmojiPickerViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        let kind = ReminderHeaderCollectionReusableView.self
-        let isAC = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
-        return CGSize(width: collectionView.availableContentSize.width, height: kind.style_viewHeight(isAccessibilityCategory: isAC))
-    }
-}
-
-fileprivate extension SFSafariViewController {
-    fileprivate class func newEmojiOneVC() -> UIViewController {
-        let url = URL(string: "https://www.emojione.com")!
-        let vc = SFSafariViewController(url: url)
-        return vc
     }
 }
