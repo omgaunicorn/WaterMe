@@ -298,7 +298,6 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
         case .editReminder:
             guard
                 let activity = self.userActivity,
-                activity.isConfigured == true,
                 activity.activityType == NSUserActivity.Kind.editReminder.rawValue
             else {
                 assertionFailure("Unexpected User Activity")
@@ -309,12 +308,13 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
             let activity = NSUserActivity(kind: .viewReminder,
                                           delegate: self.userActivityDelegate)
             activity.needsSave = true
-            self.userActivityDelegate.userActivityWillSave?(activity)
-            assert(activity.isConfigured == true)
-            shortcut = INShortcut(userActivity: activity)
+            activity.becomeCurrent()
+            let myshortcut = INShortcut(userActivity: activity)
+            shortcut = myshortcut
         }
         let vc = ClosureDelegatingAddVoiceShortcutViewController(shortcut: shortcut)
-        vc.completion = { vc, result in
+        vc.completion = { [unowned self] vc, result in
+            self.userActivity?.becomeCurrent()
             vc.dismiss(animated: true) {
                 deselectRowAnimated?(true)
             }

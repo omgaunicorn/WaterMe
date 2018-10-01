@@ -36,24 +36,11 @@ enum RestoredUserActivity {
 
 extension NSUserActivity {
 
-    static let kIsConfigured = "kIsConfiguredKey"
-
     enum Kind: String {
         case editReminder = "com.saturdayapps.waterme.activity.edit.reminder"
         case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
         case viewReminder = "com.saturdayapps.waterme.activity.view.reminder"
         case viewReminders = "com.saturdayapps.waterme.activity.view.reminders"
-    }
-
-    private(set) var isConfigured: Bool {
-        get {
-            let _configured = self.userInfo?[NSUserActivity.kIsConfigured] as? NSNumber
-            guard let configured = _configured else { return false }
-            return configured.boolValue
-        }
-        set {
-            self.userInfo?[NSUserActivity.kIsConfigured] = NSNumber(value: newValue)
-        }
     }
 
     var restoredUserActivity: RestoredUserActivity? {
@@ -100,6 +87,5 @@ extension NSUserActivity {
         attributes.relatedUniqueIdentifier = persistentIdentifier
         attributes.contentDescription = description
         self.contentAttributeSet = attributes
-        self.isConfigured = true
     }
 }
