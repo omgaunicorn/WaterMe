@@ -24,26 +24,22 @@
 import Foundation
 
 public protocol SignificantTimePassedDetectorDelegate: class {
-    func significantTimeDidPass(with reason: SignificantTimePassedDetector.Reason, detector: SignificantTimePassedDetector)
+    func significantTimeDidPass(with reason: SignificantTimePassedDetector.Reason,
+                                detector: SignificantTimePassedDetector)
 }
 
 public class SignificantTimePassedDetector {
 
     public enum Reason {
-        case STCNotification, BackupDetector
+        case STCNotification
     }
 
     public weak var delegate: SignificantTimePassedDetectorDelegate?
-    private var lastTimeChangeEventDate = Date()
-
+    
     public init() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.significantTimeChanged(_:)),
                                                name: UIApplication.significantTimeChangeNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(self.didBecomeActive(_:)),
-                                               name: UIApplication.didBecomeActiveNotification,
                                                object: nil)
     }
 
@@ -51,28 +47,7 @@ public class SignificantTimePassedDetector {
         self.fire(with: .STCNotification)
     }
 
-    @objc private func didBecomeActive(_ notification: Any) {
-        // this is a backup detection. Hopefully, iOS will always send the STC notiication when needed
-        // but every time the app is foregrounded, we need to check if the data needs to be reloaded
-        // with analytics, I'll be able to see if this backup test is ever needed
-        // if its not, I'll remove it.
-
-        // wait before doing anything. So SignificantTimeChangeNotification has a chance to fire
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { timer in
-            timer.invalidate()
-            self.checkAndFireIfNeeded()
-        }
-    }
-
-    private func checkAndFireIfNeeded() {
-        let isInToday = Calendar.current.isDateInToday(self.lastTimeChangeEventDate)
-        if isInToday == false {
-            self.fire(with: .BackupDetector)
-        }
-    }
-
     private func fire(with reason: SignificantTimePassedDetector.Reason) {
-        self.lastTimeChangeEventDate = Date()
         self.delegate?.significantTimeDidPass(with: reason, detector: self)
     }
 }

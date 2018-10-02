@@ -130,9 +130,10 @@ class GlobalReminderObserver {
 }
 
 extension GlobalReminderObserver: SignificantTimePassedDetectorDelegate {
-
     // when the data is stale because of significant time passing, we need to refresh the app icon
-    func significantTimeDidPass(with _: SignificantTimePassedDetector.Reason, detector _: SignificantTimePassedDetector) {
+    func significantTimeDidPass(with _: SignificantTimePassedDetector.Reason,
+                                detector _: SignificantTimePassedDetector)
+    {
         self.dataChanged(of: .badge)
     }
 }

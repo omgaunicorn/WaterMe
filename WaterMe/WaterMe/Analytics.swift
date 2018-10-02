@@ -33,7 +33,6 @@ enum Analytics {
     enum Event: String {
         case reviewRequested = "Event.ReviewRequested"
         case stpReloadNotification = "Event.STPReload.Notification"
-        case stpReloadBackup = "Event.STPReload.Backup"
         case updateAvailableDismiss = "Event.UpdateAvailable.Dismiss"
         case updateAvailableAppStore = "Event.UpdateAvailable.AppStore"
         case notificationSettingsFail = "Error.NotifySettingsLoadFailure"

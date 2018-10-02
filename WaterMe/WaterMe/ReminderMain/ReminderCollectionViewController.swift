@@ -250,18 +250,14 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 }
 
 extension ReminderCollectionViewController: SignificantTimePassedDetectorDelegate {
-    
-    func significantTimeDidPass(with reason: SignificantTimePassedDetector.Reason, detector _: SignificantTimePassedDetector) {
-        let event: Analytics.Event
+    func significantTimeDidPass(with reason: SignificantTimePassedDetector.Reason,
+                                detector _: SignificantTimePassedDetector)
+    {
         switch reason {
-        case .BackupDetector:
-            event = .stpReloadBackup
         case .STCNotification:
-            event = .stpReloadNotification
+            Analytics.log(event: Analytics.Event.stpReloadNotification)
         }
-        Analytics.log(event: event)
-        Analytics.log(event: Analytics.Event.stpReloadNotification)
-        log.info("Reloading Data: " + Analytics.Event.stpReloadBackup.rawValue)
+        log.info("Reloading Data...")
         self.hardReloadData()
     }
 }
