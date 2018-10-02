@@ -298,7 +298,7 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
         case .editReminder:
             guard
                 let activity = self.userActivity,
-                activity.activityType == NSUserActivity.Kind.editReminder.rawValue
+                activity.activityType == RawUserActivity.editReminder.rawValue
             else {
                 assertionFailure("Unexpected User Activity")
                 return

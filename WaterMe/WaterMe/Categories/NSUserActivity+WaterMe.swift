@@ -34,17 +34,18 @@ enum RestoredUserActivity {
     case error
 }
 
+enum RawUserActivity: String {
+    case editReminder = "com.saturdayapps.waterme.activity.edit.reminder"
+    case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
+    case viewReminder = "com.saturdayapps.waterme.activity.view.reminder"
+    case viewReminders = "com.saturdayapps.waterme.activity.view.reminders"
+    case indexedItem = "CSSearchableItemActionType"
+}
+
 extension NSUserActivity {
 
-    enum Kind: String {
-        case editReminder = "com.saturdayapps.waterme.activity.edit.reminder"
-        case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
-        case viewReminder = "com.saturdayapps.waterme.activity.view.reminder"
-        case viewReminders = "com.saturdayapps.waterme.activity.view.reminders"
-    }
-
     var restoredUserActivity: RestoredUserActivity? {
-        guard let kind = Kind(rawValue: self.activityType) else {
+        guard let kind = RawUserActivity(rawValue: self.activityType) else {
             assertionFailure()
             return nil
         }
@@ -61,10 +62,13 @@ extension NSUserActivity {
             return .viewReminder(.init(rawValue: uuid))
         case .viewReminders:
             return .viewReminders
+        case .indexedItem:
+            assertionFailure("Unimplmented")
+            return nil
         }
     }
 
-    convenience init(kind: Kind, delegate: NSUserActivityDelegate) {
+    convenience init(kind: RawUserActivity, delegate: NSUserActivityDelegate) {
         self.init(activityType: kind.rawValue)
         self.delegate = delegate
         self.isEligibleForHandoff = true

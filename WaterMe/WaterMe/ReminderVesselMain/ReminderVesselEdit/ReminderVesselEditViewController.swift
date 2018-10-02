@@ -323,7 +323,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         }
         guard
             let activity = self.userActivity,
-            activity.activityType == NSUserActivity.Kind.editReminderVessel.rawValue
+            activity.activityType == RawUserActivity.editReminderVessel.rawValue
         else {
             assertionFailure("Unexpected User Activity")
             return
@@ -338,7 +338,9 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         self.present(vc, animated: true, completion: nil)
     }
     
-    func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController?) -> Bool {
+    func userDeleted(reminder: Reminder,
+                     controller: ReminderVesselEditTableViewController?) -> Bool
+    {
         self.view.endEditing(false)
         guard let basicRC = self.basicRC else {
             assertionFailure("Missing Realm Controller.")

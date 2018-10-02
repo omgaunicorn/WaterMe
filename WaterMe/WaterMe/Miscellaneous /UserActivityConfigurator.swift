@@ -37,7 +37,7 @@ class UserActivityConfigurator: NSObject, UserActivityConfiguratorProtocol {
 extension UserActivityConfigurator: NSUserActivityDelegate {
     func userActivityWillSave(_ activity: NSUserActivity) {
         let workItem = {
-            guard let kind = NSUserActivity.Kind(rawValue: activity.activityType) else {
+            guard let kind = RawUserActivity(rawValue: activity.activityType) else {
                 assertionFailure("Unsupported User Activity Type")
                 return
             }
@@ -63,6 +63,8 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
                     return
                 }
                 self.updateViewReminder(activity: activity, reminder: reminder)
+            case .indexedItem:
+                assertionFailure("Cannot update the data on a CoreSpotlight activity")
             }
         }
         if Thread.isMainThread {
@@ -77,7 +79,7 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
 
 private extension UserActivityConfigurator {
     private func updateEditReminderVessel(activity: NSUserActivity, reminderVessel: ReminderVessel) {
-        assert(activity.activityType == NSUserActivity.Kind.editReminderVessel.rawValue)
+        assert(activity.activityType == RawUserActivity.editReminderVessel.rawValue)
         log.debug()
         guard #available(iOS 12.0, *) else { return }
 
@@ -91,7 +93,7 @@ private extension UserActivityConfigurator {
     }
 
     private func updateViewReminders(activity: NSUserActivity) {
-        assert(activity.activityType == NSUserActivity.Kind.viewReminders.rawValue)
+        assert(activity.activityType == RawUserActivity.viewReminders.rawValue)
         log.debug()
         guard #available(iOS 12.0, *) else { return }
 
@@ -104,7 +106,7 @@ private extension UserActivityConfigurator {
     }
 
     private func updateViewReminder(activity: NSUserActivity, reminder: Reminder) {
-        assert(activity.activityType == NSUserActivity.Kind.viewReminder.rawValue)
+        assert(activity.activityType == RawUserActivity.viewReminder.rawValue)
         log.debug()
         guard #available(iOS 12.0, *) else { return }
 
@@ -118,7 +120,7 @@ private extension UserActivityConfigurator {
     }
 
     private func updateEditReminder(activity: NSUserActivity, reminder: Reminder) {
-        assert(activity.activityType == NSUserActivity.Kind.editReminder.rawValue)
+        assert(activity.activityType == RawUserActivity.editReminder.rawValue)
         log.debug()
         guard #available(iOS 12.0, *) else { return }
 
