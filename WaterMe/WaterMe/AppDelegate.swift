@@ -43,7 +43,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
     private(set) var reminderObserver: GlobalReminderObserver?
 
-    let spotlightIndexer = CoreSpotlightIndexer()
     let purchaseController = PurchaseController()
     var coreDataMigrator = CoreDataMigrator()
     var window: UIWindow?
@@ -169,9 +168,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // show window
         self.window = window
         window.makeKeyAndVisible()
-
-        // configure the indexer
-        self.spotlightIndexer.basicRC = result.value
         
         return true
     }

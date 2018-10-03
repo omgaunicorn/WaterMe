@@ -28,9 +28,10 @@ import UserNotifications
 class GlobalReminderObserver {
 
     private enum DataKind {
-        case badge, notifications, both
+        case badge, notifications, spotlightIndex, all
     }
 
+    private let spotlightIndexer = CoreSpotlightIndexer.self
     private let badgeNumberController = BadgeNumberController.self
     private let notificationController = ReminderUserNotificationController()
     private let significantTimePassedDetector = SignificantTimePassedDetector()
@@ -58,7 +59,6 @@ class GlobalReminderObserver {
                                                name: .UIApplicationDidEnterBackground,
                                                object: nil)
         self.significantTimePassedDetector.delegate = self
-
     }
 
     func notificationPermissionsMayHaveChanged() {
@@ -69,14 +69,13 @@ class GlobalReminderObserver {
         switch changes {
         case .initial(let data):
             self.data = data
-            self.dataChanged(of: .both)
+            self.dataChanged(of: .all)
         case .update:
             self.resetTimer()
         case .error(let error):
             self.data = nil
             self.token?.invalidate()
             self.token = nil
-            self.dataChanged(of: .both)
             Analytics.log(error: error)
             log.error(error)
         }
@@ -98,7 +97,9 @@ class GlobalReminderObserver {
             self.notificationController.updateScheduledNotifications(with: data)
         case .badge:
             self.badgeNumberController.updateBadgeNumber(with: data)
-        case .both:
+        case .spotlightIndex:
+            break
+        case .all:
             self.notificationController.updateScheduledNotifications(with: data)
             self.badgeNumberController.updateBadgeNumber(with: data)
         }
@@ -114,7 +115,7 @@ class GlobalReminderObserver {
             timer.invalidate()
             self.timer?.invalidate()
             self.timer = nil
-            self.dataChanged(of: .both)
+            self.dataChanged(of: .all)
         }
     }
 
@@ -139,11 +140,13 @@ extension GlobalReminderObserver: SignificantTimePassedDetectorDelegate {
 }
 
 struct ReminderValue: Equatable {
+    var reminderUUID: String
     var parentPlantUUID: String
     var parentPlantName: String?
     var nextPerformDate: Date?
 
     init(reminder: Reminder) {
+        self.reminderUUID = reminder.uuid
         self.parentPlantUUID = reminder.vessel?.uuid ?? UUID().uuidString
         self.parentPlantName = reminder.vessel?.shortLabelSafeDisplayName
         self.nextPerformDate = reminder.nextPerformDate
