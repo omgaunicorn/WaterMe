@@ -21,12 +21,11 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import WaterMeData
 import MobileCoreServices
 import CoreSpotlight
 import Intents
 
-enum RestoredUserActivity {
+public enum RestoredUserActivity {
     case editReminder(Reminder.Identifier)
     case editReminderVessel(Reminder.Identifier)
     case viewReminder(Reminder.Identifier)
@@ -34,7 +33,7 @@ enum RestoredUserActivity {
     case error
 }
 
-enum RawUserActivity: String {
+public enum RawUserActivity: String {
     case editReminder = "com.saturdayapps.waterme.activity.edit.reminder"
     case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
     case viewReminder = "com.saturdayapps.waterme.activity.view.reminder"
@@ -42,9 +41,9 @@ enum RawUserActivity: String {
     case indexedItem = "CSSearchableItemActionType"
 }
 
-extension NSUserActivity {
+public extension NSUserActivity {
 
-    var restoredUserActivity: RestoredUserActivity? {
+    public var restoredUserActivity: RestoredUserActivity? {
         guard let kind = RawUserActivity(rawValue: self.activityType) else {
             assertionFailure()
             return nil
@@ -68,7 +67,7 @@ extension NSUserActivity {
         }
     }
 
-    convenience init(kind: RawUserActivity, delegate: NSUserActivityDelegate) {
+    public convenience init(kind: RawUserActivity, delegate: NSUserActivityDelegate) {
         self.init(activityType: kind.rawValue)
         self.delegate = delegate
         self.isEligibleForHandoff = true
@@ -78,7 +77,7 @@ extension NSUserActivity {
         }
     }
 
-    func update(uuid: String, title: String, phrase: String, description: String) {
+    public func update(uuid: String, title: String, phrase: String, description: String) {
         let persistentIdentifier = self.activityType + "::" + uuid
         self.title = title
         if #available(iOS 12.0, *) {

@@ -23,6 +23,7 @@
 
 import RealmSwift
 import CoreSpotlight
+import MobileCoreServices
 
 public class CoreSpotlightIndexer: HasBasicController {
 
@@ -78,6 +79,21 @@ public class CoreSpotlightIndexer: HasBasicController {
         case .error(let error):
             log.error(error)
             assertionFailure(String(describing: error))
+        }
+    }
+
+    private func replaceIndexWithReminderVessels(_ vessels: AnyRealmCollection<ReminderVessel>) {
+        CSSearchableIndex.default().deleteAllSearchableItems() { error in
+            guard error == nil else { return }
+            for vessel in vessels {
+                autoreleasepool() {
+                    let vas = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
+                    vas.title = vessel.displayName ?? "My Plant"
+                    vas.contentDescription = "Edit plant name, photo, reminders."
+                    vas.thumbnailData = vessel.iconImageData
+                    let vi = CSSearchableItem(uniqueIdentifier: vessel.uuid, domainIdentifier: nil, attributeSet: vas)
+                }
+            }
         }
     }
 }

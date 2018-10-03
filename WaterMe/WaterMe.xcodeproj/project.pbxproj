@@ -22,7 +22,6 @@
 		501C0E921ECE5EFF00D4EE7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E911ECE5EFF00D4EE7C /* Assets.xcassets */; };
 		501C0E951ECE5EFF00D4EE7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E931ECE5EFF00D4EE7C /* LaunchScreen.storyboard */; };
 		501C0E9B1ECE602400D4EE7C /* PrivateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */; };
-		50246118215805D200DA8B94 /* NSUserActivity+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50246117215805D200DA8B94 /* NSUserActivity+WaterMe.swift */; };
 		50281904200BB57D0044BEC8 /* ModalParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50281903200BB57D0044BEC8 /* ModalParentViewController.swift */; };
 		50281906200BD6110044BEC8 /* PurchaseThanksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50281905200BD6110044BEC8 /* PurchaseThanksViewController.swift */; };
 		50281908200BE7C80044BEC8 /* PurchaseThanks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50281907200BE7C80044BEC8 /* PurchaseThanks.storyboard */; };
@@ -168,7 +167,6 @@
 		501C0E941ECE5EFF00D4EE7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		501C0E961ECE5EFF00D4EE7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKeys.swift; sourceTree = "<group>"; };
-		50246117215805D200DA8B94 /* NSUserActivity+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+WaterMe.swift"; sourceTree = "<group>"; };
 		50281903200BB57D0044BEC8 /* ModalParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalParentViewController.swift; sourceTree = "<group>"; };
 		50281905200BD6110044BEC8 /* PurchaseThanksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseThanksViewController.swift; sourceTree = "<group>"; };
 		50281907200BE7C80044BEC8 /* PurchaseThanks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PurchaseThanks.storyboard; sourceTree = "<group>"; };
@@ -541,7 +539,6 @@
 				5096D190215474E1006E1019 /* UIApplication+WaterMe.swift */,
 				5096D19221547658006E1019 /* UIView+WaterMe.swift */,
 				50BB0F741EC01B8E00850FF4 /* UserDefaults+WaterMe.swift */,
-				50246117215805D200DA8B94 /* NSUserActivity+WaterMe.swift */,
 				50163F95215B0CAB002DD849 /* UIViewController+WaterMe.swift */,
 			);
 			path = Categories;
@@ -1066,7 +1063,6 @@
 				5010C230213F77B200D1832C /* ReminderSummaryViewController.swift in Sources */,
 				5028190A200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift in Sources */,
 				50B779CD2154700A00AC6240 /* UIAlertController+UserFacingError.swift in Sources */,
-				50246118215805D200DA8B94 /* NSUserActivity+WaterMe.swift in Sources */,
 				50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */,
 				5029E0962140CE42005285F5 /* TransparentTableViewHeaderFooterView.swift in Sources */,
 				506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */,
