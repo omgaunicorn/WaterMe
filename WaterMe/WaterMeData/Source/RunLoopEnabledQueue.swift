@@ -44,7 +44,6 @@ public class RunLoopEnabledQueue: NSObject {
         thread.name = name
         thread.qualityOfService = priority
         self.thread = thread
-        self.thread.start()
     }
 
     @objc private func runBlock() {
@@ -55,6 +54,7 @@ public class RunLoopEnabledQueue: NSObject {
 
     public func execute(async: Bool = true, block: @escaping () -> Void) {
         self.currentBlock = block
+        self.thread.start()
         self.perform(#selector(self.runBlock),
                      on: self.thread,
                      with: nil,

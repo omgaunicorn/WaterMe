@@ -27,55 +27,36 @@ import MobileCoreServices
 
 public class CoreSpotlightIndexer: HasBasicController {
 
-    private let queue: RunLoopEnabledQueue = {
+    private let queue: DispatchQueue = {
         let name = "com.saturdayapps.waterme.csindexer.queue.\(UUID().uuidString)"
-        let q = RunLoopEnabledQueue(name: name, priority: .background)
+        let q = DispatchQueue(label: name, qos: .background)
         return q
     }()
 
-    private var reminders: AnyRealmCollection<Reminder>?
     private var reminderVessels: AnyRealmCollection<ReminderVessel>?
 
     public var basicRC: BasicController? {
         didSet { self.hardReloadData() }
     }
 
-    private var remindersToken: NotificationToken?
     private var reminderVesselsToken: NotificationToken?
 
     public init() { }
 
     private func hardReloadData() {
-        self.queue.execute(async: false) {
-            self.remindersToken?.invalidate()
-            self.remindersToken = nil
-            self.reminderVesselsToken?.invalidate()
-            self.reminderVesselsToken = nil
-            guard let basicRC = self.basicRC else { return }
-            self.reminders = basicRC.allReminders().value
-            self.reminderVessels = basicRC.allVessels().value
-            self.remindersToken = self.reminders?.observe() { [weak self] c in
-                self?.remindersChanged(c)
-            }
-            self.reminderVesselsToken = self.reminderVessels?.observe() { [weak self] c in
-                self?.reminderVesselsChanged(c)
-            }
+        self.reminderVesselsToken?.invalidate()
+        self.reminderVesselsToken = nil
+        guard let basicRC = self.basicRC else { return }
+        self.reminderVessels = basicRC.allVessels().value
+        self.reminderVesselsToken = self.reminderVessels?.observe() { [weak self] c in
+            self?.reminderVesselsChanged(c)
         }
     }
 
-    private func remindersChanged(_ changes: RealmCollectionChange<AnyRealmCollection<Reminder>>) {
-        assert(Thread.isMainThread == false && Thread.current === self.queue.thread)
-        print("REMINDERS CHANGED")
-    }
-
     private func reminderVesselsChanged(_ changes: RealmCollectionChange<AnyRealmCollection<ReminderVessel>>) {
-        assert(Thread.isMainThread == false && Thread.current === self.queue.thread)
-        print("REMINDER VESSELS CHANGED")
         switch changes {
-        case .initial(let data):
-            break
-        case .update(let data, let dels, let ins, let mods):
-            break
+        case .initial(let data), .update(let data, _, _, _):
+            self.replaceIndexWithReminderVessels(data)
         case .error(let error):
             log.error(error)
             assertionFailure(String(describing: error))
@@ -83,16 +64,35 @@ public class CoreSpotlightIndexer: HasBasicController {
     }
 
     private func replaceIndexWithReminderVessels(_ vessels: AnyRealmCollection<ReminderVessel>) {
-        CSSearchableIndex.default().deleteAllSearchableItems() { error in
-            guard error == nil else { return }
-            for vessel in vessels {
-                autoreleasepool() {
-                    let vas = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-                    vas.title = vessel.displayName ?? "My Plant"
-                    vas.contentDescription = "Edit plant name, photo, reminders."
-                    vas.thumbnailData = vessel.iconImageData
-                    let vi = CSSearchableItem(uniqueIdentifier: vessel.uuid, domainIdentifier: nil, attributeSet: vas)
+        let _items = vessels.map() { vessel -> CSSearchableItem in
+            let vas = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
+            vas.title = vessel.displayName ?? "My Plant"
+            vas.contentDescription = "Edit plant name, photo, reminders."
+            vas.thumbnailData = vessel.iconImageData
+            let vi = CSSearchableItem(uniqueIdentifier: vessel.uuid,
+                                      domainIdentifier: RawUserActivity.editReminderVessel.rawValue,
+                                      attributeSet: vas)
+            return vi
+        }
+        let items = Array(_items)
+        self.queue.async {
+            let index = CSSearchableIndex.default()
+            let semaphore = DispatchSemaphore(value: 0)
+            index.deleteAllSearchableItems() { error in
+                if let error = error {
+                    log.error(error)
+                    assertionFailure(String(describing: error))
+                    return
                 }
+                semaphore.signal()
+            }
+            semaphore.wait()
+            log.info("Requesting Indexing: \(items.count) items.")
+            index.indexSearchableItems(items) { error in
+                log.info("Finished Indexing: \(items.count) items.")
+                guard let error = error else { return }
+                log.error(error)
+                assertionFailure(String(describing: error))
             }
         }
     }
