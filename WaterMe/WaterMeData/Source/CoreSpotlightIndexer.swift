@@ -21,4 +21,63 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Foundation
+import RealmSwift
+import CoreSpotlight
+
+public class CoreSpotlightIndexer: HasBasicController {
+
+    private let queue: RunLoopEnabledQueue = {
+        let name = "com.saturdayapps.waterme.csindexer.queue.\(UUID().uuidString)"
+        let q = RunLoopEnabledQueue(name: name, priority: .background)
+        return q
+    }()
+
+    private var reminders: AnyRealmCollection<Reminder>?
+    private var reminderVessels: AnyRealmCollection<ReminderVessel>?
+
+    public var basicRC: BasicController? {
+        didSet { self.hardReloadData() }
+    }
+
+    private var remindersToken: NotificationToken?
+    private var reminderVesselsToken: NotificationToken?
+
+    public init() { }
+
+    private func hardReloadData() {
+        self.queue.execute(async: false) {
+            self.remindersToken?.invalidate()
+            self.remindersToken = nil
+            self.reminderVesselsToken?.invalidate()
+            self.reminderVesselsToken = nil
+            guard let basicRC = self.basicRC else { return }
+            self.reminders = basicRC.allReminders().value
+            self.reminderVessels = basicRC.allVessels().value
+            self.remindersToken = self.reminders?.observe() { [weak self] c in
+                self?.remindersChanged(c)
+            }
+            self.reminderVesselsToken = self.reminderVessels?.observe() { [weak self] c in
+                self?.reminderVesselsChanged(c)
+            }
+        }
+    }
+
+    private func remindersChanged(_ changes: RealmCollectionChange<AnyRealmCollection<Reminder>>) {
+        assert(Thread.isMainThread == false && Thread.current === self.queue.thread)
+        print("REMINDERS CHANGED")
+    }
+
+    private func reminderVesselsChanged(_ changes: RealmCollectionChange<AnyRealmCollection<ReminderVessel>>) {
+        assert(Thread.isMainThread == false && Thread.current === self.queue.thread)
+        print("REMINDER VESSELS CHANGED")
+        switch changes {
+        case .initial(let data):
+            break
+        case .update(let data, let dels, let ins, let mods):
+            break
+        case .error(let error):
+            log.error(error)
+            assertionFailure(String(describing: error))
+        }
+    }
+}
