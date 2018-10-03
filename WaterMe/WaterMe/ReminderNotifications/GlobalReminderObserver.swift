@@ -35,6 +35,7 @@ class GlobalReminderObserver {
     private let badgeNumberController = BadgeNumberController.self
     private let notificationController = ReminderUserNotificationController()
     private let significantTimePassedDetector = SignificantTimePassedDetector()
+    private let basicRC: BasicController
 
     private var data: AnyRealmCollection<Reminder>?
     private var timer: Timer?
@@ -42,23 +43,18 @@ class GlobalReminderObserver {
     private let taskName = String(describing: GlobalReminderObserver.self) + UUID().uuidString
     private var backgroundTaskID: UIBackgroundTaskIdentifier?
 
-    init?(basicController: BasicController?) {
-        guard
-            let basicController = basicController,
-            let collection = basicController.allReminders().value
-        else {
-            let message = "Error Initializing: Error loading data from Realm."
-            log.error(message)
-            assertionFailure(message)
-            return nil
-        }
-
-        self.token = collection.observe({ [weak self] in self?.dataChanged($0) })
+    init(basicController: BasicController) {
+        self.basicRC = basicController
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.applicationDidEnterBackground(with:)),
                                                name: .UIApplicationDidEnterBackground,
                                                object: nil)
         self.significantTimePassedDetector.delegate = self
+        
+        DispatchQueue.main.async {
+            let collection = basicController.allReminders(sorted: .nextPerformDate, ascending: true).value
+            self.token = collection?.observe({ [weak self] in self?.dataChanged($0) })
+        }
     }
 
     func notificationPermissionsMayHaveChanged() {
@@ -97,11 +93,14 @@ class GlobalReminderObserver {
             self.notificationController.updateScheduledNotifications(with: data)
         case .badge:
             self.badgeNumberController.updateBadgeNumber(with: data)
-        case .spotlightIndex:
-            break
         case .all:
             self.notificationController.updateScheduledNotifications(with: data)
             self.badgeNumberController.updateBadgeNumber(with: data)
+            fallthrough
+        case .spotlightIndex:
+            let _vessels = self.basicRC.allVessels().value
+            let vessels = Array(_vessels?.map({ ReminderVesselValue(reminderVessel: $0) }) ?? [])
+            self.spotlightIndexer.updateSpotlightIndex(reminders: data, reminderVessels: vessels)
         }
         // end the background task
         guard let id = self.backgroundTaskID else { return }
@@ -139,14 +138,16 @@ extension GlobalReminderObserver: SignificantTimePassedDetectorDelegate {
     }
 }
 
-struct ReminderValue: Equatable {
-    var reminderUUID: String
+struct ReminderValue {
     var parentPlantUUID: String
     var parentPlantName: String?
     var nextPerformDate: Date?
+    var reminderKind: Reminder.Kind
+    var reminderUUID: String
 
     init(reminder: Reminder) {
         self.reminderUUID = reminder.uuid
+        self.reminderKind = reminder.kind
         self.parentPlantUUID = reminder.vessel?.uuid ?? UUID().uuidString
         self.parentPlantName = reminder.vessel?.shortLabelSafeDisplayName
         self.nextPerformDate = reminder.nextPerformDate
@@ -156,5 +157,17 @@ struct ReminderValue: Equatable {
         let uniqueParents = Dictionary(grouping: reminders, by: { $0.parentPlantUUID })
         let parentNames = uniqueParents.map({ $0.value.first?.parentPlantName })
         return parentNames
+    }
+}
+
+struct ReminderVesselValue {
+    var uuid: String
+    var name: String?
+    var imageData: Data?
+
+    init(reminderVessel: ReminderVessel) {
+        self.uuid = reminderVessel.uuid
+        self.name = reminderVessel.shortLabelSafeDisplayName
+        self.imageData = reminderVessel.iconImageData
     }
 }

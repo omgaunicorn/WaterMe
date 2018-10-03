@@ -50,7 +50,7 @@ public class ReminderVessel: Object {
     @objc public internal(set) dynamic var displayName: String?
     public let reminders = List<Reminder>()
     
-    @objc private(set) internal dynamic var iconImageData: Data?
+    @objc public private(set) dynamic var iconImageData: Data?
     @objc private dynamic var iconEmojiString: String?
     public internal(set) var icon: Icon? {
         get { return Icon(rawImageData: self.iconImageData, emojiString: self.iconEmojiString) }

@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import WaterMeData
 import CoreSpotlight
 import MobileCoreServices
 
@@ -30,7 +31,7 @@ class CoreSpotlightIndexer {
     private static let queue = DispatchQueue(label: taskName, qos: .utility)
     private static var backgroundTaskID: UIBackgroundTaskIdentifier?
 
-    class func updateSpotlightIndex(with data: [ReminderValue]) {
+    class func updateSpotlightIndex(reminders: [ReminderValue], reminderVessels: [ReminderVesselValue]) {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
@@ -48,15 +49,24 @@ class CoreSpotlightIndexer {
                 assertionFailure(String(describing: error))
                 return
             }
-            let items = CSSearchableItem.items(from: data)
-            let indexError = index.sync_indexSearchableItems(items: items)
-            if let error = indexError {
+            let reminderItems = CSSearchableItem.items(from: reminders)
+            let reminderIndexError = index.sync_indexSearchableItems(items: reminderItems)
+            if let error = reminderIndexError {
+                log.error(error)
+                Analytics.log(error: error)
+                assertionFailure(String(describing: error))
+                return
+            }
+            let reminderVesselItems = CSSearchableItem.items(from: reminderVessels)
+            let reminderVesselIndexError = index.sync_indexSearchableItems(items: reminderVesselItems)
+            if let error = reminderVesselIndexError {
                 log.error(error)
                 Analytics.log(error: error)
                 assertionFailure(String(describing: error))
                 return
             }
             DispatchQueue.main.async {
+                log.debug("Spotlight Items Indexed: \(reminderItems.count + reminderVesselItems.count)")
                 guard let id = self.backgroundTaskID else { return }
                 self.backgroundTaskID = nil
                 UIApplication.shared.endBackgroundTask(id)
@@ -91,6 +101,38 @@ extension CSSearchableIndex {
 
 extension CSSearchableItem {
     class func items(from data: [ReminderValue]) -> [CSSearchableItem] {
-        return []
+        let editItems = data.map() { reminder -> CSSearchableItem in
+            let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
+            attributes.title = "\(reminder.reminderKind.localizedShortString) \(reminder.parentPlantName ?? ReminderVessel.LocalizedString.untitledPlant) - Edit"
+            attributes.contentDescription = "Edit reminder notes, kind, and interval."
+            let item = CSSearchableItem(uniqueIdentifier: reminder.reminderUUID,
+                                        domainIdentifier: RawUserActivity.editReminder.rawValue,
+                                        attributeSet: attributes)
+            return item
+        }
+        let viewItems = data.map() { reminder -> CSSearchableItem in
+            let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
+            attributes.title = "\(reminder.reminderKind.localizedShortString) \(reminder.parentPlantName ?? ReminderVessel.LocalizedString.untitledPlant) - View"
+            attributes.contentDescription = "View reminder to mark as done or view notes."
+            let item = CSSearchableItem(uniqueIdentifier: reminder.reminderUUID,
+                                        domainIdentifier: RawUserActivity.viewReminder.rawValue,
+                                        attributeSet: attributes)
+            return item
+        }
+        return editItems + viewItems
+    }
+
+    class func items(from data: [ReminderVesselValue]) -> [CSSearchableItem] {
+        let items = data.map() { vessel -> CSSearchableItem in
+            let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
+            attributes.title = "\(vessel.name ?? ReminderVessel.LocalizedString.untitledPlant) - Edit"
+            attributes.contentDescription = "Edit plant name, photo, or reminders."
+            attributes.thumbnailData = vessel.imageData
+            let item = CSSearchableItem(uniqueIdentifier: vessel.uuid,
+                                        domainIdentifier: RawUserActivity.editReminderVessel.rawValue,
+                                        attributeSet: attributes)
+            return item
+        }
+        return items
     }
 }
