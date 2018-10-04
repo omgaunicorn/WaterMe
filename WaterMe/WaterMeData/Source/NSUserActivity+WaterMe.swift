@@ -27,7 +27,7 @@ import Intents
 
 public enum RestoredUserActivity {
     case editReminder(Reminder.Identifier)
-    case editReminderVessel(Reminder.Identifier)
+    case editReminderVessel(ReminderVessel.Identifier)
     case viewReminder(Reminder.Identifier)
     case viewReminders
     case error
@@ -38,26 +38,38 @@ public enum RawUserActivity: String {
     case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
     case viewReminder = "com.saturdayapps.waterme.activity.view.reminder"
     case viewReminders = "com.saturdayapps.waterme.activity.view.reminders"
-    case indexedItem = "CSSearchableItemActionType"
+    case indexedItem = "com.apple.corespotlightitem" //CSSearchableItemActionType
 }
 
 public extension NSUserActivity {
 
+    fileprivate static let stringSeparator = "::"
+
+    public static func uniqueString(for rawActivity: RawUserActivity, and uuid: UUIDRepresentable?) -> String {
+        if let uuid = uuid {
+            return rawActivity.rawValue + stringSeparator + uuid.uuid
+        } else {
+            return rawActivity.rawValue
+        }
+    }
+
     public var restoredUserActivity: RestoredUserActivity? {
-        guard let kind = RawUserActivity(rawValue: self.activityType) else {
+        let rawString = self.userInfo?[CSSearchableItemActivityIdentifier] as? String
+        guard
+            let components = rawString?.components(separatedBy: type(of: self).stringSeparator),
+            components.count == 2,
+            let kind = RawUserActivity(rawValue: components[0])
+        else {
             assertionFailure()
             return nil
         }
-        let uuid = self.userInfo?[self.activityType] as? String
+        let uuid = components[1]
         switch kind {
         case .editReminder:
-            guard let uuid = uuid else { return nil }
             return .editReminder(.init(rawValue: uuid))
         case .editReminderVessel:
-            guard let uuid = uuid else { return nil }
             return .editReminderVessel(.init(rawValue: uuid))
         case .viewReminder:
-            guard let uuid = uuid else { return nil }
             return .viewReminder(.init(rawValue: uuid))
         case .viewReminders:
             return .viewReminders
@@ -77,15 +89,19 @@ public extension NSUserActivity {
         }
     }
 
-    public func update(uuid: String, title: String, phrase: String, description: String) {
-        let persistentIdentifier = self.activityType + "::" + uuid
+    public func update(uuid: UUIDRepresentable?, title: String, phrase: String, description: String) {
+        guard let kind = RawUserActivity(rawValue: self.activityType) else {
+            assertionFailure()
+            return
+        }
+        let persistentIdentifier = type(of: self).uniqueString(for: kind, and: uuid)
         self.title = title
         if #available(iOS 12.0, *) {
             self.suggestedInvocationPhrase = phrase
             self.persistentIdentifier = persistentIdentifier
         }
-        self.requiredUserInfoKeys = [self.activityType]
-        self.addUserInfoEntries(from: [self.activityType: uuid])
+        self.addUserInfoEntries(from: [CSSearchableItemActivityIdentifier: persistentIdentifier])
+        self.requiredUserInfoKeys = [CSSearchableItemActivityIdentifier]
         let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
         attributes.relatedUniqueIdentifier = persistentIdentifier
         attributes.contentDescription = description

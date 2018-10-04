@@ -506,3 +506,27 @@ extension Reminder.Error {
                               comment: "Error Saving: Reminder: Missing Description: If the user has not entered a description for their other reminder and tries to save, an alert will warn them. This is the button title to fix the error.")
     }
 }
+
+extension NSUserActivity {
+    enum LocalizedString {
+        static func title(for reminderKind: Reminder.Kind, andVesselName vesselName: String?) -> String {
+            let localizedString = NSLocalizedString("%@ %@",
+                                                    comment: "SiriShortcut: Title: EditReminder, ViewReminder: Shows the reminder kind and the name of the plant so the user knows what the SiriShortcut applies to.")
+            let vesselName = vesselName ?? ReminderVessel.LocalizedString.untitledPlant
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString, reminderKind.localizedShortString, vesselName) as String
+            } else {
+                return String.localizedStringWithFormat(localizedString, reminderKind.localizedShortString, vesselName)
+            }
+        }
+        static var editReminderDescription: String {
+            let localizedString = NSLocalizedString("Edit reminder notes, kind, and interval.",
+                                                    comment: "SiriShortcut: Description: EditReminder: Explains to the user that by using this SiriShortcut they can edit the reminder.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+    }
+}

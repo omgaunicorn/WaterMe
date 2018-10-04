@@ -41,6 +41,17 @@ public protocol UICompleteCheckable {
 }
 
 public class ReminderVessel: Object {
+
+    public struct Identifier: UUIDRepresentable {
+        public var reminderVesselIdentifier: String
+        public init(reminderVessel: ReminderVessel) {
+            self.reminderVesselIdentifier = reminderVessel.uuid
+        }
+        public init(rawValue: String) {
+            self.reminderVesselIdentifier = rawValue
+        }
+        public var uuid: String { return self.reminderVesselIdentifier }
+    }
     
     public enum Kind: String {
         case plant

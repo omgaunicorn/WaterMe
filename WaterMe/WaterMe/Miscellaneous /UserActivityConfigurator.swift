@@ -83,7 +83,7 @@ private extension UserActivityConfigurator {
         log.debug()
         guard #available(iOS 12.0, *) else { return }
 
-        let uuid = reminderVessel.uuid
+        let uuid = ReminderVessel.Identifier(reminderVessel: reminderVessel)
         let vesselName = reminderVessel.displayName ?? ReminderVessel.LocalizedString.untitledPlant
         let title = NSString.deferredLocalizedIntentsString(with: "Edit “%@”", vesselName) as String
         let phrase = NSString.deferredLocalizedIntentsString(with: "Edit %@", vesselName) as String
@@ -97,12 +97,11 @@ private extension UserActivityConfigurator {
         log.debug()
         guard #available(iOS 12.0, *) else { return }
 
-        let uuid = String(describing: ReminderMainViewController.self)
         let title = NSString.deferredLocalizedIntentsString(with: "View all reminders") as String
         let phrase = NSString.deferredLocalizedIntentsString(with: "Garden Time") as String
         let description = NSString.deferredLocalizedIntentsString(with: "Manage all of your plants and reminders in WaterMe") as String
 
-        activity.update(uuid: uuid, title: title, phrase: phrase, description: description)
+        activity.update(uuid: nil, title: title, phrase: phrase, description: description)
     }
 
     private func updateViewReminder(activity: NSUserActivity, reminder: Reminder) {
@@ -110,7 +109,7 @@ private extension UserActivityConfigurator {
         log.debug()
         guard #available(iOS 12.0, *) else { return }
 
-        let uuid = reminder.uuid
+        let uuid = Reminder.Identifier(reminder: reminder)
         let vesselName = reminder.vessel?.displayName ?? ReminderVessel.LocalizedString.untitledPlant
         let title = NSString.deferredLocalizedIntentsString(with: "View %@ “%@” reminder", reminder.kind.localizedShortString, vesselName) as String
         let phrase = NSString.deferredLocalizedIntentsString(with: "View notes for %@", vesselName) as String
@@ -124,7 +123,7 @@ private extension UserActivityConfigurator {
         log.debug()
         guard #available(iOS 12.0, *) else { return }
 
-        let uuid = reminder.uuid
+        let uuid = Reminder.Identifier(reminder: reminder)
         let vesselName = reminder.vessel?.displayName ?? ReminderVessel.LocalizedString.untitledPlant
         let title = NSString.deferredLocalizedIntentsString(with: "Edit the %@ “%@” reminder", reminder.kind.localizedShortString, vesselName) as String
         let description = NSString.deferredLocalizedIntentsString(with: "Change how often or the kind of reminder in WaterMe.") as String

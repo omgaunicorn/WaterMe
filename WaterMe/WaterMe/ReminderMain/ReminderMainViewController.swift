@@ -170,30 +170,19 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     }
 
     private func continueUserActivity(_ activity: RestoredUserActivity) {
-        func sharedWork(_ identifier: Reminder.Identifier,
-                        work: @escaping (BasicController, (@escaping () -> Void)) -> Void)
-        {
+        switch activity {
+        case .editReminder(let identifier):
             guard
                 let completion = self.collectionVC?.programmaticalySelectReminder(with: identifier),
                 let basicRC = self.basicRC
             else { return }
             self.dismissAnimatedIfNeeded() {
-                work(basicRC, completion)
-            }
-        }
-        switch activity {
-        case .editReminder(let identifier):
-            sharedWork(identifier) { basicRC, completion in
                 self.userChoseEditReminder(with: identifier,
                                            basicRC: basicRC,
                                            completion: completion)
             }
         case .editReminderVessel(let identifier):
-            sharedWork(identifier) { basicRC, completion in
-                self.userChoseEditVessel(withReminderIdentifier: identifier,
-                                         basicRC: basicRC,
-                                         completion: completion)
-            }
+            assertionFailure("unimplemented")
         case .viewReminder(let identifier):
             self.dismissAnimatedIfNeeded() {
                 self.collectionVC?.programaticallySimulateSelectionOfReminder(with: identifier)

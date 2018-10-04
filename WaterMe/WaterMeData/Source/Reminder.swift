@@ -143,7 +143,7 @@ extension Reminder: UICompleteCheckable {
 }
 
 public extension Reminder {
-    public struct Identifier {
+    public struct Identifier: UUIDRepresentable {
         public var reminderIdentifier: String
         public init(reminder: Reminder) {
             self.reminderIdentifier = reminder.uuid
@@ -151,6 +151,7 @@ public extension Reminder {
         public init(rawValue: String) {
             self.reminderIdentifier = rawValue
         }
+        public var uuid: String { return self.reminderIdentifier }
     }
 }
 
