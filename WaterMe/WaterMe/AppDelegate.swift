@@ -64,6 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #else
         log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
         #endif
+
+        // configure main thread checking
+        DispatchQueue.configureMainQueue()
         
         // as early as possible, configure standard defaults
         UserDefaults.standard.configure()

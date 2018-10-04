@@ -70,6 +70,7 @@
 		507A64581F049CCA004E18C5 /* ReminderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */; };
 		5085C7122162D0D300030D2A /* emojione-apple.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 5085C7112162D0D300030D2A /* emojione-apple.ttc */; };
 		5085C71B216523CB00030D2A /* CoreSpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085C71A216523CB00030D2A /* CoreSpotlightIndexer.swift */; };
+		5085C71D21667A4500030D2A /* DispatchQueue+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085C71C21667A4500030D2A /* DispatchQueue+WaterMe.swift */; };
 		5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */; };
 		5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */; };
 		5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */; };
@@ -220,6 +221,7 @@
 		507A64561F049CCA004E18C5 /* ReminderTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderTableViewCell.xib; sourceTree = "<group>"; };
 		5085C7112162D0D300030D2A /* emojione-apple.ttc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "emojione-apple.ttc"; sourceTree = "<group>"; };
 		5085C71A216523CB00030D2A /* CoreSpotlightIndexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreSpotlightIndexer.swift; sourceTree = "<group>"; };
+		5085C71C21667A4500030D2A /* DispatchQueue+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+WaterMe.swift"; sourceTree = "<group>"; };
 		5087A91E1EE337C10046E687 /* EmojiPickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPickerCollectionViewCell.swift; sourceTree = "<group>"; };
 		5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmojiPickerCollectionViewCell.xib; sourceTree = "<group>"; };
 		5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCropperViewController.swift; sourceTree = "<group>"; };
@@ -543,6 +545,7 @@
 				5096D19221547658006E1019 /* UIView+WaterMe.swift */,
 				50BB0F741EC01B8E00850FF4 /* UserDefaults+WaterMe.swift */,
 				50163F95215B0CAB002DD849 /* UIViewController+WaterMe.swift */,
+				5085C71C21667A4500030D2A /* DispatchQueue+WaterMe.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1058,6 +1061,7 @@
 				5028190D200D14850044BEC8 /* SettingsInfoTableViewCell.swift in Sources */,
 				50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */,
 				5096D19A215478FF006E1019 /* UIFont+Font.swift in Sources */,
+				5085C71D21667A4500030D2A /* DispatchQueue+WaterMe.swift in Sources */,
 				50E3F2C91FF6EF35003245E3 /* ImageEmojiObject.swift in Sources */,
 				506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */,
 				501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */,

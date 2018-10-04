@@ -67,12 +67,13 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
                 assertionFailure("Cannot update the data on a CoreSpotlight activity")
             }
         }
-        if Thread.isMainThread {
+        guard DispatchQueue.isMain == false else {
+            assertionFailure("this is unexpected")
             workItem()
-        } else {
-            DispatchQueue.main.sync() {
-                workItem()
-            }
+            return
+        }
+        DispatchQueue.main.sync() {
+            workItem()
         }
     }
 }
