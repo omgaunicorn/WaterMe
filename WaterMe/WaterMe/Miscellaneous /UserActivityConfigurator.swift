@@ -80,54 +80,63 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
 private extension UserActivityConfigurator {
     private func updateEditReminderVessel(activity: NSUserActivity, reminderVessel: ReminderVessel) {
         assert(activity.activityType == RawUserActivity.editReminderVessel.rawValue)
-        log.debug()
-        guard #available(iOS 12.0, *) else { return }
 
         let uuid = ReminderVessel.Identifier(reminderVessel: reminderVessel)
-        let vesselName = reminderVessel.displayName ?? ReminderVessel.LocalizedString.untitledPlant
-        let title = NSString.deferredLocalizedIntentsString(with: "Edit “%@”", vesselName) as String
-        let phrase = NSString.deferredLocalizedIntentsString(with: "Edit %@", vesselName) as String
-        let description = NSString.deferredLocalizedIntentsString(with: "Change your plant's name, photo, and reminders.") as String
+        let title = NSUserActivity.LocalizedString.title(fromVesselName: reminderVessel.shortLabelSafeDisplayName)
+        let phrase = NSUserActivity.LocalizedString.genericLocalizedPhrase
+        let description = NSUserActivity.LocalizedString.editReminderVesselDescription
 
-        activity.update(uuid: uuid, title: title, phrase: phrase, description: description)
+        activity.update(uuid: uuid,
+                        title: title,
+                        phrase: phrase,
+                        description: description,
+                        thumbnailData: reminderVessel.iconImageData)
     }
 
     private func updateViewReminders(activity: NSUserActivity) {
         assert(activity.activityType == RawUserActivity.viewReminders.rawValue)
-        log.debug()
-        guard #available(iOS 12.0, *) else { return }
 
-        let title = NSString.deferredLocalizedIntentsString(with: "View all reminders") as String
-        let phrase = NSString.deferredLocalizedIntentsString(with: "Garden Time") as String
-        let description = NSString.deferredLocalizedIntentsString(with: "Manage all of your plants and reminders in WaterMe") as String
+        let title = NSUserActivity.LocalizedString.viewRemindersTitle
+        let phrase = NSUserActivity.LocalizedString.genericLocalizedPhrase
+        let description = NSUserActivity.LocalizedString.viewRemindersDescriptions
 
-        activity.update(uuid: nil, title: title, phrase: phrase, description: description)
+        activity.update(uuid: nil,
+                        title: title,
+                        phrase: phrase,
+                        description: description,
+                        thumbnailData: nil)
     }
 
     private func updateViewReminder(activity: NSUserActivity, reminder: Reminder) {
         assert(activity.activityType == RawUserActivity.viewReminder.rawValue)
-        log.debug()
-        guard #available(iOS 12.0, *) else { return }
 
         let uuid = Reminder.Identifier(reminder: reminder)
-        let vesselName = reminder.vessel?.displayName ?? ReminderVessel.LocalizedString.untitledPlant
-        let title = NSString.deferredLocalizedIntentsString(with: "View %@ “%@” reminder", reminder.kind.localizedShortString, vesselName) as String
-        let phrase = NSString.deferredLocalizedIntentsString(with: "View notes for %@", vesselName) as String
-        let description = NSString.deferredLocalizedIntentsString(with: "Mark the reminder as done, edit your plant, or edit your reminder.") as String
+        let title = NSUserActivity.LocalizedString.title(for: reminder.kind,
+                                                         andVesselName: reminder.vessel?.shortLabelSafeDisplayName)
+        let phrase = NSUserActivity.LocalizedString.genericLocalizedPhrase
+        let description = NSUserActivity.LocalizedString.viewReminderDescription
 
-        activity.update(uuid: uuid, title: title, phrase: phrase, description: description)
+        activity.update(uuid: uuid,
+                        title: title,
+                        phrase: phrase,
+                        description: description,
+                        thumbnailData: reminder.vessel?.iconImageData)
     }
 
     private func updateEditReminder(activity: NSUserActivity, reminder: Reminder) {
         assert(activity.activityType == RawUserActivity.editReminder.rawValue)
-        log.debug()
-        guard #available(iOS 12.0, *) else { return }
 
         let uuid = Reminder.Identifier(reminder: reminder)
-        let vesselName = reminder.vessel?.displayName ?? ReminderVessel.LocalizedString.untitledPlant
-        let title = NSString.deferredLocalizedIntentsString(with: "Edit the %@ “%@” reminder", reminder.kind.localizedShortString, vesselName) as String
-        let description = NSString.deferredLocalizedIntentsString(with: "Change how often or the kind of reminder in WaterMe.") as String
 
-        activity.update(uuid: uuid, title: title, phrase: title, description: description)
+        let title = NSUserActivity.LocalizedString.title(for: reminder.kind,
+                                                         andVesselName: reminder.vessel?.shortLabelSafeDisplayName)
+        let phrase = NSUserActivity.LocalizedString.genericLocalizedPhrase
+        let description = NSUserActivity.LocalizedString.editReminderDescription
+
+        activity.update(uuid: uuid,
+                        title: title,
+                        phrase: phrase,
+                        description: description,
+                        thumbnailData: reminder.vessel?.iconImageData)
     }
 }

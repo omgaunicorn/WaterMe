@@ -103,9 +103,10 @@ extension CSSearchableItem {
     class func items(from data: [ReminderValue]) -> [CSSearchableItem] {
         let editItems = data.map() { reminder -> CSSearchableItem in
             let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-            let title = NSUserActivity.LocalizedString.title(for: reminder.reminderKind, andVesselName: reminder.parentPlantName)
-            attributes.title = title as String
+            attributes.title = NSUserActivity.LocalizedString.title(for: reminder.reminderKind,
+                                                                    andVesselName: reminder.parentPlantName)
             attributes.contentDescription = NSUserActivity.LocalizedString.editReminderDescription
+            attributes.thumbnailData = reminder.parentPlantImageData
             let uuid = NSUserActivity.uniqueString(for: RawUserActivity.editReminder,
                                                    and: Reminder.Identifier(rawValue: reminder.reminderUUID))
             let item = CSSearchableItem(uniqueIdentifier: uuid,
@@ -115,8 +116,10 @@ extension CSSearchableItem {
         }
         let viewItems = data.map() { reminder -> CSSearchableItem in
             let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-            attributes.title = "\(reminder.reminderKind.localizedShortString) \(reminder.parentPlantName ?? ReminderVessel.LocalizedString.untitledPlant) - View"
-            attributes.contentDescription = "View reminder to mark as done or view notes."
+            attributes.title = NSUserActivity.LocalizedString.title(for: reminder.reminderKind,
+                                                                    andVesselName: reminder.parentPlantName)
+            attributes.contentDescription = NSUserActivity.LocalizedString.viewReminderDescription
+            attributes.thumbnailData = reminder.parentPlantImageData
             let uuid = NSUserActivity.uniqueString(for: RawUserActivity.viewReminder,
                                                    and: Reminder.Identifier(rawValue: reminder.reminderUUID))
             let item = CSSearchableItem(uniqueIdentifier: uuid,
@@ -128,11 +131,10 @@ extension CSSearchableItem {
     }
 
     class func items(from data: [ReminderVesselValue]) -> [CSSearchableItem] {
-        guard #available(iOS 12.0, *) else { return [] }
         let items = data.map() { vessel -> CSSearchableItem in
             let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-            attributes.title = "\(vessel.name ?? ReminderVessel.LocalizedString.untitledPlant) - Edit"
-            attributes.contentDescription = "Edit plant name, photo, or reminders."
+            attributes.title = NSUserActivity.LocalizedString.title(fromVesselName: vessel.name)
+            attributes.contentDescription = NSUserActivity.LocalizedString.editReminderVesselDescription
             attributes.thumbnailData = vessel.imageData
             let uuid = NSUserActivity.uniqueString(for: RawUserActivity.editReminderVessel,
                                                    and: ReminderVessel.Identifier(rawValue: vessel.uuid))

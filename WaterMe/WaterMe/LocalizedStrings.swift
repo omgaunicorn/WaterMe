@@ -509,7 +509,19 @@ extension Reminder.Error {
 
 extension NSUserActivity {
     enum LocalizedString {
-        static func title(for reminderKind: Reminder.Kind, andVesselName vesselName: String?) -> String {
+        static func title(fromVesselName vesselName: String?) -> String {
+            let localizedString = NSLocalizedString("%@",
+                                                    comment: "SiriShortcut: Title: EditPlant: Shows the plant name that the siri shortcut corresponds to.")
+            let vesselName = vesselName ?? ReminderVessel.LocalizedString.untitledPlant
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString, vesselName) as String
+            } else {
+                return String.localizedStringWithFormat(localizedString, vesselName)
+            }
+        }
+        static func title(for reminderKind: Reminder.Kind,
+                          andVesselName vesselName: String?) -> String
+        {
             let localizedString = NSLocalizedString("%@ %@",
                                                     comment: "SiriShortcut: Title: EditReminder, ViewReminder: Shows the reminder kind and the name of the plant so the user knows what the SiriShortcut applies to.")
             let vesselName = vesselName ?? ReminderVessel.LocalizedString.untitledPlant
@@ -522,6 +534,52 @@ extension NSUserActivity {
         static var editReminderDescription: String {
             let localizedString = NSLocalizedString("Edit reminder notes, kind, and interval.",
                                                     comment: "SiriShortcut: Description: EditReminder: Explains to the user that by using this SiriShortcut they can edit the reminder.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+        static var viewReminderDescription: String {
+            let localizedString = NSLocalizedString("View notes, last performed date, mark as done.",
+                                                    comment: "SiriShortcut: Description: ViewReminder: Explains to the user that by using this SiriShortcut they can view the reminder summary screen.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+        static var editReminderVesselDescription: String {
+            let localizedString = NSLocalizedString("Edit plant name, photo, or reminders.",
+                                                    comment: "SiriShortcut: Description: EditPlant: Explains to the user that by using this SiriShortcut they can edit their plant.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+        static var viewRemindersTitle: String {
+            let localizedString = NSLocalizedString("All Reminders",
+                                                    comment: "SiriShortcut: Title: ViewReminders: Title of the shortcut that will bring the user to see all reminders.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+
+        static var viewRemindersDescriptions: String {
+            let localizedString = NSLocalizedString("View all gardening reminders.",
+                                                    comment: "SiriShortcut: Description: ViewReminders: Explains to the user that by using this SiriShortcut they can view all reminders.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+        static var genericLocalizedPhrase: String {
+            let localizedString = NSLocalizedString("Green Thumb It!",
+                                                    comment: "SiriShortcut: Phrase: Generic: Recommends something short and funny that the user can use to trigger this shortcut.")
             if #available(iOS 12.0, *) {
                 return NSString.deferredLocalizedIntentsString(with: localizedString) as String
             } else {

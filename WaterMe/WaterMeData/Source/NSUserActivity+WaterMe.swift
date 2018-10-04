@@ -89,7 +89,12 @@ public extension NSUserActivity {
         }
     }
 
-    public func update(uuid: UUIDRepresentable?, title: String, phrase: String, description: String) {
+    public func update(uuid: UUIDRepresentable?,
+                       title: String,
+                       phrase: String,
+                       description: String,
+                       thumbnailData: Data?)
+    {
         guard let kind = RawUserActivity(rawValue: self.activityType) else {
             assertionFailure()
             return
@@ -105,6 +110,7 @@ public extension NSUserActivity {
         let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
         attributes.relatedUniqueIdentifier = persistentIdentifier
         attributes.contentDescription = description
+        attributes.thumbnailData = thumbnailData
         self.contentAttributeSet = attributes
     }
 }

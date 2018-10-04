@@ -141,11 +141,13 @@ extension GlobalReminderObserver: SignificantTimePassedDetectorDelegate {
 struct ReminderValue {
     var parentPlantUUID: String
     var parentPlantName: String?
+    var parentPlantImageData: Data?
     var nextPerformDate: Date?
     var reminderKind: Reminder.Kind
     var reminderUUID: String
 
     init(reminder: Reminder) {
+        self.parentPlantImageData = reminder.vessel?.iconImageData
         self.reminderUUID = reminder.uuid
         self.reminderKind = reminder.kind
         self.parentPlantUUID = reminder.vessel?.uuid ?? UUID().uuidString
