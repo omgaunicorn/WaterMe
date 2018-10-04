@@ -31,7 +31,7 @@ class CoreSpotlightIndexer {
     private static let queue = DispatchQueue(label: taskName, qos: .utility)
     private static var backgroundTaskID: UIBackgroundTaskIdentifier?
 
-    class func updateSpotlightIndex(reminders: [ReminderValue], reminderVessels: [ReminderVesselValue]) {
+    class func updateSpotlightIndex(reminders: [ReminderValue]) {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
@@ -57,16 +57,8 @@ class CoreSpotlightIndexer {
                 assertionFailure(String(describing: error))
                 return
             }
-            let reminderVesselItems = CSSearchableItem.items(from: reminderVessels)
-            let reminderVesselIndexError = index.sync_indexSearchableItems(items: reminderVesselItems)
-            if let error = reminderVesselIndexError {
-                log.error(error)
-                Analytics.log(error: error)
-                assertionFailure(String(describing: error))
-                return
-            }
             DispatchQueue.main.async {
-                log.debug("Spotlight Items Indexed: \(reminderItems.count + reminderVesselItems.count)")
+                log.debug("Spotlight Items Indexed: \(reminderItems.count)")
                 guard let id = self.backgroundTaskID else { return }
                 self.backgroundTaskID = nil
                 UIApplication.shared.endBackgroundTask(id)
@@ -101,24 +93,11 @@ extension CSSearchableIndex {
 
 extension CSSearchableItem {
     class func items(from data: [ReminderValue]) -> [CSSearchableItem] {
-        let editItems = data.map() { reminder -> CSSearchableItem in
+        return data.map() { reminder -> CSSearchableItem in
             let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-            attributes.title = NSUserActivity.LocalizedString.title(for: reminder.reminderKind,
-                                                                    andVesselName: reminder.parentPlantName)
-            attributes.contentDescription = NSUserActivity.LocalizedString.editReminderDescription
-            attributes.thumbnailData = reminder.parentPlantImageData
-            let uuid = NSUserActivity.uniqueString(for: RawUserActivity.editReminder,
-                                                   and: Reminder.Identifier(rawValue: reminder.reminderUUID))
-            let item = CSSearchableItem(uniqueIdentifier: uuid,
-                                        domainIdentifier: RawUserActivity.editReminder.rawValue,
-                                        attributeSet: attributes)
-            return item
-        }
-        let viewItems = data.map() { reminder -> CSSearchableItem in
-            let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-            attributes.title = NSUserActivity.LocalizedString.title(for: reminder.reminderKind,
-                                                                    andVesselName: reminder.parentPlantName)
-            attributes.contentDescription = NSUserActivity.LocalizedString.viewReminderDescription
+            attributes.title = UserActivityConfigurator.LocalizedString.title(for: reminder.reminderKind,
+                                                                              andVesselName: reminder.parentPlantName)
+            attributes.contentDescription = CoreSpotlightIndexer.LocalizedString.description
             attributes.thumbnailData = reminder.parentPlantImageData
             let uuid = NSUserActivity.uniqueString(for: RawUserActivity.viewReminder,
                                                    and: Reminder.Identifier(rawValue: reminder.reminderUUID))
@@ -127,22 +106,5 @@ extension CSSearchableItem {
                                         attributeSet: attributes)
             return item
         }
-        return editItems + viewItems
-    }
-
-    class func items(from data: [ReminderVesselValue]) -> [CSSearchableItem] {
-        let items = data.map() { vessel -> CSSearchableItem in
-            let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-            attributes.title = NSUserActivity.LocalizedString.title(fromVesselName: vessel.name)
-            attributes.contentDescription = NSUserActivity.LocalizedString.editReminderVesselDescription
-            attributes.thumbnailData = vessel.imageData
-            let uuid = NSUserActivity.uniqueString(for: RawUserActivity.editReminderVessel,
-                                                   and: ReminderVessel.Identifier(rawValue: vessel.uuid))
-            let item = CSSearchableItem(uniqueIdentifier: uuid,
-                                        domainIdentifier: RawUserActivity.editReminderVessel.rawValue,
-                                        attributeSet: attributes)
-            return item
-        }
-        return items
     }
 }

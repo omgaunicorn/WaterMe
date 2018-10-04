@@ -507,7 +507,21 @@ extension Reminder.Error {
     }
 }
 
-extension NSUserActivity {
+extension CoreSpotlightIndexer {
+    enum LocalizedString {
+        static var description: String {
+            let localizedString = NSLocalizedString("Mark as done, view notes, or edit information.",
+                                                    comment: "Spotlight: Description: ViewReminder: Explains to the user that by tapping this spotlight entry they can view the reminder summary screen.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+    }
+}
+
+extension UserActivityConfigurator {
     enum LocalizedString {
         static func title(fromVesselName vesselName: String?) -> String {
             let localizedString = NSLocalizedString("%@",
@@ -526,9 +540,9 @@ extension NSUserActivity {
                                                     comment: "SiriShortcut: Title: EditReminder, ViewReminder: Shows the reminder kind and the name of the plant so the user knows what the SiriShortcut applies to.")
             let vesselName = vesselName ?? ReminderVessel.LocalizedString.untitledPlant
             if #available(iOS 12.0, *) {
-                return NSString.deferredLocalizedIntentsString(with: localizedString, reminderKind.localizedShortString, vesselName) as String
+                return NSString.deferredLocalizedIntentsString(with: localizedString, reminderKind.localizedSpotlightString, vesselName) as String
             } else {
-                return String.localizedStringWithFormat(localizedString, reminderKind.localizedShortString, vesselName)
+                return String.localizedStringWithFormat(localizedString, reminderKind.localizedSpotlightString, vesselName)
             }
         }
         static var editReminderDescription: String {

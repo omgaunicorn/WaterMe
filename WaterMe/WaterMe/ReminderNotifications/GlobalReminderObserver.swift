@@ -93,14 +93,12 @@ class GlobalReminderObserver {
             self.notificationController.updateScheduledNotifications(with: data)
         case .badge:
             self.badgeNumberController.updateBadgeNumber(with: data)
+        case .spotlightIndex:
+            self.spotlightIndexer.updateSpotlightIndex(reminders: data)
         case .all:
             self.notificationController.updateScheduledNotifications(with: data)
+            self.spotlightIndexer.updateSpotlightIndex(reminders: data)
             self.badgeNumberController.updateBadgeNumber(with: data)
-            fallthrough
-        case .spotlightIndex:
-            let _vessels = self.basicRC.allVessels().value
-            let vessels = Array(_vessels?.map({ ReminderVesselValue(reminderVessel: $0) }) ?? [])
-            self.spotlightIndexer.updateSpotlightIndex(reminders: data, reminderVessels: vessels)
         }
         // end the background task
         guard let id = self.backgroundTaskID else { return }

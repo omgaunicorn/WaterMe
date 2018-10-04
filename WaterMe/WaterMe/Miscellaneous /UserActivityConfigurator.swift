@@ -82,9 +82,9 @@ private extension UserActivityConfigurator {
         assert(activity.activityType == RawUserActivity.editReminderVessel.rawValue)
 
         let uuid = ReminderVessel.Identifier(reminderVessel: reminderVessel)
-        let title = NSUserActivity.LocalizedString.title(fromVesselName: reminderVessel.shortLabelSafeDisplayName)
-        let phrase = NSUserActivity.LocalizedString.genericLocalizedPhrase
-        let description = NSUserActivity.LocalizedString.editReminderVesselDescription
+        let title = LocalizedString.title(fromVesselName: reminderVessel.shortLabelSafeDisplayName)
+        let phrase = LocalizedString.genericLocalizedPhrase
+        let description = LocalizedString.editReminderVesselDescription
 
         activity.update(uuid: uuid,
                         title: title,
@@ -96,9 +96,9 @@ private extension UserActivityConfigurator {
     private func updateViewReminders(activity: NSUserActivity) {
         assert(activity.activityType == RawUserActivity.viewReminders.rawValue)
 
-        let title = NSUserActivity.LocalizedString.viewRemindersTitle
-        let phrase = NSUserActivity.LocalizedString.genericLocalizedPhrase
-        let description = NSUserActivity.LocalizedString.viewRemindersDescriptions
+        let title = LocalizedString.viewRemindersTitle
+        let phrase = LocalizedString.genericLocalizedPhrase
+        let description = LocalizedString.viewRemindersDescriptions
 
         activity.update(uuid: nil,
                         title: title,
@@ -111,10 +111,10 @@ private extension UserActivityConfigurator {
         assert(activity.activityType == RawUserActivity.viewReminder.rawValue)
 
         let uuid = Reminder.Identifier(reminder: reminder)
-        let title = NSUserActivity.LocalizedString.title(for: reminder.kind,
-                                                         andVesselName: reminder.vessel?.shortLabelSafeDisplayName)
-        let phrase = NSUserActivity.LocalizedString.genericLocalizedPhrase
-        let description = NSUserActivity.LocalizedString.viewReminderDescription
+        let title = LocalizedString.title(for: reminder.kind,
+                                          andVesselName: reminder.vessel?.shortLabelSafeDisplayName)
+        let phrase = LocalizedString.genericLocalizedPhrase
+        let description = LocalizedString.viewReminderDescription
 
         activity.update(uuid: uuid,
                         title: title,
@@ -127,11 +127,10 @@ private extension UserActivityConfigurator {
         assert(activity.activityType == RawUserActivity.editReminder.rawValue)
 
         let uuid = Reminder.Identifier(reminder: reminder)
-
-        let title = NSUserActivity.LocalizedString.title(for: reminder.kind,
-                                                         andVesselName: reminder.vessel?.shortLabelSafeDisplayName)
-        let phrase = NSUserActivity.LocalizedString.genericLocalizedPhrase
-        let description = NSUserActivity.LocalizedString.editReminderDescription
+        let title = LocalizedString.title(for: reminder.kind,
+                                          andVesselName: reminder.vessel?.shortLabelSafeDisplayName)
+        let phrase = LocalizedString.genericLocalizedPhrase
+        let description = LocalizedString.editReminderDescription
 
         activity.update(uuid: uuid,
                         title: title,
