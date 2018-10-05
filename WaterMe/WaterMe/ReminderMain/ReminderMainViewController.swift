@@ -182,7 +182,18 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
                                            completion: completion)
             }
         case .editReminderVessel(let identifier):
-            assertionFailure("unimplemented")
+            guard
+                let basicRC = self.basicRC,
+                let vessel = basicRC.reminderVessel(matching: identifier).value
+            else { return }
+            self.dismissAnimatedIfNeeded() {
+                let vc = ReminderVesselEditViewController.newVC(basicController: basicRC,
+                                                                editVessel: vessel)
+                { vc in
+                    vc.dismiss(animated: true, completion: nil)
+                }
+                self.present(vc, animated: true, completion: nil)
+            }
         case .viewReminder(let identifier):
             self.dismissAnimatedIfNeeded() {
                 self.collectionVC?.programaticallySimulateSelectionOfReminder(with: identifier)

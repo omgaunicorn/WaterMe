@@ -152,6 +152,14 @@ public class BasicController {
         return result
     }
 
+    public func reminderVessel(matching identifier: ReminderVessel.Identifier) -> Result<ReminderVessel, RealmError> {
+        return self.realm.flatMap() { realm -> Result<ReminderVessel, RealmError> in
+            guard let reminder = realm.object(ofType: ReminderVessel.self, forPrimaryKey: identifier.reminderVesselIdentifier)
+                else { return .failure(.objectDeleted) }
+            return .success(reminder)
+        }
+    }
+
     public func reminder(matching identifier: Reminder.Identifier) -> Result<Reminder, RealmError> {
         return self.realm.flatMap() { realm -> Result<Reminder, RealmError> in
             guard let reminder = realm.object(ofType: Reminder.self, forPrimaryKey: identifier.reminderIdentifier)

@@ -49,7 +49,7 @@ public extension NSUserActivity {
         if let uuid = uuid {
             return rawActivity.rawValue + stringSeparator + uuid.uuid
         } else {
-            return rawActivity.rawValue
+            return rawActivity.rawValue + stringSeparator + "0"
         }
     }
 
