@@ -129,7 +129,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         // configure Crashlytics
-        if let key = WaterMeData.PrivateKeys.kFrabicAPIKey {
+        let isReleaseBuild = Bundle.main.isReleaseBuild
+        if let key = WaterMeData.PrivateKeys.kFrabicAPIKey(isReleaseBuild: isReleaseBuild)
+        {
             Crashlytics.start(withAPIKey: key)
         }
 
