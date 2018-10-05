@@ -36,12 +36,7 @@ public enum PrivateKeys {
         log.warning("Your Email Address Has Not Been Configured")
         return URL(string: "mailto://" + kEmailAddress)!
     }
-    public static var kFrabicAPIKey: String? {
-    #if RELEASE
-        log.warning("Your API Key for Fabric")
+    public static func kFrabicAPIKey(isReleaseBuild: Bool) -> String? {
         return nil
-    #else
-        return nil
-    #endif
     }
 }
