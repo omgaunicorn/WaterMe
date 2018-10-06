@@ -52,6 +52,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
                                                                        action: #selector(self.addPlantButtonTapped(_:)))
     private(set) lazy var settingsBBI: UIBarButtonItem = UIBarButtonItem(localizedSettingsButtonWithTarget: self,
                                                                          action: #selector(self.settingsButtonTapped(_:)))
+    private var secretLongPressGestureRecognizer: UILongPressGestureRecognizer?
 
     var basicRC: BasicController?
     var proRC: ProController?
@@ -87,7 +88,19 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
 
         guard self.viewDidAppearOnce == false else { return }
         self.viewDidAppearOnce = true
+        self.configureSecretLongPressGestureRecognizer()
         self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+    }
+
+    private func configureSecretLongPressGestureRecognizer() {
+        guard
+            self.secretLongPressGestureRecognizer == nil,
+            let view = self.plantsBBI.value(forKey: "_view") as? UIView
+        else { return }
+        let gr = UILongPressGestureRecognizer(target: self,
+                                              action: #selector(self.viewAllPlantsButtonTapped(_:)))
+        self.secretLongPressGestureRecognizer = gr
+        view.addGestureRecognizer(gr)
     }
 
     private func registerForPurchaseNotifications() {
@@ -217,6 +230,14 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             }
         }
         self.present(editVC, animated: true, completion: nil)
+    }
+
+    @IBAction private func viewAllPlantsButtonTapped(_ sender: Any) {
+        guard
+            let sender = sender as? UILongPressGestureRecognizer,
+            case .began = sender.state
+        else { return }
+        print("show all plants!!")
     }
 
     @IBAction private func settingsButtonTapped(_ sender: Any) {
