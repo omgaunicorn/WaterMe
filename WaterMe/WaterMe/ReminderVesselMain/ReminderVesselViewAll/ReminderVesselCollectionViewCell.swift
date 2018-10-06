@@ -31,6 +31,7 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet private weak var nameLabel: UILabel?
     @IBOutlet private weak var emojiImageView: EmojiImageView?
+    @IBOutlet private weak var emojiImageViewMaximumWidthConstraint: NSLayoutConstraint?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -51,6 +52,18 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
         super.prepareForReuse()
         self.nameLabel?.attributedText = nil
         self.emojiImageView?.setIcon(nil)
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        let isAccessibility = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+        switch isAccessibility {
+        case false:
+            self.emojiImageViewMaximumWidthConstraint?.isActive = true
+        case true:
+            self.emojiImageViewMaximumWidthConstraint?.isActive = false
+        }
+        self.setNeedsLayout()
     }
 
 }

@@ -97,17 +97,26 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
         let width = self.collectionView?.availableContentSize.width ?? 0
         let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+        let verticalClass = self.view.traitCollection.verticalSizeClass
         let horizontalClass = self.view.traitCollection.horizontalSizeClass
-        switch (horizontalClass, accessibility) {
-        case (.unspecified, _), (.regular, _):
+        switch (horizontalClass, verticalClass, accessibility) {
+        case (.unspecified, _, _), (.regular, _, _), (.compact, .unspecified, _):
             assertionFailure("Hit a size class this VC was not expecting")
             fallthrough
-        case (.compact, false):
+        case (.compact, .regular, false):
             let columnCount = 2
             let itemHeight = floor((width) / CGFloat(columnCount))
             return (columnCount, itemHeight)
-        case (.compact, true):
+        case (.compact, .regular, true):
             let columnCount = 1
+            let itemHeight = floor((width) / CGFloat(columnCount))
+            return (columnCount, itemHeight)
+        case (.compact, .compact, false):
+            let columnCount = 4
+            let itemHeight = floor((width) / CGFloat(columnCount))
+            return (columnCount, itemHeight)
+        case (.compact, .compact, true):
+            let columnCount = 2
             let itemHeight = floor((width) / CGFloat(columnCount))
             return (columnCount, itemHeight)
         }

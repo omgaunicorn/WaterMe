@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -30,41 +30,43 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     </view>
-                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="hgV-dD-EUV">
-                        <rect key="frame" x="8" y="50.5" width="234" height="149.5"/>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="hgV-dD-EUV">
+                        <rect key="frame" x="0.0" y="43.5" width="250" height="163.5"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yQM-GB-V7M" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
-                                <rect key="frame" x="58.5" y="0.0" width="117" height="117"/>
+                            <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="yQM-GB-V7M" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
+                                <rect key="frame" x="57.5" y="0.0" width="135" height="135"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="135" id="UP0-PA-X4B"/>
                                     <constraint firstAttribute="width" secondItem="yQM-GB-V7M" secondAttribute="height" multiplier="1:1" id="yS8-wF-d3S"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Cool Plant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rzm-Lk-YCJ">
-                                <rect key="frame" x="64" y="129" width="106" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="My Cool Plant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rzm-Lk-YCJ">
+                                <rect key="frame" x="72" y="143" width="106" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="yQM-GB-V7M" firstAttribute="width" secondItem="hgV-dD-EUV" secondAttribute="width" multiplier="1/2" id="gpL-a3-3Lf"/>
+                            <constraint firstItem="yQM-GB-V7M" firstAttribute="width" secondItem="hgV-dD-EUV" secondAttribute="width" multiplier="2/3" priority="999" id="gpL-a3-3Lf"/>
                         </constraints>
                     </stackView>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="Gvh-4O-Dec" firstAttribute="trailing" secondItem="hgV-dD-EUV" secondAttribute="trailing" constant="8" id="7VK-VM-Ah4"/>
-                <constraint firstItem="hgV-dD-EUV" firstAttribute="centerY" secondItem="Gvh-4O-Dec" secondAttribute="centerY" id="UTK-ra-qx5"/>
-                <constraint firstItem="hgV-dD-EUV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Gvh-4O-Dec" secondAttribute="top" constant="8" id="ccC-Hh-YUU"/>
-                <constraint firstItem="Gvh-4O-Dec" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hgV-dD-EUV" secondAttribute="bottom" constant="8" id="jAU-CL-APK"/>
-                <constraint firstItem="hgV-dD-EUV" firstAttribute="leading" secondItem="Gvh-4O-Dec" secondAttribute="leading" constant="8" id="mt6-Ei-bkE"/>
+                <constraint firstAttribute="trailing" secondItem="hgV-dD-EUV" secondAttribute="trailing" id="7VK-VM-Ah4"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="UTK-ra-qx5"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="top" id="ccC-Hh-YUU"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="hgV-dD-EUV" secondAttribute="bottom" id="jAU-CL-APK"/>
+                <constraint firstItem="hgV-dD-EUV" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="mt6-Ei-bkE"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="Gvh-4O-Dec"/>
             <size key="customSize" width="221" height="192"/>
             <connections>
                 <outlet property="backgroundView" destination="pNt-mf-2sp" id="usR-aj-t36"/>
                 <outlet property="emojiImageView" destination="yQM-GB-V7M" id="lIB-yP-il2"/>
+                <outlet property="emojiImageViewMaximumWidthConstraint" destination="UP0-PA-X4B" id="RBN-U7-yJz"/>
                 <outlet property="nameLabel" destination="rzm-Lk-YCJ" id="PYG-IH-ILk"/>
                 <outlet property="selectedBackgroundView" destination="kvt-1g-Jjl" id="GVt-Ce-W0R"/>
             </connections>
