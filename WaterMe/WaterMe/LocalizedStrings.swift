@@ -228,6 +228,14 @@ extension Reminder.Kind {
     }
 }
 
+extension ReminderVesselMainViewController {
+    enum LocalizedString {
+        static let title =
+            NSLocalizedString("Plants",
+                              comment: "Title of the screen where the user can manage their plants. Also, title of the button that opens this screen.")
+    }
+}
+
 extension ReminderSummaryViewController {
     enum LocalizedString {
         static let subheadPlantName =
