@@ -237,7 +237,11 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             let sender = sender as? UILongPressGestureRecognizer,
             case .began = sender.state
         else { return }
-        print("show all plants!!")
+        let vc = ReminderVesselMainViewController.newVC(basicController: self.basicRC)
+        { vc in
+            vc.dismiss(animated: true, completion: nil)
+        }
+        self.present(vc, animated: true, completion: nil)
     }
 
     @IBAction private func settingsButtonTapped(_ sender: Any) {

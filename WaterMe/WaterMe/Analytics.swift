@@ -117,6 +117,7 @@ enum Analytics {
         case coreDataMigration = "VCView.CoreDataMigration"
         case reminderList = "VCView.ReminderList"
         case reminderSummary = "VCView.ReminderSummary"
+        case reminderVesselList = "VCView.ReminderVesselList"
         case editReminderVessel = "VCView.EditReminderVessel"
         case editReminder = "VCView.EditReminder"
         case emailDeveloper = "VCView.EmailDeveloper"
