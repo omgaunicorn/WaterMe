@@ -91,7 +91,6 @@
 		509A0865215FFEDF00389339 /* SimpleLabelTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509A0864215FFEDF00389339 /* SimpleLabelTableViewCell.swift */; };
 		509A0867215FFEF700389339 /* SiriShortcutTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509A0866215FFEF700389339 /* SiriShortcutTableViewCell.swift */; };
 		509A0869215FFF1C00389339 /* ClosureDelegatingAddVoiceShortcutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509A0868215FFF1C00389339 /* ClosureDelegatingAddVoiceShortcutViewController.swift */; };
-		509A086B21606DBF00389339 /* UserActivityConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509A086A21606DBF00389339 /* UserActivityConfigurator.swift */; };
 		50A3BAC8214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3BAC7214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift */; };
 		50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */; };
 		50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */; };
@@ -121,6 +120,7 @@
 		50CA47EB21690D360063F51E /* ReminderVesselMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50CA47E621690D360063F51E /* ReminderVesselMain.storyboard */; };
 		50CA47EC21690D360063F51E /* ReminderVesselCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CA47E721690D360063F51E /* ReminderVesselCollectionViewController.swift */; };
 		50CA47EE21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CA47ED21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift */; };
+		50CA47F021699FED0063F51E /* UserActivityConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CA47EF21699FED0063F51E /* UserActivityConfigurator.swift */; };
 		50CB5AFA2001BAA900868F30 /* ReminderNotificationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */; };
 		50DD7A38215D6BBF00047B0C /* EmojiImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B61EE01F2FB904004654B4 /* EmojiImageView.swift */; };
 		50DFA8B31ED7A08E000D2956 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */; };
@@ -248,7 +248,6 @@
 		509A0864215FFEDF00389339 /* SimpleLabelTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleLabelTableViewCell.swift; sourceTree = "<group>"; };
 		509A0866215FFEF700389339 /* SiriShortcutTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiriShortcutTableViewCell.swift; sourceTree = "<group>"; };
 		509A0868215FFF1C00389339 /* ClosureDelegatingAddVoiceShortcutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosureDelegatingAddVoiceShortcutViewController.swift; sourceTree = "<group>"; };
-		509A086A21606DBF00389339 /* UserActivityConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserActivityConfigurator.swift; path = "WaterMe/Miscellaneous /UserActivityConfigurator.swift"; sourceTree = SOURCE_ROOT; };
 		50A3BAC7214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSummaryReminderVesselIconTableViewCell.swift; sourceTree = "<group>"; };
 		50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPickerCollectionViewController.swift; sourceTree = "<group>"; };
 		50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastPerformedTableViewCell.swift; sourceTree = "<group>"; };
@@ -284,6 +283,7 @@
 		50CA47E621690D360063F51E /* ReminderVesselMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReminderVesselMain.storyboard; sourceTree = "<group>"; };
 		50CA47E721690D360063F51E /* ReminderVesselCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselCollectionViewController.swift; sourceTree = "<group>"; };
 		50CA47ED21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonItemLongPressGestureRecognizer.swift; sourceTree = "<group>"; };
+		50CA47EF21699FED0063F51E /* UserActivityConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserActivityConfigurator.swift; sourceTree = "<group>"; };
 		50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderNotificationAlert.swift; sourceTree = "<group>"; };
 		50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
@@ -370,9 +370,6 @@
 				50BDC03D1F9A3E21002281C3 /* BlurryBackgroundBottomLineCollectionReusableView.swift */,
 				506DFA4C201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift */,
 				50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */,
-				504B1BA5207332E20090CD7F /* TCF.h */,
-				504B1BA6207332E20090CD7F /* TCF.m */,
-				504B1BA4207332E10090CD7F /* WaterMe-Bridging-Header.h */,
 				506A6216200561D5008EF601 /* DragAndDrop */,
 				5010C22C213F777E00D1832C /* ReminderSummary */,
 			);
@@ -528,10 +525,10 @@
 			path = StyleSheets;
 			sourceTree = "<group>";
 		};
-		50B779CA2154138D00AC6240 /* Miscellaneous  */ = {
+		50B779CA2154138D00AC6240 /* Miscellaneous */ = {
 			isa = PBXGroup;
 			children = (
-				509A086A21606DBF00389339 /* UserActivityConfigurator.swift */,
+				50CA47EF21699FED0063F51E /* UserActivityConfigurator.swift */,
 				509A0864215FFEDF00389339 /* SimpleLabelTableViewCell.swift */,
 				509A0866215FFEF700389339 /* SiriShortcutTableViewCell.swift */,
 				504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */,
@@ -542,8 +539,11 @@
 				50C96A311EC2BB03002802C1 /* Either.swift */,
 				50B61EE01F2FB904004654B4 /* EmojiImageView.swift */,
 				50CA47ED21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift */,
+				504B1BA5207332E20090CD7F /* TCF.h */,
+				504B1BA6207332E20090CD7F /* TCF.m */,
+				504B1BA4207332E10090CD7F /* WaterMe-Bridging-Header.h */,
 			);
-			path = "Miscellaneous ";
+			path = Miscellaneous;
 			sourceTree = "<group>";
 		};
 		50B779CB21546FE200AC6240 /* Categories */ = {
@@ -599,7 +599,7 @@
 				5049D1A11FACF9F30076565E /* ReminderNotifications */,
 				5096D1942154773D006E1019 /* StyleSheets */,
 				50B779CB21546FE200AC6240 /* Categories */,
-				50B779CA2154138D00AC6240 /* Miscellaneous  */,
+				50B779CA2154138D00AC6240 /* Miscellaneous */,
 				50F388DE1FF6D9870031ED45 /* CoreDataMigration */,
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
 				50F7A362200844390063A1FC /* StarterRealm.realm */,
@@ -1039,7 +1039,6 @@
 				501A9AE71FEB15C20016160D /* WateringAnimationPlayerView.swift in Sources */,
 				50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */,
 				50CA47EC21690D360063F51E /* ReminderVesselCollectionViewController.swift in Sources */,
-				509A086B21606DBF00389339 /* UserActivityConfigurator.swift in Sources */,
 				5096D19821547764006E1019 /* Color.swift in Sources */,
 				509A0867215FFEF700389339 /* SiriShortcutTableViewCell.swift in Sources */,
 				5096D19C21547991006E1019 /* NSAttributedString+Font.swift in Sources */,
@@ -1071,6 +1070,7 @@
 				5045CBAB1EFCCB50008E6D6A /* ReminderEditViewController.swift in Sources */,
 				50281906200BD6110044BEC8 /* PurchaseThanksViewController.swift in Sources */,
 				5047B7A5200D6B6800F69C73 /* Analytics.swift in Sources */,
+				50CA47F021699FED0063F51E /* UserActivityConfigurator.swift in Sources */,
 				50BB0F751EC01B8E00850FF4 /* UserDefaults+WaterMe.swift in Sources */,
 				50CA47E921690D360063F51E /* ReminderVesselMainViewController.swift in Sources */,
 				5051F8FC202BAB1C00741FF9 /* BadgeNumberController.swift in Sources */,
@@ -1322,7 +1322,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "WaterMe/ReminderMain/WaterMe-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "WaterMe/Miscellaneous/WaterMe-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
@@ -1343,7 +1343,7 @@
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"RELEASE\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "WaterMe/ReminderMain/WaterMe-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "WaterMe/Miscellaneous/WaterMe-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
