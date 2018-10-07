@@ -124,7 +124,7 @@ extension UITableViewCell {
     static let style_labelCellLeadingPadding: CGFloat = 16
     static let style_labelCellTrailingPadding: CGFloat = 16
 
-    static let style_textFieldCellTopPadding: CGFloat = 6
+    static let style_textFieldCellTopPadding: CGFloat = 7
     static let style_textFieldCellBottomPadding: CGFloat = 6
     static let style_textFieldCellLeadingPadding: CGFloat = 16
     static let style_textFieldCellTrailingPadding: CGFloat = 16
