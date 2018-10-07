@@ -198,11 +198,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      continue userActivity: NSUserActivity,
                      restorationHandler: @escaping ([Any]?) -> Void) -> Bool
     {
-        guard let activity = userActivity.restoredUserActivity else {
-            assertionFailure()
-            return false
-        }
-        self.rootVC?.userActivityToContinue = activity
+        let result = userActivity.restoredUserActivityResult
+        self.rootVC?.userActivityResultToContinue = result
         self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         return true
     }
@@ -215,7 +212,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard error.code != NSUserCancelledError else {
             return
         }
-        self.rootVC?.userActivityToContinue = .error
+        self.rootVC?.userActivityResultToContinue = .failure(.continuationFailed)
         self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
     }
     

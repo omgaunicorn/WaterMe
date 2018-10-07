@@ -46,7 +46,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     private weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     private var appUpdateAvailableVC: UIViewController?
     private var applicationDidFinishLaunchingError: RealmError?
-    var userActivityToContinue: RestoredUserActivity?
+    var userActivityResultToContinue: Result<RestoredUserActivity, UserActivityError>?
 
     private(set) lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedAddReminderVesselBBIButtonWithTarget: self,
                                                                        action: #selector(self.addPlantButtonTapped(_:)))
@@ -121,9 +121,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     func checkForErrorsAndOtherUnexpectedViewControllersToPresent() {
         guard self.presentedViewController == nil else {
             // user activities are allowed to continue even if the user is doing something else
-            guard let activity = self.userActivityToContinue else { return }
-            self.userActivityToContinue = nil
-            self.continueUserActivity(activity)
+            self.continueUserActivityResultIfNeeded()
             return
         }
         
@@ -151,9 +149,8 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             self.appUpdateAvailableVC = nil
             Analytics.log(viewOperation: .alertUpdateAvailable)
             self.present(updateAlert, animated: true, completion: nil)
-        } else if let activity = self.userActivityToContinue {
-            self.userActivityToContinue = nil
-            self.continueUserActivity(activity)
+        } else if self.userActivityResultToContinue != nil {
+            self.continueUserActivityResultIfNeeded()
         } else {
             self.checkForPurchasesInFlight()
         }
@@ -174,41 +171,62 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         self.present(vc, animated: true, completion: nil)
     }
 
-    private func continueUserActivity(_ activity: RestoredUserActivity) {
-        switch activity {
-        case .editReminder(let identifier):
-            guard
-                let completion = self.collectionVC?.programmaticalySelectReminder(with: identifier),
-                let basicRC = self.basicRC
-            else { return }
-            self.dismissAnimatedIfNeeded() {
-                self.userChoseEditReminder(with: identifier,
-                                           basicRC: basicRC,
-                                           completion: completion)
-            }
-        case .editReminderVessel(let identifier):
-            guard
-                let basicRC = self.basicRC,
-                let vessel = basicRC.reminderVessel(matching: identifier).value
-            else { return }
-            self.dismissAnimatedIfNeeded() {
-                let vc = ReminderVesselEditViewController.newVC(basicController: basicRC,
-                                                                editVessel: vessel)
-                { vc in
-                    vc.dismiss(animated: true, completion: nil)
+    private func continueUserActivityResultIfNeeded() {
+        guard let result = self.userActivityResultToContinue else { return }
+        switch result {
+        case .success(let activity):
+            switch activity {
+            case .editReminder(let identifier):
+                guard
+                    let completion = self.collectionVC?.programmaticalySelectReminder(with: identifier),
+                    let basicRC = self.basicRC
+                else {
+                    self.userActivityResultToContinue = .failure(.reminderNotFound)
+                    self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+                    return
                 }
-                self.present(vc, animated: true, completion: nil)
+                self.dismissAnimatedIfNeeded() {
+                    self.userChoseEditReminder(with: identifier,
+                                               basicRC: basicRC,
+                                               completion: completion)
+                }
+            case .editReminderVessel(let identifier):
+                guard
+                    let basicRC = self.basicRC,
+                    let vessel = basicRC.reminderVessel(matching: identifier).value
+                else {
+                    self.userActivityResultToContinue = .failure(.reminderVesselNotFound)
+                    self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+                    return
+                }
+                self.dismissAnimatedIfNeeded() {
+                    let vc = ReminderVesselEditViewController.newVC(basicController: basicRC,
+                                                                    editVessel: vessel)
+                    { vc in
+                        vc.dismiss(animated: true, completion: nil)
+                    }
+                    self.present(vc, animated: true, completion: nil)
+                }
+            case .viewReminder(let identifier):
+                guard
+                    let indexPath = self.collectionVC?.indexPathOfReminder(with: identifier)
+                else {
+                    self.userActivityResultToContinue = .failure(.reminderNotFound)
+                    self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+                    return
+                }
+                self.dismissAnimatedIfNeeded() {
+                    self.collectionVC?.programaticallySimulateSelectionOfReminder(at: indexPath)
+                }
+            case .viewReminders:
+                self.dismissAnimatedIfNeeded() {
+                    self.collectionVC?.collectionView?.deselectAllItems(animated: true)
+                }
             }
-        case .viewReminder(let identifier):
-            self.dismissAnimatedIfNeeded() {
-                self.collectionVC?.programaticallySimulateSelectionOfReminder(with: identifier)
+        case .failure(let error):
+            let errorVC = UIAlertController(error: error) { selection in
             }
-        case .viewReminders:
-            self.dismissAnimatedIfNeeded() {
-                self.collectionVC?.collectionView?.deselectAllItems(animated: true)
-            }
-        case .error:
-            break
+            self.present(errorVC, animated: true, completion: nil)
         }
     }
 

@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Result
 import MobileCoreServices
 import CoreSpotlight
 import Intents
@@ -30,7 +31,6 @@ public enum RestoredUserActivity {
     case editReminderVessel(ReminderVessel.Identifier)
     case viewReminder(Reminder.Identifier)
     case viewReminders
-    case error
 }
 
 public enum RawUserActivity: String {
@@ -53,7 +53,7 @@ public extension NSUserActivity {
         }
     }
 
-    public var restoredUserActivity: RestoredUserActivity? {
+    public var restoredUserActivityResult: Result<RestoredUserActivity, UserActivityError> {
         let rawString = self.userInfo?[CSSearchableItemActivityIdentifier] as? String
         guard
             let components = rawString?.components(separatedBy: type(of: self).stringSeparator),
@@ -61,25 +61,24 @@ public extension NSUserActivity {
             let kind = RawUserActivity(rawValue: rawValue)
         else {
             assertionFailure()
-            return nil
+            return .failure(.restorationFailed)
         }
         let uuids = components.dropFirst()
         switch kind {
         case .editReminder:
-            guard let uuid = uuids.first else { return nil }
-            return .editReminder(.init(rawValue: uuid))
+            guard let uuid = uuids.first else { return .failure(.restorationFailed) }
+            return .success(.editReminder(.init(rawValue: uuid)))
         case .editReminderVessel:
-            guard let uuid = uuids.first else { return nil }
-            return .editReminderVessel(.init(rawValue: uuid))
+            guard let uuid = uuids.first else { return .failure(.restorationFailed) }
+            return .success(.editReminderVessel(.init(rawValue: uuid)))
         case .viewReminder:
-            guard let uuid = uuids.first else { return nil }
-            return .viewReminder(.init(rawValue: uuid))
+            guard let uuid = uuids.first else { return .failure(.restorationFailed) }
+            return .success(.viewReminder(.init(rawValue: uuid)))
         case .viewReminders:
-            guard uuids.isEmpty else { return nil }
-            return .viewReminders
+            return .success(.viewReminders)
         case .indexedItem:
             assertionFailure("Unimplmented")
-            return nil
+            return .failure(.restorationFailed)
         }
     }
 

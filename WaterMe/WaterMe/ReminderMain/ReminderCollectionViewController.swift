@@ -99,11 +99,12 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         }
     }
 
-    func programaticallySimulateSelectionOfReminder(with identifier: Reminder.Identifier) {
-        guard
-            let collectionView = self.collectionView,
-            let indexPath = self.reminders?.indexPathOfReminder(with: identifier)
-        else { return }
+    func indexPathOfReminder(with identifier: Reminder.Identifier) -> IndexPath? {
+        return self.reminders?.indexPathOfReminder(with: identifier)
+    }
+
+    func programaticallySimulateSelectionOfReminder(at indexPath: IndexPath) {
+        guard let collectionView = self.collectionView else { return }
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
         self.collectionView(collectionView, didSelectItemAt: indexPath)
     }
