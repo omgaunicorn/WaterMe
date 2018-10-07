@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import WaterMeData
 import Foundation
 
 public enum UserActivityError: Error {
@@ -29,12 +30,19 @@ public enum UserActivityError: Error {
 
 extension UserActivityError: UserFacingError {
     public var title: String {
-        return ""
+        return "Siri Shortcut Error"
     }
     public var details: String? {
-        return nil
+        switch self {
+        case .continuationFailed, .restorationFailed:
+            return "There was an error executing this Siri Shortcut. If you see this error repeatedly, it may help to delete and re-create this shortcut."
+        case .reminderNotFound:
+            return "The reminder for this Siri Shortcut could not be found. You may want to delete this Siri Shortcut."
+        case .reminderVesselNotFound:
+            return "The plant for this Siri Shortcut could not be found. You may want to delete this Siri Shortcut."
+        }
     }
     public var recoveryActions: UserFacingErrorRecoveryActions {
-        return .none
+        return .openWaterMeSettings
     }
 }

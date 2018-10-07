@@ -122,6 +122,8 @@
 		50CA47EE21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CA47ED21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift */; };
 		50CA47F021699FED0063F51E /* UserActivityConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CA47EF21699FED0063F51E /* UserActivityConfigurator.swift */; };
 		50CB5AFA2001BAA900868F30 /* ReminderNotificationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */; };
+		50D2B2B0216A726000957E04 /* NSUserActivity+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2B2AE216A726000957E04 /* NSUserActivity+Error.swift */; };
+		50D2B2B1216A726000957E04 /* NSUserActivity+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2B2AF216A726000957E04 /* NSUserActivity+WaterMe.swift */; };
 		50DD7A38215D6BBF00047B0C /* EmojiImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B61EE01F2FB904004654B4 /* EmojiImageView.swift */; };
 		50DFA8B31ED7A08E000D2956 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */; };
 		50DFA8B51ED7A352000D2956 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */; };
@@ -285,6 +287,8 @@
 		50CA47ED21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonItemLongPressGestureRecognizer.swift; sourceTree = "<group>"; };
 		50CA47EF21699FED0063F51E /* UserActivityConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserActivityConfigurator.swift; sourceTree = "<group>"; };
 		50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderNotificationAlert.swift; sourceTree = "<group>"; };
+		50D2B2AE216A726000957E04 /* NSUserActivity+Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+Error.swift"; sourceTree = "<group>"; };
+		50D2B2AF216A726000957E04 /* NSUserActivity+WaterMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+WaterMe.swift"; sourceTree = "<group>"; };
 		50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
 		50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizingViewController.swift; sourceTree = "<group>"; };
@@ -559,6 +563,8 @@
 				50BB0F741EC01B8E00850FF4 /* UserDefaults+WaterMe.swift */,
 				50163F95215B0CAB002DD849 /* UIViewController+WaterMe.swift */,
 				5085C71C21667A4500030D2A /* DispatchQueue+WaterMe.swift */,
+				50D2B2AE216A726000957E04 /* NSUserActivity+Error.swift */,
+				50D2B2AF216A726000957E04 /* NSUserActivity+WaterMe.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1068,6 +1074,7 @@
 				5065AA1C200E872900C7F0CC /* UserFacingError.swift in Sources */,
 				504732D6214ACCFC00814E7D /* ReminderSummaryInsetManagingTableViewController.swift in Sources */,
 				5045CBAB1EFCCB50008E6D6A /* ReminderEditViewController.swift in Sources */,
+				50D2B2B1216A726000957E04 /* NSUserActivity+WaterMe.swift in Sources */,
 				50281906200BD6110044BEC8 /* PurchaseThanksViewController.swift in Sources */,
 				5047B7A5200D6B6800F69C73 /* Analytics.swift in Sources */,
 				50CA47F021699FED0063F51E /* UserActivityConfigurator.swift in Sources */,
@@ -1084,6 +1091,7 @@
 				500679AF1F4BF3DB00F8100D /* ReminderMainViewController.swift in Sources */,
 				50BB816A1EF7731E0030F5BA /* ReminderTableViewCell.swift in Sources */,
 				50B779D52154724000AC6240 /* UITableCollectionView+WaterMe.swift in Sources */,
+				50D2B2B0216A726000957E04 /* NSUserActivity+Error.swift in Sources */,
 				50B779CF215470B300AC6240 /* UIBarButtonItem+WaterMe.swift in Sources */,
 				50BB0F541EBFCDE500850FF4 /* AppDelegate.swift in Sources */,
 				50B511A71EFE144700ED1DF4 /* ReminderKindTableViewCell.swift in Sources */,

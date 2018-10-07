@@ -21,10 +21,11 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import WaterMeData
 import Result
-import MobileCoreServices
-import CoreSpotlight
 import Intents
+import CoreSpotlight
+import MobileCoreServices
 
 public enum RestoredUserActivity {
     case editReminder(Reminder.Identifier)
