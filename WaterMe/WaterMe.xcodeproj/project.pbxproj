@@ -120,6 +120,7 @@
 		50CA47EA21690D360063F51E /* ReminderVesselCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CA47E521690D360063F51E /* ReminderVesselCollectionViewCell.swift */; };
 		50CA47EB21690D360063F51E /* ReminderVesselMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50CA47E621690D360063F51E /* ReminderVesselMain.storyboard */; };
 		50CA47EC21690D360063F51E /* ReminderVesselCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CA47E721690D360063F51E /* ReminderVesselCollectionViewController.swift */; };
+		50CA47EE21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CA47ED21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift */; };
 		50CB5AFA2001BAA900868F30 /* ReminderNotificationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */; };
 		50DD7A38215D6BBF00047B0C /* EmojiImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B61EE01F2FB904004654B4 /* EmojiImageView.swift */; };
 		50DFA8B31ED7A08E000D2956 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */; };
@@ -282,6 +283,7 @@
 		50CA47E521690D360063F51E /* ReminderVesselCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselCollectionViewCell.swift; sourceTree = "<group>"; };
 		50CA47E621690D360063F51E /* ReminderVesselMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReminderVesselMain.storyboard; sourceTree = "<group>"; };
 		50CA47E721690D360063F51E /* ReminderVesselCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselCollectionViewController.swift; sourceTree = "<group>"; };
+		50CA47ED21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonItemLongPressGestureRecognizer.swift; sourceTree = "<group>"; };
 		50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderNotificationAlert.swift; sourceTree = "<group>"; };
 		50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
 		50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
@@ -539,6 +541,7 @@
 				509A0868215FFF1C00389339 /* ClosureDelegatingAddVoiceShortcutViewController.swift */,
 				50C96A311EC2BB03002802C1 /* Either.swift */,
 				50B61EE01F2FB904004654B4 /* EmojiImageView.swift */,
+				50CA47ED21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift */,
 			);
 			path = "Miscellaneous ";
 			sourceTree = "<group>";
@@ -1095,6 +1098,7 @@
 				501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */,
 				50E8B1E61EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift in Sources */,
 				50702D11200589B0009EF952 /* SettingsTipJarTableViewCell.swift in Sources */,
+				50CA47EE21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift in Sources */,
 				50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */,
 				5010C230213F77B200D1832C /* ReminderSummaryViewController.swift in Sources */,
 				5028190A200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift in Sources */,

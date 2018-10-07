@@ -88,19 +88,11 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
 
         guard self.viewDidAppearOnce == false else { return }
         self.viewDidAppearOnce = true
-        self.configureSecretLongPressGestureRecognizer()
+        self.secretLongPressGestureRecognizer =
+            UIBarButtonItemLongPressGestureRecognizer(barButtonItem: self.plantsBBI,
+                                                      target: self,
+                                                      action: #selector(self.viewAllPlantsButtonTapped(_:)))
         self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
-    }
-
-    private func configureSecretLongPressGestureRecognizer() {
-        guard
-            self.secretLongPressGestureRecognizer == nil,
-            let view = self.plantsBBI.value(forKey: "_view") as? UIView
-        else { return }
-        let gr = UILongPressGestureRecognizer(target: self,
-                                              action: #selector(self.viewAllPlantsButtonTapped(_:)))
-        self.secretLongPressGestureRecognizer = gr
-        view.addGestureRecognizer(gr)
     }
 
     private func registerForPurchaseNotifications() {
