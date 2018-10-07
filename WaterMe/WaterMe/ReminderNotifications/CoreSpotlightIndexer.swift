@@ -100,7 +100,7 @@ extension CSSearchableItem {
             attributes.contentDescription = CoreSpotlightIndexer.LocalizedString.description
             attributes.thumbnailData = reminder.parentPlantImageData
             let uuid = NSUserActivity.uniqueString(for: RawUserActivity.viewReminder,
-                                                   and: Reminder.Identifier(rawValue: reminder.reminderUUID))
+                                                   and: [Reminder.Identifier(rawValue: reminder.reminderUUID)])
             let item = CSSearchableItem(uniqueIdentifier: uuid,
                                         domainIdentifier: RawUserActivity.viewReminder.rawValue,
                                         attributeSet: attributes)

@@ -45,11 +45,11 @@ public extension NSUserActivity {
 
     fileprivate static let stringSeparator = "::"
 
-    public static func uniqueString(for rawActivity: RawUserActivity, and uuid: UUIDRepresentable?) -> String {
-        if let uuid = uuid {
-            return rawActivity.rawValue + stringSeparator + uuid.uuid
-        } else {
-            return rawActivity.rawValue + stringSeparator + "0"
+    public static func uniqueString(for rawActivity: RawUserActivity,
+                                    and uuids: [UUIDRepresentable]) -> String
+    {
+        return uuids.reduce(rawActivity.rawValue) { prevValue, item -> String in
+            return prevValue + stringSeparator + item.uuid
         }
     }
 
@@ -57,21 +57,25 @@ public extension NSUserActivity {
         let rawString = self.userInfo?[CSSearchableItemActivityIdentifier] as? String
         guard
             let components = rawString?.components(separatedBy: type(of: self).stringSeparator),
-            components.count == 2,
-            let kind = RawUserActivity(rawValue: components[0])
+            let rawValue = components.first,
+            let kind = RawUserActivity(rawValue: rawValue)
         else {
             assertionFailure()
             return nil
         }
-        let uuid = components[1]
+        let uuids = components.dropFirst()
         switch kind {
         case .editReminder:
+            guard let uuid = uuids.first else { return nil }
             return .editReminder(.init(rawValue: uuid))
         case .editReminderVessel:
+            guard let uuid = uuids.first else { return nil }
             return .editReminderVessel(.init(rawValue: uuid))
         case .viewReminder:
+            guard let uuid = uuids.first else { return nil }
             return .viewReminder(.init(rawValue: uuid))
         case .viewReminders:
+            guard uuids.isEmpty else { return nil }
             return .viewReminders
         case .indexedItem:
             assertionFailure("Unimplmented")
@@ -89,7 +93,7 @@ public extension NSUserActivity {
         }
     }
 
-    public func update(uuid: UUIDRepresentable?,
+    public func update(uuids: [UUIDRepresentable],
                        title: String,
                        phrase: String,
                        description: String,
@@ -99,7 +103,7 @@ public extension NSUserActivity {
             assertionFailure()
             return
         }
-        let persistentIdentifier = type(of: self).uniqueString(for: kind, and: uuid)
+        let persistentIdentifier = type(of: self).uniqueString(for: kind, and: uuids)
         self.title = title
         if #available(iOS 12.0, *) {
             self.suggestedInvocationPhrase = phrase

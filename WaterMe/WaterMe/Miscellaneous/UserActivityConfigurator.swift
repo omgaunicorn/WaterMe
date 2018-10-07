@@ -87,7 +87,7 @@ private extension UserActivityConfigurator {
         let phrase = LocalizedString.genericLocalizedPhrase
         let description = LocalizedString.editReminderVesselDescription
 
-        activity.update(uuid: uuid,
+        activity.update(uuids: [uuid],
                         title: title,
                         phrase: phrase,
                         description: description,
@@ -101,7 +101,7 @@ private extension UserActivityConfigurator {
         let phrase = LocalizedString.genericLocalizedPhrase
         let description = LocalizedString.viewRemindersDescriptions
 
-        activity.update(uuid: nil,
+        activity.update(uuids: [],
                         title: title,
                         phrase: phrase,
                         description: description,
@@ -117,7 +117,7 @@ private extension UserActivityConfigurator {
         let phrase = LocalizedString.genericLocalizedPhrase
         let description = LocalizedString.viewReminderDescription
 
-        activity.update(uuid: uuid,
+        activity.update(uuids: [uuid],
                         title: title,
                         phrase: phrase,
                         description: description,
@@ -133,7 +133,7 @@ private extension UserActivityConfigurator {
         let phrase = LocalizedString.genericLocalizedPhrase
         let description = LocalizedString.editReminderDescription
 
-        activity.update(uuid: uuid,
+        activity.update(uuids: [uuid],
                         title: title,
                         phrase: phrase,
                         description: description,
