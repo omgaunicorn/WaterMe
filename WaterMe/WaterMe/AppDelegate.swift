@@ -87,7 +87,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.reminderObserver?.notificationPermissionsMayHaveChanged()
         }
         // register for notifications about the increase contrast setting
-        _ = NotificationCenter.default.addObserver(forName: .UIAccessibilityDarkerSystemColorsStatusDidChange, object: nil, queue: nil) { _ in
+        _ = NotificationCenter.default.addObserver(forName: .UIAccessibilityDarkerSystemColorsStatusDidChange,
+                                                   object: nil,
+                                                   queue: nil)
+        { _ in
             appearanceChanges()
         }
         // register for notifications if user defaults change while the app is running
@@ -106,7 +109,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.userDefaultObserverTokens += [token1, token2, token3, token4]
     }
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
+    {
 
         // see if there is a new build
         _ = {
@@ -156,7 +161,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let ud = UserDefaults.standard
             guard
                 let reviewDate = ud.requestReviewDate,
-                let forwardDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: reviewDate),
+                let forwardDate = Calendar.current.date(byAdding: .weekOfMonth,
+                                                        value: 2,
+                                                        to: reviewDate),
                 now >= forwardDate
             else { return }
             log.info("Requested App Review with SKStoreReviewController")
@@ -177,7 +184,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func application(_ application: UIApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
+    func application(_ application: UIApplication,
+                     willContinueUserActivityWithType userActivityType: String) -> Bool
+    {
         guard RawUserActivity(rawValue: userActivityType) != nil else {
             assertionFailure()
             return false
@@ -185,7 +194,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+    func application(_ application: UIApplication,
+                     continue userActivity: NSUserActivity,
+                     restorationHandler: @escaping ([Any]?) -> Void) -> Bool
+    {
         guard let activity = userActivity.restoredUserActivity else {
             assertionFailure()
             return false
@@ -195,7 +207,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    func application(_ application: UIApplication, didFailToContinueUserActivityWithType userActivityType: String, error: Error) {
+    func application(_ application: UIApplication,
+                     didFailToContinueUserActivityWithType userActivityType: String,
+                     error: Error)
+    {
         let error = error as NSError
         guard error.code != NSUserCancelledError else {
             return
@@ -204,11 +219,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
     }
     
-    func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
+    func application(_ application: UIApplication,
+                     shouldSaveApplicationState coder: NSCoder) -> Bool
+    {
         return true
     }
     
-    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+    func application(_ application: UIApplication,
+                     shouldRestoreApplicationState coder: NSCoder) -> Bool
+    {
         let _savedBuild = coder.decodeObject(forKey: UIApplicationStateRestorationBundleVersionKey) as? String
         let _currentBuild = Bundle(for: type(of: self)).infoDictionary?[kCFBundleVersionKey as String] as? String
         guard let savedBuild = _savedBuild, let currentBuild = _currentBuild, currentBuild == savedBuild else { return false }
