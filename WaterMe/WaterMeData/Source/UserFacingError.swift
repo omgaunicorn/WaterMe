@@ -1,9 +1,9 @@
 //
-//  RealmError.swift
+//  UserFacingError.swift
 //  WaterMeData
 //
-//  Created by Jeffrey Bergier on 8/12/17.
-//  Copyright © 2017 Saturday Apps.
+//  Created by Jeffrey Bergier on 10/10/18.
+//  Copyright © 2018 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
 //
@@ -23,12 +23,26 @@
 
 import Foundation
 
-public enum RealmError: Error {
-    case loadError
-    case createError
-    case writeError
-    case readError
-    case objectDeleted
-    case unableToDeleteLastReminder
-    case imageCouldntBeCompressedEnough
+public enum RecoveryAction {
+    case openWaterMeSettings
+    case reminderMissingMoveLocation
+    case reminderMissingOtherDescription
+    case reminderVesselMissingIcon
+    case reminderVesselMissingName
+    case reminverVesselMissingReminder
+    case cancel
+    case dismiss
+    case saveAnyway
+}
+
+public protocol UserFacingError: Swift.Error {
+    var title: String { get }
+    var message: String? { get }
+    var recoveryActions: [RecoveryAction] { get }
+}
+
+public protocol RecoveryActionSelectable: Swift.Error {
+    var title: String { get }
+    var automaticExecution: (() -> Void)? { get }
+    var followupError: UserFacingError? { get }
 }

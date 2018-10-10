@@ -122,22 +122,20 @@ fileprivate extension Reminder {
     }
 }
 
-extension Reminder: UICompleteCheckable {
-    
-    public enum Error {
-        case missingMoveLocation, missingOtherDescription
-    }
-    
-    public typealias E = Error
-    
-    public var isUIComplete: [Error] {
+extension Reminder: ModelCompleteCheckable {
+
+    public var isModelComplete: FormInvalidInfo? {
         switch self.kind {
         case .fertilize, .water, .trim, .mist:
-            return []
+            return nil
         case .move(let description):
-            return description?.nonEmptyString == nil ? [.missingMoveLocation] : []
+            return description?.nonEmptyString == nil ?
+                FormInvalidInfo(_actions: [.reminderMissingMoveLocation, .cancel, .saveAnyway])
+                : nil
         case .other(let description):
-            return description?.nonEmptyString == nil ? [.missingOtherDescription] : []
+            return description?.nonEmptyString == nil ?
+                FormInvalidInfo(_actions: [.reminderMissingOtherDescription, .cancel, .saveAnyway])
+                : nil
         }
     }
 }

@@ -464,9 +464,6 @@ extension RealmError {
         static let objectDeletedMessage =
             NSLocalizedString("Unable to save changes because the item was deleted. Possibly from another device.",
                               comment: "Realm Error: Object Deleted: Message: Error saving because the object that is being saved has already been deleted.")
-        static let buttonTitleManageStorage =
-            NSLocalizedString("Manage Storage",
-                              comment: "Realm Error: Button Title: Manage Store: Opens the setting app for the user.")
     }
 }
 
@@ -490,7 +487,7 @@ extension Reminder.Section {
     }
 }
 
-extension ReminderVessel.Error {
+extension RecoveryAction {
     enum LocalizedString {
         static let missingPhoto =
             NSLocalizedString("Missing Photo",
@@ -501,11 +498,6 @@ extension ReminderVessel.Error {
         static let missingReminders =
             NSLocalizedString("Missing Reminders",
                               comment: "Error Saving: Plant: Missing Reminders: If the user has not added at least one reminder for their plant and tries to save, an alert will warn them. This is the button title to fix the error.")
-    }
-}
-
-extension Reminder.Error {
-    enum LocalizedString {
         static let missingLocation =
             NSLocalizedString("Missing Location",
                               comment: "Error Saving: Reminder: Missing Location: If the user has no entered a location for their move reminder and tries to save, an alert will warn them. This is the button title to fix the error.")

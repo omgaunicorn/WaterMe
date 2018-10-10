@@ -32,7 +32,7 @@ extension UserActivityError: UserFacingError {
     public var title: String {
         return "Siri Shortcut Error"
     }
-    public var details: String? {
+    public var message: String? {
         switch self {
         case .continuationFailed, .restorationFailed:
             return "There was an error executing this Siri Shortcut. If you see this error repeatedly, it may help to delete and re-create this shortcut."
@@ -42,7 +42,7 @@ extension UserActivityError: UserFacingError {
             return "The plant for this Siri Shortcut could not be found. You may want to delete this Siri Shortcut."
         }
     }
-    public var recoveryActions: UserFacingErrorRecoveryActions {
-        return .openWaterMeSettings
+    public var recoveryActions: [RecoveryAction] {
+        return [.openWaterMeSettings]
     }
 }

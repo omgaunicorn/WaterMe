@@ -127,16 +127,20 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         
         if let error = self.applicationDidFinishLaunchingError {
             self.applicationDidFinishLaunchingError = nil
-            let alert = UIAlertController(error: error) { _ in
+            UIAlertController.presentAlertVC(for: error,
+                                             over: self,
+                                             from: nil)
+            { _ in
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
-            self.present(alert, animated: true, completion: nil)
         } else if let error = self.collectionVC?.reminders?.lastError {
             self.collectionVC?.reminders?.lastError = nil
-            let alert = UIAlertController(error: error) { _ in
+            UIAlertController.presentAlertVC(for: error,
+                                             over: self,
+                                             from: nil)
+            { _ in
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
-            self.present(alert, animated: true, completion: nil)
         } else if let migrator = AppDelegate.shared.coreDataMigrator, let basicRC = self.basicRC {
             let vc = CoreDataMigratorViewController.newVC(migrator: migrator, basicRC: basicRC) { vc, _ in
                 AppDelegate.shared.coreDataMigrator = nil
@@ -224,15 +228,12 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
                 }
             }
         case .failure(let error):
-            let errorVC = UIAlertController(error: error) { selection in
-                switch selection {
-                case .cancel:
-                    break
-                case .error(let error):
-                    print(error)
-                }
+            UIAlertController.presentAlertVC(for: error,
+                                             over: self,
+                                             from: nil)
+            { _ in
+                self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
-            self.present(errorVC, animated: true, completion: nil)
         }
     }
 

@@ -141,10 +141,12 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         
         if case .failure(let error) = self.vesselResult! {
             self.vesselResult = nil
-            let alert = UIAlertController(error: error) { _ in
+            UIAlertController.presentAlertVC(for: error,
+                                             over: self,
+                                             from: nil)
+            { _ in
                 self.completionHandler?(self)
             }
-            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -175,10 +177,12 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             case .success:
                 self.reminderVesselWasDeleted()
             case .failure(let error):
-                let alert = UIAlertController(error: error) { _ in
+                UIAlertController.presentAlertVC(for: error,
+                                                 over: self,
+                                                 from: sender)
+                { _ in
                     self.completionHandler?(self)
                 }
-                self.present(alert, animated: true, completion: nil)
             }
         }
         self.present(confirmation, animated: true, completion: nil)
@@ -192,28 +196,29 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         
         let sender = sender as? UIBarButtonItem
         assert(sender != nil, "Expected UIBarButtonItem to call this method")
-        let errors = vessel.isUIComplete
-        switch errors.isEmpty {
-        case true:
-            self.completionHandler?(self)
-        case false:
-            UIAlertController.presentAlertVC(for: errors, over: self, from: sender) { [unowned self] selection in
+        if let error = vessel.isModelComplete {
+            UIAlertController.presentAlertVC(for: error,
+                                             over: self,
+                                             from: sender)
+            { selection in
                 switch selection {
+                case .dismiss, .openWaterMeSettings, .reminderMissingMoveLocation, .reminderMissingOtherDescription:
+                    assertionFailure()
+                    fallthrough
                 case .cancel:
                     break
                 case .saveAnyway:
                     self.completionHandler?(self)
-                case .error(let error):
-                    switch error {
-                    case .missingIcon:
-                        self.userChosePhotoChange(controller: self.tableViewController)
-                    case .missingName:
-                        self.tableViewController?.nameTextFieldBecomeFirstResponder()
-                    case .noReminders:
-                        self.userChoseAddReminder(controller: self.tableViewController)
-                    }
+                case .reminderVesselMissingIcon:
+                    self.userChosePhotoChange(controller: self.tableViewController)
+                case .reminderVesselMissingName:
+                    self.tableViewController?.nameTextFieldBecomeFirstResponder()
+                case .reminverVesselMissingReminder:
+                    self.userChoseAddReminder(controller: self.tableViewController)
                 }
             }
+        } else {
+            self.completionHandler?(self)
         }
     }
     
@@ -224,8 +229,10 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         }
         let updateResult = basicRC.update(icon: icon, in: vessel)
         guard case .failure(let error) = updateResult else { return }
-        let alert = UIAlertController(error: error, completion: nil)
-        self.present(alert, animated: true, completion: nil)
+        UIAlertController.presentAlertVC(for: error,
+                                         over: self,
+                                         from: nil,
+                                         completionHandler: nil)
     }
     
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?) {
@@ -276,13 +283,19 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         }
         self.notificationToken?.invalidate() // stop the update notifications from causing the tableview to reload
         let updateResult = basicRC.update(displayName: newName, in: vessel)
-        if case .failure(let error) = updateResult {
-            let alert = UIAlertController(error: error, completion: nil)
-            self.present(alert, animated: true, completion: nil)
+        switch updateResult {
+        case .failure(let error):
+            UIAlertController.presentAlertVC(for: error,
+                                             over: self,
+                                             from: nil)
+            { _ in
+                self.completionHandler?(self)
+            }
+        case .success:
+            self.startNotifications()
+            // Item changed outside of the change block, time to dirty
+            self.userDirtiedUserActivity()
         }
-        self.startNotifications()
-        // Item changed outside of the change block, time to dirty
-        self.userDirtiedUserActivity()
     }
     
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?) {
@@ -351,8 +364,10 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         case .success:
             return true
         case .failure(let error):
-            let alert = UIAlertController(error: error, completion: nil)
-            self.present(alert, animated: true, completion: nil)
+            UIAlertController.presentAlertVC(for: error,
+                                             over: self,
+                                             from: nil,
+                                             completionHandler: nil)
             return false
         }
     }

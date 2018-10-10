@@ -25,21 +25,6 @@ import Result
 import UIKit
 import RealmSwift
 
-public enum UserFacingErrorRecoveryActions {
-    case openWaterMeSettings, none
-}
-
-public protocol UserFacingError: Swift.Error {
-    var title: String { get }
-    var details: String? { get }
-    var recoveryActions: UserFacingErrorRecoveryActions { get }
-}
-
-public protocol UICompleteCheckable {
-    associatedtype E
-    var isUIComplete: [E] { get }
-}
-
 public class ReminderVessel: Object {
 
     public struct Identifier: UUIDRepresentable {
@@ -83,21 +68,19 @@ public class ReminderVessel: Object {
     }
 }
 
-extension ReminderVessel: UICompleteCheckable {
-    
-    public enum Error {
-        case missingIcon, missingName, noReminders
-    }
-    
-    public typealias E = Error
-    
-    public var isUIComplete: [Error] {
-        let errors: [Error] = [
-            self.icon == nil ? .missingIcon : nil,
-            self.displayName == nil ? .missingName : nil,
-            self.reminders.isEmpty ? .noReminders : nil
+extension ReminderVessel: ModelCompleteCheckable {
+
+    public var isModelComplete: FormInvalidInfo? {
+        let issues: [RecoveryAction] = [
+            self.icon == nil ? .reminderVesselMissingIcon : nil,
+            self.displayName == nil ? .reminderVesselMissingName : nil,
+            self.reminders.isEmpty ? .reminverVesselMissingReminder : nil
             ].compactMap({ $0 })
-        return errors
+        if issues.isEmpty {
+            return nil
+        } else {
+            return FormInvalidInfo(_actions: issues + [.cancel, .saveAnyway])
+        }
     }
 }
 

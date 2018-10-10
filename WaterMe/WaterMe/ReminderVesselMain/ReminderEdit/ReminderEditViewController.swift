@@ -92,10 +92,10 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         Analytics.log(viewOperation: .editReminder)
         if case .failure(let error) = self.reminderResult! {
             self.reminderResult = nil
-            let alert = UIAlertController(error: error) { _ in
-                self.completionHandler?(self)
-            }
-            self.present(alert, animated: true, completion: nil)
+            UIAlertController.presentAlertVC(for: error,
+                                             over: self,
+                                             from: nil,
+                                             completionHandler: nil)
         }
     }
     
@@ -152,8 +152,10 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         
         // show the user errors that may have ocurred
         guard case .failure(let error) = updateResult else { return }
-        let alert = UIAlertController(error: error, completion: nil)
-        self.present(alert, animated: true, completion: nil)
+        UIAlertController.presentAlertVC(for: error,
+                                         over: self,
+                                         from: nil,
+                                         completionHandler: nil)
     }
     
     private func intervalChosen(_ deselectSelectedCell: @escaping () -> Void) {
@@ -196,8 +198,10 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             case .success:
                 self.completionHandler?(self)
             case .failure(let error):
-                let alert = UIAlertController(error: error, completion: nil)
-                self.present(alert, animated: true, completion: nil)
+                UIAlertController.presentAlertVC(for: error,
+                                                 over: self,
+                                                 from: sender,
+                                                 completionHandler: nil)
             }
         }
         self.present(confirmation, animated: true, completion: nil)
@@ -216,27 +220,25 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             self.completionHandler?(self)
             return
         }
-        let errors = reminder.isUIComplete
-        switch errors.isEmpty {
-        case true:
-            self.completionHandler?(self)
-        case false:
-            UIAlertController.presentAlertVC(for: errors,
+        if let error = reminder.isModelComplete {
+            UIAlertController.presentAlertVC(for: error,
                                              over: self,
                                              from: sender)
             { selection in
                 switch selection {
+                case .dismiss, .openWaterMeSettings, .reminderVesselMissingIcon, .reminderVesselMissingName, .reminverVesselMissingReminder:
+                    assertionFailure()
+                    fallthrough
                 case .cancel:
                     break
-                case .error(let error):
-                    switch error {
-                    case .missingMoveLocation, .missingOtherDescription:
-                        self.tableViewController?.forceTextFieldToBecomeFirstResponder()
-                    }
                 case .saveAnyway:
                     self.completionHandler?(self)
+                case .reminderMissingMoveLocation, .reminderMissingOtherDescription:
+                    self.tableViewController?.forceTextFieldToBecomeFirstResponder()
                 }
             }
+        } else {
+            self.completionHandler?(self)
         }
     }
 

@@ -24,93 +24,37 @@
 import WaterMeData
 import UIKit
 
-// Alerts for presenting realm errors
 extension UIAlertController {
-
-    enum ErrorSelection<T: UserFacingError> {
-        case cancel, error(T)
-    }
-
-    convenience init<T>(error: T, completion: ((ErrorSelection<T>) -> Void)?) {
-        Analytics.log(viewOperation: .errorAlertRealm)
-        self.init(title: error.title, message: error.details, preferredStyle: .alert)
-        let cancelAction = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel, handler: { _ in completion?(.cancel) })
-        self.addAction(cancelAction)
-        switch error.recoveryActions {
-        case .none:
-            break
-        case .openWaterMeSettings:
-            let actionTitle = RealmError.LocalizedString.buttonTitleManageStorage
-            let errorAction = UIAlertAction(title: actionTitle, style: .default) { _ in
-                UIApplication.shared.openAppSettings(completion: nil)
-                completion?(.error(error))
-            }
-            self.addAction(errorAction)
-        }
-    }
-}
-
-// Alerts for presenting User Input Validation Errors
-extension UIAlertController {
-
-    enum SaveAnywayErrorSelection<T: UserFacingError> {
-        case cancel, saveAnyway, error(T)
-    }
-
-    private convenience init<T>(saveAnywayError error: T, completion: @escaping (SaveAnywayErrorSelection<T>) -> Void) {
-        self.init(title: error.title, message: error.details, preferredStyle: .alert)
-        switch error.recoveryActions {
-        case .none:
-            break
-        case .openWaterMeSettings:
-            let actionTitle = RealmError.LocalizedString.buttonTitleManageStorage
-            let fix = UIAlertAction(title: actionTitle, style: .default, handler: { _ in completion(.error(error)) })
-            self.addAction(fix)
-        }
-        let cancel = UIAlertAction(title: LocalizedString.buttonTitleCancel, style: .cancel, handler: { _ in completion(.cancel) })
-        let save = UIAlertAction(title: LocalizedString.buttonTitleSaveAnyway, style: .destructive, handler: { _ in completion(.saveAnyway) })
-        self.addAction(cancel)
-        self.addAction(save)
-    }
-
-    private convenience init<T>(actionSheetWithActions actions: [UIAlertAction], cancelSaveCompletion completion: @escaping (SaveAnywayErrorSelection<T>) -> Void) {
-        self.init(title: nil, message: LocalizedString.titleUnsolvedIssues, preferredStyle: .actionSheet)
-        let cancel = UIAlertAction(title: LocalizedString.buttonTitleCancel, style: .cancel, handler: { _ in completion(.cancel) })
-        let save = UIAlertAction(title: LocalizedString.buttonTitleSaveAnyway, style: .destructive, handler: { _ in completion(.saveAnyway) })
-        actions.forEach({ self.addAction($0) })
-        self.addAction(cancel)
-        self.addAction(save)
-    }
-
-    class func presentAlertVC<T>(for errors: [T],
-                                 over presentingVC: UIViewController,
-                                 from barButtonItem: UIBarButtonItem?,
-                                 completionHandler completion: @escaping (SaveAnywayErrorSelection<T>) -> Void)
+    
+    typealias UserSelection = (RecoveryAction) -> Void
+    
+    class func presentAlertVC(for error: UserFacingError,
+                              over presentingVC: UIViewController,
+                              from barButtonItem: UIBarButtonItem?,
+                              completionHandler completion: UserSelection?)
     {
-        let errorActions = errors.map() { error -> UIAlertAction in
-            let action = UIAlertAction(title: error.title, style: .default) { _ in
-                if error.details == nil {
-                    // if the alertMessage is NIL, just call the completion handler
-                    completion(.error(error))
-                } else {
-                    // otherwise, make a new alert that gives the user more detailed information
-                    let errorAlert = UIAlertController(saveAnywayError: error, completion: completion)
-                    presentingVC.present(errorAlert, animated: true, completion: nil)
-                }
+        let recoveryActions = error.recoveryActions.map()
+        { recoveryOption -> UIAlertAction in
+            let action = UIAlertAction(title: error.title,
+                                       style: recoveryOption.actionStyle)
+            { _ in
+                completion?(recoveryOption)
             }
             return action
         }
-        assert(barButtonItem != nil, "Expected to be passed a UIBarButtonItem")
-        let actionSheet = UIAlertController(actionSheetWithActions: errorActions, cancelSaveCompletion: completion)
-        actionSheet.popoverPresentationController?.barButtonItem = barButtonItem
+        let actionSheet: UIAlertController
+        if let bbi = barButtonItem {
+            actionSheet = .init(title: nil,
+                                message: LocalizedString.titleUnsolvedIssues,
+                                preferredStyle: .actionSheet)
+            actionSheet.popoverPresentationController?.barButtonItem = bbi
+        } else {
+            actionSheet = .init(title: nil,
+                                message: LocalizedString.titleUnsolvedIssues,
+                                preferredStyle: .alert)
+        }
+        recoveryActions.forEach(actionSheet.addAction)
         presentingVC.present(actionSheet, animated: true, completion: nil)
-    }
-}
-
-extension UIAlertController {
-    class func sourceRect(from view: UIView) -> CGRect {
-        let origin = CGPoint(x: view.bounds.size.width / 2, y: view.bounds.size.height / 2)
-        return CGRect(origin: origin, size: .zero)
     }
 }
 
@@ -151,5 +95,12 @@ extension UIAlertController {
             completion?()
         }
         self.addAction(dismiss)
+    }
+}
+
+extension UIAlertController {
+    class func sourceRect(from view: UIView) -> CGRect {
+        let origin = CGPoint(x: view.bounds.size.width / 2, y: view.bounds.size.height / 2)
+        return CGRect(origin: origin, size: .zero)
     }
 }

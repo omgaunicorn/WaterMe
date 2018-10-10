@@ -1,9 +1,9 @@
 //
-//  RealmError.swift
+//  FormInvalidInfo.swift
 //  WaterMeData
 //
-//  Created by Jeffrey Bergier on 8/12/17.
-//  Copyright © 2017 Saturday Apps.
+//  Created by Jeffrey Bergier on 10/10/18.
+//  Copyright © 2018 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
 //
@@ -23,12 +23,10 @@
 
 import Foundation
 
-public enum RealmError: Error {
-    case loadError
-    case createError
-    case writeError
-    case readError
-    case objectDeleted
-    case unableToDeleteLastReminder
-    case imageCouldntBeCompressedEnough
+public struct FormInvalidInfo {
+    public var _actions: [RecoveryAction]
+}
+
+public protocol ModelCompleteCheckable {
+    var isModelComplete: FormInvalidInfo? { get }
 }
