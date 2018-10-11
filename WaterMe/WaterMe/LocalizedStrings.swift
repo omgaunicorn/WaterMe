@@ -600,5 +600,11 @@ extension UserActivityConfigurator {
                 return localizedString
             }
         }
+        static let siriShortcutsUnavailableTitle: String
+            = NSLocalizedString("Siri Shortcuts Unavailable",
+                                comment: "Alert Title: On iOS 11, Siri Shortcuts is not available, but they tapped on a button the tries to use this feature. This alert tells them whats wrong.")
+        static let siriShortcutsUnavailableMessage: String
+            = NSLocalizedString("Siri Shortcuts are only available in iOS 12. Please update to use this feature.",
+                                comment: "Alert Title: On iOS 11, Siri Shortcuts is not available, but they tapped on a button the tries to use this feature. This alert tells them whats wrong.")
     }
 }

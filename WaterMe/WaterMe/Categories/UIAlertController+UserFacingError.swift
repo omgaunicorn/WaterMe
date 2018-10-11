@@ -86,8 +86,8 @@ extension UIAlertController {
 
 extension UIAlertController {
     convenience init(localizedSiriShortcutsUnavailableAlertWithCompletionHandler completion: (() -> Void)?) {
-        self.init(title: "Siri Shortcuts Unavailable",
-                  message: "Siri Shortcuts are only available in iOS 12. Please update to use this feature.",
+        self.init(title: UserActivityConfigurator.LocalizedString.siriShortcutsUnavailableTitle,
+                  message: UserActivityConfigurator.LocalizedString.siriShortcutsUnavailableMessage,
                   preferredStyle: .alert)
         let dismiss = UIAlertAction(title: LocalizedString.buttonTitleDismiss,
                                     style: .cancel)
