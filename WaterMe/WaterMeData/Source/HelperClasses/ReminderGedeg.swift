@@ -48,7 +48,7 @@ open class ReminderGedeg: NSObject {
         self.updateBatcher.batchFired = { [unowned self] changes in
             self.batchedUpdates(ins: changes.ins, dels: changes.dels, mods: changes.mods)
         }
-        for section in Reminder.Section.all {
+        for section in Reminder.Section.allCases {
             let result = basicRC.reminders(in: section, sorted: .nextPerformDate, ascending: true)
             switch result {
             case .success(let reminders):
@@ -88,7 +88,7 @@ open class ReminderGedeg: NSObject {
         // check if the reminders.count matches the number of sections
         // if this sanity check fails, something unexpected has happened
         let reminderCount = self.reminders.count
-        if reminderCount != Reminder.Section.count {
+        if reminderCount != Reminder.Section.allCases.count {
             let error = NSError(numberOfSectionsMistmatch: nil)
             assertionFailure(String(describing: error))
             BasicController.errorThrown?(error)

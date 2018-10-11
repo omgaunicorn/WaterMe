@@ -26,6 +26,10 @@ import RealmSwift
 import Foundation
 
 public class Reminder: Object {
+
+    public enum Section: Int, CaseIterable {
+        case late, today, tomorrow, thisWeek, later
+    }
     
     public static let minimumInterval: Int = 1
     public static let maximumInterval: Int = 180
@@ -169,14 +173,5 @@ public extension Reminder {
                 return #keyPath(Reminder.note)
             }
         }
-    }
-}
-
-public extension Reminder {
-    public enum Section: Int {
-        case late, today, tomorrow, thisWeek, later
-        public static let count = 5
-        public static let rawValueSet = (0 ..< Reminder.Section.count).reduce(into: Set<Int>(), { $0.insert($1) })
-        public static let all = (0 ..< Reminder.Section.count).reduce(into: [Reminder.Section](), { $0.append(Reminder.Section(rawValue: $1)!) })
     }
 }
