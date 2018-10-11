@@ -124,17 +124,17 @@ fileprivate extension Reminder {
 
 extension Reminder: ModelCompleteCheckable {
 
-    public var isModelComplete: FormInvalidInfo? {
+    public var isModelComplete: ModelCompleteError? {
         switch self.kind {
         case .fertilize, .water, .trim, .mist:
             return nil
         case .move(let description):
             return description?.nonEmptyString == nil ?
-                FormInvalidInfo(_actions: [.reminderMissingMoveLocation, .cancel, .saveAnyway])
+                ModelCompleteError(_actions: [.reminderMissingMoveLocation, .cancel, .saveAnyway])
                 : nil
         case .other(let description):
             return description?.nonEmptyString == nil ?
-                FormInvalidInfo(_actions: [.reminderMissingOtherDescription, .cancel, .saveAnyway])
+                ModelCompleteError(_actions: [.reminderMissingOtherDescription, .cancel, .saveAnyway])
                 : nil
         }
     }

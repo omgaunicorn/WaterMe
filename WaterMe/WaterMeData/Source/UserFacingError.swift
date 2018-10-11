@@ -44,5 +44,4 @@ public protocol UserFacingError: Swift.Error {
 public protocol RecoveryActionSelectable: Swift.Error {
     var title: String { get }
     var automaticExecution: (() -> Void)? { get }
-    var followupError: UserFacingError? { get }
 }

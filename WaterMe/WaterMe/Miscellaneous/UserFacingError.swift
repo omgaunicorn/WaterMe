@@ -64,6 +64,7 @@ extension RealmError: UserFacingError {
 }
 
 extension RecoveryAction: RecoveryActionSelectable {
+    
     public var title: String {
         switch self {
         case .cancel:
@@ -86,6 +87,7 @@ extension RecoveryAction: RecoveryActionSelectable {
             return LocalizedString.missingReminders
         }
     }
+
     public var automaticExecution: (() -> Void)? {
         switch self {
         case .openWaterMeSettings:
@@ -93,9 +95,6 @@ extension RecoveryAction: RecoveryActionSelectable {
         default:
             return nil
         }
-    }
-    public var followupError: UserFacingError? {
-        return nil
     }
 
     internal var actionStyle: UIAlertAction.Style {
@@ -110,7 +109,7 @@ extension RecoveryAction: RecoveryActionSelectable {
     }
 }
 
-extension FormInvalidInfo: UserFacingError {
+extension ModelCompleteError: UserFacingError {
     
     public var title: String? {
         return UIAlertController.LocalizedString.titleUnsolvedIssues

@@ -23,10 +23,10 @@
 
 import Foundation
 
-public struct FormInvalidInfo {
+public struct ModelCompleteError {
     public var _actions: [RecoveryAction]
 }
 
 public protocol ModelCompleteCheckable {
-    var isModelComplete: FormInvalidInfo? { get }
+    var isModelComplete: ModelCompleteError? { get }
 }

@@ -70,7 +70,7 @@ public class ReminderVessel: Object {
 
 extension ReminderVessel: ModelCompleteCheckable {
 
-    public var isModelComplete: FormInvalidInfo? {
+    public var isModelComplete: ModelCompleteError? {
         let issues: [RecoveryAction] = [
             self.icon == nil ? .reminderVesselMissingIcon : nil,
             self.displayName == nil ? .reminderVesselMissingName : nil,
@@ -79,7 +79,7 @@ extension ReminderVessel: ModelCompleteCheckable {
         if issues.isEmpty {
             return nil
         } else {
-            return FormInvalidInfo(_actions: issues + [.cancel, .saveAnyway])
+            return ModelCompleteError(_actions: issues + [.cancel, .saveAnyway])
         }
     }
 }
