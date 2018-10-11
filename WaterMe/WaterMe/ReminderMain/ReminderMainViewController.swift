@@ -46,7 +46,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     private weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     private var appUpdateAvailableVC: UIViewController?
     private var applicationDidFinishLaunchingError: RealmError?
-    var userActivityResultToContinue: Result<RestoredUserActivity, UserActivityError>? = .failure(.reminderNotFound)
+    var userActivityResultToContinue: Result<RestoredUserActivity, UserActivityError>?
 
     private(set) lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedAddReminderVesselBBIButtonWithTarget: self,
                                                                        action: #selector(self.addPlantButtonTapped(_:)))
@@ -177,6 +177,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
 
     private func continueUserActivityResultIfNeeded() {
         guard let result = self.userActivityResultToContinue else { return }
+        self.userActivityResultToContinue = nil
         switch result {
         case .success(let activity):
             switch activity {

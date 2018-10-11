@@ -29,9 +29,18 @@ public enum UserActivityError: Error {
 }
 
 extension UserActivityError: UserFacingError {
-    public var title: String {
-        return "Siri Shortcut Error"
+
+    public var title: String? {
+        switch self {
+        case .continuationFailed, .restorationFailed:
+            return nil
+        case .reminderNotFound:
+            return "Reminder Not Found"
+        case .reminderVesselNotFound:
+            return "Plant Not Found"
+        }
     }
+
     public var message: String? {
         switch self {
         case .continuationFailed, .restorationFailed:
@@ -42,7 +51,8 @@ extension UserActivityError: UserFacingError {
             return "The plant for this Siri Shortcut could not be found. You may want to delete this Siri Shortcut."
         }
     }
+    
     public var recoveryActions: [RecoveryAction] {
-        return [.openWaterMeSettings]
+        return [.dismiss, .openWaterMeSettings]
     }
 }

@@ -36,7 +36,7 @@ public enum RecoveryAction {
 }
 
 public protocol UserFacingError: Swift.Error {
-    var title: String { get }
+    var title: String? { get }
     var message: String? { get }
     var recoveryActions: [RecoveryAction] { get }
 }

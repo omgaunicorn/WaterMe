@@ -35,7 +35,7 @@ extension UIAlertController {
     {
         let recoveryActions = error.recoveryActions.map()
         { recoveryOption -> UIAlertAction in
-            let action = UIAlertAction(title: error.title,
+            let action = UIAlertAction(title: recoveryOption.title,
                                        style: recoveryOption.actionStyle)
             { _ in
                 completion?(recoveryOption)
@@ -44,13 +44,13 @@ extension UIAlertController {
         }
         let actionSheet: UIAlertController
         if let bbi = barButtonItem {
-            actionSheet = .init(title: nil,
-                                message: LocalizedString.titleUnsolvedIssues,
+            actionSheet = .init(title: error.title,
+                                message: error.message,
                                 preferredStyle: .actionSheet)
             actionSheet.popoverPresentationController?.barButtonItem = bbi
         } else {
-            actionSheet = .init(title: nil,
-                                message: LocalizedString.titleUnsolvedIssues,
+            actionSheet = .init(title: error.title,
+                                message: error.message,
                                 preferredStyle: .alert)
         }
         recoveryActions.forEach(actionSheet.addAction)

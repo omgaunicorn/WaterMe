@@ -25,7 +25,7 @@ import WaterMeData
 
 extension RealmError: UserFacingError {
 
-    public var title: String {
+    public var title: String? {
         switch self {
         case .unableToDeleteLastReminder:
             return LocalizedString.deleteTitle
@@ -111,7 +111,8 @@ extension RecoveryAction: RecoveryActionSelectable {
 }
 
 extension FormInvalidInfo: UserFacingError {
-    public var title: String {
+    
+    public var title: String? {
         return UIAlertController.LocalizedString.titleUnsolvedIssues
     }
 
