@@ -138,6 +138,11 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         vc.completion = { vc, result in
             vc.dismiss(animated: true) {
                 deselectRowAnimated?(true)
+                guard case .failure(let error) = result else { return }
+                UIAlertController.presentAlertVC(for: error,
+                                                 over: self,
+                                                 from: nil,
+                                                 completionHandler: nil)
             }
         }
         self.present(vc, animated: true, completion: nil)

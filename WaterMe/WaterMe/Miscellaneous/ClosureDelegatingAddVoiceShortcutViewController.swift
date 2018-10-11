@@ -21,13 +21,14 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Result
 import IntentsUI
 
 @available(iOS 12.0, *)
 class ClosureDelegatingAddVoiceShortcutViewController: INUIAddVoiceShortcutViewController, INUIAddVoiceShortcutViewControllerDelegate {
 
     enum Result {
-        case success(INVoiceShortcut), cancel, error(Error)
+        case success(INVoiceShortcut), cancel, failure(UserActivityError)
     }
 
     var completion: ((UIViewController, Result) -> Void)?
@@ -47,7 +48,8 @@ class ClosureDelegatingAddVoiceShortcutViewController: INUIAddVoiceShortcutViewC
                                         error: Error?)
     {
         if let error = error {
-            self.completion?(self, .error(error))
+            log.error(error)
+            self.completion?(self, .failure(.createShortcutFailed))
         } else if let shortcut = voiceShortcut {
             self.completion?(self, .success(shortcut))
         } else {

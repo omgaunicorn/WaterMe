@@ -25,7 +25,7 @@ import WaterMeData
 import Foundation
 
 public enum UserActivityError: Error {
-    case restorationFailed, reminderNotFound, reminderVesselNotFound, continuationFailed
+    case restorationFailed, reminderNotFound, reminderVesselNotFound, continuationFailed, createShortcutFailed
 }
 
 extension UserActivityError: UserFacingError {
@@ -34,6 +34,8 @@ extension UserActivityError: UserFacingError {
         switch self {
         case .continuationFailed, .restorationFailed:
             return nil
+        case .createShortcutFailed:
+            return "Error"
         case .reminderNotFound:
             return "Reminder Not Found"
         case .reminderVesselNotFound:
@@ -43,6 +45,8 @@ extension UserActivityError: UserFacingError {
 
     public var message: String? {
         switch self {
+        case .createShortcutFailed:
+            return "There was an error adding this Siri Shortcut. Please try again later."
         case .continuationFailed, .restorationFailed:
             return "There was an error executing this Siri Shortcut. If you see this error repeatedly, it may help to delete and re-create this shortcut."
         case .reminderNotFound:
@@ -53,6 +57,11 @@ extension UserActivityError: UserFacingError {
     }
     
     public var recoveryActions: [RecoveryAction] {
-        return [.dismiss, .openWaterMeSettings]
+        switch self {
+        case .createShortcutFailed:
+            return [.dismiss]
+        case .continuationFailed, .reminderNotFound, .reminderVesselNotFound, .restorationFailed:
+            return [.dismiss, .openWaterMeSettings]
+        }
     }
 }
