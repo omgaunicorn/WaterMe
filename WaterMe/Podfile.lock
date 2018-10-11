@@ -1,9 +1,9 @@
 PODS:
   - Cheers (2.1.0)
-  - Crashlytics (3.10.7):
-    - Fabric (~> 1.7.11)
+  - Crashlytics (3.10.9):
+    - Fabric (~> 1.7.13)
   - CropViewController (2.3.8)
-  - Fabric (1.7.11)
+  - Fabric (1.7.13)
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
@@ -21,9 +21,9 @@ PODS:
   - WaterMeStore (1.0.0):
     - Result
     - XCGLogger
-  - XCGLogger (6.0.4):
-    - XCGLogger/Core (= 6.0.4)
-  - XCGLogger/Core (6.0.4):
+  - XCGLogger (6.1.0):
+    - XCGLogger/Core (= 6.1.0)
+  - XCGLogger/Core (6.1.0):
     - ObjcExceptionBridging
 
 DEPENDENCIES:
@@ -38,7 +38,7 @@ DEPENDENCIES:
   - WaterMeData (from `WaterMeData`)
   - WaterMeStore (from `WaterMeStore`)
   - XCGLogger
-  - XCGLogger (~> 6.0.4)
+  - XCGLogger (~> 6.1.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -61,9 +61,9 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Cheers: 02d6335ac9ceb1ebf678df78d378bc71242a015e
-  Crashlytics: ccaac42660eb9351b9960c0d66106b0bcf99f4fa
+  Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
   CropViewController: 7be882b7d3fb3faef48a41924e80f689e9df2514
-  Fabric: f233c9492b3bbc1f04e3882986740f7988a58edb
+  Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
   RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
@@ -71,8 +71,8 @@ SPEC CHECKSUMS:
   SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
   WaterMeData: 2d3ceb104310e1038a8d4fc8e6a3bc322e70a391
   WaterMeStore: 4eb3190f0ba860255ee19e0fd7229587c769e0c2
-  XCGLogger: 4fc1bc0bdd5828cb8dc8da7a843536cda1bea8f3
+  XCGLogger: 7f7f43f15dfe3a305fa1342b7dc29af656289abd
 
-PODFILE CHECKSUM: 2be494810c6ff8139f179a7633d26d4deefdd380
+PODFILE CHECKSUM: 0bb3ff5214fbbac3de1a29475d6343145360d908
 
 COCOAPODS: 1.5.3
