@@ -51,6 +51,7 @@
 		5051F8FA202BA2BE00741FF9 /* GlobalReminderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */; };
 		5051F8FC202BAB1C00741FF9 /* BadgeNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8FB202BAB1C00741FF9 /* BadgeNumberController.swift */; };
 		5051F8FE202BCBE900741FF9 /* OtherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8FD202BCBE900741FF9 /* OtherTests.swift */; };
+		50572E0A217040400053114C /* ReminderMainViewController+NSUserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50572E09217040400053114C /* ReminderMainViewController+NSUserActivity.swift */; };
 		505B8C28214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B8C27214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift */; };
 		5065AA1C200E872900C7F0CC /* UserFacingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065AA1B200E872900C7F0CC /* UserFacingError.swift */; };
 		5065AA25200EC62F00C7F0CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5065AA27200EC62F00C7F0CC /* Localizable.strings */; };
@@ -208,6 +209,7 @@
 		5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalReminderObserver.swift; sourceTree = "<group>"; };
 		5051F8FB202BAB1C00741FF9 /* BadgeNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeNumberController.swift; sourceTree = "<group>"; };
 		5051F8FD202BCBE900741FF9 /* OtherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherTests.swift; sourceTree = "<group>"; };
+		50572E09217040400053114C /* ReminderMainViewController+NSUserActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderMainViewController+NSUserActivity.swift"; sourceTree = "<group>"; };
 		505B8C27214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderSummaryTableViewCells+Models.swift"; sourceTree = "<group>"; };
 		5065AA1B200E872900C7F0CC /* UserFacingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFacingError.swift; sourceTree = "<group>"; };
 		5065AA26200EC62F00C7F0CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -347,6 +349,7 @@
 				508E61541F8ACC5E00B28DD8 /* ReminderMain.storyboard */,
 				500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */,
 				507318E6202D29BB00CF3737 /* ReminderMainViewController+ReminderCollectionViewControllerDelegate.swift */,
+				50572E09217040400053114C /* ReminderMainViewController+NSUserActivity.swift */,
 				508E61561F8AD57400B28DD8 /* ReminderCollectionViewController.swift */,
 				508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */,
 				502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */,
@@ -1107,6 +1110,7 @@
 				50E3F2C91FF6EF35003245E3 /* ImageEmojiObject.swift in Sources */,
 				506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */,
 				501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */,
+				50572E0A217040400053114C /* ReminderMainViewController+NSUserActivity.swift in Sources */,
 				50E8B1E61EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift in Sources */,
 				50702D11200589B0009EF952 /* SettingsTipJarTableViewCell.swift in Sources */,
 				50CA47EE21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift in Sources */,

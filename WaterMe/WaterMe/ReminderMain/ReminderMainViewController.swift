@@ -42,7 +42,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         return navVC
     }
 
-    private weak var collectionVC: ReminderCollectionViewController?
+    private(set) weak var collectionVC: ReminderCollectionViewController?
     private weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     private var appUpdateAvailableVC: UIViewController?
     private var applicationDidFinishLaunchingError: RealmError?
@@ -173,69 +173,6 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         }
         guard let vc = _vc else { return }
         self.present(vc, animated: true, completion: nil)
-    }
-
-    private func continueUserActivityResultIfNeeded() {
-        guard let result = self.userActivityResultToContinue else { return }
-        self.userActivityResultToContinue = nil
-        switch result {
-        case .success(let activity):
-            switch activity {
-            case .editReminder(let identifier):
-                guard
-                    let completion = self.collectionVC?.programmaticalySelectReminder(with: identifier),
-                    let basicRC = self.basicRC
-                else {
-                    self.userActivityResultToContinue = .failure(.reminderNotFound)
-                    self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
-                    return
-                }
-                self.dismissAnimatedIfNeeded() {
-                    self.userChoseEditReminder(with: identifier,
-                                               basicRC: basicRC,
-                                               completion: completion)
-                }
-            case .editReminderVessel(let identifier):
-                guard
-                    let basicRC = self.basicRC,
-                    let vessel = basicRC.reminderVessel(matching: identifier).value
-                else {
-                    self.userActivityResultToContinue = .failure(.reminderVesselNotFound)
-                    self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
-                    return
-                }
-                self.dismissAnimatedIfNeeded() {
-                    let vc = ReminderVesselEditViewController.newVC(basicController: basicRC,
-                                                                    editVessel: vessel)
-                    { vc in
-                        vc.dismiss(animated: true, completion: nil)
-                    }
-                    self.present(vc, animated: true, completion: nil)
-                }
-            case .viewReminder(let identifier):
-                guard
-                    let indexPath = self.collectionVC?.indexPathOfReminder(with: identifier)
-                else {
-                    self.userActivityResultToContinue = .failure(.reminderNotFound)
-                    self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
-                    return
-                }
-                self.dismissAnimatedIfNeeded() {
-                    self.collectionVC?.programaticallySimulateSelectionOfReminder(at: indexPath)
-                }
-            case .viewReminders:
-                self.dismissAnimatedIfNeeded() {
-                    self.collectionVC?.collectionView?.deselectAllItems(animated: true)
-                }
-            }
-        case .failure(let error):
-            UIAlertController.presentAlertVC(for: error,
-                                             over: self,
-                                             from: nil)
-            { _ in
-                self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
-            }
-        }
     }
 
     @IBAction private func addPlantButtonTapped(_ sender: Any) {
