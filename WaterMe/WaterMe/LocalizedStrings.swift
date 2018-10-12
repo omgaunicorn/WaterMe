@@ -608,3 +608,29 @@ extension UserActivityConfigurator {
                                 comment: "Alert Title: On iOS 11, Siri Shortcuts is not available, but they tapped on a button the tries to use this feature. This alert tells them whats wrong.")
     }
 }
+
+extension UserActivityError {
+    enum LocalizedString {
+        static let siriShortcutGenericErrorAlertTitle: String
+            = NSLocalizedString("Shortcut Error",
+                                comment: "Alert Title: Generic Siri Shortcuts Error")
+        static let siriShortcutReminderNotFoundErrorAlertTitle: String
+            = NSLocalizedString("Reminder Not Found",
+                                comment: "Alert Title: Reminder Not Found when trying to execute a SiriShortcut")
+        static let siriShortcutReminderNotFoundErrorAlertMessage: String
+            = NSLocalizedString("The reminder for this Siri Shortcut could not be found. You may want to delete this Siri Shortcut.",
+                                comment: "Alert Message: Reminder Not Found when trying to execute a SiriShortcut")
+        static let siriShortcutReminderVesselNotFoundErrorAlertTitle: String
+            = NSLocalizedString("Plant Not Found",
+                                comment: "Alert Title: Plant Not Found when trying to execute a SiriShortcut")
+        static let siriShortcutReminderVesselNotFoundErrorAlertMessage: String
+            = NSLocalizedString("The plant for this Siri Shortcut could not be found. You may want to delete this Siri Shortcut.",
+                                comment: "Alert Message: Plant Not Found when trying to execute a SiriShortcut")
+        static let siriShortcutCreateErrorAlertMessage: String
+            = NSLocalizedString("There was an error adding this Siri Shortcut. Please try again later.",
+                                comment: "Alert Message: Error Ocurred when Creating a new Siri Shortcut.")
+        static let siriShortcutContinuationErrorAlertMessage: String
+            = NSLocalizedString("There was an error executing this Siri Shortcut. If you see this error repeatedly, it may help to delete and re-create this shortcut.",
+                                comment: "Alert Message: Error ocurred when executing an existing Shortcut.")
+    }
+}

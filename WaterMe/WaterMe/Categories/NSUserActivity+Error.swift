@@ -32,27 +32,25 @@ extension UserActivityError: UserFacingError {
 
     public var title: String? {
         switch self {
-        case .continuationFailed, .restorationFailed:
-            return nil
-        case .createShortcutFailed:
-            return "Error"
+        case .continuationFailed, .restorationFailed, .createShortcutFailed:
+            return LocalizedString.siriShortcutGenericErrorAlertTitle
         case .reminderNotFound:
-            return "Reminder Not Found"
+            return LocalizedString.siriShortcutReminderNotFoundErrorAlertTitle
         case .reminderVesselNotFound:
-            return "Plant Not Found"
+            return LocalizedString.siriShortcutReminderVesselNotFoundErrorAlertTitle
         }
     }
 
     public var message: String? {
         switch self {
         case .createShortcutFailed:
-            return "There was an error adding this Siri Shortcut. Please try again later."
+            return LocalizedString.siriShortcutCreateErrorAlertMessage
         case .continuationFailed, .restorationFailed:
-            return "There was an error executing this Siri Shortcut. If you see this error repeatedly, it may help to delete and re-create this shortcut."
+            return LocalizedString.siriShortcutContinuationErrorAlertMessage
         case .reminderNotFound:
-            return "The reminder for this Siri Shortcut could not be found. You may want to delete this Siri Shortcut."
+            return LocalizedString.siriShortcutReminderNotFoundErrorAlertMessage
         case .reminderVesselNotFound:
-            return "The plant for this Siri Shortcut could not be found. You may want to delete this Siri Shortcut."
+            return LocalizedString.siriShortcutReminderVesselNotFoundErrorAlertMessage
         }
     }
     
