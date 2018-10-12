@@ -51,6 +51,7 @@ public extension NSUserActivity {
     public static func uniqueString(for rawActivity: RawUserActivity,
                                     and uuids: [UUIDRepresentable]) -> String
     {
+        let uuids = uuids.sorted(by: { $0.uuid <= $1.uuid })
         return uuids.reduce(rawActivity.rawValue) { prevValue, item -> String in
             return prevValue + stringSeparator + item.uuid
         }

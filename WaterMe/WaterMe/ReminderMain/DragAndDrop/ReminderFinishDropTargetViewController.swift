@@ -25,6 +25,9 @@ import WaterMeData
 import UIKit
 
 protocol ReminderFinishDropTargetViewControllerDelegate: class {
+    func userDidCancelDrag(within: ReminderFinishDropTargetViewController)
+    func userDidStartDrag(with reminders: [Reminder.Identifier],
+                          within: ReminderFinishDropTargetViewController)
     func animateAlongSideDropTargetViewResize(within: ReminderFinishDropTargetViewController) -> (() -> Void)?
     func userDidPerformDrop(with reminders: [Reminder.Identifier],
                             onTargetZoneWithin controller: ReminderFinishDropTargetViewController?)
@@ -194,12 +197,14 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
         self.isDragInProgress = true
         self.updateDropTargetHeightAndPlayAnimationForDragging(animated: true)
+        self.delegate?.userDidStartDrag(with: session.reminderDrags, within: self)
         guard self.animationView?.hoverState != .drop else { return }
         self.animationView?.hoverState = .hover
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
         self.isDragInProgress = false
+        self.delegate?.userDidCancelDrag(within: self)
         guard self.animationView?.hoverState != .drop else { return }
         self.animationView?.hoverState = .noHover
     }

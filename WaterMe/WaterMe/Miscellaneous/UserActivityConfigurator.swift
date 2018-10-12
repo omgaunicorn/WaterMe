@@ -27,11 +27,13 @@ import Foundation
 protocol UserActivityConfiguratorProtocol: NSUserActivityDelegate {
     var currentReminder: (() -> Reminder?)? { get set }
     var currentReminderVessel: (() -> ReminderVessel?)? { get set }
+    var remindersForDragSession: [Reminder.Identifier]? { get set }
 }
 
 class UserActivityConfigurator: NSObject, UserActivityConfiguratorProtocol {
     var currentReminder: (() -> Reminder?)?
     var currentReminderVessel: (() -> ReminderVessel?)?
+    var remindersForDragSession: [Reminder.Identifier]?
 }
 
 extension UserActivityConfigurator: NSUserActivityDelegate {
@@ -64,11 +66,16 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
                 }
                 self.updateViewReminder(activity: activity, reminder: reminder)
             case .performReminders:
-                guard let reminder = self.currentReminder?() else {
-                    assertionFailure("Missing Reminder")
-                    return
+                if let uuids = self.remindersForDragSession, uuids.isEmpty == false {
+                    self.updatePerformMultipleReminders(activity: activity,
+                                                        reminders: uuids)
+                    self.remindersForDragSession = nil
+                } else if let reminder = self.currentReminder?() {
+                    self.updatePerformSingleReminder(activity: activity,
+                                                     reminder: reminder)
+                } else {
+                    assertionFailure("Missing Reminders")
                 }
-                self.updatePerformReminders(activity: activity, reminders: [reminder])
             case .indexedItem:
                 assertionFailure("Cannot update the data on a CoreSpotlight activity")
             }
@@ -131,36 +138,40 @@ private extension UserActivityConfigurator {
                         thumbnailData: reminder.vessel?.iconImageData)
     }
 
-    private func updatePerformReminders(activity: NSUserActivity, reminders: [Reminder]) {
+    private func updatePerformMultipleReminders(activity: NSUserActivity,
+                                                reminders: [Reminder.Identifier])
+    {
         assert(activity.activityType == RawUserActivity.performReminders.rawValue)
-        guard reminders.isEmpty == false else {
-            assertionFailure()
-            return
-        }
 
-        let uuids = reminders.map({ Reminder.Identifier(reminder: $0) })
-        let title: String
-        let description: String
-        if reminders.count >= 2 {
-            // Plural
-            // FIXME:
-            title = "Mark \(reminders.count) as done."
-            description = "Mark all of these reminders as done."
-        } else {
-            // Singular
-            let reminder = reminders.first!
-            title = LocalizedString.title(for: reminder.kind,
-                                          andVesselName: reminder.vessel?.shortLabelSafeDisplayName)
-            // FIXME:
-            description = "Mark this reminder as done."
-        }
+        // FIXME:
+        let title = "Mark \(reminders.count) as done."
+        // FIXME:
+        let description = "Mark all of these reminders as done."
         let phrase = LocalizedString.genericLocalizedPhrase
 
-        activity.update(uuids: uuids,
+        activity.update(uuids: reminders,
                         title: title,
                         phrase: phrase,
                         description: description,
-                        thumbnailData: reminders.first?.vessel?.iconImageData)
+                        thumbnailData: nil)
+    }
+
+    private func updatePerformSingleReminder(activity: NSUserActivity,
+                                             reminder: Reminder)
+    {
+        assert(activity.activityType == RawUserActivity.performReminders.rawValue)
+
+        let uuid = Reminder.Identifier(reminder: reminder)
+        let title = LocalizedString.title(for: reminder.kind,
+                                          andVesselName: reminder.vessel?.shortLabelSafeDisplayName)
+        // FIXME:
+        let description = "Mark this reminder as done."
+        let phrase = LocalizedString.genericLocalizedPhrase
+        activity.update(uuids: [uuid],
+                        title: title,
+                        phrase: phrase,
+                        description: description,
+                        thumbnailData: reminder.vessel?.iconImageData)
     }
 
     private func updateEditReminder(activity: NSUserActivity, reminder: Reminder) {

@@ -147,9 +147,10 @@ class ReminderSummaryViewController: StandardViewController {
 }
 
 extension ReminderSummaryViewController: ReminderSummaryTableViewControllerDelegate {
-    func userChose(toViewImage image: UIImage,
-                   rowDeselectionHandler: @escaping () -> Void,
-                   within: ReminderSummaryTableViewController)
+
+    internal func userChose(toViewImage image: UIImage,
+                            rowDeselectionHandler: @escaping () -> Void,
+                            within: ReminderSummaryTableViewController)
     {
         let config = DismissHandlingImageViewerConfiguration(image: image) { vc in
             vc.dismiss(animated: true) {
@@ -159,15 +160,28 @@ extension ReminderSummaryViewController: ReminderSummaryTableViewControllerDeleg
         let vc = DismissHandlingImageViewerController(configuration: config)
         self.present(vc, animated: true, completion: nil)
     }
-    func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController) {
+
+    internal func userChose(action: ReminderSummaryViewController.Action,
+                            within: ReminderSummaryTableViewController)
+    {
         if case .performReminder = action {
+            self.configurePerformRemindersActivity()
             self.haptic?.prepare()
         }
         self.completion(action, self.reminderID, self)
     }
+
+    private func configurePerformRemindersActivity() {
+        let activity = NSUserActivity(kind: .performReminders,
+                                      delegate: self.userActivityDelegate)
+        self.userActivity = activity
+        activity.needsSave = true
+        activity.becomeCurrent()
+    }
 }
 
 extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate {
+
     func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
         self.completion(.cancel, self.reminderID, self)
         return false

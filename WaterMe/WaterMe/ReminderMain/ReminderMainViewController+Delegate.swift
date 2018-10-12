@@ -43,17 +43,26 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
     func userDidPerformDrop(with reminders: [Reminder.Identifier],
                             onTargetZoneWithin controller: ReminderFinishDropTargetViewController?)
     {
+        // We donated a new activity when the drag started
+        // Now we need to restore the current activity back to default
+        self.resetUserActivity()
+
+        // Then we need to work on marking these reminders as done.
         guard let results = self.basicRC?.appendNewPerformToReminders(with: reminders) else { return }
         switch results {
         case .failure(let error):
             self.haptic.notificationOccurred(.error)
-            UIAlertController.presentAlertVC(for: error, over: self, from: nil, completionHandler: nil)
+            UIAlertController.presentAlertVC(for: error, over: self,
+                                             from: nil,
+                                             completionHandler: nil)
         case .success:
             self.haptic.notificationOccurred(.success)
-            Analytics.log(event: Analytics.CRUD_Op_R.performDrag, extras: Analytics.CRUD_Op_R.extras(count: reminders.count))
-            let notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: nil, selectionCompletionHandler: nil)
-            guard let notificationPermissionVC = notPermVC else { return }
-            self.present(notificationPermissionVC, animated: true, completion: nil)
+            Analytics.log(event: Analytics.CRUD_Op_R.performDrag,
+                          extras: Analytics.CRUD_Op_R.extras(count: reminders.count))
+            let _notPermVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: nil,
+                                               selectionCompletionHandler: nil)
+            guard let notPermVC = _notPermVC else { return }
+            self.present(notPermVC, animated: true, completion: nil)
         }
     }
 

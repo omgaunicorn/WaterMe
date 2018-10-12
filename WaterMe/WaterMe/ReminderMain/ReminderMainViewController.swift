@@ -37,8 +37,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         vc.applicationDidFinishLaunchingError = basicRCResult.error
         vc.configure(with: basicRCResult.value)
         vc.configure(with: proController)
-        vc.userActivity = NSUserActivity(kind: .viewReminders,
-                                         delegate: vc.userActivityDelegate)
+        vc.resetUserActivity()
         return navVC
     }
 
@@ -175,6 +174,13 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         self.present(vc, animated: true, completion: nil)
     }
 
+    func resetUserActivity() {
+        self.userActivity = NSUserActivity(kind: .viewReminders,
+                                         delegate: self.userActivityDelegate)
+        self.userActivity?.needsSave = true
+        self.userActivity?.becomeCurrent()
+    }
+
     @IBAction private func addPlantButtonTapped(_ sender: Any) {
         guard let basicRC = self.basicRC else { return }
         let editVC = ReminderVesselEditViewController.newVC(basicController: basicRC,
@@ -287,6 +293,25 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
 }
 
 extension ReminderMainViewController: ReminderFinishDropTargetViewControllerDelegate {
+
+    func userDidCancelDrag(within: ReminderFinishDropTargetViewController) {
+        // We donated a new activity when the drag started
+        // Now we need to restore the current activity back to default
+        self.resetUserActivity()
+    }
+
+    func userDidStartDrag(with reminders: [Reminder.Identifier],
+                          within: ReminderFinishDropTargetViewController)
+    {
+        // Donate this activity so Siri might recommend it later
+        self.userActivityDelegate.remindersForDragSession = reminders
+        let activity = NSUserActivity(kind: .performReminders,
+                                      delegate: self.userActivityDelegate)
+        self.userActivity = activity
+        activity.needsSave = true
+        activity.becomeCurrent()
+    }
+
     func animateAlongSideDropTargetViewResize(within: ReminderFinishDropTargetViewController) -> (() -> Void)? {
         return { self.updateCollectionViewInsets() }
     }
