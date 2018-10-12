@@ -1,9 +1,6 @@
 PODS:
   - Cheers (2.1.0)
-  - Crashlytics (3.10.9):
-    - Fabric (~> 1.7.13)
   - CropViewController (2.3.8)
-  - Fabric (1.7.13)
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
@@ -28,8 +25,7 @@ PODS:
 
 DEPENDENCIES:
   - Cheers (~> 2.1.0)
-  - Crashlytics (~> 3.10.7)
-  - CropViewController (~> 2.3.6)
+  - CropViewController (~> 2.3.8)
   - RealmSwift
   - RealmSwift (~> 3.7.6)
   - Result
@@ -43,9 +39,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Cheers
-    - Crashlytics
     - CropViewController
-    - Fabric
     - ObjcExceptionBridging
     - Realm
     - RealmSwift
@@ -61,9 +55,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Cheers: 02d6335ac9ceb1ebf678df78d378bc71242a015e
-  Crashlytics: 55e24fc23989680285a21cb1146578d9d18e432c
   CropViewController: 7be882b7d3fb3faef48a41924e80f689e9df2514
-  Fabric: 25d0963b691fc97be566392243ff0ecef5a68338
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
   RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
@@ -73,6 +65,6 @@ SPEC CHECKSUMS:
   WaterMeStore: 4eb3190f0ba860255ee19e0fd7229587c769e0c2
   XCGLogger: 7f7f43f15dfe3a305fa1342b7dc29af656289abd
 
-PODFILE CHECKSUM: 0bb3ff5214fbbac3de1a29475d6343145360d908
+PODFILE CHECKSUM: e948aa167d79676dcde1c1253c64d1456c202b43
 
 COCOAPODS: 1.5.3

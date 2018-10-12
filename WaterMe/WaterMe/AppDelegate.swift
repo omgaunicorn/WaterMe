@@ -24,8 +24,6 @@
 import WaterMeStore
 import WaterMeData
 import XCGLogger
-import Fabric
-import Crashlytics
 import UserNotifications
 import AVFoundation
 import StoreKit
@@ -131,13 +129,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         BasicController.errorThrown = { error in
             log.error(error)
             Analytics.log(error: error)
-        }
-
-        // configure Crashlytics
-        let isReleaseBuild = Bundle.main.isReleaseBuild
-        if let key = WaterMeData.PrivateKeys.kFrabicAPIKey(isReleaseBuild: isReleaseBuild)
-        {
-            Crashlytics.start(withAPIKey: key)
         }
 
         // configure my notification delegate

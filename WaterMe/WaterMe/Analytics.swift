@@ -22,7 +22,6 @@
 //
 
 import WaterMeData
-import Crashlytics
 import StoreKit
 import Foundation
 
@@ -133,23 +132,10 @@ enum Analytics {
 
     // MARK: Logging Functions
 
-    static func log(error: Error) {
-        let error = error as NSError
-        let userInfo: [String : String] = [
-            "errorDomain" : error.domain,
-            "errorCode" : String(describing: error.code), // Crashlytics interprets this incorrectly if passed as NSNumber
-            "errorDescription" : error.localizedDescription
-        ]
-        Answers.logCustomEvent(withName: "Error.ReportedNonFatal", customAttributes: userInfo)
-        Crashlytics.sharedInstance().recordError(error)
-    }
+    static func log(error: Error) { }
 
-    static func log(viewOperation op: VCViewOperation) {
-        Answers.logContentView(withName: op.rawValue, contentType: nil, contentId: nil, customAttributes: nil)
-    }
+    static func log(viewOperation op: VCViewOperation) { }
 
-    static func log<E: RawRepresentable>(event op: E, extras: [String : Any]? = nil) where E.RawValue == String {
-        Answers.logCustomEvent(withName: op.rawValue, customAttributes: extras)
-    }
+    static func log<E: RawRepresentable>(event op: E, extras: [String : Any]? = nil) where E.RawValue == String { }
 
 }
