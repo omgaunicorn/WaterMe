@@ -220,13 +220,16 @@ class ReminderEditTableViewController: StandardTableViewController {
 
 extension ReminderEditTableViewController {
     enum SiriShortcut: Int, CaseIterable {
-        case editReminder, viewReminder
+        case editReminder, viewReminder, performReminder
         var localizedTitle: String {
             switch self {
+                // FIXME:
             case .editReminder:
                 return "Edit Reminder"
             case .viewReminder:
                 return "View Summary of Reminder"
+            case .performReminder:
+                return "Perform Reminder"
             }
         }
     }

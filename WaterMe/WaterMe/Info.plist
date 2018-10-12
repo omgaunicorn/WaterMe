@@ -30,6 +30,7 @@
 		<string>com.saturdayapps.waterme.activity.edit.remindervessel</string>
 		<string>com.saturdayapps.waterme.activity.view.reminder</string>
 		<string>com.saturdayapps.waterme.activity.view.reminders</string>
+		<string>com.saturdayapps.waterme.activity.perform.reminders</string>
 	</array>
 	<key>UIAppFonts</key>
 	<array>

@@ -64,6 +64,7 @@ class WateringAnimationPlayerView: UIView {
             UIView.style_animateNormal() {
                 self.alpha = hidden ? 0 : 1
             }
+            guard hidden == true else { return }
             switch self.hoverState {
             case .drop, .noHover:
                 self.finishedPlayingVideo?()

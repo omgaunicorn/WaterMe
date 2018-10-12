@@ -40,7 +40,9 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         self.plantsBBI.isEnabled = true
     }
 
-    func userDidPerformDrop(with reminders: [Reminder.Identifier], onTargetZoneWithin: ReminderFinishDropTargetViewController) {
+    func userDidPerformDrop(with reminders: [Reminder.Identifier],
+                            onTargetZoneWithin controller: ReminderFinishDropTargetViewController?)
+    {
         guard let results = self.basicRC?.appendNewPerformToReminders(with: reminders) else { return }
         switch results {
         case .failure(let error):
@@ -91,11 +93,11 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                                              basicRC: basicRC,
                                              completion: viewDidAppearActions)
                 case .performReminder:
-                    self.userChosePerformReminder(with: identifier,
-                                                  in: nil,
-                                                  from: view,
-                                                  basicRC: basicRC,
-                                                  completion: viewDidAppearActions)
+                    self.userChosePerformReminders(with: [identifier],
+                                                   in: nil,
+                                                   from: view,
+                                                   basicRC: basicRC,
+                                                   completion: viewDidAppearActions)
                 }
             }
         }
@@ -139,14 +141,14 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         }
     }
 
-    private func userChosePerformReminder(with identifier: Reminder.Identifier,
-                                          in _: UIAlertAction?,
-                                          from view: UIView,
-                                          basicRC: BasicController,
-                                          completion: (() -> Void)?)
+    private func userChosePerformReminders(with identifiers: [Reminder.Identifier],
+                                           in _: UIAlertAction?,
+                                           from view: UIView,
+                                           basicRC: BasicController,
+                                           completion: (() -> Void)?)
     {
         // update the database
-        let result = basicRC.appendNewPerformToReminders(with: [identifier])
+        let result = basicRC.appendNewPerformToReminders(with: identifiers)
         switch result {
         case .success:
             // they performed the reminder, now analytics it

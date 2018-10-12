@@ -43,7 +43,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     }
 
     private(set) weak var collectionVC: ReminderCollectionViewController?
-    private weak var dropTargetViewController: ReminderFinishDropTargetViewController?
+    private(set) weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     private var appUpdateAvailableVC: UIViewController?
     private var applicationDidFinishLaunchingError: RealmError?
     var userActivityResultToContinue: Result<RestoredUserActivity, UserActivityError>?

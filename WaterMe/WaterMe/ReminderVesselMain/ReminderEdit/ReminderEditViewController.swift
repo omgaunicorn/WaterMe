@@ -295,25 +295,27 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
             self.present(vc, animated: true, completion: nil)
             return
         }
-        let shortcut: INShortcut
+        let activity: NSUserActivity
         switch siriShortcut {
         case .editReminder:
             guard
-                let activity = self.userActivity,
-                activity.activityType == RawUserActivity.editReminder.rawValue
+                let _activity = self.userActivity,
+                _activity.activityType == RawUserActivity.editReminder.rawValue
             else {
                 assertionFailure("Unexpected User Activity")
                 return
             }
-            shortcut = INShortcut(userActivity: activity)
+            activity = _activity
         case .viewReminder:
-            let activity = NSUserActivity(kind: .viewReminder,
+            activity = NSUserActivity(kind: .viewReminder,
                                           delegate: self.userActivityDelegate)
-            activity.needsSave = true
-            activity.becomeCurrent()
-            let myshortcut = INShortcut(userActivity: activity)
-            shortcut = myshortcut
+        case .performReminder:
+            activity = NSUserActivity(kind: .performReminders,
+                                          delegate: self.userActivityDelegate)
         }
+        activity.needsSave = true
+        activity.becomeCurrent()
+        let shortcut = INShortcut(userActivity: activity)
         let vc = ClosureDelegatingAddVoiceShortcutViewController(shortcut: shortcut)
         vc.completion = { [unowned self] vc, result in
             self.userActivity?.becomeCurrent()

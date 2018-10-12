@@ -26,7 +26,8 @@ import UIKit
 
 protocol ReminderFinishDropTargetViewControllerDelegate: class {
     func animateAlongSideDropTargetViewResize(within: ReminderFinishDropTargetViewController) -> (() -> Void)?
-    func userDidPerformDrop(with reminders: [Reminder.Identifier], onTargetZoneWithin: ReminderFinishDropTargetViewController)
+    func userDidPerformDrop(with reminders: [Reminder.Identifier],
+                            onTargetZoneWithin controller: ReminderFinishDropTargetViewController?)
 }
 
 class ReminderFinishDropTargetViewController: StandardViewController, HasBasicController, HasProController, UIDropInteractionDelegate {
@@ -122,7 +123,9 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
         }
     }
 
-    private func updateDropTargetHeightForDragging(animated: Bool) {
+    func updateDropTargetHeightAndPlayAnimationForDragging(animated: Bool,
+                                                           completion: ((Bool) -> Void)? = nil)
+    {
         let changes: () -> Void = {
             let height = self.view.bounds.height
             self.dropTargetViewHeightConstraint?.constant = height
@@ -131,13 +134,19 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
 
         guard animated == true else {
             changes()
+            completion?(false)
             return
         }
 
-        UIView.style_animateNormal() {
+        UIView.style_animateNormal({
             changes()
             self.view.layoutIfNeeded()
-        }
+        }, completion: completion ?? { _ in })
+    }
+
+    func updatePlayAnimationForDrop() {
+        guard self.animationView?.hoverState != .drop else { return }
+        self.animationView?.hoverState = .drop
     }
 
     private func updateDropTargetHeightForNotDragging(animated: Bool) {
@@ -176,7 +185,7 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
         self.instructionalView?.performInstructionalAnimation(completion: nil)
     }
 
-    private var isDragInProgress = false {
+    var isDragInProgress = false {
         didSet {
             self.instructionalView?.isDragInProgress = self.isDragInProgress
         }
@@ -184,7 +193,7 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
         self.isDragInProgress = true
-        self.updateDropTargetHeightForDragging(animated: true)
+        self.updateDropTargetHeightAndPlayAnimationForDragging(animated: true)
         guard self.animationView?.hoverState != .drop else { return }
         self.animationView?.hoverState = .hover
     }
@@ -197,8 +206,7 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
 
     func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
         self.isDragInProgress = false
-        guard self.animationView?.hoverState != .drop else { return }
-        self.animationView?.hoverState = .drop
+        self.updatePlayAnimationForDrop()
     }
 }
 

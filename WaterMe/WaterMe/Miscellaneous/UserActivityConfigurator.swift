@@ -63,6 +63,12 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
                     return
                 }
                 self.updateViewReminder(activity: activity, reminder: reminder)
+            case .performReminders:
+                guard let reminder = self.currentReminder?() else {
+                    assertionFailure("Missing Reminder")
+                    return
+                }
+                self.updatePerformReminders(activity: activity, reminders: [reminder])
             case .indexedItem:
                 assertionFailure("Cannot update the data on a CoreSpotlight activity")
             }
@@ -79,6 +85,7 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
 }
 
 private extension UserActivityConfigurator {
+
     private func updateEditReminderVessel(activity: NSUserActivity, reminderVessel: ReminderVessel) {
         assert(activity.activityType == RawUserActivity.editReminderVessel.rawValue)
 
@@ -122,6 +129,38 @@ private extension UserActivityConfigurator {
                         phrase: phrase,
                         description: description,
                         thumbnailData: reminder.vessel?.iconImageData)
+    }
+
+    private func updatePerformReminders(activity: NSUserActivity, reminders: [Reminder]) {
+        assert(activity.activityType == RawUserActivity.performReminders.rawValue)
+        guard reminders.isEmpty == false else {
+            assertionFailure()
+            return
+        }
+
+        let uuids = reminders.map({ Reminder.Identifier(reminder: $0) })
+        let title: String
+        let description: String
+        if reminders.count >= 2 {
+            // Plural
+            // FIXME:
+            title = "Mark \(reminders.count) as done."
+            description = "Mark all of these reminders as done."
+        } else {
+            // Singular
+            let reminder = reminders.first!
+            title = LocalizedString.title(for: reminder.kind,
+                                          andVesselName: reminder.vessel?.shortLabelSafeDisplayName)
+            // FIXME:
+            description = "Mark this reminder as done."
+        }
+        let phrase = LocalizedString.genericLocalizedPhrase
+
+        activity.update(uuids: uuids,
+                        title: title,
+                        phrase: phrase,
+                        description: description,
+                        thumbnailData: reminders.first?.vessel?.iconImageData)
     }
 
     private func updateEditReminder(activity: NSUserActivity, reminder: Reminder) {

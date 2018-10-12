@@ -32,6 +32,7 @@ public enum RestoredUserActivity {
     case editReminderVessel(ReminderVessel.Identifier)
     case viewReminder(Reminder.Identifier)
     case viewReminders
+    case performReminders([Reminder.Identifier])
 }
 
 public enum RawUserActivity: String {
@@ -39,6 +40,7 @@ public enum RawUserActivity: String {
     case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
     case viewReminder = "com.saturdayapps.waterme.activity.view.reminder"
     case viewReminders = "com.saturdayapps.waterme.activity.view.reminders"
+    case performReminders = "com.saturdayapps.waterme.activity.perform.reminders"
     case indexedItem = "com.apple.corespotlightitem" //CSSearchableItemActionType
 }
 
@@ -75,6 +77,10 @@ public extension NSUserActivity {
         case .viewReminder:
             guard let uuid = uuids.first else { return .failure(.restorationFailed) }
             return .success(.viewReminder(.init(rawValue: uuid)))
+        case .performReminders:
+            guard uuids.isEmpty == false else { return .failure(.restorationFailed) }
+            let uuids = uuids.map({ Reminder.Identifier(rawValue: $0) })
+            return .success(.performReminders(uuids))
         case .viewReminders:
             return .success(.viewReminders)
         case .indexedItem:

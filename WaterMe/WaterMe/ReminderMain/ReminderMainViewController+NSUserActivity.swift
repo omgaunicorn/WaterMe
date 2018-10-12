@@ -40,6 +40,8 @@ extension ReminderMainViewController {
                 failure = self.continueActivityViewReminder(with: identifier)
             case .viewReminders:
                 failure = self.continueActivityViewAllReminders()
+            case .performReminders(let ids):
+                failure = self.continueActivityPerformReminders(with: ids)
             }
             guard let _failure = failure else { return }
             self.userActivityResultToContinue = .failure(_failure)
@@ -47,6 +49,17 @@ extension ReminderMainViewController {
         case .failure(let error):
             self.continueActivityError(error)
         }
+    }
+
+    private func continueActivityPerformReminders(with identifiers: [Reminder.Identifier]) -> UserActivityError? {
+        guard let dropVC = self.dropTargetViewController else { return .restorationFailed }
+        dropVC.isDragInProgress = true
+        dropVC.updateDropTargetHeightAndPlayAnimationForDragging(animated: true) { _ in
+            self.userDidPerformDrop(with: identifiers, onTargetZoneWithin: nil)
+            dropVC.updatePlayAnimationForDrop()
+            dropVC.isDragInProgress = false
+        }
+        return nil
     }
 
     private func continueActivityEditReminder(with identifier: Reminder.Identifier) -> UserActivityError? {
