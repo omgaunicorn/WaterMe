@@ -29,7 +29,7 @@ class ReminderUserNotificationController {
     private lazy var queue = DispatchQueue(label: taskName, qos: .utility)
     private var backgroundTaskID: UIBackgroundTaskIdentifier?
 
-    func updateScheduledNotifications(with reminders: [ReminderValue]) {
+    func updateScheduledNotifications(with values: [ReminderAndVesselValue]) {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
@@ -46,7 +46,7 @@ class ReminderUserNotificationController {
             center.removeAllPendingNotificationRequests()
 
             // make sure we have data to work with before continuing
-            guard reminders.isEmpty == false else {
+            guard values.isEmpty == false else {
                 log.debug("Reminder array was empty")
                 return
             }
@@ -58,7 +58,7 @@ class ReminderUserNotificationController {
                 return
             }
             // generate notification object requests
-            let requests = type(of: self).notificationRequests(from: reminders)
+            let requests = type(of: self).notificationRequests(from: values)
             Analytics.log(event: Analytics.NotificationPermission.scheduleSucceeded,
                           extras: Analytics.NotificationPermission.extras(forCount: requests.count))
             guard requests.isEmpty == false else {
@@ -82,9 +82,9 @@ class ReminderUserNotificationController {
         }
     }
 
-    private class func notificationRequests(from reminders: [ReminderValue]) -> [UNNotificationRequest] {
+    private class func notificationRequests(from values: [ReminderAndVesselValue]) -> [UNNotificationRequest] {
         // make sure we have data to work with
-        guard reminders.isEmpty == false else { return [] }
+        guard values.isEmpty == false else { return [] }
 
         // get preference values for reminder time and number of days to remind for
         let reminderHour = UserDefaults.standard.reminderHour
@@ -95,7 +95,7 @@ class ReminderUserNotificationController {
         let now = Date()
 
         // find the last reminder time and how many days away it is
-        let numberOfDaysToLastReminder = reminders.last?.nextPerformDate.map() { endDate -> Int in
+        let numberOfDaysToLastReminder = values.last?.reminder.nextPerformDate.map() { endDate -> Int in
             return calendar.numberOfDaysBetween(startDate: now, endDate: endDate)
         }
         // add that to the number of extra days the user requested
@@ -103,11 +103,11 @@ class ReminderUserNotificationController {
 
         // loop through the number of days the user wants to be reminded for
         // get all reminders that happened on or before the end of the day of `futureReminderTime`
-        let matches = (0 ..< totalReminderDays).compactMap() { i -> (Date, [ReminderValue])? in
+        let matches = (0 ..< totalReminderDays).compactMap() { i -> (Date, [ReminderAndVesselValue])? in
             let testDate = calendar.date(byAdding: .day, value: i, to: now)!
             let endOfDayInTestDate = calendar.endOfDay(for: testDate)
-            let matches = reminders.filter() { reminder -> Bool in
-                let endOfDayInNextPerformDate = calendar.endOfDay(for: reminder.nextPerformDate ?? now)
+            let matches = values.filter() { value -> Bool in
+                let endOfDayInNextPerformDate = calendar.endOfDay(for: value.reminder.nextPerformDate ?? now)
                 return endOfDayInNextPerformDate <= endOfDayInTestDate
             }
             guard matches.isEmpty == false else { return nil }
@@ -132,7 +132,7 @@ class ReminderUserNotificationController {
             assert(trigger.nextTriggerDate() == reminderTime)
 
             // shuffle the names so that different plant names show in the notifications
-            let plantNames = ReminderValue.uniqueParentPlantNames(from: matches).shuffled()
+            let plantNames = ReminderAndVesselValue.uniqueParentPlantNames(from: matches).shuffled()
 
             // only set the body if there is a trigger. this way a notification won't be shown to the user
             // only the badge will update.

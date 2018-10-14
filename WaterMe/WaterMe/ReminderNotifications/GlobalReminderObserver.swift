@@ -87,17 +87,17 @@ class GlobalReminderObserver {
         // start a background task
         self.backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: self.taskName,
                                                                          expirationHandler: nil)
-        let data = Array(self.data?.map({ ReminderValue(reminder: $0) }) ?? [])
+        let data = Array(self.data?.compactMap({ ReminderAndVesselValue(reminder: $0) }) ?? [])
         switch kind {
         case .notifications:
             self.notificationController.updateScheduledNotifications(with: data)
         case .badge:
             self.badgeNumberController.updateBadgeNumber(with: data)
         case .spotlightIndex:
-            self.spotlightIndexer.updateSpotlightIndex(reminders: data)
+            self.spotlightIndexer.updateSpotlightIndex(with: data)
         case .all:
             self.notificationController.updateScheduledNotifications(with: data)
-            self.spotlightIndexer.updateSpotlightIndex(reminders: data)
+            self.spotlightIndexer.updateSpotlightIndex(with: data)
             self.badgeNumberController.updateBadgeNumber(with: data)
         }
         // end the background task
@@ -136,27 +136,33 @@ extension GlobalReminderObserver: SignificantTimePassedDetectorDelegate {
     }
 }
 
-struct ReminderValue {
-    var parentPlantUUID: String
-    var parentPlantName: String?
-    var parentPlantImageData: Data?
-    var nextPerformDate: Date?
-    var reminderKind: Reminder.Kind
-    var reminderUUID: String
+struct ReminderAndVesselValue {
+    var reminder: ReminderValue2
+    var reminderVessel: ReminderVesselValue
 
-    init(reminder: Reminder) {
-        self.parentPlantImageData = reminder.vessel?.iconImageData
-        self.reminderUUID = reminder.uuid
-        self.reminderKind = reminder.kind
-        self.parentPlantUUID = reminder.vessel?.uuid ?? UUID().uuidString
-        self.parentPlantName = reminder.vessel?.shortLabelSafeDisplayName
-        self.nextPerformDate = reminder.nextPerformDate
+    init?(reminder: Reminder) {
+        let _vessel = ReminderVesselValue(reminderVessel: reminder.vessel)
+        guard let vessel = _vessel else { return nil }
+        self.reminderVessel = vessel
+        self.reminder = ReminderValue2(reminder: reminder)
     }
 
-    static func uniqueParentPlantNames(from reminders: [ReminderValue]) -> [String?] {
-        let uniqueParents = Dictionary(grouping: reminders, by: { $0.parentPlantUUID })
-        let parentNames = uniqueParents.map({ $0.value.first?.parentPlantName })
+    static func uniqueParentPlantNames(from values: [ReminderAndVesselValue]) -> [String?] {
+        let uniqueParents = Dictionary(grouping: values, by: { $0.reminderVessel.uuid })
+        let parentNames = uniqueParents.map({ $0.value.first?.reminderVessel.name })
         return parentNames
+    }
+}
+
+struct ReminderValue2 {
+    var uuid: String
+    var nextPerformDate: Date?
+    var kind: Reminder.Kind
+
+    init(reminder: Reminder) {
+        self.uuid = reminder.uuid
+        self.nextPerformDate = reminder.nextPerformDate
+        self.kind = reminder.kind
     }
 }
 
@@ -165,7 +171,8 @@ struct ReminderVesselValue {
     var name: String?
     var imageData: Data?
 
-    init(reminderVessel: ReminderVessel) {
+    init?(reminderVessel: ReminderVessel?) {
+        guard let reminderVessel = reminderVessel else { return nil }
         self.uuid = reminderVessel.uuid
         self.name = reminderVessel.shortLabelSafeDisplayName
         self.imageData = reminderVessel.iconImageData

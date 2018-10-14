@@ -30,7 +30,7 @@ enum BadgeNumberController {
     private static let queue = DispatchQueue(label: taskName, qos: .utility)
     private static var backgroundTaskID: UIBackgroundTaskIdentifier?
 
-    static func updateBadgeNumber(with reminders: [ReminderValue]) {
+    static func updateBadgeNumber(with values: [ReminderAndVesselValue]) {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
@@ -46,12 +46,12 @@ enum BadgeNumberController {
         self.queue.async {
             self.backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: self.taskName,
                                                                              expirationHandler: nil)
-            let remindersThatNeedToBeDoneBeforeTomorrow = reminders.filter() { reminder -> Bool in
+            let remindersThatNeedToBeDoneBeforeTomorrow = values.filter() { value -> Bool in
                 let cal = Calendar.current
                 let now = Date()
                 let endOfToday = cal.endOfDay(for: now)
                 // if there is no nextPerformDate, it needs to be performed, so treat it as such
-                guard let testDate = reminder.nextPerformDate else { return true }
+                guard let testDate = value.reminder.nextPerformDate else { return true }
                 // otherwise check to see if the date is before the end of today
                 let interval = endOfToday.timeIntervalSince(testDate)
                 let test = interval >= 0

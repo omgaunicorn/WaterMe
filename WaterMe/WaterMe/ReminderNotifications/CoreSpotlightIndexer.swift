@@ -31,7 +31,7 @@ class CoreSpotlightIndexer {
     private static let queue = DispatchQueue(label: taskName, qos: .utility)
     private static var backgroundTaskID: UIBackgroundTaskIdentifier?
 
-    class func updateSpotlightIndex(reminders: [ReminderValue]) {
+    class func updateSpotlightIndex(with values: [ReminderAndVesselValue]) {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
@@ -49,7 +49,7 @@ class CoreSpotlightIndexer {
                 assertionFailure(String(describing: error))
                 return
             }
-            let reminderItems = CSSearchableItem.items(from: reminders)
+            let reminderItems = CSSearchableItem.items(from: values)
             let reminderIndexError = index.sync_indexSearchableItems(items: reminderItems)
             if let error = reminderIndexError {
                 log.error(error)
@@ -92,15 +92,15 @@ extension CSSearchableIndex {
 }
 
 extension CSSearchableItem {
-    class func items(from data: [ReminderValue]) -> [CSSearchableItem] {
-        return data.map() { reminder -> CSSearchableItem in
+    class func items(from values: [ReminderAndVesselValue]) -> [CSSearchableItem] {
+        return values.map() { value -> CSSearchableItem in
             let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-            attributes.title = UserActivityConfigurator.LocalizedString.title(for: reminder.reminderKind,
-                                                                              andVesselName: reminder.parentPlantName)
+            attributes.title = UserActivityConfigurator.LocalizedString.title(for: value.reminder.kind,
+                                                                              andVesselName: value.reminderVessel.name)
             attributes.contentDescription = CoreSpotlightIndexer.LocalizedString.description
-            attributes.thumbnailData = reminder.parentPlantImageData
+            attributes.thumbnailData = value.reminderVessel.imageData
             let uuid = NSUserActivity.uniqueString(for: RawUserActivity.viewReminder,
-                                                   and: [Reminder.Identifier(rawValue: reminder.reminderUUID)])
+                                                   and: [Reminder.Identifier(rawValue: value.reminder.uuid)])
             let item = CSSearchableItem(uniqueIdentifier: uuid,
                                         domainIdentifier: RawUserActivity.viewReminder.rawValue,
                                         attributeSet: attributes)
