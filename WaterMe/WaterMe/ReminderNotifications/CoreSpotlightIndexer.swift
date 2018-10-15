@@ -41,58 +41,65 @@ class CoreSpotlightIndexer {
         self.queue.async {
             self.backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: self.taskName,
                                                                              expirationHandler: nil)
-            let index = CSSearchableIndex.default()
-            let deleteError = index.sync_deleteAllSearchableItems()
-            if let error = deleteError {
-                log.error(error)
-                Analytics.log(error: error)
-                assertionFailure(String(describing: error))
-                return
-            }
-            let reminderItems = CSSearchableItem.items(from: values)
-            let reminderIndexError = index.sync_indexSearchableItems(items: reminderItems)
-            if let error = reminderIndexError {
-                log.error(error)
-                Analytics.log(error: error)
-                assertionFailure(String(describing: error))
-                return
-            }
+            self.raw_updateSpotlightIndex(with: values)
             DispatchQueue.main.async {
-                log.debug("Spotlight Items Indexed: \(reminderItems.count)")
                 guard let id = self.backgroundTaskID else { return }
                 self.backgroundTaskID = nil
                 UIApplication.shared.endBackgroundTask(id)
             }
         }
     }
+
+    private class func raw_updateSpotlightIndex(with values: [ReminderAndVesselValue]) {
+        let index = CSSearchableIndex.default()
+        let deleteError = index.sync_deleteAllSearchableItems()
+        if let error = deleteError {
+            log.error(error)
+            Analytics.log(error: error)
+            assertionFailure(String(describing: error))
+            return
+        }
+        let reminderItems = CSSearchableItem.items(from: values)
+        let reminderIndexError = index.sync_indexSearchableItems(items: reminderItems)
+        if let error = reminderIndexError {
+            log.error(error)
+            Analytics.log(error: error)
+            assertionFailure(String(describing: error))
+            return
+        }
+        log.debug("Spotlight Items Indexed: \(reminderItems.count)")
+    }
 }
 
 extension CSSearchableIndex {
-    func sync_deleteAllSearchableItems() -> Error? {
-        var _error: Error?
+
+    fileprivate func sync_deleteAllSearchableItems() -> Error? {
+        var error: Error?
         let semaphore = DispatchSemaphore(value: 0)
-        self.deleteAllSearchableItems() { error in
-            _error = error
+        self.deleteAllSearchableItems() { _error in
+            error = _error
             semaphore.signal()
         }
         semaphore.wait()
-        return _error
+        return error
     }
-    func sync_indexSearchableItems(items: [CSSearchableItem]) -> Error? {
-        var _error: Error?
+
+    fileprivate func sync_indexSearchableItems(items: [CSSearchableItem]) -> Error? {
+        var error: Error?
         let semaphore = DispatchSemaphore(value: 0)
-        self.indexSearchableItems(items) { error in
-            _error = error
+        self.indexSearchableItems(items) { _error in
+            error = _error
             semaphore.signal()
         }
         semaphore.wait()
-        return _error
+        return error
     }
 
 }
 
 extension CSSearchableItem {
-    class func items(from values: [ReminderAndVesselValue]) -> [CSSearchableItem] {
+
+    fileprivate class func items(from values: [ReminderAndVesselValue]) -> [CSSearchableItem] {
         return values.map() { value -> CSSearchableItem in
             let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
             attributes.title = UserActivityConfigurator.LocalizedString.title(for: value.reminder.kind,

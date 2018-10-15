@@ -100,11 +100,11 @@ class ReminderSummaryViewController: StandardViewController {
         super.viewDidLoad()
         self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
         self.updateViewForPresentation()
-        self.userActivityDelegate.currentReminder = { [weak self] in
+        self.userActivityDelegate.currentReminderAndVessel = { [weak self] in
             // should be unowned because this object should not exist longer
             // than the view controller. But since NIL is a possible return value
             // it just seems safer to go with weak
-            return self?.reminderResult?.value
+            return ReminderAndVesselValue(reminder: self?.reminderResult?.value)
         }
     }
 

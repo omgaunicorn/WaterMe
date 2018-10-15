@@ -28,10 +28,17 @@ import UserNotifications
 class GlobalReminderObserver {
 
     private enum DataKind {
-        case badge, notifications, spotlightIndex, all
+        case badge, notifications, systemIndexes, all
     }
 
     private let spotlightIndexer = CoreSpotlightIndexer.self
+    private let shortcutProvider: RelevantShortcutIndexerProtocol.Type? = {
+        if #available(iOS 12.0, *) {
+            return RelevantShortcutIndexer.self
+        } else {
+            return nil
+        }
+    }()
     private let badgeNumberController = BadgeNumberController.self
     private let notificationController = ReminderUserNotificationController()
     private let significantTimePassedDetector = SignificantTimePassedDetector()
@@ -93,11 +100,13 @@ class GlobalReminderObserver {
             self.notificationController.updateScheduledNotifications(with: data)
         case .badge:
             self.badgeNumberController.updateBadgeNumber(with: data)
-        case .spotlightIndex:
+        case .systemIndexes:
             self.spotlightIndexer.updateSpotlightIndex(with: data)
+            self.shortcutProvider?.updateShortcutIndex(with: data)
         case .all:
             self.notificationController.updateScheduledNotifications(with: data)
             self.spotlightIndexer.updateSpotlightIndex(with: data)
+            self.shortcutProvider?.updateShortcutIndex(with: data)
             self.badgeNumberController.updateBadgeNumber(with: data)
         }
         // end the background task
@@ -136,11 +145,12 @@ extension GlobalReminderObserver: SignificantTimePassedDetectorDelegate {
     }
 }
 
-struct ReminderAndVesselValue {
+struct ReminderAndVesselValue: Hashable {
     var reminder: ReminderValue2
     var reminderVessel: ReminderVesselValue
 
-    init?(reminder: Reminder) {
+    init?(reminder: Reminder?) {
+        guard let reminder = reminder else { return nil }
         let _vessel = ReminderVesselValue(reminderVessel: reminder.vessel)
         guard let vessel = _vessel else { return nil }
         self.reminderVessel = vessel
@@ -154,7 +164,7 @@ struct ReminderAndVesselValue {
     }
 }
 
-struct ReminderValue2 {
+struct ReminderValue2: Hashable {
     var uuid: String
     var nextPerformDate: Date?
     var kind: Reminder.Kind
@@ -166,7 +176,7 @@ struct ReminderValue2 {
     }
 }
 
-struct ReminderVesselValue {
+struct ReminderVesselValue: Hashable {
     var uuid: String
     var name: String?
     var imageData: Data?

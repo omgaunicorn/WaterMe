@@ -35,7 +35,7 @@ public class Reminder: Object {
     public static let maximumInterval: Int = 180
     public static let defaultInterval: Int = 7
     
-    public enum Kind {
+    public enum Kind: Hashable {
         case water, fertilize, trim, mist, move(location: String?), other(description: String?)
         public static let count = 6
     }

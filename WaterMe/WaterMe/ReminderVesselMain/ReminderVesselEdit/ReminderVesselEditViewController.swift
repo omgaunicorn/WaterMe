@@ -75,7 +75,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             // should be unowned because this object should not exist longer
             // than the view controller. But since NIL is a possible return value
             // it just seems safer to go with weak
-            return self?.vesselResult?.value
+            return ReminderVesselValue(reminderVessel: self?.vesselResult?.value)
         }
     }
 
