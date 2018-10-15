@@ -26,10 +26,16 @@ import WaterMeData
 extension ReminderMainViewController {
     
     func continueUserActivityResultIfNeeded() {
-        guard let result = self.userActivityResultToContinue else { return }
-        self.userActivityResultToContinue = nil
+        guard let result = self.userActivityResultToContinue.first else { return }
+        self.userActivityContinuationInProgress = true
+        self.userActivityResultToContinue.removeFirst()
         switch result {
         case .success(let activity, let completion):
+            let completion: NSUserActivityContinuedHandler = { [weak self] urls in
+                self?.userActivityContinuationInProgress = false
+                self?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+                completion(urls)
+            }
             let failure: UserActivityError?
             switch activity {
             case .editReminder(let identifier):
@@ -46,7 +52,7 @@ extension ReminderMainViewController {
                                                                 completion: completion)
             }
             guard let _failure = failure else { return }
-            self.userActivityResultToContinue = .failure(_failure)
+            self.userActivityResultToContinue += [.failure(_failure)]
             self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         case .failure(let error):
             self.continueActivityError(error)
@@ -59,12 +65,11 @@ extension ReminderMainViewController {
         guard let dropVC = self.dropTargetViewController else { return .restorationFailed }
         self.dismissAnimatedIfNeeded() {
             dropVC.isDragInProgress = true
-            dropVC.updateDropTargetHeightAndPlayAnimationForDragging(animated: true) { _ in
-                self.userDidPerformDrop(with: identifiers, onTargetZoneWithin: nil)
-                dropVC.updatePlayAnimationForDrop()
-                dropVC.isDragInProgress = false
-                completion(nil)
-            }
+            dropVC.updatePlayAnimationForDrop()
+            self.userDidPerformDrop(with: identifiers, onTargetZoneWithin: nil)
+            dropVC.updateDropTargetHeightAndPlayAnimationForDragging(animated: true, completion: nil)
+            dropVC.isDragInProgress = false
+            completion(nil)
         }
         return nil
     }

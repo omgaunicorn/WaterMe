@@ -45,7 +45,8 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     private(set) weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     private var appUpdateAvailableVC: UIViewController?
     private var applicationDidFinishLaunchingError: RealmError?
-    var userActivityResultToContinue: Result<(RestoredUserActivity, NSUserActivityContinuedHandler), UserActivityError>?
+    var userActivityResultToContinue: [Result<(RestoredUserActivity, NSUserActivityContinuedHandler), UserActivityError>] = []
+    var userActivityContinuationInProgress = false
 
     private(set) lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedAddReminderVesselBBIButtonWithTarget: self,
                                                                        action: #selector(self.addPlantButtonTapped(_:)))
@@ -152,7 +153,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             self.appUpdateAvailableVC = nil
             Analytics.log(viewOperation: .alertUpdateAvailable)
             self.present(updateAlert, animated: true, completion: nil)
-        } else if self.userActivityResultToContinue != nil {
+        } else if self.userActivityResultToContinue.isEmpty == false {
             self.continueUserActivityResultIfNeeded()
         } else {
             self.checkForPurchasesInFlight()

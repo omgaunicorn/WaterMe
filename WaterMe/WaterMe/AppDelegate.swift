@@ -189,12 +189,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      continue userActivity: NSUserActivity,
                      restorationHandler: @escaping NSUserActivityContinuedHandler) -> Bool
     {
-        let newBlock: NSUserActivityContinuedHandler = { urls in
-            print("Block Called!!!")
-            restorationHandler(urls)
-        }
         let result = userActivity.restoredUserActivityResult
-        self.rootVC?.userActivityResultToContinue = result.map({ ($0, newBlock) })
+        self.rootVC?.userActivityResultToContinue += [result.map({ ($0, restorationHandler) })]
+        let userActivityContinuationInProgress = self.rootVC?.userActivityContinuationInProgress ?? false
+        guard userActivityContinuationInProgress == false else { return true }
         self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         return true
     }
@@ -207,7 +205,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard error.code != NSUserCancelledError else {
             return
         }
-        self.rootVC?.userActivityResultToContinue = .failure(.continuationFailed)
+        self.rootVC?.userActivityResultToContinue += [.failure(.continuationFailed)]
         self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
     }
     
