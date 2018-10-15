@@ -31,7 +31,7 @@ class CoreSpotlightIndexer {
     private static let queue = DispatchQueue(label: taskName, qos: .utility)
     private static var backgroundTaskID: UIBackgroundTaskIdentifier?
 
-    class func updateSpotlightIndex(with values: [ReminderAndVesselValue]) {
+    class func perform(with values: [ReminderAndVesselValue]) {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
@@ -41,7 +41,7 @@ class CoreSpotlightIndexer {
         self.queue.async {
             self.backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: self.taskName,
                                                                              expirationHandler: nil)
-            self.raw_updateSpotlightIndex(with: values)
+            self.raw_perform(with: values)
             DispatchQueue.main.async {
                 guard let id = self.backgroundTaskID else { return }
                 self.backgroundTaskID = nil
@@ -50,7 +50,7 @@ class CoreSpotlightIndexer {
         }
     }
 
-    private class func raw_updateSpotlightIndex(with values: [ReminderAndVesselValue]) {
+    private class func raw_perform(with values: [ReminderAndVesselValue]) {
         let index = CSSearchableIndex.default()
         let deleteError = index.sync_deleteAllSearchableItems()
         if let error = deleteError {

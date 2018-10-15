@@ -32,12 +32,9 @@ class GlobalReminderObserver {
     }
 
     private let spotlightIndexer = CoreSpotlightIndexer.self
-    private let shortcutProvider: RelevantShortcutIndexerProtocol.Type? = {
-        if #available(iOS 12.0, *) {
-            return RelevantShortcutIndexer.self
-        } else {
-            return nil
-        }
+    private let shortcutSuggester: ShortcutSuggesterProtocol.Type? = {
+        guard #available(iOS 12.0, *) else { return nil }
+        return ShortcutSuggester.self
     }()
     private let badgeNumberController = BadgeNumberController.self
     private let notificationController = ReminderUserNotificationController()
@@ -97,17 +94,17 @@ class GlobalReminderObserver {
         let data = Array(self.data?.compactMap({ ReminderAndVesselValue(reminder: $0) }) ?? [])
         switch kind {
         case .notifications:
-            self.notificationController.updateScheduledNotifications(with: data)
+            self.notificationController.perform(with: data)
         case .badge:
-            self.badgeNumberController.updateBadgeNumber(with: data)
+            self.badgeNumberController.perform(with: data)
         case .systemIndexes:
-            self.spotlightIndexer.updateSpotlightIndex(with: data)
-            self.shortcutProvider?.updateShortcutIndex(with: data)
+            self.spotlightIndexer.perform(with: data)
+            self.shortcutSuggester?.perform(with: data)
         case .all:
-            self.notificationController.updateScheduledNotifications(with: data)
-            self.spotlightIndexer.updateSpotlightIndex(with: data)
-            self.shortcutProvider?.updateShortcutIndex(with: data)
-            self.badgeNumberController.updateBadgeNumber(with: data)
+            self.notificationController.perform(with: data)
+            self.spotlightIndexer.perform(with: data)
+            self.shortcutSuggester?.perform(with: data)
+            self.badgeNumberController.perform(with: data)
         }
         // end the background task
         guard let id = self.backgroundTaskID else { return }

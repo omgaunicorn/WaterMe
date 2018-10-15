@@ -29,7 +29,7 @@ class ReminderUserNotificationController {
     private lazy var queue = DispatchQueue(label: taskName, qos: .utility)
     private var backgroundTaskID: UIBackgroundTaskIdentifier?
 
-    func updateScheduledNotifications(with values: [ReminderAndVesselValue]) {
+    func perform(with values: [ReminderAndVesselValue]) {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)

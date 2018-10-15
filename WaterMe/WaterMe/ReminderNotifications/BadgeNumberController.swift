@@ -30,7 +30,7 @@ enum BadgeNumberController {
     private static let queue = DispatchQueue(label: taskName, qos: .utility)
     private static var backgroundTaskID: UIBackgroundTaskIdentifier?
 
-    static func updateBadgeNumber(with values: [ReminderAndVesselValue]) {
+    static func perform(with values: [ReminderAndVesselValue]) {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
@@ -67,5 +67,4 @@ enum BadgeNumberController {
             }
         }
     }
-
 }
