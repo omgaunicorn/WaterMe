@@ -105,7 +105,7 @@ private extension UserActivityConfigurator {
         assert(activity.activityType == RawUserActivity.editReminderVessel.rawValue)
 
         let uuid = ReminderVessel.Identifier(rawValue: reminderVessel.uuid)
-        let title = LocalizedString.title(fromVesselName: reminderVessel.name)
+        let title = LocalizedString.editVesselTitle(fromVesselName: reminderVessel.name)
         let phrase = LocalizedString.genericLocalizedPhrase
         let description = LocalizedString.editReminderVesselDescription
 
@@ -134,8 +134,8 @@ private extension UserActivityConfigurator {
         assert(activity.activityType == RawUserActivity.viewReminder.rawValue)
 
         let uuid = Reminder.Identifier(rawValue: value.reminder.uuid)
-        let title = LocalizedString.title(for: value.reminder.kind,
-                                          andVesselName: value.reminderVessel.name)
+        let title = LocalizedString.viewReminderTitle(for: value.reminder.kind,
+                                                      andVesselName: value.reminderVessel.name)
         let phrase = LocalizedString.genericLocalizedPhrase
         let description = LocalizedString.viewReminderDescription
 
@@ -170,10 +170,9 @@ private extension UserActivityConfigurator {
         assert(activity.activityType == RawUserActivity.performReminders.rawValue)
 
         let uuid = Reminder.Identifier(rawValue: value.reminder.uuid)
-        let title = LocalizedString.title(for: value.reminder.kind,
-                                          andVesselName: value.reminderVessel.name)
-        // FIXME:
-        let description = "Mark this reminder as done."
+        let title = LocalizedString.performReminderTitle(for: value.reminder.kind,
+                                                      andVesselName: value.reminderVessel.name)
+        let description = LocalizedString.performReminderDescription
         let phrase = LocalizedString.genericLocalizedPhrase
         activity.update(uuids: [uuid],
                         title: title,
@@ -186,8 +185,8 @@ private extension UserActivityConfigurator {
         assert(activity.activityType == RawUserActivity.editReminder.rawValue)
 
         let uuid = Reminder.Identifier(rawValue: value.reminder.uuid)
-        let title = LocalizedString.title(for: value.reminder.kind,
-                                          andVesselName: value.reminderVessel.name)
+        let title = LocalizedString.editReminderTitle(for: value.reminder.kind,
+                                                      andVesselName: value.reminderVessel.name)
         let phrase = LocalizedString.genericLocalizedPhrase
         let description = LocalizedString.editReminderDescription
 

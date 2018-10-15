@@ -102,8 +102,8 @@ extension CSSearchableItem {
     fileprivate class func items(from values: [ReminderAndVesselValue]) -> [CSSearchableItem] {
         return values.map() { value -> CSSearchableItem in
             let attributes = CSSearchableItemAttributeSet(itemContentType: kUTTypeContent as String)
-            attributes.title = UserActivityConfigurator.LocalizedString.title(for: value.reminder.kind,
-                                                                              andVesselName: value.reminderVessel.name)
+            attributes.title = UserActivityConfigurator.LocalizedString.viewReminderTitle(for: value.reminder.kind,
+                                                                                          andVesselName: value.reminderVessel.name)
             attributes.contentDescription = CoreSpotlightIndexer.LocalizedString.description
             attributes.thumbnailData = value.reminderVessel.imageData
             let uuid = NSUserActivity.uniqueString(for: RawUserActivity.viewReminder,
