@@ -345,6 +345,9 @@ extension ReminderEditViewController {
         static let dataEntryPlaceholderDescription =
             NSLocalizedString("Trim the leaves and throw out the clippings.",
                               comment: "Edit Reminder: Data Entry Placeholder: Placeholder text in a textfield. The user should type in what they want to be reminded to do to their plant.")
+        static let viewReminderShortcutLabelText =
+            NSLocalizedString("View Summary of Reminder",
+                              comment: "Edit Reminder: Siri Shortcut Title: Label for a cell that when tapped, lets the user add a Siri Shortcut for viewing the reminder summary.")
     }
 }
 
@@ -558,7 +561,7 @@ extension UserActivityConfigurator {
             }
         }
         static func performReminderTitle(for reminderKind: Reminder.Kind,
-                                      andVesselName vesselName: String?) -> String
+                                         andVesselName vesselName: String?) -> String
         {
             let localizedString = NSLocalizedString("Mark %@ %@ as Done",
                                                     comment: "SiriShortcut: Title: PerformReminder: Shows the reminder kind and the name of the plant so the user knows what the SiriShortcut applies to.")
@@ -608,6 +611,24 @@ extension UserActivityConfigurator {
         static var genericLocalizedPhrase: String {
             let localizedString = NSLocalizedString("Green Thumb It!",
                                                     comment: "SiriShortcut: Phrase: Generic: Recommends something short and funny that the user can use to trigger this shortcut.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+        static var performMultipleRemindersTitle: String {
+            let localizedString = NSLocalizedString("Mark Reminders as Done",
+                                                    comment: "SiriShortcut: Title: Perform Multiple Reminders: Siri Shortcut that allows user to mark multiple reminders as done at once.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+        static var performMultipleRemindersDescription: String {
+            let localizedString = NSLocalizedString("Mark all of these reminders as done.",
+                                                    comment: "SiriShortcut: Description: Perform Multiple Reminders: Siri Shortcut that allows user to mark multiple reminders as done at once.")
             if #available(iOS 12.0, *) {
                 return NSString.deferredLocalizedIntentsString(with: localizedString) as String
             } else {

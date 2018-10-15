@@ -223,13 +223,12 @@ extension ReminderEditTableViewController {
         case editReminder, viewReminder, performReminder
         var localizedTitle: String {
             switch self {
-                // FIXME:
             case .editReminder:
-                return "Edit Reminder"
+                return UIApplication.LocalizedString.editReminder
             case .viewReminder:
-                return "View Summary of Reminder"
+                return ReminderEditViewController.LocalizedString.viewReminderShortcutLabelText
             case .performReminder:
-                return "Perform Reminder"
+                return ReminderMainViewController.LocalizedString.buttonTitleReminderPerform
             }
         }
     }

@@ -45,32 +45,24 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
                 assertionFailure("Unsupported User Activity Type")
                 return
             }
+
+            let reminderVessel = self.currentReminderVessel?()
+            let value = self.currentReminderAndVessel?()
+            
             switch kind {
             case .editReminderVessel:
-                guard let reminderVessel = self.currentReminderVessel?() else {
-                    assertionFailure("Missing Reminder Vessel")
-                    return
-                }
                 self.updateEditReminderVessel(activity: activity,
                                               reminderVessel: reminderVessel)
             case .editReminder:
-                guard let value = self.currentReminderAndVessel?() else {
-                    assertionFailure("Missing Reminder")
-                    return
-                }
                 self.updateEditReminder(activity: activity, value: value)
             case .viewReminder:
-                guard let value = self.currentReminderAndVessel?() else {
-                    assertionFailure("Missing Reminder")
-                    return
-                }
                 self.updateViewReminder(activity: activity, value: value)
             case .performReminders:
                 if let uuids = self.remindersForDragSession, uuids.isEmpty == false {
                     self.updatePerformMultipleReminders(activity: activity,
                                                         reminders: uuids)
                     self.remindersForDragSession = nil
-                } else if let value = self.currentReminderAndVessel?() {
+                } else if let value = value {
                     self.updatePerformSingleReminder(activity: activity,
                                                      value: value)
                 } else {
@@ -80,17 +72,21 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
                 assertionFailure("Cannot update the data on a CoreSpotlight activity")
             }
         }
-        if self.requiresMainThreadExecution {
-            if DispatchQueue.isMain {
-                workItem()
-                return
-            } else {
-                DispatchQueue.main.sync() {
-                    workItem()
-                    return
-                }
-            }
-        } else {
+        // check if we're NOT on the main thread
+        // if we are just, execute the workitem
+        guard DispatchQueue.isMain == false else {
+            workItem()
+            return
+        }
+        // check if the user of this class needs
+        // the execution to happen on the main thread
+        // if they don't, just execute the work item
+        guard self.requiresMainThreadExecution else {
+            workItem()
+            return
+        }
+        // now hop on the main thread and execute
+        DispatchQueue.main.sync() {
             workItem()
             return
         }
@@ -99,8 +95,12 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
 
 private extension UserActivityConfigurator {
 
-    private func updateEditReminderVessel(activity: NSUserActivity, reminderVessel: ReminderVesselValue) {
+    private func updateEditReminderVessel(activity: NSUserActivity, reminderVessel: ReminderVesselValue?) {
         assert(activity.activityType == RawUserActivity.editReminderVessel.rawValue)
+        guard let reminderVessel = reminderVessel else {
+            assertionFailure("Missing Reminder Vessel")
+            return
+        }
 
         let uuid = ReminderVessel.Identifier(rawValue: reminderVessel.uuid)
         let title = LocalizedString.editVesselTitle(fromVesselName: reminderVessel.name)
@@ -114,8 +114,12 @@ private extension UserActivityConfigurator {
                         thumbnailData: reminderVessel.imageData)
     }
 
-    private func updateViewReminder(activity: NSUserActivity, value: ReminderAndVesselValue) {
+    private func updateViewReminder(activity: NSUserActivity, value: ReminderAndVesselValue?) {
         assert(activity.activityType == RawUserActivity.viewReminder.rawValue)
+        guard let value = value else {
+            assertionFailure("Missing Reminder")
+            return
+        }
 
         let uuid = Reminder.Identifier(rawValue: value.reminder.uuid)
         let title = LocalizedString.viewReminderTitle(for: value.reminder.kind,
@@ -135,10 +139,8 @@ private extension UserActivityConfigurator {
     {
         assert(activity.activityType == RawUserActivity.performReminders.rawValue)
 
-        // FIXME:
-        let title = "Mark \(reminders.count) as done."
-        // FIXME:
-        let description = "Mark all of these reminders as done."
+        let title = LocalizedString.performMultipleRemindersTitle
+        let description = LocalizedString.performMultipleRemindersDescription
         let phrase = LocalizedString.genericLocalizedPhrase
 
         activity.update(uuids: reminders,
@@ -149,9 +151,13 @@ private extension UserActivityConfigurator {
     }
 
     private func updatePerformSingleReminder(activity: NSUserActivity,
-                                             value: ReminderAndVesselValue)
+                                             value: ReminderAndVesselValue?)
     {
         assert(activity.activityType == RawUserActivity.performReminders.rawValue)
+        guard let value = value else {
+            assertionFailure("Missing Reminder")
+            return
+        }
 
         let uuid = Reminder.Identifier(rawValue: value.reminder.uuid)
         let title = LocalizedString.performReminderTitle(for: value.reminder.kind,
@@ -165,8 +171,14 @@ private extension UserActivityConfigurator {
                         thumbnailData: value.reminderVessel.imageData)
     }
 
-    private func updateEditReminder(activity: NSUserActivity, value: ReminderAndVesselValue) {
+    private func updateEditReminder(activity: NSUserActivity,
+                                    value: ReminderAndVesselValue?)
+    {
         assert(activity.activityType == RawUserActivity.editReminder.rawValue)
+        guard let value = value else {
+            assertionFailure("Missing Reminder")
+            return
+        }
 
         let uuid = Reminder.Identifier(rawValue: value.reminder.uuid)
         let title = LocalizedString.editReminderTitle(for: value.reminder.kind,
