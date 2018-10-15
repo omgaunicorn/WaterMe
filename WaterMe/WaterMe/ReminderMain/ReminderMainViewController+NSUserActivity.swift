@@ -51,11 +51,13 @@ extension ReminderMainViewController {
 
     private func continueActivityPerformReminders(with identifiers: [Reminder.Identifier]) -> UserActivityError? {
         guard let dropVC = self.dropTargetViewController else { return .restorationFailed }
-        dropVC.isDragInProgress = true
-        dropVC.updateDropTargetHeightAndPlayAnimationForDragging(animated: true) { _ in
-            self.userDidPerformDrop(with: identifiers, onTargetZoneWithin: nil)
-            dropVC.updatePlayAnimationForDrop()
-            dropVC.isDragInProgress = false
+        self.dismissAnimatedIfNeeded() {
+            dropVC.isDragInProgress = true
+            dropVC.updateDropTargetHeightAndPlayAnimationForDragging(animated: true) { _ in
+                self.userDidPerformDrop(with: identifiers, onTargetZoneWithin: nil)
+                dropVC.updatePlayAnimationForDrop()
+                dropVC.isDragInProgress = false
+            }
         }
         return nil
     }
