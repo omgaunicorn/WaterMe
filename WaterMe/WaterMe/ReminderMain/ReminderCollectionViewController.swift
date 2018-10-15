@@ -220,7 +220,7 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
         default:
             item.previewProvider = { ReminderDragPreviewView.dragPreview(for: reminder) }
         }
-        item.localObject = Reminder.Identifier(reminder: reminder)
+        item.localObject = ReminderAndVesselValue(reminder: reminder)
         return item
     }
 

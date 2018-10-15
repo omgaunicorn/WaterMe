@@ -300,11 +300,13 @@ extension ReminderMainViewController: ReminderFinishDropTargetViewControllerDele
         self.resetUserActivity()
     }
 
-    func userDidStartDrag(with reminders: [Reminder.Identifier],
+    func userDidStartDrag(with values: [ReminderAndVesselValue],
                           within: ReminderFinishDropTargetViewController)
     {
+        self.userActivityDelegate.currentReminderAndVessels = {
+            return values
+        }
         // Donate this activity so Siri might recommend it later
-        self.userActivityDelegate.remindersForDragSession = reminders
         let activity = NSUserActivity(kind: .performReminders,
                                       delegate: self.userActivityDelegate)
         self.userActivity = activity

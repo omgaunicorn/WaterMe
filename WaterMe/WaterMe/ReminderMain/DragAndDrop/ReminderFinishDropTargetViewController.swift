@@ -26,7 +26,7 @@ import UIKit
 
 protocol ReminderFinishDropTargetViewControllerDelegate: class {
     func userDidCancelDrag(within: ReminderFinishDropTargetViewController)
-    func userDidStartDrag(with reminders: [Reminder.Identifier],
+    func userDidStartDrag(with values: [ReminderAndVesselValue],
                           within: ReminderFinishDropTargetViewController)
     func animateAlongSideDropTargetViewResize(within: ReminderFinishDropTargetViewController) -> (() -> Void)?
     func userDidPerformDrop(with reminders: [Reminder.Identifier],
@@ -92,8 +92,8 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        let drags = session.reminderDrags
-        self.delegate?.userDidPerformDrop(with: drags, onTargetZoneWithin: self)
+        let identifiers = session.reminderDrags.map({ Reminder.Identifier(rawValue: $0.reminder.uuid) })
+        self.delegate?.userDidPerformDrop(with: identifiers, onTargetZoneWithin: self)
     }
 
     // MARK: Handle View Layouts
@@ -216,8 +216,8 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
 }
 
 fileprivate extension UIDropSession {
-    fileprivate var reminderDrags: [Reminder.Identifier] {
-        return self.localDragSession?.items.compactMap({ $0.localObject as? Reminder.Identifier }) ?? []
+    fileprivate var reminderDrags: [ReminderAndVesselValue] {
+        return self.localDragSession?.items.compactMap({ $0.localObject as? ReminderAndVesselValue }) ?? []
     }
 }
 
