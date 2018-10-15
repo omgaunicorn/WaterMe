@@ -34,10 +34,12 @@ class ReminderSummaryViewController: StandardViewController {
         case cancel, performReminder, editReminderVessel, editReminder
     }
 
+    // swiftlint:disable:next function_parameter_count
     class func newVC(reminderID: Reminder.Identifier,
                      basicController: BasicController,
                      hapticGenerator: UIFeedbackGenerator,
                      sourceView: UIView,
+                     userActivityContinuation: NSUserActivityContinuedHandler?,
                      completion: @escaping Completion) -> UIViewController
     {
         let sb = UIStoryboard(name: "ReminderSummary", bundle: Bundle(for: self))
@@ -51,6 +53,7 @@ class ReminderSummaryViewController: StandardViewController {
         vc.popoverPresentationController?.sourceRect = UIAlertController.sourceRect(from: sourceView)
         // configure needed properties
         vc.completion = completion
+        vc.userActivityContinuation = userActivityContinuation
         vc.reminderResult = basicController.reminder(matching: reminderID)
         vc.reminderID = reminderID
         vc.haptic = hapticGenerator
@@ -90,6 +93,7 @@ class ReminderSummaryViewController: StandardViewController {
 
     var reminderResult: Result<Reminder, RealmError>!
     private var completion: Completion!
+    private var userActivityContinuation: NSUserActivityContinuedHandler?
     private var reminderID: Reminder.Identifier!
     private weak var tableViewController: ReminderSummaryTableViewController!
     private weak var haptic: UIFeedbackGenerator?
@@ -106,6 +110,13 @@ class ReminderSummaryViewController: StandardViewController {
             // it just seems safer to go with weak
             return ReminderAndVesselValue(reminder: self?.reminderResult?.value)
         }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.userActivityContinuation?([self])
+        self.userActivityContinuation = nil
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

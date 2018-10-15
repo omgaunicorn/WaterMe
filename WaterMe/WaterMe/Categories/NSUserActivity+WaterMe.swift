@@ -27,6 +27,8 @@ import Intents
 import CoreSpotlight
 import MobileCoreServices
 
+typealias NSUserActivityContinuedHandler = ([Any]?) -> Void
+
 public enum RestoredUserActivity {
     case editReminder(Reminder.Identifier)
     case editReminderVessel(ReminderVessel.Identifier)

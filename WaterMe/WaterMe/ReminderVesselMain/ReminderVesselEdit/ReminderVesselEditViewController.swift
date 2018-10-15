@@ -32,6 +32,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     
     class func newVC(basicController: BasicController?,
                      editVessel vessel: ReminderVessel? = nil,
+                     userActivityCompletion: NSUserActivityContinuedHandler? = nil,
                      completionHandler: @escaping CompletionHandler) -> UIViewController
     {
         let sb = UIStoryboard(name: "ReminderVesselEdit", bundle: Bundle(for: self))
@@ -42,6 +43,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         vc.title = UIApplication.LocalizedString.editVessel
         vc.configure(with: basicController)
         vc.completionHandler = completionHandler
+        vc.userActivityCompletion = userActivityCompletion
         if let vessel = vessel {
             vc.vesselResult = .success(vessel)
         } else {
@@ -61,6 +63,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     var basicRC: BasicController?
     private(set) var vesselResult: Result<ReminderVessel, RealmError>?
     private(set) var completionHandler: CompletionHandler!
+    private var userActivityCompletion: NSUserActivityContinuedHandler?
     //swiftlint:disable:next weak_delegate
     private let userActivityDelegate: UserActivityConfiguratorProtocol = UserActivityConfigurator()
 
@@ -83,6 +86,9 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         super.viewDidAppear(animated)
 
         Analytics.log(viewOperation: .editReminderVessel)
+
+        self.userActivityCompletion?([self])
+        self.userActivityCompletion = nil
 
         if case .failure(let error) = self.vesselResult! {
             self.vesselResult = nil

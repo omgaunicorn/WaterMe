@@ -187,10 +187,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication,
                      continue userActivity: NSUserActivity,
-                     restorationHandler: @escaping ([Any]?) -> Void) -> Bool
+                     restorationHandler: @escaping NSUserActivityContinuedHandler) -> Bool
     {
+        let newBlock: NSUserActivityContinuedHandler = { urls in
+            print("Block Called!!!")
+            restorationHandler(urls)
+        }
         let result = userActivity.restoredUserActivityResult
-        self.rootVC?.userActivityResultToContinue = result
+        self.rootVC?.userActivityResultToContinue = result.map({ ($0, newBlock) })
         self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         return true
     }

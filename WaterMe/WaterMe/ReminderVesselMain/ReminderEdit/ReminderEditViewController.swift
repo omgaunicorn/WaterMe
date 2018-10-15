@@ -36,6 +36,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     
     class func newVC(basicController: BasicController?,
                      purpose: Purpose,
+                     userActivityCompletion: NSUserActivityContinuedHandler? = nil,
                      completionHandler: @escaping CompletionHandler) -> UIViewController
     {
         let sb = UIStoryboard(name: "ReminderEdit", bundle: Bundle(for: self))
@@ -46,6 +47,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         vc.title = UIApplication.LocalizedString.editReminder
         vc.configure(with: basicController)
         vc.completionHandler = completionHandler
+        vc.userActivityCompletion = userActivityCompletion
         switch purpose {
         case .new(let vessel):
             Analytics.log(event: Analytics.CRUD_Op_R.create)
@@ -68,6 +70,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     var basicRC: BasicController?
     private(set) var reminderResult: Result<Reminder, RealmError>?
     private var completionHandler: CompletionHandler?
+    private var userActivityCompletion: NSUserActivityContinuedHandler?
     //swiftlint:disable:next weak_delegate
     private let userActivityDelegate: UserActivityConfiguratorProtocol = UserActivityConfigurator()
     
@@ -90,6 +93,8 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         Analytics.log(viewOperation: .editReminder)
+        self.userActivityCompletion?([self])
+        self.userActivityCompletion = nil
         if case .failure(let error) = self.reminderResult! {
             self.reminderResult = nil
             UIAlertController.presentAlertVC(for: error,

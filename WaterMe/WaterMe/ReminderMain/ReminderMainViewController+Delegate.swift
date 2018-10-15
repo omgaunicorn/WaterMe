@@ -68,6 +68,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
 
     func userDidSelect(reminderID: Reminder.Identifier,
                        from view: UIView,
+                       userActivityContinuation: NSUserActivityContinuedHandler?,
                        deselectAnimated: @escaping (Bool) -> Void,
                        within viewController: ReminderCollectionViewController)
     {
@@ -78,8 +79,8 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         Analytics.log(viewOperation: .reminderSummary)
 
         // closure that needs to be executed whenever all the alerts have disappeared
-        let viewDidAppearActions = {
-            deselectAnimated(true)
+        let viewDidAppearActions = { (animated: Bool) in
+            deselectAnimated(animated)
             self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         }
 
@@ -87,12 +88,13 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         let alert = ReminderSummaryViewController.newVC(reminderID: reminderID,
                                                         basicController: basicRC,
                                                         hapticGenerator: self.haptic,
-                                                        sourceView: view)
+                                                        sourceView: view,
+                                                        userActivityContinuation: userActivityContinuation)
         { action, identifier, vc in
             vc.dismiss(animated: true) {
                 switch action {
                 case .cancel:
-                    viewDidAppearActions()
+                    viewDidAppearActions(true)
                 case .editReminder:
                     self.userChoseEditReminder(with: identifier,
                                                basicRC: basicRC,
@@ -116,25 +118,27 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
 
     func userChoseEditReminder(with identifier: Reminder.Identifier,
                                basicRC: BasicController,
-                               completion: (() -> Void)?)
+                               userActivityCompletion: NSUserActivityContinuedHandler? = nil,
+                               completion: ((Bool) -> Void)?)
     {
         let result = basicRC.reminder(matching: identifier)
         switch result {
         case .success(let reminder):
             let vc = ReminderEditViewController.newVC(basicController: self.basicRC,
-                                                      purpose: .existing(reminder))
+                                                      purpose: .existing(reminder),
+                                                      userActivityCompletion: userActivityCompletion)
             { vc in
-                vc.dismiss(animated: true, completion: { completion?() })
+                vc.dismiss(animated: true, completion: { completion?(true) })
             }
             self.present(vc, animated: true, completion: nil)
         case .failure(let error):
-            self.present(error: error, with: completion)
+            self.present(error: error, with: { completion?(true) })
         }
     }
 
     func userChoseEditVessel(withReminderIdentifier identifier: Reminder.Identifier,
                              basicRC: BasicController,
-                             completion: (() -> Void)?)
+                             completion: ((Bool) -> Void)?)
     {
         let result = basicRC.reminder(matching: identifier)
         switch result {
@@ -142,11 +146,11 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             let vc = ReminderVesselEditViewController.newVC(basicController: self.basicRC,
                                                             editVessel: reminder.vessel)
             { vc in
-                vc.dismiss(animated: true, completion: { completion?() })
+                vc.dismiss(animated: true, completion: { completion?(true) })
             }
             self.present(vc, animated: true, completion: nil)
         case .failure(let error):
-            self.present(error: error, with: completion)
+            self.present(error: error, with: { completion?(true) })
         }
     }
 
@@ -154,7 +158,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                                            in _: UIAlertAction?,
                                            from view: UIView,
                                            basicRC: BasicController,
-                                           completion: (() -> Void)?)
+                                           completion: ((Bool) -> Void)?)
     {
         // update the database
         let result = basicRC.appendNewPerformToReminders(with: identifiers)
@@ -167,12 +171,12 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             // next we need to see if they are allowing / want to give us permission to send push notifications
             let _notificationPermissionVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .right(view))
             { _ in
-                completion?()
+                completion?(true)
             }
             // if we got a VC to present, then we need to show it
             // otherwise, just call the completion handler
             guard let notificationPermissionVC = _notificationPermissionVC else {
-                completion?()
+                completion?(true)
                 return
             }
             self.present(notificationPermissionVC, animated: true, completion: nil)
@@ -180,7 +184,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             // perform the haptic for error
             self.haptic.notificationOccurred(.error)
             // present the alert for the error
-            self.present(error: error, with: completion)
+            self.present(error: error, with: { completion?(true) })
         }
     }
 

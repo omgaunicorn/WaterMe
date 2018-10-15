@@ -27,9 +27,15 @@ import WaterMeData
 import UIKit
 
 protocol ReminderCollectionViewControllerDelegate: class {
-    func userDidSelect(reminderID: Reminder.Identifier, from view: UIView, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController)
-    func dragSessionWillBegin(_ session: UIDragSession, within viewController: ReminderCollectionViewController)
-    func dragSessionDidEnd(_ session: UIDragSession, within viewController: ReminderCollectionViewController)
+    func userDidSelect(reminderID: Reminder.Identifier,
+                       from view: UIView,
+                       userActivityContinuation: NSUserActivityContinuedHandler?,
+                       deselectAnimated: @escaping (Bool) -> Void,
+                       within viewController: ReminderCollectionViewController)
+    func dragSessionWillBegin(_ session: UIDragSession,
+                              within viewController: ReminderCollectionViewController)
+    func dragSessionDidEnd(_ session: UIDragSession,
+                           within viewController: ReminderCollectionViewController)
     func forceUpdateCollectionViewInsets()
 }
 
@@ -88,25 +94,17 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
                                                  collectionViewReplacer: self)
     }
 
-    func programmaticalySelectReminder(with identifier: Reminder.Identifier) -> (() -> Void)? {
+    func programmaticalySelectReminder(with identifier: Reminder.Identifier) -> (IndexPath, ((Bool) -> Void))? {
         guard
             let collectionView = self.collectionView,
             let indexPath = self.reminders?.indexPathOfReminder(with: identifier)
         else { return nil }
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
-        return {
-            collectionView.deselectItem(at: indexPath, animated: true)
-        }
+        return (indexPath, { collectionView.deselectItem(at: indexPath, animated: $0) })
     }
 
     func indexPathOfReminder(with identifier: Reminder.Identifier) -> IndexPath? {
         return self.reminders?.indexPathOfReminder(with: identifier)
-    }
-
-    func programaticallySimulateSelectionOfReminder(at indexPath: IndexPath) {
-        guard let collectionView = self.collectionView else { return }
-        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
-        self.collectionView(collectionView, didSelectItemAt: indexPath)
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -143,10 +141,14 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let reminder = self.reminders?.reminder(at: indexPath), let cell = collectionView.cellForItem(at: indexPath) else { return }
+        guard
+            let reminder = self.reminders?.reminder(at: indexPath),
+            let cell = collectionView.cellForItem(at: indexPath)
+        else { return }
         let identifier = Reminder.Identifier(reminder: reminder)
         self.delegate?.userDidSelect(reminderID: identifier,
                                      from: cell,
+                                     userActivityContinuation: nil,
                                      deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) },
                                      within: self)
     }

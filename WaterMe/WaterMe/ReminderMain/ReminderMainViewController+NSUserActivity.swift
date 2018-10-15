@@ -24,22 +24,26 @@
 import WaterMeData
 
 extension ReminderMainViewController {
-
+    
     func continueUserActivityResultIfNeeded() {
         guard let result = self.userActivityResultToContinue else { return }
         self.userActivityResultToContinue = nil
         switch result {
-        case .success(let activity):
+        case .success(let activity, let completion):
             let failure: UserActivityError?
             switch activity {
             case .editReminder(let identifier):
-                failure = self.continueActivityEditReminder(with: identifier)
+                failure = self.continueActivityEditReminder(with: identifier,
+                                                            completion: completion)
             case .editReminderVessel(let identifier):
-                failure = self.continueActivityEditReminderVessel(with: identifier)
+                failure = self.continueActivityEditReminderVessel(with: identifier,
+                                                                  completion: completion)
             case .viewReminder(let identifier):
-                failure = self.continueActivityViewReminder(with: identifier)
+                failure = self.continueActivityViewReminder(with: identifier,
+                                                            completion: completion)
             case .performReminders(let ids):
-                failure = self.continueActivityPerformReminders(with: ids)
+                failure = self.continueActivityPerformReminders(with: ids,
+                                                                completion: completion)
             }
             guard let _failure = failure else { return }
             self.userActivityResultToContinue = .failure(_failure)
@@ -49,7 +53,9 @@ extension ReminderMainViewController {
         }
     }
 
-    private func continueActivityPerformReminders(with identifiers: [Reminder.Identifier]) -> UserActivityError? {
+    private func continueActivityPerformReminders(with identifiers: [Reminder.Identifier],
+                                                  completion: @escaping NSUserActivityContinuedHandler) -> UserActivityError?
+    {
         guard let dropVC = self.dropTargetViewController else { return .restorationFailed }
         self.dismissAnimatedIfNeeded() {
             dropVC.isDragInProgress = true
@@ -57,32 +63,39 @@ extension ReminderMainViewController {
                 self.userDidPerformDrop(with: identifiers, onTargetZoneWithin: nil)
                 dropVC.updatePlayAnimationForDrop()
                 dropVC.isDragInProgress = false
+                completion(nil)
             }
         }
         return nil
     }
 
-    private func continueActivityEditReminder(with identifier: Reminder.Identifier) -> UserActivityError? {
+    private func continueActivityEditReminder(with identifier: Reminder.Identifier,
+                                              completion: @escaping NSUserActivityContinuedHandler) -> UserActivityError?
+    {
         guard
-            let completion = self.collectionVC?.programmaticalySelectReminder(with: identifier),
+            let deselect = self.collectionVC?.programmaticalySelectReminder(with: identifier),
             let basicRC = self.basicRC
         else { return .reminderNotFound }
         self.dismissAnimatedIfNeeded() {
             self.userChoseEditReminder(with: identifier,
                                        basicRC: basicRC,
-                                       completion: completion)
+                                       userActivityCompletion: completion,
+                                       completion: deselect.1)
         }
         return nil
     }
 
-    private func continueActivityEditReminderVessel(with identifier: ReminderVessel.Identifier) -> UserActivityError? {
+    private func continueActivityEditReminderVessel(with identifier: ReminderVessel.Identifier,
+                                                    completion: @escaping NSUserActivityContinuedHandler) -> UserActivityError?
+    {
         guard
             let basicRC = self.basicRC,
             let vessel = basicRC.reminderVessel(matching: identifier).value
         else { return .reminderVesselNotFound }
         self.dismissAnimatedIfNeeded() {
             let vc = ReminderVesselEditViewController.newVC(basicController: basicRC,
-                                                            editVessel: vessel)
+                                                            editVessel: vessel,
+                                                            userActivityCompletion: completion)
             { vc in
                 vc.dismiss(animated: true, completion: nil)
             }
@@ -91,11 +104,20 @@ extension ReminderMainViewController {
         return nil
     }
 
-    private func continueActivityViewReminder(with identifier: Reminder.Identifier) -> UserActivityError? {
-        guard let indexPath = self.collectionVC?.indexPathOfReminder(with: identifier)
-            else { return .reminderNotFound }
+    private func continueActivityViewReminder(with identifier: Reminder.Identifier,
+                                              completion: @escaping NSUserActivityContinuedHandler) -> UserActivityError?
+    {
+        guard
+            let collectionVC = self.collectionVC,
+            let deselect = collectionVC.programmaticalySelectReminder(with: identifier),
+            let cellView = collectionVC.collectionView?.cellForItem(at: deselect.0)
+        else { return .reminderNotFound }
         self.dismissAnimatedIfNeeded() {
-            self.collectionVC?.programaticallySimulateSelectionOfReminder(at: indexPath)
+            self.userDidSelect(reminderID: identifier,
+                               from: cellView,
+                               userActivityContinuation: completion,
+                               deselectAnimated: deselect.1,
+                               within: collectionVC)
         }
         return nil
     }
