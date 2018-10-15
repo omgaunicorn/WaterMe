@@ -605,25 +605,6 @@ extension UserActivityConfigurator {
                 return localizedString
             }
         }
-        static var viewRemindersTitle: String {
-            let localizedString = NSLocalizedString("All Reminders",
-                                                    comment: "SiriShortcut: Title: ViewReminders: Title of the shortcut that will bring the user to see all reminders.")
-            if #available(iOS 12.0, *) {
-                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
-            } else {
-                return localizedString
-            }
-        }
-
-        static var viewRemindersDescriptions: String {
-            let localizedString = NSLocalizedString("View all gardening reminders.",
-                                                    comment: "SiriShortcut: Description: ViewReminders: Explains to the user that by using this SiriShortcut they can view all reminders.")
-            if #available(iOS 12.0, *) {
-                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
-            } else {
-                return localizedString
-            }
-        }
         static var genericLocalizedPhrase: String {
             let localizedString = NSLocalizedString("Green Thumb It!",
                                                     comment: "SiriShortcut: Phrase: Generic: Recommends something short and funny that the user can use to trigger this shortcut.")

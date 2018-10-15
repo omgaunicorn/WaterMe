@@ -38,8 +38,6 @@ extension ReminderMainViewController {
                 failure = self.continueActivityEditReminderVessel(with: identifier)
             case .viewReminder(let identifier):
                 failure = self.continueActivityViewReminder(with: identifier)
-            case .viewReminders:
-                failure = self.continueActivityViewAllReminders()
             case .performReminders(let ids):
                 failure = self.continueActivityPerformReminders(with: ids)
             }
@@ -96,13 +94,6 @@ extension ReminderMainViewController {
             else { return .reminderNotFound }
         self.dismissAnimatedIfNeeded() {
             self.collectionVC?.programaticallySimulateSelectionOfReminder(at: indexPath)
-        }
-        return nil
-    }
-
-    private func continueActivityViewAllReminders() -> UserActivityError? {
-        self.dismissAnimatedIfNeeded() {
-            self.collectionVC?.collectionView?.deselectAllItems(animated: true)
         }
         return nil
     }

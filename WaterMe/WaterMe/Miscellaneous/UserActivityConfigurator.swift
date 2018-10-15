@@ -46,8 +46,6 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
                 return
             }
             switch kind {
-            case .viewReminders:
-                self.updateViewReminders(activity: activity)
             case .editReminderVessel:
                 guard let reminderVessel = self.currentReminderVessel?() else {
                     assertionFailure("Missing Reminder Vessel")
@@ -114,20 +112,6 @@ private extension UserActivityConfigurator {
                         phrase: phrase,
                         description: description,
                         thumbnailData: reminderVessel.imageData)
-    }
-
-    private func updateViewReminders(activity: NSUserActivity) {
-        assert(activity.activityType == RawUserActivity.viewReminders.rawValue)
-
-        let title = LocalizedString.viewRemindersTitle
-        let phrase = LocalizedString.genericLocalizedPhrase
-        let description = LocalizedString.viewRemindersDescriptions
-
-        activity.update(uuids: [],
-                        title: title,
-                        phrase: phrase,
-                        description: description,
-                        thumbnailData: nil)
     }
 
     private func updateViewReminder(activity: NSUserActivity, value: ReminderAndVesselValue) {

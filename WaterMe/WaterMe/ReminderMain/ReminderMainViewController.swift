@@ -175,8 +175,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     }
 
     func resetUserActivity() {
-        self.userActivity = NSUserActivity(kind: .viewReminders,
-                                         delegate: self.userActivityDelegate)
+        self.userActivity = nil
         self.userActivity?.needsSave = true
         self.userActivity?.becomeCurrent()
     }
