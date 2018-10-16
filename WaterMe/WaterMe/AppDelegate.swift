@@ -142,7 +142,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let result = BasicController.new(of: .local)
         let vc = ReminderMainViewController.newVC(basicRCResult: result, proController: nil)
-        result.value.map({ self.reminderObserver = GlobalReminderObserver(basicController: $0) })
+        if case .success(let basicRC) = result {
+            self.reminderObserver = GlobalReminderObserver(basicController: basicRC)
+        }
 
         // When a new build is detected, we set a date
         // Two weeks after that date, the user is eligible to be asked for a review

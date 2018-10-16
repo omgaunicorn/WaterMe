@@ -54,7 +54,13 @@ class GlobalReminderObserver {
                                                name: .UIApplicationDidEnterBackground,
                                                object: nil)
         self.significantTimePassedDetector.delegate = self
-        
+
+        self.basicRC.reminderVesselsDeleted = { vessels in
+            self.shortcutSuggester?.deleteActivities(for: vessels)
+        }
+        self.basicRC.remindersDeleted = { reminders in
+            self.shortcutSuggester?.deleteActivities(for: reminders)
+        }
         DispatchQueue.main.async {
             let collection = basicController.allReminders(sorted: .nextPerformDate, ascending: true).value
             self.token = collection?.observe({ [weak self] in self?.dataChanged($0) })

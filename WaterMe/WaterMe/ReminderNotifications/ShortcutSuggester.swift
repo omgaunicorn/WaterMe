@@ -26,6 +26,8 @@ import Intents
 
 protocol ShortcutSuggesterProtocol {
     static func perform(with values: [ReminderAndVesselValue])
+    static func deleteActivities(for vessels: [ReminderVesselValue])
+    static func deleteActivities(for reminders: [ReminderValue])
 }
 
 @available(iOS 12.0, *)
@@ -34,6 +36,28 @@ class ShortcutSuggester: ShortcutSuggesterProtocol {
     private static let taskName = String(describing: ShortcutSuggester.self) + "_SerialQueue_" + UUID().uuidString
     private static let queue = DispatchQueue(label: taskName, qos: .utility)
     private static var backgroundTaskID: UIBackgroundTaskIdentifier?
+
+    class func deleteActivities(for reminders: [ReminderValue]) {
+        let ids = reminders.flatMap() { reminder in
+            return [
+                NSUserActivity.uniqueString(for: .editReminder,
+                                            and: [reminder.uuid]),
+                NSUserActivity.uniqueString(for: .viewReminder,
+                                            and: [reminder.uuid]),
+                NSUserActivity.uniqueString(for: .performReminders,
+                                            and: [reminder.uuid])
+            ]
+        }
+        NSUserActivity.deleteSavedUserActivities(withPersistentIdentifiers: ids,
+                                                 completionHandler: {})
+    }
+
+    class func deleteActivities(for vessels: [ReminderVesselValue]) {
+        let ids = vessels.map({ NSUserActivity.uniqueString(for: .editReminderVessel,
+                                                            and: [$0.uuid]) })
+        NSUserActivity.deleteSavedUserActivities(withPersistentIdentifiers: ids,
+                                                 completionHandler: {})
+    }
 
     class func perform(with values: [ReminderAndVesselValue]) {
         // make sure there isn't already a background task in progress
