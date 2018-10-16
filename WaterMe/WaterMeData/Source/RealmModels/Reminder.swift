@@ -145,7 +145,7 @@ extension Reminder: ModelCompleteCheckable {
 }
 
 public extension Reminder {
-    public struct Identifier: UUIDRepresentable {
+    public struct Identifier: UUIDRepresentable, Hashable {
         public var reminderIdentifier: String
         public init(reminder: Reminder) {
             self.reminderIdentifier = reminder.uuid

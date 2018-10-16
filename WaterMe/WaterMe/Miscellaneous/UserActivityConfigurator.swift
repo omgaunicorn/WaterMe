@@ -92,7 +92,7 @@ private extension UserActivityConfigurator {
             return
         }
 
-        let uuid = ReminderVessel.Identifier(rawValue: reminderVessel.uuid)
+        let uuid = reminderVessel.uuid
         let title = LocalizedString.editVesselTitle(fromVesselName: reminderVessel.name)
         let phrase = LocalizedString.genericLocalizedPhrase
         let description = LocalizedString.editReminderVesselDescription
@@ -111,7 +111,7 @@ private extension UserActivityConfigurator {
             return
         }
 
-        let uuid = Reminder.Identifier(rawValue: value.reminder.uuid)
+        let uuid = value.reminder.uuid
         let title = LocalizedString.viewReminderTitle(for: value.reminder.kind,
                                                       andVesselName: value.reminderVessel.name)
         let phrase = LocalizedString.genericLocalizedPhrase
@@ -134,7 +134,7 @@ private extension UserActivityConfigurator {
         }
 
         if let value = reminders.first, reminders.count == 1 {
-            let uuid = Reminder.Identifier(rawValue: value.reminder.uuid)
+            let uuid = value.reminder.uuid
             let title = LocalizedString.performReminderTitle(for: value.reminder.kind,
                                                              andVesselName: value.reminderVessel.name)
             let description = LocalizedString.performReminderDescription
@@ -145,7 +145,7 @@ private extension UserActivityConfigurator {
                             description: description,
                             thumbnailData: value.reminderVessel.imageData)
         } else {
-            let uuids = reminders.map({ Reminder.Identifier(rawValue: $0.reminder.uuid) })
+            let uuids = reminders.map({ $0.reminder.uuid })
             let title = LocalizedString.performMultipleRemindersTitle
             let description = LocalizedString.performMultipleRemindersDescription
             let phrase = LocalizedString.genericLocalizedPhrase
@@ -166,7 +166,7 @@ private extension UserActivityConfigurator {
             return
         }
 
-        let uuid = Reminder.Identifier(rawValue: value.reminder.uuid)
+        let uuid = value.reminder.uuid
         let title = LocalizedString.editReminderTitle(for: value.reminder.kind,
                                                       andVesselName: value.reminderVessel.name)
         let phrase = LocalizedString.genericLocalizedPhrase

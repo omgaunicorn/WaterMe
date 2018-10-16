@@ -62,20 +62,3 @@ extension DateComponentsFormatter {
         return string ?? "–"
     }
 }
-
-import WaterMeData
-
-extension ReminderVessel {
-    var shortLabelSafeDisplayName: String? {
-        let name = self.displayName ?? ""
-        let characterLimit = 20
-        guard name.count > characterLimit else { return self.displayName }
-        let endIndex = name.index(name.startIndex, offsetBy: characterLimit)
-        let substring = String(self.displayName![..<endIndex])
-        if let trimmed = substring.nonEmptyString {
-            return trimmed + "…"
-        } else {
-            return nil
-        }
-    }
-}

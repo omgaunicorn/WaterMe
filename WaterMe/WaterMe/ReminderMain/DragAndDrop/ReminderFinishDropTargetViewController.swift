@@ -92,7 +92,7 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        let identifiers = session.reminderDrags.map({ Reminder.Identifier(rawValue: $0.reminder.uuid) })
+        let identifiers = session.reminderDrags.map({ $0.reminder.uuid })
         self.delegate?.userDidPerformDrop(with: identifiers, onTargetZoneWithin: self)
     }
 

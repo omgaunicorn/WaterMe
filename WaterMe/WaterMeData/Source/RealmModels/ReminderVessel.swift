@@ -27,7 +27,7 @@ import RealmSwift
 
 public class ReminderVessel: Object {
 
-    public struct Identifier: UUIDRepresentable {
+    public struct Identifier: UUIDRepresentable, Hashable {
         public var reminderVesselIdentifier: String
         public init(reminderVessel: ReminderVessel) {
             self.reminderVesselIdentifier = reminderVessel.uuid
@@ -110,5 +110,21 @@ extension ReminderVessel {
         let matches = properties.filter({ $0.name == "bloop" })
         let contains = !matches.isEmpty
         return contains
+    }
+}
+
+public extension ReminderVessel {
+
+    public var shortLabelSafeDisplayName: String? {
+        let name = self.displayName ?? ""
+        let characterLimit = 20
+        guard name.count > characterLimit else { return self.displayName }
+        let endIndex = name.index(name.startIndex, offsetBy: characterLimit)
+        let substring = String(self.displayName![..<endIndex])
+        if let trimmed = substring.nonEmptyString {
+            return trimmed + "…"
+        } else {
+            return nil
+        }
     }
 }

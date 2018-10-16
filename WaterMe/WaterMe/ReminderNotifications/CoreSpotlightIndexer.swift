@@ -107,7 +107,7 @@ extension CSSearchableItem {
             attributes.contentDescription = CoreSpotlightIndexer.LocalizedString.description
             attributes.thumbnailData = value.reminderVessel.imageData
             let uuid = NSUserActivity.uniqueString(for: RawUserActivity.viewReminder,
-                                                   and: [Reminder.Identifier(rawValue: value.reminder.uuid)])
+                                                   and: [value.reminder.uuid])
             let item = CSSearchableItem(uniqueIdentifier: uuid,
                                         domainIdentifier: RawUserActivity.viewReminder.rawValue,
                                         attributeSet: attributes)
