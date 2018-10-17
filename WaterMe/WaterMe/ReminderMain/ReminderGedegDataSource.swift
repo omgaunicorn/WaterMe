@@ -81,7 +81,6 @@ class ReminderGedegDataSource: ReminderGedeg {
         let failureReason = ItemAndSectionSanityCheckFailureReason.check(old: cv, new: self, delta: (ins, dels))
         guard failureReason == nil else {
             let error = NSError(errorFromSanityCheckFailureReason: failureReason!)
-            assertionFailure(String(describing: error))
             Analytics.log(error: error)
             log.error(error)
             cv.reloadData()

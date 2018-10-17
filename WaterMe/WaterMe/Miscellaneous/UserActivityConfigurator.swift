@@ -88,7 +88,7 @@ private extension UserActivityConfigurator {
     private func updateEditReminderVessel(activity: NSUserActivity, reminderVessel: ReminderVesselValue?) {
         assert(activity.activityType == RawUserActivity.editReminderVessel.rawValue)
         guard let reminderVessel = reminderVessel else {
-            assertionFailure("Missing Reminder Vessel")
+            log.error("Unable to save Activity: Missing Reminder Vessel")
             return
         }
 
@@ -107,7 +107,7 @@ private extension UserActivityConfigurator {
     private func updateViewReminder(activity: NSUserActivity, value: ReminderAndVesselValue?) {
         assert(activity.activityType == RawUserActivity.viewReminder.rawValue)
         guard let value = value else {
-            assertionFailure("Missing Reminder")
+            log.error("Unable to save Activity: Missing Reminder")
             return
         }
 
@@ -129,7 +129,7 @@ private extension UserActivityConfigurator {
     {
         assert(activity.activityType == RawUserActivity.performReminders.rawValue)
         guard let value = value else {
-            assertionFailure("Missing Reminder")
+            log.error("Unable to save Activity: Missing Reminder")
             return
         }
 
@@ -150,7 +150,7 @@ private extension UserActivityConfigurator {
     {
         assert(activity.activityType == RawUserActivity.editReminder.rawValue)
         guard let value = value else {
-            assertionFailure("Missing Reminder")
+            log.error("Unable to save Activity: Missing Reminder")
             return
         }
 
