@@ -86,8 +86,8 @@ class ShortcutSuggester: ShortcutSuggesterProtocol {
         values.forEach() { value in
             let delegate: UserActivityConfiguratorProtocol = UserActivityConfigurator()
             delegate.requiresMainThreadExecution = false
-            delegate.currentReminderAndVessels = {
-                return [value]
+            delegate.currentReminderAndVessel = {
+                return value
             }
             delegate.currentReminderVessel = {
                 return value.reminderVessel

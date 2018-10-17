@@ -25,13 +25,13 @@ import WaterMeData
 import Foundation
 
 protocol UserActivityConfiguratorProtocol: NSUserActivityDelegate {
-    var currentReminderAndVessels: (() -> [ReminderAndVesselValue])? { get set }
+    var currentReminderAndVessel: (() -> ReminderAndVesselValue?)? { get set }
     var currentReminderVessel: (() -> ReminderVesselValue?)? { get set }
     var requiresMainThreadExecution: Bool { get set }
 }
 
 class UserActivityConfigurator: NSObject, UserActivityConfiguratorProtocol {
-    var currentReminderAndVessels: (() -> [ReminderAndVesselValue])?
+    var currentReminderAndVessel: (() -> ReminderAndVesselValue?)?
     var currentReminderVessel: (() -> ReminderVesselValue?)?
     var requiresMainThreadExecution = true
 }
@@ -45,19 +45,19 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
             }
 
             let reminderVessel = self.currentReminderVessel?()
-            let values = self.currentReminderAndVessels?()
+            let reminder = self.currentReminderAndVessel?()
             
             switch kind {
             case .editReminderVessel:
                 self.updateEditReminderVessel(activity: activity,
                                               reminderVessel: reminderVessel)
             case .editReminder:
-                self.updateEditReminder(activity: activity, value: values?.first)
+                self.updateEditReminder(activity: activity, value: reminder)
             case .viewReminder:
-                self.updateViewReminder(activity: activity, value: values?.first)
+                self.updateViewReminder(activity: activity, value: reminder)
             case .performReminders:
-                self.updatePerformMultipleReminders(activity: activity,
-                                                    reminders: values ?? [])
+                self.updatePerformReminder(activity: activity,
+                                           value: reminder)
             case .indexedItem:
                 assertionFailure("Cannot update the data on a CoreSpotlight activity")
             }
@@ -97,7 +97,7 @@ private extension UserActivityConfigurator {
         let phrase = LocalizedString.genericLocalizedPhrase
         let description = LocalizedString.editReminderVesselDescription
 
-        activity.update(uuids: [uuid],
+        activity.update(uuid: uuid,
                         title: title,
                         phrase: phrase,
                         description: description,
@@ -117,44 +117,32 @@ private extension UserActivityConfigurator {
         let phrase = LocalizedString.genericLocalizedPhrase
         let description = LocalizedString.viewReminderDescription
 
-        activity.update(uuids: [uuid],
+        activity.update(uuid: uuid,
                         title: title,
                         phrase: phrase,
                         description: description,
                         thumbnailData: value.reminderVessel.imageData)
     }
 
-    private func updatePerformMultipleReminders(activity: NSUserActivity,
-                                                reminders: [ReminderAndVesselValue])
+    private func updatePerformReminder(activity: NSUserActivity,
+                                       value: ReminderAndVesselValue?)
     {
         assert(activity.activityType == RawUserActivity.performReminders.rawValue)
-        guard reminders.isEmpty == false else {
+        guard let value = value else {
             assertionFailure("Missing Reminder")
             return
         }
 
-        if let value = reminders.first, reminders.count == 1 {
-            let uuid = value.reminder.uuid
-            let title = LocalizedString.performReminderTitle(for: value.reminder.kind,
-                                                             andVesselName: value.reminderVessel.name)
-            let description = LocalizedString.performReminderDescription
-            let phrase = LocalizedString.genericLocalizedPhrase
-            activity.update(uuids: [uuid],
-                            title: title,
-                            phrase: phrase,
-                            description: description,
-                            thumbnailData: value.reminderVessel.imageData)
-        } else {
-            let uuids = reminders.map({ $0.reminder.uuid })
-            let title = LocalizedString.performMultipleRemindersTitle
-            let description = LocalizedString.performMultipleRemindersDescription
-            let phrase = LocalizedString.genericLocalizedPhrase
-            activity.update(uuids: uuids,
-                            title: title,
-                            phrase: phrase,
-                            description: description,
-                            thumbnailData: nil)
-        }
+        let uuid = value.reminder.uuid
+        let title = LocalizedString.performReminderTitle(for: value.reminder.kind,
+                                                         andVesselName: value.reminderVessel.name)
+        let description = LocalizedString.performReminderDescription
+        let phrase = LocalizedString.genericLocalizedPhrase
+        activity.update(uuid: uuid,
+                        title: title,
+                        phrase: phrase,
+                        description: description,
+                        thumbnailData: value.reminderVessel.imageData)
     }
 
     private func updateEditReminder(activity: NSUserActivity,
@@ -172,7 +160,7 @@ private extension UserActivityConfigurator {
         let phrase = LocalizedString.genericLocalizedPhrase
         let description = LocalizedString.editReminderDescription
 
-        activity.update(uuids: [uuid],
+        activity.update(uuid: uuid,
                         title: title,
                         phrase: phrase,
                         description: description,

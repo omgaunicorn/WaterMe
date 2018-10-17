@@ -33,14 +33,14 @@ public enum RestoredUserActivity {
     case editReminder(Reminder.Identifier)
     case editReminderVessel(ReminderVessel.Identifier)
     case viewReminder(Reminder.Identifier)
-    case performReminders([Reminder.Identifier])
+    case performReminder(Reminder.Identifier)
 }
 
 public enum RawUserActivity: String {
     case editReminder = "com.saturdayapps.waterme.activity.edit.reminder"
     case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
     case viewReminder = "com.saturdayapps.waterme.activity.view.reminder"
-    case performReminders = "com.saturdayapps.waterme.activity.perform.reminders"
+    case performReminders = "com.saturdayapps.waterme.activity.perform.reminder"
     case indexedItem = "com.apple.corespotlightitem" //CSSearchableItemActionType
 }
 
@@ -57,31 +57,33 @@ public extension NSUserActivity {
         }
     }
 
+    public static func deuniqueString(fromRawString rawString: String) -> (String, [String])? {
+        let components = rawString.components(separatedBy: self.stringSeparator)
+        let _first = components.first
+        let rest = components.dropFirst()
+        guard let first = _first else { return nil }
+        return (first, Array(rest))
+    }
+
     public var restoredUserActivityResult: Result<RestoredUserActivity, UserActivityError> {
-        let rawString = self.userInfo?[CSSearchableItemActivityIdentifier] as? String
         guard
-            let components = rawString?.components(separatedBy: type(of: self).stringSeparator),
-            let rawValue = components.first,
+            let rawString = self.userInfo?[CSSearchableItemActivityIdentifier] as? String,
+            let (rawValue, uuids) = type(of: self).deuniqueString(fromRawString: rawString),
+            let uuid = uuids.first,
             let kind = RawUserActivity(rawValue: rawValue)
         else {
             assertionFailure()
             return .failure(.restorationFailed)
         }
-        let uuids = components.dropFirst()
         switch kind {
         case .editReminder:
-            guard let uuid = uuids.first else { return .failure(.restorationFailed) }
             return .success(.editReminder(.init(rawValue: uuid)))
         case .editReminderVessel:
-            guard let uuid = uuids.first else { return .failure(.restorationFailed) }
             return .success(.editReminderVessel(.init(rawValue: uuid)))
         case .viewReminder:
-            guard let uuid = uuids.first else { return .failure(.restorationFailed) }
             return .success(.viewReminder(.init(rawValue: uuid)))
         case .performReminders:
-            guard uuids.isEmpty == false else { return .failure(.restorationFailed) }
-            let uuids = uuids.map({ Reminder.Identifier(rawValue: $0) })
-            return .success(.performReminders(uuids))
+            return .success(.performReminder(.init(rawValue: uuid)))
         case .indexedItem:
             assertionFailure("Unimplmented")
             return .failure(.restorationFailed)
@@ -98,7 +100,7 @@ public extension NSUserActivity {
         }
     }
 
-    public func update(uuids: [UUIDRepresentable],
+    public func update(uuid: UUIDRepresentable,
                        title: String,
                        phrase: String,
                        description: String,
@@ -108,7 +110,7 @@ public extension NSUserActivity {
             assertionFailure()
             return
         }
-        let persistentIdentifier = type(of: self).uniqueString(for: kind, and: uuids)
+        let persistentIdentifier = type(of: self).uniqueString(for: kind, and: [uuid])
         self.title = title
         if #available(iOS 12.0, *) {
             self.suggestedInvocationPhrase = phrase

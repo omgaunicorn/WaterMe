@@ -327,8 +327,8 @@ extension ReminderMainViewController: ReminderFinishDropTargetViewControllerDele
     func userDidStartDrag(with values: [ReminderAndVesselValue],
                           within: ReminderFinishDropTargetViewController)
     {
-        self.userActivityDelegate.currentReminderAndVessels = {
-            return values
+        self.userActivityDelegate.currentReminderAndVessel = {
+            return values.first
         }
         // Donate this activity so Siri might recommend it later
         let activity = NSUserActivity(kind: .performReminders,

@@ -617,24 +617,6 @@ extension UserActivityConfigurator {
                 return localizedString
             }
         }
-        static var performMultipleRemindersTitle: String {
-            let localizedString = NSLocalizedString("Mark Reminders as Done",
-                                                    comment: "SiriShortcut: Title: Perform Multiple Reminders: Siri Shortcut that allows user to mark multiple reminders as done at once.")
-            if #available(iOS 12.0, *) {
-                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
-            } else {
-                return localizedString
-            }
-        }
-        static var performMultipleRemindersDescription: String {
-            let localizedString = NSLocalizedString("Mark all of these reminders as done.",
-                                                    comment: "SiriShortcut: Description: Perform Multiple Reminders: Siri Shortcut that allows user to mark multiple reminders as done at once.")
-            if #available(iOS 12.0, *) {
-                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
-            } else {
-                return localizedString
-            }
-        }
         static let siriShortcutsUnavailableTitle: String
             = NSLocalizedString("Siri Shortcuts Unavailable",
                                 comment: "Alert Title: On iOS 11, Siri Shortcuts is not available, but they tapped on a button the tries to use this feature. This alert tells them whats wrong.")
