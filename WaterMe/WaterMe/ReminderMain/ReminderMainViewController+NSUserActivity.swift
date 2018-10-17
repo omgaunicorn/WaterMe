@@ -137,12 +137,9 @@ extension ReminderMainViewController {
                                        completion: NSUserActivityContinuedHandler?)
     {
         self.dismissAnimatedIfNeeded() {
-            UIAlertController.presentAlertVC(for: error, over: self, afterPresenting:
-            {
+            UIAlertController.presentAlertVC(for: error, over: self) { _ in
                 completion?(nil)
-            }, completionHandler: { _ in
-                self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
-            })
+            }
         }
     }
 }

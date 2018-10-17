@@ -67,10 +67,7 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
 
         if let data = self.collectionVC?.data, case .failure(let error) = data {
             self.collectionVC?.data = nil
-            UIAlertController.presentAlertVC(for: error,
-                                             over: self,
-                                             from: nil,
-                                             completionHandler: nil)
+            UIAlertController.presentAlertVC(for: error, over: self)
         }
     }
     

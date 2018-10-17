@@ -92,10 +92,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
 
         if case .failure(let error) = self.vesselResult! {
             self.vesselResult = nil
-            UIAlertController.presentAlertVC(for: error,
-                                             over: self,
-                                             from: nil)
-            { _ in
+            UIAlertController.presentAlertVC(for: error, over: self) { _ in
                 self.completionHandler?(self)
             }
         }

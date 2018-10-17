@@ -52,9 +52,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         switch results {
         case .failure(let error):
             self.haptic.notificationOccurred(.error)
-            UIAlertController.presentAlertVC(for: error, over: self,
-                                             from: nil,
-                                             completionHandler: nil)
+            UIAlertController.presentAlertVC(for: error, over: self)
         case .success:
             self.haptic.notificationOccurred(.success)
             Analytics.log(event: Analytics.CRUD_Op_R.performDrag,
@@ -189,9 +187,6 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
     }
 
     private func present(error: RealmError, with completion: (() -> Void)?) {
-        UIAlertController.presentAlertVC(for: error,
-                                         over: self,
-                                         from: nil,
-                                         completionHandler: nil)
+        UIAlertController.presentAlertVC(for: error, over: self)
     }
 }

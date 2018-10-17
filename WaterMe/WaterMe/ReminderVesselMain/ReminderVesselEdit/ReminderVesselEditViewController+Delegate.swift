@@ -77,10 +77,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         let updateResult = basicRC.update(displayName: newName, in: vessel)
         switch updateResult {
         case .failure(let error):
-            UIAlertController.presentAlertVC(for: error,
-                                             over: self,
-                                             from: nil)
-            { _ in
+            UIAlertController.presentAlertVC(for: error, over: self) { _ in
                 self.completionHandler?(self)
             }
         case .success:
@@ -139,10 +136,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
             vc.dismiss(animated: true) {
                 deselectRowAnimated?(true)
                 guard case .failure(let error) = result else { return }
-                UIAlertController.presentAlertVC(for: error,
-                                                 over: self,
-                                                 from: nil,
-                                                 completionHandler: nil)
+                UIAlertController.presentAlertVC(for: error, over: self)
             }
         }
         self.present(vc, animated: true, completion: nil)
@@ -161,10 +155,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         case .success:
             return true
         case .failure(let error):
-            UIAlertController.presentAlertVC(for: error,
-                                             over: self,
-                                             from: nil,
-                                             completionHandler: nil)
+            UIAlertController.presentAlertVC(for: error, over: self)
             return false
         }
     }
@@ -176,9 +167,6 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         }
         let updateResult = basicRC.update(icon: icon, in: vessel)
         guard case .failure(let error) = updateResult else { return }
-        UIAlertController.presentAlertVC(for: error,
-                                         over: self,
-                                         from: nil,
-                                         completionHandler: nil)
+        UIAlertController.presentAlertVC(for: error, over: self)
     }
 }

@@ -137,18 +137,12 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         
         if let error = self.applicationDidFinishLaunchingError {
             self.applicationDidFinishLaunchingError = nil
-            UIAlertController.presentAlertVC(for: error,
-                                             over: self,
-                                             from: nil)
-            { _ in
+            UIAlertController.presentAlertVC(for: error, over: self) { _ in
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
         } else if let error = self.collectionVC?.reminders?.lastError {
             self.collectionVC?.reminders?.lastError = nil
-            UIAlertController.presentAlertVC(for: error,
-                                             over: self,
-                                             from: nil)
-            { _ in
+            UIAlertController.presentAlertVC(for: error, over: self) { _ in
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
         } else if let migrator = AppDelegate.shared.coreDataMigrator, let basicRC = self.basicRC {
