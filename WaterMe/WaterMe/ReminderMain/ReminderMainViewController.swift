@@ -27,7 +27,9 @@ import UIKit
 
 class ReminderMainViewController: StandardViewController, HasProController, HasBasicController {
     
-    class func newVC(basicRCResult: Result<BasicController, RealmError>, proController: ProController? = nil) -> UINavigationController {
+    class func newVC(basicRCResult: Result<BasicController, RealmError>,
+                     proController: ProController? = nil) -> UINavigationController
+    {
         let sb = UIStoryboard(name: "ReminderMain", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
@@ -88,10 +90,19 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
 
         guard self.viewDidAppearOnce == false else { return }
         self.viewDidAppearOnce = true
+        
         self.secretLongPressGestureRecognizer =
             UIBarButtonItemLongPressGestureRecognizer(barButtonItem: self.plantsBBI,
                                                       target: self,
                                                       action: #selector(self.viewAllPlantsButtonTapped(_:)))
+        //
+        // We need to make sure that our data is loaded before we call this method
+        // If data has not loaded before viewDidAppear is called
+        // There is a separate closure that executes and calls
+        // `checkForErrorsAndOtherUnexpectedViewControllersToPresent`
+        // https://github.com/jeffreybergier/WaterMe2/issues/47
+        //
+        guard self.collectionVC?.reminders?.allSectionsFinishedLoading == true else { return }
         self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
     }
 
@@ -285,6 +296,19 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
 
         if let destVC = segue.destination as? ReminderCollectionViewController {
             self.collectionVC = destVC
+            destVC.allDataReady = { [weak self] _ in
+                //
+                // When all data is ready, we need to make sure the view has appeared
+                // If it has already appeared once, then we need to check to see
+                // If there is anything to show.
+                // It turns out that viewDidAppear often happens before
+                // All of the data loads
+                // I'm surprised this didn't cause an issue up to this point
+                // https://github.com/jeffreybergier/WaterMe2/issues/47
+                //
+                guard self?.viewDidAppearOnce == true else { return }
+                self?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+            }
         } else if let destVC = segue.destination as? ReminderFinishDropTargetViewController {
             destVC.delegate = self
             self.dropTargetViewController = destVC

@@ -50,9 +50,9 @@ class ReminderGedegDataSource: ReminderGedeg {
         */
     }
 
-    override func allDataReady() {
-        super.allDataReady()
+    override func allDataReady(success: Bool) {
         self.collectionView?.reloadData()
+        super.allDataReady(success: success)
     }
 
     override func batchedUpdates(ins: [IndexPath], dels: [IndexPath], mods: [IndexPath]) {

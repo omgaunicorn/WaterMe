@@ -38,7 +38,9 @@ open class ReminderGedeg: NSObject {
     private(set) var reminders: [Reminder.Section : AnyRealmCollection<Reminder>] = [:]
     public var lastError: RealmError?
 
-    var allSectionsFinishedLoading: Bool {
+    open var allDataReadyClosure: ((Bool) -> Void)?
+
+    open var allSectionsFinishedLoading: Bool {
         return self.reminders.count == self.tokens.count
     }
 
@@ -65,17 +67,21 @@ open class ReminderGedeg: NSObject {
         case .initial(let data):
             self.reminders[section] = data
             if self.allSectionsFinishedLoading == true {
-                self.allDataReady()
+                self.allDataReady(success: true)
             }
         case .update(_, deletions: let del, insertions: let ins, modifications: let mod):
             self.updateBatcher.appendUpdateExtendingTimer(Update(section: section, deletions: del, insertions: ins, modifications: mod))
         case .error(let error):
+            self.lastError = .loadError
             BasicController.errorThrown?(error)
             log.error(error)
+            self.allDataReady(success: false)
         }
     }
 
-    open func allDataReady() { }
+    open func allDataReady(success: Bool) {
+        self.allDataReadyClosure?(success)
+    }
 
     open func batchedUpdates(ins: [IndexPath], dels: [IndexPath], mods: [IndexPath]) { }
 

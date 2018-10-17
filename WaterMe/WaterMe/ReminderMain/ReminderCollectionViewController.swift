@@ -43,6 +43,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     
     var proRC: ProController?
     var basicRC: BasicController?
+    var allDataReady: ((Bool) -> Void)?
 
     private(set) var reminders: ReminderGedeg?
     private let significantTimePassedDetector = SignificantTimePassedDetector()
@@ -92,6 +93,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         self.reminders = ReminderGedegDataSource(basicRC: self.basicRC,
                                                  managedCollectionView: self.collectionView,
                                                  collectionViewReplacer: self)
+        self.reminders?.allDataReadyClosure = { [weak self] in self?.allDataReady?($0) }
     }
 
     func programmaticalySelectReminder(with identifier: Reminder.Identifier) -> (IndexPath, ((Bool) -> Void))? {
