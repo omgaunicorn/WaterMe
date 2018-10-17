@@ -647,7 +647,7 @@ extension UserActivityError {
             = NSLocalizedString("There was an error adding this Siri Shortcut. Please try again later.",
                                 comment: "Alert Message: Error Ocurred when Creating a new Siri Shortcut.")
         static let siriShortcutContinuationErrorAlertMessage: String
-            = NSLocalizedString("There was an error executing this Siri Shortcut. If you see this error repeatedly, it may help to delete and re-create this shortcut.",
+            = NSLocalizedString("There was an error executing this Siri Shortcut. If you see this error repeatedly, it may help to delete and recreate it.",
                                 comment: "Alert Message: Error ocurred when executing an existing Shortcut.")
     }
 }
