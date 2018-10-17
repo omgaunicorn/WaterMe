@@ -38,6 +38,7 @@ extension UIAlertController {
             let action = UIAlertAction(title: recoveryOption.title,
                                        style: recoveryOption.actionStyle)
             { _ in
+                recoveryOption.automaticExecution?()
                 completion?(recoveryOption)
             }
             return action
