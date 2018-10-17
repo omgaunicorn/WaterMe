@@ -181,7 +181,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      willContinueUserActivityWithType userActivityType: String) -> Bool
     {
         guard RawUserActivity(rawValue: userActivityType) != nil else {
-            assertionFailure()
             return false
         }
         return true
@@ -191,10 +190,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      continue userActivity: NSUserActivity,
                      restorationHandler: @escaping NSUserActivityContinuedHandler) -> Bool
     {
-        let result = userActivity.restoredUserActivityResult
-        self.rootVC?.userActivityResultToContinue += [result.map({ ($0, restorationHandler) })]
-        let userActivityContinuationInProgress = self.rootVC?.userActivityContinuationInProgress ?? false
-        guard userActivityContinuationInProgress == false else { return true }
+        let result: UserActivityResult
+            = userActivity.restoredUserActivityResult
+                .bimap(success: { UserActivityToContinue(activity: $0, completion: restorationHandler) },
+                       failure: { UserActivityToFail(error: $0, completion: restorationHandler) })
+        self.rootVC?.userActivityResultToContinue += [result]
+        let isReady = self.rootVC?.isReady ?? false
+        guard isReady else { return true }
         self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         return true
     }
@@ -207,7 +209,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard error.code != NSUserCancelledError else {
             return
         }
-        self.rootVC?.userActivityResultToContinue += [.failure(.continuationFailed)]
+        let result: UserActivityResult
+            = .failure(UserActivityToFail(error: .continuationFailed, completion: nil))
+        self.rootVC?.userActivityResultToContinue += [result]
+        let isReady = self.rootVC?.isReady ?? false
+        guard isReady else { return }
         self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
     }
     
@@ -222,7 +228,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     {
         let _savedBuild = coder.decodeObject(forKey: UIApplicationStateRestorationBundleVersionKey) as? String
         let _currentBuild = Bundle(for: type(of: self)).infoDictionary?[kCFBundleVersionKey as String] as? String
-        guard let savedBuild = _savedBuild, let currentBuild = _currentBuild, currentBuild == savedBuild else { return false }
+        guard
+            let savedBuild = _savedBuild,
+            let currentBuild = _currentBuild,
+            currentBuild == savedBuild
+        else { return false }
         return true
     }
 }

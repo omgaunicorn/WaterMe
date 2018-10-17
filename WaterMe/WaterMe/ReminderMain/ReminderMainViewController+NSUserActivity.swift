@@ -30,14 +30,14 @@ extension ReminderMainViewController {
         self.userActivityContinuationInProgress = true
         self.userActivityResultToContinue.removeFirst()
         switch result {
-        case .success(let activity, let completion):
+        case .success(let v):
             let completion: NSUserActivityContinuedHandler = { [weak self] urls in
                 self?.userActivityContinuationInProgress = false
                 self?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
-                completion(urls)
+                v.completion(urls)
             }
             let failure: UserActivityError?
-            switch activity {
+            switch v.activity {
             case .editReminder(let identifier):
                 failure = self.continueActivityEditReminder(with: identifier,
                                                             completion: completion)
@@ -52,10 +52,16 @@ extension ReminderMainViewController {
                                                                 completion: completion)
             }
             guard let _failure = failure else { return }
-            self.userActivityResultToContinue += [.failure(_failure)]
+            let result = UserActivityToFail(error: _failure, completion: v.completion)
+            self.userActivityResultToContinue += [.failure(result)]
             self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
-        case .failure(let error):
-            self.continueActivityError(error)
+        case .failure(let e):
+            let completion: NSUserActivityContinuedHandler = { [weak self] urls in
+                self?.userActivityContinuationInProgress = false
+                self?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+                e.completion?(urls)
+            }
+            self.continueActivityError(e.error, completion: completion)
         }
     }
 
@@ -127,14 +133,16 @@ extension ReminderMainViewController {
         return nil
     }
 
-    private func continueActivityError(_ error: UserActivityError) {
+    private func continueActivityError(_ error: UserActivityError,
+                                       completion: NSUserActivityContinuedHandler?)
+    {
         self.dismissAnimatedIfNeeded() {
-            UIAlertController.presentAlertVC(for: error,
-                                             over: self,
-                                             from: nil)
-            { _ in
+            UIAlertController.presentAlertVC(for: error, over: self, afterPresenting:
+            {
+                completion?(nil)
+            }, completionHandler: { _ in
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
-            }
+            })
         }
     }
 }

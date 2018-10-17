@@ -30,8 +30,9 @@ extension UIAlertController {
     
     class func presentAlertVC(for error: UserFacingError,
                               over presentingVC: UIViewController,
-                              from barButtonItem: UIBarButtonItem?,
-                              completionHandler completion: UserSelection?)
+                              from barButtonItem: UIBarButtonItem? = nil,
+                              afterPresenting: (() -> Void)? = nil,
+                              completionHandler completion: UserSelection? = nil)
     {
         let recoveryActions = error.recoveryActions.map()
         { recoveryOption -> UIAlertAction in
@@ -54,7 +55,7 @@ extension UIAlertController {
                                 preferredStyle: .alert)
         }
         recoveryActions.forEach(actionSheet.addAction)
-        presentingVC.present(actionSheet, animated: true, completion: nil)
+        presentingVC.present(actionSheet, animated: true, completion: afterPresenting)
     }
 }
 

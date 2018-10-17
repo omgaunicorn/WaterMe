@@ -29,6 +29,18 @@ import MobileCoreServices
 
 typealias NSUserActivityContinuedHandler = ([Any]?) -> Void
 
+typealias UserActivityResult = Result<UserActivityToContinue, UserActivityToFail>
+
+struct UserActivityToContinue {
+    var activity: RestoredUserActivity
+    var completion: NSUserActivityContinuedHandler
+}
+
+struct UserActivityToFail: Error {
+    var error: UserActivityError
+    var completion: NSUserActivityContinuedHandler?
+}
+
 public enum RestoredUserActivity {
     case editReminder(Reminder.Identifier)
     case editReminderVessel(ReminderVessel.Identifier)
@@ -72,7 +84,6 @@ public extension NSUserActivity {
             let uuid = uuids.first,
             let kind = RawUserActivity(rawValue: rawValue)
         else {
-            assertionFailure()
             return .failure(.restorationFailed)
         }
         switch kind {

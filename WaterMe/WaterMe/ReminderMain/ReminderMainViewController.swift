@@ -47,8 +47,14 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     private(set) weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     private var appUpdateAvailableVC: UIViewController?
     private var applicationDidFinishLaunchingError: RealmError?
-    var userActivityResultToContinue: [Result<(RestoredUserActivity, NSUserActivityContinuedHandler), UserActivityError>] = []
+    var userActivityResultToContinue: [UserActivityResult] = []
     var userActivityContinuationInProgress = false
+
+    var isReady: Bool {
+        return self.userActivityContinuationInProgress == false
+            && self.collectionVC?.reminders?.allSectionsFinishedLoading == true
+            && self.viewDidAppearOnce == true
+    }
 
     private(set) lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedAddReminderVesselBBIButtonWithTarget: self,
                                                                        action: #selector(self.addPlantButtonTapped(_:)))
@@ -102,7 +108,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         // `checkForErrorsAndOtherUnexpectedViewControllersToPresent`
         // https://github.com/jeffreybergier/WaterMe2/issues/47
         //
-        guard self.collectionVC?.reminders?.allSectionsFinishedLoading == true else { return }
+        guard self.isReady == true else { return }
         self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
     }
 
@@ -306,7 +312,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
                 // I'm surprised this didn't cause an issue up to this point
                 // https://github.com/jeffreybergier/WaterMe2/issues/47
                 //
-                guard self?.viewDidAppearOnce == true else { return }
+                guard self?.isReady == true else { return }
                 self?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
         } else if let destVC = segue.destination as? ReminderFinishDropTargetViewController {
