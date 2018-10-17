@@ -48,13 +48,8 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     private var appUpdateAvailableVC: UIViewController?
     private var applicationDidFinishLaunchingError: RealmError?
     var userActivityResultToContinue: [UserActivityResult] = []
-    var userActivityContinuationInProgress = false
 
-    var isReady: Bool {
-        return self.userActivityContinuationInProgress == false
-            && self.collectionVC?.reminders?.allSectionsFinishedLoading == true
-            && self.viewDidAppearOnce == true
-    }
+    var isReady: ReadyState = []
 
     private(set) lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedAddReminderVesselBBIButtonWithTarget: self,
                                                                        action: #selector(self.addPlantButtonTapped(_:)))
@@ -87,15 +82,13 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         self.registerForPurchaseNotifications()
     }
 
-    private var viewDidAppearOnce = false
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         Analytics.log(viewOperation: .reminderList)
 
-        guard self.viewDidAppearOnce == false else { return }
-        self.viewDidAppearOnce = true
+        guard self.isReady.contains([.viewDidAppearOnce]) == false else { return }
+        self.isReady.insert(.viewDidAppearOnce)
         
         self.secretLongPressGestureRecognizer =
             UIBarButtonItemLongPressGestureRecognizer(barButtonItem: self.plantsBBI,
@@ -108,7 +101,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         // `checkForErrorsAndOtherUnexpectedViewControllersToPresent`
         // https://github.com/jeffreybergier/WaterMe2/issues/47
         //
-        guard self.isReady == true else { return }
+        guard self.isReady.completely else { return }
         self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
     }
 
@@ -121,7 +114,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     private func checkForUpdates() {
         UIAlertController.newAppVersionCheckAlert({ controller in
             self.appUpdateAvailableVC = controller
-            guard controller != nil, self.viewDidAppearOnce else { return }
+            guard controller != nil, self.isReady.completely else { return }
             self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         }, { selection in
             switch selection {
@@ -312,7 +305,8 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
                 // I'm surprised this didn't cause an issue up to this point
                 // https://github.com/jeffreybergier/WaterMe2/issues/47
                 //
-                guard self?.isReady == true else { return }
+                self?.isReady.insert(.allDataLoaded)
+                guard self?.isReady.completely == true else { return }
                 self?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
         } else if let destVC = segue.destination as? ReminderFinishDropTargetViewController {
@@ -365,6 +359,20 @@ extension Reminder {
         } else {
             let format = ReminderMainViewController.LocalizedString.reminderAlertMessage1Arg
             return String.localizedStringWithFormat(format, dateString)
+        }
+    }
+}
+
+extension ReminderMainViewController {
+    struct ReadyState: OptionSet {
+        let rawValue: Int
+        static let viewDidAppearOnce = ReadyState(rawValue: 1)
+        static let allDataLoaded = ReadyState(rawValue: 2)
+        static let userActivityInProgress = ReadyState(rawValue: 4)
+
+        var completely: Bool {
+            return self.contains([.viewDidAppearOnce, .allDataLoaded])
+                && !self.contains([.userActivityInProgress])
         }
     }
 }

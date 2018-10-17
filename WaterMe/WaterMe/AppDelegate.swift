@@ -195,8 +195,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 .bimap(success: { UserActivityToContinue(activity: $0, completion: restorationHandler) },
                        failure: { UserActivityToFail(error: $0, completion: restorationHandler) })
         self.rootVC?.userActivityResultToContinue += [result]
-        let isReady = self.rootVC?.isReady ?? false
-        guard isReady else { return true }
+        let isReady = self.rootVC?.isReady ?? []
+        guard isReady.completely else { return true }
         self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         return true
     }
@@ -212,8 +212,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let result: UserActivityResult
             = .failure(UserActivityToFail(error: .continuationFailed, completion: nil))
         self.rootVC?.userActivityResultToContinue += [result]
-        let isReady = self.rootVC?.isReady ?? false
-        guard isReady else { return }
+        let isReady = self.rootVC?.isReady ?? []
+        guard isReady.completely else { return }
         self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
     }
     

@@ -27,12 +27,12 @@ extension ReminderMainViewController {
     
     func continueUserActivityResultIfNeeded() {
         guard let result = self.userActivityResultToContinue.first else { return }
-        self.userActivityContinuationInProgress = true
+        self.isReady.insert(.userActivityInProgress)
         self.userActivityResultToContinue.removeFirst()
         switch result {
         case .success(let v):
             let completion: NSUserActivityContinuedHandler = { [weak self] urls in
-                self?.userActivityContinuationInProgress = false
+                self?.isReady.remove(.userActivityInProgress)
                 self?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
                 v.completion(urls)
             }
@@ -57,7 +57,7 @@ extension ReminderMainViewController {
             self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         case .failure(let e):
             let completion: NSUserActivityContinuedHandler = { [weak self] urls in
-                self?.userActivityContinuationInProgress = false
+                self?.isReady.remove(.userActivityInProgress)
                 self?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
                 e.completion?(urls)
             }
