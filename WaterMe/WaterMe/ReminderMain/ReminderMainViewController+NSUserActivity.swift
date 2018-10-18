@@ -120,9 +120,11 @@ extension ReminderMainViewController {
     {
         guard
             let collectionVC = self.collectionVC,
-            let deselect = collectionVC.programmaticalySelectReminder(with: identifier),
-            let cellView = collectionVC.collectionView?.cellForItem(at: deselect.0)
-        else { return .reminderNotFound }
+            let deselect = collectionVC.programmaticalySelectReminder(with: identifier)
+        else {
+            return .reminderNotFound
+        }
+        let cellView = collectionVC.collectionView?.cellForItem(at: deselect.0) ?? self.view!
         self.dismissAnimatedIfNeeded() {
             self.userDidSelect(reminderID: identifier,
                                from: cellView,
