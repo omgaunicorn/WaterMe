@@ -55,7 +55,7 @@ extension UserActivityConfigurator: NSUserActivityDelegate {
                 self.updateEditReminder(activity: activity, value: reminder)
             case .viewReminder:
                 self.updateViewReminder(activity: activity, value: reminder)
-            case .performReminders:
+            case .performReminder:
                 self.updatePerformReminder(activity: activity,
                                            value: reminder)
             case .indexedItem:
@@ -129,7 +129,7 @@ private extension UserActivityConfigurator {
     private func updatePerformReminder(activity: NSUserActivity,
                                        value: ReminderAndVesselValue?)
     {
-        assert(activity.activityType == RawUserActivity.performReminders.rawValue)
+        assert(activity.activityType == RawUserActivity.performReminder.rawValue)
         guard let value = value else {
             log.error("Unable to save Activity: Missing Reminder")
             activity.waterme_isEligibleForNeededServices = false

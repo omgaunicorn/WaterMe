@@ -112,6 +112,7 @@
 		50BB816A1EF7731E0030F5BA /* ReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */; };
 		50BDC03F1F9A3E21002281C3 /* BlurryBackgroundBottomLineCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BDC03D1F9A3E21002281C3 /* BlurryBackgroundBottomLineCollectionReusableView.swift */; };
 		50C1AA971ED006B300E3BF0A /* AdminRealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C1AA961ED006B300E3BF0A /* AdminRealmController.swift */; };
+		50C28D9921811BD900101D0A /* RestoredAndRawUserActivities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C28D9821811BD900101D0A /* RestoredAndRawUserActivities.swift */; };
 		50C30E541EFF490D006003A1 /* ReminderIntervalPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */; };
 		50C30E561EFF9349006003A1 /* ReminderIntervalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C30E551EFF9349006003A1 /* ReminderIntervalTableViewCell.swift */; };
 		50C96A321EC2BB03002802C1 /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C96A311EC2BB03002802C1 /* Either.swift */; };
@@ -276,6 +277,7 @@
 		50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTableViewCell.swift; sourceTree = "<group>"; };
 		50BDC03D1F9A3E21002281C3 /* BlurryBackgroundBottomLineCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurryBackgroundBottomLineCollectionReusableView.swift; sourceTree = "<group>"; };
 		50C1AA961ED006B300E3BF0A /* AdminRealmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminRealmController.swift; sourceTree = "<group>"; };
+		50C28D9821811BD900101D0A /* RestoredAndRawUserActivities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RestoredAndRawUserActivities.swift; path = WaterMe/Miscellaneous/RestoredAndRawUserActivities.swift; sourceTree = SOURCE_ROOT; };
 		50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderIntervalPickerViewController.swift; sourceTree = "<group>"; };
 		50C30E551EFF9349006003A1 /* ReminderIntervalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderIntervalTableViewCell.swift; sourceTree = "<group>"; };
 		50C96A311EC2BB03002802C1 /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
@@ -518,6 +520,7 @@
 		50B779CA2154138D00AC6240 /* Miscellaneous */ = {
 			isa = PBXGroup;
 			children = (
+				50C28D9821811BD900101D0A /* RestoredAndRawUserActivities.swift */,
 				50CA47EF21699FED0063F51E /* UserActivityConfigurator.swift */,
 				509A0864215FFEDF00389339 /* SimpleLabelTableViewCell.swift */,
 				509A0866215FFEF700389339 /* SiriShortcutTableViewCell.swift */,
@@ -1069,6 +1072,7 @@
 				50B779D7215473F100AC6240 /* NSBundle+WaterMe.swift in Sources */,
 				50CB5AFA2001BAA900868F30 /* ReminderNotificationAlert.swift in Sources */,
 				50C30E541EFF490D006003A1 /* ReminderIntervalPickerViewController.swift in Sources */,
+				50C28D9921811BD900101D0A /* RestoredAndRawUserActivities.swift in Sources */,
 				50BDC03F1F9A3E21002281C3 /* BlurryBackgroundBottomLineCollectionReusableView.swift in Sources */,
 				50C30E561EFF9349006003A1 /* ReminderIntervalTableViewCell.swift in Sources */,
 				508E615A1F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift in Sources */,

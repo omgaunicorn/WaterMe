@@ -44,7 +44,7 @@ class ShortcutSuggester: ShortcutSuggesterProtocol {
                                             and: [reminder.uuid]),
                 NSUserActivity.uniqueString(for: .viewReminder,
                                             and: [reminder.uuid]),
-                NSUserActivity.uniqueString(for: .performReminders,
+                NSUserActivity.uniqueString(for: .performReminder,
                                             and: [reminder.uuid])
             ]
         }
@@ -112,7 +112,7 @@ class ShortcutSuggester: ShortcutSuggesterProtocol {
                               delegate: self.delegates[$0])
         }
         let performReminderShortcuts = values.compactMap() {
-            return INShortcut(kind: .performReminders,
+            return INShortcut(kind: .performReminder,
                               value: $0,
                               delegate: self.delegates[$0])
         }

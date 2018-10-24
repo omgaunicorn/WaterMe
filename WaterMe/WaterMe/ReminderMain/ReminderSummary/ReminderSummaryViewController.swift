@@ -183,7 +183,7 @@ extension ReminderSummaryViewController: ReminderSummaryTableViewControllerDeleg
     }
 
     private func configurePerformRemindersActivity() {
-        let activity = NSUserActivity(kind: .performReminders,
+        let activity = NSUserActivity(kind: .performReminder,
                                       delegate: self.userActivityDelegate)
         self.userActivity = activity
         activity.needsSave = true

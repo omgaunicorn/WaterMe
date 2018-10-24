@@ -41,22 +41,6 @@ struct UserActivityToFail: Error {
     var completion: NSUserActivityContinuedHandler?
 }
 
-public enum RestoredUserActivity {
-    case editReminder(Reminder.Identifier)
-    case editReminderVessel(ReminderVessel.Identifier)
-    case viewReminder(Reminder.Identifier)
-    case performReminder(Reminder.Identifier)
-}
-
-public enum RawUserActivity: String {
-    case editReminder = "com.saturdayapps.waterme.activity.edit.reminder"
-    case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
-    case viewReminder = "com.saturdayapps.waterme.activity.view.reminder"
-    case performReminders = "com.saturdayapps.waterme.activity.perform.reminder"
-    // FIXME: Use the typealias instead of the raw string
-    case indexedItem = "com.apple.corespotlightitem" //CSSearchableItemActionType
-}
-
 public extension NSUserActivity {
 
     fileprivate static let stringSeparator = "::"
@@ -94,7 +78,7 @@ public extension NSUserActivity {
             return .success(.editReminderVessel(.init(rawValue: uuid)))
         case .viewReminder:
             return .success(.viewReminder(.init(rawValue: uuid)))
-        case .performReminders:
+        case .performReminder:
             return .success(.performReminder(.init(rawValue: uuid)))
         case .indexedItem:
             assertionFailure("Unimplmented")
