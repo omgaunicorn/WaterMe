@@ -53,6 +53,7 @@ public enum RawUserActivity: String {
     case editReminderVessel = "com.saturdayapps.waterme.activity.edit.remindervessel"
     case viewReminder = "com.saturdayapps.waterme.activity.view.reminder"
     case performReminders = "com.saturdayapps.waterme.activity.perform.reminder"
+    // FIXME: Use the typealias instead of the raw string
     case indexedItem = "com.apple.corespotlightitem" //CSSearchableItemActionType
 }
 
@@ -101,14 +102,30 @@ public extension NSUserActivity {
         }
     }
 
+    public var waterme_isEligibleForNeededServices: Bool {
+        get {
+            if #available(iOS 12.0, *) {
+                return self.isEligibleForSearch
+                    && self.isEligibleForHandoff
+                    && self.isEligibleForPrediction
+            } else {
+                return self.isEligibleForSearch
+                    && self.isEligibleForHandoff
+            }
+        }
+        set {
+            self.isEligibleForSearch = newValue
+            self.isEligibleForHandoff = newValue
+            if #available(iOS 12.0, *) {
+                self.isEligibleForPrediction = newValue
+            }
+        }
+    }
+
     public convenience init(kind: RawUserActivity, delegate: NSUserActivityDelegate) {
         self.init(activityType: kind.rawValue)
         self.delegate = delegate
-        self.isEligibleForHandoff = true
-        self.isEligibleForSearch = true
-        if #available(iOS 12.0, *) {
-            self.isEligibleForPrediction = true
-        }
+        self.waterme_isEligibleForNeededServices = true
     }
 
     public func update(uuid: UUIDRepresentable,
