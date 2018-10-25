@@ -125,7 +125,7 @@ class ReminderSummaryTableViewController: StandardTableViewController {
             (cell as? ReminderVesselIconTableViewCell)?.configure(with: self.delegate?.reminderResult.value?.vessel?.icon)
             return cell
         case .unimportantInfo:
-            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDUnimportantInfoCell, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDInfoCell, for: indexPath)
             (cell as? InfoTableViewCell)?.configureUnimportant(with: self.delegate?.reminderResult?.value)
             return cell
         case .note:
@@ -133,7 +133,7 @@ class ReminderSummaryTableViewController: StandardTableViewController {
             (cell as? InfoTableViewCell)?.configure(withNoteString: self.delegate?.reminderResult.value?.note)
             return cell
         case .importantInfo:
-            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDImportantInfoCell, for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTableViewCell.reuseIDInfoCell, for: indexPath)
             (cell as? InfoTableViewCell)?.configureImportant(with: self.delegate?.reminderResult?.value)
             return cell
         case .actions(let row):
@@ -185,8 +185,7 @@ extension ReminderSummaryTableViewController {
         static func numberOfRows(inSection section: Int, withNote: Bool) -> Int {
             let value = Sections(IndexPath(row: 0, section: section), withNote: withNote)
             switch value {
-            case .imageEmoji, .note, .cancel, .unimportantInfo, .importantInfo
-                :
+            case .imageEmoji, .note, .cancel, .unimportantInfo, .importantInfo:
                 return 1
             case .actions(let rows):
                 return type(of: rows).allCases.count

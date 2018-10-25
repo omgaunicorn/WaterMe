@@ -239,13 +239,17 @@ extension ReminderVesselMainViewController {
 extension ReminderSummaryViewController {
     enum LocalizedString {
         static let subheadPlantName =
-            NSLocalizedString("Plant", comment: "")
+            NSLocalizedString("Plant",
+                              comment: "View Reminder: Section Header: Shows the plant name.")
         static let subheadReminderKind =
-            NSLocalizedString("Reminder", comment: "")
+            NSLocalizedString("Reminder",
+                              comment: "View Reminder: Section Header: Shows the kind of reminder.")
         static let subheadNextPerformDate =
-            NSLocalizedString("Due Next", comment: "")
-        static let subheadLastPerformDate =
-            NSLocalizedString("Last Performed", comment: "")
+            NSLocalizedString("Due Next",
+                              comment: "View Reminder: Section Header: Shows the next perform date")
+        static let subheadMoveTo =
+            NSLocalizedString("Location",
+                              comment: "View Reminder: Section Header: Shows where the user has selected to move their plant.")
     }
 }
 

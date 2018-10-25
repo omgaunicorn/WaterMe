@@ -118,29 +118,34 @@ class ButtonTableViewCell: RoundedBackgroundViewTableViewCell {
 
 class InfoTableViewCell: RoundedBackgroundViewTableViewCell {
 
-    static let reuseIDUnimportantInfoCell = "UnimportantInfoCell"
-    static let reuseIDImportantInfoCell = "ImportantInfoCell"
+    static let reuseIDInfoCell = "InfoCell"
     static let reuseIDNoteCell = "NoteCell"
 
     private(set) lazy var dueDateFormatter = Formatter.newDueDateFormatter
     private(set) lazy var timeAgoDateFormatter = Formatter.newTimeAgoFormatter
     private(set) lazy var intervalFormatter = DateComponentsFormatter.newReminderIntervalFormatter
 
+    @IBOutlet private(set) weak var stackView0: UIStackView?
     @IBOutlet private(set) weak var label0: UILabel?
     @IBOutlet private(set) weak var sublabel0: UILabel?
 
+    @IBOutlet private(set) weak var stackView1: UIStackView?
     @IBOutlet private(set) weak var label1: UILabel?
     @IBOutlet private(set) weak var sublabel1: UILabel?
 
+    @IBOutlet private(set) weak var stackView2: UIStackView?
     @IBOutlet private(set) weak var label2: UILabel?
     @IBOutlet private(set) weak var sublabel2: UILabel?
 
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.stackView0?.isHidden = false
         self.label0?.text = nil
         self.sublabel0?.text = nil
+        self.stackView1?.isHidden = false
         self.label1?.text = nil
         self.sublabel1?.text = nil
+        self.stackView2?.isHidden = false
         self.label2?.text = nil
         self.sublabel2?.text = nil
     }
