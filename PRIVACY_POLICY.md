@@ -12,7 +12,7 @@ WaterMe never collects any personally identifiable information. Information that
 
 WaterMe uses the Apple provided analytics and crash reporting services. These services are provided by Apple, are opt-in by the user, and contain no personally identifiable information. If you would like to opt-out of this serivce see this page: https://support.apple.com/en-us/HT202100
 
-WaterMe uses the Realm persistence library to store data locally on the device. WaterMe does not use the Realm Cloud Platform. Information entered into WaterMe never leaves the device. Information entered into WaterMe is protected by the lock screen on your iOS device. The data can be accessed if the lock screen password is known. Do not enter sensitive data for storage within WaterMe.
+WaterMe uses the Realm persistence library to store data locally on the device. WaterMe does not use the Realm Cloud Platform. Information entered into WaterMe never leaves the device. Information entered into WaterMe is protected by the lock screen on your iOS device. The data can be accessed if the lock screen password is known. Do not enter sensitive or personally identifiable information data for storage within WaterMe.
 
 Realm collects a very small amount non-personally-identifiable analytics data. More information about what they collect can be seen here: https://github.com/realm/realm-cocoa/blob/master/Realm/RLMAnalytics.mm#L27-L53
 
@@ -26,7 +26,7 @@ I value your personal information and privacy. That is why I have built WaterMe 
 
 **Children’s Privacy**
 
-WaterMe is not intended to be used by children under the age of 13. Do not under any circumstances enter information about children or any people into WaterMe. WaterMe is intedned to store information about your plants and your garden. WaterMe is not intended to be used to store information about people.
+WaterMe is not intended to be used by children under the age of 13. Do not under any circumstances enter information about children or any people into WaterMe. WaterMe is intended to store information about your plants and your garden. WaterMe is not intended to be used to store information about people.
 
 **Changes to This Privacy Policy**
 
