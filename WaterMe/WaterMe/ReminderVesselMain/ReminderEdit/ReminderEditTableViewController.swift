@@ -25,59 +25,98 @@ import Result
 import WaterMeData
 import UIKit
 
-class ReminderEditTableViewController: UITableViewController {
-    
-    var reminder: (() -> Result<Reminder, RealmError>?)?
-    var kindChanged: ((Reminder.Kind, Bool) -> Void)?
-    var intervalChosen: ((@escaping () -> Void) -> Void)?
-    var noteChanged: ((String) -> Void)?
+protocol ReminderEditTableViewControllerDelegate: class {
+    var reminderResult: Result<Reminder, RealmError>? { get }
+    func userChangedKind(to newKind: Reminder.Kind,
+                         byUsingKeyboard usingKeyboard: Bool,
+                         within: ReminderEditTableViewController)
+    func userDidSelectChangeInterval(_ deselectHandler: @escaping () -> Void,
+                                     within: ReminderEditTableViewController)
+    func userChangedNote(toNewNote newNote: String,
+                         within: ReminderEditTableViewController)
+
+    func userDidSelect(siriShortcut: ReminderEditTableViewController.SiriShortcut,
+                       deselectRowAnimated: ((Bool) -> Void)?,
+                       within: ReminderEditTableViewController)
+}
+
+class ReminderEditTableViewController: StandardTableViewController {
+
+    weak var delegate: ReminderEditTableViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.clearsSelectionOnViewWillAppear = false
-        self.tableView.register(TextViewTableViewCell.nib, forCellReuseIdentifier: TextViewTableViewCell.reuseID)
-        self.tableView.register(TextFieldTableViewCell.nib, forCellReuseIdentifier: TextFieldTableViewCell.reuseID)
-        self.tableView.register(ReminderKindTableViewCell.self, forCellReuseIdentifier: ReminderKindTableViewCell.reuseID)
-        self.tableView.register(ReminderIntervalTableViewCell.self, forCellReuseIdentifier: ReminderIntervalTableViewCell.reuseID)
-        self.tableView.register(LastPerformedTableViewCell.self, forCellReuseIdentifier: LastPerformedTableViewCell.reuseID)
+        self.tableView.register(TextViewTableViewCell.nib,
+                                forCellReuseIdentifier: TextViewTableViewCell.reuseID)
+        self.tableView.register(TextFieldTableViewCell.nib,
+                                forCellReuseIdentifier: TextFieldTableViewCell.reuseID)
+        self.tableView.register(ReminderKindTableViewCell.self,
+                                forCellReuseIdentifier: ReminderKindTableViewCell.reuseID)
+        self.tableView.register(ReminderIntervalTableViewCell.self,
+                                forCellReuseIdentifier: ReminderIntervalTableViewCell.reuseID)
+        self.tableView.register(SiriShortcutTableViewCell.self,
+                                forCellReuseIdentifier: SiriShortcutTableViewCell.reuseID)
+        self.tableView.register(LastPerformedTableViewCell.self,
+                                forCellReuseIdentifier: LastPerformedTableViewCell.reuseID)
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 40
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return; }
+        guard let reminder = self.delegate?.reminderResult?.value else {
+            assertionFailure("Missing Reminder Object")
+            return
+        }
         let section = Section(section: indexPath.section, for: reminder.kind)
         switch section {
         case .kind:
             self.tableView.deselectRow(at: indexPath, animated: true)
-            // let the deslection happen before changing the tableview
+            // let the deselection happen before changing the tableview
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                 let new = Reminder.Kind(row: indexPath.row)
-                self.kindChanged?(new, false)
+                self.delegate?.userChangedKind(to: new,
+                                               byUsingKeyboard: false,
+                                               within: self)
             }
         case .interval:
-            self.intervalChosen?() {
+            self.delegate?.userDidSelectChangeInterval({
                 tableView.deselectRow(at: indexPath, animated: true)
+            }, within: self)
+        case .siriShortcuts:
+            guard let shortcut = SiriShortcut(rawValue: indexPath.row) else { return }
+            let closure = { (anim: Bool) -> Void in
+                tableView.deselectRow(at: indexPath, animated: anim)
             }
-        default:
-            break // ignore
+            self.delegate?.userDidSelect(siriShortcut: shortcut,
+                                         deselectRowAnimated: closure,
+                                         within: self)
+        case .details, .notes, .performed:
+            assertionFailure("User was allowed to select unselectable row")
         }
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        guard let reminder = self.reminder?()?.value else { return 0 }
+        guard let reminder = self.delegate?.reminderResult?.value else { return 0 }
         return Section.count(for: reminder.kind)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return 0; }
+        guard let reminder = self.delegate?.reminderResult?.value else {
+            assertionFailure("Missing Reminder Object")
+            return 0
+        }
         let section = Section(section: section, for: reminder.kind)
         return section.numberOfRows(for: reminder.kind)
     }
-    
+
+    //swiftlint:disable:next function_body_length
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return UITableViewCell(); }
+        guard let reminder = self.delegate?.reminderResult?.value else {
+            assertionFailure("Missing Reminder Object")
+            return UITableViewCell()
+        }
         let section = Section(section: indexPath.section, for: reminder.kind)
         switch section {
         case .kind:
@@ -107,9 +146,18 @@ class ReminderEditTableViewController: UITableViewController {
             let cell = _cell as? TextViewTableViewCell
             cell?.configure(with: reminder.note)
             cell?.textChanged = { [unowned self] newText in
-                self.noteChanged?(newText)
+                self.delegate?.userChangedNote(toNewNote: newText, within: self)
             }
             return _cell
+        case .siriShortcuts:
+            let id = SiriShortcutTableViewCell.reuseID
+            let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
+            guard
+                let cell = _cell as? SiriShortcutTableViewCell,
+                let row = SiriShortcut(rawValue: indexPath.row)
+            else { return _cell }
+            cell.configure(withLocalizedTitle: row.localizedTitle)
+            return cell
         case .performed:
             let id = LastPerformedTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
@@ -119,8 +167,11 @@ class ReminderEditTableViewController: UITableViewController {
         }
     }
     
-    func nameTextFieldBecomeFirstResponder() {
-        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return; }
+    func forceTextFieldToBecomeFirstResponder() {
+        guard let reminder = self.delegate?.reminderResult?.value else {
+            assertionFailure("Missing Reminder Object")
+            return
+        }
         let reminderKind = reminder.kind
         switch reminderKind {
         case .other, .move:
@@ -143,7 +194,9 @@ class ReminderEditTableViewController: UITableViewController {
     private func updated(text newText: String, for oldKind: Reminder.Kind) {
         let newKind: Reminder.Kind
         defer {
-            self.kindChanged?(newKind, true)
+            self.delegate?.userChangedKind(to: newKind,
+                                           byUsingKeyboard: true,
+                                           within: self)
         }
         switch oldKind {
         case .move:
@@ -156,19 +209,37 @@ class ReminderEditTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        guard let reminder = self.reminder?()?.value else { assertionFailure("Missing Reminder Object"); return nil; }
+        guard let reminder = self.delegate?.reminderResult?.value else {
+            assertionFailure("Missing Reminder Object")
+            return nil
+        }
         let section = Section(section: section, for: reminder.kind)
         return section.localizedString
     }
-    
+}
+
+extension ReminderEditTableViewController {
+    enum SiriShortcut: Int, CaseIterable {
+        case editReminder, viewReminder, performReminder
+        var localizedTitle: String {
+            switch self {
+            case .editReminder:
+                return UIApplication.LocalizedString.editReminder
+            case .viewReminder:
+                return ReminderEditViewController.LocalizedString.viewReminderShortcutLabelText
+            case .performReminder:
+                return ReminderMainViewController.LocalizedString.buttonTitleReminderPerform
+            }
+        }
+    }
     private enum Section {
-        case kind, details, interval, notes, performed
+        case kind, details, interval, notes, siriShortcuts, performed
         static func count(for kind: Reminder.Kind) -> Int {
             switch kind {
             case .fertilize, .water, .trim, .mist:
-                return 4
-            case .other, .move:
                 return 5
+            case .other, .move:
+                return 6
             }
         }
         // swiftlint:disable:next cyclomatic_complexity
@@ -183,6 +254,8 @@ class ReminderEditTableViewController: UITableViewController {
                 case 2:
                     self = .notes
                 case 3:
+                    self = .siriShortcuts
+                case 4:
                     self = .performed
                 default:
                     fatalError("Invalid Section")
@@ -198,6 +271,8 @@ class ReminderEditTableViewController: UITableViewController {
                 case 3:
                     self = .notes
                 case 4:
+                    self = .siriShortcuts
+                case 5:
                     self = .performed
                 default:
                     fatalError("Invalid Section")
@@ -214,6 +289,8 @@ class ReminderEditTableViewController: UITableViewController {
                 return ReminderEditViewController.LocalizedString.sectionTitleInterval
             case .notes:
                 return ReminderEditViewController.LocalizedString.sectionTitleNotes
+            case .siriShortcuts:
+                return "Siri Shortcuts"
             case .performed:
                 return ReminderEditViewController.LocalizedString.sectionTitleLastPerformed
             }
@@ -222,6 +299,8 @@ class ReminderEditTableViewController: UITableViewController {
             switch self {
             case .kind:
                 return type(of: kind).count
+            case .siriShortcuts:
+                return SiriShortcut.allCases.count
             case .details, .performed, .interval, .notes:
                 return 1
             }

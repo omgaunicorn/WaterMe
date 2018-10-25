@@ -38,7 +38,9 @@ open class ReminderGedeg: NSObject {
     private(set) var reminders: [Reminder.Section : AnyRealmCollection<Reminder>] = [:]
     public var lastError: RealmError?
 
-    var allSectionsFinishedLoading: Bool {
+    open var allDataReadyClosure: ((Bool) -> Void)?
+
+    open var allSectionsFinishedLoading: Bool {
         return self.reminders.count == self.tokens.count
     }
 
@@ -48,7 +50,7 @@ open class ReminderGedeg: NSObject {
         self.updateBatcher.batchFired = { [unowned self] changes in
             self.batchedUpdates(ins: changes.ins, dels: changes.dels, mods: changes.mods)
         }
-        for section in Reminder.Section.all {
+        for section in Reminder.Section.allCases {
             let result = basicRC.reminders(in: section, sorted: .nextPerformDate, ascending: true)
             switch result {
             case .success(let reminders):
@@ -65,17 +67,21 @@ open class ReminderGedeg: NSObject {
         case .initial(let data):
             self.reminders[section] = data
             if self.allSectionsFinishedLoading == true {
-                self.allDataReady()
+                self.allDataReady(success: true)
             }
         case .update(_, deletions: let del, insertions: let ins, modifications: let mod):
             self.updateBatcher.appendUpdateExtendingTimer(Update(section: section, deletions: del, insertions: ins, modifications: mod))
         case .error(let error):
+            self.lastError = .loadError
             BasicController.errorThrown?(error)
             log.error(error)
+            self.allDataReady(success: false)
         }
     }
 
-    open func allDataReady() { }
+    open func allDataReady(success: Bool) {
+        self.allDataReadyClosure?(success)
+    }
 
     open func batchedUpdates(ins: [IndexPath], dels: [IndexPath], mods: [IndexPath]) { }
 
@@ -88,7 +94,7 @@ open class ReminderGedeg: NSObject {
         // check if the reminders.count matches the number of sections
         // if this sanity check fails, something unexpected has happened
         let reminderCount = self.reminders.count
-        if reminderCount != Reminder.Section.count {
+        if reminderCount != Reminder.Section.allCases.count {
             let error = NSError(numberOfSectionsMistmatch: nil)
             assertionFailure(String(describing: error))
             BasicController.errorThrown?(error)
@@ -154,6 +160,15 @@ open class ReminderGedeg: NSObject {
         }
 
         return data[row]
+    }
+
+    public func indexPathOfReminder(with identifier: Reminder.Identifier) -> IndexPath? {
+        var indexPath: IndexPath?
+        for (section, collection) in self.reminders {
+            guard let row = collection.index(matching: "uuid = %@", identifier.reminderIdentifier) else { continue }
+            indexPath = IndexPath(row: row, section: section.rawValue)
+        }
+        return indexPath
     }
 
     private var tokens: [NotificationToken] = []

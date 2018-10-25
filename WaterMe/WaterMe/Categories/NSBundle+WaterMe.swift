@@ -24,6 +24,15 @@
 import Foundation
 
 internal extension Bundle {
+    
+    internal var isReleaseBuild: Bool {
+        #if RELEASE
+        return true
+        #else
+        return false
+        #endif
+    }
+
     internal var isTestFlightInstall: Bool {
         #if DEBUG
         return false

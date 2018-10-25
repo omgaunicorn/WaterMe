@@ -24,8 +24,6 @@
 import WaterMeStore
 import WaterMeData
 import XCGLogger
-import Fabric
-import Crashlytics
 import UserNotifications
 import AVFoundation
 import StoreKit
@@ -48,6 +46,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var userDefaultObserverTokens: [NSKeyValueObservation] = []
 
+    private var rootVC: ReminderMainViewController? {
+        let navVC = self.window?.rootViewController as? UINavigationController
+        let vc = navVC?.viewControllers.first as? ReminderMainViewController
+        assert(vc != nil)
+        return vc
+    }
+
     override init() {
         super.init()
 
@@ -57,6 +62,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #else
         log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
         #endif
+
+        // configure main thread checking
+        DispatchQueue.configureMainQueue()
         
         // as early as possible, configure standard defaults
         UserDefaults.standard.configure()
@@ -77,7 +85,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.reminderObserver?.notificationPermissionsMayHaveChanged()
         }
         // register for notifications about the increase contrast setting
-        _ = NotificationCenter.default.addObserver(forName: .UIAccessibilityDarkerSystemColorsStatusDidChange, object: nil, queue: nil) { _ in
+        _ = NotificationCenter.default.addObserver(forName: .UIAccessibilityDarkerSystemColorsStatusDidChange,
+                                                   object: nil,
+                                                   queue: nil)
+        { _ in
             appearanceChanges()
         }
         // register for notifications if user defaults change while the app is running
@@ -96,7 +107,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.userDefaultObserverTokens += [token1, token2, token3, token4]
     }
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
+    {
 
         // see if there is a new build
         _ = {
@@ -118,11 +131,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Analytics.log(error: error)
         }
 
-        // configure Crashlytics
-        if let key = WaterMeData.PrivateKeys.kFrabicAPIKey {
-            Crashlytics.start(withAPIKey: key)
-        }
-
         // configure my notification delegate
         UNUserNotificationCenter.current().delegate = self.notificationUIDelegate
 
@@ -134,7 +142,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let result = BasicController.new(of: .local)
         let vc = ReminderMainViewController.newVC(basicRCResult: result, proController: nil)
-        self.reminderObserver = GlobalReminderObserver(basicController: result.value)
+        if case .success(let basicRC) = result {
+            self.reminderObserver = GlobalReminderObserver(basicController: basicRC)
+        }
 
         // When a new build is detected, we set a date
         // Two weeks after that date, the user is eligible to be asked for a review
@@ -144,7 +154,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let ud = UserDefaults.standard
             guard
                 let reviewDate = ud.requestReviewDate,
-                let forwardDate = Calendar.current.date(byAdding: .weekOfMonth, value: 2, to: reviewDate),
+                let forwardDate = Calendar.current.date(byAdding: .weekOfMonth,
+                                                        value: 2,
+                                                        to: reviewDate),
                 now >= forwardDate
             else { return }
             log.info("Requested App Review with SKStoreReviewController")
@@ -164,15 +176,63 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
+
+    func application(_ application: UIApplication,
+                     willContinueUserActivityWithType userActivityType: String) -> Bool
+    {
+        guard RawUserActivity(rawValue: userActivityType) != nil else {
+            return false
+        }
+        return true
+    }
+
+    func application(_ application: UIApplication,
+                     continue userActivity: NSUserActivity,
+                     restorationHandler: @escaping NSUserActivityContinuedHandler) -> Bool
+    {
+        let result: UserActivityResult
+            = userActivity.restoredUserActivityResult
+                .bimap(success: { UserActivityToContinue(activity: $0, completion: restorationHandler) },
+                       failure: { UserActivityToFail(error: $0, completion: restorationHandler) })
+        self.rootVC?.userActivityResultToContinue += [result]
+        let isReady = self.rootVC?.isReady ?? []
+        guard isReady.completely else { return true }
+        self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+        return true
+    }
+
+    func application(_ application: UIApplication,
+                     didFailToContinueUserActivityWithType userActivityType: String,
+                     error: Error)
+    {
+        let error = error as NSError
+        guard error.code != NSUserCancelledError else {
+            return
+        }
+        let result: UserActivityResult
+            = .failure(UserActivityToFail(error: .continuationFailed, completion: nil))
+        self.rootVC?.userActivityResultToContinue += [result]
+        let isReady = self.rootVC?.isReady ?? []
+        guard isReady.completely else { return }
+        self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+    }
     
-    func application(_ application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
+    func application(_ application: UIApplication,
+                     shouldSaveApplicationState coder: NSCoder) -> Bool
+    {
         return true
     }
     
-    func application(_ application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
+    func application(_ application: UIApplication,
+                     shouldRestoreApplicationState coder: NSCoder) -> Bool
+    {
         let _savedBuild = coder.decodeObject(forKey: UIApplicationStateRestorationBundleVersionKey) as? String
         let _currentBuild = Bundle(for: type(of: self)).infoDictionary?[kCFBundleVersionKey as String] as? String
-        guard let savedBuild = _savedBuild, let currentBuild = _currentBuild, currentBuild == savedBuild else { return false }
+        guard
+            let savedBuild = _savedBuild,
+            let currentBuild = _currentBuild,
+            currentBuild == savedBuild
+        else { return false }
         return true
     }
 }

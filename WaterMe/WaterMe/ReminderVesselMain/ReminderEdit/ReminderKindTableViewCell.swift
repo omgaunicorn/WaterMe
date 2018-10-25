@@ -79,6 +79,22 @@ extension Reminder.Kind {
             return LocalizedString.other
         }
     }
+    var localizedSpotlightString: String {
+        switch self {
+        case .water:
+            return LocalizedString.waterShort
+        case .fertilize:
+            return LocalizedString.fertilizeShort
+        case .trim:
+            return LocalizedString.trimShort
+        case .mist:
+            return LocalizedString.mistShort
+        case .move:
+            return LocalizedString.moveShort
+        case .other(let description):
+            return description ?? LocalizedString.other
+        }
+    }
     // swiftlint:disable:next cyclomatic_complexity
     fileprivate func isSameKind(as other: Reminder.Kind) -> Bool {
         switch self {

@@ -27,9 +27,15 @@ import WaterMeData
 import UIKit
 
 protocol ReminderCollectionViewControllerDelegate: class {
-    func userDidSelect(reminderID: Reminder.Identifier, from view: UIView, deselectAnimated: @escaping (Bool) -> Void, within viewController: ReminderCollectionViewController)
-    func dragSessionWillBegin(_ session: UIDragSession, within viewController: ReminderCollectionViewController)
-    func dragSessionDidEnd(_ session: UIDragSession, within viewController: ReminderCollectionViewController)
+    func userDidSelect(reminderID: Reminder.Identifier,
+                       from view: UIView,
+                       userActivityContinuation: NSUserActivityContinuedHandler?,
+                       deselectAnimated: @escaping (Bool) -> Void,
+                       within viewController: ReminderCollectionViewController)
+    func dragSessionWillBegin(_ session: UIDragSession,
+                              within viewController: ReminderCollectionViewController)
+    func dragSessionDidEnd(_ session: UIDragSession,
+                           within viewController: ReminderCollectionViewController)
     func forceUpdateCollectionViewInsets()
 }
 
@@ -37,6 +43,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     
     var proRC: ProController?
     var basicRC: BasicController?
+    var allDataReady: ((Bool) -> Void)?
 
     private(set) var reminders: ReminderGedeg?
     private let significantTimePassedDetector = SignificantTimePassedDetector()
@@ -86,6 +93,20 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         self.reminders = ReminderGedegDataSource(basicRC: self.basicRC,
                                                  managedCollectionView: self.collectionView,
                                                  collectionViewReplacer: self)
+        self.reminders?.allDataReadyClosure = { [weak self] in self?.allDataReady?($0) }
+    }
+
+    func programmaticalySelectReminder(with identifier: Reminder.Identifier) -> (IndexPath, ((Bool) -> Void))? {
+        guard
+            let collectionView = self.collectionView,
+            let indexPath = self.reminders?.indexPathOfReminder(with: identifier)
+        else { return nil }
+        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
+        return (indexPath, { collectionView.deselectItem(at: indexPath, animated: $0) })
+    }
+
+    func indexPathOfReminder(with identifier: Reminder.Identifier) -> IndexPath? {
+        return self.reminders?.indexPathOfReminder(with: identifier)
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -122,10 +143,14 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let reminder = self.reminders?.reminder(at: indexPath), let cell = collectionView.cellForItem(at: indexPath) else { return }
+        guard
+            let reminder = self.reminders?.reminder(at: indexPath),
+            let cell = collectionView.cellForItem(at: indexPath)
+        else { return }
         let identifier = Reminder.Identifier(reminder: reminder)
         self.delegate?.userDidSelect(reminderID: identifier,
                                      from: cell,
+                                     userActivityContinuation: nil,
                                      deselectAnimated: { collectionView.deselectItem(at: indexPath, animated: $0) },
                                      within: self)
     }
@@ -197,7 +222,7 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
         default:
             item.previewProvider = { ReminderDragPreviewView.dragPreview(for: reminder) }
         }
-        item.localObject = Reminder.Identifier(reminder: reminder)
+        item.localObject = ReminderAndVesselValue(reminder: reminder)
         return item
     }
 
@@ -230,18 +255,14 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 }
 
 extension ReminderCollectionViewController: SignificantTimePassedDetectorDelegate {
-    
-    func significantTimeDidPass(with reason: SignificantTimePassedDetector.Reason, detector _: SignificantTimePassedDetector) {
-        let event: Analytics.Event
+    func significantTimeDidPass(with reason: SignificantTimePassedDetector.Reason,
+                                detector _: SignificantTimePassedDetector)
+    {
         switch reason {
-        case .BackupDetector:
-            event = .stpReloadBackup
         case .STCNotification:
-            event = .stpReloadNotification
+            Analytics.log(event: Analytics.Event.stpReloadNotification)
         }
-        Analytics.log(event: event)
-        Analytics.log(event: Analytics.Event.stpReloadNotification)
-        log.info("Reloading Data: " + Analytics.Event.stpReloadBackup.rawValue)
+        log.info("Reloading Data...")
         self.hardReloadData()
     }
 }

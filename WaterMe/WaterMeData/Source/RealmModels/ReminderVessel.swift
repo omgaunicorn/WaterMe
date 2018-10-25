@@ -25,22 +25,18 @@ import Result
 import UIKit
 import RealmSwift
 
-public enum UserFacingErrorRecoveryActions {
-    case openWaterMeSettings, none
-}
-
-public protocol UserFacingError: Swift.Error {
-    var title: String { get }
-    var details: String? { get }
-    var recoveryActions: UserFacingErrorRecoveryActions { get }
-}
-
-public protocol UICompleteCheckable {
-    associatedtype E
-    var isUIComplete: [E] { get }
-}
-
 public class ReminderVessel: Object {
+
+    public struct Identifier: UUIDRepresentable, Hashable {
+        public var reminderVesselIdentifier: String
+        public init(reminderVessel: ReminderVessel) {
+            self.reminderVesselIdentifier = reminderVessel.uuid
+        }
+        public init(rawValue: String) {
+            self.reminderVesselIdentifier = rawValue
+        }
+        public var uuid: String { return self.reminderVesselIdentifier }
+    }
     
     public enum Kind: String {
         case plant
@@ -50,7 +46,7 @@ public class ReminderVessel: Object {
     @objc public internal(set) dynamic var displayName: String?
     public let reminders = List<Reminder>()
     
-    @objc private dynamic var iconImageData: Data?
+    @objc public private(set) dynamic var iconImageData: Data?
     @objc private dynamic var iconEmojiString: String?
     public internal(set) var icon: Icon? {
         get { return Icon(rawImageData: self.iconImageData, emojiString: self.iconEmojiString) }
@@ -72,21 +68,19 @@ public class ReminderVessel: Object {
     }
 }
 
-extension ReminderVessel: UICompleteCheckable {
-    
-    public enum Error {
-        case missingIcon, missingName, noReminders
-    }
-    
-    public typealias E = Error
-    
-    public var isUIComplete: [Error] {
-        let errors: [Error] = [
-            self.icon == nil ? .missingIcon : nil,
-            self.displayName == nil ? .missingName : nil,
-            self.reminders.isEmpty ? .noReminders : nil
+extension ReminderVessel: ModelCompleteCheckable {
+
+    public var isModelComplete: ModelCompleteError? {
+        let issues: [RecoveryAction] = [
+            self.icon == nil ? .reminderVesselMissingIcon : nil,
+            self.displayName == nil ? .reminderVesselMissingName : nil,
+            self.reminders.isEmpty ? .reminverVesselMissingReminder : nil
             ].compactMap({ $0 })
-        return errors
+        if issues.isEmpty {
+            return nil
+        } else {
+            return ModelCompleteError(_actions: issues + [.cancel, .saveAnyway])
+        }
     }
 }
 
@@ -116,5 +110,21 @@ extension ReminderVessel {
         let matches = properties.filter({ $0.name == "bloop" })
         let contains = !matches.isEmpty
         return contains
+    }
+}
+
+public extension ReminderVessel {
+
+    public var shortLabelSafeDisplayName: String? {
+        let name = self.displayName ?? ""
+        let characterLimit = 20
+        guard name.count > characterLimit else { return self.displayName }
+        let endIndex = name.index(name.startIndex, offsetBy: characterLimit)
+        let substring = String(self.displayName![..<endIndex])
+        if let trimmed = substring.nonEmptyString {
+            return trimmed + "…"
+        } else {
+            return nil
+        }
     }
 }

@@ -50,9 +50,9 @@ class ReminderGedegDataSource: ReminderGedeg {
         */
     }
 
-    override func allDataReady() {
-        super.allDataReady()
+    override func allDataReady(success: Bool) {
         self.collectionView?.reloadData()
+        super.allDataReady(success: success)
     }
 
     override func batchedUpdates(ins: [IndexPath], dels: [IndexPath], mods: [IndexPath]) {
@@ -81,7 +81,6 @@ class ReminderGedegDataSource: ReminderGedeg {
         let failureReason = ItemAndSectionSanityCheckFailureReason.check(old: cv, new: self, delta: (ins, dels))
         guard failureReason == nil else {
             let error = NSError(errorFromSanityCheckFailureReason: failureReason!)
-            assertionFailure(String(describing: error))
             Analytics.log(error: error)
             log.error(error)
             cv.reloadData()

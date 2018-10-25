@@ -26,7 +26,7 @@ import WaterMeData
 import WaterMeStore
 import UIKit
 
-class SettingsTableViewController: UITableViewController {
+class SettingsTableViewController: StandardTableViewController {
 
     var settingsRowChosen: ((SettingsRows, ((Bool) -> Void)?) -> Void)?
     var tipJarRowChosen: ((TipJarRowSelection, ((Bool) -> Void)?) -> Void)?

@@ -79,9 +79,9 @@ extension InfoTableViewCell {
             let lastPerformedDate = reminder?.performed.last?.date
             let dateString = self.timeAgoDateFormatter.timeAgoString(for: lastPerformedDate)
             self.label1?.attributedText = NSAttributedString(string: dateString,
-                                                                           font: .reminderSummaryPrimaryLabel)
-            self.sublabel1?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadLastPerformDate,
-                                                                              font: .reminderSummarySublabel)
+                                                             font: .reminderSummaryPrimaryLabel)
+            self.sublabel1?.attributedText = NSAttributedString(string: ReminderEditViewController.LocalizedString.sectionTitleLastPerformed,
+                                                                font: .reminderSummarySublabel)
         }()
         _ = {
             guard let interval = reminder?.interval else { return }
@@ -101,12 +101,20 @@ extension InfoTableViewCell {
             self.sublabel0?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadReminderKind,
                                                                 font: .reminderSummarySublabel)
         }()
+        if let kind = reminder?.kind, case .move(let _location) = kind, let location = _location {
+            self.label1?.attributedText = NSAttributedString(string: location,
+                                                             font: .reminderSummaryPrimaryLabel)
+            self.sublabel1?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadMoveTo,
+                                                                font: .reminderSummarySublabel)
+        } else {
+            self.stackView1?.isHidden = true
+        }
         _ = {
             let nextPerformDate = reminder?.nextPerformDate ?? Date()
             let dueDateString = self.dueDateFormatter.string(from: nextPerformDate)
-            self.label1?.attributedText = NSAttributedString(string: dueDateString,
+            self.label2?.attributedText = NSAttributedString(string: dueDateString,
                                                              font: .reminderSummaryPrimaryLabel)
-            self.sublabel1?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadNextPerformDate,
+            self.sublabel2?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadNextPerformDate,
                                                                 font: .reminderSummarySublabel)
         }()
     }

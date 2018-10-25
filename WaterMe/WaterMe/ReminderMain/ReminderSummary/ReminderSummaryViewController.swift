@@ -27,17 +27,19 @@ import WaterMeData
 import Result
 import RealmSwift
 
-class ReminderSummaryViewController: UIViewController {
+class ReminderSummaryViewController: StandardViewController {
 
     typealias Completion = (Action, Reminder.Identifier, UIViewController) -> Void
     enum Action {
         case cancel, performReminder, editReminderVessel, editReminder
     }
 
+    // swiftlint:disable:next function_parameter_count
     class func newVC(reminderID: Reminder.Identifier,
                      basicController: BasicController,
                      hapticGenerator: UIFeedbackGenerator,
                      sourceView: UIView,
+                     userActivityContinuation: NSUserActivityContinuedHandler?,
                      completion: @escaping Completion) -> UIViewController
     {
         let sb = UIStoryboard(name: "ReminderSummary", bundle: Bundle(for: self))
@@ -51,9 +53,12 @@ class ReminderSummaryViewController: UIViewController {
         vc.popoverPresentationController?.sourceRect = UIAlertController.sourceRect(from: sourceView)
         // configure needed properties
         vc.completion = completion
+        vc.userActivityContinuation = userActivityContinuation
         vc.reminderResult = basicController.reminder(matching: reminderID)
         vc.reminderID = reminderID
         vc.haptic = hapticGenerator
+        vc.userActivity = NSUserActivity(kind: .viewReminder,
+                                         delegate: vc.userActivityDelegate)
         return vc
     }
 
@@ -88,14 +93,30 @@ class ReminderSummaryViewController: UIViewController {
 
     var reminderResult: Result<Reminder, RealmError>!
     private var completion: Completion!
+    private var userActivityContinuation: NSUserActivityContinuedHandler?
     private var reminderID: Reminder.Identifier!
     private weak var tableViewController: ReminderSummaryTableViewController!
     private weak var haptic: UIFeedbackGenerator?
+    //swiftlint:disable:next weak_delegate
+    private let userActivityDelegate: UserActivityConfiguratorProtocol = UserActivityConfigurator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
         self.updateViewForPresentation()
+        self.userActivityDelegate.currentReminderAndVessel = { [weak self] in
+            // should be unowned because this object should not exist longer
+            // than the view controller. But since NIL is a possible return value
+            // it just seems safer to go with weak
+            return ReminderAndVesselValue(reminder: self?.reminderResult?.value)
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.userActivityContinuation?([self])
+        self.userActivityContinuation = nil
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -137,9 +158,10 @@ class ReminderSummaryViewController: UIViewController {
 }
 
 extension ReminderSummaryViewController: ReminderSummaryTableViewControllerDelegate {
-    func userChose(toViewImage image: UIImage,
-                   rowDeselectionHandler: @escaping () -> Void,
-                   within: ReminderSummaryTableViewController)
+
+    internal func userChose(toViewImage image: UIImage,
+                            rowDeselectionHandler: @escaping () -> Void,
+                            within: ReminderSummaryTableViewController)
     {
         let config = DismissHandlingImageViewerConfiguration(image: image) { vc in
             vc.dismiss(animated: true) {
@@ -149,15 +171,28 @@ extension ReminderSummaryViewController: ReminderSummaryTableViewControllerDeleg
         let vc = DismissHandlingImageViewerController(configuration: config)
         self.present(vc, animated: true, completion: nil)
     }
-    func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController) {
+
+    internal func userChose(action: ReminderSummaryViewController.Action,
+                            within: ReminderSummaryTableViewController)
+    {
         if case .performReminder = action {
+            self.configurePerformRemindersActivity()
             self.haptic?.prepare()
         }
         self.completion(action, self.reminderID, self)
     }
+
+    private func configurePerformRemindersActivity() {
+        let activity = NSUserActivity(kind: .performReminder,
+                                      delegate: self.userActivityDelegate)
+        self.userActivity = activity
+        activity.needsSave = true
+        activity.becomeCurrent()
+    }
 }
 
 extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate {
+
     func popoverPresentationControllerShouldDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) -> Bool {
         self.completion(.cancel, self.reminderID, self)
         return false

@@ -22,7 +22,6 @@
 //
 
 import WaterMeData
-import Crashlytics
 import StoreKit
 import Foundation
 
@@ -33,7 +32,6 @@ enum Analytics {
     enum Event: String {
         case reviewRequested = "Event.ReviewRequested"
         case stpReloadNotification = "Event.STPReload.Notification"
-        case stpReloadBackup = "Event.STPReload.Backup"
         case updateAvailableDismiss = "Event.UpdateAvailable.Dismiss"
         case updateAvailableAppStore = "Event.UpdateAvailable.AppStore"
         case notificationSettingsFail = "Error.NotifySettingsLoadFailure"
@@ -118,6 +116,7 @@ enum Analytics {
         case coreDataMigration = "VCView.CoreDataMigration"
         case reminderList = "VCView.ReminderList"
         case reminderSummary = "VCView.ReminderSummary"
+        case reminderVesselList = "VCView.ReminderVesselList"
         case editReminderVessel = "VCView.EditReminderVessel"
         case editReminder = "VCView.EditReminder"
         case emailDeveloper = "VCView.EmailDeveloper"
@@ -125,7 +124,6 @@ enum Analytics {
         case openSettings = "VCView.OpenSettings"
         case openAppStoreReview = "VCView.OpenAppStoreReview"
         case openAppStore = "VCView.OpenAppStore"
-        case openEmojiOne = "VCView.OpenEmojiOneSite"
         case errorAlertRealm = "VCView.ErrorAlert.Realm"
         case errorAlertPurchase = "VCView.ErrorAlert.Purchase"
         case alertUpdateAvailable = "VCView.Alert.UpdatedAvailable"
@@ -134,23 +132,10 @@ enum Analytics {
 
     // MARK: Logging Functions
 
-    static func log(error: Error) {
-        let error = error as NSError
-        let userInfo: [String : String] = [
-            "errorDomain" : error.domain,
-            "errorCode" : String(describing: error.code), // Crashlytics interprets this incorrectly if passed as NSNumber
-            "errorDescription" : error.localizedDescription
-        ]
-        Answers.logCustomEvent(withName: "Error.ReportedNonFatal", customAttributes: userInfo)
-        Crashlytics.sharedInstance().recordError(error)
-    }
+    static func log(error: Error) { }
 
-    static func log(viewOperation op: VCViewOperation) {
-        Answers.logContentView(withName: op.rawValue, contentType: nil, contentId: nil, customAttributes: nil)
-    }
+    static func log(viewOperation op: VCViewOperation) { }
 
-    static func log<E: RawRepresentable>(event op: E, extras: [String : Any]? = nil) where E.RawValue == String {
-        Answers.logCustomEvent(withName: op.rawValue, customAttributes: extras)
-    }
+    static func log<E: RawRepresentable>(event op: E, extras: [String : Any]? = nil) where E.RawValue == String { }
 
 }

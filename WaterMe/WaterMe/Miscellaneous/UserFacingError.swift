@@ -25,7 +25,7 @@ import WaterMeData
 
 extension RealmError: UserFacingError {
 
-    public var title: String {
+    public var title: String? {
         switch self {
         case .unableToDeleteLastReminder:
             return LocalizedString.deleteTitle
@@ -38,7 +38,7 @@ extension RealmError: UserFacingError {
         }
     }
 
-    public var details: String? {
+    public var message: String? {
         switch self {
         case .imageCouldntBeCompressedEnough:
             return LocalizedString.saveImageMessage
@@ -53,48 +53,73 @@ extension RealmError: UserFacingError {
         }
     }
 
-    public var recoveryActions: UserFacingErrorRecoveryActions {
+    public var recoveryActions: [RecoveryAction] {
         switch self {
         case .objectDeleted, .unableToDeleteLastReminder, .imageCouldntBeCompressedEnough:
-            return .none
+            return [.dismiss]
         case .createError, .loadError, .readError, .writeError:
-            return .openWaterMeSettings
+            return [.dismiss, .openWaterMeSettings]
         }
     }
 }
 
-extension ReminderVessel.Error: UserFacingError {
+extension RecoveryAction: RecoveryActionSelectable {
+    
     public var title: String {
         switch self {
-        case .missingIcon:
+        case .cancel:
+            return UIAlertController.LocalizedString.buttonTitleCancel
+        case .dismiss:
+            return UIAlertController.LocalizedString.buttonTitleDismiss
+        case .saveAnyway:
+            return UIAlertController.LocalizedString.buttonTitleSaveAnyway
+        case .openWaterMeSettings:
+            return SettingsMainViewController.LocalizedString.cellTitleOpenSettings
+        case .reminderMissingMoveLocation:
+            return LocalizedString.missingLocation
+        case .reminderMissingOtherDescription:
+            return LocalizedString.missingDescription
+        case .reminderVesselMissingIcon:
             return LocalizedString.missingPhoto
-        case .missingName:
+        case .reminderVesselMissingName:
             return LocalizedString.missingName
-        case .noReminders:
+        case .reminverVesselMissingReminder:
             return LocalizedString.missingReminders
         }
     }
-    public var details: String? {
-        return nil
+
+    public var automaticExecution: (() -> Void)? {
+        switch self {
+        case .openWaterMeSettings:
+            return { UIApplication.shared.openAppSettings(completion: nil) }
+        default:
+            return nil
+        }
     }
-    public var recoveryActions: UserFacingErrorRecoveryActions {
-        return .none
+
+    internal var actionStyle: UIAlertAction.Style {
+        switch self {
+        case .cancel, .dismiss:
+            return .cancel
+        case .saveAnyway:
+            return .destructive
+        default:
+            return .default
+        }
     }
 }
 
-extension Reminder.Error: UserFacingError {
-    public var title: String {
-        switch self {
-        case .missingMoveLocation:
-            return LocalizedString.missingLocation
-        case .missingOtherDescription:
-            return LocalizedString.missingDescription
-        }
+extension ModelCompleteError: UserFacingError {
+    
+    public var title: String? {
+        return UIAlertController.LocalizedString.titleUnsolvedIssues
     }
-    public var details: String? {
+
+    public var message: String? {
         return nil
     }
-    public var recoveryActions: UserFacingErrorRecoveryActions {
-        return .none
+
+    public var recoveryActions: [RecoveryAction] {
+        return self._actions
     }
 }

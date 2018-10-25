@@ -26,12 +26,13 @@ import RealmSwift
 import WaterMeData
 import UIKit
 
-class ReminderVesselEditViewController: UIViewController, HasBasicController, ReminderVesselEditTableViewControllerDelegate {
+class ReminderVesselEditViewController: StandardViewController, HasBasicController {
     
     typealias CompletionHandler = (UIViewController) -> Void
     
     class func newVC(basicController: BasicController?,
                      editVessel vessel: ReminderVessel? = nil,
+                     userActivityCompletion: NSUserActivityContinuedHandler? = nil,
                      completionHandler: @escaping CompletionHandler) -> UIViewController
     {
         let sb = UIStoryboard(name: "ReminderVesselEdit", bundle: Bundle(for: self))
@@ -42,12 +43,15 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         vc.title = UIApplication.LocalizedString.editVessel
         vc.configure(with: basicController)
         vc.completionHandler = completionHandler
+        vc.userActivityCompletion = userActivityCompletion
         if let vessel = vessel {
             vc.vesselResult = .success(vessel)
         } else {
             Analytics.log(event: Analytics.CRUD_Op_RV.create)
             vc.vesselResult = basicController?.newReminderVessel()
         }
+        vc.userActivity = NSUserActivity(kind: .editReminderVessel,
+                                         delegate: vc.userActivityDelegate)
         return navVC
     }
     
@@ -58,8 +62,48 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
     
     var basicRC: BasicController?
     private(set) var vesselResult: Result<ReminderVessel, RealmError>?
-    private var completionHandler: CompletionHandler!
-    
+    private(set) var completionHandler: CompletionHandler!
+    private var userActivityCompletion: NSUserActivityContinuedHandler?
+    //swiftlint:disable:next weak_delegate
+    private let userActivityDelegate: UserActivityConfiguratorProtocol = UserActivityConfigurator()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        self.navigationItem.leftBarButtonItem = self.deleteBBI
+        self.navigationItem.rightBarButtonItem = self.doneBBI
+
+        self.startNotifications()
+        self.userActivityDelegate.currentReminderVessel = { [weak self] in
+            // should be unowned because this object should not exist longer
+            // than the view controller. But since NIL is a possible return value
+            // it just seems safer to go with weak
+            return ReminderVesselValue(reminderVessel: self?.vesselResult?.value)
+        }
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        Analytics.log(viewOperation: .editReminderVessel)
+
+        self.userActivityCompletion?([self])
+        self.userActivityCompletion = nil
+
+        if case .failure(let error) = self.vesselResult! {
+            self.vesselResult = nil
+            UIAlertController.presentAlertVC(for: error, over: self) { _ in
+                self.completionHandler?(self)
+            }
+        }
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destVC = segue.destination as? ReminderVesselEditTableViewController else { return }
+        self.tableViewController = destVC
+        self.tableViewController?.delegate = self
+    }
+
     private func vesselChanged(_ changes: ObjectChange) {
         switch changes {
         case .change(let properties):
@@ -109,35 +153,16 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         case .deleted:
             self.reminderVesselWasDeleted()
         }
+        // All changes should dirty the User Activity
+        self.userDirtiedUserActivity()
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
 
-        self.navigationItem.leftBarButtonItem = self.deleteBBI
-        self.navigationItem.rightBarButtonItem = self.doneBBI
-
-        self.startNotifications()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        Analytics.log(viewOperation: .editReminderVessel)
-        
-        if case .failure(let error) = self.vesselResult! {
-            self.vesselResult = nil
-            let alert = UIAlertController(error: error) { _ in
-                self.completionHandler?(self)
-            }
-            self.present(alert, animated: true, completion: nil)
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let destVC = segue.destination as? ReminderVesselEditTableViewController else { return }
-        self.tableViewController = destVC
-        self.tableViewController?.delegate = self
+    private func reminderVesselWasDeleted() {
+        self.vesselResult = nil
+        self.notificationToken?.invalidate()
+        self.notificationToken = nil
+        self.tableViewController?.reloadAll()
+        self.completionHandler?(self)
     }
     
     @IBAction private func deleteButtonTapped(_ sender: Any) {
@@ -161,10 +186,12 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
             case .success:
                 self.reminderVesselWasDeleted()
             case .failure(let error):
-                let alert = UIAlertController(error: error) { _ in
+                UIAlertController.presentAlertVC(for: error,
+                                                 over: self,
+                                                 from: sender)
+                { _ in
                     self.completionHandler?(self)
                 }
-                self.present(alert, animated: true, completion: nil)
             }
         }
         self.present(confirmation, animated: true, completion: nil)
@@ -178,139 +205,44 @@ class ReminderVesselEditViewController: UIViewController, HasBasicController, Re
         
         let sender = sender as? UIBarButtonItem
         assert(sender != nil, "Expected UIBarButtonItem to call this method")
-        let errors = vessel.isUIComplete
-        switch errors.isEmpty {
-        case true:
-            self.completionHandler?(self)
-        case false:
-            UIAlertController.presentAlertVC(for: errors, over: self, from: sender) { [unowned self] selection in
+        if let error = vessel.isModelComplete {
+            UIAlertController.presentAlertVC(for: error,
+                                             over: self,
+                                             from: sender)
+            { selection in
                 switch selection {
+                case .dismiss, .openWaterMeSettings, .reminderMissingMoveLocation, .reminderMissingOtherDescription:
+                    assertionFailure()
+                    fallthrough
                 case .cancel:
                     break
                 case .saveAnyway:
                     self.completionHandler?(self)
-                case .error(let error):
-                    switch error {
-                    case .missingIcon:
-                        self.userChosePhotoChange(controller: self.tableViewController)
-                    case .missingName:
-                        self.tableViewController?.nameTextFieldBecomeFirstResponder()
-                    case .noReminders:
-                        self.userChoseAddReminder(controller: self.tableViewController)
-                    }
+                case .reminderVesselMissingIcon:
+                    self.userChosePhotoChange(controller: self.tableViewController)
+                case .reminderVesselMissingName:
+                    self.tableViewController?.nameTextFieldBecomeFirstResponder()
+                case .reminverVesselMissingReminder:
+                    self.userChoseAddReminder(controller: self.tableViewController)
                 }
             }
-        }
-    }
-    
-    private func updateIcon(_ icon: ReminderVessel.Icon) {
-        guard let vessel = self.vesselResult?.value, let basicRC = self.basicRC
-            else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
-        let updateResult = basicRC.update(icon: icon, in: vessel)
-        guard case .failure(let error) = updateResult else { return }
-        let alert = UIAlertController(error: error, completion: nil)
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func userChosePhotoChange(controller: ReminderVesselEditTableViewController?) {
-        self.view.endEditing(false)
-        let imageAlreadyChosen = self.vesselResult?.value?.icon?.image != nil
-        let vc = UIAlertController.emojiPhotoActionSheet(withAlreadyChosenImage: imageAlreadyChosen)
-        { choice in
-            switch choice {
-            case .camera:
-                let vc = ImagePickerCropperViewController.newCameraVC() { image, vc in
-                    vc.dismiss(animated: true, completion: nil)
-                    guard let image = image else { return }
-                    self.updateIcon(ReminderVessel.Icon(rawImage: image))
-                }
-                self.present(vc, animated: true, completion: nil)
-            case .photos:
-                let vc = ImagePickerCropperViewController.newPhotosVC() { image, vc in
-                    vc.dismiss(animated: true, completion: nil)
-                    guard let image = image else { return }
-                    self.updateIcon(ReminderVessel.Icon(rawImage: image))
-                }
-                self.present(vc, animated: true, completion: nil)
-            case .emoji:
-                let vc = EmojiPickerViewController.newVC() { emoji, vc in
-                    vc.dismiss(animated: true, completion: nil)
-                    guard let emoji = emoji else { return }
-                    self.updateIcon(.emoji(emoji))
-                }
-                self.present(vc, animated: true, completion: nil)
-            case .viewCurrentPhoto:
-                guard let image = self.vesselResult?.value?.icon?.image else { return }
-                let config = DismissHandlingImageViewerConfiguration(image: image) { vc in
-                    vc.dismiss(animated: true, completion: nil)
-                }
-                let vc = DismissHandlingImageViewerController(configuration: config)
-                self.present(vc, animated: true, completion: nil)
-            case .error(let errorVC):
-                self.present(errorVC, animated: true, completion: nil)
-            }
-        }
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    func userChangedName(to newName: String, controller: ReminderVesselEditTableViewController?) {
-        guard let vessel = self.vesselResult?.value, let basicRC = self.basicRC
-            else { assertionFailure("Missing ReminderVessel or Realm Controller"); return; }
-        self.notificationToken?.invalidate() // stop the update notifications from causing the tableview to reload
-        let updateResult = basicRC.update(displayName: newName, in: vessel)
-        if case .failure(let error) = updateResult {
-            let alert = UIAlertController(error: error, completion: nil)
-            self.present(alert, animated: true, completion: nil)
-        }
-        self.startNotifications()
-    }
-    
-    func userChoseAddReminder(controller: ReminderVesselEditTableViewController?) {
-        self.view.endEditing(false)
-        guard let vessel = self.vesselResult?.value else { assertionFailure("Missing ReminderVessel"); return; }
-        let addReminderVC = ReminderEditViewController.newVC(basicController: basicRC, purpose: .new(vessel)) { vc in
-            vc.dismiss(animated: true, completion: nil)
-        }
-        self.present(addReminderVC, animated: true, completion: nil)
-    }
-    
-    func userChose(reminder: Reminder, deselectRowAnimated: ((Bool) -> Void)?, controller: ReminderVesselEditTableViewController?) {
-        self.view.endEditing(false)
-        let editReminderVC = ReminderEditViewController.newVC(basicController: basicRC, purpose: .existing(reminder)) { vc in
-            vc.dismiss(animated: true, completion: { deselectRowAnimated?(true) })
-        }
-        self.present(editReminderVC, animated: true, completion: nil)
-    }
-    
-    func userDeleted(reminder: Reminder, controller: ReminderVesselEditTableViewController?) -> Bool {
-        self.view.endEditing(false)
-        guard let basicRC = self.basicRC else { assertionFailure("Missing Realm Controller."); return false; }
-        let deleteResult = basicRC.delete(reminder: reminder)
-        switch deleteResult {
-        case .success:
-            return true
-        case .failure(let error):
-            let alert = UIAlertController(error: error, completion: nil)
-            self.present(alert, animated: true, completion: nil)
-            return false
+        } else {
+            self.completionHandler?(self)
         }
     }
 
-    private func reminderVesselWasDeleted() {
-        self.vesselResult = nil
-        self.notificationToken?.invalidate()
-        self.notificationToken = nil
-        self.tableViewController?.reloadAll()
-        self.completionHandler?(self)
+    func userDirtiedUserActivity() {
+        self.userActivity?.needsSave = true
     }
     
-    private func startNotifications() {
-      self.notificationToken = self.vesselResult?.value?.observe({ [weak self] in self?.vesselChanged($0) })
+    func startNotifications() {
+        self.notificationToken =
+            self.vesselResult?.value?.observe({ [weak self] in self?.vesselChanged($0) })
     }
     
-    private var notificationToken: NotificationToken?
+    var notificationToken: NotificationToken?
     
     deinit {
-      self.notificationToken?.invalidate()
+        self.notificationToken?.invalidate()
     }
 }

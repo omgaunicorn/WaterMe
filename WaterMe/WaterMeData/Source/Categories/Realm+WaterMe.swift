@@ -87,3 +87,7 @@ public extension String {
         return stripped
     }
 }
+
+public protocol UUIDRepresentable {
+    var uuid: String { get }
+}

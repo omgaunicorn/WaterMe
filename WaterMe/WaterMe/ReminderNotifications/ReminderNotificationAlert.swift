@@ -39,11 +39,12 @@ extension UIAlertController {
         let userAskedToBeAsked = ud.askForNotifications
         let style: UIAlertControllerStyle = sender != nil ? .actionSheet : .alert
         switch (authorizationStatus, userAskedToBeAsked) {
-        case (.notDetermined, true):
+        case (.notDetermined, true), (.provisional, true):
             self.init(newRequestPermissionAlertWithStyle: style, selectionCompletionHandler: selection)
         case (.denied, true):
             self.init(newPermissionDeniedAlertWithStyle: style, selectionCompletionHandler: selection)
-        default:
+        case (_, false),       // if the user has asked not to be bothered, never bother
+             (.authorized, _): // if we're authorized, also don't bother
             return nil
         }
         guard let sender = sender else { return }

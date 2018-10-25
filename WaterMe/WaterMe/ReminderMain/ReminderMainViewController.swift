@@ -25,9 +25,11 @@ import Result
 import WaterMeData
 import UIKit
 
-class ReminderMainViewController: UIViewController, HasProController, HasBasicController {
+class ReminderMainViewController: StandardViewController, HasProController, HasBasicController {
     
-    class func newVC(basicRCResult: Result<BasicController, RealmError>, proController: ProController? = nil) -> UINavigationController {
+    class func newVC(basicRCResult: Result<BasicController, RealmError>,
+                     proController: ProController? = nil) -> UINavigationController
+    {
         let sb = UIStoryboard(name: "ReminderMain", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
@@ -37,24 +39,31 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         vc.applicationDidFinishLaunchingError = basicRCResult.error
         vc.configure(with: basicRCResult.value)
         vc.configure(with: proController)
+        vc.resetUserActivity()
         return navVC
     }
 
-    private weak var collectionVC: ReminderCollectionViewController?
-    private weak var dropTargetViewController: ReminderFinishDropTargetViewController?
+    private(set) weak var collectionVC: ReminderCollectionViewController?
+    private(set) weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     private var appUpdateAvailableVC: UIViewController?
     private var applicationDidFinishLaunchingError: RealmError?
+    var userActivityResultToContinue: [UserActivityResult] = []
+
+    var isReady: ReadyState = []
 
     private(set) lazy var plantsBBI: UIBarButtonItem = UIBarButtonItem(localizedAddReminderVesselBBIButtonWithTarget: self,
                                                                        action: #selector(self.addPlantButtonTapped(_:)))
     private(set) lazy var settingsBBI: UIBarButtonItem = UIBarButtonItem(localizedSettingsButtonWithTarget: self,
                                                                          action: #selector(self.settingsButtonTapped(_:)))
+    private var secretLongPressGestureRecognizer: UILongPressGestureRecognizer?
 
     var basicRC: BasicController?
     var proRC: ProController?
 
     let dueDateFormatter = Formatter.newDueDateFormatter
     let haptic = UINotificationFeedbackGenerator()
+    //swiftlint:disable:next weak_delegate
+    private let userActivityDelegate: UserActivityConfiguratorProtocol = UserActivityConfigurator()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,15 +82,26 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         self.registerForPurchaseNotifications()
     }
 
-    private var viewDidAppearOnce = false
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
         Analytics.log(viewOperation: .reminderList)
 
-        guard self.viewDidAppearOnce == false else { return }
-        self.viewDidAppearOnce = true
+        guard self.isReady.contains([.viewDidAppearOnce]) == false else { return }
+        self.isReady.insert(.viewDidAppearOnce)
+        
+        self.secretLongPressGestureRecognizer =
+            UIBarButtonItemLongPressGestureRecognizer(barButtonItem: self.plantsBBI,
+                                                      target: self,
+                                                      action: #selector(self.viewAllPlantsButtonTapped(_:)))
+        //
+        // We need to make sure that our data is loaded before we call this method
+        // If data has not loaded before viewDidAppear is called
+        // There is a separate closure that executes and calls
+        // `checkForErrorsAndOtherUnexpectedViewControllersToPresent`
+        // https://github.com/jeffreybergier/WaterMe2/issues/47
+        //
+        guard self.isReady.completely else { return }
         self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
     }
 
@@ -94,7 +114,7 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     private func checkForUpdates() {
         UIAlertController.newAppVersionCheckAlert({ controller in
             self.appUpdateAvailableVC = controller
-            guard controller != nil, self.viewDidAppearOnce else { return }
+            guard controller != nil, self.isReady.completely else { return }
             self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         }, { selection in
             switch selection {
@@ -109,20 +129,22 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
     }
 
     func checkForErrorsAndOtherUnexpectedViewControllersToPresent() {
-        guard self.presentedViewController == nil else { return }
+        guard self.presentedViewController == nil else {
+            // user activities are allowed to continue even if the user is doing something else
+            self.continueUserActivityResultIfNeeded()
+            return
+        }
         
         if let error = self.applicationDidFinishLaunchingError {
             self.applicationDidFinishLaunchingError = nil
-            let alert = UIAlertController(error: error) { _ in
+            UIAlertController.presentAlertVC(for: error, over: self) { _ in
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
-            self.present(alert, animated: true, completion: nil)
         } else if let error = self.collectionVC?.reminders?.lastError {
             self.collectionVC?.reminders?.lastError = nil
-            let alert = UIAlertController(error: error) { _ in
+            UIAlertController.presentAlertVC(for: error, over: self) { _ in
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
-            self.present(alert, animated: true, completion: nil)
         } else if let migrator = AppDelegate.shared.coreDataMigrator, let basicRC = self.basicRC {
             let vc = CoreDataMigratorViewController.newVC(migrator: migrator, basicRC: basicRC) { vc, _ in
                 AppDelegate.shared.coreDataMigrator = nil
@@ -135,6 +157,8 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
             self.appUpdateAvailableVC = nil
             Analytics.log(viewOperation: .alertUpdateAvailable)
             self.present(updateAlert, animated: true, completion: nil)
+        } else if self.userActivityResultToContinue.isEmpty == false {
+            self.continueUserActivityResultIfNeeded()
         } else {
             self.checkForPurchasesInFlight()
         }
@@ -155,14 +179,34 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
         self.present(vc, animated: true, completion: nil)
     }
 
+    func resetUserActivity() {
+        self.userActivity = nil
+        self.userActivity?.needsSave = true
+        self.userActivity?.becomeCurrent()
+    }
+
     @IBAction private func addPlantButtonTapped(_ sender: Any) {
         guard let basicRC = self.basicRC else { return }
-        let editVC = ReminderVesselEditViewController.newVC(basicController: basicRC, editVessel: nil) { vc in
+        let editVC = ReminderVesselEditViewController.newVC(basicController: basicRC,
+                                                            editVessel: nil)
+        { vc in
             vc.dismiss(animated: true) {
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
         }
         self.present(editVC, animated: true, completion: nil)
+    }
+
+    @IBAction private func viewAllPlantsButtonTapped(_ sender: Any) {
+        guard
+            let sender = sender as? UILongPressGestureRecognizer,
+            case .began = sender.state
+        else { return }
+        let vc = ReminderVesselMainViewController.newVC(basicController: self.basicRC)
+        { vc in
+            vc.dismiss(animated: true, completion: nil)
+        }
+        self.present(vc, animated: true, completion: nil)
     }
 
     @IBAction private func settingsButtonTapped(_ sender: Any) {
@@ -245,6 +289,20 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 
         if let destVC = segue.destination as? ReminderCollectionViewController {
             self.collectionVC = destVC
+            destVC.allDataReady = { [weak self] _ in
+                //
+                // When all data is ready, we need to make sure the view has appeared
+                // If it has already appeared once, then we need to check to see
+                // If there is anything to show.
+                // It turns out that viewDidAppear often happens before
+                // All of the data loads
+                // I'm surprised this didn't cause an issue up to this point
+                // https://github.com/jeffreybergier/WaterMe2/issues/47
+                //
+                self?.isReady.insert(.allDataLoaded)
+                guard self?.isReady.completely == true else { return }
+                self?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+            }
         } else if let destVC = segue.destination as? ReminderFinishDropTargetViewController {
             destVC.delegate = self
             self.dropTargetViewController = destVC
@@ -253,6 +311,27 @@ class ReminderMainViewController: UIViewController, HasProController, HasBasicCo
 }
 
 extension ReminderMainViewController: ReminderFinishDropTargetViewControllerDelegate {
+
+    func userDidCancelDrag(within: ReminderFinishDropTargetViewController) {
+        // We donated a new activity when the drag started
+        // Now we need to restore the current activity back to default
+        self.resetUserActivity()
+    }
+
+    func userDidStartDrag(with values: [ReminderAndVesselValue],
+                          within: ReminderFinishDropTargetViewController)
+    {
+        self.userActivityDelegate.currentReminderAndVessel = {
+            return values.first
+        }
+        // Donate this activity so Siri might recommend it later
+        let activity = NSUserActivity(kind: .performReminder,
+                                      delegate: self.userActivityDelegate)
+        self.userActivity = activity
+        activity.needsSave = true
+        activity.becomeCurrent()
+    }
+
     func animateAlongSideDropTargetViewResize(within: ReminderFinishDropTargetViewController) -> (() -> Void)? {
         return { self.updateCollectionViewInsets() }
     }
@@ -274,6 +353,20 @@ extension Reminder {
         } else {
             let format = ReminderMainViewController.LocalizedString.reminderAlertMessage1Arg
             return String.localizedStringWithFormat(format, dateString)
+        }
+    }
+}
+
+extension ReminderMainViewController {
+    struct ReadyState: OptionSet {
+        let rawValue: Int
+        static let viewDidAppearOnce = ReadyState(rawValue: 1)
+        static let allDataLoaded = ReadyState(rawValue: 2)
+        static let userActivityInProgress = ReadyState(rawValue: 4)
+
+        var completely: Bool {
+            return self.contains([.viewDidAppearOnce, .allDataLoaded])
+                && !self.contains([.userActivityInProgress])
         }
     }
 }

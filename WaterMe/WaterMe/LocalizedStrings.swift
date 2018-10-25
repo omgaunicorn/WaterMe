@@ -228,16 +228,28 @@ extension Reminder.Kind {
     }
 }
 
+extension ReminderVesselMainViewController {
+    enum LocalizedString {
+        static let title =
+            NSLocalizedString("Plants",
+                              comment: "Title of the screen where the user can manage their plants. Also, title of the button that opens this screen.")
+    }
+}
+
 extension ReminderSummaryViewController {
     enum LocalizedString {
         static let subheadPlantName =
-            NSLocalizedString("Plant", comment: "")
+            NSLocalizedString("Plant",
+                              comment: "View Reminder: Section Header: Shows the plant name.")
         static let subheadReminderKind =
-            NSLocalizedString("Reminder", comment: "")
+            NSLocalizedString("Reminder",
+                              comment: "View Reminder: Section Header: Shows the kind of reminder.")
         static let subheadNextPerformDate =
-            NSLocalizedString("Due Next", comment: "")
-        static let subheadLastPerformDate =
-            NSLocalizedString("Last Performed", comment: "")
+            NSLocalizedString("Due Next",
+                              comment: "View Reminder: Section Header: Shows the next perform date")
+        static let subheadMoveTo =
+            NSLocalizedString("Location",
+                              comment: "View Reminder: Section Header: Shows where the user has selected to move their plant.")
     }
 }
 
@@ -265,17 +277,6 @@ extension SettingsMainViewController {
             NSLocalizedString("I’m Jeff, a professional iOS Developer and UX Designer. I like making small and polished apps in my spare time. If you find WaterMe useful and would like to fund its development, consider supporting the app with the buttons below.",
                               comment: "Settings: Info Cell: Title: Text in the tip jar area that explains why someone should give money.")
 
-    }
-}
-
-extension EmojiPickerFooterCollectionReusableView {
-    enum LocalizedString {
-        static let providedBy =
-            NSLocalizedString("Emoji Provided by EmojiOne",
-                              comment: "EmojiPicker: Footer: Label: Explains the emoji are provided by EmojiOne. Must contain one and only one instance of the  string under key ‘EmojiOne’ because its given a different font treatment.")
-        static let emojiOne =
-            NSLocalizedString("EmojiOne",
-                              comment: "EmojiPicker: Footer: Used to style the ‘Emoji Provided by EmojiOne’ key.")
     }
 }
 
@@ -348,6 +349,9 @@ extension ReminderEditViewController {
         static let dataEntryPlaceholderDescription =
             NSLocalizedString("Trim the leaves and throw out the clippings.",
                               comment: "Edit Reminder: Data Entry Placeholder: Placeholder text in a textfield. The user should type in what they want to be reminded to do to their plant.")
+        static let viewReminderShortcutLabelText =
+            NSLocalizedString("View Summary of Reminder",
+                              comment: "Edit Reminder: Siri Shortcut Title: Label for a cell that when tapped, lets the user add a Siri Shortcut for viewing the reminder summary.")
     }
 }
 
@@ -467,9 +471,6 @@ extension RealmError {
         static let objectDeletedMessage =
             NSLocalizedString("Unable to save changes because the item was deleted. Possibly from another device.",
                               comment: "Realm Error: Object Deleted: Message: Error saving because the object that is being saved has already been deleted.")
-        static let buttonTitleManageStorage =
-            NSLocalizedString("Manage Storage",
-                              comment: "Realm Error: Button Title: Manage Store: Opens the setting app for the user.")
     }
 }
 
@@ -493,7 +494,7 @@ extension Reminder.Section {
     }
 }
 
-extension ReminderVessel.Error {
+extension RecoveryAction {
     enum LocalizedString {
         static let missingPhoto =
             NSLocalizedString("Missing Photo",
@@ -504,16 +505,167 @@ extension ReminderVessel.Error {
         static let missingReminders =
             NSLocalizedString("Missing Reminders",
                               comment: "Error Saving: Plant: Missing Reminders: If the user has not added at least one reminder for their plant and tries to save, an alert will warn them. This is the button title to fix the error.")
-    }
-}
-
-extension Reminder.Error {
-    enum LocalizedString {
         static let missingLocation =
             NSLocalizedString("Missing Location",
                               comment: "Error Saving: Reminder: Missing Location: If the user has no entered a location for their move reminder and tries to save, an alert will warn them. This is the button title to fix the error.")
         static let missingDescription =
             NSLocalizedString("Missing Description",
                               comment: "Error Saving: Reminder: Missing Description: If the user has not entered a description for their other reminder and tries to save, an alert will warn them. This is the button title to fix the error.")
+    }
+}
+
+extension CoreSpotlightIndexer {
+    enum LocalizedString {
+        static var description: String {
+            let localizedString = NSLocalizedString("Mark as done, view notes, or edit information.",
+                                                    comment: "Spotlight: Description: ViewReminder: Explains to the user that by tapping this spotlight entry they can view the reminder summary screen.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+    }
+}
+
+extension UserActivityConfigurator {
+    enum LocalizedString {
+        static func editVesselTitle(fromVesselName vesselName: String?) -> String {
+            let localizedString = NSLocalizedString("Edit %@",
+                                                    comment: "SiriShortcut: Title: EditPlant: Shows the plant name that the siri shortcut corresponds to.")
+            let vesselName = vesselName ?? ReminderVessel.LocalizedString.untitledPlant
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString, vesselName) as String
+            } else {
+                return String.localizedStringWithFormat(localizedString, vesselName)
+            }
+        }
+        static func editReminderTitle(for reminderKind: Reminder.Kind,
+                                      andVesselName vesselName: String?) -> String
+        {
+            let localizedString = NSLocalizedString("Edit %@ %@ Reminder",
+                                                    comment: "SiriShortcut: Title: ViewReminder: Shows the reminder kind and the name of the plant so the user knows what the SiriShortcut applies to.")
+            let vesselName = vesselName ?? ReminderVessel.LocalizedString.untitledPlant
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString, reminderKind.localizedSpotlightString, vesselName) as String
+            } else {
+                return String.localizedStringWithFormat(localizedString, reminderKind.localizedSpotlightString, vesselName)
+            }
+        }
+        static func viewReminderTitle(for reminderKind: Reminder.Kind,
+                                      andVesselName vesselName: String?) -> String
+        {
+            let localizedString = NSLocalizedString("View %@ %@ Reminder",
+                                                    comment: "SiriShortcut: Title: ViewReminder: Shows the reminder kind and the name of the plant so the user knows what the SiriShortcut applies to.")
+            let vesselName = vesselName ?? ReminderVessel.LocalizedString.untitledPlant
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString, reminderKind.localizedSpotlightString, vesselName) as String
+            } else {
+                return String.localizedStringWithFormat(localizedString, reminderKind.localizedSpotlightString, vesselName)
+            }
+        }
+        static func performReminderTitle(for reminderKind: Reminder.Kind,
+                                         andVesselName vesselName: String?) -> String
+        {
+            let localizedString = NSLocalizedString("Mark %@ %@ as Done",
+                                                    comment: "SiriShortcut: Title: PerformReminder: Shows the reminder kind and the name of the plant so the user knows what the SiriShortcut applies to.")
+            let vesselName = vesselName ?? ReminderVessel.LocalizedString.untitledPlant
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString, reminderKind.localizedSpotlightString, vesselName) as String
+            } else {
+                return String.localizedStringWithFormat(localizedString, reminderKind.localizedSpotlightString, vesselName)
+            }
+        }
+        static var editReminderDescription: String {
+            let localizedString = NSLocalizedString("Edit reminder notes, kind, and interval.",
+                                                    comment: "SiriShortcut: Description: EditReminder: Explains to the user that by using this SiriShortcut they can edit the reminder.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+        static var viewReminderDescription: String {
+            let localizedString = NSLocalizedString("View notes, last performed date, mark as done.",
+                                                    comment: "SiriShortcut: Description: ViewReminder: Explains to the user that by using this SiriShortcut they can view the reminder summary screen.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+        static var editReminderVesselDescription: String {
+            let localizedString = NSLocalizedString("Edit plant name, photo, or reminders.",
+                                                    comment: "SiriShortcut: Description: EditPlant: Explains to the user that by using this SiriShortcut they can edit their plant.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+        static var performReminderDescription: String {
+            let localizedString = NSLocalizedString("Mark this reminder as done.",
+                                                    comment: "SiriShortcut: Description: PerformReminder: Explains to the user that by using this SiriShortcut they mark a reminder as done.")
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+            } else {
+                return localizedString
+            }
+        }
+        static var randomLocalizedPhrase: String {
+            var localizedStrings: [String] = [
+                NSLocalizedString("I gardened!",
+                                  comment: "SiriShortcut: Phrase: Random1"),
+                NSLocalizedString("Water Me Baby!",
+                                  comment: "SiriShortcut: Phrase: Random2"),
+                NSLocalizedString("Thats that!",
+                                  comment: "SiriShortcut: Phrase: Random3"),
+                NSLocalizedString("Bam! Watered.",
+                                  comment: "SiriShortcut: Phrase: Random4"),
+                NSLocalizedString("Green thumb for the win!",
+                                  comment: "SiriShortcut: Phrase: Random5"),
+                NSLocalizedString("Live long and prosper.",
+                                  comment: "SiriShortcut: Phrase: Random6")
+            ]
+            localizedStrings.shuffle()
+            let first = localizedStrings.first!
+            if #available(iOS 12.0, *) {
+                return NSString.deferredLocalizedIntentsString(with: first) as String
+            } else {
+                return first
+            }
+        }
+        static let siriShortcutsUnavailableTitle: String
+            = NSLocalizedString("Siri Shortcuts Unavailable",
+                                comment: "Alert Title: On iOS 11, Siri Shortcuts is not available, but they tapped on a button the tries to use this feature. This alert tells them whats wrong.")
+        static let siriShortcutsUnavailableMessage: String
+            = NSLocalizedString("Siri Shortcuts are only available in iOS 12. Please update to use this feature.",
+                                comment: "Alert Title: On iOS 11, Siri Shortcuts is not available, but they tapped on a button the tries to use this feature. This alert tells them whats wrong.")
+    }
+}
+
+extension UserActivityError {
+    enum LocalizedString {
+        static let siriShortcutGenericErrorAlertTitle: String
+            = NSLocalizedString("Shortcut Error",
+                                comment: "Alert Title: Generic Siri Shortcuts Error")
+        static let siriShortcutReminderNotFoundErrorAlertTitle: String
+            = NSLocalizedString("Reminder Not Found",
+                                comment: "Alert Title: Reminder Not Found when trying to execute a SiriShortcut")
+        static let siriShortcutReminderNotFoundErrorAlertMessage: String
+            = NSLocalizedString("The reminder for this Siri Shortcut could not be found. You may want to delete this Siri Shortcut.",
+                                comment: "Alert Message: Reminder Not Found when trying to execute a SiriShortcut")
+        static let siriShortcutReminderVesselNotFoundErrorAlertTitle: String
+            = NSLocalizedString("Plant Not Found",
+                                comment: "Alert Title: Plant Not Found when trying to execute a SiriShortcut")
+        static let siriShortcutReminderVesselNotFoundErrorAlertMessage: String
+            = NSLocalizedString("The plant for this Siri Shortcut could not be found. You may want to delete this Siri Shortcut.",
+                                comment: "Alert Message: Plant Not Found when trying to execute a SiriShortcut")
+        static let siriShortcutCreateErrorAlertMessage: String
+            = NSLocalizedString("There was an error adding this Siri Shortcut. Please try again later.",
+                                comment: "Alert Message: Error Ocurred when Creating a new Siri Shortcut.")
+        static let siriShortcutContinuationErrorAlertMessage: String
+            = NSLocalizedString("There was an error executing this Siri Shortcut. If you see this error repeatedly, it may help to delete and recreate it.",
+                                comment: "Alert Message: Error ocurred when executing an existing Shortcut.")
     }
 }

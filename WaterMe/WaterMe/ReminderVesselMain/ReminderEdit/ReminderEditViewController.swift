@@ -24,9 +24,10 @@
 import Result
 import WaterMeData
 import RealmSwift
+import IntentsUI
 import UIKit
 
-class ReminderEditViewController: UIViewController, HasBasicController {
+class ReminderEditViewController: StandardViewController, HasBasicController {
     
     enum Purpose {
         case new(ReminderVessel), existing(Reminder)
@@ -35,6 +36,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     
     class func newVC(basicController: BasicController?,
                      purpose: Purpose,
+                     userActivityCompletion: NSUserActivityContinuedHandler? = nil,
                      completionHandler: @escaping CompletionHandler) -> UIViewController
     {
         let sb = UIStoryboard(name: "ReminderEdit", bundle: Bundle(for: self))
@@ -45,6 +47,7 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         vc.title = UIApplication.LocalizedString.editReminder
         vc.configure(with: basicController)
         vc.completionHandler = completionHandler
+        vc.userActivityCompletion = userActivityCompletion
         switch purpose {
         case .new(let vessel):
             Analytics.log(event: Analytics.CRUD_Op_R.create)
@@ -52,42 +55,49 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         case .existing(let reminder):
             vc.reminderResult = .success(reminder)
         }
+        vc.userActivity = NSUserActivity(kind: .editReminder,
+                                         delegate: vc.userActivityDelegate)
         return navVC
     }
     
     /*@IBOutlet*/ private weak var tableViewController: ReminderEditTableViewController?
 
-    private lazy var deleteBBI: UIBarButtonItem = UIBarButtonItem(localizedDeleteButtonWithTarget: self, action: #selector(self.deleteButtonTapped(_:)))
-    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
+    private lazy var deleteBBI: UIBarButtonItem = UIBarButtonItem(localizedDeleteButtonWithTarget: self,
+                                                                  action: #selector(self.deleteButtonTapped(_:)))
+    private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self,
+                                                                action: #selector(self.doneButtonTapped(_:)))
 
     var basicRC: BasicController?
-    private var reminderResult: Result<Reminder, RealmError>?
+    private(set) var reminderResult: Result<Reminder, RealmError>?
     private var completionHandler: CompletionHandler?
+    private var userActivityCompletion: NSUserActivityContinuedHandler?
+    //swiftlint:disable:next weak_delegate
+    private let userActivityDelegate: UserActivityConfiguratorProtocol = UserActivityConfigurator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.navigationItem.leftBarButtonItem = self.deleteBBI
         self.navigationItem.rightBarButtonItem = self.doneBBI
-        
-        self.tableViewController?.reminder = { [unowned self] in return self.reminderResult }
-        self.tableViewController?.kindChanged = { [unowned self] in self.update(kind: $0, fromKeyboard: $1) }
-        self.tableViewController?.noteChanged = { [unowned self] in self.update(note: $0, fromKeyboard: true) }
-        self.tableViewController?.intervalChosen = { [unowned self] in self.intervalChosen($0) }
+
+        self.tableViewController?.delegate = self
         self.startNotifications()
+        self.userActivityDelegate.currentReminderAndVessel = { [weak self] in
+            // should be unowned because this object should not exist longer
+            // than the view controller. But since NIL is a possible return value
+            // it just seems safer to go with weak
+            return ReminderAndVesselValue(reminder: self?.reminderResult?.value)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         Analytics.log(viewOperation: .editReminder)
-        
+        self.userActivityCompletion?([self])
+        self.userActivityCompletion = nil
         if case .failure(let error) = self.reminderResult! {
             self.reminderResult = nil
-            let alert = UIAlertController(error: error) { _ in
-                self.completionHandler?(self)
-            }
-            self.present(alert, animated: true, completion: nil)
+            UIAlertController.presentAlertVC(for: error, over: self)
         }
     }
     
@@ -105,41 +115,58 @@ class ReminderEditViewController: UIViewController, HasBasicController {
             self.notificationToken = nil
             self.completionHandler?(self)
         }
+        // dirty the user activity because the item changed
+        self.userDirtiedUserActivity()
     }
     
-    private func update(kind: Reminder.Kind? = nil, interval: Int? = nil, note: String? = nil, fromKeyboard: Bool = false) {
+    private func update(kind: Reminder.Kind? = nil,
+                        interval: Int? = nil,
+                        note: String? = nil,
+                        fromKeyboard: Bool = false)
+    {
         // make sure we have the info we needed
-        guard let reminder = self.reminderResult?.value, let basicRC = self.basicRC
-            else { assertionFailure("Missing Reminder or Realm Controller"); return; }
-        
+        guard
+            let reminder = self.reminderResult?.value,
+            let basicRC = self.basicRC
+        else {
+            assertionFailure("Missing Reminder or Realm Controller")
+            return
+        }
         // if this came from the keyboard stop notifications
         // so the keyboard doesn't get dismissed because of tableview reloads
         if fromKeyboard == true {
           self.notificationToken?.invalidate()
         }
-        
         // after we exit this scope, we need to turn notifications back on
         // again, only if the from keyboard variable is true
         defer {
             if fromKeyboard == true {
                 self.startNotifications()
+                // item was changed outside of notification block
+                self.userDirtiedUserActivity()
             }
         }
-        
         // update the Reminder in Realm
-        let updateResult = basicRC.update(kind: kind, interval: interval, note: note, in: reminder)
+        let updateResult = basicRC.update(kind: kind,
+                                          interval: interval,
+                                          note: note,
+                                          in: reminder)
         
         // show the user errors that may have ocurred
         guard case .failure(let error) = updateResult else { return }
-        let alert = UIAlertController(error: error, completion: nil)
-        self.present(alert, animated: true, completion: nil)
+        UIAlertController.presentAlertVC(for: error, over: self)
     }
     
     private func intervalChosen(_ deselectSelectedCell: @escaping () -> Void) {
         self.view.endEditing(false)
-        guard let existingValue = self.reminderResult?.value?.interval
-            else { assertionFailure("No Reminder Present"); self.completionHandler?(self); return; }
-        let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard, existingValue: existingValue) { vc, newValue in
+        guard let existingValue = self.reminderResult?.value?.interval else {
+            assertionFailure("No Reminder Present")
+            self.completionHandler?(self)
+            return
+        }
+        let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard,
+                                                            existingValue: existingValue)
+        { vc, newValue in
             vc.dismiss(animated: true) {
                 deselectSelectedCell()
                 guard let newValue = newValue else { return }
@@ -161,50 +188,57 @@ class ReminderEditViewController: UIViewController, HasBasicController {
             return
         }
 
-        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .left(sender)) { confirmed in
-
+        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .left(sender))
+        { confirmed in
             Analytics.log(event: Analytics.CRUD_Op_R.delete)
-
             guard confirmed == true else { return }
             let deleteResult = basicRC.delete(reminder: reminder)
             switch deleteResult {
             case .success:
                 self.completionHandler?(self)
             case .failure(let error):
-                let alert = UIAlertController(error: error, completion: nil)
-                self.present(alert, animated: true, completion: nil)
+                UIAlertController.presentAlertVC(for: error, over: self, from: sender)
             }
         }
         self.present(confirmation, animated: true, completion: nil)
     }
     
     @IBAction private func doneButtonTapped(_ _sender: Any) {
-
         Analytics.log(event: Analytics.CRUD_Op_R.update)
-
         self.view.endEditing(false)
-        guard let sender = _sender as? UIBarButtonItem, let reminder = self.reminderResult?.value else {
+        guard
+            let sender = _sender as? UIBarButtonItem,
+            let reminder = self.reminderResult?.value
+        else {
             let message = "Expected UIBarButtonItem to call this method"
             log.error(message)
             assertionFailure(message)
             self.completionHandler?(self)
             return
         }
-        let errors = reminder.isUIComplete
-        switch errors.isEmpty {
-        case true:
-            self.completionHandler?(self)
-        case false:
-            UIAlertController.presentAlertVC(for: errors, over: self, from: sender) { selection in
+        if let error = reminder.isModelComplete {
+            UIAlertController.presentAlertVC(for: error,
+                                             over: self,
+                                             from: sender)
+            { selection in
                 switch selection {
+                case .dismiss,
+                     .openWaterMeSettings,
+                     .reminderVesselMissingIcon,
+                     .reminderVesselMissingName,
+                     .reminverVesselMissingReminder:
+                    assertionFailure()
+                    fallthrough
                 case .cancel:
                     break
-                case .error:
-                    self.tableViewController?.nameTextFieldBecomeFirstResponder()
                 case .saveAnyway:
                     self.completionHandler?(self)
+                case .reminderMissingMoveLocation, .reminderMissingOtherDescription:
+                    self.tableViewController?.forceTextFieldToBecomeFirstResponder()
                 }
             }
+        } else {
+            self.completionHandler?(self)
         }
     }
 
@@ -212,6 +246,10 @@ class ReminderEditViewController: UIViewController, HasBasicController {
         if let tableVC = segue.destination as? ReminderEditTableViewController {
             self.tableViewController = tableVC
         }
+    }
+
+    private func userDirtiedUserActivity() {
+        self.userActivity?.needsSave = true
     }
     
     private func startNotifications() {
@@ -222,5 +260,71 @@ class ReminderEditViewController: UIViewController, HasBasicController {
     
     deinit {
       self.notificationToken?.invalidate()
+    }
+}
+
+extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
+
+    func userChangedKind(to newKind: Reminder.Kind,
+                         byUsingKeyboard usingKeyboard: Bool,
+                         within: ReminderEditTableViewController)
+    {
+        self.update(kind: newKind, fromKeyboard: usingKeyboard)
+    }
+
+    func userChangedNote(toNewNote newNote: String,
+                         within: ReminderEditTableViewController)
+    {
+        self.update(note: newNote, fromKeyboard: true)
+    }
+
+    func userDidSelectChangeInterval(_ deselectHandler: @escaping () -> Void,
+                                     within: ReminderEditTableViewController)
+    {
+        self.intervalChosen(deselectHandler)
+    }
+
+    func userDidSelect(siriShortcut: ReminderEditTableViewController.SiriShortcut,
+                       deselectRowAnimated: ((Bool) -> Void)?,
+                       within: ReminderEditTableViewController)
+    {
+        guard #available(iOS 12.0, *) else {
+            let vc = UIAlertController(localizedSiriShortcutsUnavailableAlertWithCompletionHandler: {
+                deselectRowAnimated?(true)
+            })
+            self.present(vc, animated: true, completion: nil)
+            return
+        }
+        let activity: NSUserActivity
+        switch siriShortcut {
+        case .editReminder:
+            guard
+                let _activity = self.userActivity,
+                _activity.activityType == RawUserActivity.editReminder.rawValue
+            else {
+                assertionFailure("Unexpected User Activity")
+                return
+            }
+            activity = _activity
+        case .viewReminder:
+            activity = NSUserActivity(kind: .viewReminder,
+                                          delegate: self.userActivityDelegate)
+        case .performReminder:
+            activity = NSUserActivity(kind: .performReminder,
+                                          delegate: self.userActivityDelegate)
+        }
+        activity.needsSave = true
+        activity.becomeCurrent()
+        let shortcut = INShortcut(userActivity: activity)
+        let vc = ClosureDelegatingAddVoiceShortcutViewController(shortcut: shortcut)
+        vc.completion = { [unowned self] vc, result in
+            self.userActivity?.becomeCurrent()
+            vc.dismiss(animated: true) {
+                deselectRowAnimated?(true)
+                guard case .failure(let error) = result else { return }
+                UIAlertController.presentAlertVC(for: error, over: self)
+            }
+        }
+        self.present(vc, animated: true, completion: nil)
     }
 }

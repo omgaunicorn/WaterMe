@@ -50,7 +50,11 @@ internal extension Realm {
 
 public class BasicController {
 
+    // MARK: Observation Closures
+
     public static var errorThrown: ((Error) -> Void)?
+    public var remindersDeleted: (([ReminderValue]) -> Void)?
+    public var reminderVesselsDeleted: (([ReminderVesselValue]) -> Void)?
     
     // MARK: Initialization
 
@@ -110,7 +114,8 @@ public class BasicController {
     }
 
     public func allReminders(sorted: Reminder.SortOrder = .nextPerformDate,
-                             ascending: Bool = true) -> Result<AnyRealmCollection<Reminder>, RealmError> {
+                             ascending: Bool = true) -> Result<AnyRealmCollection<Reminder>, RealmError>
+    {
         return self.realm.map({ AnyRealmCollection($0.objects(Reminder.self).sorted(byKeyPath: sorted.keyPath, ascending: ascending)) })
     }
 
@@ -149,6 +154,14 @@ public class BasicController {
         let result = self.reminders(matching: identifiers).flatMap({ self.appendNewPerform(to: $0) })
         self.userDidPerformReminder?()
         return result
+    }
+
+    public func reminderVessel(matching identifier: ReminderVessel.Identifier) -> Result<ReminderVessel, RealmError> {
+        return self.realm.flatMap() { realm -> Result<ReminderVessel, RealmError> in
+            guard let reminder = realm.object(ofType: ReminderVessel.self, forPrimaryKey: identifier.reminderVesselIdentifier)
+                else { return .failure(.objectDeleted) }
+            return .success(reminder)
+        }
     }
 
     public func reminder(matching identifier: Reminder.Identifier) -> Result<Reminder, RealmError> {
@@ -289,11 +302,18 @@ public class BasicController {
     }
         
     public func delete(vessel: ReminderVessel) -> Result<Void, RealmError> {
-        return self.realm.flatMap() { realm in
+        let reminderValues = Array(vessel.reminders.map({ ReminderValue(reminder: $0) }))
+        let vesselValue = ReminderVesselValue(reminderVessel: vessel)
+        let result: Result<Void, RealmError> = self.realm.flatMap() { realm in
             realm.beginWrite()
             self.delete(vessel: vessel, inOpenRealm: realm)
             return realm.waterMe_commitWrite()
         }
+        if case .success = result {
+            self.remindersDeleted?(reminderValues)
+            self.reminderVesselsDeleted?([vesselValue].compactMap({ $0 }))
+        }
+        return result
     }
     
     private func delete(vessel: ReminderVessel, inOpenRealm realm: Realm) {
@@ -307,11 +327,16 @@ public class BasicController {
         if let vessel = reminder.vessel, vessel.reminders.count <= 1 {
             return .failure(.unableToDeleteLastReminder) 
         }
-        return self.realm.flatMap() { realm in
+        let reminderValue = ReminderValue(reminder: reminder)
+        let result: Result<Void, RealmError> = self.realm.flatMap() { realm in
             realm.beginWrite()
             self.delete(reminder: reminder, inOpenRealm: realm)
             return realm.waterMe_commitWrite()
         }
+        if case .success = result {
+            self.remindersDeleted?([reminderValue])
+        }
+        return result
     }
     
     private func delete(reminder: Reminder, inOpenRealm realm: Realm) {

@@ -1,9 +1,9 @@
 //
-//  SubscriptionLevel.swift
+//  DispatchQueue+WaterMe.swift
 //  WaterMe
 //
-//  Created by Jeffrey Bergier on 5/9/17.
-//  Copyright © 2017 Saturday Apps.
+//  Created by Jeffrey Bergier on 10/4/18.
+//  Copyright © 2018 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
 //
@@ -21,19 +21,21 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-/*
-
-import StoreKit
 import Foundation
 
-public struct UnpurchasedSubscription {
-    public var period: Period
-    public var level: Level
-    public var localizedTitle: String
-    public var localizedDescription: String
-    public var price: Double
-    public var priceLocale: Locale
-    internal var product: SKProduct
-}
+public extension DispatchQueue {
 
- */
+    private static let mainQueueKey = DispatchSpecificKey<()>()
+
+    public static func configureMainQueue() {
+        self.main.setSpecific(key: self.mainQueueKey, value: ())
+    }
+
+    public static var isMain: Bool {
+        return self.getSpecific(key: self.mainQueueKey) != nil
+    }
+
+    public var isMain: Bool {
+        return self.getSpecific(key: DispatchQueue.mainQueueKey) != nil
+    }
+}

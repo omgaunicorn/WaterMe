@@ -25,11 +25,15 @@ import WaterMeData
 import UIKit
 
 protocol ReminderFinishDropTargetViewControllerDelegate: class {
+    func userDidCancelDrag(within: ReminderFinishDropTargetViewController)
+    func userDidStartDrag(with values: [ReminderAndVesselValue],
+                          within: ReminderFinishDropTargetViewController)
     func animateAlongSideDropTargetViewResize(within: ReminderFinishDropTargetViewController) -> (() -> Void)?
-    func userDidPerformDrop(with reminders: [Reminder.Identifier], onTargetZoneWithin: ReminderFinishDropTargetViewController)
+    func userDidPerformDrop(with reminders: [Reminder.Identifier],
+                            onTargetZoneWithin controller: ReminderFinishDropTargetViewController?)
 }
 
-class ReminderFinishDropTargetViewController: UIViewController, HasBasicController, HasProController, UIDropInteractionDelegate {
+class ReminderFinishDropTargetViewController: StandardViewController, HasBasicController, HasProController, UIDropInteractionDelegate {
 
     @IBOutlet private weak var instructionalView: DragTargetInstructionalView?
     @IBOutlet private weak var animationView: WateringAnimationPlayerView?
@@ -88,8 +92,8 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, performDrop session: UIDropSession) {
-        let drags = session.reminderDrags
-        self.delegate?.userDidPerformDrop(with: drags, onTargetZoneWithin: self)
+        let identifiers = session.reminderDrags.map({ $0.reminder.uuid })
+        self.delegate?.userDidPerformDrop(with: identifiers, onTargetZoneWithin: self)
     }
 
     // MARK: Handle View Layouts
@@ -122,7 +126,9 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         }
     }
 
-    private func updateDropTargetHeightForDragging(animated: Bool) {
+    func updateDropTargetHeightAndPlayAnimationForDragging(animated: Bool,
+                                                           completion: ((Bool) -> Void)? = nil)
+    {
         let changes: () -> Void = {
             let height = self.view.bounds.height
             self.dropTargetViewHeightConstraint?.constant = height
@@ -131,13 +137,19 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
 
         guard animated == true else {
             changes()
+            completion?(false)
             return
         }
 
-        UIView.style_animateNormal() {
+        UIView.style_animateNormal({
             changes()
             self.view.layoutIfNeeded()
-        }
+        }, completion: completion ?? { _ in })
+    }
+
+    func updatePlayAnimationForDrop() {
+        guard self.animationView?.hoverState != .drop else { return }
+        self.animationView?.hoverState = .drop
     }
 
     private func updateDropTargetHeightForNotDragging(animated: Bool) {
@@ -176,7 +188,7 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
         self.instructionalView?.performInstructionalAnimation(completion: nil)
     }
 
-    private var isDragInProgress = false {
+    var isDragInProgress = false {
         didSet {
             self.instructionalView?.isDragInProgress = self.isDragInProgress
         }
@@ -184,27 +196,28 @@ class ReminderFinishDropTargetViewController: UIViewController, HasBasicControll
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidEnter session: UIDropSession) {
         self.isDragInProgress = true
-        self.updateDropTargetHeightForDragging(animated: true)
+        self.updateDropTargetHeightAndPlayAnimationForDragging(animated: true)
+        self.delegate?.userDidStartDrag(with: session.reminderDrags, within: self)
         guard self.animationView?.hoverState != .drop else { return }
         self.animationView?.hoverState = .hover
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, sessionDidExit session: UIDropSession) {
         self.isDragInProgress = false
+        self.delegate?.userDidCancelDrag(within: self)
         guard self.animationView?.hoverState != .drop else { return }
         self.animationView?.hoverState = .noHover
     }
 
     func dropInteraction(_ interaction: UIDropInteraction, concludeDrop session: UIDropSession) {
         self.isDragInProgress = false
-        guard self.animationView?.hoverState != .drop else { return }
-        self.animationView?.hoverState = .drop
+        self.updatePlayAnimationForDrop()
     }
 }
 
 fileprivate extension UIDropSession {
-    fileprivate var reminderDrags: [Reminder.Identifier] {
-        return self.localDragSession?.items.compactMap({ $0.localObject as? Reminder.Identifier }) ?? []
+    fileprivate var reminderDrags: [ReminderAndVesselValue] {
+        return self.localDragSession?.items.compactMap({ $0.localObject as? ReminderAndVesselValue }) ?? []
     }
 }
 

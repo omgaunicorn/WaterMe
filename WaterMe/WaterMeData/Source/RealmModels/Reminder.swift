@@ -26,12 +26,16 @@ import RealmSwift
 import Foundation
 
 public class Reminder: Object {
+
+    public enum Section: Int, CaseIterable {
+        case late, today, tomorrow, thisWeek, later
+    }
     
     public static let minimumInterval: Int = 1
     public static let maximumInterval: Int = 180
     public static let defaultInterval: Int = 7
     
-    public enum Kind {
+    public enum Kind: Hashable {
         case water, fertilize, trim, mist, move(location: String?), other(description: String?)
         public static let count = 6
     }
@@ -122,32 +126,34 @@ fileprivate extension Reminder {
     }
 }
 
-extension Reminder: UICompleteCheckable {
-    
-    public enum Error {
-        case missingMoveLocation, missingOtherDescription
-    }
-    
-    public typealias E = Error
-    
-    public var isUIComplete: [Error] {
+extension Reminder: ModelCompleteCheckable {
+
+    public var isModelComplete: ModelCompleteError? {
         switch self.kind {
         case .fertilize, .water, .trim, .mist:
-            return []
+            return nil
         case .move(let description):
-            return description?.nonEmptyString == nil ? [.missingMoveLocation] : []
+            return description?.nonEmptyString == nil ?
+                ModelCompleteError(_actions: [.reminderMissingMoveLocation, .cancel, .saveAnyway])
+                : nil
         case .other(let description):
-            return description?.nonEmptyString == nil ? [.missingOtherDescription] : []
+            return description?.nonEmptyString == nil ?
+                ModelCompleteError(_actions: [.reminderMissingOtherDescription, .cancel, .saveAnyway])
+                : nil
         }
     }
 }
 
 public extension Reminder {
-    public struct Identifier {
+    public struct Identifier: UUIDRepresentable, Hashable {
         public var reminderIdentifier: String
         public init(reminder: Reminder) {
             self.reminderIdentifier = reminder.uuid
         }
+        public init(rawValue: String) {
+            self.reminderIdentifier = rawValue
+        }
+        public var uuid: String { return self.reminderIdentifier }
     }
 }
 
@@ -167,14 +173,5 @@ public extension Reminder {
                 return #keyPath(Reminder.note)
             }
         }
-    }
-}
-
-public extension Reminder {
-    public enum Section: Int {
-        case late, today, tomorrow, thisWeek, later
-        public static let count = 5
-        public static let rawValueSet = (0 ..< Reminder.Section.count).reduce(into: Set<Int>(), { $0.insert($1) })
-        public static let all = (0 ..< Reminder.Section.count).reduce(into: [Reminder.Section](), { $0.append(Reminder.Section(rawValue: $1)!) })
     }
 }

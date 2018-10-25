@@ -24,6 +24,7 @@
 import Foundation
 
 public extension Calendar {
+
     public func numberOfDaysBetween(startDate: Date, endDate: Date, stopCountingAfterMaxDays maxDays: Int = 365) -> Int {
         var numberOfDays = 0
         var stop = false
@@ -38,6 +39,7 @@ public extension Calendar {
         }
         return numberOfDays
     }
+
     public func dateWithExact(hour desiredHour: Int, onSameDayAs inputDate: Date) -> Date {
         // get the start of the day
         let start = self.startOfDay(for: inputDate)
@@ -50,17 +52,20 @@ public extension Calendar {
 
         return end
     }
+
     public func dateWithExact(hour desiredHour: Int, onSameDayAs inputDate: Date?) -> Date? {
         guard let inputDate = inputDate else { return nil }
         let adjusted: Date = self.dateWithExact(hour: desiredHour, onSameDayAs: inputDate)
         return adjusted
     }
+
     public func endOfDay(for date: Date) -> Date {
         let plusOneDay = self.date(byAdding: .day, value: 1, to: date)!
         let startOfPlusOneDay = self.startOfDay(for: plusOneDay)
         let oneSecondBeforeStartOfPlusOneDay = self.date(byAdding: .second, value: -1, to: startOfPlusOneDay)!
         return oneSecondBeforeStartOfPlusOneDay
     }
+
     public func userNotificationCompatibleDateComponents(with date: Date) -> DateComponents {
         return self.dateComponents([.year, .month, .day, .hour, .minute], from: date)
     }
