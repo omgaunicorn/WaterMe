@@ -93,6 +93,8 @@ private extension UserActivityConfigurator {
             return
         }
 
+        activity.waterme_isEligibleForNeededServices = true
+
         let uuid = reminderVessel.uuid
         let title = LocalizedString.editVesselTitle(fromVesselName: reminderVessel.name)
         let phrase = LocalizedString.randomLocalizedPhrase
@@ -112,6 +114,8 @@ private extension UserActivityConfigurator {
             activity.waterme_isEligibleForNeededServices = false
             return
         }
+
+        activity.waterme_isEligibleForNeededServices = true
 
         let uuid = value.reminder.uuid
         let title = LocalizedString.viewReminderTitle(for: value.reminder.kind,
@@ -136,6 +140,8 @@ private extension UserActivityConfigurator {
             return
         }
 
+        activity.waterme_isEligibleForNeededServices = true
+
         let uuid = value.reminder.uuid
         let title = LocalizedString.performReminderTitle(for: value.reminder.kind,
                                                          andVesselName: value.reminderVessel.name)
@@ -157,6 +163,8 @@ private extension UserActivityConfigurator {
             activity.waterme_isEligibleForNeededServices = false
             return
         }
+
+        activity.waterme_isEligibleForNeededServices = true
 
         let uuid = value.reminder.uuid
         let title = LocalizedString.editReminderTitle(for: value.reminder.kind,
