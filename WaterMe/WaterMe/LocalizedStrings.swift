@@ -608,13 +608,27 @@ extension UserActivityConfigurator {
                 return localizedString
             }
         }
-        static var genericLocalizedPhrase: String {
-            let localizedString = NSLocalizedString("Green Thumb It!",
-                                                    comment: "SiriShortcut: Phrase: Generic: Recommends something short and funny that the user can use to trigger this shortcut.")
+        static var randomLocalizedPhrase: String {
+            var localizedStrings: [String] = [
+                NSLocalizedString("I gardened!",
+                                  comment: "SiriShortcut: Phrase: Random1"),
+                NSLocalizedString("Water Me Baby!",
+                                  comment: "SiriShortcut: Phrase: Random2"),
+                NSLocalizedString("Thats that!",
+                                  comment: "SiriShortcut: Phrase: Random3"),
+                NSLocalizedString("Bam! Watered.",
+                                  comment: "SiriShortcut: Phrase: Random4"),
+                NSLocalizedString("Green thumb for the win!",
+                                  comment: "SiriShortcut: Phrase: Random5"),
+                NSLocalizedString("Live long and prosper.",
+                                  comment: "SiriShortcut: Phrase: Random6")
+            ]
+            localizedStrings.shuffle()
+            let first = localizedStrings.first!
             if #available(iOS 12.0, *) {
-                return NSString.deferredLocalizedIntentsString(with: localizedString) as String
+                return NSString.deferredLocalizedIntentsString(with: first) as String
             } else {
-                return localizedString
+                return first
             }
         }
         static let siriShortcutsUnavailableTitle: String

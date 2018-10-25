@@ -95,7 +95,7 @@ private extension UserActivityConfigurator {
 
         let uuid = reminderVessel.uuid
         let title = LocalizedString.editVesselTitle(fromVesselName: reminderVessel.name)
-        let phrase = LocalizedString.genericLocalizedPhrase
+        let phrase = LocalizedString.randomLocalizedPhrase
         let description = LocalizedString.editReminderVesselDescription
 
         activity.update(uuid: uuid,
@@ -116,7 +116,7 @@ private extension UserActivityConfigurator {
         let uuid = value.reminder.uuid
         let title = LocalizedString.viewReminderTitle(for: value.reminder.kind,
                                                       andVesselName: value.reminderVessel.name)
-        let phrase = LocalizedString.genericLocalizedPhrase
+        let phrase = LocalizedString.randomLocalizedPhrase
         let description = LocalizedString.viewReminderDescription
 
         activity.update(uuid: uuid,
@@ -140,7 +140,7 @@ private extension UserActivityConfigurator {
         let title = LocalizedString.performReminderTitle(for: value.reminder.kind,
                                                          andVesselName: value.reminderVessel.name)
         let description = LocalizedString.performReminderDescription
-        let phrase = LocalizedString.genericLocalizedPhrase
+        let phrase = LocalizedString.randomLocalizedPhrase
         activity.update(uuid: uuid,
                         title: title,
                         phrase: phrase,
@@ -161,7 +161,7 @@ private extension UserActivityConfigurator {
         let uuid = value.reminder.uuid
         let title = LocalizedString.editReminderTitle(for: value.reminder.kind,
                                                       andVesselName: value.reminderVessel.name)
-        let phrase = LocalizedString.genericLocalizedPhrase
+        let phrase = LocalizedString.randomLocalizedPhrase
         let description = LocalizedString.editReminderDescription
 
         activity.update(uuid: uuid,
