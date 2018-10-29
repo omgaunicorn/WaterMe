@@ -5,7 +5,8 @@
 
 WaterMe is an open source iOS application that is available for free on the App Store. Its a small app by any measure, but its my baby and I love it. According to Fabric analytics, the app has about 500 Daily Active Users and 2,400 monthly active users. WaterMe is under active development and I welcome feature requests and pull requests.
 
-[![Download on the App Store](https://devimages-cdn.apple.com/app-store/marketing/guidelines/images/exhibit-1-1-alternate.png)](https://itunes.apple.com/app/waterme/id1089742494)
+[📲 App Store Link](https://itunes.apple.com/app/waterme/id1089742494)<br>
+[🕊 TestFlight Link](https://testflight.apple.com/join/C9vDCb25)
 
 ## App Store Screenshots
 
