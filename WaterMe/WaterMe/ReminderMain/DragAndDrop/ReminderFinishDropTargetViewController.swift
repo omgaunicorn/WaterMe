@@ -215,7 +215,7 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
     }
 }
 
-fileprivate extension UIDropSession {
+extension UIDropSession {
     fileprivate var reminderDrags: [ReminderAndVesselValue] {
         return self.localDragSession?.items.compactMap({ $0.localObject as? ReminderAndVesselValue }) ?? []
     }

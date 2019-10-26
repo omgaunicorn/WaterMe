@@ -88,6 +88,7 @@ class ReminderSummaryViewController: StandardViewController {
             let size = self.tableViewController?.tableView.visibleRowsSize
             return size ?? .zero
         }
+        //swiftlint:disable:next unused_setter_value
         set { assertionFailure("Not sure why this was set") }
     }
 

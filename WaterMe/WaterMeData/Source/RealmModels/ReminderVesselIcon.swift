@@ -23,7 +23,7 @@
 
 import UIKit
 
-public extension ReminderVessel {
+extension ReminderVessel {
     
     public enum Icon {
         case emoji(String), image(UIImage)
@@ -78,7 +78,7 @@ public extension ReminderVessel {
     }
 }
 
-internal extension ReminderVessel.Icon {
+extension ReminderVessel.Icon {
     
     internal init?(rawImageData: Data?, emojiString: String?) {
         if let data = rawImageData, let image = UIImage(data: data) {

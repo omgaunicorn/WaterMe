@@ -162,7 +162,7 @@ extension UIAlertController {
     }
 }
 
-fileprivate extension UserDefaults {
+extension UserDefaults {
 
     fileprivate static let kAppVersionDisplayDatePrefix = "kAppVersionDisplayDatePrefixKey"
 

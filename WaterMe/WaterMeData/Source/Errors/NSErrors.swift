@@ -23,7 +23,7 @@
 
 import Foundation
 
-public extension NSError {
+extension NSError {
 
     private static let kDomain = "WaterMe"
 

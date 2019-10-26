@@ -113,7 +113,7 @@ extension ReminderVessel {
     }
 }
 
-public extension ReminderVessel {
+extension ReminderVessel {
 
     public var shortLabelSafeDisplayName: String? {
         let name = self.displayName ?? ""

@@ -154,7 +154,7 @@ class ReminderUserNotificationController {
 
 import WaterMeData
 
-fileprivate extension ReminderUserNotificationController.LocalizedString {
+extension ReminderUserNotificationController.LocalizedString {
     fileprivate static func localizedNotificationBody(from items: [String?]) -> String {
         switch items.count {
         case 1:

@@ -23,7 +23,7 @@
 
 import UIKit
 
-internal extension UIImage {
+extension UIImage {
 
     internal static let style_maxSize: CGFloat = 500
     internal static let style_scale: CGFloat = 1

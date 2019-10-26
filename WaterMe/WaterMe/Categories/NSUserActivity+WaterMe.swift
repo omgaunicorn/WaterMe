@@ -41,7 +41,7 @@ struct UserActivityToFail: Error {
     var completion: NSUserActivityContinuedHandler?
 }
 
-public extension NSUserActivity {
+extension NSUserActivity {
 
     fileprivate static let stringSeparator = "::"
 

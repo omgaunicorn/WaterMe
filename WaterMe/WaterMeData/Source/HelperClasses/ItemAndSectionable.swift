@@ -100,7 +100,7 @@ public enum ItemAndSectionSanityCheckFailureReason {
     }
 }
 
-public extension Sequence where Iterator.Element == IndexPath {
+extension Sequence where Iterator.Element == IndexPath {
     // Counts the number of times items appear in a single section
     // Key: Section
     // Value: Number of times an items appeared from the key section

@@ -28,7 +28,7 @@ import CloudKit
 
 internal let log = XCGLogger.default
 
-internal extension URL {
+extension URL {
     internal func realmURL(withAppName appName: String, userPath: String) -> URL {
         var userPath = userPath
         if userPath.first == "/" {
@@ -53,7 +53,7 @@ internal extension URL {
     }
 }
 
-public extension CKContainer {
+extension CKContainer {
     public func token(completionHandler: ((Result<CKRecord.ID, AnyError>) -> Void)?) {
         self.fetchUserRecordID { id, error in
             if let id = id {
@@ -65,7 +65,7 @@ public extension CKContainer {
     }
 }
 
-public extension SyncUser {
+extension SyncUser {
     public static func cloudKitUser(with cloudKitID: CKRecord.ID, completionHandler: ((Result<SyncUser, AnyError>) -> Void)?) {
         let server = PrivateKeys.kRealmServer
         let credential = SyncCredentials.cloudKit(token: cloudKitID.recordName)
@@ -80,7 +80,7 @@ public extension SyncUser {
     }
 }
 
-public extension String {
+extension String {
     public var nonEmptyString: String? {
         let stripped = self.trimmingCharacters(in: .whitespacesAndNewlines)
         guard stripped.isEmpty == false else { return nil }

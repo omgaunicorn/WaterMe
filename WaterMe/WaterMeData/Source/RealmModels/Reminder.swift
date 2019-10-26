@@ -76,7 +76,7 @@ public class ReminderPerform: Object {
     @objc internal dynamic var bloop = false
 }
 
-fileprivate extension Reminder {
+extension Reminder {
     
     fileprivate static let kCaseWaterValue = "kReminderKindCaseWaterValue"
     fileprivate static let kCaseTrimValue = "kReminderKindCaseTrimValue"
@@ -144,7 +144,7 @@ extension Reminder: ModelCompleteCheckable {
     }
 }
 
-public extension Reminder {
+extension Reminder {
     public struct Identifier: UUIDRepresentable, Hashable {
         public var reminderIdentifier: String
         public init(reminder: Reminder) {
@@ -157,7 +157,7 @@ public extension Reminder {
     }
 }
 
-public extension Reminder {
+extension Reminder {
     public enum SortOrder {
         case nextPerformDate, interval, kind, note
 
