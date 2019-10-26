@@ -22,7 +22,6 @@
 //
 
 import RealmSwift
-import Result
 import Foundation
 
 /**

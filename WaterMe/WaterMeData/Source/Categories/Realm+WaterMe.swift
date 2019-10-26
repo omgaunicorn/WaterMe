@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Result
 import RealmSwift
 import XCGLogger
 import CloudKit
@@ -54,23 +53,23 @@ extension URL {
 }
 
 extension CKContainer {
-    public func token(completionHandler: ((Result<CKRecord.ID, AnyError>) -> Void)?) {
+    public func token(completionHandler: ((Result<CKRecord.ID, Swift.Error>) -> Void)?) {
         self.fetchUserRecordID { id, error in
             if let id = id {
                 completionHandler?(.success(id))
             } else {
-                completionHandler?(.failure(AnyError(error!)))
+                completionHandler?(.failure(error!))
             }
         }
     }
 }
 
 extension SyncUser {
-    public static func cloudKitUser(with cloudKitID: CKRecord.ID, completionHandler: ((Result<SyncUser, AnyError>) -> Void)?) {
+    public static func cloudKitUser(with cloudKitID: CKRecord.ID, completionHandler: ((Result<SyncUser, Swift.Error>) -> Void)?) {
         let server = PrivateKeys.kRealmServer
         let credential = SyncCredentials.cloudKit(token: cloudKitID.recordName)
         SyncUser.logIn(with: credential, server: server) { user, error in
-            guard let user = user else { completionHandler?(.failure(AnyError(error!))); return; }
+            guard let user = user else { completionHandler?(.failure(error!)); return; }
             completionHandler?(.success(user))
         }
     }

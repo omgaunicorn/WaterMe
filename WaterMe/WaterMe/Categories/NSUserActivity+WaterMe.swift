@@ -22,7 +22,6 @@
 //
 
 import WaterMeData
-import Result
 import Intents
 import CoreSpotlight
 import MobileCoreServices

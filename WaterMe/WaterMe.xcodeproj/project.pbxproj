@@ -872,7 +872,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -893,7 +893,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		44B12411F1A3FF58FB1AB4B1 /* [CP] Check Pods Manifest.lock */ = {
@@ -920,7 +920,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-AdminConsole/Pods-AdminConsole-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
@@ -941,7 +941,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AdminConsole/Pods-AdminConsole-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		50BB0F7A1EC214AC00850FF4 /* Swiftlint */ = {
@@ -982,7 +982,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Cheers/Cheers.framework",
 				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
@@ -1009,7 +1009,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

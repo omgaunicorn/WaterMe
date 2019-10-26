@@ -9,7 +9,7 @@ PODS:
   - Realm/Headers (3.7.6)
   - RealmSwift (3.7.6):
     - Realm (= 3.7.6)
-  - Result (4.0.0)
+  - Result (5.0.0)
   - SimpleImageViewer (1.1.1)
   - WaterMeData (1.0.0):
     - RealmSwift
@@ -28,8 +28,6 @@ DEPENDENCIES:
   - CropViewController (~> 2.3.8)
   - RealmSwift
   - RealmSwift (~> 3.7.6)
-  - Result
-  - Result (~> 4.0.0)
   - SimpleImageViewer (~> 1.1.1)
   - WaterMeData (from `WaterMeData`)
   - WaterMeStore (from `WaterMeStore`)
@@ -37,7 +35,7 @@ DEPENDENCIES:
   - XCGLogger (~> 6.1.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Cheers
     - CropViewController
     - ObjcExceptionBridging
@@ -59,12 +57,12 @@ SPEC CHECKSUMS:
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
   RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
-  Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
+  Result: ed341d2f236af425b803e690e9bd8fd0a0cb7c5a
   SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
-  WaterMeData: 2d3ceb104310e1038a8d4fc8e6a3bc322e70a391
-  WaterMeStore: 4eb3190f0ba860255ee19e0fd7229587c769e0c2
+  WaterMeData: 4ab15af6eb99b90c9a904959b11bfccf5214c2f7
+  WaterMeStore: f10bb19def2e4ecde8c7819d795278e82dd7eb57
   XCGLogger: 7f7f43f15dfe3a305fa1342b7dc29af656289abd
 
-PODFILE CHECKSUM: e948aa167d79676dcde1c1253c64d1456c202b43
+PODFILE CHECKSUM: 36af7304c7798ec1a04ad6a8f02007fd08ec968f
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.4

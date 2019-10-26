@@ -1,3 +1,5 @@
+source 'https://cdn.cocoapods.org/'
+
 target 'WaterMe' do
 	platform :ios, '11.0'
 	use_frameworks!
@@ -5,7 +7,6 @@ target 'WaterMe' do
   pod 'SimpleImageViewer', '~> 1.1.1'
 	pod 'Cheers', '~> 2.1.0'
 	pod 'CropViewController', '~> 2.3.8'
-	pod 'Result', '~> 4.0.0'
 	pod 'RealmSwift', '~> 3.7.6'
 	pod 'XCGLogger', '~> 6.1.0'
 	pod 'WaterMeData', :path => 'WaterMeData'
@@ -16,7 +17,6 @@ target 'AdminConsole' do
 	platform :ios, '11.0'
 	use_frameworks!
 	
-	pod 'Result'
 	pod 'RealmSwift'
 	pod 'XCGLogger'
 	pod 'WaterMeData', :path => 'WaterMeData'

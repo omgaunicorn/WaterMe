@@ -22,7 +22,6 @@
 //
 
 import RealmSwift
-import Result
 
 public protocol HasBasicController {
     var basicRC: BasicController? { get set }

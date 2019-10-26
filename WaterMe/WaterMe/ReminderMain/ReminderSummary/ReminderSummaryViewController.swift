@@ -24,7 +24,6 @@
 import UIKit
 import SimpleImageViewer
 import WaterMeData
-import Result
 import RealmSwift
 
 class ReminderSummaryViewController: StandardViewController {
