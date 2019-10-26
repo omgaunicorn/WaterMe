@@ -5,7 +5,7 @@ target 'WaterMe' do
 	use_frameworks!
 	
   pod 'SimpleImageViewer', '~> 1.1.1'
-	pod 'Cheers', '~> 2.1.0'
+	pod 'Cheers', '~> 2.3.0'
 	pod 'CropViewController', '~> 2.3.8'
 	pod 'RealmSwift', '~> 3.20.0'
 	pod 'XCGLogger', '~> 7.0.0'
