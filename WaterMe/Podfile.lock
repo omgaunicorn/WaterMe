@@ -18,9 +18,9 @@ PODS:
   - WaterMeStore (1.0.0):
     - Result
     - XCGLogger
-  - XCGLogger (6.1.0):
-    - XCGLogger/Core (= 6.1.0)
-  - XCGLogger/Core (6.1.0):
+  - XCGLogger (7.0.0):
+    - XCGLogger/Core (= 7.0.0)
+  - XCGLogger/Core (7.0.0):
     - ObjcExceptionBridging
 
 DEPENDENCIES:
@@ -32,7 +32,7 @@ DEPENDENCIES:
   - WaterMeData (from `WaterMeData`)
   - WaterMeStore (from `WaterMeStore`)
   - XCGLogger
-  - XCGLogger (~> 6.1.0)
+  - XCGLogger (~> 7.0.0)
 
 SPEC REPOS:
   trunk:
@@ -61,8 +61,8 @@ SPEC CHECKSUMS:
   SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
   WaterMeData: 4ab15af6eb99b90c9a904959b11bfccf5214c2f7
   WaterMeStore: f10bb19def2e4ecde8c7819d795278e82dd7eb57
-  XCGLogger: 7f7f43f15dfe3a305fa1342b7dc29af656289abd
+  XCGLogger: 0434f15e3909cdc450bb63faf638b8792ab782ab
 
-PODFILE CHECKSUM: 36af7304c7798ec1a04ad6a8f02007fd08ec968f
+PODFILE CHECKSUM: 2cbab59bb12f758036d486d4d8cf4ae52f2fba1b
 
 COCOAPODS: 1.8.4

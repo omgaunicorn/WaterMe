@@ -8,7 +8,7 @@ target 'WaterMe' do
 	pod 'Cheers', '~> 2.1.0'
 	pod 'CropViewController', '~> 2.3.8'
 	pod 'RealmSwift', '~> 3.7.6'
-	pod 'XCGLogger', '~> 6.1.0'
+	pod 'XCGLogger', '~> 7.0.0'
 	pod 'WaterMeData', :path => 'WaterMeData'
 	pod 'WaterMeStore', :path => 'WaterMeStore'
 end
