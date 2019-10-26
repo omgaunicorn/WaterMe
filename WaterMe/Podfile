@@ -7,7 +7,7 @@ target 'WaterMe' do
   pod 'SimpleImageViewer', '~> 1.1.1'
 	pod 'Cheers', '~> 2.1.0'
 	pod 'CropViewController', '~> 2.3.8'
-	pod 'RealmSwift', '~> 3.7.6'
+	pod 'RealmSwift', '~> 3.20.0'
 	pod 'XCGLogger', '~> 7.0.0'
 	pod 'WaterMeData', :path => 'WaterMeData'
 	pod 'WaterMeStore', :path => 'WaterMeStore'
@@ -39,11 +39,11 @@ post_install do |installer|
   FileUtils.cp_r('Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe-acknowledgements.plist', 'WaterMe/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
   
   #
-  # Force everything to use Swift 4.2
+  # Force everything to use Swift 5.1
   #
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
-      config.build_settings['SWIFT_VERSION'] = '4.2'
+      config.build_settings['SWIFT_VERSION'] = '5.1'
     end
   end
 end
