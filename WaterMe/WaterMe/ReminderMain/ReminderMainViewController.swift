@@ -247,15 +247,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         let layoutDirection = self.traitCollection.layoutDirection
         let customInset: UIEdgeInsets
         switch verticalSizeClass {
-        case .regular, .unspecified:
-            // get the width and set the custom inset
-            let dragViewHeight = self.dropTargetViewController?.dropTargetViewHeight ?? 0
-            customInset = UIEdgeInsets(top: dragViewHeight, left: 0, bottom: 0, right: 0)
-            // we need custom scroll insets in portrait
-            self.collectionVC?.collectionView?.scrollIndicatorInsets = customInset
         case .compact:
-            fallthrough
-        @unknown default:
             // Scroll Indicators can have normal behavior in landscape
             self.collectionVC?.collectionView?.scrollIndicatorInsets = .zero
             // get the width and set the custom inset
@@ -268,6 +260,14 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             @unknown default:
                 customInset = UIEdgeInsets(top: 0, left: dragViewWidth, bottom: 0, right: 0)
             }
+        case .regular, .unspecified:
+            fallthrough
+        @unknown default:
+            // get the width and set the custom inset
+            let dragViewHeight = self.dropTargetViewController?.dropTargetViewHeight ?? 0
+            customInset = UIEdgeInsets(top: dragViewHeight, left: 0, bottom: 0, right: 0)
+            // we need custom scroll insets in portrait
+            self.collectionVC?.collectionView?.scrollIndicatorInsets = customInset
         }
 
         // BUGFIX: http://crashes.to/s/254b2d6597f
