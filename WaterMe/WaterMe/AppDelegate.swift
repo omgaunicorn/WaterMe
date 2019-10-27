@@ -167,7 +167,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // configure window
         let window = self.window ?? UIWindow(frame: UIScreen.main.bounds)
-        window.backgroundColor = .white
+        window.backgroundColor = .black
         window.rootViewController = vc
 
         // show window

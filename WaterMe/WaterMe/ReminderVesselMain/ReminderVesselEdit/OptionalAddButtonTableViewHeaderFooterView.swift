@@ -37,10 +37,17 @@ class OptionalAddButtonTableViewHeaderFooterView: UITableViewHeaderFooterView {
     }
     
     var addButtonTapped: (() -> Void)?
+    
+    @IBAction private func addButtonTapped(_ sender: Any) {
+        self.addButtonTapped?()
+    }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        self.updateLabels()
+    }
 
+    private func updateLabels() {
         // bottom alignment of apple's label changes based on accessibility text size
         // also in accessibility sizes, a much shorter label is used
         switch self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory {
@@ -56,9 +63,10 @@ class OptionalAddButtonTableViewHeaderFooterView: UITableViewHeaderFooterView {
             self.addButton?.setAttributedTitle(title, for: .normal)
         }
     }
-    
-    @IBAction private func addButtonTapped(_ sender: Any) {
-        self.addButtonTapped?()
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.updateLabels()
     }
     
 }
