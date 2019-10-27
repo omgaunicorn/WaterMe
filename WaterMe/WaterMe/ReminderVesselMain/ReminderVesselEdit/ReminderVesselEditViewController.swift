@@ -51,6 +51,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         }
         vc.userActivity = NSUserActivity(kind: .editReminderVessel,
                                          delegate: vc.userActivityDelegate)
+        navVC.presentationController?.delegate = vc
         return navVC
     }
     
@@ -243,5 +244,11 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     
     deinit {
         self.notificationToken?.invalidate()
+    }
+}
+
+extension ReminderVesselEditViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.completionHandler(self)
     }
 }
