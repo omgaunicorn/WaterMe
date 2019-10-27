@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.reminderObserver?.notificationPermissionsMayHaveChanged()
         }
         // register for notifications about the increase contrast setting
-        _ = NotificationCenter.default.addObserver(forName: .UIAccessibilityDarkerSystemColorsStatusDidChange,
+        _ = NotificationCenter.default.addObserver(forName: UIAccessibility.darkerSystemColorsStatusDidChangeNotification,
                                                    object: nil,
                                                    queue: nil)
         { _ in
@@ -108,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
     {
 
         // see if there is a new build
@@ -138,7 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.style_configure()
 
         // Configure audio so the water video does not pause the users music
-        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.ambient)))
 
         let result = BasicController.new(of: .local)
         let vc = ReminderMainViewController.newVC(basicRCResult: result, proController: nil)
@@ -226,7 +226,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      shouldRestoreApplicationState coder: NSCoder) -> Bool
     {
-        let _savedBuild = coder.decodeObject(forKey: UIApplicationStateRestorationBundleVersionKey) as? String
+        let _savedBuild = coder.decodeObject(forKey: UIApplication.stateRestorationBundleVersionKey) as? String
         let _currentBuild = Bundle(for: type(of: self)).infoDictionary?[kCFBundleVersionKey as String] as? String
         guard
             let savedBuild = _savedBuild,
@@ -235,4 +235,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else { return false }
         return true
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+	return input.rawValue
 }

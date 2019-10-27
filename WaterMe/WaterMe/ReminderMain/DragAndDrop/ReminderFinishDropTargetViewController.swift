@@ -56,7 +56,7 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillEnterForeground(_:)), name: .UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
         self.dropTargetView?.addInteraction(UIDropInteraction(delegate: self))
         self.animationView?.finishedPlayingVideo = { [unowned self] in
             self.updateDropTargetHeightForNotDragging(animated: true)

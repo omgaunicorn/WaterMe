@@ -27,7 +27,7 @@ extension UIBarButtonItem {
     convenience init(localizedSettingsButtonWithTarget target: Any,
                      action: Selector)
     {
-        self.init(image: #imageLiteral(resourceName: "TipJar"), style: UIBarButtonItemStyle.plain,
+        self.init(image: #imageLiteral(resourceName: "TipJar"), style: UIBarButtonItem.Style.plain,
                   target: target,
                   action: action)
         self.accessibilityLabel = SettingsMainViewController.LocalizedString.settingsTitle

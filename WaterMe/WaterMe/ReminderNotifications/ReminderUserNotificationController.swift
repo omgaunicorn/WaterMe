@@ -137,7 +137,7 @@ class ReminderUserNotificationController {
             // only set the body if there is a trigger. this way a notification won't be shown to the user
             // only the badge will update.
             _content.body = ReminderUserNotificationController.LocalizedString.localizedNotificationBody(from: plantNames)
-            _content.sound = .default()
+            _content.sound = .default
             _content.badge = NSNumber(value: matches.count)
 
             // swiftlint:disable:next force_cast

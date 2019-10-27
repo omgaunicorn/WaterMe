@@ -37,7 +37,7 @@ extension UIAlertController {
         let ud = UserDefaults.standard
         let authorizationStatus = nc.notificationAuthorizationStatus
         let userAskedToBeAsked = ud.askForNotifications
-        let style: UIAlertControllerStyle = sender != nil ? .actionSheet : .alert
+        let style: UIAlertController.Style = sender != nil ? .actionSheet : .alert
         switch (authorizationStatus, userAskedToBeAsked) {
         case (.notDetermined, true), (.provisional, true):
             self.init(newRequestPermissionAlertWithStyle: style, selectionCompletionHandler: selection)
@@ -58,7 +58,7 @@ extension UIAlertController {
         }
     }
 
-    private convenience init(newRequestPermissionAlertWithStyle style: UIAlertControllerStyle,
+    private convenience init(newRequestPermissionAlertWithStyle style: UIAlertController.Style,
                              selectionCompletionHandler selection: ((PermissionSelection) -> Void)?)
     {
         self.init(title: LocalizedString.newPermissionTitle,
@@ -93,7 +93,7 @@ extension UIAlertController {
         self.addAction(no)
         self.addAction(cancel)
     }
-    private convenience init(newPermissionDeniedAlertWithStyle style: UIAlertControllerStyle,
+    private convenience init(newPermissionDeniedAlertWithStyle style: UIAlertController.Style,
                              selectionCompletionHandler selection: ((PermissionSelection) -> Void)?)
     {
         self.init(title: LocalizedString.permissionDeniedAlertTitle,

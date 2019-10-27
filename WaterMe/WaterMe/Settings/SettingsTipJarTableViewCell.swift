@@ -37,7 +37,7 @@ class SettingsTipJarTableViewCell: UITableViewCell {
         return f
     }()
 
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.setup()
     }
@@ -62,7 +62,7 @@ class SettingsTipJarTableViewCell: UITableViewCell {
             self.contentView.bottomAnchor.constraint(greaterThanOrEqualTo: self.trailingLabel.bottomAnchor, constant: UITableViewCell.style_labelCellBottomPadding),
             self.contentView.trailingAnchor.constraint(equalTo: self.trailingLabel.trailingAnchor, constant: UITableViewCell.style_labelCellTrailingPadding),
             self.leadingLabel.firstBaselineAnchor.constraint(equalTo: self.trailingLabel.firstBaselineAnchor, constant: 0),
-            self.trailingLabel.leadingAnchor.constraintGreaterThanOrEqualToSystemSpacingAfter(self.leadingLabel.trailingAnchor, multiplier: 1)
+            self.trailingLabel.leadingAnchor.constraint(greaterThanOrEqualToSystemSpacingAfter: self.leadingLabel.trailingAnchor, multiplier: 1)
             ])
     }
 

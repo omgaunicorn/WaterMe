@@ -51,7 +51,7 @@ class GlobalReminderObserver {
         self.basicRC = basicController
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.applicationDidEnterBackground(with:)),
-                                               name: .UIApplicationDidEnterBackground,
+                                               name: UIApplication.didEnterBackgroundNotification,
                                                object: nil)
         self.significantTimePassedDetector.delegate = self
 

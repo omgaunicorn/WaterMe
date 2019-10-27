@@ -27,7 +27,7 @@ import UIKit
 class ReminderHeaderCollectionReusableView: BlurryBackgroundBottomLineCollectionReusableView {
 
     override class var reuseID: String { return "ReminderHeaderCollectionReusableView" }
-    override class var kind: String { return UICollectionElementKindSectionHeader }
+    override class var kind: String { return UICollectionView.elementKindSectionHeader }
 
     private let label: UILabel = {
         let v = UILabel()

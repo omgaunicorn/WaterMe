@@ -90,12 +90,16 @@ class ImagePickerCropperViewController: UIImagePickerController, UIImagePickerCo
                 }
             case .photoLibrary, .savedPhotosAlbum:
                 invalidateTimer() // iOS 11 makes photos permission no longer needed for UIImagePickerController
+            @unknown default:
+                // in the case we don't know whats happening,
+                // just disable the timer and hope it all works out.
+                invalidateTimer()
             }
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let original = info[UIImagePickerControllerOriginalImage] as? UIImage
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let original = info[.originalImage] as? UIImage
         guard let image = original else { self.completionHandler?(nil, picker); return; }
         let crop = CropViewController(croppingStyle: .default, image: image)
         crop.delegate = self
