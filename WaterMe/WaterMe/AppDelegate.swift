@@ -138,7 +138,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.style_configure()
 
         // Configure audio so the water video does not pause the users music
-        try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.ambient)))
+        try? AVAudioSession.sharedInstance().setCategory(.ambient)
 
         let result = BasicController.new(of: .local)
         let vc = ReminderMainViewController.newVC(basicRCResult: result, proController: nil)
@@ -235,9 +235,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else { return false }
         return true
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
-	return input.rawValue
 }

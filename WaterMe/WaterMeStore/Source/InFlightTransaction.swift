@@ -65,10 +65,15 @@ public struct InFlightTransaction {
                 case .paymentNotAllowed:
                     inFlight += [InFlightTransaction(state: .errorNotAllowed, transaction: transaction)]
                 case .privacyAcknowledgementRequired, .unauthorizedRequestData, .invalidOfferIdentifier, .invalidSignature, .missingOfferParams, .invalidOfferPrice:
+                    fallthrough
+                @unknown default:
                     // TODO: New Cases for iOS 12.2
                     // Go through them
                     inFlight += [InFlightTransaction(state: .errorUnknown, transaction: transaction)]
                 }
+            @unknown default:
+                // Unknown future cases should produce an error
+                inFlight += [InFlightTransaction(state: .errorUnknown, transaction: transaction)]
             }
         }
         return (inFlight: inFlight, ignored: ignored, readyToBeFinished: readyToBeFinished)

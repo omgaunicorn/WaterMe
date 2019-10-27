@@ -76,12 +76,14 @@ extension UIBarButtonItem {
 
         // adjust the values based on orientation
         switch traitCollection.layoutDirection {
-        case .leftToRight, .unspecified:
-            imageInsetLeadingValue = kImageInsetLeadingValue * -1
-            landscapeImagePhoneInsetLeadingValue = kLandscapeImagePhoneInsetLeadingValue * -1
         case .rightToLeft:
             imageInsetLeadingValue = kImageInsetLeadingValue
             landscapeImagePhoneInsetLeadingValue = kLandscapeImagePhoneInsetLeadingValue
+        case .leftToRight, .unspecified:
+            fallthrough
+        @unknown default:
+            imageInsetLeadingValue = kImageInsetLeadingValue * -1
+            landscapeImagePhoneInsetLeadingValue = kLandscapeImagePhoneInsetLeadingValue * -1
         }
 
         // reset the values to defaults

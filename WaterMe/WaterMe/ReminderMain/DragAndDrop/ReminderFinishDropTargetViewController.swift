@@ -157,12 +157,14 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
         let changes: () -> Void = {
             let height: CGFloat
             switch verticalSizeClass {
-            case .regular, .unspecified:
-                height = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory ?
-                    type(of: self).style_dropTargetViewCompactHeightAccessibilityTextSizeEnabled :
-                    type(of: self).style_dropTargetViewCompactHeight
             case .compact:
                 height = self.view.bounds.height
+            case .regular, .unspecified:
+                fallthrough
+            @unknown default:
+                height = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+                    ? type(of: self).style_dropTargetViewCompactHeightAccessibilityTextSizeEnabled
+                    : type(of: self).style_dropTargetViewCompactHeight
             }
             self.dropTargetViewHeightConstraint?.constant = height
             self.delegate?.animateAlongSideDropTargetViewResize(within: self)?()

@@ -80,13 +80,15 @@ class ImagePickerCropperViewController: UIImagePickerController, UIImagePickerCo
             switch self.sourceType {
             case .camera:
                 switch type(of: self).cameraPermission {
-                case .notDetermined:
-                    break // do nothing. the user needs to pick
                 case .authorized:
                     invalidateTimer()
                 case .restricted, .denied:
                     invalidateTimer()
                     self.completionHandler?(nil, self)
+                case .notDetermined:
+                    fallthrough
+                @unknown default:
+                    break // do nothing. the user needs to pick
                 }
             case .photoLibrary, .savedPhotosAlbum:
                 invalidateTimer() // iOS 11 makes photos permission no longer needed for UIImagePickerController

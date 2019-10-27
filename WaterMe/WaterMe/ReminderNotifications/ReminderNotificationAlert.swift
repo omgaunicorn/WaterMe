@@ -45,7 +45,9 @@ extension UIAlertController {
             self.init(newPermissionDeniedAlertWithStyle: style, selectionCompletionHandler: selection)
         case (_, false),       // if the user has asked not to be bothered, never bother
              (.authorized, _): // if we're authorized, also don't bother
-            return nil
+            fallthrough
+        @unknown default:
+            return nil // if we don't know whats happening don't show the user anything
         }
         guard let sender = sender else { return }
         switch sender {

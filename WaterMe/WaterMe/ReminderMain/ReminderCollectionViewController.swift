@@ -163,12 +163,15 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
         let horizontalClass = self.view.traitCollection.horizontalSizeClass
         let verticalClass = self.view.traitCollection.verticalSizeClass
+        let defaultValue: (() -> (columnCount: Int, itemHeight: CGFloat)) = {
+            return (2, 200)
+        }
         switch (horizontalClass, verticalClass, accessibility) {
         case (.unspecified, _, _), (_, .unspecified, _):
             assertionFailure("Hit a size class this VC was not expecting")
             fallthrough
         case (.compact, .regular, false): // iPhone Portrait, no Accessibility
-            return (2, 200)
+            return defaultValue()
         case (.compact, .regular, true): // iPhone Portrait, w/ Accessibility
             return (1, 320)
         case (.compact, .compact, false): // iPhone Landscape, no Accessibility
@@ -183,6 +186,8 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
             return (4, 200)
         case (.regular, .regular, true): // iPad w/ Accessibility
             return (2, 320)
+        @unknown default:
+            return defaultValue()
         }
     }
 }

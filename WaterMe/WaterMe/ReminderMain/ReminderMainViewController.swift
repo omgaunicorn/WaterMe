@@ -255,15 +255,19 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             // we need custom scroll insets in portrait
             self.collectionVC?.collectionView?.scrollIndicatorInsets = customInset
         case .compact:
+            fallthrough
+        @unknown default:
             // Scroll Indicators can have normal behavior in landscape
             self.collectionVC?.collectionView?.scrollIndicatorInsets = .zero
             // get the width and set the custom inset
             let dragViewWidth = self.dropTargetViewController?.view.bounds.width ?? 0
             switch layoutDirection {
-            case .leftToRight, .unspecified:
-                customInset = UIEdgeInsets(top: 0, left: dragViewWidth, bottom: 0, right: 0)
             case .rightToLeft:
                 customInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: dragViewWidth)
+            case .leftToRight, .unspecified:
+                fallthrough
+            @unknown default:
+                customInset = UIEdgeInsets(top: 0, left: dragViewWidth, bottom: 0, right: 0)
             }
         }
 

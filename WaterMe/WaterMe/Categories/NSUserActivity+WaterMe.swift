@@ -26,7 +26,7 @@ import Intents
 import CoreSpotlight
 import MobileCoreServices
 
-typealias NSUserActivityContinuedHandler = ([Any]?) -> Void
+typealias NSUserActivityContinuedHandler = ([UIUserActivityRestoring]?) -> Void
 
 typealias UserActivityResult = Result<UserActivityToContinue, UserActivityToFail>
 

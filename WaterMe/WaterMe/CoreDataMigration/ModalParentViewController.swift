@@ -103,6 +103,8 @@ class ModalParentViewController: StandardViewController {
                     sub.heightAnchor.constraint(equalTo: safe.heightAnchor, multiplier: 4 / 7)
                 ]
             case (.compact, _):
+                fallthrough
+            @unknown default:
                 newConstraints = [
                     sub.centerXAnchor.constraint(equalTo: safe.centerXAnchor, constant: 0),
                     sub.centerYAnchor.constraint(equalTo: safe.centerYAnchor, constant: 0),

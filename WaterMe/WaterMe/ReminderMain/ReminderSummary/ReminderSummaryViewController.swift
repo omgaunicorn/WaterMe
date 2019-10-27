@@ -208,6 +208,9 @@ extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate
              (.unspecified, _):
             self.isPresentedAsPopover = true
             return controller.presentedViewController.modalPresentationStyle
+        @unknown default:
+            self.isPresentedAsPopover = false
+            return .overFullScreen
         }
     }
 }
