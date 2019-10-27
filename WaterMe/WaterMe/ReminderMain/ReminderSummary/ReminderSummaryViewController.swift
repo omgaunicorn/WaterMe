@@ -24,7 +24,6 @@
 import UIKit
 import SimpleImageViewer
 import WaterMeData
-import Result
 import RealmSwift
 
 class ReminderSummaryViewController: StandardViewController {
@@ -88,6 +87,7 @@ class ReminderSummaryViewController: StandardViewController {
             let size = self.tableViewController?.tableView.visibleRowsSize
             return size ?? .zero
         }
+        //swiftlint:disable:next unused_setter_value
         set { assertionFailure("Not sure why this was set") }
     }
 
@@ -208,6 +208,9 @@ extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate
              (.unspecified, _):
             self.isPresentedAsPopover = true
             return controller.presentedViewController.modalPresentationStyle
+        @unknown default:
+            self.isPresentedAsPopover = false
+            return .overFullScreen
         }
     }
 }

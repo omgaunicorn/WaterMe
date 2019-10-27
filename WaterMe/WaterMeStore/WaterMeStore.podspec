@@ -34,7 +34,6 @@ Pod::Spec.new do |s|
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 
   s.dependency 'XCGLogger'
-  s.dependency 'Result'
 
 
 end

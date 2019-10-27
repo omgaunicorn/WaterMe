@@ -86,10 +86,6 @@ extension UNUserNotificationCenter {
     func requestAuthorizationIfNeeded(completion: ((Bool) -> Void)?) {
         self.getNotificationSettings() { preSettings in
             switch preSettings.authorizationStatus {
-            case .authorized, .denied:
-                DispatchQueue.main.async {
-                    completion?(preSettings.authorizationStatus.boolValue)
-                }
             case .notDetermined, .provisional:
                 self.requestAuthorization(options: [.alert, .badge, .sound]) { _, error in
                     if let error = error {
@@ -102,6 +98,12 @@ extension UNUserNotificationCenter {
                         }
                     }
                 }
+            case .authorized, .denied:
+                fallthrough
+            @unknown default:
+                DispatchQueue.main.async {
+                    completion?(preSettings.authorizationStatus.boolValue)
+                }
             }
         }
     }
@@ -113,6 +115,8 @@ extension UNAuthorizationStatus {
         case .authorized:
             return true
         case .notDetermined, .denied, .provisional:
+            return false
+        @unknown default:
             return false
         }
     }

@@ -27,7 +27,7 @@ public protocol HasProController {
     var proRC: ProController? { get set }
 }
 
-public extension HasProController {
+extension HasProController {
     public mutating func configure(with proRC: ProController?) {
         guard let proRC = proRC else { return }
         self.proRC = proRC

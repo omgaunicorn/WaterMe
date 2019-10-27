@@ -37,7 +37,7 @@ class StandardCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.contentSizeCategoryDidChange(_:)),
-                                               name: .UIContentSizeCategoryDidChange,
+                                               name: UIContentSizeCategory.didChangeNotification,
                                                object: nil)
     }
 

@@ -28,7 +28,7 @@ extension UIApplication {
 
     func openAppSettings(completion: ((Bool) -> Void)?) {
         Analytics.log(viewOperation: .openSettings)
-        let url = URL(string: UIApplicationOpenSettingsURLString)!
+        let url = URL(string: UIApplication.openSettingsURLString)!
         self.open(url, options: [:], completionHandler: completion)
     }
 

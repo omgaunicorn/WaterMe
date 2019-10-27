@@ -22,20 +22,19 @@
 //
 
 import RealmSwift
-import Result
 
 public protocol HasBasicController {
     var basicRC: BasicController? { get set }
 }
 
-public extension HasBasicController {
+extension HasBasicController {
     public mutating func configure(with basicRC: BasicController?) {
         guard let basicRC = basicRC else { return }
         self.basicRC = basicRC
     }
 }
 
-internal extension Realm {
+extension Realm {
     internal func waterMe_commitWrite() -> Result<Void, RealmError> {
         do {
             try self.commitWrite()

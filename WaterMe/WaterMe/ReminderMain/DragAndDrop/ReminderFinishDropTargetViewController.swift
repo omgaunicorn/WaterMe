@@ -56,7 +56,7 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillEnterForeground(_:)), name: .UIApplicationWillEnterForeground, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.applicationWillEnterForeground(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
         self.dropTargetView?.addInteraction(UIDropInteraction(delegate: self))
         self.animationView?.finishedPlayingVideo = { [unowned self] in
             self.updateDropTargetHeightForNotDragging(animated: true)
@@ -157,12 +157,14 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
         let changes: () -> Void = {
             let height: CGFloat
             switch verticalSizeClass {
-            case .regular, .unspecified:
-                height = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory ?
-                    type(of: self).style_dropTargetViewCompactHeightAccessibilityTextSizeEnabled :
-                    type(of: self).style_dropTargetViewCompactHeight
             case .compact:
                 height = self.view.bounds.height
+            case .regular, .unspecified:
+                fallthrough
+            @unknown default:
+                height = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+                    ? type(of: self).style_dropTargetViewCompactHeightAccessibilityTextSizeEnabled
+                    : type(of: self).style_dropTargetViewCompactHeight
             }
             self.dropTargetViewHeightConstraint?.constant = height
             self.delegate?.animateAlongSideDropTargetViewResize(within: self)?()
@@ -215,7 +217,7 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
     }
 }
 
-fileprivate extension UIDropSession {
+extension UIDropSession {
     fileprivate var reminderDrags: [ReminderAndVesselValue] {
         return self.localDragSession?.items.compactMap({ $0.localObject as? ReminderAndVesselValue }) ?? []
     }

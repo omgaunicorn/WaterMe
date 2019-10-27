@@ -53,7 +53,7 @@ class ReminderIntervalPickerViewController: StandardViewController {
         
         self.titleItem?.title = "Reminder Interval"
         
-        let existingIndex = self.data.index(of: self.existingValue) ?? 0
+        let existingIndex = self.data.firstIndex(of: self.existingValue) ?? 0
         self.pickerView?.selectRow(existingIndex, inComponent: 0, animated: false)
     }
 
@@ -105,9 +105,9 @@ extension ReminderIntervalPickerViewController: UIPickerViewDelegate {
         let days = self.data[row]
         let interval: TimeInterval = TimeInterval(days) * (24 * 60 * 60)
         let formattedString = self.formatter.string(from: interval) ?? "–"
-        let primary: [NSAttributedStringKey : Any] = [
-            NSAttributedStringKey.font : self.primaryFont,
-            NSAttributedStringKey.foregroundColor : UIColor.black
+        let primary: [NSAttributedString.Key : Any] = [
+            NSAttributedString.Key.font : self.primaryFont,
+            NSAttributedString.Key.foregroundColor : UIColor.black
         ]
         let string = NSAttributedString(string: formattedString, attributes: primary)
         return string

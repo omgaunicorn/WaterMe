@@ -63,7 +63,7 @@ extension UIAlertController {
     convenience init(localizedDeleteConfirmationAlertPresentedFrom sender: Either<UIBarButtonItem, UIView>?,
                      userConfirmationHandler confirmed: ((Bool) -> Void)?)
     {
-        let style: UIAlertControllerStyle = sender != nil ? .actionSheet : .alert
+        let style: UIAlertController.Style = sender != nil ? .actionSheet : .alert
         self.init(title: nil, message: LocalizedString.deleteAlertMessage, preferredStyle: style)
         let delete = UIAlertAction(title: LocalizedString.buttonTitleDelete, style: .destructive) { _ in
             confirmed?(true)

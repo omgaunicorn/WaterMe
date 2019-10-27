@@ -81,10 +81,10 @@ class ModalParentViewController: StandardViewController {
         let newConstraints: [NSLayoutConstraint]
         if accessible {
             newConstraints = [
-                sub.leadingAnchor.constraintEqualToSystemSpacingAfter(safe.leadingAnchor, multiplier: 1),
-                safe.trailingAnchor.constraintEqualToSystemSpacingAfter(sub.trailingAnchor, multiplier: 1),
-                sub.topAnchor.constraintEqualToSystemSpacingBelow(safe.topAnchor, multiplier: 1),
-                safe.bottomAnchor.constraintEqualToSystemSpacingBelow(sub.bottomAnchor, multiplier: 1)
+                sub.leadingAnchor.constraint(equalToSystemSpacingAfter: safe.leadingAnchor, multiplier: 1),
+                safe.trailingAnchor.constraint(equalToSystemSpacingAfter: sub.trailingAnchor, multiplier: 1),
+                sub.topAnchor.constraint(equalToSystemSpacingBelow: safe.topAnchor, multiplier: 1),
+                safe.bottomAnchor.constraint(equalToSystemSpacingBelow: sub.bottomAnchor, multiplier: 1)
             ]
         } else {
             switch (traits.verticalSizeClass, traits.horizontalSizeClass) {
@@ -103,6 +103,8 @@ class ModalParentViewController: StandardViewController {
                     sub.heightAnchor.constraint(equalTo: safe.heightAnchor, multiplier: 4 / 7)
                 ]
             case (.compact, _):
+                fallthrough
+            @unknown default:
                 newConstraints = [
                     sub.centerXAnchor.constraint(equalTo: safe.centerXAnchor, constant: 0),
                     sub.centerYAnchor.constraint(equalTo: safe.centerYAnchor, constant: 0),

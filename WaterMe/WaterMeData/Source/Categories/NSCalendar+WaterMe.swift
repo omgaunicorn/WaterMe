@@ -23,7 +23,7 @@
 
 import Foundation
 
-public extension Calendar {
+extension Calendar {
 
     public func numberOfDaysBetween(startDate: Date, endDate: Date, stopCountingAfterMaxDays maxDays: Int = 365) -> Int {
         var numberOfDays = 0

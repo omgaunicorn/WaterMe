@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Result
 import WaterMeData
 import RealmSwift
 import UIKit
@@ -93,7 +92,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                                 forCellReuseIdentifier: SiriShortcutTableViewCell.reuseID)
         self.tableView.register(OptionalAddButtonTableViewHeaderFooterView.nib,
                                 forHeaderFooterViewReuseIdentifier: OptionalAddButtonTableViewHeaderFooterView.reuseID)
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 40
         self.reloadAll()
     }
@@ -306,7 +305,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
     override func tableView(_ tableView: UITableView,
                             heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     private var notificationToken: NotificationToken?

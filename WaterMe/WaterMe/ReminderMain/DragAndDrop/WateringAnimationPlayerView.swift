@@ -91,10 +91,12 @@ class WateringAnimationPlayerView: UIView {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         switch self.traitCollection.verticalSizeClass {
-        case .regular, .unspecified:
-            self.videoManager.landscapeVideo = true
         case .compact:
             self.videoManager.landscapeVideo = false
+        case .regular, .unspecified:
+            fallthrough
+        @unknown default:
+            self.videoManager.landscapeVideo = true
         }
     }
 }

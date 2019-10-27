@@ -34,6 +34,5 @@ Pod::Spec.new do |s|
 
   s.dependency 'RealmSwift'
   s.dependency 'XCGLogger'
-  s.dependency 'Result'
 
 end

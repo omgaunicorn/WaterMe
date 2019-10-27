@@ -1,49 +1,41 @@
 PODS:
-  - Cheers (2.1.0)
-  - CropViewController (2.3.8)
+  - Cheers (2.3.0)
+  - CropViewController (2.5.2)
   - ObjcExceptionBridging (1.0.1):
     - ObjcExceptionBridging/ObjcExceptionBridging (= 1.0.1)
   - ObjcExceptionBridging/ObjcExceptionBridging (1.0.1)
-  - Realm (3.7.6):
-    - Realm/Headers (= 3.7.6)
-  - Realm/Headers (3.7.6)
-  - RealmSwift (3.7.6):
-    - Realm (= 3.7.6)
-  - Result (4.0.0)
+  - Realm (3.20.0):
+    - Realm/Headers (= 3.20.0)
+  - Realm/Headers (3.20.0)
+  - RealmSwift (3.20.0):
+    - Realm (= 3.20.0)
   - SimpleImageViewer (1.1.1)
   - WaterMeData (1.0.0):
     - RealmSwift
-    - Result
     - XCGLogger
   - WaterMeStore (1.0.0):
-    - Result
     - XCGLogger
-  - XCGLogger (6.1.0):
-    - XCGLogger/Core (= 6.1.0)
-  - XCGLogger/Core (6.1.0):
+  - XCGLogger (7.0.0):
+    - XCGLogger/Core (= 7.0.0)
+  - XCGLogger/Core (7.0.0):
     - ObjcExceptionBridging
 
 DEPENDENCIES:
-  - Cheers (~> 2.1.0)
-  - CropViewController (~> 2.3.8)
-  - RealmSwift
-  - RealmSwift (~> 3.7.6)
-  - Result
-  - Result (~> 4.0.0)
+  - Cheers (~> 2.3.0)
+  - CropViewController (~> 2.5.2)
+  - RealmSwift (~> 3.20.0)
   - SimpleImageViewer (~> 1.1.1)
   - WaterMeData (from `WaterMeData`)
   - WaterMeStore (from `WaterMeStore`)
-  - XCGLogger
-  - XCGLogger (~> 6.1.0)
+  - XCGLogger (~> 7.0.0)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Cheers
     - CropViewController
     - ObjcExceptionBridging
     - Realm
     - RealmSwift
-    - Result
     - SimpleImageViewer
     - XCGLogger
 
@@ -54,17 +46,16 @@ EXTERNAL SOURCES:
     :path: WaterMeStore
 
 SPEC CHECKSUMS:
-  Cheers: 02d6335ac9ceb1ebf678df78d378bc71242a015e
-  CropViewController: 7be882b7d3fb3faef48a41924e80f689e9df2514
+  Cheers: 7e42fc09e1ca5059870b979131136d17b50ccc9c
+  CropViewController: 1aac40093c5739e60d992b04724a55d12a689a4c
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
-  Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
-  RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
-  Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
+  Realm: 8b2ca5bc6479a91f379b6b42b5922e396cd5ba5a
+  RealmSwift: 1949ef26a279e1845bd51d591b9103adfcd121df
   SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
-  WaterMeData: 2d3ceb104310e1038a8d4fc8e6a3bc322e70a391
-  WaterMeStore: 4eb3190f0ba860255ee19e0fd7229587c769e0c2
-  XCGLogger: 7f7f43f15dfe3a305fa1342b7dc29af656289abd
+  WaterMeData: 9a5b5e875d488b5270fbf6b4e2533723fdfddfe0
+  WaterMeStore: 72d769352dd2c395e2450eb98720a5bfe0aee70b
+  XCGLogger: 0434f15e3909cdc450bb63faf638b8792ab782ab
 
-PODFILE CHECKSUM: e948aa167d79676dcde1c1253c64d1456c202b43
+PODFILE CHECKSUM: db8d1e350adbbc382b8dd900ff6a6f4822d2d184
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.8.4

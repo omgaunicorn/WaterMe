@@ -35,6 +35,8 @@ extension UIAlertController {
         case .authorized, .notDetermined:
             return UIAlertController.LocalizedString.buttonTitleCamera
         case .denied, .restricted:
+            fallthrough
+        @unknown default:
             return UIAlertController.LocalizedString.buttonTitleCameraLocked
         }
     }
@@ -59,14 +61,16 @@ extension UIAlertController {
         if front || rear {
             let camera = UIAlertAction(title: self.cameraLocalizedString, style: .default) { _ in
                 switch ImagePickerCropperViewController.cameraPermission {
-                case .authorized, .notDetermined:
-                    completionHandler(.camera)
                 case .restricted:
                     let errorVC = self.cameraRestrictedAlert()
                     completionHandler(.error(errorVC))
                 case .denied:
                     let errorVC = self.cameraDeniedAlert()
                     completionHandler(.error(errorVC))
+                case .authorized, .notDetermined:
+                    fallthrough
+                @unknown default:
+                    completionHandler(.camera)
                 }
             }
             alertVC.addAction(camera)

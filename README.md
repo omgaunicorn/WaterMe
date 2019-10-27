@@ -102,7 +102,7 @@ I am happy to have others contribute to WaterMe. Because WaterMe is a shipping a
 
 There are 3 files that are placeholders for storage in the repository. Please don't change these files and include them in a pull request. These files are overwritten by me when I build on my computer and for the App Store.
 
-1. [`emojione-apple.ttf`](/WaterMe/WaterMe/emojione-apple.ttf)
+1. [`emojione-apple.ttc`](/WaterMe/WaterMe/emojione-apple.ttc)
     - WaterMe uses [EmojiOne](https://www.emojione.com) emoji rather than the built-in emoji. This is because Apple rejected the app for using Apple's artwork. Using this alternative emoji font avoid this rejection.
     - The font file is not mine so I don't want to commit it into the repo. The application works fine without this font, it just can't be submitted to the app store. 
 1. `PrivateKeys.swift`: [File 1](/WaterMe/WaterMeData/Source/PrivateKeys.swift), [File 2](/WaterMe/WaterMeStore/Source/PrivateKeys.swift)

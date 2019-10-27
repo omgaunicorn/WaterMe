@@ -37,7 +37,7 @@ extension UIAlertController {
         let ud = UserDefaults.standard
         let authorizationStatus = nc.notificationAuthorizationStatus
         let userAskedToBeAsked = ud.askForNotifications
-        let style: UIAlertControllerStyle = sender != nil ? .actionSheet : .alert
+        let style: UIAlertController.Style = sender != nil ? .actionSheet : .alert
         switch (authorizationStatus, userAskedToBeAsked) {
         case (.notDetermined, true), (.provisional, true):
             self.init(newRequestPermissionAlertWithStyle: style, selectionCompletionHandler: selection)
@@ -45,7 +45,9 @@ extension UIAlertController {
             self.init(newPermissionDeniedAlertWithStyle: style, selectionCompletionHandler: selection)
         case (_, false),       // if the user has asked not to be bothered, never bother
              (.authorized, _): // if we're authorized, also don't bother
-            return nil
+            fallthrough
+        @unknown default:
+            return nil // if we don't know whats happening don't show the user anything
         }
         guard let sender = sender else { return }
         switch sender {
@@ -58,7 +60,7 @@ extension UIAlertController {
         }
     }
 
-    private convenience init(newRequestPermissionAlertWithStyle style: UIAlertControllerStyle,
+    private convenience init(newRequestPermissionAlertWithStyle style: UIAlertController.Style,
                              selectionCompletionHandler selection: ((PermissionSelection) -> Void)?)
     {
         self.init(title: LocalizedString.newPermissionTitle,
@@ -93,7 +95,7 @@ extension UIAlertController {
         self.addAction(no)
         self.addAction(cancel)
     }
-    private convenience init(newPermissionDeniedAlertWithStyle style: UIAlertControllerStyle,
+    private convenience init(newPermissionDeniedAlertWithStyle style: UIAlertController.Style,
                              selectionCompletionHandler selection: ((PermissionSelection) -> Void)?)
     {
         self.init(title: LocalizedString.permissionDeniedAlertTitle,

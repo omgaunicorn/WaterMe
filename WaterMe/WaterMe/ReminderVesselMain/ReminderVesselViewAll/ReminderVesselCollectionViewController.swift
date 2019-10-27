@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Result
 import WaterMeData
 import RealmSwift
 import UIKit
@@ -99,14 +98,17 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
         let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
         let verticalClass = self.view.traitCollection.verticalSizeClass
         let horizontalClass = self.view.traitCollection.horizontalSizeClass
+        let defaultValue: (() -> (columnCount: Int, itemHeight: CGFloat)) = {
+            let columnCount = 2
+            let itemHeight = floor((width) / CGFloat(columnCount))
+            return (columnCount, itemHeight)
+        }
         switch (horizontalClass, verticalClass, accessibility) {
         case (.unspecified, _, _), (.regular, _, _), (.compact, .unspecified, _):
             assertionFailure("Hit a size class this VC was not expecting")
             fallthrough
         case (.compact, .regular, false):
-            let columnCount = 2
-            let itemHeight = floor((width) / CGFloat(columnCount))
-            return (columnCount, itemHeight)
+            return defaultValue()
         case (.compact, .regular, true):
             let columnCount = 1
             let itemHeight = floor((width) / CGFloat(columnCount))
@@ -119,6 +121,8 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
             let columnCount = 2
             let itemHeight = floor((width) / CGFloat(columnCount))
             return (columnCount, itemHeight)
+        @unknown default:
+            return defaultValue()
         }
     }
     

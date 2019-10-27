@@ -29,7 +29,7 @@ public protocol Resettable {
     func reset()
 }
 
-internal extension HTTPURLResponse {
+extension HTTPURLResponse {
     internal var successfulStatusCode: Bool {
         switch self.statusCode {
         case 200..<400:

@@ -73,7 +73,7 @@ extension UserDefaults {
         get {
             guard let number = self.object(forKey: Constants.kIncreaseContrast) as? NSNumber
                 else { fatalError("Must call configure() before accessing user defaults") }
-            let systemSetting = UIAccessibilityDarkerSystemColorsEnabled()
+            let systemSetting = UIAccessibility.isDarkerSystemColorsEnabled
             if systemSetting == true {
                 return systemSetting
             } else {

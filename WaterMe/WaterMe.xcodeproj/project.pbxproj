@@ -15,12 +15,6 @@
 		50163F96215B0CAB002DD849 /* UIViewController+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50163F95215B0CAB002DD849 /* UIViewController+WaterMe.swift */; };
 		501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A9AE41FE9682C0016160D /* LocalizedStrings.swift */; };
 		501A9AE71FEB15C20016160D /* WateringAnimationPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */; };
-		501C0E8B1ECE5EFF00D4EE7C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */; };
-		501C0E8D1ECE5EFF00D4EE7C /* UserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E8C1ECE5EFF00D4EE7C /* UserTableViewController.swift */; };
-		501C0E901ECE5EFF00D4EE7C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E8E1ECE5EFF00D4EE7C /* Main.storyboard */; };
-		501C0E921ECE5EFF00D4EE7C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E911ECE5EFF00D4EE7C /* Assets.xcassets */; };
-		501C0E951ECE5EFF00D4EE7C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 501C0E931ECE5EFF00D4EE7C /* LaunchScreen.storyboard */; };
-		501C0E9B1ECE602400D4EE7C /* PrivateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */; };
 		50281904200BB57D0044BEC8 /* ModalParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50281903200BB57D0044BEC8 /* ModalParentViewController.swift */; };
 		50281906200BD6110044BEC8 /* PurchaseThanksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50281905200BD6110044BEC8 /* PurchaseThanksViewController.swift */; };
 		50281908200BE7C80044BEC8 /* PurchaseThanks.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50281907200BE7C80044BEC8 /* PurchaseThanks.storyboard */; };
@@ -33,7 +27,6 @@
 		5029E09B214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5029E09A214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m */; };
 		502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */; };
 		502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */; };
-		503F74491ED3BB64005EF5F2 /* UserSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503F74481ED3BB64005EF5F2 /* UserSummaryViewController.swift */; };
 		5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */; };
 		5045CBAB1EFCCB50008E6D6A /* ReminderEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */; };
 		5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5045CBAC1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift */; };
@@ -41,11 +34,6 @@
 		5047B7A5200D6B6800F69C73 /* Analytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5047B7A4200D6B6800F69C73 /* Analytics.swift */; };
 		5049D1A31FACFA1B0076565E /* ReminderUserNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5049D1A21FACFA1B0076565E /* ReminderUserNotificationController.swift */; };
 		504A36FB214C7ECC009543C0 /* SimpleImageViewerSubclass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */; };
-		504A8D511ED6A04F002D928D /* UserTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D501ED6A04F002D928D /* UserTableViewCell.swift */; };
-		504A8D5B1EDA8C76002D928D /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5A1EDA8C76002D928D /* LoadingViewController.swift */; };
-		504A8D5D1EDA8D41002D928D /* ReceiptVerifyingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */; };
-		504A8D5F1EDB56AC002D928D /* ErrorTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */; };
-		504A8D611EDB5A46002D928D /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */; };
 		504B1BA7207332E20090CD7F /* TCF.m in Sources */ = {isa = PBXBuildFile; fileRef = 504B1BA6207332E20090CD7F /* TCF.m */; };
 		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
 		5051F8FA202BA2BE00741FF9 /* GlobalReminderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */; };
@@ -97,6 +85,7 @@
 		50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */; };
 		50B511A51EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B511A41EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib */; };
 		50B511A71EFE144700ED1DF4 /* ReminderKindTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B511A61EFE144700ED1DF4 /* ReminderKindTableViewCell.swift */; };
+		50B6F6132365355800C49832 /* Result+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B6F6122365355800C49832 /* Result+Convenience.swift */; };
 		50B779CD2154700A00AC6240 /* UIAlertController+UserFacingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779CC2154700A00AC6240 /* UIAlertController+UserFacingError.swift */; };
 		50B779CF215470B300AC6240 /* UIBarButtonItem+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779CE215470B300AC6240 /* UIBarButtonItem+WaterMe.swift */; };
 		50B779D1215470FE00AC6240 /* NSFormatter+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779D0215470FE00AC6240 /* NSFormatter+WaterMe.swift */; };
@@ -111,7 +100,6 @@
 		50BB0F751EC01B8E00850FF4 /* UserDefaults+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB0F741EC01B8E00850FF4 /* UserDefaults+WaterMe.swift */; };
 		50BB816A1EF7731E0030F5BA /* ReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */; };
 		50BDC03F1F9A3E21002281C3 /* BlurryBackgroundBottomLineCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BDC03D1F9A3E21002281C3 /* BlurryBackgroundBottomLineCollectionReusableView.swift */; };
-		50C1AA971ED006B300E3BF0A /* AdminRealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C1AA961ED006B300E3BF0A /* AdminRealmController.swift */; };
 		50C28D9921811BD900101D0A /* RestoredAndRawUserActivities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C28D9821811BD900101D0A /* RestoredAndRawUserActivities.swift */; };
 		50C30E541EFF490D006003A1 /* ReminderIntervalPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */; };
 		50C30E561EFF9349006003A1 /* ReminderIntervalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C30E551EFF9349006003A1 /* ReminderIntervalTableViewCell.swift */; };
@@ -128,10 +116,6 @@
 		50D2B2B1216A726000957E04 /* NSUserActivity+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2B2AF216A726000957E04 /* NSUserActivity+WaterMe.swift */; };
 		50D2B2B9216FD4EF00957E04 /* ReminderVesselEditViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2B2B8216FD4EF00957E04 /* ReminderVesselEditViewController+Delegate.swift */; };
 		50DD7A38215D6BBF00047B0C /* EmojiImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B61EE01F2FB904004654B4 /* EmojiImageView.swift */; };
-		50DFA8B31ED7A08E000D2956 /* ControlPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */; };
-		50DFA8B51ED7A352000D2956 /* ErrorTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */; };
-		50DFA8B71ED7B27F000D2956 /* SynchronizingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */; };
-		50DFA8B91ED7BCE0000D2956 /* ReceiptWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DFA8B81ED7BCE0000D2956 /* ReceiptWatcher.swift */; };
 		50E3F2C91FF6EF35003245E3 /* ImageEmojiObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E3F2C81FF6EF35003245E3 /* ImageEmojiObject.swift */; };
 		50E3F2CB1FF70D27003245E3 /* CoreDataMigration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */; };
 		50E3F2CD1FF70D3B003245E3 /* CoreDataMigratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */; };
@@ -145,7 +129,6 @@
 		50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */; };
 		50F7A360200844390063A1FC /* StarterRealm.realm in Resources */ = {isa = PBXBuildFile; fileRef = 50F7A362200844390063A1FC /* StarterRealm.realm */; };
 		A22CDC4107318045C2A0725F /* Pods_NoDeviceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884536C079641A13C887C6C5 /* Pods_NoDeviceTests.framework */; };
-		C4E36E53671BEFC3305F1B4B /* Pods_AdminConsole.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B9CEBEDEED746418CBDA557 /* Pods_AdminConsole.framework */; };
 		CC7EBDB4E145A49632F4234B /* Pods_WaterMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E11D3E748DFB5DC55E98C09D /* Pods_WaterMe.framework */; };
 /* End PBXBuildFile section */
 
@@ -170,14 +153,6 @@
 		50163F95215B0CAB002DD849 /* UIViewController+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+WaterMe.swift"; sourceTree = "<group>"; };
 		501A9AE41FE9682C0016160D /* LocalizedStrings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStrings.swift; sourceTree = "<group>"; };
 		501A9AE61FEB15C20016160D /* WateringAnimationPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WateringAnimationPlayerView.swift; sourceTree = "<group>"; };
-		501C0E881ECE5EFF00D4EE7C /* AdminConsole.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AdminConsole.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		501C0E8C1ECE5EFF00D4EE7C /* UserTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableViewController.swift; sourceTree = "<group>"; };
-		501C0E8F1ECE5EFF00D4EE7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		501C0E911ECE5EFF00D4EE7C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		501C0E941ECE5EFF00D4EE7C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		501C0E961ECE5EFF00D4EE7C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateKeys.swift; sourceTree = "<group>"; };
 		50281903200BB57D0044BEC8 /* ModalParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalParentViewController.swift; sourceTree = "<group>"; };
 		50281905200BD6110044BEC8 /* PurchaseThanksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseThanksViewController.swift; sourceTree = "<group>"; };
 		50281907200BE7C80044BEC8 /* PurchaseThanks.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PurchaseThanks.storyboard; sourceTree = "<group>"; };
@@ -191,7 +166,6 @@
 		5029E09A214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReminderSummaryPopoverBackgroundView.m; sourceTree = "<group>"; };
 		502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderCollectionViewCell.xib; sourceTree = "<group>"; };
 		502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFinishDropTargetViewController.swift; sourceTree = "<group>"; };
-		503F74481ED3BB64005EF5F2 /* UserSummaryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserSummaryViewController.swift; sourceTree = "<group>"; };
 		5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReminderEdit.storyboard; sourceTree = "<group>"; };
 		5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditViewController.swift; sourceTree = "<group>"; };
 		5045CBAC1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditTableViewController.swift; sourceTree = "<group>"; };
@@ -199,11 +173,6 @@
 		5047B7A4200D6B6800F69C73 /* Analytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Analytics.swift; sourceTree = "<group>"; };
 		5049D1A21FACFA1B0076565E /* ReminderUserNotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderUserNotificationController.swift; sourceTree = "<group>"; };
 		504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleImageViewerSubclass.swift; sourceTree = "<group>"; };
-		504A8D501ED6A04F002D928D /* UserTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableViewCell.swift; sourceTree = "<group>"; };
-		504A8D5A1EDA8C76002D928D /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
-		504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptVerifyingViewController.swift; sourceTree = "<group>"; };
-		504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewController.swift; sourceTree = "<group>"; };
-		504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
 		504B1BA4207332E10090CD7F /* WaterMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WaterMe-Bridging-Header.h"; sourceTree = "<group>"; };
 		504B1BA5207332E20090CD7F /* TCF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCF.h; sourceTree = "<group>"; };
 		504B1BA6207332E20090CD7F /* TCF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCF.m; sourceTree = "<group>"; };
@@ -259,6 +228,7 @@
 		50B511A41EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		50B511A61EFE144700ED1DF4 /* ReminderKindTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderKindTableViewCell.swift; sourceTree = "<group>"; };
 		50B61EE01F2FB904004654B4 /* EmojiImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiImageView.swift; sourceTree = "<group>"; };
+		50B6F6122365355800C49832 /* Result+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+Convenience.swift"; sourceTree = "<group>"; };
 		50B779CC2154700A00AC6240 /* UIAlertController+UserFacingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+UserFacingError.swift"; sourceTree = "<group>"; };
 		50B779CE215470B300AC6240 /* UIBarButtonItem+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+WaterMe.swift"; sourceTree = "<group>"; };
 		50B779D0215470FE00AC6240 /* NSFormatter+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSFormatter+WaterMe.swift"; sourceTree = "<group>"; };
@@ -276,7 +246,6 @@
 		50BB0F741EC01B8E00850FF4 /* UserDefaults+WaterMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+WaterMe.swift"; sourceTree = "<group>"; };
 		50BB81691EF7731E0030F5BA /* ReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTableViewCell.swift; sourceTree = "<group>"; };
 		50BDC03D1F9A3E21002281C3 /* BlurryBackgroundBottomLineCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlurryBackgroundBottomLineCollectionReusableView.swift; sourceTree = "<group>"; };
-		50C1AA961ED006B300E3BF0A /* AdminRealmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdminRealmController.swift; sourceTree = "<group>"; };
 		50C28D9821811BD900101D0A /* RestoredAndRawUserActivities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RestoredAndRawUserActivities.swift; path = WaterMe/Miscellaneous/RestoredAndRawUserActivities.swift; sourceTree = SOURCE_ROOT; };
 		50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderIntervalPickerViewController.swift; sourceTree = "<group>"; };
 		50C30E551EFF9349006003A1 /* ReminderIntervalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderIntervalTableViewCell.swift; sourceTree = "<group>"; };
@@ -294,10 +263,6 @@
 		50D2B2AE216A726000957E04 /* NSUserActivity+Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+Error.swift"; sourceTree = "<group>"; };
 		50D2B2AF216A726000957E04 /* NSUserActivity+WaterMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+WaterMe.swift"; sourceTree = "<group>"; };
 		50D2B2B8216FD4EF00957E04 /* ReminderVesselEditViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderVesselEditViewController+Delegate.swift"; sourceTree = "<group>"; };
-		50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlPanelViewController.swift; sourceTree = "<group>"; };
-		50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorTypes.swift; sourceTree = "<group>"; };
-		50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SynchronizingViewController.swift; sourceTree = "<group>"; };
-		50DFA8B81ED7BCE0000D2956 /* ReceiptWatcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptWatcher.swift; sourceTree = "<group>"; };
 		50E3F2C81FF6EF35003245E3 /* ImageEmojiObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEmojiObject.swift; sourceTree = "<group>"; };
 		50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CoreDataMigration.storyboard; sourceTree = "<group>"; };
 		50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMigratorViewController.swift; sourceTree = "<group>"; };
@@ -320,14 +285,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		501C0E851ECE5EFF00D4EE7C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C4E36E53671BEFC3305F1B4B /* Pods_AdminConsole.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		50BB0F4D1EBFCDE500850FF4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -381,31 +338,6 @@
 				5029E0952140CE42005285F5 /* TransparentTableViewHeaderFooterView.swift */,
 			);
 			path = ReminderSummary;
-			sourceTree = "<group>";
-		};
-		501C0E891ECE5EFF00D4EE7C /* AdminConsole */ = {
-			isa = PBXGroup;
-			children = (
-				501C0E8A1ECE5EFF00D4EE7C /* AppDelegate.swift */,
-				50DFA8B41ED7A352000D2956 /* ErrorTypes.swift */,
-				504A8D5E1EDB56AC002D928D /* ErrorTableViewController.swift */,
-				504A8D601EDB5A46002D928D /* ErrorTableViewCell.swift */,
-				501C0E8C1ECE5EFF00D4EE7C /* UserTableViewController.swift */,
-				504A8D501ED6A04F002D928D /* UserTableViewCell.swift */,
-				503F74481ED3BB64005EF5F2 /* UserSummaryViewController.swift */,
-				504A8D5A1EDA8C76002D928D /* LoadingViewController.swift */,
-				50DFA8B61ED7B27F000D2956 /* SynchronizingViewController.swift */,
-				50DFA8B21ED7A08E000D2956 /* ControlPanelViewController.swift */,
-				504A8D5C1EDA8D41002D928D /* ReceiptVerifyingViewController.swift */,
-				50DFA8B81ED7BCE0000D2956 /* ReceiptWatcher.swift */,
-				50C1AA961ED006B300E3BF0A /* AdminRealmController.swift */,
-				501C0E9A1ECE602400D4EE7C /* PrivateKeys.swift */,
-				501C0E8E1ECE5EFF00D4EE7C /* Main.storyboard */,
-				501C0E911ECE5EFF00D4EE7C /* Assets.xcassets */,
-				501C0E931ECE5EFF00D4EE7C /* LaunchScreen.storyboard */,
-				501C0E961ECE5EFF00D4EE7C /* Info.plist */,
-			);
-			path = AdminConsole;
 			sourceTree = "<group>";
 		};
 		50402387200ABD8F004C7FA7 /* PurchaseConfirmation */ = {
@@ -554,6 +486,7 @@
 				5085C71C21667A4500030D2A /* DispatchQueue+WaterMe.swift */,
 				50D2B2AE216A726000957E04 /* NSUserActivity+Error.swift */,
 				50D2B2AF216A726000957E04 /* NSUserActivity+WaterMe.swift */,
+				50B6F6122365355800C49832 /* Result+Convenience.swift */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -563,7 +496,6 @@
 			children = (
 				50BB0F521EBFCDE500850FF4 /* WaterMe */,
 				50C96A381EC2CFE8002802C1 /* NoDeviceTests */,
-				501C0E891ECE5EFF00D4EE7C /* AdminConsole */,
 				50BB0F511EBFCDE500850FF4 /* Products */,
 				D282BCF4E8B3004228E0F3BF /* Pods */,
 				8CCD0EA6DFF9C0E9A378684C /* Frameworks */,
@@ -575,7 +507,6 @@
 			children = (
 				50BB0F501EBFCDE500850FF4 /* WaterMe.app */,
 				50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */,
-				501C0E881ECE5EFF00D4EE7C /* AdminConsole.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -680,25 +611,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		501C0E871ECE5EFF00D4EE7C /* AdminConsole */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 501C0E971ECE5EFF00D4EE7C /* Build configuration list for PBXNativeTarget "AdminConsole" */;
-			buildPhases = (
-				036177E8C5F07B909924EA10 /* [CP] Check Pods Manifest.lock */,
-				501C0E841ECE5EFF00D4EE7C /* Sources */,
-				501C0E851ECE5EFF00D4EE7C /* Frameworks */,
-				501C0E861ECE5EFF00D4EE7C /* Resources */,
-				5076460B4A13F66148594C07 /* [CP] Embed Pods Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = AdminConsole;
-			productName = AdminConsole;
-			productReference = 501C0E881ECE5EFF00D4EE7C /* AdminConsole.app */;
-			productType = "com.apple.product-type.application";
-		};
 		50BB0F4F1EBFCDE500850FF4 /* WaterMe */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50BB0F621EBFCDE500850FF4 /* Build configuration list for PBXNativeTarget "WaterMe" */;
@@ -749,15 +661,10 @@
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Saturday Apps";
 				TargetAttributes = {
-					501C0E871ECE5EFF00D4EE7C = {
-						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = V6ESYGU6CV;
-						ProvisioningStyle = Automatic;
-					};
 					50BB0F4F1EBFCDE500850FF4 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = V6ESYGU6CV;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1120;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
@@ -778,7 +685,7 @@
 			};
 			buildConfigurationList = 50BB0F4B1EBFCDE500850FF4 /* Build configuration list for PBXProject "WaterMe" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -791,22 +698,11 @@
 			targets = (
 				50BB0F4F1EBFCDE500850FF4 /* WaterMe */,
 				50C96A361EC2CFE8002802C1 /* NoDeviceTests */,
-				501C0E871ECE5EFF00D4EE7C /* AdminConsole */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		501C0E861ECE5EFF00D4EE7C /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				501C0E951ECE5EFF00D4EE7C /* LaunchScreen.storyboard in Resources */,
-				501C0E921ECE5EFF00D4EE7C /* Assets.xcassets in Resources */,
-				501C0E901ECE5EFF00D4EE7C /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		50BB0F4E1EBFCDE500850FF4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -848,35 +744,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		036177E8C5F07B909924EA10 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-AdminConsole-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		181BFC3E457D8747E95F19F8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/WaterMeData/WaterMeData.framework",
 				"${BUILT_PRODUCTS_DIR}/WaterMeStore/WaterMeStore.framework",
 				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
@@ -886,14 +763,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjcExceptionBridging.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeData.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeStore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		44B12411F1A3FF58FB1AB4B1 /* [CP] Check Pods Manifest.lock */ = {
@@ -912,36 +788,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5076460B4A13F66148594C07 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
-				"${BUILT_PRODUCTS_DIR}/WaterMeData/WaterMeData.framework",
-				"${BUILT_PRODUCTS_DIR}/WaterMeStore/WaterMeStore.framework",
-				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjcExceptionBridging.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeData.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeStore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		50BB0F7A1EC214AC00850FF4 /* Swiftlint */ = {
@@ -982,13 +828,12 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Cheers/Cheers.framework",
 				"${BUILT_PRODUCTS_DIR}/CropViewController/CropViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SimpleImageViewer/SimpleImageViewer.framework",
 				"${BUILT_PRODUCTS_DIR}/WaterMeData/WaterMeData.framework",
 				"${BUILT_PRODUCTS_DIR}/WaterMeStore/WaterMeStore.framework",
@@ -1001,7 +846,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjcExceptionBridging.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimpleImageViewer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeData.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeStore.framework",
@@ -1009,33 +853,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		501C0E841ECE5EFF00D4EE7C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				501C0E8D1ECE5EFF00D4EE7C /* UserTableViewController.swift in Sources */,
-				50DFA8B71ED7B27F000D2956 /* SynchronizingViewController.swift in Sources */,
-				501C0E8B1ECE5EFF00D4EE7C /* AppDelegate.swift in Sources */,
-				50DFA8B51ED7A352000D2956 /* ErrorTypes.swift in Sources */,
-				504A8D611EDB5A46002D928D /* ErrorTableViewCell.swift in Sources */,
-				50DFA8B31ED7A08E000D2956 /* ControlPanelViewController.swift in Sources */,
-				504A8D5D1EDA8D41002D928D /* ReceiptVerifyingViewController.swift in Sources */,
-				50DFA8B91ED7BCE0000D2956 /* ReceiptWatcher.swift in Sources */,
-				501C0E9B1ECE602400D4EE7C /* PrivateKeys.swift in Sources */,
-				50C1AA971ED006B300E3BF0A /* AdminRealmController.swift in Sources */,
-				504A8D5B1EDA8C76002D928D /* LoadingViewController.swift in Sources */,
-				504A8D5F1EDB56AC002D928D /* ErrorTableViewController.swift in Sources */,
-				504A8D511ED6A04F002D928D /* UserTableViewCell.swift in Sources */,
-				503F74491ED3BB64005EF5F2 /* UserSummaryViewController.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		50BB0F4C1EBFCDE500850FF4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1100,6 +923,7 @@
 				508FFCAF1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift in Sources */,
 				5096D19E21547BE5006E1019 /* UIKit+StyleConstants.swift in Sources */,
 				5075B4901FF178EA007B42D8 /* ReminderDragPreviewView.swift in Sources */,
+				50B6F6132365355800C49832 /* Result+Convenience.swift in Sources */,
 				50299E651FED926400363EF3 /* DragAndDropPlayerManager.swift in Sources */,
 				5096D19321547659006E1019 /* UIView+WaterMe.swift in Sources */,
 				500679AF1F4BF3DB00F8100D /* ReminderMainViewController.swift in Sources */,
@@ -1157,22 +981,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		501C0E8E1ECE5EFF00D4EE7C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				501C0E8F1ECE5EFF00D4EE7C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		501C0E931ECE5EFF00D4EE7C /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				501C0E941ECE5EFF00D4EE7C /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
 		5065AA27200EC62F00C7F0CC /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1192,38 +1000,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		501C0E981ECE5EFF00D4EE7C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 403ED0B9FD8DFE91560E8B80 /* Pods-AdminConsole.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = V6ESYGU6CV;
-				INFOPLIST_FILE = AdminConsole/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe.AdminConsole;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		501C0E991ECE5EFF00D4EE7C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1CD49FF23792A05DAB59D06B /* Pods-AdminConsole.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = V6ESYGU6CV;
-				INFOPLIST_FILE = AdminConsole/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe.AdminConsole;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		50BB0F601EBFCDE500850FF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1349,7 +1125,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "WaterMe/Miscellaneous/WaterMe-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1369,7 +1145,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "WaterMe/Miscellaneous/WaterMe-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1385,7 +1161,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.NoDeviceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
 			};
 			name = Debug;
@@ -1401,7 +1177,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.NoDeviceTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
 			};
 			name = Release;
@@ -1409,15 +1185,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		501C0E971ECE5EFF00D4EE7C /* Build configuration list for PBXNativeTarget "AdminConsole" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				501C0E981ECE5EFF00D4EE7C /* Debug */,
-				501C0E991ECE5EFF00D4EE7C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		50BB0F4B1EBFCDE500850FF4 /* Build configuration list for PBXProject "WaterMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

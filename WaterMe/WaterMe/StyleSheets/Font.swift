@@ -76,7 +76,7 @@ extension Font {
 }
 
 extension Font {
-    var attributes: [NSAttributedStringKey : Any] {
+    var attributes: [NSAttributedString.Key : Any] {
         switch self {
         case .reminderSummaryCancelButton:
             return [

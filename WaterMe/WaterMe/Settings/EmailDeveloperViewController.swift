@@ -50,24 +50,19 @@ class EmailDeveloperViewController: MFMailComposeViewController, MFMailComposeVi
 
     private var completion: Completion?
 
-    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
-        switch result {
-        case .cancelled:
-            break
-        case .failed:
-            break
-        case .saved:
-            break
-        case .sent:
-            break
-        }
+    func mailComposeController(_ controller: MFMailComposeViewController,
+                               didFinishWith result: MFMailComposeResult,
+                               error: Error?)
+    {
         self.completion?(self)
     }
 }
 
 extension UIAlertController {
     convenience init(copyEmailAlertWithAddress address: URL, completion: (() -> Void)?) {
-        self.init(title: LocalizedString.copyEmailAlertButtonTitle, message: LocalizedString.copyEmailAlertMessage, preferredStyle: .alert)
+        self.init(title: LocalizedString.copyEmailAlertButtonTitle,
+                  message: LocalizedString.copyEmailAlertMessage,
+                  preferredStyle: .alert)
         let copy = UIAlertAction(title: LocalizedString.copyEmailAlertButtonTitle, style: .default) { _ in
             completion?()
         }
