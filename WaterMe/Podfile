@@ -4,7 +4,7 @@ target 'WaterMe' do
 	platform :ios, '11.0'
 	use_frameworks!
 	
-  pod 'SimpleImageViewer', '~> 1.1.1'
+  pod 'SimpleImageViewer', :git => 'git@github.com:jeffreybergier/SimpleImageViewer.git', :commit => '05bb35ed2df7abbdc3c29a1975b77793452555f0'
 	pod 'Cheers', '~> 2.3.0'
 	pod 'CropViewController', '~> 2.5.2'
 	pod 'RealmSwift', '~> 3.20.0'

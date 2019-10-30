@@ -9,7 +9,7 @@ PODS:
   - Realm/Headers (3.20.0)
   - RealmSwift (3.20.0):
     - Realm (= 3.20.0)
-  - SimpleImageViewer (1.1.1)
+  - SimpleImageViewer (1.1.2)
   - WaterMeData (1.0.0):
     - RealmSwift
     - XCGLogger
@@ -24,26 +24,33 @@ DEPENDENCIES:
   - Cheers (~> 2.3.0)
   - CropViewController (~> 2.5.2)
   - RealmSwift (~> 3.20.0)
-  - SimpleImageViewer (~> 1.1.1)
+  - "SimpleImageViewer (from `git@github.com:jeffreybergier/SimpleImageViewer.git`, commit `05bb35ed2df7abbdc3c29a1975b77793452555f0`)"
   - WaterMeData (from `WaterMeData`)
   - WaterMeStore (from `WaterMeStore`)
   - XCGLogger (~> 7.0.0)
 
 SPEC REPOS:
-  trunk:
+  https://cdn.cocoapods.org/:
     - Cheers
     - CropViewController
     - ObjcExceptionBridging
     - Realm
     - RealmSwift
-    - SimpleImageViewer
     - XCGLogger
 
 EXTERNAL SOURCES:
+  SimpleImageViewer:
+    :commit: 05bb35ed2df7abbdc3c29a1975b77793452555f0
+    :git: "git@github.com:jeffreybergier/SimpleImageViewer.git"
   WaterMeData:
     :path: WaterMeData
   WaterMeStore:
     :path: WaterMeStore
+
+CHECKOUT OPTIONS:
+  SimpleImageViewer:
+    :commit: 05bb35ed2df7abbdc3c29a1975b77793452555f0
+    :git: "git@github.com:jeffreybergier/SimpleImageViewer.git"
 
 SPEC CHECKSUMS:
   Cheers: 7e42fc09e1ca5059870b979131136d17b50ccc9c
@@ -51,11 +58,11 @@ SPEC CHECKSUMS:
   ObjcExceptionBridging: c30e00eb3700467e695faeea30e26e18bd445001
   Realm: 8b2ca5bc6479a91f379b6b42b5922e396cd5ba5a
   RealmSwift: 1949ef26a279e1845bd51d591b9103adfcd121df
-  SimpleImageViewer: 34c3a2cde2d9ac022146772cefc27fca14b0c8b1
+  SimpleImageViewer: 290c2f126b63c136da3a63ae9de70a0fd838c0a3
   WaterMeData: 9a5b5e875d488b5270fbf6b4e2533723fdfddfe0
   WaterMeStore: 72d769352dd2c395e2450eb98720a5bfe0aee70b
   XCGLogger: 0434f15e3909cdc450bb63faf638b8792ab782ab
 
-PODFILE CHECKSUM: db8d1e350adbbc382b8dd900ff6a6f4822d2d184
+PODFILE CHECKSUM: 61d7693dfbab78ea9da861bd3cccd95521cde928
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.7.3
