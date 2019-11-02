@@ -26,16 +26,17 @@ import UIKit
 
 class EmojiPickerViewController: StandardCollectionViewController {
     
-    class func newVC(emojiChosen: @escaping (String?, UIViewController) -> Void) -> UIViewController {
+    class func newVC(completionHandler: @escaping (String?, UIViewController) -> Void) -> UIViewController {
         let layout = UICollectionViewFlowLayout()
         let vc = EmojiPickerViewController(collectionViewLayout: layout)
-        vc.emojiChosen = emojiChosen
+        vc.completionHandler = completionHandler
         let navVC = UINavigationController(rootViewController: vc)
         navVC.modalPresentationStyle = .formSheet
+        navVC.presentationController?.delegate = vc
         return navVC
     }
     
-    var emojiChosen: ((String?, UIViewController) -> Void)?
+    var completionHandler: ((String?, UIViewController) -> Void)?
     private let data = ["💐", "🌷", "🌹", "🥀", "🌻", "🌼", "🌸", "🌺", "🍏", "🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🍈", "🍒", "🍑", "🍍", "🥝", "🥑", "🍅", "🍆", "🥒", "🥕", "🌽", "🌶", "🥔", "🍠", "🌰", "🥜", "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🎍", "🎋", "🍃", "🍂", "🍁", "🍄", "🌾", "🥚", "🍳", "🐔", "🐧", "🐤", "🐣", "🐥", "🐓", "🦆", "🦃", "🐇", "🦀", "🦑", "🐙", "🦐", "🍤", "🐠", "🐟", "🐢", "🐍", "🦎", "🐝", "🍯", "🥐", "🍞", "🥖", "🧀", "🥗", "🍣", "🍱", "🍛", "🍚", "☕️", "🍵", "🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🥛", "🐷", "🐽", "🐸", "🐒", "🦅", "🦉", "🦇", "🐺", "🐗", "🐴", "🦄", "🐛", "🦋", "🐌", "🐚", "🐞", "🐜", "🕷", "🦂", "🐡", "🐬", "🦈", "🐳", "🐋", "🐊", "🐆", "🐅", "🐃", "🐂", "🐄", "🦌", "🐪", "🐫", "🐘", "🦏", "🦍", "🐎", "🐖", "🐐", "🐏", "🐑", "🐕", "🐩", "🐈", "🕊", "🐁", "🐀", "🐿", "🐉", "🐲"]
     
     override func viewDidLoad() {
@@ -50,12 +51,12 @@ class EmojiPickerViewController: StandardCollectionViewController {
     }
     
     @objc private func cancelButtonTapped(_ sender: NSObject?) {
-        self.emojiChosen?(nil, self)
+        self.completionHandler?(nil, self)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = self.data[indexPath.row]
-        self.emojiChosen?(item, self)
+        self.completionHandler?(item, self)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -92,5 +93,11 @@ class EmojiPickerViewController: StandardCollectionViewController {
         @unknown default:
             return defaultValue()
         }
+    }
+}
+
+extension EmojiPickerViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.completionHandler?(nil, self)
     }
 }
