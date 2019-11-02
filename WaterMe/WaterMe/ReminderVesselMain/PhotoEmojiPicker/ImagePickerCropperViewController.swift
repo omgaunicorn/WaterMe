@@ -147,6 +147,8 @@ extension ImagePickerCropperViewController: CropViewControllerDelegate {
     }
 
     func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
-        cropViewController.dismiss(animated: true, completion: nil)
+        cropViewController.dismiss(animated: true) {
+            self.completionHandler?(nil, self)
+        }
     }
 }
