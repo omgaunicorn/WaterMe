@@ -56,6 +56,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         }
         vc.userActivity = NSUserActivity(kind: .editReminder,
                                          delegate: vc.userActivityDelegate)
+        navVC.presentationController?.delegate = vc
         return navVC
     }
     
@@ -325,5 +326,11 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
             }
         }
         self.present(vc, animated: true, completion: nil)
+    }
+}
+
+extension ReminderEditViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.completionHandler?(self)
     }
 }
