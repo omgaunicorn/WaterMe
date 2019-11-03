@@ -52,7 +52,7 @@ class ReminderIntervalPickerViewController: StandardViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Reminder Interval"
+        self.title = LocalizedString.title
         
         let existingIndex = self.data.firstIndex(of: self.existingValue) ?? 0
         self.pickerView?.selectRow(existingIndex, inComponent: 0, animated: false)
