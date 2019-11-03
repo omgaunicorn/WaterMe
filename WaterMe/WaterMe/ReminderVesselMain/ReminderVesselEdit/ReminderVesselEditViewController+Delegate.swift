@@ -132,7 +132,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         }
         let shortcut = INShortcut(userActivity: activity)
         let vc = ClosureDelegatingAddVoiceShortcutViewController(shortcut: shortcut)
-        vc.completion = { vc, result in
+        vc.completionHandler = { vc, result in
             vc.dismiss(animated: true) {
                 deselectRowAnimated?(true)
                 guard case .failure(let error) = result else { return }

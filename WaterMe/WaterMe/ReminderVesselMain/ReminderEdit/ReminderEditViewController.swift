@@ -317,7 +317,7 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
         activity.becomeCurrent()
         let shortcut = INShortcut(userActivity: activity)
         let vc = ClosureDelegatingAddVoiceShortcutViewController(shortcut: shortcut)
-        vc.completion = { [unowned self] vc, result in
+        vc.completionHandler = { [unowned self] vc, result in
             self.userActivity?.becomeCurrent()
             vc.dismiss(animated: true) {
                 deselectRowAnimated?(true)
