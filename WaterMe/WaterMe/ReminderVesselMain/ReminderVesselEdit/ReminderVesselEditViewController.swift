@@ -203,15 +203,20 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
 
         Analytics.log(event: Analytics.CRUD_Op_RV.update)
         
-        let sender = sender as? UIBarButtonItem
-        assert(sender != nil, "Expected UIBarButtonItem to call this method")
+        guard let sender = sender as? UIBarButtonItem else {
+            assertionFailure("Expected UIBarButtonItem to call this method")
+            return
+        }
         if let error = vessel.isModelComplete {
             UIAlertController.presentAlertVC(for: error,
                                              over: self,
                                              from: sender)
             { selection in
                 switch selection {
-                case .dismiss, .openWaterMeSettings, .reminderMissingMoveLocation, .reminderMissingOtherDescription:
+                case .dismiss,
+                     .openWaterMeSettings,
+                     .reminderMissingMoveLocation,
+                     .reminderMissingOtherDescription:
                     assertionFailure()
                     fallthrough
                 case .cancel:
@@ -219,7 +224,8 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
                 case .saveAnyway:
                     self.completionHandler?(self)
                 case .reminderVesselMissingIcon:
-                    self.userChosePhotoChange(controller: self.tableViewController)
+                    self.userChosePhotoChange(controller: self.tableViewController,
+                                              sender: .right(sender))
                 case .reminderVesselMissingName:
                     self.tableViewController?.nameTextFieldBecomeFirstResponder()
                 case .reminverVesselMissingReminder:

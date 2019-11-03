@@ -27,9 +27,10 @@ import UIKit
 
 protocol ReminderVesselEditTableViewControllerDelegate: class {
     var vesselResult: Result<ReminderVessel, RealmError>? { get }
-    func userChosePhotoChange(controller: ReminderVesselEditTableViewController?)
     func userChangedName(to: String, controller: ReminderVesselEditTableViewController?)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
+    func userChosePhotoChange(controller: ReminderVesselEditTableViewController?,
+                              sender: Either<UIView, UIBarButtonItem>)
     func userChose(reminder: Reminder,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
@@ -186,8 +187,8 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? ReminderVesselIconTableViewCell
             cell?.configure(with: self.delegate?.vesselResult?.value?.icon)
-            cell?.iconButtonTapped = { [unowned self] in
-                self.delegate?.userChosePhotoChange(controller: self)
+            cell?.iconButtonTapped = { [unowned self] sender in
+                self.delegate?.userChosePhotoChange(controller: self, sender: .left(sender))
             }
             return _cell
         case .reminders:
