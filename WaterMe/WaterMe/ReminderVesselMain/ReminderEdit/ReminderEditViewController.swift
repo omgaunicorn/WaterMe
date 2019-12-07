@@ -56,6 +56,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         }
         vc.userActivity = NSUserActivity(kind: .editReminder,
                                          delegate: vc.userActivityDelegate)
+        navVC.presentationController?.delegate = vc
         return navVC
     }
     
@@ -316,7 +317,7 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
         activity.becomeCurrent()
         let shortcut = INShortcut(userActivity: activity)
         let vc = ClosureDelegatingAddVoiceShortcutViewController(shortcut: shortcut)
-        vc.completion = { [unowned self] vc, result in
+        vc.completionHandler = { [unowned self] vc, result in
             self.userActivity?.becomeCurrent()
             vc.dismiss(animated: true) {
                 deselectRowAnimated?(true)
@@ -325,5 +326,11 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
             }
         }
         self.present(vc, animated: true, completion: nil)
+    }
+}
+
+extension ReminderEditViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.completionHandler?(self)
     }
 }

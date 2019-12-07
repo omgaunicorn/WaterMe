@@ -280,6 +280,14 @@ extension SettingsMainViewController {
     }
 }
 
+extension ReminderIntervalPickerViewController {
+    enum LocalizedString {
+        static let title =
+            NSLocalizedString("Reminder Interval",
+                              comment: "Reminder Interval Chooser: Title")
+    }
+}
+
 extension ReminderVesselEditViewController {
     enum LocalizedString {
         static let rowLabelInterval =

@@ -34,6 +34,7 @@ class SettingsMainViewController: StandardViewController {
         // swiftlint:disable:next force_cast
         let vc = navVC.viewControllers.first as! SettingsMainViewController
         vc.completionHandler = completion
+        navVC.presentationController?.delegate = vc
         return navVC
     }
 
@@ -74,5 +75,11 @@ class SettingsMainViewController: StandardViewController {
         if let settingsVC = segue.destination as? SettingsTableViewController {
             self.tableViewController = settingsVC
         }
+    }
+}
+
+extension SettingsMainViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.completionHandler(self)
     }
 }

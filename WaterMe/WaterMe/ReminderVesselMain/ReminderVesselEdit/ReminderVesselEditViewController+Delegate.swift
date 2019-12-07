@@ -27,7 +27,9 @@ import UIKit
 
 extension ReminderVesselEditViewController: ReminderVesselEditTableViewControllerDelegate {
 
-    func userChosePhotoChange(controller: ReminderVesselEditTableViewController?) {
+    func userChosePhotoChange(controller: ReminderVesselEditTableViewController?,
+                              sender: Either<UIView, UIBarButtonItem>)
+    {
         self.view.endEditing(false)
         let imageAlreadyChosen = self.vesselResult?.value?.icon?.image != nil
         let vc = UIAlertController.emojiPhotoActionSheet(withAlreadyChosenImage: imageAlreadyChosen)
@@ -64,6 +66,12 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
             case .error(let errorVC):
                 self.present(errorVC, animated: true, completion: nil)
             }
+        }
+        switch sender {
+        case .left(let sender):
+            vc.popoverPresentationController?.sourceView = sender
+        case .right(let sender):
+            vc.popoverPresentationController?.barButtonItem = sender
         }
         self.present(vc, animated: true, completion: nil)
     }
@@ -132,7 +140,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         }
         let shortcut = INShortcut(userActivity: activity)
         let vc = ClosureDelegatingAddVoiceShortcutViewController(shortcut: shortcut)
-        vc.completion = { vc, result in
+        vc.completionHandler = { vc, result in
             vc.dismiss(animated: true) {
                 deselectRowAnimated?(true)
                 guard case .failure(let error) = result else { return }

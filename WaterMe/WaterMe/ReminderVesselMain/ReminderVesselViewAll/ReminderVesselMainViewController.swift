@@ -38,6 +38,7 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
         vc.configure(with: basicController)
         vc.configure(with: proController)
         vc.completionHandler = completionHandler
+        navVC.presentationController?.delegate = vc
         return navVC
     }
     
@@ -95,5 +96,10 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
             destVC.configure(with: self.basicRC)
         }
     }
-    
+}
+
+extension ReminderVesselMainViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.completionHandler?(self)
+    }
 }
