@@ -44,6 +44,13 @@ enum Color {
     static var darkTintColor: UIColor {
         return UIColor(red: 97 / 255.0, green: 46 / 255.0, blue: 128 / 255.0, alpha: 1.0)
     }
+    static var genericBackgroundColor: UIColor {
+        if #available(iOS 13.0, *) {
+            return .systemBackground
+        } else {
+            return .white
+        }
+    }
     static var visuelEffectViewBackground: UIColor? {
         if UserDefaults.standard.increaseContrast == true {
             return nil
