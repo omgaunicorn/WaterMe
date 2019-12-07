@@ -74,6 +74,7 @@ class ReminderTableViewCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.emojiImageView?.backgroundColor = .clear
         self.emojiImageView?.size = .small
         self.emojiImageView?.ring = false
         self.leadingConstraint?.constant = UITableViewCell.style_labelCellLeadingPadding
