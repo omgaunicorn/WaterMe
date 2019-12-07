@@ -44,7 +44,6 @@ class EmojiPickerViewController: StandardCollectionViewController {
         self.title = LocalizedString.title
         let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelButtonTapped(_:)))
         self.navigationItem.rightBarButtonItem = cancel
-        self.collectionView?.backgroundColor = .white
         self.collectionView?.alwaysBounceVertical = true
         self.collectionView?.register(EmojiPickerCollectionViewCell.nib, forCellWithReuseIdentifier: EmojiPickerCollectionViewCell.reuseID)
         self.flow?.minimumInteritemSpacing = 0

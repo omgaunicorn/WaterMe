@@ -71,8 +71,6 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         self.collectionView?.contentInsetAdjustmentBehavior = .always
         // not sure why this is not the default
         self.collectionView?.alwaysBounceVertical = true
-        // not sure why this is not the default
-        self.collectionView?.backgroundColor = .white
         // disabled by default on iphone
         self.collectionView?.dragInteractionEnabled = true
         self.collectionView?.dragDelegate = self
