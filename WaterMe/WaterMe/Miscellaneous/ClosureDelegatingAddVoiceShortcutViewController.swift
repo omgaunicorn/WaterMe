@@ -34,13 +34,13 @@ class ClosureDelegatingAddVoiceShortcutViewController: INUIAddVoiceShortcutViewC
 
     override init(shortcut: INShortcut) {
         super.init(shortcut: shortcut)
-        self.presentationController!.delegate = self
+        self.presentationController?.delegate = self
         self.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.presentationController!.delegate = self
+        self.presentationController?.delegate = self
         self.delegate = self
     }
 
