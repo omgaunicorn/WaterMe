@@ -97,6 +97,6 @@ extension ReminderIntervalPickerViewController: UIPickerViewDataSource {
 
 extension ReminderIntervalPickerViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
-        self.completionHandler(self, nil)
+        self.doneButtonTapped(presentationController)
     }
 }
