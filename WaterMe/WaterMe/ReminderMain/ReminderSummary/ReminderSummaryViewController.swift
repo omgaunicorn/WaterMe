@@ -50,6 +50,7 @@ class ReminderSummaryViewController: StandardViewController {
         vc.popoverPresentationController?.popoverBackgroundViewClass = ReminderSummaryPopoverBackgroundView.self
         vc.popoverPresentationController?.sourceView = sourceView
         vc.popoverPresentationController?.sourceRect = UIAlertController.sourceRect(from: sourceView)
+        vc.presentationController?.delegate = vc
         // configure needed properties
         vc.completion = completion
         vc.userActivityContinuation = userActivityContinuation
@@ -212,5 +213,11 @@ extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate
             self.isPresentedAsPopover = false
             return .overFullScreen
         }
+    }
+}
+
+extension ReminderSummaryViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.completion(.cancel, self.reminderID, self)
     }
 }
