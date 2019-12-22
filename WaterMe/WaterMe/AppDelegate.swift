@@ -79,22 +79,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // in order for the new UIAppearance to take effect
             UIApplication.style_configure()
 
-            // configure dark mode
-            if #available(iOS 13.0, *) {
-                switch ud.darkMode {
-                case .system:
-                    window.overrideUserInterfaceStyle = .unspecified
-                case .forceLight:
-                    window.overrideUserInterfaceStyle = .light
-                case .forceDark:
-                    window.overrideUserInterfaceStyle = .dark
-                }
-            }
-
             // force window to update everything by
             // forcefully setting rootVC
             let prevVC = window.rootViewController
             window.rootViewController = nil
+            window.style_configure()
             window.rootViewController = prevVC
         }
         let notificationChanges = {
@@ -186,6 +175,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // configure window
         let window = self.window ?? UIWindow(frame: UIScreen.main.bounds)
+        window.style_configure()
         window.rootViewController = vc
 
         // show window

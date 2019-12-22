@@ -82,6 +82,21 @@ extension UIApplication {
         UIImageView.appearance(whenContainedInInstancesOf: [ReminderTableViewCell.self]).tintColor = Color.textSecondary
         UIVisualEffectView.appearance(whenContainedInInstancesOf: [CropViewController.self]).backgroundColor = nil
         UIVisualEffectView.appearance().backgroundColor = Color.visuelEffectViewBackground
+
+extension UIWindow {
+    func style_configure() {
+        // configure dark mode
+        let ud = UserDefaults.standard
+        if #available(iOS 13.0, *) {
+            switch ud.darkMode {
+            case .system:
+                self.overrideUserInterfaceStyle = .unspecified
+            case .forceLight:
+                self.overrideUserInterfaceStyle = .light
+            case .forceDark:
+                self.overrideUserInterfaceStyle = .dark
+            }
+        }
     }
 }
 
