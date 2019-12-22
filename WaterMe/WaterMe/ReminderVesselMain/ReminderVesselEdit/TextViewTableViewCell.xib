@@ -20,7 +20,6 @@
                 <subviews>
                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MFI-tZ-feg">
                         <rect key="frame" x="8" y="0.0" width="441" height="192.5"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="192.5" id="VYD-PT-fqm"/>
                         </constraints>

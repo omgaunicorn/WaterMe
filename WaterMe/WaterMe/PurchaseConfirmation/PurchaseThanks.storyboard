@@ -29,7 +29,6 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="eKL-cR-Zhx" firstAttribute="centerY" secondItem="CWh-DG-IYx" secondAttribute="centerY" placeholder="YES" id="Cdl-IA-YYg"/>
                             <constraint firstItem="eKL-cR-Zhx" firstAttribute="centerX" secondItem="CWh-DG-IYx" secondAttribute="centerX" placeholder="YES" id="VQf-BK-OHf"/>
@@ -117,7 +116,6 @@
                                                         </subviews>
                                                     </stackView>
                                                 </subviews>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="bottom" secondItem="IUx-Zl-IOc" secondAttribute="bottom" constant="20" symbolic="YES" id="Tzd-Pg-MwL"/>
                                                     <constraint firstItem="IUx-Zl-IOc" firstAttribute="top" secondItem="lL3-wD-Fv7" secondAttribute="top" constant="20" symbolic="YES" id="kzi-Ko-H3z"/>
@@ -135,7 +133,6 @@
                                         </constraints>
                                     </scrollView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="3Vz-oE-Dd3" firstAttribute="leading" secondItem="9Fs-DI-3Ij" secondAttribute="leading" id="CGV-s5-gkJ"/>
                                     <constraint firstItem="3Vz-oE-Dd3" firstAttribute="top" secondItem="9Fs-DI-3Ij" secondAttribute="top" id="RdJ-EB-jUZ"/>
@@ -144,7 +141,6 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9Fs-DI-3Ij" firstAttribute="centerX" secondItem="qgj-Iz-2vR" secondAttribute="centerX" id="E4v-Ke-xYS"/>
                             <constraint firstItem="9Fs-DI-3Ij" firstAttribute="width" secondItem="qgj-Iz-2vR" secondAttribute="width" id="Vpk-7s-KKO"/>

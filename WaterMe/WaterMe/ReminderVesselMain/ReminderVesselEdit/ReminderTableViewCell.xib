@@ -21,7 +21,6 @@
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cqQ-mh-PX3" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
                         <rect key="frame" x="20" y="35" width="50" height="50"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="3pn-tb-aR3"/>
                             <constraint firstAttribute="width" secondItem="cqQ-mh-PX3" secondAttribute="height" multiplier="1:1" id="baG-hc-IXr"/>
