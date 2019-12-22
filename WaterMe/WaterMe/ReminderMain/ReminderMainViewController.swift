@@ -34,6 +34,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderMainViewController
+        navVC.navigationBar.style_forceTransparentAppearance()
         vc.title = UIApplication.LocalizedString.appTitle // set here because it works better in UITabBarController
         vc.applicationDidFinishLaunchingError = basicRCResult.error
         vc.configure(with: basicRCResult.value)

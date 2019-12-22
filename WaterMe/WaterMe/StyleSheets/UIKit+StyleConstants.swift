@@ -78,10 +78,37 @@ extension UIApplication {
     static let style_cornerRadius: CGFloat = 12
     class func style_configure() {
         UIView.appearance().tintColor = Color.tint
-        UIView.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = nil
-        UIImageView.appearance(whenContainedInInstancesOf: [ReminderTableViewCell.self]).tintColor = Color.textSecondary
-        UIVisualEffectView.appearance(whenContainedInInstancesOf: [CropViewController.self]).backgroundColor = nil
-        UIVisualEffectView.appearance().backgroundColor = Color.visuelEffectViewBackground
+
+        UIImageView.appearance(whenContainedInInstancesOf: [
+            ReminderTableViewCell.self
+        ]).tintColor = Color.textSecondary
+        
+        UIVisualEffectView.appearance(whenContainedInInstancesOf: [
+            ReminderSummaryViewController.self
+        ]).backgroundColor = Color.visuelEffectViewBackground
+
+        // make sure navigation bars appear the legacy way
+        guard #available(iOS 13.0, *) else { return }
+        let transparentAppearance = UINavigationBarAppearance()
+        let opaqueAppearance = UINavigationBarAppearance()
+        transparentAppearance.configureWithTransparentBackground()
+        opaqueAppearance.configureWithOpaqueBackground()
+        UINavigationBar.appearance().compactAppearance = opaqueAppearance
+        UINavigationBar.appearance().standardAppearance = opaqueAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = transparentAppearance
+    }
+}
+
+extension UINavigationBar {
+    func style_forceTransparentAppearance() {
+        guard #available(iOS 13.0, *) else { return }
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        self.compactAppearance = appearance
+        self.standardAppearance = appearance
+        self.scrollEdgeAppearance = appearance
+    }
+}
 
 extension UIWindow {
     func style_configure() {
