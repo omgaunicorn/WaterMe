@@ -78,7 +78,6 @@ class StandardTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // TODO: Hacky workaround for RDAR:FB7322599
-        guard self.presentingViewController != nil else { return }
         self.navigationController?.navigationBar.setNeedsLayout()
     }
 
@@ -95,7 +94,6 @@ class StandardViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // TODO: Hacky workaround for RDAR:FB7322599
-        guard self.presentingViewController != nil else { return }
         self.navigationController?.navigationBar.setNeedsLayout()
     }
 
