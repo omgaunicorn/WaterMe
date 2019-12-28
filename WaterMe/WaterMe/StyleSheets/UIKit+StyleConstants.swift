@@ -90,20 +90,20 @@ extension UIApplication {
         // make sure navigation bars appear the legacy way
         guard #available(iOS 13.0, *) else { return }
         let transparentAppearance = UINavigationBarAppearance()
-        let opaqueAppearance = UINavigationBarAppearance()
+        let defaultAppearance = UINavigationBarAppearance()
         transparentAppearance.configureWithTransparentBackground()
-        opaqueAppearance.configureWithOpaqueBackground()
-        UINavigationBar.appearance().compactAppearance = opaqueAppearance
-        UINavigationBar.appearance().standardAppearance = opaqueAppearance
+        defaultAppearance.configureWithDefaultBackground()
+        UINavigationBar.appearance().compactAppearance = defaultAppearance
+        UINavigationBar.appearance().standardAppearance = defaultAppearance
         UINavigationBar.appearance().scrollEdgeAppearance = transparentAppearance
     }
 }
 
 extension UINavigationBar {
-    func style_forceTransparentAppearance() {
+    func style_forceDefaultAppearance() {
         guard #available(iOS 13.0, *) else { return }
         let appearance = UINavigationBarAppearance()
-        appearance.configureWithTransparentBackground()
+        appearance.configureWithDefaultBackground()
         self.compactAppearance = appearance
         self.standardAppearance = appearance
         self.scrollEdgeAppearance = appearance
