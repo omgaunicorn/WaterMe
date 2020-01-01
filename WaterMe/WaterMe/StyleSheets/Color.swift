@@ -109,10 +109,32 @@ extension Color {
     }
 
     static private var _tint: UIColor {
-        return UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)
+        let light = UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)
+        guard #available(iOS 13.0, *) else { return light }
+        return UIColor() { trait -> UIColor in
+            switch trait.userInterfaceStyle {
+            case .dark:
+                return UIColor(red: 207 / 255.0, green: 148 / 255.0, blue: 242 / 255.0, alpha: 1.0)
+            case .unspecified, .light:
+                fallthrough
+            @unknown default:
+                return light
+            }
+        }
     }
 
     static private var _increasedContrastTint: UIColor {
-        return UIColor(red: 97 / 255.0, green: 46 / 255.0, blue: 128 / 255.0, alpha: 1.0)
+        let light = UIColor(red: 97 / 255.0, green: 46 / 255.0, blue: 128 / 255.0, alpha: 1.0)
+        guard #available(iOS 13.0, *) else { return light }
+        return UIColor() { trait -> UIColor in
+            switch trait.userInterfaceStyle {
+            case .dark:
+                return .white
+            case .unspecified, .light:
+                fallthrough
+            @unknown default:
+                return light
+            }
+        }
     }
 }
