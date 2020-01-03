@@ -22,6 +22,7 @@
 //
 
 #import "ReminderSummaryPopoverBackgroundView.h"
+#import "WaterMe-Swift.h"
 
 @interface ReminderSummaryPopoverBackgroundView ()
 {
@@ -79,10 +80,8 @@
 - (void)configureArrowViewConstraints;
 {
     // Create and Add the View
-    UIVisualEffect* effect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
-    UIView* view = [[UIVisualEffectView alloc] initWithEffect:effect];
+    UIView* view = [UIVisualEffectView style_systemMaterial];
     [self setMyArrowView:view];
-    [view setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self addSubview:view];
 
     // Configure height and width constraints

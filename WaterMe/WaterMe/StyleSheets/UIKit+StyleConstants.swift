@@ -72,6 +72,22 @@ extension ModalParentViewController {
     }
 }
 
+extension UIVisualEffectView {
+    @objc class func style_systemMaterial() -> UIVisualEffectView {
+        let style: UIBlurEffect.Style
+        if #available(iOS 13.0, *) {
+            style = UIBlurEffect.Style.systemMaterial
+        } else {
+            style = .extraLight
+        }
+        let v = UIVisualEffectView(effect: UIBlurEffect(style: style))
+        v.layer.cornerRadius = UIApplication.style_cornerRadius
+        v.clipsToBounds = true
+        v.translatesAutoresizingMaskIntoConstraints = false
+        return v
+    }
+}
+
 extension UIApplication {
     static let style_animationDurationLong: TimeInterval = 1.2
     static let style_animationDurationNormal: TimeInterval = 0.3

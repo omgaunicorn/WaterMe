@@ -252,7 +252,7 @@
                                                 <constraint firstItem="4e9-1z-VjI" firstAttribute="top" secondItem="Lvs-q0-INH" secondAttribute="top" id="ndQ-UJ-ON7"/>
                                             </constraints>
                                         </view>
-                                        <blurEffect style="extraLight"/>
+                                        <blurEffect style="systemMaterial"/>
                                     </visualEffectView>
                                     <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2T-Np-1PS" customClass="WateringAnimationPlayerView" customModule="WaterMe" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="215" height="233"/>
