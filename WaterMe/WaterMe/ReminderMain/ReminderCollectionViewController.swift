@@ -227,7 +227,8 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
         guard let reminder = self.reminders?.reminder(at: indexPath) else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
         // only make the "small" preview show on iPhones. On iPads, there is plenty of space
-        switch (self.view.traitCollection.horizontalSizeClass, self.view.traitCollection.verticalSizeClass) {
+        let traits = self.view.traitCollection
+        switch (traits.horizontalSizeClass, traits.verticalSizeClass) {
         case (.regular, .regular):
             break // do nothing for ipads
         default:
