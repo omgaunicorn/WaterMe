@@ -89,7 +89,18 @@ enum Color {
 extension Color {
 
     static private var _late: UIColor {
-        return UIColor(red: 221 / 255.0, green: 158 / 255.0, blue: 95 / 255.0, alpha: 1.0)
+        let light = UIColor(red: 221 / 255.0, green: 158 / 255.0, blue: 95 / 255.0, alpha: 1.0)
+        guard #available(iOS 13.0, *) else { return light }
+        return UIColor() { trait -> UIColor in
+            switch trait.userInterfaceStyle {
+            case .dark:
+                return UIColor(red: 255 / 255.0, green: 163 / 255.0, blue: 72 / 255.0, alpha: 1.0)
+            case .unspecified, .light:
+                fallthrough
+            @unknown default:
+                return light
+            }
+        }
     }
 
     static private var _today: UIColor {
@@ -97,7 +108,18 @@ extension Color {
     }
 
     static private var _tomorrow: UIColor {
-        return UIColor(red: 26 / 255.0, green: 188 / 255.0, blue: 156 / 255.0, alpha: 1.0)
+        let light = UIColor(red: 26 / 255.0, green: 188 / 255.0, blue: 156 / 255.0, alpha: 1.0)
+        guard #available(iOS 13.0, *) else { return light }
+        return UIColor() { trait -> UIColor in
+            switch trait.userInterfaceStyle {
+            case .dark:
+                return UIColor(red: 8 / 255.0, green: 228 / 255.0, blue: 185 / 255.0, alpha: 1.0)
+            case .unspecified, .light:
+                fallthrough
+            @unknown default:
+                return light
+            }
+        }
     }
 
     static private var _thisWeek: UIColor {
@@ -105,7 +127,7 @@ extension Color {
     }
 
     static private var _later: UIColor {
-        return UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)
+        return _tint
     }
 
     static private var _tint: UIColor {
@@ -114,7 +136,7 @@ extension Color {
         return UIColor() { trait -> UIColor in
             switch trait.userInterfaceStyle {
             case .dark:
-                return UIColor(red: 207 / 255.0, green: 148 / 255.0, blue: 242 / 255.0, alpha: 1.0)
+                return UIColor(red: 192 / 255.0, green: 85 / 255.0, blue: 255 / 255.0, alpha: 1.0)
             case .unspecified, .light:
                 fallthrough
             @unknown default:
@@ -129,7 +151,7 @@ extension Color {
         return UIColor() { trait -> UIColor in
             switch trait.userInterfaceStyle {
             case .dark:
-                return .white
+                return UIColor(red: 240 / 255.0, green: 216 / 255.0, blue: 255 / 255.0, alpha: 1.0)
             case .unspecified, .light:
                 fallthrough
             @unknown default:
