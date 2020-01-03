@@ -53,6 +53,7 @@ class ReminderIntervalPickerViewController: StandardViewController {
         super.viewDidLoad()
         
         self.title = LocalizedString.title
+        self.view.backgroundColor = Color.systemBackgroundColor
         
         let existingIndex = self.data.firstIndex(of: self.existingValue) ?? 0
         self.pickerView?.selectRow(existingIndex, inComponent: 0, animated: false)
@@ -79,7 +80,7 @@ extension ReminderIntervalPickerViewController: UIPickerViewDelegate {
         let formattedString = self.formatter.string(from: interval) ?? "–"
         let primary: [NSAttributedString.Key : Any] = [
             NSAttributedString.Key.font : self.primaryFont,
-            NSAttributedString.Key.foregroundColor : UIColor.black
+            NSAttributedString.Key.foregroundColor : Color.textPrimary
         ]
         let string = NSAttributedString(string: formattedString, attributes: primary)
         return string

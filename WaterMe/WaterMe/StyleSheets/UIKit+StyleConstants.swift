@@ -126,7 +126,7 @@ extension UINavigationBar {
     }
 }
 
-extension UIWindow {
+extension UIView {
     func style_configure() {
         // configure dark mode
         let ud = UserDefaults.standard
