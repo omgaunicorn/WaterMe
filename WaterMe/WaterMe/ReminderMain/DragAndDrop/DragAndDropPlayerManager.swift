@@ -92,9 +92,9 @@ class DragAndDropPlayerManager {
             self.player.removeAllItems()
             switch self.landscapeVideo {
             case true:
-                self.player.insert(landscapeVideoAsset, after: nil)
+                self.player.insert(self.landscapeVideoAsset, after: nil)
             case false:
-                self.player.insert(portraitVideoAsset, after: nil)
+                self.player.insert(self.portraitVideoAsset, after: nil)
             }
         }
     }
@@ -140,10 +140,11 @@ class DragAndDropPlayerManager {
         self.configuration = configuration
         self.landscapeVideoAsset = AVPlayerItem(url: configuration.landscapeVideoURL)
         self.portraitVideoAsset = AVPlayerItem(url: configuration.portraitVideoURL)
+        self.player.insert(self.landscapeVideoAsset, after: nil)
 
         let token = self.player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 60),
                                                         queue: nil)
-        { currentTime in
+        { [unowned self] currentTime in
             switch self.player.rate {
             case 0...: // Forward
                 switch self.hoverState {
@@ -172,7 +173,7 @@ class DragAndDropPlayerManager {
                 break
             }
         }
-        self.observerTokens += [token]
+        self.observerToken = token
     }
 
     func hardReset() {
@@ -182,15 +183,11 @@ class DragAndDropPlayerManager {
         self.player.seek(to: startTime)
     }
 
-    private var observerTokens = [Any]()
-
-    private func removeAllTokens() {
-        for token in self.observerTokens {
-            self.player.removeTimeObserver(token)
-        }
-    }
+    private var observerToken: Any?
 
     deinit {
-        self.removeAllTokens()
+        if let token = self.observerToken {
+            self.player.removeTimeObserver(token)
+        }
     }
 }
