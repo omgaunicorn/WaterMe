@@ -70,8 +70,22 @@ class DragAndDropPlayerManager {
     }
 
     private let configuration: Configuration
-    private let landscapeVideoAsset: AVPlayerItem
-    private let portraitVideoAsset: AVPlayerItem
+    private lazy var landscapeVideoAsset = AVPlayerItem.style_videoAsset(
+        at: self.configuration.landscapeVideoURL,
+        forDarkMode: false
+    )
+    private lazy var portraitVideoAsset = AVPlayerItem.style_videoAsset(
+        at: self.configuration.portraitVideoURL,
+        forDarkMode: false
+    )
+    private lazy var darkLandscapeVideoAsset = AVPlayerItem.style_videoAsset(
+        at: self.configuration.landscapeVideoURL,
+        forDarkMode: true
+    )
+    private lazy var darkPortraitVideoAsset = AVPlayerItem.style_videoAsset(
+        at: self.configuration.portraitVideoURL,
+        forDarkMode: true
+    )
 
     private(set) var videoLayerShouldBeHidden = true {
         didSet {
@@ -138,8 +152,6 @@ class DragAndDropPlayerManager {
     init(configuration: Configuration) {
         
         self.configuration = configuration
-        self.landscapeVideoAsset = AVPlayerItem(url: configuration.landscapeVideoURL)
-        self.portraitVideoAsset = AVPlayerItem(url: configuration.portraitVideoURL)
         self.player.insert(self.landscapeVideoAsset, after: nil)
 
         let token = self.player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 60),

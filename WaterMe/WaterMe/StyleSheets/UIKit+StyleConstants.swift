@@ -23,6 +23,7 @@
 
 import CropViewController
 import UIKit
+import AVFoundation
 
 extension UIView {
     class func style_animateNormal(_ animations: @escaping () -> Void, completion: @escaping ((Bool) -> Void)) {
@@ -196,4 +197,39 @@ extension TextViewTableViewCell {
 extension ReminderVesselIconTableViewCell {
     static let style_iconButtonHeightAccessibilityTextSizeEnabled: CGFloat = 280
     static let style_iconButtonHeightAccessibilityTextSizeDisabled: CGFloat = 140
+}
+
+extension AVPlayerItem {
+    class func style_videoAsset(at url: URL, forDarkMode darkMode: Bool) -> AVPlayerItem {
+        guard darkMode == true else { return .init(url: url) }
+
+        guard
+            let grayscaleFilter = CIFilter(name: "CIColorControls"),
+            let invertFilter = CIFilter(name: "CIColorInvert")
+        else {
+            assertionFailure("Failed to load built-in CIFilters")
+            return .init(url: url)
+        }
+        grayscaleFilter.setValue(NSNumber(value: 0), forKey: kCIInputSaturationKey)
+        let asset = AVAsset(url: url)
+        let item = AVPlayerItem(asset: asset)
+
+        item.videoComposition = .init(asset: asset) { request in
+            let pass0 = request.sourceImage
+            grayscaleFilter.setValue(pass0, forKey: kCIInputImageKey)
+            guard let pass1 = grayscaleFilter.outputImage else {
+                assertionFailure("Failed to apply basic filters")
+                request.finish(with: pass0, context: nil)
+                return
+            }
+            invertFilter.setValue(pass1, forKey: kCIInputImageKey)
+            guard let pass2 = invertFilter.outputImage?.cropped(to: request.sourceImage.extent) else {
+                assertionFailure("Failed to apply basic filters")
+                request.finish(with: pass0, context: nil)
+                return
+            }
+            request.finish(with: pass2, context: nil)
+        }
+        return item
+    }
 }
