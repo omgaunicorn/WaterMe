@@ -25,6 +25,8 @@ import AVFoundation
 
 class DragAndDropPlayerManager {
 
+    // MARK: Internal Types
+
     enum HoverState {
         case noHover, hover, drop
     }
@@ -44,6 +46,13 @@ class DragAndDropPlayerManager {
         var end: CMTime
     }
 
+    // MARK: Private State
+
+    private let configuration: Configuration
+    private var landscapeVideo = true
+
+    // MARK: Computed Properties
+
     private var startTime: CMTime {
         switch self.landscapeVideo {
         case true:
@@ -52,6 +61,7 @@ class DragAndDropPlayerManager {
             return configuration.portraitTimings.start
         }
     }
+
     private var hoverTime: CMTime {
         switch self.landscapeVideo {
         case true:
@@ -60,6 +70,7 @@ class DragAndDropPlayerManager {
             return configuration.portraitTimings.hover
         }
     }
+
     private var endTime: CMTime {
         switch self.landscapeVideo {
         case true:
@@ -69,29 +80,13 @@ class DragAndDropPlayerManager {
         }
     }
 
-    private let configuration: Configuration
-    private lazy var landscapeVideoAsset = AVPlayerItem.style_videoAsset(
-        at: self.configuration.landscapeVideoURL,
-        forDarkMode: false
-    )
-    private lazy var portraitVideoAsset = AVPlayerItem.style_videoAsset(
-        at: self.configuration.portraitVideoURL,
-        forDarkMode: false
-    )
-    private lazy var darkLandscapeVideoAsset = AVPlayerItem.style_videoAsset(
-        at: self.configuration.landscapeVideoURL,
-        forDarkMode: true
-    )
-    private lazy var darkPortraitVideoAsset = AVPlayerItem.style_videoAsset(
-        at: self.configuration.portraitVideoURL,
-        forDarkMode: true
-    )
-
     private(set) var videoLayerShouldBeHidden = true {
         didSet {
             self.videoHiddenChanged?(self.videoLayerShouldBeHidden)
         }
     }
+
+    // MARK: Video Layer for View
 
     let player: AVQueuePlayer = {
         let p = AVQueuePlayer()
@@ -101,9 +96,11 @@ class DragAndDropPlayerManager {
         return p
     }()
 
-    private var landscapeVideo = true
+    // MARK: Delegation to Owner
 
     var videoHiddenChanged: ((Bool) -> Void)?
+
+    // MARK: State Changes from Owner
 
     var hoverState = HoverState.noHover {
         didSet {
@@ -139,6 +136,28 @@ class DragAndDropPlayerManager {
         }
     }
 
+    func updateVideoAssets(landscape: Bool, darkMode: Bool) {
+        let item: AVPlayerItem
+        switch landscape {
+        case true:
+            item = .style_videoAsset(
+                at: self.configuration.landscapeVideoURL,
+                forDarkMode: darkMode
+            )
+        case false:
+            item = .style_videoAsset(
+                at: self.configuration.portraitVideoURL,
+                forDarkMode: darkMode
+            )
+        }
+
+        self.player.removeAllItems()
+        self.landscapeVideo = landscape
+        self.player.insert(item, after: nil)
+    }
+
+
+    // MARK: Init
     init(configuration: Configuration) {
         self.configuration = configuration
         let token = self.player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 60),
@@ -175,20 +194,7 @@ class DragAndDropPlayerManager {
         self.observerToken = token
     }
 
-    func updateVideoAssets(landscape: Bool, darkMode: Bool) {
-        self.player.removeAllItems()
-        self.landscapeVideo = landscape
-        switch (landscape, darkMode) {
-        case (true, false):
-            self.player.insert(self.landscapeVideoAsset, after: nil)
-        case (false, false):
-            self.player.insert(self.portraitVideoAsset, after: nil)
-        case (true, true):
-            self.player.insert(self.darkLandscapeVideoAsset, after: nil)
-        case (false, true):
-            self.player.insert(self.darkPortraitVideoAsset, after: nil)
-        }
-    }
+    // MARK: Cleanup
 
     func hardReset() {
         self.hoverState = .noHover
