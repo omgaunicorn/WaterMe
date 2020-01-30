@@ -101,17 +101,7 @@ class DragAndDropPlayerManager {
         return p
     }()
 
-    var landscapeVideo = true {
-        didSet {
-            self.player.removeAllItems()
-            switch self.landscapeVideo {
-            case true:
-                self.player.insert(self.landscapeVideoAsset, after: nil)
-            case false:
-                self.player.insert(self.portraitVideoAsset, after: nil)
-            }
-        }
-    }
+    private var landscapeVideo = true
 
     var videoHiddenChanged: ((Bool) -> Void)?
 
@@ -150,10 +140,7 @@ class DragAndDropPlayerManager {
     }
 
     init(configuration: Configuration) {
-        
         self.configuration = configuration
-        self.player.insert(self.landscapeVideoAsset, after: nil)
-
         let token = self.player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 60),
                                                         queue: nil)
         { [unowned self] currentTime in
@@ -186,6 +173,21 @@ class DragAndDropPlayerManager {
             }
         }
         self.observerToken = token
+    }
+
+    func updateVideoAssets(landscape: Bool, darkMode: Bool) {
+        self.player.removeAllItems()
+        self.landscapeVideo = landscape
+        switch (landscape, darkMode) {
+        case (true, false):
+            self.player.insert(self.landscapeVideoAsset, after: nil)
+        case (false, false):
+            self.player.insert(self.portraitVideoAsset, after: nil)
+        case (true, true):
+            self.player.insert(self.darkLandscapeVideoAsset, after: nil)
+        case (false, true):
+            self.player.insert(self.darkPortraitVideoAsset, after: nil)
+        }
     }
 
     func hardReset() {
