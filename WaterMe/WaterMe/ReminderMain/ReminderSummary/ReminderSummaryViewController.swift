@@ -66,22 +66,6 @@ class ReminderSummaryViewController: StandardViewController {
     @IBOutlet var tableViewControllerLeadingTrailingConstraints: [NSLayoutConstraint]?
     
     private(set) var isPresentedAsPopover = false
-    private var tableViewControllerLeadingTrailingConstraintConstant: CGFloat {
-        switch self.isPresentedAsPopover {
-        case true:
-            return 0
-        case false:
-            return type(of: self).style_leadingTrailingPadding
-        }
-    }
-    private var darkBackgroundViewAlpha: CGFloat {
-        switch self.isPresentedAsPopover {
-        case true:
-            return 0
-        case false:
-            return 1
-        }
-    }
 
     override var preferredContentSize: CGSize {
         get {
@@ -127,10 +111,38 @@ class ReminderSummaryViewController: StandardViewController {
         }, completion: nil)
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.updateViewForPresentation()
+    }
+
     private func updateViewForPresentation() {
-        self.darkBackgroundView?.alpha = self.darkBackgroundViewAlpha
+        var isDarkMode: Bool {
+            guard #available(iOS 12.0, *) else { return false }
+            switch self.view.traitCollection.userInterfaceStyle {
+            case .dark: return true
+            case .light, .unspecified: fallthrough
+            @unknown default: return false
+            }
+        }
+
+        var tableViewControllerInsets: CGFloat {
+            self.isPresentedAsPopover
+                ? 0
+                : type(of: self).style_leadingTrailingPadding
+        }
+
+        var darkBackgroundViewAlpha: CGFloat {
+            switch (self.isPresentedAsPopover, isDarkMode) {
+            case (true, _): return 0
+            case (false, true): return 0.8
+            case (false, false): return 0.4
+            }
+        }
+
+        self.darkBackgroundView?.alpha = darkBackgroundViewAlpha
         self.tableViewControllerLeadingTrailingConstraints?.forEach() { c in
-            c.constant = self.tableViewControllerLeadingTrailingConstraintConstant
+            c.constant = tableViewControllerInsets
         }
     }
 
