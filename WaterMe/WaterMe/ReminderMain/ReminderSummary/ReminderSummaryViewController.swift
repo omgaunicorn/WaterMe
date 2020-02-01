@@ -117,14 +117,7 @@ class ReminderSummaryViewController: StandardViewController {
     }
 
     private func updateViewForPresentation() {
-        var isDarkMode: Bool {
-            guard #available(iOS 12.0, *) else { return false }
-            switch self.view.traitCollection.userInterfaceStyle {
-            case .dark: return true
-            case .light, .unspecified: fallthrough
-            @unknown default: return false
-            }
-        }
+        let isDarkMode = !self.traitCollection.userInterfaceStyleIsNormal
 
         var tableViewControllerInsets: CGFloat {
             self.isPresentedAsPopover

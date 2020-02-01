@@ -36,19 +36,7 @@ extension DragAndDropPlayerManager {
             verticalSizeClassIsDefault = true
         }
 
-        let userInterfaceStyleIsDefault: Bool
-        if #available(iOS 12.0, *) {
-            switch newValue.userInterfaceStyle {
-            case .dark:
-                userInterfaceStyleIsDefault = false
-            case .light, .unspecified:
-                fallthrough
-            @unknown default:
-                userInterfaceStyleIsDefault = true
-            }
-        } else {
-            userInterfaceStyleIsDefault = true
-        }
+        let userInterfaceStyleIsDefault = newValue.userInterfaceStyleIsNormal
 
         self.updateVideoAssets(landscape: verticalSizeClassIsDefault,
                                darkMode: !userInterfaceStyleIsDefault)

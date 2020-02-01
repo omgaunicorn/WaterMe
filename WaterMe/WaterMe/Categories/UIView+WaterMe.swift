@@ -36,3 +36,17 @@ extension UIView {
         }
     }
 }
+
+extension UITraitCollection {
+    var userInterfaceStyleIsNormal: Bool {
+        guard #available(iOS 12.0, *) else { return true }
+        switch self.userInterfaceStyle {
+        case .dark:
+            return false
+        case .light, .unspecified:
+            fallthrough
+        @unknown default:
+            return true
+        }
+    }
+}
