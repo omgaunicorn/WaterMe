@@ -47,6 +47,7 @@ class EmojiPickerViewController: StandardCollectionViewController {
         self.collectionView?.alwaysBounceVertical = true
         self.collectionView?.register(EmojiPickerCollectionViewCell.nib, forCellWithReuseIdentifier: EmojiPickerCollectionViewCell.reuseID)
         self.flow?.minimumInteritemSpacing = 0
+        self.collectionView.backgroundColor = Color.systemBackgroundColor
     }
     
     @objc private func cancelButtonTapped(_ sender: NSObject?) {
