@@ -95,6 +95,20 @@ class ReminderEditTableViewController: StandardTableViewController {
             assertionFailure("User was allowed to select unselectable row")
         }
     }
+
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        guard let reminder = self.delegate?.reminderResult?.value else {
+            assertionFailure("Missing Reminder Object")
+            return nil
+        }
+        let section = Section(section: indexPath.section, for: reminder.kind)
+        switch section {
+        case .details, .notes, .performed:
+            return nil
+        case .kind, .interval, .siriShortcuts:
+            return indexPath
+        }
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         guard let reminder = self.delegate?.reminderResult?.value else { return 0 }
