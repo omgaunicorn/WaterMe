@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5002ADE523E6AC5F00CBC2B9 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5002ADE423E6AC5F00CBC2B9 /* NSObject+Runtime.m */; };
 		500679AF1F4BF3DB00F8100D /* ReminderMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */; };
 		5010C22E213F779F00D1832C /* ReminderSummary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5010C22D213F779F00D1832C /* ReminderSummary.storyboard */; };
 		5010C230213F77B200D1832C /* ReminderSummaryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5010C22F213F77B200D1832C /* ReminderSummaryViewController.swift */; };
@@ -146,6 +147,8 @@
 /* Begin PBXFileReference section */
 		1CD49FF23792A05DAB59D06B /* Pods-AdminConsole.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdminConsole.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole.release.xcconfig"; sourceTree = "<group>"; };
 		403ED0B9FD8DFE91560E8B80 /* Pods-AdminConsole.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdminConsole.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole.debug.xcconfig"; sourceTree = "<group>"; };
+		5002ADE323E6AC5600CBC2B9 /* NSObject+Runtime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
+		5002ADE423E6AC5F00CBC2B9 /* NSObject+Runtime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
 		500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderMainViewController.swift; sourceTree = "<group>"; };
 		5010C22D213F779F00D1832C /* ReminderSummary.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReminderSummary.storyboard; sourceTree = "<group>"; };
 		5010C22F213F77B200D1832C /* ReminderSummaryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSummaryViewController.swift; sourceTree = "<group>"; };
@@ -469,6 +472,8 @@
 				50CA47ED21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift */,
 				504B1BA5207332E20090CD7F /* TCF.h */,
 				504B1BA6207332E20090CD7F /* TCF.m */,
+				5002ADE323E6AC5600CBC2B9 /* NSObject+Runtime.h */,
+				5002ADE423E6AC5F00CBC2B9 /* NSObject+Runtime.m */,
 				504B1BA4207332E10090CD7F /* WaterMe-Bridging-Header.h */,
 			);
 			path = Miscellaneous;
@@ -873,6 +878,7 @@
 				50F388E01FF6D9C10031ED45 /* CoreDataMigrator.swift in Sources */,
 				50A3BAC8214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift in Sources */,
 				5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */,
+				5002ADE523E6AC5F00CBC2B9 /* NSObject+Runtime.m in Sources */,
 				502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */,
 				50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */,
 				504A36FB214C7ECC009543C0 /* SimpleImageViewerSubclass.swift in Sources */,

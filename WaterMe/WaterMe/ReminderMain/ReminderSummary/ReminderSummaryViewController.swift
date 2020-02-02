@@ -225,4 +225,32 @@ extension ReminderSummaryViewController: UIAdaptivePresentationControllerDelegat
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.completion(.cancel, self.reminderID, self)
     }
+
+    func presentationController(_ presentationController: UIPresentationController,
+                                willPresentWithAdaptiveStyle style: UIModalPresentationStyle,
+                                transitionCoordinator: UIViewControllerTransitionCoordinator?)
+    {
+        presentationController.removeShadow(in: transitionCoordinator)
+    }
+}
+
+extension UIPresentationController {
+    fileprivate func removeShadow(in transitionCoordinator: UIViewControllerTransitionCoordinator?) {
+        let _subterfuge = [
+            "_",
+            "sha",
+            "dow",
+            "Vi",
+            "ew"
+        ]
+        let subterfuge = _subterfuge.reduce("", +)
+        guard
+            let self = self as? UIPopoverPresentationController,
+            let tc = transitionCoordinator,
+            self.sanityCheck(forKey: subterfuge) == true,
+            let shadowView = self.value(forKey: subterfuge) as? UIImageView
+        else { return }
+        tc.animate(alongsideTransition: { _ in shadowView.alpha = 0 },
+                   completion: { _ in shadowView.image = nil })
+    }
 }

@@ -1,9 +1,9 @@
 //
-//  WaterMe-Bridging-Header.h
+//  NSObject+Runtime.h
 //  WaterMe
 //
-//  Created by Jeffrey Bergier on 03/04/2018.
-//  Copyright © 2018 Saturday Apps.
+//  Created by Jeffrey Bergier on 2020/02/02.
+//  Copyright © 2020 Saturday Apps. All rights reserved.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
 //
@@ -21,11 +21,22 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-//
-//  Use this file to import your target's public headers that you would like to expose to Swift.
-//
+@import Foundation;
 
-#import "TCF.h"
-#import "ReminderSummaryPopoverBackgroundView.h"
-#import "NSObject+Runtime.h"
+@interface NSObject (Runtime)
 
+/**
+There is no way to guarantee that an object you don't control will or won't be
+KVC compliant for a given key ahead of time. However, this method attempts
+to do some introspection to see if it COULD work.
+
+1. Checks for a matching selector
+2. Checks the properties of the class to see if one matches
+3. Checks the Ivars of the class to see if one matches
+
+It goes in the above order and if one matches then it returns YES.
+If all tests fail, it returns NO
+ */
+- (BOOL)sanityCheckForKey:(NSString*_Nonnull)key;
+
+@end
