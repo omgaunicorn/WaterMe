@@ -224,7 +224,11 @@
 - (CGFloat)_shadowOpacity;
 {
     [self setShadowOpacityWasCalled:YES];
-    return 0.1;
+    if ([[self traitCollection] userInterfaceStyleIsNormal]) {
+        return 0.15;
+    } else {
+        return 0.6;
+    }
 }
 
 @end

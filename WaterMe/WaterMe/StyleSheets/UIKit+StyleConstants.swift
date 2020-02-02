@@ -99,9 +99,15 @@ extension UIApplication {
         UIImageView.appearance(whenContainedInInstancesOf: [
             ReminderTableViewCell.self
         ]).tintColor = Color.textSecondary
-        
+
+        // For some reason these have to be separate in order for it to be effective.
         UIVisualEffectView.appearance(whenContainedInInstancesOf: [
             ReminderSummaryViewController.self
+        ]).backgroundColor = Color.visuelEffectViewBackground
+
+        // For some reason these have to be separate in order for it to be effective.
+        UIVisualEffectView.appearance(whenContainedInInstancesOf: [
+            ReminderSummaryPopoverBackgroundView.self
         ]).backgroundColor = Color.visuelEffectViewBackground
 
         // make sure navigation bars appear the legacy way

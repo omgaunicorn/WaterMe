@@ -38,7 +38,7 @@ extension UIView {
 }
 
 extension UITraitCollection {
-    var userInterfaceStyleIsNormal: Bool {
+    @objc var userInterfaceStyleIsNormal: Bool {
         guard #available(iOS 12.0, *) else { return true }
         switch self.userInterfaceStyle {
         case .dark:
