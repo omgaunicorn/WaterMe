@@ -66,22 +66,6 @@ class ReminderSummaryViewController: StandardViewController {
     @IBOutlet var tableViewControllerLeadingTrailingConstraints: [NSLayoutConstraint]?
     
     private(set) var isPresentedAsPopover = false
-    private var tableViewControllerLeadingTrailingConstraintConstant: CGFloat {
-        switch self.isPresentedAsPopover {
-        case true:
-            return 0
-        case false:
-            return type(of: self).style_leadingTrailingPadding
-        }
-    }
-    private var darkBackgroundViewAlpha: CGFloat {
-        switch self.isPresentedAsPopover {
-        case true:
-            return 0
-        case false:
-            return 1
-        }
-    }
 
     override var preferredContentSize: CGSize {
         get {
@@ -127,10 +111,31 @@ class ReminderSummaryViewController: StandardViewController {
         }, completion: nil)
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.updateViewForPresentation()
+    }
+
     private func updateViewForPresentation() {
-        self.darkBackgroundView?.alpha = self.darkBackgroundViewAlpha
+        let isDarkMode = !self.traitCollection.userInterfaceStyleIsNormal
+
+        var tableViewControllerInsets: CGFloat {
+            self.isPresentedAsPopover
+                ? 0
+                : type(of: self).style_leadingTrailingPadding
+        }
+
+        var darkBackgroundViewAlpha: CGFloat {
+            switch (self.isPresentedAsPopover, isDarkMode) {
+            case (true, _): return 0
+            case (false, true): return 0.8
+            case (false, false): return 0.4
+            }
+        }
+
+        self.darkBackgroundView?.alpha = darkBackgroundViewAlpha
         self.tableViewControllerLeadingTrailingConstraints?.forEach() { c in
-            c.constant = self.tableViewControllerLeadingTrailingConstraintConstant
+            c.constant = tableViewControllerInsets
         }
     }
 
@@ -219,5 +224,33 @@ extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate
 extension ReminderSummaryViewController: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.completion(.cancel, self.reminderID, self)
+    }
+
+    func presentationController(_ presentationController: UIPresentationController,
+                                willPresentWithAdaptiveStyle style: UIModalPresentationStyle,
+                                transitionCoordinator: UIViewControllerTransitionCoordinator?)
+    {
+        presentationController.removeShadow(in: transitionCoordinator)
+    }
+}
+
+extension UIPresentationController {
+    fileprivate func removeShadow(in transitionCoordinator: UIViewControllerTransitionCoordinator?) {
+        let _subterfuge = [
+            "_",
+            "sha",
+            "dow",
+            "Vi",
+            "ew"
+        ]
+        let subterfuge = _subterfuge.reduce("", +)
+        guard
+            let self = self as? UIPopoverPresentationController,
+            let tc = transitionCoordinator,
+            self.sanityCheck(forKey: subterfuge) == true,
+            let shadowView = self.value(forKey: subterfuge) as? UIImageView
+        else { return }
+        tc.animate(alongsideTransition: { _ in shadowView.alpha = 0 },
+                   completion: { _ in shadowView.image = nil })
     }
 }

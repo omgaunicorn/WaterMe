@@ -58,16 +58,6 @@ class ImagePickerCropperViewController: UIImagePickerController, UIImagePickerCo
     var completionHandler: ((UIImage?, UIViewController) -> Void)?
     private var permissionCheckTimer: Timer?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        if self.sourceType == .photoLibrary {
-            // makes it so when the screen first launches
-            // and user has not given permission yet
-            // the VC is white rather than black
-            self.view.backgroundColor = .white
-        }
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard self.permissionCheckTimer == nil else { return }

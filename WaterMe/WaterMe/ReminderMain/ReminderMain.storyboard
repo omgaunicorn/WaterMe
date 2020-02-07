@@ -43,7 +43,6 @@
                             </containerView>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RHs-C3-vgv" userLabel="DragView" customClass="OnlySubviewsTouchableView" customModule="WaterMe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="32" width="215" height="382"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="200" id="52b-vx-zZs"/>
                                     <constraint firstAttribute="width" secondItem="RHs-C3-vgv" secondAttribute="height" multiplier="16:9" id="Sgj-xU-18S"/>
@@ -72,7 +71,6 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="RHs-C3-vgv" firstAttribute="centerX" secondItem="RKH-f9-TFG" secondAttribute="centerX" id="3KT-GX-dHt"/>
                             <constraint firstItem="7bz-mK-2hj" firstAttribute="width" secondItem="lUe-we-dUa" secondAttribute="width" id="4Ck-Vu-zKc"/>
@@ -133,7 +131,6 @@
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="32O-Kc-8k3">
                         <rect key="frame" x="0.0" y="0.0" width="736" height="414"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dp4-W4-56m">
                             <size key="itemSize" width="50" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -195,7 +192,6 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="ula-eI-h4j" firstAttribute="leading" secondItem="4e9-1z-VjI" secondAttribute="leading" constant="20" symbolic="YES" id="0tr-NL-SqX"/>
                                                         <constraint firstItem="8ax-fT-iNm" firstAttribute="centerY" secondItem="4e9-1z-VjI" secondAttribute="centerY" id="FjR-dT-dBY"/>
@@ -256,14 +252,13 @@
                                                 <constraint firstItem="4e9-1z-VjI" firstAttribute="top" secondItem="Lvs-q0-INH" secondAttribute="top" id="ndQ-UJ-ON7"/>
                                             </constraints>
                                         </view>
-                                        <blurEffect style="extraLight"/>
+                                        <blurEffect style="systemMaterial"/>
                                     </visualEffectView>
                                     <view opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A2T-Np-1PS" customClass="WateringAnimationPlayerView" customModule="WaterMe" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="215" height="233"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QIf-SG-lIu">
                                                 <rect key="frame" x="0.0" y="232" width="414" height="1"/>
-                                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="K9J-Ui-70A"/>
                                                 </constraints>
@@ -279,7 +274,6 @@
                                                 </variation>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="QIf-SG-lIu" firstAttribute="leading" secondItem="A2T-Np-1PS" secondAttribute="leading" constant="87" id="dGl-yB-l0z">
                                                 <variation key="heightClass=regular" constant="0.0"/>
@@ -316,7 +310,6 @@
                                         </connections>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="A2T-Np-1PS" secondAttribute="bottom" id="75y-kJ-lwr"/>
                                     <constraint firstItem="468-Sm-OV2" firstAttribute="leading" secondItem="0Bz-NO-4fe" secondAttribute="leading" constant="8" id="9s6-mI-zKG">
@@ -336,7 +329,6 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="0Bz-NO-4fe" firstAttribute="leading" secondItem="Q0w-r9-5E9" secondAttribute="leading" id="dKz-mb-5a6"/>
                             <constraint firstAttribute="trailing" secondItem="0Bz-NO-4fe" secondAttribute="trailing" id="hQy-rz-vFA"/>

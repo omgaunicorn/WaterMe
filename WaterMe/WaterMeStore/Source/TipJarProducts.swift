@@ -63,11 +63,13 @@ internal class TipJarProductRequester: NSObject, SKProductsRequestDelegate {
 
     internal func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         let products = TipJarProducts(products: response.products)
-        if let products = products {
-            self.completion?(products)
-        } else {
-            self.completion?(nil)
+        DispatchQueue.main.async {
+            if let products = products {
+                self.completion?(products)
+            } else {
+                self.completion?(nil)
+            }
+            self.completion = nil // nil the completion handler since it captures self. It creates a retain cycle.
         }
-        self.completion = nil // nil the completion handler since it captures self. It creates a retain cycle.
     }
 }

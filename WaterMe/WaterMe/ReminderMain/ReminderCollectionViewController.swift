@@ -51,9 +51,16 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // update if significant time passes
         self.significantTimePassedDetector.delegate = self
+
+        // part of a hack that sometimes requires the collectionview to be replaced
         self.replaceCollectionView()
+
+        // configure the collectionview
         self.configureCollectionView()
+
+        // load data
         self.hardReloadData()
     }
 
@@ -71,8 +78,6 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         self.collectionView?.contentInsetAdjustmentBehavior = .always
         // not sure why this is not the default
         self.collectionView?.alwaysBounceVertical = true
-        // not sure why this is not the default
-        self.collectionView?.backgroundColor = .white
         // disabled by default on iphone
         self.collectionView?.dragInteractionEnabled = true
         self.collectionView?.dragDelegate = self
@@ -86,6 +91,8 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         // make everything as tight as possible on the screen
         self.flow?.minimumInteritemSpacing = 0
         self.flow?.minimumLineSpacing = 0
+        // support dark mode
+        self.collectionView.backgroundColor = Color.systemBackgroundColor
     }
     
     private func hardReloadData() {
@@ -220,7 +227,8 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
         guard let reminder = self.reminders?.reminder(at: indexPath) else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
         // only make the "small" preview show on iPhones. On iPads, there is plenty of space
-        switch (self.view.traitCollection.horizontalSizeClass, self.view.traitCollection.verticalSizeClass) {
+        let traits = self.view.traitCollection
+        switch (traits.horizontalSizeClass, traits.verticalSizeClass) {
         case (.regular, .regular):
             break // do nothing for ipads
         default:

@@ -25,25 +25,43 @@ import WaterMeData
 import UIKit
 
 enum Color {
+
     static var textSecondary: UIColor {
-        return .gray
+        guard #available(iOS 13.0, *) else { return .gray }
+        return .secondaryLabel
     }
+
     static var textPrimary: UIColor {
-        return .black
+        guard #available(iOS 13.0, *) else { return .black }
+        return .label
     }
+
     static var delete: UIColor {
-        return .red
+        guard #available(iOS 13.0, *) else { return .red }
+        return .systemRed
     }
+
+    static var systemBackgroundColor: UIColor {
+        guard #available(iOS 13.0, *) else { return .white }
+        return .systemBackground
+    }
+
+    static var confetti1: UIColor {
+        return _tint
+    }
+
+    static var confetti2: UIColor {
+        return _increasedContrastTint
+    }
+
     static var tint: UIColor {
         if UserDefaults.standard.increaseContrast == true {
-            return darkTintColor
+            return _increasedContrastTint
         } else {
-            return UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)
+            return _tint
         }
     }
-    static var darkTintColor: UIColor {
-        return UIColor(red: 97 / 255.0, green: 46 / 255.0, blue: 128 / 255.0, alpha: 1.0)
-    }
+
     static var visuelEffectViewBackground: UIColor? {
         if UserDefaults.standard.increaseContrast == true {
             return nil
@@ -51,29 +69,74 @@ enum Color {
             return tint.withAlphaComponent(0.25)
         }
     }
+
     static func color(for section: Reminder.Section) -> UIColor {
-        let r: CGFloat
-        let g: CGFloat
-        let b: CGFloat
-        let a: CGFloat
         switch section {
         case .late:
-            r = 221
-            g = 158
-            b = 95
-            a = 1.0
-        case .today, .tomorrow:
-            r = 26
-            g = 188
-            b = 156
-            a = 1.0
-        case .thisWeek, .later:
-            r = 200
-            g = 129
-            b = 242
-            a = 1.0
+            return _late
+        case .today:
+            return _today
+        case .tomorrow:
+            return _tomorrow
+        case .thisWeek:
+            return _thisWeek
+        case .later:
+            return _later
         }
-        let d: CGFloat = 255
-        return UIColor(red: r / d, green: g / d, blue: b / d, alpha: a)
+    }
+}
+
+extension Color {
+
+    static private var _late: UIColor {
+        let light = UIColor(red: 221 / 255.0, green: 158 / 255.0, blue: 95 / 255.0, alpha: 1.0)
+        guard #available(iOS 13.0, *) else { return light }
+        return UIColor() { trait -> UIColor in
+            return trait.userInterfaceStyleIsNormal
+                ? light
+                : UIColor(red: 255 / 255.0, green: 163 / 255.0, blue: 72 / 255.0, alpha: 1.0)
+        }
+    }
+
+    static private var _today: UIColor {
+        return _tomorrow
+    }
+
+    static private var _tomorrow: UIColor {
+        let light = UIColor(red: 26 / 255.0, green: 188 / 255.0, blue: 156 / 255.0, alpha: 1.0)
+        guard #available(iOS 13.0, *) else { return light }
+        return UIColor() { trait -> UIColor in
+            return trait.userInterfaceStyleIsNormal
+                ? light
+                : UIColor(red: 8 / 255.0, green: 228 / 255.0, blue: 185 / 255.0, alpha: 1.0)
+        }
+    }
+
+    static private var _thisWeek: UIColor {
+        return _later
+    }
+
+    static private var _later: UIColor {
+        return _tint
+    }
+
+    static private var _tint: UIColor {
+        let light = UIColor(red: 200 / 255.0, green: 129 / 255.0, blue: 242 / 255.0, alpha: 1.0)
+        guard #available(iOS 13.0, *) else { return light }
+        return UIColor() { trait -> UIColor in
+            return trait.userInterfaceStyleIsNormal
+            ? light
+            : UIColor(red: 192 / 255.0, green: 85 / 255.0, blue: 255 / 255.0, alpha: 1.0)
+        }
+    }
+
+    static private var _increasedContrastTint: UIColor {
+        let light = UIColor(red: 97 / 255.0, green: 46 / 255.0, blue: 128 / 255.0, alpha: 1.0)
+        guard #available(iOS 13.0, *) else { return light }
+        return UIColor() { trait -> UIColor in
+            return trait.userInterfaceStyleIsNormal
+                ? light
+                : UIColor(red: 240 / 255.0, green: 216 / 255.0, blue: 255 / 255.0, alpha: 1.0)
+        }
     }
 }

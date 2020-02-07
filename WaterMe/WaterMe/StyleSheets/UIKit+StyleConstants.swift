@@ -23,6 +23,7 @@
 
 import CropViewController
 import UIKit
+import AVFoundation
 
 extension UIView {
     class func style_animateNormal(_ animations: @escaping () -> Void, completion: @escaping ((Bool) -> Void)) {
@@ -72,16 +73,80 @@ extension ModalParentViewController {
     }
 }
 
+extension UIVisualEffectView {
+    @objc class func style_systemMaterial() -> UIVisualEffectView {
+        let style: UIBlurEffect.Style
+        if #available(iOS 13.0, *) {
+            style = UIBlurEffect.Style.systemMaterial
+        } else {
+            style = .extraLight
+        }
+        let v = UIVisualEffectView(effect: UIBlurEffect(style: style))
+        v.layer.cornerRadius = UIApplication.style_cornerRadius
+        v.clipsToBounds = true
+        v.translatesAutoresizingMaskIntoConstraints = false
+        return v
+    }
+}
+
 extension UIApplication {
     static let style_animationDurationLong: TimeInterval = 1.2
     static let style_animationDurationNormal: TimeInterval = 0.3
     static let style_cornerRadius: CGFloat = 12
     class func style_configure() {
         UIView.appearance().tintColor = Color.tint
-        UIView.appearance(whenContainedInInstancesOf: [UINavigationBar.self]).tintColor = nil
-        UIImageView.appearance(whenContainedInInstancesOf: [ReminderTableViewCell.self]).tintColor = Color.textSecondary
-        UIVisualEffectView.appearance(whenContainedInInstancesOf: [CropViewController.self]).backgroundColor = nil
-        UIVisualEffectView.appearance().backgroundColor = Color.visuelEffectViewBackground
+
+        UIImageView.appearance(whenContainedInInstancesOf: [
+            ReminderTableViewCell.self
+        ]).tintColor = Color.textSecondary
+
+        // For some reason these have to be separate in order for it to be effective.
+        UIVisualEffectView.appearance(whenContainedInInstancesOf: [
+            ReminderSummaryViewController.self
+        ]).backgroundColor = Color.visuelEffectViewBackground
+
+        // For some reason these have to be separate in order for it to be effective.
+        UIVisualEffectView.appearance(whenContainedInInstancesOf: [
+            ReminderSummaryPopoverBackgroundView.self
+        ]).backgroundColor = Color.visuelEffectViewBackground
+
+        // make sure navigation bars appear the legacy way
+        guard #available(iOS 13.0, *) else { return }
+        let transparentAppearance = UINavigationBarAppearance()
+        let defaultAppearance = UINavigationBarAppearance()
+        transparentAppearance.configureWithTransparentBackground()
+        defaultAppearance.configureWithDefaultBackground()
+        UINavigationBar.appearance().compactAppearance = defaultAppearance
+        UINavigationBar.appearance().standardAppearance = defaultAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = transparentAppearance
+    }
+}
+
+extension UINavigationBar {
+    func style_forceDefaultAppearance() {
+        guard #available(iOS 13.0, *) else { return }
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithDefaultBackground()
+        self.compactAppearance = appearance
+        self.standardAppearance = appearance
+        self.scrollEdgeAppearance = appearance
+    }
+}
+
+extension UIView {
+    func style_configure() {
+        // configure dark mode
+        let ud = UserDefaults.standard
+        if #available(iOS 13.0, *) {
+            switch ud.darkMode {
+            case .system:
+                self.overrideUserInterfaceStyle = .unspecified
+            case .forceLight:
+                self.overrideUserInterfaceStyle = .light
+            case .forceDark:
+                self.overrideUserInterfaceStyle = .dark
+            }
+        }
     }
 }
 
@@ -138,4 +203,39 @@ extension TextViewTableViewCell {
 extension ReminderVesselIconTableViewCell {
     static let style_iconButtonHeightAccessibilityTextSizeEnabled: CGFloat = 280
     static let style_iconButtonHeightAccessibilityTextSizeDisabled: CGFloat = 140
+}
+
+extension AVPlayerItem {
+    class func style_videoAsset(at url: URL, forDarkMode darkMode: Bool) -> AVPlayerItem {
+        guard darkMode == true else { return .init(url: url) }
+
+        guard
+            let grayscaleFilter = CIFilter(name: "CIColorControls"),
+            let invertFilter = CIFilter(name: "CIColorInvert")
+        else {
+            assertionFailure("Failed to load built-in CIFilters")
+            return .init(url: url)
+        }
+        grayscaleFilter.setValue(NSNumber(value: 0), forKey: kCIInputSaturationKey)
+        let asset = AVAsset(url: url)
+        let item = AVPlayerItem(asset: asset)
+
+        item.videoComposition = .init(asset: asset) { request in
+            let pass0 = request.sourceImage
+            grayscaleFilter.setValue(pass0, forKey: kCIInputImageKey)
+            guard let pass1 = grayscaleFilter.outputImage else {
+                assertionFailure("Failed to apply basic filters")
+                request.finish(with: pass0, context: nil)
+                return
+            }
+            invertFilter.setValue(pass1, forKey: kCIInputImageKey)
+            guard let pass2 = invertFilter.outputImage?.cropped(to: request.sourceImage.extent) else {
+                assertionFailure("Failed to apply basic filters")
+                request.finish(with: pass0, context: nil)
+                return
+            }
+            request.finish(with: pass2, context: nil)
+        }
+        return item
+    }
 }

@@ -39,7 +39,6 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="CQB-gW-brA" firstAttribute="width" secondItem="MWU-KS-gJQ" secondAttribute="width" id="5Op-og-ITM"/>
                             <constraint firstItem="CQB-gW-brA" firstAttribute="height" secondItem="MWU-KS-gJQ" secondAttribute="height" id="D4A-Ob-675"/>
@@ -61,7 +60,6 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="uaR-V7-Ewe">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <connections>
                             <outlet property="dataSource" destination="5eK-u9-Wjy" id="T3N-HY-m7g"/>
                             <outlet property="delegate" destination="5eK-u9-Wjy" id="t84-6G-byD"/>
@@ -91,7 +89,6 @@
                                         </connections>
                                     </pickerView>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Yza-fM-hD0" secondAttribute="bottom" id="9SI-7V-9Dk"/>
                                     <constraint firstItem="Yza-fM-hD0" firstAttribute="top" secondItem="tMR-Dp-DGg" secondAttribute="top" id="Oas-My-DrV"/>
@@ -100,7 +97,6 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="tMR-Dp-DGg" firstAttribute="width" secondItem="IyY-zF-d0S" secondAttribute="width" id="4Eh-Vv-oNx"/>
                             <constraint firstItem="tMR-Dp-DGg" firstAttribute="centerX" secondItem="aIA-TO-MSO" secondAttribute="centerX" id="K80-HX-zWf"/>

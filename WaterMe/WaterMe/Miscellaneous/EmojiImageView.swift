@@ -69,7 +69,7 @@ class EmojiImageView: UIView {
         self.imageViewMaskLayer = maskLayer
         self.imageView = imageView
         self.label = label
-        self.backgroundColor = .white
+        self.backgroundColor = Color.systemBackgroundColor
     }
 
     enum Size {

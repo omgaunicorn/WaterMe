@@ -25,6 +25,8 @@ import AVFoundation
 
 class DragAndDropPlayerManager {
 
+    // MARK: Internal Types
+
     enum HoverState {
         case noHover, hover, drop
     }
@@ -44,6 +46,13 @@ class DragAndDropPlayerManager {
         var end: CMTime
     }
 
+    // MARK: Private State
+
+    private let configuration: Configuration
+    private var landscapeVideo = true
+
+    // MARK: Computed Properties
+
     private var startTime: CMTime {
         switch self.landscapeVideo {
         case true:
@@ -52,6 +61,7 @@ class DragAndDropPlayerManager {
             return configuration.portraitTimings.start
         }
     }
+
     private var hoverTime: CMTime {
         switch self.landscapeVideo {
         case true:
@@ -60,6 +70,7 @@ class DragAndDropPlayerManager {
             return configuration.portraitTimings.hover
         }
     }
+
     private var endTime: CMTime {
         switch self.landscapeVideo {
         case true:
@@ -69,15 +80,13 @@ class DragAndDropPlayerManager {
         }
     }
 
-    private let configuration: Configuration
-    private let landscapeVideoAsset: AVPlayerItem
-    private let portraitVideoAsset: AVPlayerItem
-
     private(set) var videoLayerShouldBeHidden = true {
         didSet {
             self.videoHiddenChanged?(self.videoLayerShouldBeHidden)
         }
     }
+
+    // MARK: Video Layer for View
 
     let player: AVQueuePlayer = {
         let p = AVQueuePlayer()
@@ -87,19 +96,11 @@ class DragAndDropPlayerManager {
         return p
     }()
 
-    var landscapeVideo = true {
-        didSet {
-            self.player.removeAllItems()
-            switch self.landscapeVideo {
-            case true:
-                self.player.insert(landscapeVideoAsset, after: nil)
-            case false:
-                self.player.insert(portraitVideoAsset, after: nil)
-            }
-        }
-    }
+    // MARK: Delegation to Owner
 
     var videoHiddenChanged: ((Bool) -> Void)?
+
+    // MARK: State Changes from Owner
 
     var hoverState = HoverState.noHover {
         didSet {
@@ -135,15 +136,33 @@ class DragAndDropPlayerManager {
         }
     }
 
-    init(configuration: Configuration) {
-        
-        self.configuration = configuration
-        self.landscapeVideoAsset = AVPlayerItem(url: configuration.landscapeVideoURL)
-        self.portraitVideoAsset = AVPlayerItem(url: configuration.portraitVideoURL)
+    func updateVideoAssets(landscape: Bool, darkMode: Bool) {
+        let item: AVPlayerItem
+        switch landscape {
+        case true:
+            item = .style_videoAsset(
+                at: self.configuration.landscapeVideoURL,
+                forDarkMode: darkMode
+            )
+        case false:
+            item = .style_videoAsset(
+                at: self.configuration.portraitVideoURL,
+                forDarkMode: darkMode
+            )
+        }
 
+        self.player.removeAllItems()
+        self.landscapeVideo = landscape
+        self.player.insert(item, after: nil)
+    }
+
+
+    // MARK: Init
+    init(configuration: Configuration) {
+        self.configuration = configuration
         let token = self.player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.1, preferredTimescale: 60),
                                                         queue: nil)
-        { currentTime in
+        { [unowned self] currentTime in
             switch self.player.rate {
             case 0...: // Forward
                 switch self.hoverState {
@@ -172,8 +191,10 @@ class DragAndDropPlayerManager {
                 break
             }
         }
-        self.observerTokens += [token]
+        self.observerToken = token
     }
+
+    // MARK: Cleanup
 
     func hardReset() {
         self.hoverState = .noHover
@@ -182,15 +203,11 @@ class DragAndDropPlayerManager {
         self.player.seek(to: startTime)
     }
 
-    private var observerTokens = [Any]()
-
-    private func removeAllTokens() {
-        for token in self.observerTokens {
-            self.player.removeTimeObserver(token)
-        }
-    }
+    private var observerToken: Any?
 
     deinit {
-        self.removeAllTokens()
+        if let token = self.observerToken {
+            self.player.removeTimeObserver(token)
+        }
     }
 }

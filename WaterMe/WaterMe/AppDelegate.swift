@@ -67,7 +67,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         DispatchQueue.configureMainQueue()
         
         // as early as possible, configure standard defaults
-        UserDefaults.standard.configure()
+        let ud = UserDefaults.standard
+        ud.configure()
 
         // make re-usable closures for notifications I'll register for later
         let appearanceChanges = {
@@ -77,8 +78,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // need to rip the view hierarchy out of the window and put it back in
             // in order for the new UIAppearance to take effect
             UIApplication.style_configure()
+
+            // force window to update everything by
+            // forcefully setting rootVC
             let prevVC = window.rootViewController
             window.rootViewController = nil
+            window.style_configure()
             window.rootViewController = prevVC
         }
         let notificationChanges = {
@@ -92,19 +97,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             appearanceChanges()
         }
         // register for notifications if user defaults change while the app is running
-        let token1 = UserDefaults.standard.observe(\.INCREASE_CONTRAST) { _, _ in
+        let token1 = ud.observe(\.INCREASE_CONTRAST) { _, _ in
             appearanceChanges()
         }
-        let token2 = UserDefaults.standard.observe(\.REMINDER_HOUR) { _, _ in
+        let token2 = ud.observe(\.DARK_MODE) { _, _ in
+            appearanceChanges()
+        }
+        let token3 = ud.observe(\.REMINDER_HOUR) { _, _ in
             notificationChanges()
         }
-        let token3 = UserDefaults.standard.observe(\.NUMBER_OF_REMINDER_DAYS) { _, _ in
+        let token4 = ud.observe(\.NUMBER_OF_REMINDER_DAYS) { _, _ in
             notificationChanges()
         }
-        let token4 = UserDefaults.standard.observe(\.FIRST_RUN) { _, _ in
+        let token5 = ud.observe(\.FIRST_RUN) { _, _ in
             notificationChanges()
         }
-        self.userDefaultObserverTokens += [token1, token2, token3, token4]
+        self.userDefaultObserverTokens += [token1, token2, token3, token4, token5]
     }
     
     func application(_ application: UIApplication,
@@ -167,7 +175,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // configure window
         let window = self.window ?? UIWindow(frame: UIScreen.main.bounds)
-        window.backgroundColor = .black
+        window.style_configure()
         window.rootViewController = vc
 
         // show window

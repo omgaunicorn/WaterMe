@@ -40,8 +40,15 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView?.register(ReminderVesselCollectionViewCell.nib, forCellWithReuseIdentifier: ReminderVesselCollectionViewCell.reuseID)
+        // support dark mode
+        self.collectionView.backgroundColor = Color.systemBackgroundColor
+
+        // configure collectionview
+        self.collectionView?.register(ReminderVesselCollectionViewCell.nib,
+                                      forCellWithReuseIdentifier: ReminderVesselCollectionViewCell.reuseID)
         self.flow?.minimumInteritemSpacing = 0
+
+        // load data
         self.hardReloadData()
     }
     
