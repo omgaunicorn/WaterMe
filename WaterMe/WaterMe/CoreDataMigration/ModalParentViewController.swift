@@ -72,8 +72,8 @@ class ModalParentViewController: StandardViewController {
     }
 
     private func updateChildVCContainerViewConstraints(withNewTraitCollection traitCollection: UITraitCollection? = nil) {
-        let traits = traitCollection ?? self.view.traitCollection
-        let accessible = traits.preferredContentSizeCategory.isAccessibilityCategory
+        let tc = traitCollection ?? self.view.traitCollection
+        let accessible = tc.preferredContentSizeCategory.isAccessibilityCategory
 
         let sub = self.childVCContainerView!
         let safe = self.view.safeAreaLayoutGuide
@@ -87,24 +87,22 @@ class ModalParentViewController: StandardViewController {
                 safe.bottomAnchor.constraint(equalToSystemSpacingBelow: sub.bottomAnchor, multiplier: 1)
             ]
         } else {
-            switch (traits.verticalSizeClass, traits.horizontalSizeClass) {
-            case (.regular, .regular):
+            switch (tc.verticalSizeClassIsRegular, tc.horizontalSizeClassIsCompact) {
+            case (true, false):
                 newConstraints = [
                     sub.centerXAnchor.constraint(equalTo: safe.centerXAnchor, constant: 0),
                     sub.centerYAnchor.constraint(equalTo: safe.centerYAnchor, constant: 0),
                     sub.widthAnchor.constraint(equalToConstant: 400),
                     sub.heightAnchor.constraint(equalToConstant: 400)
                 ]
-            case (.regular, _), (.unspecified, _):
+            case (true, _):
                 newConstraints = [
                     sub.centerXAnchor.constraint(equalTo: safe.centerXAnchor, constant: 0),
                     sub.centerYAnchor.constraint(equalTo: safe.centerYAnchor, constant: 0),
                     sub.widthAnchor.constraint(equalTo: safe.widthAnchor, multiplier: 5 / 6),
                     sub.heightAnchor.constraint(equalTo: safe.heightAnchor, multiplier: 4 / 7)
                 ]
-            case (.compact, _):
-                fallthrough
-            @unknown default:
+            case (false, _):
                 newConstraints = [
                     sub.centerXAnchor.constraint(equalTo: safe.centerXAnchor, constant: 0),
                     sub.centerYAnchor.constraint(equalTo: safe.centerYAnchor, constant: 0),

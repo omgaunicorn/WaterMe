@@ -49,4 +49,55 @@ extension UITraitCollection {
             return true
         }
     }
+
+    /**
+     Checking trait collection is now so horrible in Swift
+     These are simple helper properties to check for the usual cases.
+
+     Returns: `YES` when using iPhone or iPad Skinny Split Screen.
+
+     Returns: `NO` when using iPad.
+     */
+    var horizontalSizeClassIsCompact: Bool {
+        switch self.horizontalSizeClass {
+        case .regular:
+            return false
+        case .compact, .unspecified:
+            fallthrough
+        @unknown default:
+            return true
+        }
+    }
+
+    /**
+     Checking trait collection is now so horrible in Swift
+     These are simple helper properties to check for the usual cases.
+
+     Returns: `YES` when iPhone is Portrait or iPad
+
+     Returns: `NO` when iPhone is Landscape
+     */
+    var verticalSizeClassIsRegular: Bool {
+        switch self.verticalSizeClass {
+        case .compact:
+            return false
+        case .regular, .unspecified:
+            fallthrough
+        @unknown default:
+            return true
+        }
+    }
+}
+
+extension UITraitEnvironmentLayoutDirection {
+    var isLeftToRight: Bool {
+        switch self {
+        case .rightToLeft:
+            return false
+        case .leftToRight, .unspecified:
+            fallthrough
+        @unknown default:
+            return true
+        }
+    }
 }

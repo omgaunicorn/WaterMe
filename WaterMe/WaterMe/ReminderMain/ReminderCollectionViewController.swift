@@ -167,34 +167,28 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
 
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
-        let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
-        let horizontalClass = self.view.traitCollection.horizontalSizeClass
-        let verticalClass = self.view.traitCollection.verticalSizeClass
-        let defaultValue: (() -> (columnCount: Int, itemHeight: CGFloat)) = {
+        // TODO: Fix launch sizing being wrong for `isAccessibilityCategory`
+        let tc = self.view.traitCollection
+        switch (tc.horizontalSizeClassIsCompact,
+                tc.verticalSizeClassIsRegular,
+                tc.preferredContentSizeCategory.isAccessibilityCategory)
+        {
+        case (true, true, false): // iPhone Portrait, no Accessibility
             return (2, 200)
-        }
-        switch (horizontalClass, verticalClass, accessibility) {
-        case (.unspecified, _, _), (_, .unspecified, _):
-            assertionFailure("Hit a size class this VC was not expecting")
-            fallthrough
-        case (.compact, .regular, false): // iPhone Portrait, no Accessibility
-            return defaultValue()
-        case (.compact, .regular, true): // iPhone Portrait, w/ Accessibility
+        case (true, true, true): // iPhone Portrait, w/ Accessibility
             return (1, 320)
-        case (.compact, .compact, false): // iPhone Landscape, no Accessibility
+        case (true, false, false): // iPhone Landscape, no Accessibility
             return (2, 200)
-        case (.compact, .compact, true): // iPhone Landscape, w/ Accessibility
+        case (true, false, true): // iPhone Landscape, w/ Accessibility
             return (1, 320)
-        case (.regular, .compact, false): // iPhone+ Landscape, no Accessibility
+        case (false, false, false): // iPhone+ Landscape, no Accessibility
             return (3, 200)
-        case (.regular, .compact, true): // iPhone+ Landscape, w/ Accessibility
+        case (false, false, true): // iPhone+ Landscape, w/ Accessibility
             return (2, 320)
-        case (.regular, .regular, false): // iPad No Accessibility
+        case (false, true, false): // iPad No Accessibility
             return (4, 200)
-        case (.regular, .regular, true): // iPad w/ Accessibility
+        case (false, true, true): // iPad w/ Accessibility
             return (2, 320)
-        @unknown default:
-            return defaultValue()
         }
     }
 }
@@ -227,9 +221,9 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
         guard let reminder = self.reminders?.reminder(at: indexPath) else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
         // only make the "small" preview show on iPhones. On iPads, there is plenty of space
-        let traits = self.view.traitCollection
-        switch (traits.horizontalSizeClass, traits.verticalSizeClass) {
-        case (.regular, .regular):
+        let tc = self.view.traitCollection
+        switch (tc.horizontalSizeClassIsCompact, tc.verticalSizeClassIsRegular) {
+        case (false, true):
             break // do nothing for ipads
         default:
             item.previewProvider = { ReminderDragPreviewView.dragPreview(for: reminder) }

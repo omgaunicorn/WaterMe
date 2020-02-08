@@ -25,6 +25,12 @@ import UIKit
 
 class StandardCollectionViewController: UICollectionViewController {
 
+    /// To be used by subclasses overriding `columnCountAndItemHeight` to help standardize rounding.
+    class func columnCountAndItemHeight(withWidth width: CGFloat, columnCount: Int) -> (columnCount: Int, itemHeight: CGFloat) {
+        let itemHeight = floor((width) / CGFloat(columnCount))
+        return (columnCount, itemHeight)
+    }
+
     var flow: UICollectionViewFlowLayout? {
         return self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }

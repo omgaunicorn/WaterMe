@@ -40,15 +40,9 @@ class DragTargetInstructionalView: UIView {
     }
 
     private func updateDynamicText() {
-        switch self.traitCollection.verticalSizeClass {
-        case .compact:
-            self.textLabel?.numberOfLines = 4
-        case .regular, .unspecified:
-            fallthrough
-        @unknown default:
-            self.textLabel?.numberOfLines = 2
-        }
-        self.textLabel?.attributedText = NSAttributedString(string: "Drag and Drop Here", font: .dragInstructionalText(self.tintColor))
+        self.textLabel?.numberOfLines = self.traitCollection.verticalSizeClassIsRegular ? 2 : 4
+        self.textLabel?.attributedText = NSAttributedString(string: "Drag and Drop Here",
+                                                            font: .dragInstructionalText(self.tintColor))
     }
 
     private enum AnimState {

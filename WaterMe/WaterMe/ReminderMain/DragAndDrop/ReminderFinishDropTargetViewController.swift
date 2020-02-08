@@ -153,15 +153,13 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
     }
 
     private func updateDropTargetHeightForNotDragging(animated: Bool) {
-        let verticalSizeClass = self.view.traitCollection.verticalSizeClass
+        let verticalSizeClassIsRegular = self.view.traitCollection.verticalSizeClassIsRegular
         let changes: () -> Void = {
             let height: CGFloat
-            switch verticalSizeClass {
-            case .compact:
+            switch verticalSizeClassIsRegular {
+            case false:
                 height = self.view.bounds.height
-            case .regular, .unspecified:
-                fallthrough
-            @unknown default:
+            case true:
                 height = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
                     ? type(of: self).style_dropTargetViewCompactHeightAccessibilityTextSizeEnabled
                     : type(of: self).style_dropTargetViewCompactHeight

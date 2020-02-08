@@ -204,19 +204,17 @@ extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate
         return false
     }
 
-    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
-        switch (traitCollection.horizontalSizeClass, traitCollection.verticalSizeClass) {
-        case (.compact, _),
-             (.regular, .compact):
+    func adaptivePresentationStyle(for controller: UIPresentationController,
+                                   traitCollection tc: UITraitCollection) -> UIModalPresentationStyle
+    {
+        switch (tc.horizontalSizeClassIsCompact, tc.verticalSizeClassIsRegular) {
+        case (true, _),
+             (false, false):
             self.isPresentedAsPopover = false
             return .overFullScreen
-        case (.regular, _),
-             (.unspecified, _):
+        case (false, true):
             self.isPresentedAsPopover = true
             return controller.presentedViewController.modalPresentationStyle
-        @unknown default:
-            self.isPresentedAsPopover = false
-            return .overFullScreen
         }
     }
 }

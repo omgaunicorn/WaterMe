@@ -25,19 +25,8 @@ import UIKit
 
 extension DragAndDropPlayerManager {
     func setTraitCollection(_ newValue: UITraitCollection) {
-
-        let verticalSizeClassIsDefault: Bool
-        switch newValue.verticalSizeClass {
-        case .compact:
-            verticalSizeClassIsDefault = false
-        case .regular, .unspecified:
-            fallthrough
-        @unknown default:
-            verticalSizeClassIsDefault = true
-        }
-
+        let verticalSizeClassIsDefault = newValue.verticalSizeClassIsRegular
         let userInterfaceStyleIsDefault = newValue.userInterfaceStyleIsNormal
-
         self.updateVideoAssets(landscape: verticalSizeClassIsDefault,
                                darkMode: !userInterfaceStyleIsDefault)
     }

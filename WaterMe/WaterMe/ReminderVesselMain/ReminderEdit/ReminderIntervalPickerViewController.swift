@@ -118,13 +118,6 @@ extension ReminderIntervalPickerViewController: UIAdaptivePresentationController
     func adaptivePresentationStyle(for controller: UIPresentationController,
                                    traitCollection: UITraitCollection) -> UIModalPresentationStyle
     {
-        switch traitCollection.horizontalSizeClass {
-        case .regular:
-            return .formSheet
-        case .compact, .unspecified:
-            fallthrough
-        @unknown default:
-            return .none
-        }
+        return traitCollection.horizontalSizeClassIsCompact ? .none : .formSheet
     }
 }
