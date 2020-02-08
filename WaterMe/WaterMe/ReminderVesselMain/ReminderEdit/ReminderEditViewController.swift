@@ -157,7 +157,9 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         UIAlertController.presentAlertVC(for: error, over: self)
     }
     
-    private func intervalChosen(_ deselectSelectedCell: @escaping () -> Void) {
+    private func intervalChosen(popoverSourceView: UIView?,
+                                deselectHandler: @escaping () -> Void)
+    {
         self.view.endEditing(false)
         guard let existingValue = self.reminderResult?.value?.interval else {
             assertionFailure("No Reminder Present")
@@ -165,10 +167,11 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             return
         }
         let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard,
-                                                            existingValue: existingValue)
+                                                            existingValue: existingValue,
+                                                            popoverSourceView: popoverSourceView)
         { vc, newValue in
             vc.dismiss(animated: true) {
-                deselectSelectedCell()
+                deselectHandler()
                 guard let newValue = newValue else { return }
                 self.update(interval: newValue)
             }
@@ -278,10 +281,12 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
         self.update(note: newNote, fromKeyboard: true)
     }
 
-    func userDidSelectChangeInterval(_ deselectHandler: @escaping () -> Void,
+    func userDidSelectChangeInterval(popoverSourceView: UIView?,
+                                     deselectHandler: @escaping () -> Void,
                                      within: ReminderEditTableViewController)
     {
-        self.intervalChosen(deselectHandler)
+        self.intervalChosen(popoverSourceView: popoverSourceView,
+                            deselectHandler: deselectHandler)
     }
 
     func userDidSelect(siriShortcut: ReminderEditTableViewController.SiriShortcut,

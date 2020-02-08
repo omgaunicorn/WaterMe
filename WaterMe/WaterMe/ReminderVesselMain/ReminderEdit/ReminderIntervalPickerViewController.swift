@@ -28,7 +28,11 @@ class ReminderIntervalPickerViewController: StandardViewController {
     
     typealias CompletionHandler = (UIViewController, Int?) -> Void
     
-    class func newVC(from storyboard: UIStoryboard!, existingValue: Int, completionHandler: @escaping CompletionHandler) -> UIViewController {
+    class func newVC(from storyboard: UIStoryboard!,
+                     existingValue: Int,
+                     popoverSourceView: UIView?,
+                     completionHandler: @escaping CompletionHandler) -> UIViewController
+    {
         let id = "ReminderIntervalPickerViewController"
         // swiftlint:disable:next force_cast
         let navVC = storyboard.instantiateViewController(withIdentifier: id) as! UINavigationController
@@ -36,7 +40,15 @@ class ReminderIntervalPickerViewController: StandardViewController {
         let vc = navVC.viewControllers.first as! ReminderIntervalPickerViewController
         vc.completionHandler = completionHandler
         vc.existingValue = existingValue
-        navVC.presentationController?.delegate = vc
+        if let sourceView = popoverSourceView {
+            vc.preferredContentSize = .init(width: 320, height: 260)
+            navVC.modalPresentationStyle = .popover
+            navVC.popoverPresentationController?.sourceView = sourceView
+            navVC.popoverPresentationController?.sourceRect = sourceView.bounds
+            navVC.popoverPresentationController?.delegate = vc
+        } else {
+            navVC.presentationController?.delegate = vc
+        }
         return navVC
     }
     
@@ -96,8 +108,23 @@ extension ReminderIntervalPickerViewController: UIPickerViewDataSource {
     }
 }
 
-extension ReminderIntervalPickerViewController: UIAdaptivePresentationControllerDelegate {
+extension ReminderIntervalPickerViewController: UIAdaptivePresentationControllerDelegate,
+                                                UIPopoverPresentationControllerDelegate
+{
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.doneButtonTapped(presentationController)
+    }
+
+    func adaptivePresentationStyle(for controller: UIPresentationController,
+                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle
+    {
+        switch traitCollection.horizontalSizeClass {
+        case .regular:
+            return .formSheet
+        case .compact, .unspecified:
+            fallthrough
+        @unknown default:
+            return .none
+        }
     }
 }

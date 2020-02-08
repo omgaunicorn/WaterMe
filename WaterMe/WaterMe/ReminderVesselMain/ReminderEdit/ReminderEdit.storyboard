@@ -78,30 +78,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tMR-Dp-DGg">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <subviews>
-                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yza-fM-hD0">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                        <connections>
-                                            <outlet property="dataSource" destination="NwA-e7-GPw" id="EeP-Zg-sUh"/>
-                                            <outlet property="delegate" destination="NwA-e7-GPw" id="PQR-Hu-kPB"/>
-                                        </connections>
-                                    </pickerView>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="Yza-fM-hD0" secondAttribute="bottom" id="9SI-7V-9Dk"/>
-                                    <constraint firstItem="Yza-fM-hD0" firstAttribute="top" secondItem="tMR-Dp-DGg" secondAttribute="top" id="Oas-My-DrV"/>
-                                    <constraint firstItem="Yza-fM-hD0" firstAttribute="leading" secondItem="tMR-Dp-DGg" secondAttribute="leading" id="Usi-Vc-STN"/>
-                                    <constraint firstAttribute="trailing" secondItem="Yza-fM-hD0" secondAttribute="trailing" id="udB-v2-J3d"/>
-                                </constraints>
-                            </view>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yza-fM-hD0">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="NwA-e7-GPw" id="EeP-Zg-sUh"/>
+                                    <outlet property="delegate" destination="NwA-e7-GPw" id="PQR-Hu-kPB"/>
+                                </connections>
+                            </pickerView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="tMR-Dp-DGg" firstAttribute="width" secondItem="IyY-zF-d0S" secondAttribute="width" id="4Eh-Vv-oNx"/>
-                            <constraint firstItem="tMR-Dp-DGg" firstAttribute="centerX" secondItem="aIA-TO-MSO" secondAttribute="centerX" id="K80-HX-zWf"/>
-                            <constraint firstItem="tMR-Dp-DGg" firstAttribute="centerY" secondItem="IyY-zF-d0S" secondAttribute="centerY" id="Mhv-t5-pFo"/>
-                            <constraint firstItem="tMR-Dp-DGg" firstAttribute="height" secondItem="IyY-zF-d0S" secondAttribute="height" id="r8y-hZ-Ba4"/>
+                            <constraint firstItem="Yza-fM-hD0" firstAttribute="centerX" secondItem="aIA-TO-MSO" secondAttribute="centerX" id="7HQ-3Z-UgK"/>
+                            <constraint firstItem="aIA-TO-MSO" firstAttribute="top" secondItem="Yza-fM-hD0" secondAttribute="top" id="80p-uk-B19"/>
+                            <constraint firstItem="aIA-TO-MSO" firstAttribute="bottom" secondItem="Yza-fM-hD0" secondAttribute="bottom" id="Z72-5M-wof"/>
+                            <constraint firstItem="Yza-fM-hD0" firstAttribute="width" secondItem="IyY-zF-d0S" secondAttribute="width" id="yfy-9I-Wto"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="aIA-TO-MSO"/>
                     </view>
