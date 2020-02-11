@@ -111,3 +111,32 @@ class StandardViewController: UIViewController {
         self.userActivity?.becomeCurrent()
     }
 }
+
+extension StandardViewController: UIAdaptivePresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController,
+                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle
+    {
+        return presentationLogic(with: traitCollection)
+    }
+}
+
+extension StandardTableViewController: UIAdaptivePresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController,
+                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle
+    {
+        return presentationLogic(with: traitCollection)
+    }
+}
+
+extension StandardCollectionViewController: UIAdaptivePresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController,
+                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle
+    {
+        return presentationLogic(with: traitCollection)
+    }
+}
+
+fileprivate func presentationLogic(with traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+    // return .overFullScreen // use for debugging
+    return traitCollection.preferredContentSizeCategory.isAccessibilityCategory ? .overFullScreen : .none
+}

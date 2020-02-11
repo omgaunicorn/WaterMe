@@ -253,7 +253,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     }
 }
 
-extension ReminderVesselEditViewController: UIAdaptivePresentationControllerDelegate {
+extension ReminderVesselEditViewController /*: UIAdaptivePresentationControllerDelegate*/ {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.completionHandler(self)
     }

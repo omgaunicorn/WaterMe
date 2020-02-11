@@ -78,9 +78,10 @@ class EmojiPickerViewController: StandardCollectionViewController {
         switch (tc.horizontalSizeClassIsCompact,
                 tc.preferredContentSizeCategory.isAccessibilityCategory)
         {
-        case (false, _):
-            assertionFailure("Hit a size class this VC was not expecting")
-            fallthrough
+        case (false, false):
+            return math(width, 8)
+        case (false, true):
+            return math(width, 4)
         case (true, false):
             return math(width, 4)
         case (true, true):
@@ -89,7 +90,7 @@ class EmojiPickerViewController: StandardCollectionViewController {
     }
 }
 
-extension EmojiPickerViewController: UIAdaptivePresentationControllerDelegate {
+extension EmojiPickerViewController /*: UIAdaptivePresentationControllerDelegate*/ {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.completionHandler?(nil, self)
     }

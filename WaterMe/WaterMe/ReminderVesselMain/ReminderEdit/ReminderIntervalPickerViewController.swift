@@ -108,16 +108,21 @@ extension ReminderIntervalPickerViewController: UIPickerViewDataSource {
     }
 }
 
-extension ReminderIntervalPickerViewController: UIAdaptivePresentationControllerDelegate,
-                                                UIPopoverPresentationControllerDelegate
+extension ReminderIntervalPickerViewController: UIPopoverPresentationControllerDelegate /*: UIAdaptivePresentationControllerDelegate*/
 {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.doneButtonTapped(presentationController)
     }
 
-    func adaptivePresentationStyle(for controller: UIPresentationController,
-                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle
+    override func adaptivePresentationStyle(for controller: UIPresentationController,
+                                            traitCollection: UITraitCollection) -> UIModalPresentationStyle
     {
-        return traitCollection.horizontalSizeClassIsCompact ? .none : .formSheet
+        /**
+         Apple Docs:
+         The new presentation style, which must be UIModalPresentationStyle.fullScreen, UIModalPresentationStyle.overFullScreen, UIModalPresentationStyle.formSheet, or UIModalPresentationStyle.none.
+         If you do not implement this method or if you return an invalid style, the current presentation controller returns its preferred default style.
+         */
+        let invalidStyle = UIModalPresentationStyle.custom
+        return traitCollection.horizontalSizeClassIsCompact ? invalidStyle : .formSheet
     }
 }
