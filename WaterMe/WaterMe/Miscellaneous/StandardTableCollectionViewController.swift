@@ -143,5 +143,6 @@ fileprivate func presentationLogic(with traitCollection: UITraitCollection) -> U
      If you do not implement this method or if you return an invalid style, the current presentation controller returns its preferred default style.
      */
     let invalidStyle = UIModalPresentationStyle(rawValue: -100)!
-    return traitCollection.horizontalSizeClassIsCompact ? invalidStyle : .formSheet
+    let isAccessibilityCategory = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+    return !isAccessibilityCategory ? invalidStyle : .overFullScreen
 }

@@ -117,11 +117,10 @@ extension ReminderIntervalPickerViewController: UIPopoverPresentationControllerD
                                 willPresentWithAdaptiveStyle style: UIModalPresentationStyle,
                                 transitionCoordinator: UIViewControllerTransitionCoordinator?)
     {
-        print(self.preferredContentSize)
         switch style {
         case .none:
             self.preferredContentSize = .init(width: 320, height: 260)
-        case .formSheet:
+        case .overFullScreen, .formSheet:
             self.preferredContentSize = .zero
         default:
             assertionFailure("Unexpected presentation style reached")
