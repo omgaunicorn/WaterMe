@@ -210,7 +210,7 @@ extension ReminderCollectionViewController: UICollectionViewDelegateFlowLayout {
             // instead I'll just have to set the alpha to 0
             return CGSize(width: collectionView.availableContentSize.width, height: 1)
         }
-        let isAC = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+        let isAC = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
         return CGSize(width: collectionView.availableContentSize.width, height: kind.style_viewHeight(isAccessibilityCategory: isAC))
     }
 }

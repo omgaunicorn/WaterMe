@@ -160,7 +160,7 @@ class ReminderFinishDropTargetViewController: StandardViewController, HasBasicCo
             case false:
                 height = self.view.bounds.height
             case true:
-                height = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+                height = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
                     ? type(of: self).style_dropTargetViewCompactHeightAccessibilityTextSizeEnabled
                     : type(of: self).style_dropTargetViewCompactHeight
             }
