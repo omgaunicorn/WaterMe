@@ -41,7 +41,6 @@ class ReminderIntervalPickerViewController: StandardViewController {
         vc.completionHandler = completionHandler
         vc.existingValue = existingValue
         if let sourceView = popoverSourceView {
-            vc.preferredContentSize = .init(width: 320, height: 260)
             navVC.modalPresentationStyle = .popover
             navVC.popoverPresentationController?.sourceView = sourceView
             navVC.popoverPresentationController?.sourceRect = sourceView.bounds
@@ -108,16 +107,34 @@ extension ReminderIntervalPickerViewController: UIPickerViewDataSource {
     }
 }
 
-extension ReminderIntervalPickerViewController: UIAdaptivePresentationControllerDelegate,
-                                                UIPopoverPresentationControllerDelegate
+extension ReminderIntervalPickerViewController: UIPopoverPresentationControllerDelegate /*: UIAdaptivePresentationControllerDelegate*/
 {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.doneButtonTapped(presentationController)
     }
 
-    func adaptivePresentationStyle(for controller: UIPresentationController,
-                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle
+    func presentationController(_ presentationController: UIPresentationController,
+                                willPresentWithAdaptiveStyle style: UIModalPresentationStyle,
+                                transitionCoordinator: UIViewControllerTransitionCoordinator?)
     {
+        switch style {
+        case .none:
+            self.preferredContentSize = .init(width: 320, height: 260)
+        case .overFullScreen, .formSheet:
+            self.preferredContentSize = .zero
+        default:
+            assertionFailure("Unexpected presentation style reached")
+        }
+    }
+
+    override func adaptivePresentationStyle(for controller: UIPresentationController,
+                                            traitCollection: UITraitCollection) -> UIModalPresentationStyle
+    {
+        guard !traitCollection.preferredContentSizeCategory.isAccessibilityCategory else {
+            return super.adaptivePresentationStyle(for: controller, traitCollection: traitCollection)
+        }
+        // if on narrow iphone screen, present as popover
+        // on ipad present as normal form sheet
         return traitCollection.horizontalSizeClassIsCompact ? .none : .formSheet
     }
 }

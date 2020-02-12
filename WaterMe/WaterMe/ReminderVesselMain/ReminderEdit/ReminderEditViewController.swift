@@ -334,7 +334,7 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
     }
 }
 
-extension ReminderEditViewController: UIAdaptivePresentationControllerDelegate {
+extension ReminderEditViewController /*: UIAdaptivePresentationControllerDelegate*/ {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.completionHandler?(self)
     }

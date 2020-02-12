@@ -64,6 +64,7 @@ class ReminderSummaryViewController: StandardViewController {
 
     @IBOutlet private weak var darkBackgroundView: UIView?
     @IBOutlet var tableViewControllerLeadingTrailingConstraints: [NSLayoutConstraint]?
+    @IBOutlet var tableViewMaximumWidthConstraint: NSLayoutConstraint!
     
     private(set) var isPresentedAsPopover = false
 
@@ -110,14 +111,15 @@ class ReminderSummaryViewController: StandardViewController {
             self.updateViewForPresentation()
         }, completion: nil)
     }
-
+    
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         self.updateViewForPresentation()
     }
 
     private func updateViewForPresentation() {
-        let isDarkMode = !self.traitCollection.userInterfaceStyleIsNormal
+        let tc = self.traitCollection
+        let isDarkMode = !tc.userInterfaceStyleIsNormal
 
         var tableViewControllerInsets: CGFloat {
             self.isPresentedAsPopover
@@ -133,6 +135,7 @@ class ReminderSummaryViewController: StandardViewController {
             }
         }
 
+        self.tableViewMaximumWidthConstraint.isActive = !tc.preferredContentSizeCategory.isAccessibilityCategory
         self.darkBackgroundView?.alpha = darkBackgroundViewAlpha
         self.tableViewControllerLeadingTrailingConstraints?.forEach() { c in
             c.constant = tableViewControllerInsets
@@ -203,23 +206,9 @@ extension ReminderSummaryViewController: UIPopoverPresentationControllerDelegate
         self.completion(.cancel, self.reminderID, self)
         return false
     }
-
-    func adaptivePresentationStyle(for controller: UIPresentationController,
-                                   traitCollection tc: UITraitCollection) -> UIModalPresentationStyle
-    {
-        switch (tc.horizontalSizeClassIsCompact, tc.verticalSizeClassIsRegular) {
-        case (true, _),
-             (false, false):
-            self.isPresentedAsPopover = false
-            return .overFullScreen
-        case (false, true):
-            self.isPresentedAsPopover = true
-            return controller.presentedViewController.modalPresentationStyle
-        }
-    }
 }
 
-extension ReminderSummaryViewController: UIAdaptivePresentationControllerDelegate {
+extension ReminderSummaryViewController /*: UIAdaptivePresentationControllerDelegate*/ {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.completion(.cancel, self.reminderID, self)
     }
@@ -228,7 +217,38 @@ extension ReminderSummaryViewController: UIAdaptivePresentationControllerDelegat
                                 willPresentWithAdaptiveStyle style: UIModalPresentationStyle,
                                 transitionCoordinator: UIViewControllerTransitionCoordinator?)
     {
+        // figure out if we're a popover or not
+        switch style {
+        case .none:
+            self.isPresentedAsPopover = true
+        case .overFullScreen:
+            self.isPresentedAsPopover = false
+        default:
+            assertionFailure("Encountered unexpected presentation style.")
+        }
+        // remove the shadow from the popover via the popover presentation controller
         presentationController.removeShadow(in: transitionCoordinator)
+        // have our view controller update based on our new presentation
+        self.updateViewForPresentation()
+    }
+    
+    override func adaptivePresentationStyle(for controller: UIPresentationController,
+                                            traitCollection tc: UITraitCollection) -> UIModalPresentationStyle
+    {
+        let fullScreen = UIModalPresentationStyle.overFullScreen
+        let popover = UIModalPresentationStyle.none
+
+        // if we're in accessibility sizing, always run in full screen
+        guard !tc.preferredContentSizeCategory.isAccessibilityCategory
+            else { return fullScreen }
+        switch tc.horizontalSizeClassIsCompact {
+            // if the horizontal size class is compact, always run fullscreen
+        case true: return fullScreen
+            // if the horizontal size class is regular, then we need to check vertical
+            // if vertical is regular, run as popover, if compact, run as fullscreen
+            // iPhone 6+, 7+, 8+ run in this configuration when horizontal
+        case false: return tc.verticalSizeClassIsRegular ? popover : fullScreen
+        }
     }
 }
 
