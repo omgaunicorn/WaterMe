@@ -65,20 +65,38 @@ class ReminderUserNotificationController {
                 log.debug("No notifications to schedule")
                 return
             }
+
+            // completion block for when things are finished
+            let completion = {
+                // tell the OS I'm done with the background task
+                guard let id = self.backgroundTaskID else { return }
+                self.backgroundTaskID = nil
+                UIApplication.shared.endBackgroundTask(id)
+            }
+
             // ask the notification center to schedule the notifications
-            for request in requests {
-                center.add(request) { error in
-                    guard let error = error else { return }
+            var idx = 0
+            var scheduleLoop: ((Error?) -> Void)!
+            scheduleLoop = { error in
+                if let error = error {
+                    // error, time to bail
                     log.error(error)
                     Analytics.log(error: error)
+                    assertionFailure()
+                    completion()
+                    // TODO: Add error for AppDelegate that main app knows about
+                    // TODO: Remove all pending notifications
+                } else if idx < requests.count {
+                    // normal looping / iteration
+                    center.add(requests[idx], withCompletionHandler: scheduleLoop)
+                } else {
+                    // finished successfully!
+                    log.debug("Scheduled Notifications: \(requests.count)")
+                    completion()
                 }
+                idx += 1
             }
-            log.debug("Scheduled Notifications: \(requests.count)")
-
-            // tell the OS I'm done with the background task
-            guard let id = self.backgroundTaskID else { return }
-            self.backgroundTaskID = nil
-            UIApplication.shared.endBackgroundTask(id)
+            scheduleLoop(nil)
         }
     }
 
