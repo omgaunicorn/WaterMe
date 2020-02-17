@@ -107,6 +107,7 @@ class ReminderUserNotificationController {
         // get preference values for reminder time and number of days to remind for
         let reminderHour = UserDefaults.standard.reminderHour
         let reminderDays = UserDefaults.standard.reminderDays
+        let notificationLimit = UNUserNotificationCenter.notificationLimit
 
         // get some constants we'll use throughout
         let calendar = Calendar.current
@@ -114,7 +115,9 @@ class ReminderUserNotificationController {
 
         // find the last reminder time and how many days away it is
         let numberOfDaysToLastReminder = values.last?.reminder.nextPerformDate.map() { endDate -> Int in
-            return calendar.numberOfDaysBetween(startDate: now, endDate: endDate)
+            return calendar.numberOfDaysBetween(startDate: now,
+                                                endDate: endDate,
+                                                stopCountingAfterMaxDays: notificationLimit - reminderDays)
         }
         // add that to the number of extra days the user requested
         let totalReminderDays = (numberOfDaysToLastReminder ?? 0) + reminderDays
