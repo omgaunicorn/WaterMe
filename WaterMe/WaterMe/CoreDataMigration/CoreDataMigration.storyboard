@@ -155,8 +155,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zd9-B3-alQ">
-                                <rect key="frame" x="27" y="184" width="320" height="320"/>
+                            <containerView opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zd9-B3-alQ">
+                                <rect key="frame" x="27.5" y="173.5" width="320" height="320"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="320" placeholder="YES" id="K9t-kc-Yow"/>
                                     <constraint firstAttribute="width" constant="320" placeholder="YES" id="KyL-af-YxZ"/>
