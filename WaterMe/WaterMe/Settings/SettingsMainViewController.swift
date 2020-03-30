@@ -78,7 +78,7 @@ class SettingsMainViewController: StandardViewController {
     }
 }
 
-extension SettingsMainViewController: UIAdaptivePresentationControllerDelegate {
+extension SettingsMainViewController /*: UIAdaptivePresentationControllerDelegate*/ {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.completionHandler(self)
     }

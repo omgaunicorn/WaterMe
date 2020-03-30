@@ -72,31 +72,25 @@ class EmojiPickerViewController: StandardCollectionViewController {
     }
 
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
+        let tc = self.view.traitCollection
         let width = self.collectionView?.availableContentSize.width ?? 0
-        let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
-        let horizontalClass = self.view.traitCollection.horizontalSizeClass
-        let defaultValue: (() -> (columnCount: Int, itemHeight: CGFloat)) = {
-            let columnCount = 4
-            let itemHeight = floor((width) / CGFloat(columnCount))
-            return (columnCount, itemHeight)
-        }
-        switch (horizontalClass, accessibility) {
-        case (.unspecified, _), (.regular, _):
-            assertionFailure("Hit a size class this VC was not expecting")
-            fallthrough
-        case (.compact, false):
-            return defaultValue()
-        case (.compact, true):
-            let columnCount = 2
-            let itemHeight = floor((width) / CGFloat(columnCount))
-            return (columnCount, itemHeight)
-        @unknown default:
-            return defaultValue()
+        let math = type(of: self).columnCountAndItemHeight(withWidth:columnCount:)
+        switch (tc.horizontalSizeClassIsCompact,
+                tc.preferredContentSizeCategory.isAccessibilityCategory)
+        {
+        case (false, false):
+            return math(width, 8)
+        case (false, true):
+            return math(width, 4)
+        case (true, false):
+            return math(width, 4)
+        case (true, true):
+            return math(width, 2)
         }
     }
 }
 
-extension EmojiPickerViewController: UIAdaptivePresentationControllerDelegate {
+extension EmojiPickerViewController /*: UIAdaptivePresentationControllerDelegate*/ {
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.completionHandler?(nil, self)
     }

@@ -224,15 +224,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard isReady.completely else { return }
         self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
     }
-    
-    func application(_ application: UIApplication,
-                     shouldSaveApplicationState coder: NSCoder) -> Bool
-    {
+
+    func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool {
         return true
     }
     
     func application(_ application: UIApplication,
-                     shouldRestoreApplicationState coder: NSCoder) -> Bool
+                     shouldRestoreSecureApplicationState coder: NSCoder) -> Bool
     {
         let _savedBuild = coder.decodeObject(forKey: UIApplication.stateRestorationBundleVersionKey) as? String
         let _currentBuild = Bundle(for: type(of: self)).infoDictionary?[kCFBundleVersionKey as String] as? String
@@ -242,5 +240,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             currentBuild == savedBuild
         else { return false }
         return true
+    }
+
+    @available(*, deprecated, message: "This is deprecated. Only implemented for old iOS support.")
+    func application(_ application: UIApplication,
+                     shouldSaveApplicationState coder: NSCoder) -> Bool
+    {
+        return self.application(application, shouldSaveSecureApplicationState: coder)
+    }
+    
+    @available(*, deprecated, message: "This is deprecated. Only implemented for old iOS support.")
+    func application(_ application: UIApplication,
+                     shouldRestoreApplicationState coder: NSCoder) -> Bool
+    {
+        return self.application(application, shouldRestoreSecureApplicationState: coder)
     }
 }

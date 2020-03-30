@@ -29,7 +29,8 @@ protocol ReminderEditTableViewControllerDelegate: class {
     func userChangedKind(to newKind: Reminder.Kind,
                          byUsingKeyboard usingKeyboard: Bool,
                          within: ReminderEditTableViewController)
-    func userDidSelectChangeInterval(_ deselectHandler: @escaping () -> Void,
+    func userDidSelectChangeInterval(popoverSourceView: UIView?,
+                                     deselectHandler: @escaping () -> Void,
                                      within: ReminderEditTableViewController)
     func userChangedNote(toNewNote newNote: String,
                          within: ReminderEditTableViewController)
@@ -80,9 +81,12 @@ class ReminderEditTableViewController: StandardTableViewController {
                                                within: self)
             }
         case .interval:
-            self.delegate?.userDidSelectChangeInterval({
-                tableView.deselectRow(at: indexPath, animated: true)
-            }, within: self)
+            self.delegate?.userDidSelectChangeInterval(
+                popoverSourceView: tableView.cellForRow(at: indexPath),
+                deselectHandler: {
+                    tableView.deselectRow(at: indexPath, animated: true)
+                },
+                within: self)
         case .siriShortcuts:
             guard let shortcut = SiriShortcut(rawValue: indexPath.row) else { return }
             let closure = { (anim: Bool) -> Void in

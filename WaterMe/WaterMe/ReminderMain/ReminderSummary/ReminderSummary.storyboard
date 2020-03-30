@@ -46,6 +46,7 @@
                     </view>
                     <connections>
                         <outlet property="darkBackgroundView" destination="KYc-XF-kSZ" id="YSQ-qd-Cg4"/>
+                        <outlet property="tableViewMaximumWidthConstraint" destination="dGX-cW-h7q" id="F46-wy-BuQ"/>
                         <outletCollection property="tableViewControllerLeadingTrailingConstraints" destination="L1T-9G-zCX" collectionClass="NSMutableArray" id="av8-Rw-bva"/>
                         <outletCollection property="tableViewControllerLeadingTrailingConstraints" destination="n25-8E-4aP" collectionClass="NSMutableArray" id="Ae2-ut-O9H"/>
                     </connections>

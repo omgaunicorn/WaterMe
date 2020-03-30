@@ -244,31 +244,24 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     }
 
     private func updateCollectionViewInsets() {
-        let verticalSizeClass = self.traitCollection.verticalSizeClass
-        let layoutDirection = self.traitCollection.layoutDirection
+        let verticalSizeClassIsRegular = self.traitCollection.verticalSizeClassIsRegular
+        let layoutDirectionIsLeftToRight = self.traitCollection.layoutDirection.isLeftToRight
         let customInset: UIEdgeInsets
-        switch verticalSizeClass {
-        case .compact:
-            // Scroll Indicators can have normal behavior in landscape
-            self.collectionVC?.collectionView?.scrollIndicatorInsets = .zero
-            // get the width and set the custom inset
-            let dragViewWidth = self.dropTargetViewController?.view.bounds.width ?? 0
-            switch layoutDirection {
-            case .rightToLeft:
-                customInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: dragViewWidth)
-            case .leftToRight, .unspecified:
-                fallthrough
-            @unknown default:
-                customInset = UIEdgeInsets(top: 0, left: dragViewWidth, bottom: 0, right: 0)
-            }
-        case .regular, .unspecified:
-            fallthrough
-        @unknown default:
+        switch verticalSizeClassIsRegular {
+        case true:
             // get the width and set the custom inset
             let dragViewHeight = self.dropTargetViewController?.dropTargetViewHeight ?? 0
             customInset = UIEdgeInsets(top: dragViewHeight, left: 0, bottom: 0, right: 0)
             // we need custom scroll insets in portrait
             self.collectionVC?.collectionView?.scrollIndicatorInsets = customInset
+        case false:
+            // Scroll Indicators can have normal behavior in landscape
+            self.collectionVC?.collectionView?.scrollIndicatorInsets = .zero
+            // get the width and set the custom inset
+            let dragViewWidth = self.dropTargetViewController?.view.bounds.width ?? 0
+            customInset = layoutDirectionIsLeftToRight
+                ? UIEdgeInsets(top: 0, left: dragViewWidth, bottom: 0, right: 0)
+                : UIEdgeInsets(top: 0, left: 0, bottom: 0, right: dragViewWidth)
         }
 
         // BUGFIX: http://crashes.to/s/254b2d6597f

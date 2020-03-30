@@ -28,7 +28,11 @@ class ReminderIntervalPickerViewController: StandardViewController {
     
     typealias CompletionHandler = (UIViewController, Int?) -> Void
     
-    class func newVC(from storyboard: UIStoryboard!, existingValue: Int, completionHandler: @escaping CompletionHandler) -> UIViewController {
+    class func newVC(from storyboard: UIStoryboard!,
+                     existingValue: Int,
+                     popoverSourceView: UIView?,
+                     completionHandler: @escaping CompletionHandler) -> UIViewController
+    {
         let id = "ReminderIntervalPickerViewController"
         // swiftlint:disable:next force_cast
         let navVC = storyboard.instantiateViewController(withIdentifier: id) as! UINavigationController
@@ -36,7 +40,14 @@ class ReminderIntervalPickerViewController: StandardViewController {
         let vc = navVC.viewControllers.first as! ReminderIntervalPickerViewController
         vc.completionHandler = completionHandler
         vc.existingValue = existingValue
-        navVC.presentationController?.delegate = vc
+        if let sourceView = popoverSourceView {
+            navVC.modalPresentationStyle = .popover
+            navVC.popoverPresentationController?.sourceView = sourceView
+            navVC.popoverPresentationController?.sourceRect = sourceView.bounds
+            navVC.popoverPresentationController?.delegate = vc
+        } else {
+            navVC.presentationController?.delegate = vc
+        }
         return navVC
     }
     
@@ -96,8 +107,34 @@ extension ReminderIntervalPickerViewController: UIPickerViewDataSource {
     }
 }
 
-extension ReminderIntervalPickerViewController: UIAdaptivePresentationControllerDelegate {
+extension ReminderIntervalPickerViewController: UIPopoverPresentationControllerDelegate /*: UIAdaptivePresentationControllerDelegate*/
+{
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.doneButtonTapped(presentationController)
+    }
+
+    func presentationController(_ presentationController: UIPresentationController,
+                                willPresentWithAdaptiveStyle style: UIModalPresentationStyle,
+                                transitionCoordinator: UIViewControllerTransitionCoordinator?)
+    {
+        switch style {
+        case .none:
+            self.preferredContentSize = .init(width: 320, height: 260)
+        case .overFullScreen, .formSheet:
+            self.preferredContentSize = .zero
+        default:
+            assertionFailure("Unexpected presentation style reached")
+        }
+    }
+
+    override func adaptivePresentationStyle(for controller: UIPresentationController,
+                                            traitCollection: UITraitCollection) -> UIModalPresentationStyle
+    {
+        guard !traitCollection.preferredContentSizeCategory.isAccessibilityCategory else {
+            return super.adaptivePresentationStyle(for: controller, traitCollection: traitCollection)
+        }
+        // if on narrow iphone screen, present as popover
+        // on ipad present as normal form sheet
+        return traitCollection.horizontalSizeClassIsCompact ? .none : .formSheet
     }
 }

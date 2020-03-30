@@ -145,7 +145,10 @@ extension INShortcut {
     {
         guard let delegate = delegate else { return nil }
         let activity = NSUserActivity(kind: kind, delegate: delegate)
-        activity.needsSave = true
+        // Force values to save immediately
+        // This prevents console log output that said the
+        // INShortcuts were invalid because of missing title
+        delegate.userActivityWillSave?(activity)
         self.init(userActivity: activity)
     }
 }

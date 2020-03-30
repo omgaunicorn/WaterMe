@@ -114,6 +114,7 @@
 		50CA47EE21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CA47ED21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift */; };
 		50CA47F021699FED0063F51E /* UserActivityConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CA47EF21699FED0063F51E /* UserActivityConfigurator.swift */; };
 		50CB5AFA2001BAA900868F30 /* ReminderNotificationAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */; };
+		50CF864D23FAA403002B2D3D /* UNUserNotificationCenter+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CF864C23FAA403002B2D3D /* UNUserNotificationCenter+WaterMe.swift */; };
 		50D2B2B0216A726000957E04 /* NSUserActivity+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2B2AE216A726000957E04 /* NSUserActivity+Error.swift */; };
 		50D2B2B1216A726000957E04 /* NSUserActivity+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2B2AF216A726000957E04 /* NSUserActivity+WaterMe.swift */; };
 		50D2B2B9216FD4EF00957E04 /* ReminderVesselEditViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2B2B8216FD4EF00957E04 /* ReminderVesselEditViewController+Delegate.swift */; };
@@ -265,6 +266,7 @@
 		50CA47ED21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBarButtonItemLongPressGestureRecognizer.swift; sourceTree = "<group>"; };
 		50CA47EF21699FED0063F51E /* UserActivityConfigurator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserActivityConfigurator.swift; sourceTree = "<group>"; };
 		50CB5AF92001BAA900868F30 /* ReminderNotificationAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderNotificationAlert.swift; sourceTree = "<group>"; };
+		50CF864C23FAA403002B2D3D /* UNUserNotificationCenter+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UNUserNotificationCenter+WaterMe.swift"; sourceTree = "<group>"; };
 		50D2B2AE216A726000957E04 /* NSUserActivity+Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+Error.swift"; sourceTree = "<group>"; };
 		50D2B2AF216A726000957E04 /* NSUserActivity+WaterMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+WaterMe.swift"; sourceTree = "<group>"; };
 		50D2B2B8216FD4EF00957E04 /* ReminderVesselEditViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderVesselEditViewController+Delegate.swift"; sourceTree = "<group>"; };
@@ -489,6 +491,7 @@
 				50B779D6215473F100AC6240 /* NSBundle+WaterMe.swift */,
 				5096D190215474E1006E1019 /* UIApplication+WaterMe.swift */,
 				5096D19221547658006E1019 /* UIView+WaterMe.swift */,
+				50CF864C23FAA403002B2D3D /* UNUserNotificationCenter+WaterMe.swift */,
 				50BB0F741EC01B8E00850FF4 /* UserDefaults+WaterMe.swift */,
 				50163F95215B0CAB002DD849 /* UIViewController+WaterMe.swift */,
 				5085C71C21667A4500030D2A /* DispatchQueue+WaterMe.swift */,
@@ -910,6 +913,7 @@
 				508E615A1F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift in Sources */,
 				5096D191215474E1006E1019 /* UIApplication+WaterMe.swift in Sources */,
 				507777AA1FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift in Sources */,
+				50CF864D23FAA403002B2D3D /* UNUserNotificationCenter+WaterMe.swift in Sources */,
 				509A0865215FFEDF00389339 /* SimpleLabelTableViewCell.swift in Sources */,
 				508E61571F8AD57400B28DD8 /* ReminderCollectionViewController.swift in Sources */,
 				5085C71B216523CB00030D2A /* CoreSpotlightIndexer.swift in Sources */,
@@ -1125,7 +1129,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 250003;
+				CURRENT_PROJECT_VERSION = 250008;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1148,7 +1152,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 250003;
+				CURRENT_PROJECT_VERSION = 250008;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

@@ -60,7 +60,7 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         self.emojiImageViewHeightConstraint?.constant =
-            UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory ?
+            self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory ?
                 type(of: self).style_iconButtonHeightAccessibilityTextSizeEnabled :
                 type(of: self).style_iconButtonHeightAccessibilityTextSizeDisabled
         

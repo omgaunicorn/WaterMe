@@ -75,15 +75,13 @@ extension UIBarButtonItem {
         let landscapeImagePhoneInsetLeadingValue: CGFloat
 
         // adjust the values based on orientation
-        switch traitCollection.layoutDirection {
-        case .rightToLeft:
-            imageInsetLeadingValue = kImageInsetLeadingValue
-            landscapeImagePhoneInsetLeadingValue = kLandscapeImagePhoneInsetLeadingValue
-        case .leftToRight, .unspecified:
-            fallthrough
-        @unknown default:
+        switch traitCollection.layoutDirection.isLeftToRight {
+        case true:
             imageInsetLeadingValue = kImageInsetLeadingValue * -1
             landscapeImagePhoneInsetLeadingValue = kLandscapeImagePhoneInsetLeadingValue * -1
+        case false:
+            imageInsetLeadingValue = kImageInsetLeadingValue
+            landscapeImagePhoneInsetLeadingValue = kLandscapeImagePhoneInsetLeadingValue
         }
 
         // reset the values to defaults

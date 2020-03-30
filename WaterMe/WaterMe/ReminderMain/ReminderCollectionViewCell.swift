@@ -76,7 +76,7 @@ class ReminderCollectionViewCell: UICollectionViewCell {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        switch UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
+        switch self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory {
         case true:
             self.emojiImageWidthConstraint?.constant = type(of: self).style_emojiImageViewWidthAccessibility
         case false:

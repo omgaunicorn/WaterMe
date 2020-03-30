@@ -76,6 +76,9 @@ extension ReminderMainViewController {
         static let buttonTitleReminderPerform =
             NSLocalizedString("Mark Reminder as Done",
                               comment: "Button Title in an Alert. Shows when the user taps on a reminder. After being selected, this will mark the reminder as performed.")
+        static let dragAndDropInstructionalText =
+            NSLocalizedString("Drag and Drop Here",
+                              comment: "ReminderMainViewController: Instructional text that instructs the user and drag and drop to this location to mark the reminder as done.")
         static let reminderAlertTitle =
             NSLocalizedString("%@ – %@",
                               comment: "ReminderMainViewController: Select Reminder Alert Title: 2 Arguments: When the user taps on a reminder, this is the title of the alert if the plant has a name. It tells the user the kind of reminder and the name of the plant. e.g. ‘Water Plant - My Cool Plant’")
