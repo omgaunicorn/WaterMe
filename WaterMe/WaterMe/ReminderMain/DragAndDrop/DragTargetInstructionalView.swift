@@ -41,7 +41,8 @@ class DragTargetInstructionalView: UIView {
 
     private func updateDynamicText() {
         self.textLabel?.numberOfLines = self.traitCollection.verticalSizeClassIsRegular ? 2 : 4
-        self.textLabel?.attributedText = NSAttributedString(string: "Drag and Drop Here",
+        let message = ReminderMainViewController.LocalizedString.dragAndDropInstructionalText
+        self.textLabel?.attributedText = NSAttributedString(string: message,
                                                             font: .dragInstructionalText(self.tintColor))
     }
 
