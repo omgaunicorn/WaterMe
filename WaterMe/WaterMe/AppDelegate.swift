@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private(set) var reminderObserver: GlobalReminderObserver?
 
     let purchaseController = PurchaseController()
-    var coreDataMigrator = CoreDataMigrator()
+    var coreDataMigrator: CoreDataMigratable? = CoreDataMigrator()
     var window: UIWindow?
     var userDefaultObserverTokens: [NSKeyValueObservation] = []
 
