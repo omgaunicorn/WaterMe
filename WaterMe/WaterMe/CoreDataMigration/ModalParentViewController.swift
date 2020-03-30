@@ -69,8 +69,7 @@ class ModalParentViewController: StandardViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        self.transitionCoordinator!.animate(alongsideTransition: { _ in
+        self.animateAlongSideTransitionCoordinator(animations: {
             self.childVCContainerView.transform = CGAffineTransform.identity
         }, completion: nil)
     }

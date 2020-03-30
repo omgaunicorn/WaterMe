@@ -95,36 +95,16 @@ class PurchaseThanksViewController: StandardViewController {
             self.contentView.trailingAnchor.constraint(equalTo: self.cheerView.trailingAnchor, constant: 0),
             self.cheerView.heightAnchor.constraint(equalToConstant: 1)
             ])
-        self.contentView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        // get closures ready
-        let transform = {
-            self.contentView.transform = CGAffineTransform.identity
-        }
-        let completion = {
+        self.animateAlongSideTransitionCoordinator(animations: nil, completion: {
             self.cheerView.start()
             Timer.scheduledTimer(withTimeInterval: 7, repeats: false) { _ in
                 self.cheerView.stop()
             }
-        }
-
-        // make sure we have a coordinate
-        // if not, just do the closures
-        guard let tc = self.transitionCoordinator else {
-            transform()
-            completion()
-            return
-        }
-
-        // do the animation
-        tc.animate(alongsideTransition: { _ in
-            transform()
-        }, completion: { _ in
-            completion()
         })
     }
 
