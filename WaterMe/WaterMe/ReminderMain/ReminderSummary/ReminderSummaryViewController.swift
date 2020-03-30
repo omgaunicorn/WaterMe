@@ -68,15 +68,6 @@ class ReminderSummaryViewController: StandardViewController {
     
     private(set) var isPresentedAsPopover = false
 
-    override var preferredContentSize: CGSize {
-        get {
-            let size = self.tableViewController?.tableView.visibleRowsSize
-            return size ?? .zero
-        }
-        //swiftlint:disable:next unused_setter_value
-        set { assertionFailure("Not sure why this was set") }
-    }
-
     var reminderResult: Result<Reminder, RealmError>!
     private var completion: Completion!
     private var userActivityContinuation: NSUserActivityContinuedHandler?
