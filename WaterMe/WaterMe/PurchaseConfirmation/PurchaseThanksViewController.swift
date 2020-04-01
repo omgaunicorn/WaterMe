@@ -42,15 +42,29 @@ class PurchaseThanksViewController: StandardViewController {
             }
         case .errorNetwork:
             Analytics.log(event: Analytics.IAPOperation.buyErrorNetwork)
-            alert = UIAlertController(title: LocalizedString.errorAlertTitle, message: LocalizedString.errorNetworkAlertMessage, preferredStyle: .alert)
+            alert = UIAlertController(
+                title: LocalizedString.errorAlertTitle,
+                message: LocalizedString.errorNetworkAlertMessage,
+                preferredStyle: .alert
+            )
         case .errorNotAllowed:
             Analytics.log(event: Analytics.IAPOperation.buyErrorNotAllowed)
-            alert = UIAlertController(title: LocalizedString.errorAlertTitle, message: LocalizedString.errorNotAllowedAlertMessage, preferredStyle: .alert)
+            alert = UIAlertController(
+                title: LocalizedString.errorAlertTitle,
+                message: LocalizedString.errorNotAllowedAlertMessage,
+                preferredStyle: .alert
+            )
         case .errorUnknown:
             Analytics.log(event: Analytics.IAPOperation.buyErrorUnknown)
-            alert = UIAlertController(title: LocalizedString.errorAlertTitle, message: LocalizedString.errorUnknownAlertMessage, preferredStyle: .alert)
+            alert = UIAlertController(
+                title: LocalizedString.errorAlertTitle,
+                message: LocalizedString.errorUnknownAlertMessage,
+                preferredStyle: .alert
+            )
         }
-        let confirm = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
+        let confirm = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleDismiss,
+                                    style: .cancel)
+        { _ in
             AppDelegate.shared.purchaseController?.finish(inFlight: inFlight)
             completion(nil)
         }
