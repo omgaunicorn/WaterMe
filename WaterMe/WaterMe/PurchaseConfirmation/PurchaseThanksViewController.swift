@@ -95,6 +95,7 @@ class PurchaseThanksViewController: StandardViewController {
             self.contentView.trailingAnchor.constraint(equalTo: self.cheerView.trailingAnchor, constant: 0),
             self.cheerView.heightAnchor.constraint(equalToConstant: 1)
             ])
+        self.configureAttributedText()
     }
 
     override func viewWillAppear(_ animated: Bool) {
