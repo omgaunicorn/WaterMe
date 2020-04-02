@@ -26,8 +26,8 @@ import UIKit
 
 class ReminderMainViewController: StandardViewController, HasProController, HasBasicController {
     
-    class func newVC(basicRCResult: Result<BasicController, RealmError>,
-                     proController: ProController? = nil) -> UINavigationController
+    class func newVC(basic: Result<BasicController, RealmError>,
+                     pro: ProController? = nil) -> UINavigationController
     {
         let sb = UIStoryboard(name: "ReminderMain", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
@@ -36,9 +36,9 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         var vc = navVC.viewControllers.first as! ReminderMainViewController
         navVC.navigationBar.style_forceDefaultAppearance()
         vc.title = UIApplication.LocalizedString.appTitle // set here because it works better in UITabBarController
-        vc.applicationDidFinishLaunchingError = basicRCResult.error
-        vc.configure(with: basicRCResult.value)
-        vc.configure(with: proController)
+        vc.applicationDidFinishLaunchingError = basic.error
+        vc.configure(with: basic.value)
+        vc.configure(with: pro)
         vc.resetUserActivity()
         return navVC
     }
