@@ -109,24 +109,34 @@ extension UIApplication {
         ]).tintColor = Color.textSecondary
 
         // For some reason these have to be separate in order for it to be effective.
-        UIVisualEffectView.appearance(whenContainedInInstancesOf: [
-            ReminderSummaryViewController.self
-        ]).backgroundColor = Color.visuelEffectViewBackground
+        let types: [UIAppearanceContainer.Type] = [ReminderSummaryViewController.self,
+                                                   ReminderSummaryPopoverBackgroundView.self]
+        types.forEach() {
+            UIVisualEffectView
+                .appearance(whenContainedInInstancesOf: [$0])
+                .backgroundColor = Color.visuelEffectViewBackground
+        }
 
-        // For some reason these have to be separate in order for it to be effective.
-        UIVisualEffectView.appearance(whenContainedInInstancesOf: [
-            ReminderSummaryPopoverBackgroundView.self
-        ]).backgroundColor = Color.visuelEffectViewBackground
-
-        // make sure navigation bars appear the legacy way
-        guard #available(iOS 13.0, *) else { return }
-        let transparentAppearance = UINavigationBarAppearance()
-        let defaultAppearance = UINavigationBarAppearance()
-        transparentAppearance.configureWithTransparentBackground()
-        defaultAppearance.configureWithDefaultBackground()
-        UINavigationBar.appearance().compactAppearance = defaultAppearance
-        UINavigationBar.appearance().standardAppearance = defaultAppearance
-        UINavigationBar.appearance().scrollEdgeAppearance = transparentAppearance
+        if #available(iOS 13.0, *) {
+            // make sure navigation bars appear the legacy way
+            let transparentAppearance = UINavigationBarAppearance()
+            let defaultAppearance = UINavigationBarAppearance()
+            transparentAppearance.configureWithTransparentBackground()
+            defaultAppearance.configureWithDefaultBackground()
+            UINavigationBar.appearance().compactAppearance = defaultAppearance
+            UINavigationBar.appearance().standardAppearance = defaultAppearance
+            UINavigationBar.appearance().scrollEdgeAppearance = transparentAppearance
+        } else {
+            // make sure visual effect views have the legacy appearance
+            // For some reason these have to be separate in order for it to be effective.
+            let types: [UIAppearanceContainer.Type] = [ReminderSummaryViewController.self,
+                                                       ReminderFinishDropTargetViewController.self]
+            types.forEach() {
+                UIVisualEffectView
+                    .appearance(whenContainedInInstancesOf: [$0])
+                    .effect = UIBlurEffect(style: .extraLight)
+            }
+        }
     }
 }
 
