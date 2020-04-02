@@ -69,7 +69,15 @@ extension ReminderHeaderCollectionReusableView {
 
 extension ModalParentViewController {
     enum Style {
-        static let grayViewColor = UIColor.black.withAlphaComponent(0.5)
+        static var grayViewColor: UIColor {
+            let defaultColor = UIColor.black.withAlphaComponent(0.5)
+            guard #available(iOS 13.0, *) else { return defaultColor }
+            return UIColor { traits -> UIColor in
+                return traits.userInterfaceStyleIsNormal
+                    ? defaultColor
+                    : UIColor.black.withAlphaComponent(0.8)
+            }
+        }
     }
 }
 

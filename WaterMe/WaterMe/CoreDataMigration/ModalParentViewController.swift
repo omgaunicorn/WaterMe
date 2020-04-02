@@ -61,7 +61,17 @@ class ModalParentViewController: StandardViewController {
             ])
         
         self.view.backgroundColor = .clear
+        self.childVCContainerView.style_setCornerRadius()
+        self.childVCContainerView.backgroundColor = Color.systemBackgroundColor
+        self.childVCContainerView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
         self.updateChildVCContainerViewConstraints()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.animateAlongSideTransitionCoordinator(animations: {
+            self.childVCContainerView.transform = CGAffineTransform.identity
+        }, completion: nil)
     }
 
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {

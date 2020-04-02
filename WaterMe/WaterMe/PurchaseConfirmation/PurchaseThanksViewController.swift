@@ -42,15 +42,29 @@ class PurchaseThanksViewController: StandardViewController {
             }
         case .errorNetwork:
             Analytics.log(event: Analytics.IAPOperation.buyErrorNetwork)
-            alert = UIAlertController(title: LocalizedString.errorAlertTitle, message: LocalizedString.errorNetworkAlertMessage, preferredStyle: .alert)
+            alert = UIAlertController(
+                title: LocalizedString.errorAlertTitle,
+                message: LocalizedString.errorNetworkAlertMessage,
+                preferredStyle: .alert
+            )
         case .errorNotAllowed:
             Analytics.log(event: Analytics.IAPOperation.buyErrorNotAllowed)
-            alert = UIAlertController(title: LocalizedString.errorAlertTitle, message: LocalizedString.errorNotAllowedAlertMessage, preferredStyle: .alert)
+            alert = UIAlertController(
+                title: LocalizedString.errorAlertTitle,
+                message: LocalizedString.errorNotAllowedAlertMessage,
+                preferredStyle: .alert
+            )
         case .errorUnknown:
             Analytics.log(event: Analytics.IAPOperation.buyErrorUnknown)
-            alert = UIAlertController(title: LocalizedString.errorAlertTitle, message: LocalizedString.errorUnknownAlertMessage, preferredStyle: .alert)
+            alert = UIAlertController(
+                title: LocalizedString.errorAlertTitle,
+                message: LocalizedString.errorUnknownAlertMessage,
+                preferredStyle: .alert
+            )
         }
-        let confirm = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
+        let confirm = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleDismiss,
+                                    style: .cancel)
+        { _ in
             AppDelegate.shared.purchaseController?.finish(inFlight: inFlight)
             completion(nil)
         }
@@ -95,36 +109,17 @@ class PurchaseThanksViewController: StandardViewController {
             self.contentView.trailingAnchor.constraint(equalTo: self.cheerView.trailingAnchor, constant: 0),
             self.cheerView.heightAnchor.constraint(equalToConstant: 1)
             ])
-        self.contentView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
+        self.configureAttributedText()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        // get closures ready
-        let transform = {
-            self.contentView.transform = CGAffineTransform.identity
-        }
-        let completion = {
+        self.animateAlongSideTransitionCoordinator(animations: nil, completion: {
             self.cheerView.start()
             Timer.scheduledTimer(withTimeInterval: 7, repeats: false) { _ in
                 self.cheerView.stop()
             }
-        }
-
-        // make sure we have a coordinate
-        // if not, just do the closures
-        guard let tc = self.transitionCoordinator else {
-            transform()
-            completion()
-            return
-        }
-
-        // do the animation
-        tc.animate(alongsideTransition: { _ in
-            transform()
-        }, completion: { _ in
-            completion()
         })
     }
 

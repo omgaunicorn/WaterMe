@@ -31,4 +31,14 @@ extension UIViewController {
             completion?()
         }
     }
+
+    func animateAlongSideTransitionCoordinator(animations: (() -> Void)?, completion: (() -> Void)?) {
+        guard let tc = self.transitionCoordinator else {
+            animations?()
+            completion?()
+            return
+        }
+        tc.animate(alongsideTransition: { _ in animations?() },
+                   completion: { _ in completion?()})
+    }
 }
