@@ -173,14 +173,22 @@ extension Font {
                 .font : UIFont.systemFont(ofSize: 20)
             ]
         case .emojiSmall(let accessibilityFontSizeEnabled):
+            let baselineOffset: NSNumber = {
+                guard Font.customEmojiLoaded else { return 0 }
+                return accessibilityFontSizeEnabled ? -8 : -4
+            }()
             return [
                 .font : Font.emojiFont(ofSize: accessibilityFontSizeEnabled ? 50 : 36),
-                .baselineOffset : NSNumber(value: accessibilityFontSizeEnabled ? -8 : -4)
+                .baselineOffset : baselineOffset
             ]
         case .emojiLarge(let accessibilityFontSizeEnabled):
+            let baselineOffset: NSNumber = {
+                guard Font.customEmojiLoaded else { return 0 }
+                return accessibilityFontSizeEnabled ? -10 : -5
+            }()
             return [
                 .font : Font.emojiFont(ofSize: accessibilityFontSizeEnabled ? 120 : 60),
-                .baselineOffset : NSNumber(value: accessibilityFontSizeEnabled ? -10 : -5)
+                .baselineOffset : baselineOffset
             ]
         case .textInputTableViewCell:
             return [
