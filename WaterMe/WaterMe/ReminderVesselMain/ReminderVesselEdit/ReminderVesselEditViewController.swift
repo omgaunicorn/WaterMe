@@ -176,7 +176,8 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             self.completionHandler?(self)
             return
         }
-        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .left(sender)) { confirmed in
+        let vc = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .right(sender))
+        { confirmed in
             guard confirmed == true else { return }
 
             Analytics.log(event: Analytics.CRUD_Op_RV.delete)
@@ -194,7 +195,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
                 }
             }
         }
-        self.present(confirmation, animated: true, completion: nil)
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction private func doneButtonTapped(_ sender: Any) {

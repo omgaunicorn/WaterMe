@@ -37,6 +37,16 @@ extension UIView {
     }
 }
 
+typealias PopoverSender = Either<UIView, UIBarButtonItem>
+
+extension CGRect {
+    /// Used to point Popovers at the middle of the presenting view
+    var centerRect: CGRect {
+        return CGRect(origin: CGPoint(x: self.width / 2, y: self.height / 2),
+                      size: .zero)
+    }
+}
+
 extension UITraitCollection {
     @objc var userInterfaceStyleIsNormal: Bool {
         guard #available(iOS 12.0, *) else { return true }

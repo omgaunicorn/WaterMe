@@ -28,7 +28,7 @@ import UIKit
 extension ReminderVesselEditViewController: ReminderVesselEditTableViewControllerDelegate {
 
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?,
-                              sender: Either<UIView, UIBarButtonItem>)
+                              sender: PopoverSender)
     {
         self.view.endEditing(false)
         let imageAlreadyChosen = self.vesselResult?.value?.icon?.image != nil
@@ -70,6 +70,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         switch sender {
         case .left(let sender):
             vc.popoverPresentationController?.sourceView = sender
+            vc.popoverPresentationController?.sourceRect = sender.bounds.centerRect
         case .right(let sender):
             vc.popoverPresentationController?.barButtonItem = sender
         }

@@ -60,7 +60,7 @@ extension UIAlertController {
 }
 
 extension UIAlertController {
-    convenience init(localizedDeleteConfirmationAlertPresentedFrom sender: Either<UIBarButtonItem, UIView>?,
+    convenience init(localizedDeleteConfirmationAlertPresentedFrom sender: PopoverSender?,
                      userConfirmationHandler confirmed: ((Bool) -> Void)?)
     {
         let style: UIAlertController.Style = sender != nil ? .actionSheet : .alert
@@ -75,11 +75,11 @@ extension UIAlertController {
         self.addAction(dont)
         guard let sender = sender else { return }
         switch sender {
-        case .left(let bbi):
+        case .right(let bbi):
             self.popoverPresentationController?.barButtonItem = bbi
-        case .right(let view):
+        case .left(let view):
             self.popoverPresentationController?.sourceView = view
-            self.popoverPresentationController?.sourceRect = type(of: self).sourceRect(from: view)
+            self.popoverPresentationController?.sourceRect = view.bounds.centerRect
             self.popoverPresentationController?.permittedArrowDirections = [.up, .down]
         }
     }
@@ -96,12 +96,5 @@ extension UIAlertController {
             completion?()
         }
         self.addAction(dismiss)
-    }
-}
-
-extension UIAlertController {
-    class func sourceRect(from view: UIView) -> CGRect {
-        let origin = CGPoint(x: view.bounds.size.width / 2, y: view.bounds.size.height / 2)
-        return CGRect(origin: origin, size: .zero)
     }
 }

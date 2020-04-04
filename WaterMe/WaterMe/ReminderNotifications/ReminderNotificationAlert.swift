@@ -30,7 +30,7 @@ extension UIAlertController {
         case denied, allowed, cancel
     }
 
-    convenience init?(newPermissionAlertIfNeededPresentedFrom sender: Either<UIBarButtonItem, UIView>?,
+    convenience init?(newPermissionAlertIfNeededPresentedFrom sender: PopoverSender?,
                       selectionCompletionHandler selection: ((PermissionSelection) -> Void)?)
     {
         let nc = UNUserNotificationCenter.current()
@@ -51,11 +51,11 @@ extension UIAlertController {
         }
         guard let sender = sender else { return }
         switch sender {
-        case .left(let bbi):
+        case .right(let bbi):
             self.popoverPresentationController?.barButtonItem = bbi
-        case .right(let view):
+        case .left(let view):
             self.popoverPresentationController?.sourceView = view
-            self.popoverPresentationController?.sourceRect = type(of: self).sourceRect(from: view)
+            self.popoverPresentationController?.sourceRect = view.bounds.centerRect
             self.popoverPresentationController?.permittedArrowDirections = [.up, .down]
         }
     }

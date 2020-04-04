@@ -167,7 +167,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             // perform the haptic for success
             self.haptic.notificationOccurred(.success)
             // next we need to see if they are allowing / want to give us permission to send push notifications
-            let _notificationPermissionVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .right(view))
+            let _notificationPermissionVC = UIAlertController(newPermissionAlertIfNeededPresentedFrom: .left(view))
             { _ in
                 completion?(true)
             }

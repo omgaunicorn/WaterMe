@@ -191,7 +191,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             return
         }
 
-        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .left(sender))
+        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .right(sender))
         { confirmed in
             Analytics.log(event: Analytics.CRUD_Op_R.delete)
             guard confirmed == true else { return }
