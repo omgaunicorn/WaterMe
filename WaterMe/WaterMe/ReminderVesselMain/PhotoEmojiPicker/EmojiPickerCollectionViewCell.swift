@@ -29,6 +29,7 @@ class EmojiPickerCollectionViewCell: UICollectionViewCell {
     class var nib: UINib { return UINib(nibName: self.reuseID, bundle: Bundle(for: self.self)) }
     
     @IBOutlet private weak var emojiLabel: UILabel?
+    private var emojiString: String?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -37,12 +38,20 @@ class EmojiPickerCollectionViewCell: UICollectionViewCell {
     
     func configure(withEmojiString emojiString: String) {
         let accessibility = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+        self.emojiString = emojiString
         self.emojiLabel?.attributedText = NSAttributedString(string: emojiString,
                                                              font: .emojiLarge(accessibilityFontSizeEnabled: accessibility))
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard let emojiString = self.emojiString else { return }
+        self.configure(withEmojiString: emojiString)
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        self.emojiString = nil
         self.emojiLabel?.attributedText = nil
     }
 
