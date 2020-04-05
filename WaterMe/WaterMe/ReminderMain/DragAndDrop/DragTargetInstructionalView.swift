@@ -143,6 +143,11 @@ class DragTargetInstructionalView: UIView {
         self.updateDynamicText()
     }
 
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        self.updateDynamicText()
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         self.updateDynamicText()

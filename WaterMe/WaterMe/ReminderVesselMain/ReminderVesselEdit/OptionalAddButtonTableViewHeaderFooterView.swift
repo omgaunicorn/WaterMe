@@ -42,11 +42,6 @@ class OptionalAddButtonTableViewHeaderFooterView: UITableViewHeaderFooterView {
         self.addButtonTapped?()
     }
 
-    override func didMoveToWindow() {
-        super.didMoveToWindow()
-        self.updateLabels()
-    }
-
     private func updateLabels() {
         // bottom alignment of apple's label changes based on accessibility text size
         // also in accessibility sizes, a much shorter label is used
@@ -62,6 +57,11 @@ class OptionalAddButtonTableViewHeaderFooterView: UITableViewHeaderFooterView {
                                            font: .tableHeaderActionButton)
             self.addButton?.setAttributedTitle(title, for: .normal)
         }
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        self.updateLabels()
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

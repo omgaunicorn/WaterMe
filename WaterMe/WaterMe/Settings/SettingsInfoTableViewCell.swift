@@ -55,13 +55,18 @@ class SettingsInfoTableViewCell: UITableViewCell {
         self.emojiImageView?.setIcon(icon)
     }
 
+    private func updateLayout() {
+        self.emojiImageView?.isHidden = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        self.updateLayout()
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        if self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory {
-            self.emojiImageView?.isHidden = true
-        } else {
-            self.emojiImageView?.isHidden = false
-        }
+        self.updateLayout()
     }
 
     override func prepareForReuse() {

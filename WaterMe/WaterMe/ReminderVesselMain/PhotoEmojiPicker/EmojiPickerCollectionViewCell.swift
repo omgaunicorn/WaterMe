@@ -43,10 +43,19 @@ class EmojiPickerCollectionViewCell: UICollectionViewCell {
                                                              font: .emojiLarge(accessibilityFontSizeEnabled: accessibility))
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+    func updateLayout() {
         guard let emojiString = self.emojiString else { return }
         self.configure(withEmojiString: emojiString)
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        self.updateLayout()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.updateLayout()
     }
     
     override func prepareForReuse() {

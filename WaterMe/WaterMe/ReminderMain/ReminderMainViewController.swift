@@ -80,6 +80,9 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
 
         // register to find out about purchases that come in at any time
         self.registerForPurchaseNotifications()
+
+        // update layout
+        self.updateLayout()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -275,9 +278,13 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         self.collectionVC?.collectionView?.contentInset = customInset
     }
 
+    private func updateLayout() {
+        self.settingsBBI.style_updateSettingsButtonInsets(for: self.traitCollection)
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        self.settingsBBI.style_updateSettingsButtonInsets(for: self.traitCollection)
+        self.updateLayout()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
