@@ -98,3 +98,20 @@ extension UIAlertController {
         self.addAction(dismiss)
     }
 }
+
+extension UIAlertController {
+    class func newLocalizedDarkModeImproperlyConfigured() -> UIAlertController? {
+        if #available(iOS 13.0, *) { return nil } else {
+            let ud = UserDefaults.standard
+            guard ud.darkMode != .system else { return nil }
+            let alertVC = UIAlertController(title: LocalizedString.darkModeImproperTitle,
+                                            message: LocalizedString.darkModeImproperMessage,
+                                            preferredStyle: .alert)
+            let dismiss = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
+                ud.darkMode = .system
+            }
+            alertVC.addAction(dismiss)
+            return alertVC
+        }
+    }
+}

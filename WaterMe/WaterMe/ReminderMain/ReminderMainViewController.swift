@@ -135,7 +135,9 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             return
         }
         
-        if let error = self.applicationDidFinishLaunchingError {
+        if let vc = UIAlertController.newLocalizedDarkModeImproperlyConfigured() {
+            self.present(vc, animated: true, completion: nil)
+        } else if let error = self.applicationDidFinishLaunchingError {
             self.applicationDidFinishLaunchingError = nil
             UIAlertController.presentAlertVC(for: error, over: self) { _ in
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
