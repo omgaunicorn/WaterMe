@@ -38,8 +38,13 @@ class BlurryBackgroundBottomLineCollectionReusableView: UICollectionReusableView
     }()
 
     let backgroundView = UIVisualEffectView.style_systemMaterial()
+    var color: UIColor = .white {
+        didSet {
+            self.colorView.backgroundColor = self.color
+        }
+    }
 
-    let colorView: UIView = {
+    private let colorView: UIView = {
         let v = UIView()
         v.backgroundColor = .red
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -105,6 +110,15 @@ class BlurryBackgroundBottomLineCollectionReusableView: UICollectionReusableView
                 self.centerYAnchor.constraint(equalTo: self.stackView.centerYAnchor)
                 ])
         }()
+    }
+
+    override func tintColorDidChange() {
+        super.tintColorDidChange()
+        if self.tintColor.isGray {
+            self.colorView.backgroundColor = self.tintColor
+        } else {
+            self.colorView.backgroundColor = self.color
+        }
     }
 
     override func layoutSubviews() {

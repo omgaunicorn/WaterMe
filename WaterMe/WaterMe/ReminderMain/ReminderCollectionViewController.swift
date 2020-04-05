@@ -136,8 +136,10 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: ReminderHeaderCollectionReusableView.kind,
                                                                      withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID,
                                                                      for: indexPath)
-        if let header = header as? ReminderHeaderCollectionReusableView, let section = Reminder.Section(rawValue: indexPath.section) {
-            header.setSection(section)
+        if let header = header as? ReminderHeaderCollectionReusableView,
+            let section = Reminder.Section(rawValue: indexPath.section)
+        {
+            header.section = section
         }
         return header
     }

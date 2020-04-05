@@ -47,6 +47,26 @@ extension CGRect {
     }
 }
 
+extension UIColor {
+    var isGray: Bool {
+        var _red: CGFloat = -1
+        var _green: CGFloat = -2
+        var _blue: CGFloat = -3
+        self.getRed(&_red, green: &_green, blue: &_blue, alpha: nil)
+        // adjust so we only care about 4 significant digits
+        let mult: CGFloat = 10000
+        let red = Int(_red * mult)
+        let green = Int(_green * mult)
+        let blue = Int(_blue * mult)
+        // check if all three are the same
+        // if they are, then its gray
+        if red == blue && red == green {
+            return true
+        }
+        return false
+    }
+}
+
 extension UITraitCollection {
     @objc var userInterfaceStyleIsNormal: Bool {
         guard #available(iOS 12.0, *) else { return true }

@@ -25,7 +25,7 @@ import WaterMeData
 import UIKit
 
 enum Font {
-    case sectionHeaderBold(Reminder.Section)
+    case sectionHeaderBold(ReminderHeaderCollectionReusableView.SectionOrTint)
     case sectionHeaderRegular(Reminder.Section)
     case selectableTableViewCell
     case selectableTableViewCellDisabled
@@ -224,10 +224,18 @@ extension Font {
                 .font : Font.bodyMinusIgnoringDynamicType,
                 .foregroundColor : Color.textPrimary
             ]
-        case .sectionHeaderBold(let section):
+        case .sectionHeaderBold(let input):
+            let color: UIColor = {
+                switch input {
+                case .right(let tintColor):
+                    return tintColor
+                case .left(let section):
+                    return Color.color(for: section)
+                }
+            }()
             return [
                 .font : Font.bodyBold,
-                .foregroundColor : Color.color(for: section),
+                .foregroundColor : color,
                 .paragraphStyle : type(of: self).truncateMiddleStyle
             ]
         case .sectionHeaderRegular(let section):
