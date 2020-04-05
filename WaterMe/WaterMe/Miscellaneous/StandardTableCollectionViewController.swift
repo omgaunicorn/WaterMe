@@ -81,12 +81,6 @@ class StandardCollectionViewController: UICollectionViewController {
 }
 
 class StandardTableViewController: UITableViewController {
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // TODO: Hacky workaround for RDAR:FB7322599
-        self.navigationController?.navigationBar.setNeedsLayout()
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // TODO: Hacky workaround for RDAR:44727935
@@ -97,12 +91,6 @@ class StandardTableViewController: UITableViewController {
 }
 
 class StandardViewController: UIViewController {
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // TODO: Hacky workaround for RDAR:FB7322599
-        self.navigationController?.navigationBar.setNeedsLayout()
-    }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // TODO: Hacky workaround for RDAR:44727935
@@ -136,7 +124,7 @@ extension StandardCollectionViewController: UIAdaptivePresentationControllerDele
     }
 }
 
-fileprivate func presentationLogic(with traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+private func presentationLogic(with traitCollection: UITraitCollection) -> UIModalPresentationStyle {
     /**
      Apple Docs:
      The new presentation style, which must be UIModalPresentationStyle.fullScreen, UIModalPresentationStyle.overFullScreen, UIModalPresentationStyle.formSheet, or UIModalPresentationStyle.none.
