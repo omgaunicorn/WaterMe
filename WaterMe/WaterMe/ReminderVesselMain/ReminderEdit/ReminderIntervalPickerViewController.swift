@@ -103,7 +103,7 @@ extension ReminderIntervalPickerViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         if let cache = self.heightCache { return cache }
-        let height = self.attributedString(forRow: 100).size().height
+        let height = self.attributedString(forRow: 100).size().height + 8
         self.heightCache = height
         return height
     }
