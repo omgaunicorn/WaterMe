@@ -57,12 +57,20 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
         self.iconButtonTapped = nil
     }
 
+    private func updateLayout() {
+        self.emojiImageViewHeightConstraint?.constant =
+        self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory ?
+            type(of: self).style_iconButtonHeightAccessibilityTextSizeEnabled :
+            type(of: self).style_iconButtonHeightAccessibilityTextSizeDisabled
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        self.updateLayout()
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        self.emojiImageViewHeightConstraint?.constant =
-            self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory ?
-                type(of: self).style_iconButtonHeightAccessibilityTextSizeEnabled :
-                type(of: self).style_iconButtonHeightAccessibilityTextSizeDisabled
-        
+        self.updateLayout()
     }
 }

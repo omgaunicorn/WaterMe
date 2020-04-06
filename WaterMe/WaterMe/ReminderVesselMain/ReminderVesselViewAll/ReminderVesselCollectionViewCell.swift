@@ -54,8 +54,7 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
         self.emojiImageView?.setIcon(nil)
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+    private func updateLayout() {
         let isAccessibility = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
         switch isAccessibility {
         case false:
@@ -63,7 +62,16 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
         case true:
             self.emojiImageViewMaximumWidthConstraint?.isActive = false
         }
-        self.setNeedsLayout()
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        self.updateLayout()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.updateLayout()
     }
 
 }

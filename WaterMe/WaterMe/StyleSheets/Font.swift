@@ -25,7 +25,7 @@ import WaterMeData
 import UIKit
 
 enum Font {
-    case sectionHeaderBold(Reminder.Section)
+    case sectionHeaderBold(ReminderHeaderCollectionReusableView.SectionOrTint)
     case sectionHeaderRegular(Reminder.Section)
     case selectableTableViewCell
     case selectableTableViewCellDisabled
@@ -173,14 +173,22 @@ extension Font {
                 .font : UIFont.systemFont(ofSize: 20)
             ]
         case .emojiSmall(let accessibilityFontSizeEnabled):
+            let baselineOffset: NSNumber = {
+                guard Font.customEmojiLoaded else { return 0 }
+                return accessibilityFontSizeEnabled ? -8 : -4
+            }()
             return [
                 .font : Font.emojiFont(ofSize: accessibilityFontSizeEnabled ? 50 : 36),
-                .baselineOffset : NSNumber(value: accessibilityFontSizeEnabled ? -8 : -4)
+                .baselineOffset : baselineOffset
             ]
         case .emojiLarge(let accessibilityFontSizeEnabled):
+            let baselineOffset: NSNumber = {
+                guard Font.customEmojiLoaded else { return 0 }
+                return accessibilityFontSizeEnabled ? -10 : -5
+            }()
             return [
                 .font : Font.emojiFont(ofSize: accessibilityFontSizeEnabled ? 120 : 60),
-                .baselineOffset : NSNumber(value: accessibilityFontSizeEnabled ? -10 : -5)
+                .baselineOffset : baselineOffset
             ]
         case .textInputTableViewCell:
             return [
@@ -216,10 +224,18 @@ extension Font {
                 .font : Font.bodyMinusIgnoringDynamicType,
                 .foregroundColor : Color.textPrimary
             ]
-        case .sectionHeaderBold(let section):
+        case .sectionHeaderBold(let input):
+            let color: UIColor = {
+                switch input {
+                case .right(let tintColor):
+                    return tintColor
+                case .left(let section):
+                    return Color.color(for: section)
+                }
+            }()
             return [
                 .font : Font.bodyBold,
-                .foregroundColor : Color.color(for: section),
+                .foregroundColor : color,
                 .paragraphStyle : type(of: self).truncateMiddleStyle
             ]
         case .sectionHeaderRegular(let section):

@@ -181,6 +181,12 @@ extension UIAlertController {
         static let updateAvailableButtonTitleOpenAppStore: String =
             NSLocalizedString("Open App Store",
                               comment: "Alert: App Update: Button Title: Button title that allows the user to open the app store in order to update WaterMe.")
+        static let darkModeImproperTitle: String =
+            NSLocalizedString("Dark Mode",
+                              comment: "Alert: Dark Mode Improper: Title: Title of alert that is presented when Dark Mode settings are configured on iOS 11 or 12.")
+        static let darkModeImproperMessage: String =
+            NSLocalizedString("The dark mode settings for WaterMe only work when running iOS 13 or higher.",
+                              comment: "Alert: Dark Mode Improper: Message: Message of alert that is presented when Dark Mode settings are configured on iOS 11 or 12.")
 
     }
 }

@@ -26,8 +26,8 @@ import UIKit
 
 class ReminderMainViewController: StandardViewController, HasProController, HasBasicController {
     
-    class func newVC(basicRCResult: Result<BasicController, RealmError>,
-                     proController: ProController? = nil) -> UINavigationController
+    class func newVC(basic: Result<BasicController, RealmError>,
+                     pro: ProController? = nil) -> UINavigationController
     {
         let sb = UIStoryboard(name: "ReminderMain", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
@@ -36,9 +36,9 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         var vc = navVC.viewControllers.first as! ReminderMainViewController
         navVC.navigationBar.style_forceDefaultAppearance()
         vc.title = UIApplication.LocalizedString.appTitle // set here because it works better in UITabBarController
-        vc.applicationDidFinishLaunchingError = basicRCResult.error
-        vc.configure(with: basicRCResult.value)
-        vc.configure(with: proController)
+        vc.applicationDidFinishLaunchingError = basic.error
+        vc.configure(with: basic.value)
+        vc.configure(with: pro)
         vc.resetUserActivity()
         return navVC
     }
@@ -80,6 +80,9 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
 
         // register to find out about purchases that come in at any time
         self.registerForPurchaseNotifications()
+
+        // update layout
+        self.updateLayout()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -135,7 +138,9 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             return
         }
         
-        if let error = self.applicationDidFinishLaunchingError {
+        if let vc = UIAlertController.newLocalizedDarkModeImproperlyConfigured() {
+            self.present(vc, animated: true, completion: nil)
+        } else if let error = self.applicationDidFinishLaunchingError {
             self.applicationDidFinishLaunchingError = nil
             UIAlertController.presentAlertVC(for: error, over: self) { _ in
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
@@ -273,9 +278,13 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         self.collectionVC?.collectionView?.contentInset = customInset
     }
 
+    private func updateLayout() {
+        self.settingsBBI.style_updateSettingsButtonInsets(for: self.traitCollection)
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        self.settingsBBI.style_updateSettingsButtonInsets(for: self.traitCollection)
+        self.updateLayout()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -66,6 +66,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
         super.viewDidLoad()
 
         self.progressView?.observedProgress = self.migrator.progress
+        self.configureAttributedText()
     }
 
     override func viewDidAppear(_ animated: Bool) {

@@ -49,7 +49,7 @@ class ReminderSummaryViewController: StandardViewController {
         vc.popoverPresentationController?.delegate = vc
         vc.popoverPresentationController?.popoverBackgroundViewClass = ReminderSummaryPopoverBackgroundView.self
         vc.popoverPresentationController?.sourceView = sourceView
-        vc.popoverPresentationController?.sourceRect = UIAlertController.sourceRect(from: sourceView)
+        vc.popoverPresentationController?.sourceRect = sourceView.bounds.centerRect
         vc.presentationController?.delegate = vc
         // configure needed properties
         vc.completion = completion

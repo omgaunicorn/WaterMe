@@ -40,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // swiftlint:disable:next weak_delegate
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
     private(set) var reminderObserver: GlobalReminderObserver?
+    private lazy var basicControllerResult = BasicController.new(of: .local)
 
     let purchaseController = PurchaseController()
     var coreDataMigrator: CoreDataMigratable? = CoreDataMigrator()
@@ -71,20 +72,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ud.configure()
 
         // make re-usable closures for notifications I'll register for later
-        let appearanceChanges = {
+        let appearanceChanges = { [weak self] in
             // if the window is not configured yet, bail
-            guard let window = self.window else { return }
+            guard
+                let self = self,
+                let window = self.window
+            else { return }
 
             // need to rip the view hierarchy out of the window and put it back in
             // in order for the new UIAppearance to take effect
             UIApplication.style_configure()
 
             // force window to update everything by
-            // forcefully setting rootVC
-            let prevVC = window.rootViewController
+            // get the old vc in iOS 13
+            var newVC: UIViewController!
+            if #available(iOS 13.0, *) {
+                newVC = window.rootViewController
+            }
+            // create a new VC in older versions
+            // for some reason this is needed
+            if newVC == nil {
+                let result = self.basicControllerResult
+                newVC = ReminderMainViewController.newVC(basic: result)
+            }
+            // clear the vc from the window
             window.rootViewController = nil
+            // configuring the window
             window.style_configure()
-            window.rootViewController = prevVC
+            // replace with newVC
+            window.rootViewController = newVC
         }
         let notificationChanges = {
             self.reminderObserver?.notificationPermissionsMayHaveChanged()
@@ -148,8 +164,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Configure audio so the water video does not pause the users music
         try? AVAudioSession.sharedInstance().setCategory(.ambient)
 
-        let result = BasicController.new(of: .local)
-        let vc = ReminderMainViewController.newVC(basicRCResult: result, proController: nil)
+        let result = self.basicControllerResult
+        let vc = ReminderMainViewController.newVC(basic: result)
         if case .success(let basicRC) = result {
             self.reminderObserver = GlobalReminderObserver(basicController: basicRC)
         }

@@ -57,27 +57,28 @@ extension Font {
         return UIFont.systemFont(ofSize: 14)
     }
     fileprivate static var cachedEmojiFontWithSize: [CGFloat : UIFont] = [:]
+    static var customEmojiLoaded: Bool = false
     static func emojiFont(ofSize size: CGFloat) -> UIFont {
-        // find the cached font
+        // custom emojis only work on iOS 12 and higher for some reason
+        guard #available(iOS 12.0, *) else { return UIFont.systemFont(ofSize: size) }
+
+        // look for cached font
         if let cachedFont = self.cachedEmojiFontWithSize[size] {
             return cachedFont
         }
 
-        // if its not found, make a new font, cache it and return it
-        // make a new font
-        let font: UIFont
-        if let _font = UIFont(name: "AppleColorEmoj2", size: size) {
-            font = _font
-        } else {
+        // try to load the custom emoji font
+        guard let customFont = UIFont(name: "AppleColorEmoj2", size: size) else {
             let error = NSError(unableToLoadEmojiFont: nil)
             log.error(error)
             Analytics.log(error: error)
-            font = UIFont.systemFont(ofSize: size)
             assertionFailure()
+            return UIFont.systemFont(ofSize: size)
         }
-        // cache it
-        self.cachedEmojiFontWithSize[size] = font
-        // return it
-        return font
+
+        // cache it for later
+        self.cachedEmojiFontWithSize[size] = customFont
+        self.customEmojiLoaded = true
+        return customFont
     }
 }

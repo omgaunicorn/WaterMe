@@ -56,9 +56,10 @@ class ReminderIntervalPickerViewController: StandardViewController {
     private var completionHandler: CompletionHandler!
     private var existingValue: Int = Reminder.defaultInterval
     
-    fileprivate lazy var primaryFont: UIFont = UIFont.preferredFont(forTextStyle: .body)
-    fileprivate let data: [Int] = (Reminder.minimumInterval...Reminder.maximumInterval).map({ $0 })
-    fileprivate let formatter = DateComponentsFormatter.newReminderIntervalFormatter
+    private let data: [Int] = (Reminder.minimumInterval...Reminder.maximumInterval).map({ $0 })
+    private let formatter = DateComponentsFormatter.newReminderIntervalFormatter
+    private var rowCache: [Int : NSAttributedString] = [:]
+    private var heightCache: CGFloat?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,21 +80,44 @@ class ReminderIntervalPickerViewController: StandardViewController {
         let selectedItem = self.data[selectedIndex]
         self.completionHandler(self, selectedItem)
     }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.rowCache = [:]
+        self.heightCache = nil
+        self.pickerView?.reloadAllComponents()
+    }
 }
 
 extension ReminderIntervalPickerViewController: UIPickerViewDelegate {
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 44
+    func pickerView(_ pickerView: UIPickerView,
+                    viewForRow row: Int,
+                    forComponent component: Int,
+                    reusing view: UIView?) -> UIView
+    {
+        let view: UILabel = (view as? UILabel) ?? UILabel()
+        view.attributedText = self.attributedString(forRow: row)
+        view.sizeToFit()
+        return view
     }
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        if let cache = self.heightCache { return cache }
+        let height = self.attributedString(forRow: 100).size().height + 8
+        self.heightCache = height
+        return height
+    }
+
+    private func attributedString(forRow row: Int) -> NSAttributedString {
+        if let cache = self.rowCache[row] {
+            return cache
+        }
         let days = self.data[row]
         let interval: TimeInterval = TimeInterval(days) * (24 * 60 * 60)
         let formattedString = self.formatter.string(from: interval) ?? "–"
-        let primary: [NSAttributedString.Key : Any] = [
-            NSAttributedString.Key.font : self.primaryFont,
-            NSAttributedString.Key.foregroundColor : Color.textPrimary
-        ]
-        let string = NSAttributedString(string: formattedString, attributes: primary)
+        let string = NSAttributedString(string: formattedString,
+                                        attributes: Font.selectableTableViewCell.attributes)
+        self.rowCache[row] = string
         return string
     }
 }

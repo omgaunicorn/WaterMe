@@ -30,7 +30,7 @@ protocol ReminderVesselEditTableViewControllerDelegate: class {
     func userChangedName(to: String, controller: ReminderVesselEditTableViewController?)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?,
-                              sender: Either<UIView, UIBarButtonItem>)
+                              sender: PopoverSender)
     func userChose(reminder: Reminder,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)

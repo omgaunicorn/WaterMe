@@ -26,8 +26,18 @@ import UIKit
 
 class ReminderHeaderCollectionReusableView: BlurryBackgroundBottomLineCollectionReusableView {
 
+    typealias SectionOrTint = Either<Reminder.Section, UIColor>
+
     override class var reuseID: String { return "ReminderHeaderCollectionReusableView" }
     override class var kind: String { return UICollectionView.elementKindSectionHeader }
+
+    var section: Reminder.Section? {
+        didSet {
+            guard let section = section else { return }
+            self.color = Color.color(for: section)
+            self.updateUI(with: section)
+        }
+    }
 
     private let label: UILabel = {
         let v = UILabel()
@@ -40,9 +50,20 @@ class ReminderHeaderCollectionReusableView: BlurryBackgroundBottomLineCollection
         self.stackView.addArrangedSubview(self.label)
     }
 
-    func setSection(_ section: Reminder.Section) {
-        self.label.attributedText = NSAttributedString(string: section.localizedTitleString, font: .sectionHeaderBold(section))
-        self.colorView.backgroundColor = Color.color(for: section)
+    private func updateUI(with section: Reminder.Section) {
+        let input: SectionOrTint = self.tintColor.isGray ? .right(self.tintColor) : .left(section)
+        self.label.attributedText = NSAttributedString(string: section.localizedTitleString,
+                                                       font: .sectionHeaderBold(input))
+    }
+
+    override func tintColorDidChange() {
+        super.tintColorDidChange()
+        self.section.map { self.updateUI(with: $0) }
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.section = nil
     }
 }
 

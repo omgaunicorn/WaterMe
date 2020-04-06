@@ -40,7 +40,14 @@ class UIBarButtonItemLongPressGestureRecognizer: UILongPressGestureRecognizer {
         // So when accessibility text sizes are enabled, the gesture recognizer
         // will be forcefully cancelled.
         //
-        let isAccessible = self.view?.traitCollection.preferredContentSizeCategory.isAccessibilityCategory ?? false
+        let isAccessible: Bool
+        if #available(iOS 13.0, *) {
+            // TODO: Remove Later
+            // For some reason, the owned view does not get the right trait collection in iOS 13
+            isAccessible = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+        } else {
+            isAccessible = self.view?.traitCollection.preferredContentSizeCategory.isAccessibilityCategory ?? true
+        }
         guard isAccessible else { return }
         self.state = .cancelled
     }

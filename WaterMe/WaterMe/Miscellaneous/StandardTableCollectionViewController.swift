@@ -136,7 +136,7 @@ extension StandardCollectionViewController: UIAdaptivePresentationControllerDele
     }
 }
 
-fileprivate func presentationLogic(with traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+private func presentationLogic(with traitCollection: UITraitCollection) -> UIModalPresentationStyle {
     /**
      Apple Docs:
      The new presentation style, which must be UIModalPresentationStyle.fullScreen, UIModalPresentationStyle.overFullScreen, UIModalPresentationStyle.formSheet, or UIModalPresentationStyle.none.
