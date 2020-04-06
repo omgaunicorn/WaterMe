@@ -38,7 +38,7 @@ class BlurryBackgroundBottomLineCollectionReusableView: UICollectionReusableView
     }()
 
     let backgroundView = UIVisualEffectView.style_systemMaterial()
-    var color: UIColor = .white {
+    var color: UIColor? {
         didSet {
             self.colorView.backgroundColor = self.color
         }
@@ -130,5 +130,10 @@ class BlurryBackgroundBottomLineCollectionReusableView: UICollectionReusableView
             self.stackView.alpha = 1
             self.backgroundView.alpha = 1
         }
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.color = nil
     }
 }

@@ -31,10 +31,9 @@ class ReminderHeaderCollectionReusableView: BlurryBackgroundBottomLineCollection
     override class var reuseID: String { return "ReminderHeaderCollectionReusableView" }
     override class var kind: String { return UICollectionView.elementKindSectionHeader }
 
-    var section: Reminder.Section = .today {
+    var section: Reminder.Section? {
         didSet {
-            self.color = Color.color(for: section)
-            self.updateText()
+            self.updateUI()
         }
     }
 
@@ -49,15 +48,23 @@ class ReminderHeaderCollectionReusableView: BlurryBackgroundBottomLineCollection
         self.stackView.addArrangedSubview(self.label)
     }
 
-    private func updateText() {
-        let input: SectionOrTint = self.tintColor.isGray ? .right(self.tintColor) : .left(self.section)
-        self.label.attributedText = NSAttributedString(string: self.section.localizedTitleString,
+    private func updateUI() {
+        guard let section = self.section else { return }
+        self.color = Color.color(for: section)
+        let input: SectionOrTint = self.tintColor.isGray ? .right(self.tintColor) : .left(section)
+        self.label.attributedText = NSAttributedString(string: section.localizedTitleString,
                                                        font: .sectionHeaderBold(input))
     }
 
     override func tintColorDidChange() {
         super.tintColorDidChange()
-        self.updateText()
+        self.updateUI()
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        super.prepareForReuse()
+        self.section = nil
     }
 }
 
