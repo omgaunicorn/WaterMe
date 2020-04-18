@@ -64,10 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
         #endif
 
-        // print the simulator directory if possible
-        if let docs = UIDevice.debug_documentsDirectory() {
-            log.debug(docs)
-        }
+        // configure simulator
+        self.simulator_configure()
 
         // configure main thread checking
         DispatchQueue.configureMainQueue()
@@ -278,15 +276,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension UIDevice {
-    // x86 checking doesn't work on mac catalyst
-    // this error will force me to improve the logic later
-    @available(macCatalyst, unavailable)
-    fileprivate class func debug_documentsDirectory() -> String? {
-        #if arch(i386) || arch(x86_64)
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
-        return documentsPath
+extension AppDelegate {
+    private func simulator_configure() {
+        #if targetEnvironment(simulator)
+        log.debug(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         #endif
-        return nil
     }
 }

@@ -51,6 +51,24 @@
       migratedStopOnEveryIssue = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "xcrun simctl status_bar booted override \&#10;--time &quot;2020-01-01T09:41:00+09:00&quot; \&#10;--dataNetwork wifi \&#10;--wifiMode active \&#10;--wifiBars 3 \&#10;--cellularMode active \&#10;--cellularBars 4 \&#10;--cellularMode notSupported \&#10;--batteryState charged \&#10;--batteryLevel 100&#10;">
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "xcrun simctl status_bar booted clear&#10;">
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
