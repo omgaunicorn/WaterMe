@@ -21,16 +21,16 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Result
 import WaterMeData
 import RealmSwift
 import UIKit
 
 protocol ReminderVesselEditTableViewControllerDelegate: class {
     var vesselResult: Result<ReminderVessel, RealmError>? { get }
-    func userChosePhotoChange(controller: ReminderVesselEditTableViewController?)
     func userChangedName(to: String, controller: ReminderVesselEditTableViewController?)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
+    func userChosePhotoChange(controller: ReminderVesselEditTableViewController?,
+                              sender: PopoverSender)
     func userChose(reminder: Reminder,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
@@ -93,7 +93,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                                 forCellReuseIdentifier: SiriShortcutTableViewCell.reuseID)
         self.tableView.register(OptionalAddButtonTableViewHeaderFooterView.nib,
                                 forHeaderFooterViewReuseIdentifier: OptionalAddButtonTableViewHeaderFooterView.reuseID)
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 40
         self.reloadAll()
     }
@@ -187,8 +187,8 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? ReminderVesselIconTableViewCell
             cell?.configure(with: self.delegate?.vesselResult?.value?.icon)
-            cell?.iconButtonTapped = { [unowned self] in
-                self.delegate?.userChosePhotoChange(controller: self)
+            cell?.iconButtonTapped = { [unowned self] sender in
+                self.delegate?.userChosePhotoChange(controller: self, sender: .left(sender))
             }
             return _cell
         case .reminders:
@@ -238,9 +238,10 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
     override func tableView(_ tableView: UITableView,
                             trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration?
     {
-        // TODO: This is causing visual bugs as of iOS 12.0 GM
-        // disable for now. Try to remove this later to re-enable swipe actions
-        return UISwipeActionsConfiguration(actions: [])
+        // These actions cause a visual bug in iOS 12 and lower
+        guard #available(iOS 13, *) else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
 
         guard let section = Section(rawValue: indexPath.section) else {
             assertionFailure("Unknown Section")
@@ -306,7 +307,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
     override func tableView(_ tableView: UITableView,
                             heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return UITableViewAutomaticDimension
+        return UITableView.automaticDimension
     }
     
     private var notificationToken: NotificationToken?

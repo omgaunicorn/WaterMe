@@ -37,15 +37,14 @@ class BlurryBackgroundBottomLineCollectionReusableView: UICollectionReusableView
         return v
     }()
 
-    let backgroundView: UIVisualEffectView = {
-        let v = UIVisualEffectView(effect: UIBlurEffect(style: .extraLight))
-        v.layer.cornerRadius = UIApplication.style_cornerRadius
-        v.clipsToBounds = true
-        v.translatesAutoresizingMaskIntoConstraints = false
-        return v
-    }()
+    let backgroundView = UIVisualEffectView.style_systemMaterial()
+    var color: UIColor? {
+        didSet {
+            self.colorView.backgroundColor = self.color
+        }
+    }
 
-    let colorView: UIView = {
+    private let colorView: UIView = {
         let v = UIView()
         v.backgroundColor = .red
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -113,6 +112,15 @@ class BlurryBackgroundBottomLineCollectionReusableView: UICollectionReusableView
         }()
     }
 
+    override func tintColorDidChange() {
+        super.tintColorDidChange()
+        if self.tintColor.isGray {
+            self.colorView.backgroundColor = self.tintColor
+        } else {
+            self.colorView.backgroundColor = self.color
+        }
+    }
+
     override func layoutSubviews() {
         super.layoutSubviews()
         if self.bounds.height <= 2 {
@@ -122,5 +130,10 @@ class BlurryBackgroundBottomLineCollectionReusableView: UICollectionReusableView
             self.stackView.alpha = 1
             self.backgroundView.alpha = 1
         }
+    }
+
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.color = nil
     }
 }

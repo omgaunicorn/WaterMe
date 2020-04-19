@@ -64,14 +64,14 @@ extension AppVersion: Comparable {
     }
 }
 
-public extension AppVersion {
+extension AppVersion {
     public static func fetchFromBundle(_ bundle: Bundle = .main) -> AppVersion? {
         guard let versionString = bundle.infoDictionary?["CFBundleShortVersionString"] as? String else { return nil }
         return AppVersion(versionString: versionString)
     }
 }
 
-public extension AppVersion {
+extension AppVersion {
     public static func fetchFromAppStore(_ completion: @escaping ((appStoreVersion: AppVersion, minimumOSVersion: AppVersion)?) -> Void) {
         guard let url = PrivateKeys.kAppInfoJSONURL else {
             completion(nil)

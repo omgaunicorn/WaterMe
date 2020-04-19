@@ -24,7 +24,6 @@
 import UIKit
 import WaterMeData
 import RealmSwift
-import Result
 
 protocol ReminderSummaryTableViewControllerDelegate: class {
     var reminderResult: Result<Reminder, RealmError>! { get }

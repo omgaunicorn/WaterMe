@@ -23,8 +23,11 @@
 
 import Foundation
 
-public extension DispatchQueue {
+extension DispatchQueue {
 
+    // TODO: Terrible Hack
+    // What does this code allow to happen???
+    // Maybe it can be removed
     private static let mainQueueKey = DispatchSpecificKey<()>()
 
     public static func configureMainQueue() {

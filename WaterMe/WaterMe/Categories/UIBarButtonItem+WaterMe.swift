@@ -27,7 +27,7 @@ extension UIBarButtonItem {
     convenience init(localizedSettingsButtonWithTarget target: Any,
                      action: Selector)
     {
-        self.init(image: #imageLiteral(resourceName: "TipJar"), style: UIBarButtonItemStyle.plain,
+        self.init(image: #imageLiteral(resourceName: "TipJar"), style: UIBarButtonItem.Style.plain,
                   target: target,
                   action: action)
         self.accessibilityLabel = SettingsMainViewController.LocalizedString.settingsTitle
@@ -75,11 +75,11 @@ extension UIBarButtonItem {
         let landscapeImagePhoneInsetLeadingValue: CGFloat
 
         // adjust the values based on orientation
-        switch traitCollection.layoutDirection {
-        case .leftToRight, .unspecified:
+        switch traitCollection.layoutDirection.isLeftToRight {
+        case true:
             imageInsetLeadingValue = kImageInsetLeadingValue * -1
             landscapeImagePhoneInsetLeadingValue = kLandscapeImagePhoneInsetLeadingValue * -1
-        case .rightToLeft:
+        case false:
             imageInsetLeadingValue = kImageInsetLeadingValue
             landscapeImagePhoneInsetLeadingValue = kLandscapeImagePhoneInsetLeadingValue
         }

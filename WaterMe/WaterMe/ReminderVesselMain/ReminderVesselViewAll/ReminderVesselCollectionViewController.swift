@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Result
 import WaterMeData
 import RealmSwift
 import UIKit
@@ -41,8 +40,15 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView?.register(ReminderVesselCollectionViewCell.nib, forCellWithReuseIdentifier: ReminderVesselCollectionViewCell.reuseID)
+        // support dark mode
+        self.collectionView.backgroundColor = Color.systemBackgroundColor
+
+        // configure collectionview
+        self.collectionView?.register(ReminderVesselCollectionViewCell.nib,
+                                      forCellWithReuseIdentifier: ReminderVesselCollectionViewCell.reuseID)
         self.flow?.minimumInteritemSpacing = 0
+
+        // load data
         self.hardReloadData()
     }
     
@@ -96,29 +102,19 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
 
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
         let width = self.collectionView?.availableContentSize.width ?? 0
-        let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
-        let verticalClass = self.view.traitCollection.verticalSizeClass
-        let horizontalClass = self.view.traitCollection.horizontalSizeClass
-        switch (horizontalClass, verticalClass, accessibility) {
-        case (.unspecified, _, _), (.regular, _, _), (.compact, .unspecified, _):
-            assertionFailure("Hit a size class this VC was not expecting")
-            fallthrough
-        case (.compact, .regular, false):
-            let columnCount = 2
-            let itemHeight = floor((width) / CGFloat(columnCount))
-            return (columnCount, itemHeight)
-        case (.compact, .regular, true):
-            let columnCount = 1
-            let itemHeight = floor((width) / CGFloat(columnCount))
-            return (columnCount, itemHeight)
-        case (.compact, .compact, false):
-            let columnCount = 4
-            let itemHeight = floor((width) / CGFloat(columnCount))
-            return (columnCount, itemHeight)
-        case (.compact, .compact, true):
-            let columnCount = 2
-            let itemHeight = floor((width) / CGFloat(columnCount))
-            return (columnCount, itemHeight)
+        let tc = self.view.traitCollection
+        let math = type(of: self).columnCountAndItemHeight(withWidth:columnCount:)
+        switch (tc.horizontalSizeClassIsCompact,
+                tc.preferredContentSizeCategory.isAccessibilityCategory)
+        {
+        case (true, false):
+            return math(width, 2)
+        case (true, true):
+            return math(width, 1)
+        case (false, false):
+            return math(width, 4)
+        case (false, true):
+            return math(width, 2)
         }
     }
     

@@ -23,7 +23,7 @@
 
 import Foundation
 
-fileprivate extension NSString {
+extension NSString {
     fileprivate func ranges(of substring: String) -> [NSRange] {
         // make sure we have an immutable copy of the string
         // swiftlint:disable:next force_cast

@@ -24,7 +24,7 @@
 import WaterMeData
 import UIKit
 
-class ReminderVesselMainViewController: UIViewController, HasProController, HasBasicController {
+class ReminderVesselMainViewController: StandardViewController, HasProController, HasBasicController {
 
     class func newVC(basicController: BasicController?,
                      proController: ProController? = nil,
@@ -38,6 +38,7 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
         vc.configure(with: basicController)
         vc.configure(with: proController)
         vc.completionHandler = completionHandler
+        navVC.presentationController?.delegate = vc
         return navVC
     }
     
@@ -95,5 +96,10 @@ class ReminderVesselMainViewController: UIViewController, HasProController, HasB
             destVC.configure(with: self.basicRC)
         }
     }
-    
+}
+
+extension ReminderVesselMainViewController /* UIAdaptivePresentationControllerDelegate */ {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.completionHandler?(self)
+    }
 }

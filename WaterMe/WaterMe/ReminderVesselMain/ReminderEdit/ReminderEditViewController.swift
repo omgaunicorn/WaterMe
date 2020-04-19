@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Result
 import WaterMeData
 import RealmSwift
 import IntentsUI
@@ -57,6 +56,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         }
         vc.userActivity = NSUserActivity(kind: .editReminder,
                                          delegate: vc.userActivityDelegate)
+        navVC.presentationController?.delegate = vc
         return navVC
     }
     
@@ -157,7 +157,9 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         UIAlertController.presentAlertVC(for: error, over: self)
     }
     
-    private func intervalChosen(_ deselectSelectedCell: @escaping () -> Void) {
+    private func intervalChosen(popoverSourceView: UIView?,
+                                deselectHandler: @escaping () -> Void)
+    {
         self.view.endEditing(false)
         guard let existingValue = self.reminderResult?.value?.interval else {
             assertionFailure("No Reminder Present")
@@ -165,10 +167,11 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             return
         }
         let vc = ReminderIntervalPickerViewController.newVC(from: self.storyboard,
-                                                            existingValue: existingValue)
+                                                            existingValue: existingValue,
+                                                            popoverSourceView: popoverSourceView)
         { vc, newValue in
             vc.dismiss(animated: true) {
-                deselectSelectedCell()
+                deselectHandler()
                 guard let newValue = newValue else { return }
                 self.update(interval: newValue)
             }
@@ -188,7 +191,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             return
         }
 
-        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .left(sender))
+        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .right(sender))
         { confirmed in
             Analytics.log(event: Analytics.CRUD_Op_R.delete)
             guard confirmed == true else { return }
@@ -278,10 +281,12 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
         self.update(note: newNote, fromKeyboard: true)
     }
 
-    func userDidSelectChangeInterval(_ deselectHandler: @escaping () -> Void,
+    func userDidSelectChangeInterval(popoverSourceView: UIView?,
+                                     deselectHandler: @escaping () -> Void,
                                      within: ReminderEditTableViewController)
     {
-        self.intervalChosen(deselectHandler)
+        self.intervalChosen(popoverSourceView: popoverSourceView,
+                            deselectHandler: deselectHandler)
     }
 
     func userDidSelect(siriShortcut: ReminderEditTableViewController.SiriShortcut,
@@ -317,7 +322,7 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
         activity.becomeCurrent()
         let shortcut = INShortcut(userActivity: activity)
         let vc = ClosureDelegatingAddVoiceShortcutViewController(shortcut: shortcut)
-        vc.completion = { [unowned self] vc, result in
+        vc.completionHandler = { [unowned self] vc, result in
             self.userActivity?.becomeCurrent()
             vc.dismiss(animated: true) {
                 deselectRowAnimated?(true)
@@ -326,5 +331,11 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
             }
         }
         self.present(vc, animated: true, completion: nil)
+    }
+}
+
+extension ReminderEditViewController /*: UIAdaptivePresentationControllerDelegate*/ {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.completionHandler?(self)
     }
 }

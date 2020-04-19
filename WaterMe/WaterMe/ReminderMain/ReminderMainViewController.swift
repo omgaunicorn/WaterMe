@@ -21,24 +21,24 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Result
 import WaterMeData
 import UIKit
 
 class ReminderMainViewController: StandardViewController, HasProController, HasBasicController {
     
-    class func newVC(basicRCResult: Result<BasicController, RealmError>,
-                     proController: ProController? = nil) -> UINavigationController
+    class func newVC(basic: Result<BasicController, RealmError>,
+                     pro: ProController? = nil) -> UINavigationController
     {
         let sb = UIStoryboard(name: "ReminderMain", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let navVC = sb.instantiateInitialViewController() as! UINavigationController
         // swiftlint:disable:next force_cast
         var vc = navVC.viewControllers.first as! ReminderMainViewController
+        navVC.navigationBar.style_forceDefaultAppearance()
         vc.title = UIApplication.LocalizedString.appTitle // set here because it works better in UITabBarController
-        vc.applicationDidFinishLaunchingError = basicRCResult.error
-        vc.configure(with: basicRCResult.value)
-        vc.configure(with: proController)
+        vc.applicationDidFinishLaunchingError = basic.error
+        vc.configure(with: basic.value)
+        vc.configure(with: pro)
         vc.resetUserActivity()
         return navVC
     }
@@ -80,6 +80,9 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
 
         // register to find out about purchases that come in at any time
         self.registerForPurchaseNotifications()
+
+        // update layout
+        self.updateLayout()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -135,7 +138,9 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             return
         }
         
-        if let error = self.applicationDidFinishLaunchingError {
+        if let vc = UIAlertController.newLocalizedDarkModeImproperlyConfigured() {
+            self.present(vc, animated: true, completion: nil)
+        } else if let error = self.applicationDidFinishLaunchingError {
             self.applicationDidFinishLaunchingError = nil
             UIAlertController.presentAlertVC(for: error, over: self) { _ in
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
@@ -244,27 +249,24 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     }
 
     private func updateCollectionViewInsets() {
-        let verticalSizeClass = self.traitCollection.verticalSizeClass
-        let layoutDirection = self.traitCollection.layoutDirection
+        let verticalSizeClassIsRegular = self.traitCollection.verticalSizeClassIsRegular
+        let layoutDirectionIsLeftToRight = self.traitCollection.layoutDirection.isLeftToRight
         let customInset: UIEdgeInsets
-        switch verticalSizeClass {
-        case .regular, .unspecified:
+        switch verticalSizeClassIsRegular {
+        case true:
             // get the width and set the custom inset
             let dragViewHeight = self.dropTargetViewController?.dropTargetViewHeight ?? 0
             customInset = UIEdgeInsets(top: dragViewHeight, left: 0, bottom: 0, right: 0)
             // we need custom scroll insets in portrait
             self.collectionVC?.collectionView?.scrollIndicatorInsets = customInset
-        case .compact:
+        case false:
             // Scroll Indicators can have normal behavior in landscape
             self.collectionVC?.collectionView?.scrollIndicatorInsets = .zero
             // get the width and set the custom inset
             let dragViewWidth = self.dropTargetViewController?.view.bounds.width ?? 0
-            switch layoutDirection {
-            case .leftToRight, .unspecified:
-                customInset = UIEdgeInsets(top: 0, left: dragViewWidth, bottom: 0, right: 0)
-            case .rightToLeft:
-                customInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: dragViewWidth)
-            }
+            customInset = layoutDirectionIsLeftToRight
+                ? UIEdgeInsets(top: 0, left: dragViewWidth, bottom: 0, right: 0)
+                : UIEdgeInsets(top: 0, left: 0, bottom: 0, right: dragViewWidth)
         }
 
         // BUGFIX: http://crashes.to/s/254b2d6597f
@@ -276,9 +278,13 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         self.collectionVC?.collectionView?.contentInset = customInset
     }
 
+    private func updateLayout() {
+        self.settingsBBI.style_updateSettingsButtonInsets(for: self.traitCollection)
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        self.settingsBBI.style_updateSettingsButtonInsets(for: self.traitCollection)
+        self.updateLayout()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

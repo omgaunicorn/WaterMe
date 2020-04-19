@@ -61,7 +61,17 @@ class ModalParentViewController: StandardViewController {
             ])
         
         self.view.backgroundColor = .clear
+        self.childVCContainerView.style_setCornerRadius()
+        self.childVCContainerView.backgroundColor = Color.systemBackgroundColor
+        self.childVCContainerView.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
         self.updateChildVCContainerViewConstraints()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.animateAlongSideTransitionCoordinator(animations: {
+            self.childVCContainerView.transform = CGAffineTransform.identity
+        }, completion: nil)
     }
 
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -72,8 +82,8 @@ class ModalParentViewController: StandardViewController {
     }
 
     private func updateChildVCContainerViewConstraints(withNewTraitCollection traitCollection: UITraitCollection? = nil) {
-        let traits = traitCollection ?? self.view.traitCollection
-        let accessible = traits.preferredContentSizeCategory.isAccessibilityCategory
+        let tc = traitCollection ?? self.view.traitCollection
+        let accessible = tc.preferredContentSizeCategory.isAccessibilityCategory
 
         let sub = self.childVCContainerView!
         let safe = self.view.safeAreaLayoutGuide
@@ -81,28 +91,28 @@ class ModalParentViewController: StandardViewController {
         let newConstraints: [NSLayoutConstraint]
         if accessible {
             newConstraints = [
-                sub.leadingAnchor.constraintEqualToSystemSpacingAfter(safe.leadingAnchor, multiplier: 1),
-                safe.trailingAnchor.constraintEqualToSystemSpacingAfter(sub.trailingAnchor, multiplier: 1),
-                sub.topAnchor.constraintEqualToSystemSpacingBelow(safe.topAnchor, multiplier: 1),
-                safe.bottomAnchor.constraintEqualToSystemSpacingBelow(sub.bottomAnchor, multiplier: 1)
+                sub.leadingAnchor.constraint(equalToSystemSpacingAfter: safe.leadingAnchor, multiplier: 1),
+                safe.trailingAnchor.constraint(equalToSystemSpacingAfter: sub.trailingAnchor, multiplier: 1),
+                sub.topAnchor.constraint(equalToSystemSpacingBelow: safe.topAnchor, multiplier: 1),
+                safe.bottomAnchor.constraint(equalToSystemSpacingBelow: sub.bottomAnchor, multiplier: 1)
             ]
         } else {
-            switch (traits.verticalSizeClass, traits.horizontalSizeClass) {
-            case (.regular, .regular):
+            switch (tc.verticalSizeClassIsRegular, tc.horizontalSizeClassIsCompact) {
+            case (true, false):
                 newConstraints = [
                     sub.centerXAnchor.constraint(equalTo: safe.centerXAnchor, constant: 0),
                     sub.centerYAnchor.constraint(equalTo: safe.centerYAnchor, constant: 0),
                     sub.widthAnchor.constraint(equalToConstant: 400),
                     sub.heightAnchor.constraint(equalToConstant: 400)
                 ]
-            case (.regular, _), (.unspecified, _):
+            case (true, _):
                 newConstraints = [
                     sub.centerXAnchor.constraint(equalTo: safe.centerXAnchor, constant: 0),
                     sub.centerYAnchor.constraint(equalTo: safe.centerYAnchor, constant: 0),
                     sub.widthAnchor.constraint(equalTo: safe.widthAnchor, multiplier: 5 / 6),
                     sub.heightAnchor.constraint(equalTo: safe.heightAnchor, multiplier: 4 / 7)
                 ]
-            case (.compact, _):
+            case (false, _):
                 newConstraints = [
                     sub.centerXAnchor.constraint(equalTo: safe.centerXAnchor, constant: 0),
                     sub.centerYAnchor.constraint(equalTo: safe.centerYAnchor, constant: 0),

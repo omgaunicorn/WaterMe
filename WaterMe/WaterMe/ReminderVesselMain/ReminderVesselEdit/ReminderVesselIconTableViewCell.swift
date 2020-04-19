@@ -32,7 +32,7 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
     @IBOutlet private weak var emojiImageViewHeightConstraint: NSLayoutConstraint?
     @IBOutlet private weak var cameraButton: UIButton?
     
-    var iconButtonTapped: (() -> Void)?
+    var iconButtonTapped: ((UIView) -> Void)?
     
     func configure(with icon: ReminderVessel.Icon?) {
         self.cameraButton?.setTitle(nil, for: .normal)
@@ -42,7 +42,7 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
     }
     
     @IBAction private func iconButtonTapped(_ sender: NSObject?) {
-        self.iconButtonTapped?()
+        self.iconButtonTapped?(sender as! UIView)
     }
     
     override func awakeFromNib() {
@@ -57,12 +57,20 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
         self.iconButtonTapped = nil
     }
 
+    private func updateLayout() {
+        self.emojiImageViewHeightConstraint?.constant =
+        self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory ?
+            type(of: self).style_iconButtonHeightAccessibilityTextSizeEnabled :
+            type(of: self).style_iconButtonHeightAccessibilityTextSizeDisabled
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        self.updateLayout()
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        self.emojiImageViewHeightConstraint?.constant =
-            UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory ?
-                type(of: self).style_iconButtonHeightAccessibilityTextSizeEnabled :
-                type(of: self).style_iconButtonHeightAccessibilityTextSizeDisabled
-        
+        self.updateLayout()
     }
 }

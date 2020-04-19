@@ -18,7 +18,6 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="213" sectionHeaderHeight="18" sectionFooterHeight="18" id="2lB-aP-URI">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderVesselIconTableViewCell" rowHeight="166" id="gC9-Lk-0nU" customClass="ReminderVesselIconTableViewCell" customModule="WaterMe" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="55.5" width="375" height="166"/>
@@ -29,7 +28,6 @@
                                     <subviews>
                                         <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fcd-zd-Vwt" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
                                             <rect key="frame" x="125" y="18.5" width="125" height="128"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="125" id="oqe-y3-qA5"/>
                                                 <constraint firstAttribute="width" secondItem="fcd-zd-Vwt" secondAttribute="height" multiplier="1:1" id="r1s-vL-dWI"/>
@@ -86,7 +84,6 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="6BV-F7-HAz" firstAttribute="width" secondItem="rlg-JY-Gc1" secondAttribute="width" id="HKX-eL-F9t"/>
                             <constraint firstItem="6BV-F7-HAz" firstAttribute="height" secondItem="rlg-JY-Gc1" secondAttribute="height" id="pbe-Vi-uQ4"/>

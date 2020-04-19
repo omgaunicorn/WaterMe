@@ -22,7 +22,6 @@
 //
 
 import RealmSwift
-import Result
 import Foundation
 
 /**
@@ -200,7 +199,7 @@ open class ReminderGedeg: NSObject {
     }
 }
 
-fileprivate extension ReminderGedeg {
+extension ReminderGedeg {
     fileprivate struct Update {
         public var section: Reminder.Section
         public var deletions: [Int]
@@ -209,7 +208,7 @@ fileprivate extension ReminderGedeg {
     }
 }
 
-fileprivate extension Sequence where Iterator.Element == ReminderGedeg.Update {
+extension Sequence where Iterator.Element == ReminderGedeg.Update {
     fileprivate func deduplicatedIndexPaths(at kp: KeyPath<ReminderGedeg.Update, [Int]>) -> [IndexPath] {
         let rawIndexPaths = self.flatMap() { update in
             return update[keyPath: kp].map({ IndexPath(row: $0, section: update.section.rawValue) })

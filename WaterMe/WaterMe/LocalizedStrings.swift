@@ -76,6 +76,9 @@ extension ReminderMainViewController {
         static let buttonTitleReminderPerform =
             NSLocalizedString("Mark Reminder as Done",
                               comment: "Button Title in an Alert. Shows when the user taps on a reminder. After being selected, this will mark the reminder as performed.")
+        static let dragAndDropInstructionalText =
+            NSLocalizedString("Drag and Drop Here",
+                              comment: "ReminderMainViewController: Instructional text that instructs the user and drag and drop to this location to mark the reminder as done.")
         static let reminderAlertTitle =
             NSLocalizedString("%@ – %@",
                               comment: "ReminderMainViewController: Select Reminder Alert Title: 2 Arguments: When the user taps on a reminder, this is the title of the alert if the plant has a name. It tells the user the kind of reminder and the name of the plant. e.g. ‘Water Plant - My Cool Plant’")
@@ -178,6 +181,12 @@ extension UIAlertController {
         static let updateAvailableButtonTitleOpenAppStore: String =
             NSLocalizedString("Open App Store",
                               comment: "Alert: App Update: Button Title: Button title that allows the user to open the app store in order to update WaterMe.")
+        static let darkModeImproperTitle: String =
+            NSLocalizedString("Dark Mode",
+                              comment: "Alert: Dark Mode Improper: Title: Title of alert that is presented when Dark Mode settings are configured on iOS 11 or 12.")
+        static let darkModeImproperMessage: String =
+            NSLocalizedString("The dark mode settings for WaterMe only work when running iOS 13 or higher.",
+                              comment: "Alert: Dark Mode Improper: Message: Message of alert that is presented when Dark Mode settings are configured on iOS 11 or 12.")
 
     }
 }
@@ -277,6 +286,14 @@ extension SettingsMainViewController {
             NSLocalizedString("I’m Jeff, a professional iOS Developer and UX Designer. I like making small and polished apps in my spare time. If you find WaterMe useful and would like to fund its development, consider supporting the app with the buttons below.",
                               comment: "Settings: Info Cell: Title: Text in the tip jar area that explains why someone should give money.")
 
+    }
+}
+
+extension ReminderIntervalPickerViewController {
+    enum LocalizedString {
+        static let title =
+            NSLocalizedString("Reminder Interval",
+                              comment: "Reminder Interval Chooser: Title")
     }
 }
 

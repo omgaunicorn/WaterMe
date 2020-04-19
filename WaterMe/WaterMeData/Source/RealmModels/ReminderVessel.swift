@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Result
 import UIKit
 import RealmSwift
 
@@ -113,7 +112,7 @@ extension ReminderVessel {
     }
 }
 
-public extension ReminderVessel {
+extension ReminderVessel {
 
     public var shortLabelSafeDisplayName: String? {
         let name = self.displayName ?? ""

@@ -65,17 +65,8 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.contentView?.style_setCornerRadius()
         self.progressView?.observedProgress = self.migrator.progress
-        self.contentView?.transform = CGAffineTransform(scaleX: 0.3, y: 0.3)
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        self.transitionCoordinator!.animate(alongsideTransition: { _ in
-            self.contentView?.transform = CGAffineTransform.identity
-        }, completion: nil)
+        self.configureAttributedText()
     }
 
     override func viewDidAppear(_ animated: Bool) {

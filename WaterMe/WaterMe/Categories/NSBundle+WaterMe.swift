@@ -23,7 +23,7 @@
 
 import Foundation
 
-internal extension Bundle {
+extension Bundle {
     
     internal var isReleaseBuild: Bool {
         #if RELEASE

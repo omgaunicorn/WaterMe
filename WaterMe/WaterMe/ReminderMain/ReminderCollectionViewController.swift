@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Result
 import RealmSwift
 import WaterMeData
 import UIKit
@@ -52,9 +51,16 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // update if significant time passes
         self.significantTimePassedDetector.delegate = self
+
+        // part of a hack that sometimes requires the collectionview to be replaced
         self.replaceCollectionView()
+
+        // configure the collectionview
         self.configureCollectionView()
+
+        // load data
         self.hardReloadData()
     }
 
@@ -72,8 +78,6 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         self.collectionView?.contentInsetAdjustmentBehavior = .always
         // not sure why this is not the default
         self.collectionView?.alwaysBounceVertical = true
-        // not sure why this is not the default
-        self.collectionView?.backgroundColor = .white
         // disabled by default on iphone
         self.collectionView?.dragInteractionEnabled = true
         self.collectionView?.dragDelegate = self
@@ -87,6 +91,8 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         // make everything as tight as possible on the screen
         self.flow?.minimumInteritemSpacing = 0
         self.flow?.minimumLineSpacing = 0
+        // support dark mode
+        self.collectionView.backgroundColor = Color.systemBackgroundColor
     }
     
     private func hardReloadData() {
@@ -130,8 +136,10 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: ReminderHeaderCollectionReusableView.kind,
                                                                      withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID,
                                                                      for: indexPath)
-        if let header = header as? ReminderHeaderCollectionReusableView, let section = Reminder.Section(rawValue: indexPath.section) {
-            header.setSection(section)
+        if let header = header as? ReminderHeaderCollectionReusableView,
+            let section = Reminder.Section(rawValue: indexPath.section)
+        {
+            header.section = section
         }
         return header
     }
@@ -161,28 +169,27 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
 
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
-        let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
-        let horizontalClass = self.view.traitCollection.horizontalSizeClass
-        let verticalClass = self.view.traitCollection.verticalSizeClass
-        switch (horizontalClass, verticalClass, accessibility) {
-        case (.unspecified, _, _), (_, .unspecified, _):
-            assertionFailure("Hit a size class this VC was not expecting")
-            fallthrough
-        case (.compact, .regular, false): // iPhone Portrait, no Accessibility
+        // TODO: Fix launch sizing being wrong for `isAccessibilityCategory`
+        let tc = self.view.traitCollection
+        switch (tc.horizontalSizeClassIsCompact,
+                tc.verticalSizeClassIsRegular,
+                tc.preferredContentSizeCategory.isAccessibilityCategory)
+        {
+        case (true, true, false): // iPhone Portrait, no Accessibility
             return (2, 200)
-        case (.compact, .regular, true): // iPhone Portrait, w/ Accessibility
+        case (true, true, true): // iPhone Portrait, w/ Accessibility
             return (1, 320)
-        case (.compact, .compact, false): // iPhone Landscape, no Accessibility
+        case (true, false, false): // iPhone Landscape, no Accessibility
             return (2, 200)
-        case (.compact, .compact, true): // iPhone Landscape, w/ Accessibility
+        case (true, false, true): // iPhone Landscape, w/ Accessibility
             return (1, 320)
-        case (.regular, .compact, false): // iPhone+ Landscape, no Accessibility
+        case (false, false, false): // iPhone+ Landscape, no Accessibility
             return (3, 200)
-        case (.regular, .compact, true): // iPhone+ Landscape, w/ Accessibility
+        case (false, false, true): // iPhone+ Landscape, w/ Accessibility
             return (2, 320)
-        case (.regular, .regular, false): // iPad No Accessibility
+        case (false, true, false): // iPad No Accessibility
             return (4, 200)
-        case (.regular, .regular, true): // iPad w/ Accessibility
+        case (false, true, true): // iPad w/ Accessibility
             return (2, 320)
         }
     }
@@ -205,7 +212,7 @@ extension ReminderCollectionViewController: UICollectionViewDelegateFlowLayout {
             // instead I'll just have to set the alpha to 0
             return CGSize(width: collectionView.availableContentSize.width, height: 1)
         }
-        let isAC = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
+        let isAC = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
         return CGSize(width: collectionView.availableContentSize.width, height: kind.style_viewHeight(isAccessibilityCategory: isAC))
     }
 }
@@ -216,8 +223,9 @@ extension ReminderCollectionViewController: UICollectionViewDragDelegate {
         guard let reminder = self.reminders?.reminder(at: indexPath) else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
         // only make the "small" preview show on iPhones. On iPads, there is plenty of space
-        switch (self.view.traitCollection.horizontalSizeClass, self.view.traitCollection.verticalSizeClass) {
-        case (.regular, .regular):
+        let tc = self.view.traitCollection
+        switch (tc.horizontalSizeClassIsCompact, tc.verticalSizeClassIsRegular) {
+        case (false, true):
             break // do nothing for ipads
         default:
             item.previewProvider = { ReminderDragPreviewView.dragPreview(for: reminder) }

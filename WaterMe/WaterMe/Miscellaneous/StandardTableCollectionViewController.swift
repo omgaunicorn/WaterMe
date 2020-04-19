@@ -25,6 +25,12 @@ import UIKit
 
 class StandardCollectionViewController: UICollectionViewController {
 
+    /// To be used by subclasses overriding `columnCountAndItemHeight` to help standardize rounding.
+    class func columnCountAndItemHeight(withWidth width: CGFloat, columnCount: Int) -> (columnCount: Int, itemHeight: CGFloat) {
+        let itemHeight = floor((width) / CGFloat(columnCount))
+        return (columnCount, itemHeight)
+    }
+
     var flow: UICollectionViewFlowLayout? {
         return self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
@@ -37,7 +43,7 @@ class StandardCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(self.contentSizeCategoryDidChange(_:)),
-                                               name: .UIContentSizeCategoryDidChange,
+                                               name: UIContentSizeCategory.didChangeNotification,
                                                object: nil)
     }
 
@@ -75,6 +81,12 @@ class StandardCollectionViewController: UICollectionViewController {
 }
 
 class StandardTableViewController: UITableViewController {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // TODO: Hacky workaround for RDAR:FB7322599
+        self.navigationController?.navigationBar.setNeedsLayout()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // TODO: Hacky workaround for RDAR:44727935
@@ -85,6 +97,12 @@ class StandardTableViewController: UITableViewController {
 }
 
 class StandardViewController: UIViewController {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // TODO: Hacky workaround for RDAR:FB7322599
+        self.navigationController?.navigationBar.setNeedsLayout()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         // TODO: Hacky workaround for RDAR:44727935
@@ -92,4 +110,39 @@ class StandardViewController: UIViewController {
         self.userActivity?.needsSave = true
         self.userActivity?.becomeCurrent()
     }
+}
+
+extension StandardViewController: UIAdaptivePresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController,
+                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle
+    {
+        return presentationLogic(with: traitCollection)
+    }
+}
+
+extension StandardTableViewController: UIAdaptivePresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController,
+                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle
+    {
+        return presentationLogic(with: traitCollection)
+    }
+}
+
+extension StandardCollectionViewController: UIAdaptivePresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController,
+                                   traitCollection: UITraitCollection) -> UIModalPresentationStyle
+    {
+        return presentationLogic(with: traitCollection)
+    }
+}
+
+private func presentationLogic(with traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+    /**
+     Apple Docs:
+     The new presentation style, which must be UIModalPresentationStyle.fullScreen, UIModalPresentationStyle.overFullScreen, UIModalPresentationStyle.formSheet, or UIModalPresentationStyle.none.
+     If you do not implement this method or if you return an invalid style, the current presentation controller returns its preferred default style.
+     */
+    let invalidStyle = UIModalPresentationStyle(rawValue: -100)!
+    let isAccessibilityCategory = traitCollection.preferredContentSizeCategory.isAccessibilityCategory
+    return !isAccessibilityCategory ? invalidStyle : .overFullScreen
 }

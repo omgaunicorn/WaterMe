@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Result
 import WaterMeData
 import UIKit
 
@@ -30,7 +29,8 @@ protocol ReminderEditTableViewControllerDelegate: class {
     func userChangedKind(to newKind: Reminder.Kind,
                          byUsingKeyboard usingKeyboard: Bool,
                          within: ReminderEditTableViewController)
-    func userDidSelectChangeInterval(_ deselectHandler: @escaping () -> Void,
+    func userDidSelectChangeInterval(popoverSourceView: UIView?,
+                                     deselectHandler: @escaping () -> Void,
                                      within: ReminderEditTableViewController)
     func userChangedNote(toNewNote newNote: String,
                          within: ReminderEditTableViewController)
@@ -60,7 +60,7 @@ class ReminderEditTableViewController: StandardTableViewController {
                                 forCellReuseIdentifier: SiriShortcutTableViewCell.reuseID)
         self.tableView.register(LastPerformedTableViewCell.self,
                                 forCellReuseIdentifier: LastPerformedTableViewCell.reuseID)
-        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 40
     }
     
@@ -81,9 +81,12 @@ class ReminderEditTableViewController: StandardTableViewController {
                                                within: self)
             }
         case .interval:
-            self.delegate?.userDidSelectChangeInterval({
-                tableView.deselectRow(at: indexPath, animated: true)
-            }, within: self)
+            self.delegate?.userDidSelectChangeInterval(
+                popoverSourceView: tableView.cellForRow(at: indexPath),
+                deselectHandler: {
+                    tableView.deselectRow(at: indexPath, animated: true)
+                },
+                within: self)
         case .siriShortcuts:
             guard let shortcut = SiriShortcut(rawValue: indexPath.row) else { return }
             let closure = { (anim: Bool) -> Void in
@@ -94,6 +97,20 @@ class ReminderEditTableViewController: StandardTableViewController {
                                          within: self)
         case .details, .notes, .performed:
             assertionFailure("User was allowed to select unselectable row")
+        }
+    }
+
+    override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+        guard let reminder = self.delegate?.reminderResult?.value else {
+            assertionFailure("Missing Reminder Object")
+            return nil
+        }
+        let section = Section(section: indexPath.section, for: reminder.kind)
+        switch section {
+        case .details, .notes, .performed:
+            return nil
+        case .kind, .interval, .siriShortcuts:
+            return indexPath
         }
     }
     

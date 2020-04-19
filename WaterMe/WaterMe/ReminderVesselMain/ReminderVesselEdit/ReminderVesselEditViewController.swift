@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Result
 import RealmSwift
 import WaterMeData
 import UIKit
@@ -52,6 +51,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         }
         vc.userActivity = NSUserActivity(kind: .editReminderVessel,
                                          delegate: vc.userActivityDelegate)
+        navVC.presentationController?.delegate = vc
         return navVC
     }
     
@@ -176,7 +176,8 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             self.completionHandler?(self)
             return
         }
-        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .left(sender)) { confirmed in
+        let vc = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .right(sender))
+        { confirmed in
             guard confirmed == true else { return }
 
             Analytics.log(event: Analytics.CRUD_Op_RV.delete)
@@ -194,7 +195,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
                 }
             }
         }
-        self.present(confirmation, animated: true, completion: nil)
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction private func doneButtonTapped(_ sender: Any) {
@@ -203,15 +204,20 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
 
         Analytics.log(event: Analytics.CRUD_Op_RV.update)
         
-        let sender = sender as? UIBarButtonItem
-        assert(sender != nil, "Expected UIBarButtonItem to call this method")
+        guard let sender = sender as? UIBarButtonItem else {
+            assertionFailure("Expected UIBarButtonItem to call this method")
+            return
+        }
         if let error = vessel.isModelComplete {
             UIAlertController.presentAlertVC(for: error,
                                              over: self,
                                              from: sender)
             { selection in
                 switch selection {
-                case .dismiss, .openWaterMeSettings, .reminderMissingMoveLocation, .reminderMissingOtherDescription:
+                case .dismiss,
+                     .openWaterMeSettings,
+                     .reminderMissingMoveLocation,
+                     .reminderMissingOtherDescription:
                     assertionFailure()
                     fallthrough
                 case .cancel:
@@ -219,7 +225,8 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
                 case .saveAnyway:
                     self.completionHandler?(self)
                 case .reminderVesselMissingIcon:
-                    self.userChosePhotoChange(controller: self.tableViewController)
+                    self.userChosePhotoChange(controller: self.tableViewController,
+                                              sender: .right(sender))
                 case .reminderVesselMissingName:
                     self.tableViewController?.nameTextFieldBecomeFirstResponder()
                 case .reminverVesselMissingReminder:
@@ -244,5 +251,11 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     
     deinit {
         self.notificationToken?.invalidate()
+    }
+}
+
+extension ReminderVesselEditViewController /*: UIAdaptivePresentationControllerDelegate*/ {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.completionHandler(self)
     }
 }

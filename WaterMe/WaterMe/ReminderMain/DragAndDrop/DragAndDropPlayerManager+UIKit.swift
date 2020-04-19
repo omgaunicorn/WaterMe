@@ -1,9 +1,9 @@
 //
-//  AppDelegate.swift
-//  AdminConsole
+//  DragAndDropPlayerManager+UIKit.swift
+//  WaterMe
 //
-//  Created by Jeffrey Bergier on 5/18/17.
-//  Copyright © 2017 Saturday Apps.
+//  Created by Jeffrey Bergier on 2020/01/30.
+//  Copyright © 2020 Saturday Apps. All rights reserved.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
 //
@@ -21,22 +21,13 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import XCGLogger
 import UIKit
 
-let log = XCGLogger.default
-
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    var window: UIWindow?
-    
-    override init() {
-        super.init()
-        log.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: true, showLineNumbers: true, showDate: true, writeToFile: true, fileLevel: .debug)
-    }
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        return true
+extension DragAndDropPlayerManager {
+    func setTraitCollection(_ newValue: UITraitCollection) {
+        let verticalSizeClassIsDefault = newValue.verticalSizeClassIsRegular
+        let userInterfaceStyleIsDefault = newValue.userInterfaceStyleIsNormal
+        self.updateVideoAssets(landscape: verticalSizeClassIsDefault,
+                               darkMode: !userInterfaceStyleIsDefault)
     }
 }

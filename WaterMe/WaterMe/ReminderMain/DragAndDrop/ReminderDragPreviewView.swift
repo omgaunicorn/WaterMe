@@ -26,7 +26,7 @@ import UIKit
 
 class ReminderDragPreviewView: UIView {
 
-    class func newView(for reminder: Reminder) -> ReminderDragPreviewView {
+    private class func newView(for reminder: Reminder) -> ReminderDragPreviewView {
         // swiftlint:disable:next force_cast
         let v = self.nib.instantiate(withOwner: nil, options: nil).first as! ReminderDragPreviewView
         v.configure(with: reminder)
@@ -36,7 +36,8 @@ class ReminderDragPreviewView: UIView {
     class func dragPreview(for reminder: Reminder) -> UIDragPreview {
         let v = self.newView(for: reminder)
         let p = UIDragPreview(view: v)
-        p.parameters.visiblePath = UIBezierPath(roundedRect: v.bounds, cornerRadius: UIApplication.style_cornerRadius)
+        p.parameters.visiblePath = UIBezierPath(roundedRect: v.bounds,
+                                                cornerRadius: UIApplication.style_cornerRadius)
         return p
     }
 
@@ -49,6 +50,10 @@ class ReminderDragPreviewView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
+
+        // I think this view belongs to a different window,
+        // so the trait collection is not set by the main app window
+        self.style_configure()
 
         self.largeEmojiImageView?.size = .small
         self.largeEmojiImageView?.ring = true

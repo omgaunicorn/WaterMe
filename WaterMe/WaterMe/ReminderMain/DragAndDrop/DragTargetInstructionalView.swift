@@ -40,13 +40,10 @@ class DragTargetInstructionalView: UIView {
     }
 
     private func updateDynamicText() {
-        switch self.traitCollection.verticalSizeClass {
-        case .regular, .unspecified:
-            self.textLabel?.numberOfLines = 2
-        case .compact:
-            self.textLabel?.numberOfLines = 4
-        }
-        self.textLabel?.attributedText = NSAttributedString(string: "Drag and Drop Here", font: .dragInstructionalText(self.tintColor))
+        self.textLabel?.numberOfLines = self.traitCollection.verticalSizeClassIsRegular ? 2 : 4
+        let message = ReminderMainViewController.LocalizedString.dragAndDropInstructionalText
+        self.textLabel?.attributedText = NSAttributedString(string: message,
+                                                            font: .dragInstructionalText(self.tintColor))
     }
 
     private enum AnimState {
@@ -143,6 +140,11 @@ class DragTargetInstructionalView: UIView {
 
     override func tintColorDidChange() {
         super.tintColorDidChange()
+        self.updateDynamicText()
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
         self.updateDynamicText()
     }
 

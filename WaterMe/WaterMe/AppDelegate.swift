@@ -40,9 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // swiftlint:disable:next weak_delegate
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
     private(set) var reminderObserver: GlobalReminderObserver?
+    private lazy var basicControllerResult = BasicController.new(of: .local)
 
     let purchaseController = PurchaseController()
-    var coreDataMigrator = CoreDataMigrator()
+    var coreDataMigrator: CoreDataMigratable? = CoreDataMigrator()
     var window: UIWindow?
     var userDefaultObserverTokens: [NSKeyValueObservation] = []
 
@@ -63,52 +64,78 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
         #endif
 
+        // configure simulator
+        self.simulator_configure()
+
         // configure main thread checking
         DispatchQueue.configureMainQueue()
         
         // as early as possible, configure standard defaults
-        UserDefaults.standard.configure()
+        let ud = UserDefaults.standard
+        ud.configure()
 
         // make re-usable closures for notifications I'll register for later
-        let appearanceChanges = {
+        let appearanceChanges = { [weak self] in
             // if the window is not configured yet, bail
-            guard let window = self.window else { return }
+            guard
+                let self = self,
+                let window = self.window
+            else { return }
 
             // need to rip the view hierarchy out of the window and put it back in
             // in order for the new UIAppearance to take effect
             UIApplication.style_configure()
-            let prevVC = window.rootViewController
+
+            // force window to update everything by
+            // get the old vc in iOS 13
+            var newVC: UIViewController!
+            if #available(iOS 13.0, *) {
+                newVC = window.rootViewController
+            }
+            // create a new VC in older versions
+            // for some reason this is needed
+            if newVC == nil {
+                let result = self.basicControllerResult
+                newVC = ReminderMainViewController.newVC(basic: result)
+            }
+            // clear the vc from the window
             window.rootViewController = nil
-            window.rootViewController = prevVC
+            // configuring the window
+            window.style_configure()
+            // replace with newVC
+            window.rootViewController = newVC
         }
         let notificationChanges = {
             self.reminderObserver?.notificationPermissionsMayHaveChanged()
         }
         // register for notifications about the increase contrast setting
-        _ = NotificationCenter.default.addObserver(forName: .UIAccessibilityDarkerSystemColorsStatusDidChange,
+        _ = NotificationCenter.default.addObserver(forName: UIAccessibility.darkerSystemColorsStatusDidChangeNotification,
                                                    object: nil,
                                                    queue: nil)
         { _ in
             appearanceChanges()
         }
         // register for notifications if user defaults change while the app is running
-        let token1 = UserDefaults.standard.observe(\.INCREASE_CONTRAST) { _, _ in
+        let token1 = ud.observe(\.INCREASE_CONTRAST) { _, _ in
             appearanceChanges()
         }
-        let token2 = UserDefaults.standard.observe(\.REMINDER_HOUR) { _, _ in
+        let token2 = ud.observe(\.DARK_MODE) { _, _ in
+            appearanceChanges()
+        }
+        let token3 = ud.observe(\.REMINDER_HOUR) { _, _ in
             notificationChanges()
         }
-        let token3 = UserDefaults.standard.observe(\.NUMBER_OF_REMINDER_DAYS) { _, _ in
+        let token4 = ud.observe(\.NUMBER_OF_REMINDER_DAYS) { _, _ in
             notificationChanges()
         }
-        let token4 = UserDefaults.standard.observe(\.FIRST_RUN) { _, _ in
+        let token5 = ud.observe(\.FIRST_RUN) { _, _ in
             notificationChanges()
         }
-        self.userDefaultObserverTokens += [token1, token2, token3, token4]
+        self.userDefaultObserverTokens += [token1, token2, token3, token4, token5]
     }
     
     func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
     {
 
         // see if there is a new build
@@ -138,10 +165,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIApplication.style_configure()
 
         // Configure audio so the water video does not pause the users music
-        try? AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+        try? AVAudioSession.sharedInstance().setCategory(.ambient)
 
-        let result = BasicController.new(of: .local)
-        let vc = ReminderMainViewController.newVC(basicRCResult: result, proController: nil)
+        let result = self.basicControllerResult
+        let vc = ReminderMainViewController.newVC(basic: result)
         if case .success(let basicRC) = result {
             self.reminderObserver = GlobalReminderObserver(basicController: basicRC)
         }
@@ -167,7 +194,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // configure window
         let window = self.window ?? UIWindow(frame: UIScreen.main.bounds)
-        window.backgroundColor = .white
+        window.style_configure()
         window.rootViewController = vc
 
         // show window
@@ -216,17 +243,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard isReady.completely else { return }
         self.rootVC?.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
     }
-    
-    func application(_ application: UIApplication,
-                     shouldSaveApplicationState coder: NSCoder) -> Bool
-    {
+
+    func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool {
         return true
     }
     
     func application(_ application: UIApplication,
-                     shouldRestoreApplicationState coder: NSCoder) -> Bool
+                     shouldRestoreSecureApplicationState coder: NSCoder) -> Bool
     {
-        let _savedBuild = coder.decodeObject(forKey: UIApplicationStateRestorationBundleVersionKey) as? String
+        let _savedBuild = coder.decodeObject(forKey: UIApplication.stateRestorationBundleVersionKey) as? String
         let _currentBuild = Bundle(for: type(of: self)).infoDictionary?[kCFBundleVersionKey as String] as? String
         guard
             let savedBuild = _savedBuild,
@@ -234,5 +259,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             currentBuild == savedBuild
         else { return false }
         return true
+    }
+
+    @available(*, deprecated, message: "This is deprecated. Only implemented for old iOS support.")
+    func application(_ application: UIApplication,
+                     shouldSaveApplicationState coder: NSCoder) -> Bool
+    {
+        return self.application(application, shouldSaveSecureApplicationState: coder)
+    }
+    
+    @available(*, deprecated, message: "This is deprecated. Only implemented for old iOS support.")
+    func application(_ application: UIApplication,
+                     shouldRestoreApplicationState coder: NSCoder) -> Bool
+    {
+        return self.application(application, shouldRestoreSecureApplicationState: coder)
+    }
+}
+
+extension AppDelegate {
+    private func simulator_configure() {
+        #if targetEnvironment(simulator)
+        log.debug(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        #endif
     }
 }

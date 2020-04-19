@@ -21,7 +21,6 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XYx-WY-Wjm" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="XYx-WY-Wjm" secondAttribute="height" multiplier="1:1" id="9mg-Rw-fIt"/>
                                 <constraint firstAttribute="width" constant="50" id="AW0-Qw-MIC"/>
@@ -29,14 +28,12 @@
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SVx-Z7-0ep" customClass="EmojiImageView" customModule="WaterMe" customModuleProvider="target">
                             <rect key="frame" x="30" y="30" width="25" height="25"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="SVx-Z7-0ep" secondAttribute="height" multiplier="1:1" id="Zia-i9-19o"/>
                                 <constraint firstAttribute="width" constant="25" id="aQd-I2-2Ec"/>
                             </constraints>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="XYx-WY-Wjm" firstAttribute="top" secondItem="prc-XY-weH" secondAttribute="top" id="9RV-iR-ZiT"/>
                         <constraint firstItem="SVx-Z7-0ep" firstAttribute="bottom" secondItem="XYx-WY-Wjm" secondAttribute="bottom" constant="5" id="Boi-x0-eeG"/>
@@ -64,7 +61,6 @@
                     </subviews>
                 </stackView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="dhq-nI-9XW" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="3qG-g3-yLa"/>
                 <constraint firstItem="prc-XY-weH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leadingMargin" id="Fvd-rs-Q7G"/>

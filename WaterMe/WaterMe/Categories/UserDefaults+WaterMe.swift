@@ -31,6 +31,7 @@ extension UserDefaults {
         static let kReminderHour = "REMINDER_HOUR"
         static let kNumberOfReminderDays = "NUMBER_OF_REMINDER_DAYS"
         static let kIncreaseContrast = "INCREASE_CONTRAST"
+        static let kDarkMode = "DARK_MODE"
         static let kBuildNumberKey = "LAST_BUILD_NUMBER"
         static let kRequestReviewDate = "REQUEST_REVIEW_DATE"
         static let kCheckForUpdatesOnLaunch = "CHECK_FOR_UPDATES"
@@ -73,7 +74,7 @@ extension UserDefaults {
         get {
             guard let number = self.object(forKey: Constants.kIncreaseContrast) as? NSNumber
                 else { fatalError("Must call configure() before accessing user defaults") }
-            let systemSetting = UIAccessibilityDarkerSystemColorsEnabled()
+            let systemSetting = UIAccessibility.isDarkerSystemColorsEnabled
             if systemSetting == true {
                 return systemSetting
             } else {
@@ -82,6 +83,17 @@ extension UserDefaults {
         }
         set {
             self.set(NSNumber(value: newValue), forKey: Constants.kIncreaseContrast)
+        }
+    }
+
+    var darkMode: DarkMode {
+        get {
+            guard let number = self.object(forKey: Constants.kDarkMode) as? NSNumber
+                else { fatalError("Must call configure() before accessing user defaults") }
+            return DarkMode(rawValue: number.intValue) ?? .system
+        }
+        set {
+            self.set(NSNumber(value: newValue.rawValue), forKey: Constants.kDarkMode)
         }
     }
     
@@ -124,6 +136,7 @@ extension UserDefaults {
             Constants.kReminderHour : 8,
             Constants.kNumberOfReminderDays : 14,
             Constants.kIncreaseContrast : false,
+            Constants.kDarkMode : 0,
             Constants.kCheckForUpdatesOnLaunch : true
         ])
 
@@ -134,8 +147,15 @@ extension UserDefaults {
         }
     }
 
+    enum DarkMode: Int {
+        case system = 0
+        case forceLight = 1
+        case forceDark = 2
+    }
+
     // MARK: For KVO only, do not use
     @objc dynamic var INCREASE_CONTRAST: Any { fatalError() }
+    @objc dynamic var DARK_MODE: Any { fatalError() }
     @objc dynamic var NUMBER_OF_REMINDER_DAYS: Any { fatalError() }
     @objc dynamic var REMINDER_HOUR: Any { fatalError() }
     @objc dynamic var FIRST_RUN: Any { fatalError() }

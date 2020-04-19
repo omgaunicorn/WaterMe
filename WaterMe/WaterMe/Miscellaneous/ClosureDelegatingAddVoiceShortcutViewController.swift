@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Result
 import IntentsUI
 
 @available(iOS 12.0, *)
@@ -31,15 +30,17 @@ class ClosureDelegatingAddVoiceShortcutViewController: INUIAddVoiceShortcutViewC
         case success(INVoiceShortcut), cancel, failure(UserActivityError)
     }
 
-    var completion: ((UIViewController, Result) -> Void)?
+    var completionHandler: ((UIViewController, Result) -> Void)?
 
     override init(shortcut: INShortcut) {
         super.init(shortcut: shortcut)
+        self.presentationController?.delegate = self
         self.delegate = self
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.presentationController?.delegate = self
         self.delegate = self
     }
 
@@ -49,15 +50,22 @@ class ClosureDelegatingAddVoiceShortcutViewController: INUIAddVoiceShortcutViewC
     {
         if let error = error {
             log.error(error)
-            self.completion?(self, .failure(.createShortcutFailed))
+            self.completionHandler?(self, .failure(.createShortcutFailed))
         } else if let shortcut = voiceShortcut {
-            self.completion?(self, .success(shortcut))
+            self.completionHandler?(self, .success(shortcut))
         } else {
             assertionFailure("Invalid Callback from IntentsUI API")
-            self.completion?(self, .cancel)
+            self.completionHandler?(self, .cancel)
         }
     }
     public func addVoiceShortcutViewControllerDidCancel(_ controller: INUIAddVoiceShortcutViewController) {
-        self.completion?(self, .cancel)
+        self.completionHandler?(self, .cancel)
+    }
+}
+
+@available(iOS 12.0, *)
+extension ClosureDelegatingAddVoiceShortcutViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.completionHandler?(self, .cancel)
     }
 }

@@ -73,7 +73,6 @@ class WateringAnimationPlayerView: UIView {
             }
         }
 
-        self.videoLayer.backgroundColor = UIColor.white.cgColor
         self.videoLayer.videoGravity = .resizeAspect
         self.videoLayer.opacity = 0
         self.videoLayer.player = self.videoManager.player
@@ -83,18 +82,23 @@ class WateringAnimationPlayerView: UIView {
         self.videoManager.hardReset()
     }
 
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        self.appearanceDidChange()
+    }
+
     override func tintColorDidChange() {
         super.tintColorDidChange()
         self.hairlineView?.backgroundColor = self.tintColor
     }
 
+    private func appearanceDidChange() {
+        self.videoLayer.backgroundColor = Color.systemBackgroundColor.cgColor
+        self.videoManager.setTraitCollection(self.traitCollection)
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
-        switch self.traitCollection.verticalSizeClass {
-        case .regular, .unspecified:
-            self.videoManager.landscapeVideo = true
-        case .compact:
-            self.videoManager.landscapeVideo = false
-        }
+        self.appearanceDidChange()
     }
 }

@@ -40,7 +40,6 @@
                                 </connections>
                             </containerView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="zTV-SF-oHI" firstAttribute="centerX" secondItem="Uxc-k5-LnG" secondAttribute="centerX" id="Kic-pH-SoE"/>
                             <constraint firstItem="zTV-SF-oHI" firstAttribute="height" secondItem="Uxc-k5-LnG" secondAttribute="height" id="MAl-NS-4Vy"/>
@@ -68,7 +67,6 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="R8a-bv-5Ek">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <connections>
                             <outlet property="dataSource" destination="dfD-an-c4d" id="QiB-Lq-EfS"/>
                             <outlet property="delegate" destination="dfD-an-c4d" id="Jhd-bb-hGU"/>

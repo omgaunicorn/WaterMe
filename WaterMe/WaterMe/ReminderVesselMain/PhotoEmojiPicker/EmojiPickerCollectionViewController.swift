@@ -26,16 +26,17 @@ import UIKit
 
 class EmojiPickerViewController: StandardCollectionViewController {
     
-    class func newVC(emojiChosen: @escaping (String?, UIViewController) -> Void) -> UIViewController {
+    class func newVC(completionHandler: @escaping (String?, UIViewController) -> Void) -> UIViewController {
         let layout = UICollectionViewFlowLayout()
         let vc = EmojiPickerViewController(collectionViewLayout: layout)
-        vc.emojiChosen = emojiChosen
+        vc.completionHandler = completionHandler
         let navVC = UINavigationController(rootViewController: vc)
         navVC.modalPresentationStyle = .formSheet
+        navVC.presentationController?.delegate = vc
         return navVC
     }
     
-    var emojiChosen: ((String?, UIViewController) -> Void)?
+    var completionHandler: ((String?, UIViewController) -> Void)?
     private let data = ["💐", "🌷", "🌹", "🥀", "🌻", "🌼", "🌸", "🌺", "🍏", "🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🍈", "🍒", "🍑", "🍍", "🥝", "🥑", "🍅", "🍆", "🥒", "🥕", "🌽", "🌶", "🥔", "🍠", "🌰", "🥜", "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🎍", "🎋", "🍃", "🍂", "🍁", "🍄", "🌾", "🥚", "🍳", "🐔", "🐧", "🐤", "🐣", "🐥", "🐓", "🦆", "🦃", "🐇", "🦀", "🦑", "🐙", "🦐", "🍤", "🐠", "🐟", "🐢", "🐍", "🦎", "🐝", "🍯", "🥐", "🍞", "🥖", "🧀", "🥗", "🍣", "🍱", "🍛", "🍚", "☕️", "🍵", "🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🥛", "🐷", "🐽", "🐸", "🐒", "🦅", "🦉", "🦇", "🐺", "🐗", "🐴", "🦄", "🐛", "🦋", "🐌", "🐚", "🐞", "🐜", "🕷", "🦂", "🐡", "🐬", "🦈", "🐳", "🐋", "🐊", "🐆", "🐅", "🐃", "🐂", "🐄", "🦌", "🐪", "🐫", "🐘", "🦏", "🦍", "🐎", "🐖", "🐐", "🐏", "🐑", "🐕", "🐩", "🐈", "🕊", "🐁", "🐀", "🐿", "🐉", "🐲"]
     
     override func viewDidLoad() {
@@ -43,19 +44,19 @@ class EmojiPickerViewController: StandardCollectionViewController {
         self.title = LocalizedString.title
         let cancel = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancelButtonTapped(_:)))
         self.navigationItem.rightBarButtonItem = cancel
-        self.collectionView?.backgroundColor = .white
         self.collectionView?.alwaysBounceVertical = true
         self.collectionView?.register(EmojiPickerCollectionViewCell.nib, forCellWithReuseIdentifier: EmojiPickerCollectionViewCell.reuseID)
         self.flow?.minimumInteritemSpacing = 0
+        self.collectionView.backgroundColor = Color.systemBackgroundColor
     }
     
     @objc private func cancelButtonTapped(_ sender: NSObject?) {
-        self.emojiChosen?(nil, self)
+        self.completionHandler?(nil, self)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let item = self.data[indexPath.row]
-        self.emojiChosen?(item, self)
+        self.completionHandler?(item, self)
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -71,21 +72,26 @@ class EmojiPickerViewController: StandardCollectionViewController {
     }
 
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
+        let tc = self.view.traitCollection
         let width = self.collectionView?.availableContentSize.width ?? 0
-        let accessibility = UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory
-        let horizontalClass = self.view.traitCollection.horizontalSizeClass
-        switch (horizontalClass, accessibility) {
-        case (.unspecified, _), (.regular, _):
-            assertionFailure("Hit a size class this VC was not expecting")
-            fallthrough
-        case (.compact, false):
-            let columnCount = 4
-            let itemHeight = floor((width) / CGFloat(columnCount))
-            return (columnCount, itemHeight)
-        case (.compact, true):
-            let columnCount = 2
-            let itemHeight = floor((width) / CGFloat(columnCount))
-            return (columnCount, itemHeight)
+        let math = type(of: self).columnCountAndItemHeight(withWidth:columnCount:)
+        switch (tc.horizontalSizeClassIsCompact,
+                tc.preferredContentSizeCategory.isAccessibilityCategory)
+        {
+        case (false, false):
+            return math(width, 8)
+        case (false, true):
+            return math(width, 4)
+        case (true, false):
+            return math(width, 4)
+        case (true, true):
+            return math(width, 2)
         }
+    }
+}
+
+extension EmojiPickerViewController /*: UIAdaptivePresentationControllerDelegate*/ {
+    func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        self.completionHandler?(nil, self)
     }
 }

@@ -58,16 +58,6 @@ class ImagePickerCropperViewController: UIImagePickerController, UIImagePickerCo
     var completionHandler: ((UIImage?, UIViewController) -> Void)?
     private var permissionCheckTimer: Timer?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        if self.sourceType == .photoLibrary {
-            // makes it so when the screen first launches
-            // and user has not given permission yet
-            // the VC is white rather than black
-            self.view.backgroundColor = .white
-        }
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard self.permissionCheckTimer == nil else { return }
@@ -80,22 +70,28 @@ class ImagePickerCropperViewController: UIImagePickerController, UIImagePickerCo
             switch self.sourceType {
             case .camera:
                 switch type(of: self).cameraPermission {
-                case .notDetermined:
-                    break // do nothing. the user needs to pick
                 case .authorized:
                     invalidateTimer()
                 case .restricted, .denied:
                     invalidateTimer()
                     self.completionHandler?(nil, self)
+                case .notDetermined:
+                    fallthrough
+                @unknown default:
+                    break // do nothing. the user needs to pick
                 }
             case .photoLibrary, .savedPhotosAlbum:
                 invalidateTimer() // iOS 11 makes photos permission no longer needed for UIImagePickerController
+            @unknown default:
+                // in the case we don't know whats happening,
+                // just disable the timer and hope it all works out.
+                invalidateTimer()
             }
         }
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let original = info[UIImagePickerControllerOriginalImage] as? UIImage
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let original = info[.originalImage] as? UIImage
         guard let image = original else { self.completionHandler?(nil, picker); return; }
         let crop = CropViewController(croppingStyle: .default, image: image)
         crop.delegate = self
@@ -141,6 +137,8 @@ extension ImagePickerCropperViewController: CropViewControllerDelegate {
     }
 
     func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
-        cropViewController.dismiss(animated: true, completion: nil)
+        cropViewController.dismiss(animated: true) {
+            self.completionHandler?(nil, self)
+        }
     }
 }

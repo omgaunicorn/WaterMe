@@ -22,12 +22,11 @@
 //
 
 import WaterMeData
-import Result
 import Intents
 import CoreSpotlight
 import MobileCoreServices
 
-typealias NSUserActivityContinuedHandler = ([Any]?) -> Void
+typealias NSUserActivityContinuedHandler = ([UIUserActivityRestoring]?) -> Void
 
 typealias UserActivityResult = Result<UserActivityToContinue, UserActivityToFail>
 
@@ -41,7 +40,7 @@ struct UserActivityToFail: Error {
     var completion: NSUserActivityContinuedHandler?
 }
 
-public extension NSUserActivity {
+extension NSUserActivity {
 
     fileprivate static let stringSeparator = "::"
 

@@ -49,13 +49,22 @@ class TextViewTableViewCell: UITableViewCell {
         super.prepareForReuse()
         self.textView?.attributedText = nil
     }
-    
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
+
+    private func updateLayout() {
         self.heightConstraint?.constant =
             self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory ?
                 type(of: self).style_cellHeightAccessibilityTextSizeEnabled :
                 type(of: self).style_cellHeightAccessibilityTextSizeDisabled
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        self.updateLayout()
+    }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.updateLayout()
     }
 }
 

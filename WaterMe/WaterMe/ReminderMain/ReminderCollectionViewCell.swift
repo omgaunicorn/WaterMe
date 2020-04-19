@@ -74,14 +74,23 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         self.smallEmojiImageView?.ring = true
     }
 
-    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        super.traitCollectionDidChange(previousTraitCollection)
-        switch UIApplication.shared.preferredContentSizeCategory.isAccessibilityCategory {
+    private func updateLayout() {
+        switch self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory {
         case true:
             self.emojiImageWidthConstraint?.constant = type(of: self).style_emojiImageViewWidthAccessibility
         case false:
             self.emojiImageWidthConstraint?.constant = type(of: self).style_emojiImageViewWidth
         }
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        self.updateLayout()
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.updateLayout()
     }
 
     func willDisplay() {
