@@ -64,6 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
         #endif
 
+        // configure simulator
+        self.simulator_configure()
+
         // configure main thread checking
         DispatchQueue.configureMainQueue()
         
@@ -270,5 +273,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      shouldRestoreApplicationState coder: NSCoder) -> Bool
     {
         return self.application(application, shouldRestoreSecureApplicationState: coder)
+    }
+}
+
+extension AppDelegate {
+    private func simulator_configure() {
+        #if targetEnvironment(simulator)
+        log.debug(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        #endif
     }
 }

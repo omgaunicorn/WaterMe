@@ -12,7 +12,7 @@ WaterMe is an open source iOS application that is available for free on the App 
 
 1  |2  |3  |4  |5
 :-:|:-:|:-:|:-:|:-:
-![1](/Screenshots/2.0/iPhone%204.0/01.png)|![2](/Screenshots/2.0/iPhone%204.0/02.png)|![3](/Screenshots/2.0/iPhone%204.0/03.png)|![4](/Screenshots/2.0/iPhone%204.0/04.png)|![5](/Screenshots/2.0/iPhone%204.0/05.png)
+![1](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/01.png)|![2](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/02.png)|![3](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/03.png)|![4](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/04.png)|![5](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/05.png)
 
 ## App Store Description
 
