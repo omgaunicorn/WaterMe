@@ -8,20 +8,12 @@ target 'WaterMe' do
 	pod 'Cheers', '~> 2.3.0'
 	pod 'CropViewController', '~> 2.5.2'
 	pod 'RealmSwift', '~> 3.21.0'
-	pod 'XCGLogger', '~> 7.0.1'
 end
 
 target 'Datum' do
 	platform :ios, '11.0'
 	use_frameworks!
 	pod 'RealmSwift'
-	pod 'XCGLogger'
-end
-
-target 'Store' do
-	platform :ios, '11.0'
-	use_frameworks!
-	pod 'XCGLogger'
 end
 
 post_install do |installer|
