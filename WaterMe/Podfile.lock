@@ -1,5 +1,4 @@
 PODS:
-  - Cheers (2.3.0)
   - CropViewController (2.5.2)
   - Realm (3.21.0):
     - Realm/Headers (= 3.21.0)
@@ -9,7 +8,6 @@ PODS:
   - SimpleImageViewer (1.1.2)
 
 DEPENDENCIES:
-  - Cheers (~> 2.3.0)
   - CropViewController (~> 2.5.2)
   - RealmSwift
   - RealmSwift (~> 3.21.0)
@@ -17,7 +15,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Cheers
     - CropViewController
     - Realm
     - RealmSwift
@@ -33,12 +30,11 @@ CHECKOUT OPTIONS:
     :git: "git@github.com:jeffreybergier/SimpleImageViewer.git"
 
 SPEC CHECKSUMS:
-  Cheers: 7e42fc09e1ca5059870b979131136d17b50ccc9c
   CropViewController: 1aac40093c5739e60d992b04724a55d12a689a4c
   Realm: 38e9dcb19104b58407167d99f70d4995f7c16023
   RealmSwift: 3183cc1ad48378fbcd634311b22c0e6c44021152
   SimpleImageViewer: 290c2f126b63c136da3a63ae9de70a0fd838c0a3
 
-PODFILE CHECKSUM: 6103aa2bf353a71ebf31631072625c6750256dd2
+PODFILE CHECKSUM: d75ecdbe389953feedb1bc3a217a48bc94f65057
 
 COCOAPODS: 1.8.4

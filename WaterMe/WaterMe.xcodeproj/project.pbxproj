@@ -74,6 +74,7 @@
 		503476F724557A7800C3DAD3 /* SPMShim.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		503476FB24557A7D00C3DAD3 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
 		503476FC24557A7D00C3DAD3 /* SPMShim.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5034770224557CB200C3DAD3 /* Cheers in Frameworks */ = {isa = PBXBuildFile; productRef = 5034770124557CB200C3DAD3 /* Cheers */; };
 		5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */; };
 		5045CBAB1EFCCB50008E6D6A /* ReminderEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */; };
 		5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5045CBAC1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift */; };
@@ -525,6 +526,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5034770224557CB200C3DAD3 /* Cheers in Frameworks */,
 				5034765824552CFD00C3DAD3 /* Datum.framework in Frameworks */,
 				CC7EBDB4E145A49632F4234B /* Pods_WaterMe.framework in Frameworks */,
 				503476ED24557A6200C3DAD3 /* SPMShim.framework in Frameworks */,
@@ -1133,6 +1135,7 @@
 			);
 			name = WaterMe;
 			packageProductDependencies = (
+				5034770124557CB200C3DAD3 /* Cheers */,
 			);
 			productName = WaterMe;
 			productReference = 50BB0F501EBFCDE500850FF4 /* WaterMe.app */;
@@ -1226,6 +1229,7 @@
 			mainGroup = 50BB0F471EBFCDE500850FF4;
 			packageReferences = (
 				503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */,
+				5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */,
 			);
 			productRefGroup = 50BB0F511EBFCDE500850FF4 /* Products */;
 			projectDirPath = "";
@@ -2244,6 +2248,14 @@
 				minimumVersion = 7.0.0;
 			};
 		};
+		5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onmyway133/Cheers";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2256,6 +2268,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */;
 			productName = XCGLogger;
+		};
+		5034770124557CB200C3DAD3 /* Cheers */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */;
+			productName = Cheers;
 		};
 /* End XCSwiftPackageProductDependency section */
 
