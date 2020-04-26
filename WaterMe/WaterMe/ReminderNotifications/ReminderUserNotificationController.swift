@@ -173,7 +173,7 @@ class ReminderUserNotificationController {
     }
 }
 
-import WaterMeData
+import Datum
 
 extension ReminderUserNotificationController.LocalizedString {
     fileprivate static func localizedNotificationBody(from items: [String?]) -> String {

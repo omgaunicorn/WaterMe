@@ -10,11 +10,6 @@ PODS:
   - RealmSwift (3.21.0):
     - Realm (= 3.21.0)
   - SimpleImageViewer (1.1.2)
-  - WaterMeData (1.0.0):
-    - RealmSwift
-    - XCGLogger
-  - WaterMeStore (1.0.0):
-    - XCGLogger
   - XCGLogger (7.0.1):
     - XCGLogger/Core (= 7.0.1)
   - XCGLogger/Core (7.0.1):
@@ -26,8 +21,6 @@ DEPENDENCIES:
   - RealmSwift
   - RealmSwift (~> 3.21.0)
   - "SimpleImageViewer (from `git@github.com:jeffreybergier/SimpleImageViewer.git`, commit `2d244d0ff1598898b9cc79887b87b5489be7d166`)"
-  - WaterMeData (from `WaterMeData`)
-  - WaterMeStore (from `WaterMeStore`)
   - XCGLogger
   - XCGLogger (~> 7.0.1)
 
@@ -44,10 +37,6 @@ EXTERNAL SOURCES:
   SimpleImageViewer:
     :commit: 2d244d0ff1598898b9cc79887b87b5489be7d166
     :git: "git@github.com:jeffreybergier/SimpleImageViewer.git"
-  WaterMeData:
-    :path: WaterMeData
-  WaterMeStore:
-    :path: WaterMeStore
 
 CHECKOUT OPTIONS:
   SimpleImageViewer:
@@ -61,10 +50,8 @@ SPEC CHECKSUMS:
   Realm: 38e9dcb19104b58407167d99f70d4995f7c16023
   RealmSwift: 3183cc1ad48378fbcd634311b22c0e6c44021152
   SimpleImageViewer: 290c2f126b63c136da3a63ae9de70a0fd838c0a3
-  WaterMeData: 9a5b5e875d488b5270fbf6b4e2533723fdfddfe0
-  WaterMeStore: 72d769352dd2c395e2450eb98720a5bfe0aee70b
   XCGLogger: 1943831ef907df55108b0b18657953f868de973b
 
-PODFILE CHECKSUM: 78e94b6a481c6d6f5eddd65b54fc0d172cc16ecc
+PODFILE CHECKSUM: d664625fe415dbfc6f5973ced9b454244f029aee
 
 COCOAPODS: 1.8.4

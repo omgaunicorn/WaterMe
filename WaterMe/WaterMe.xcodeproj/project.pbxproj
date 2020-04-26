@@ -41,6 +41,31 @@
 		5034767824552D0700C3DAD3 /* Store.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034766824552D0600C3DAD3 /* Store.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5034767B24552D0700C3DAD3 /* Store.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5034766624552D0600C3DAD3 /* Store.framework */; };
 		5034767C24552D0700C3DAD3 /* Store.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5034766624552D0600C3DAD3 /* Store.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		503476AE24552EFE00C3DAD3 /* SignificantTimePassedDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769624552EFE00C3DAD3 /* SignificantTimePassedDetector.swift */; };
+		503476AF24552EFE00C3DAD3 /* ItemAndSectionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769724552EFE00C3DAD3 /* ItemAndSectionable.swift */; };
+		503476B024552EFE00C3DAD3 /* ReminderGedeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769824552EFE00C3DAD3 /* ReminderGedeg.swift */; };
+		503476B124552EFE00C3DAD3 /* RealmError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769A24552EFE00C3DAD3 /* RealmError.swift */; };
+		503476B224552EFE00C3DAD3 /* ModelCompleteError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769B24552EFE00C3DAD3 /* ModelCompleteError.swift */; };
+		503476B324552EFE00C3DAD3 /* UserFacingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769C24552EFE00C3DAD3 /* UserFacingError.swift */; };
+		503476B424552EFE00C3DAD3 /* NSErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769D24552EFE00C3DAD3 /* NSErrors.swift */; };
+		503476B524552EFE00C3DAD3 /* ReminderVessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769F24552EFE00C3DAD3 /* ReminderVessel.swift */; };
+		503476B624552EFE00C3DAD3 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A024552EFE00C3DAD3 /* Reminder.swift */; };
+		503476B724552EFE00C3DAD3 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A124552EFE00C3DAD3 /* Receipt.swift */; };
+		503476B824552EFE00C3DAD3 /* ReminderAndVesselValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A224552EFE00C3DAD3 /* ReminderAndVesselValue.swift */; };
+		503476B924552EFE00C3DAD3 /* ReminderVesselIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A324552EFE00C3DAD3 /* ReminderVesselIcon.swift */; };
+		503476BB24552EFE00C3DAD3 /* ReceiptController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A624552EFE00C3DAD3 /* ReceiptController.swift */; };
+		503476BC24552EFE00C3DAD3 /* ProController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A724552EFE00C3DAD3 /* ProController.swift */; };
+		503476BD24552EFE00C3DAD3 /* BasicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A824552EFE00C3DAD3 /* BasicController.swift */; };
+		503476BE24552EFE00C3DAD3 /* NSCalendar+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476AA24552EFE00C3DAD3 /* NSCalendar+WaterMe.swift */; };
+		503476BF24552EFE00C3DAD3 /* UIImage+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476AB24552EFE00C3DAD3 /* UIImage+WaterMe.swift */; };
+		503476C024552EFE00C3DAD3 /* Realm+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476AC24552EFE00C3DAD3 /* Realm+WaterMe.swift */; };
+		503476C124552EFE00C3DAD3 /* PrivateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476AD24552EFE00C3DAD3 /* PrivateKeys.swift */; };
+		503476C924552F9900C3DAD3 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476C224552F9900C3DAD3 /* PurchaseController.swift */; };
+		503476CA24552F9900C3DAD3 /* Basics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476C324552F9900C3DAD3 /* Basics.swift */; };
+		503476CB24552F9900C3DAD3 /* PrivateKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476C424552F9900C3DAD3 /* PrivateKeys.swift */; };
+		503476CC24552F9900C3DAD3 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476C524552F9900C3DAD3 /* AppVersion.swift */; };
+		503476CD24552F9900C3DAD3 /* TipJarProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476C624552F9900C3DAD3 /* TipJarProducts.swift */; };
+		503476CF24552F9900C3DAD3 /* InFlightTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476C824552F9900C3DAD3 /* InFlightTransaction.swift */; };
 		5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */; };
 		5045CBAB1EFCCB50008E6D6A /* ReminderEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */; };
 		5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5045CBAC1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift */; };
@@ -143,7 +168,6 @@
 		50F388E41FF6DA490031ED45 /* WaterMeData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50F388E11FF6DA490031ED45 /* WaterMeData.xcdatamodeld */; };
 		50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */; };
 		50F7A360200844390063A1FC /* StarterRealm.realm in Resources */ = {isa = PBXBuildFile; fileRef = 50F7A362200844390063A1FC /* StarterRealm.realm */; };
-		A22CDC4107318045C2A0725F /* Pods_NoDeviceTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884536C079641A13C887C6C5 /* Pods_NoDeviceTests.framework */; };
 		CC7EBDB4E145A49632F4234B /* Pods_WaterMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E11D3E748DFB5DC55E98C09D /* Pods_WaterMe.framework */; };
 /* End PBXBuildFile section */
 
@@ -256,6 +280,31 @@
 		5034766E24552D0700C3DAD3 /* StoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5034767524552D0700C3DAD3 /* StoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreTests.swift; sourceTree = "<group>"; };
 		5034767724552D0700C3DAD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5034769624552EFE00C3DAD3 /* SignificantTimePassedDetector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignificantTimePassedDetector.swift; sourceTree = "<group>"; };
+		5034769724552EFE00C3DAD3 /* ItemAndSectionable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemAndSectionable.swift; sourceTree = "<group>"; };
+		5034769824552EFE00C3DAD3 /* ReminderGedeg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderGedeg.swift; sourceTree = "<group>"; };
+		5034769A24552EFE00C3DAD3 /* RealmError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmError.swift; sourceTree = "<group>"; };
+		5034769B24552EFE00C3DAD3 /* ModelCompleteError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelCompleteError.swift; sourceTree = "<group>"; };
+		5034769C24552EFE00C3DAD3 /* UserFacingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFacingError.swift; sourceTree = "<group>"; };
+		5034769D24552EFE00C3DAD3 /* NSErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSErrors.swift; sourceTree = "<group>"; };
+		5034769F24552EFE00C3DAD3 /* ReminderVessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVessel.swift; sourceTree = "<group>"; };
+		503476A024552EFE00C3DAD3 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
+		503476A124552EFE00C3DAD3 /* Receipt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
+		503476A224552EFE00C3DAD3 /* ReminderAndVesselValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderAndVesselValue.swift; sourceTree = "<group>"; };
+		503476A324552EFE00C3DAD3 /* ReminderVesselIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselIcon.swift; sourceTree = "<group>"; };
+		503476A624552EFE00C3DAD3 /* ReceiptController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptController.swift; sourceTree = "<group>"; };
+		503476A724552EFE00C3DAD3 /* ProController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProController.swift; sourceTree = "<group>"; };
+		503476A824552EFE00C3DAD3 /* BasicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicController.swift; sourceTree = "<group>"; };
+		503476AA24552EFE00C3DAD3 /* NSCalendar+WaterMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCalendar+WaterMe.swift"; sourceTree = "<group>"; };
+		503476AB24552EFE00C3DAD3 /* UIImage+WaterMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+WaterMe.swift"; sourceTree = "<group>"; };
+		503476AC24552EFE00C3DAD3 /* Realm+WaterMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Realm+WaterMe.swift"; sourceTree = "<group>"; };
+		503476AD24552EFE00C3DAD3 /* PrivateKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivateKeys.swift; path = Datum/PrivateKeys.swift; sourceTree = "<group>"; };
+		503476C224552F9900C3DAD3 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PurchaseController.swift; path = Store/PurchaseController.swift; sourceTree = "<group>"; };
+		503476C324552F9900C3DAD3 /* Basics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Basics.swift; path = Store/Basics.swift; sourceTree = "<group>"; };
+		503476C424552F9900C3DAD3 /* PrivateKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivateKeys.swift; path = Store/PrivateKeys.swift; sourceTree = "<group>"; };
+		503476C524552F9900C3DAD3 /* AppVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppVersion.swift; path = Store/AppVersion.swift; sourceTree = "<group>"; };
+		503476C624552F9900C3DAD3 /* TipJarProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TipJarProducts.swift; path = Store/TipJarProducts.swift; sourceTree = "<group>"; };
+		503476C824552F9900C3DAD3 /* InFlightTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InFlightTransaction.swift; path = Store/InFlightTransaction.swift; sourceTree = "<group>"; };
 		5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReminderEdit.storyboard; sourceTree = "<group>"; };
 		5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditViewController.swift; sourceTree = "<group>"; };
 		5045CBAC1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditTableViewController.swift; sourceTree = "<group>"; };
@@ -366,15 +415,12 @@
 		50F388E21FF6DA490031ED45 /* WaterMe_CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WaterMe_CoreData.xcdatamodel; sourceTree = "<group>"; };
 		50F388E31FF6DA490031ED45 /* WaterMe_CoreData 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WaterMe_CoreData 2.xcdatamodel"; sourceTree = "<group>"; };
 		50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderGedegDataSource.swift; sourceTree = "<group>"; };
-		873B951A014E32AA56354E11 /* Pods-NoDeviceTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.debug.xcconfig"; sourceTree = "<group>"; };
 		8808A60674F2D186B72551A0 /* Pods-WaterMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.release.xcconfig"; sourceTree = "<group>"; };
-		884536C079641A13C887C6C5 /* Pods_NoDeviceTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NoDeviceTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		88952884FDA6B6CBC7C04EC5 /* Pods-Datum.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Datum.release.xcconfig"; path = "Pods/Target Support Files/Pods-Datum/Pods-Datum.release.xcconfig"; sourceTree = "<group>"; };
 		9B9CEBEDEED746418CBDA557 /* Pods_AdminConsole.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AdminConsole.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF36563AD39A2DB3AFCE0629 /* Pods-Store.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Store.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Store/Pods-Store.debug.xcconfig"; sourceTree = "<group>"; };
 		C131DD70430D8850CFEDB2E7 /* Pods-WaterMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-WaterMe/Pods-WaterMe.debug.xcconfig"; sourceTree = "<group>"; };
 		CB58E048F7B97196868C27C4 /* Pods_Store.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Store.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		DD331A926B6818410B3325A0 /* Pods-NoDeviceTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NoDeviceTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests.release.xcconfig"; sourceTree = "<group>"; };
 		E11D3E748DFB5DC55E98C09D /* Pods_WaterMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaterMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8E5B63D3CF896070BB4FB5B /* Pods-Datum.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Datum.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Datum/Pods-Datum.debug.xcconfig"; sourceTree = "<group>"; };
 		EF97BDC07B6A3E2372119FD1 /* Pods_Datum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Datum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -427,7 +473,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A22CDC4107318045C2A0725F /* Pods_NoDeviceTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +519,12 @@
 			isa = PBXGroup;
 			children = (
 				5034764524552CFD00C3DAD3 /* Datum.h */,
+				503476AD24552EFE00C3DAD3 /* PrivateKeys.swift */,
+				503476A924552EFE00C3DAD3 /* Categories */,
+				503476A524552EFE00C3DAD3 /* Controllers */,
+				5034769924552EFE00C3DAD3 /* Errors */,
+				5034769524552EFE00C3DAD3 /* HelperClasses */,
+				5034769E24552EFE00C3DAD3 /* RealmModels */,
 				5034764624552CFD00C3DAD3 /* Info.plist */,
 			);
 			path = Datum;
@@ -492,6 +543,12 @@
 			isa = PBXGroup;
 			children = (
 				5034766824552D0600C3DAD3 /* Store.h */,
+				503476C524552F9900C3DAD3 /* AppVersion.swift */,
+				503476C324552F9900C3DAD3 /* Basics.swift */,
+				503476C824552F9900C3DAD3 /* InFlightTransaction.swift */,
+				503476C424552F9900C3DAD3 /* PrivateKeys.swift */,
+				503476C224552F9900C3DAD3 /* PurchaseController.swift */,
+				503476C624552F9900C3DAD3 /* TipJarProducts.swift */,
 				5034766924552D0600C3DAD3 /* Info.plist */,
 			);
 			path = Store;
@@ -504,6 +561,64 @@
 				5034767724552D0700C3DAD3 /* Info.plist */,
 			);
 			path = StoreTests;
+			sourceTree = "<group>";
+		};
+		5034769524552EFE00C3DAD3 /* HelperClasses */ = {
+			isa = PBXGroup;
+			children = (
+				5034769624552EFE00C3DAD3 /* SignificantTimePassedDetector.swift */,
+				5034769724552EFE00C3DAD3 /* ItemAndSectionable.swift */,
+				5034769824552EFE00C3DAD3 /* ReminderGedeg.swift */,
+			);
+			name = HelperClasses;
+			path = Datum/HelperClasses;
+			sourceTree = "<group>";
+		};
+		5034769924552EFE00C3DAD3 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				5034769A24552EFE00C3DAD3 /* RealmError.swift */,
+				5034769B24552EFE00C3DAD3 /* ModelCompleteError.swift */,
+				5034769C24552EFE00C3DAD3 /* UserFacingError.swift */,
+				5034769D24552EFE00C3DAD3 /* NSErrors.swift */,
+			);
+			name = Errors;
+			path = Datum/Errors;
+			sourceTree = "<group>";
+		};
+		5034769E24552EFE00C3DAD3 /* RealmModels */ = {
+			isa = PBXGroup;
+			children = (
+				5034769F24552EFE00C3DAD3 /* ReminderVessel.swift */,
+				503476A024552EFE00C3DAD3 /* Reminder.swift */,
+				503476A124552EFE00C3DAD3 /* Receipt.swift */,
+				503476A224552EFE00C3DAD3 /* ReminderAndVesselValue.swift */,
+				503476A324552EFE00C3DAD3 /* ReminderVesselIcon.swift */,
+			);
+			name = RealmModels;
+			path = Datum/RealmModels;
+			sourceTree = "<group>";
+		};
+		503476A524552EFE00C3DAD3 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				503476A624552EFE00C3DAD3 /* ReceiptController.swift */,
+				503476A724552EFE00C3DAD3 /* ProController.swift */,
+				503476A824552EFE00C3DAD3 /* BasicController.swift */,
+			);
+			name = Controllers;
+			path = Datum/Controllers;
+			sourceTree = "<group>";
+		};
+		503476A924552EFE00C3DAD3 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				503476AA24552EFE00C3DAD3 /* NSCalendar+WaterMe.swift */,
+				503476AB24552EFE00C3DAD3 /* UIImage+WaterMe.swift */,
+				503476AC24552EFE00C3DAD3 /* Realm+WaterMe.swift */,
+			);
+			name = Categories;
+			path = Datum/Categories;
 			sourceTree = "<group>";
 		};
 		50402387200ABD8F004C7FA7 /* PurchaseConfirmation */ = {
@@ -665,10 +780,10 @@
 			isa = PBXGroup;
 			children = (
 				50BB0F521EBFCDE500850FF4 /* WaterMe */,
-				50C96A381EC2CFE8002802C1 /* NoDeviceTests */,
 				5034764424552CFD00C3DAD3 /* Datum */,
-				5034765124552CFD00C3DAD3 /* DatumTests */,
 				5034766724552D0600C3DAD3 /* Store */,
+				50C96A381EC2CFE8002802C1 /* NoDeviceTests */,
+				5034765124552CFD00C3DAD3 /* DatumTests */,
 				5034767424552D0700C3DAD3 /* StoreTests */,
 				50BB0F511EBFCDE500850FF4 /* Products */,
 				D282BCF4E8B3004228E0F3BF /* Pods */,
@@ -769,7 +884,6 @@
 				5034763B24552BCF00C3DAD3 /* Store.framework */,
 				5034761324552B5200C3DAD3 /* Datum.framework */,
 				9B9CEBEDEED746418CBDA557 /* Pods_AdminConsole.framework */,
-				884536C079641A13C887C6C5 /* Pods_NoDeviceTests.framework */,
 				E11D3E748DFB5DC55E98C09D /* Pods_WaterMe.framework */,
 				EF97BDC07B6A3E2372119FD1 /* Pods_Datum.framework */,
 				CB58E048F7B97196868C27C4 /* Pods_Store.framework */,
@@ -782,8 +896,6 @@
 			children = (
 				403ED0B9FD8DFE91560E8B80 /* Pods-AdminConsole.debug.xcconfig */,
 				1CD49FF23792A05DAB59D06B /* Pods-AdminConsole.release.xcconfig */,
-				873B951A014E32AA56354E11 /* Pods-NoDeviceTests.debug.xcconfig */,
-				DD331A926B6818410B3325A0 /* Pods-NoDeviceTests.release.xcconfig */,
 				C131DD70430D8850CFEDB2E7 /* Pods-WaterMe.debug.xcconfig */,
 				8808A60674F2D186B72551A0 /* Pods-WaterMe.release.xcconfig */,
 				E8E5B63D3CF896070BB4FB5B /* Pods-Datum.debug.xcconfig */,
@@ -919,11 +1031,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50C96A3C1EC2CFE8002802C1 /* Build configuration list for PBXNativeTarget "NoDeviceTests" */;
 			buildPhases = (
-				C7DEAEA357C7026D35E64870 /* [CP] Check Pods Manifest.lock */,
 				50C96A331EC2CFE8002802C1 /* Sources */,
 				50C96A341EC2CFE8002802C1 /* Frameworks */,
 				50C96A351EC2CFE8002802C1 /* Resources */,
-				181BFC3E457D8747E95F19F8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -948,6 +1058,7 @@
 					5034764224552CFD00C3DAD3 = {
 						CreatedOnToolsVersion = 11.4;
 						DevelopmentTeam = V6ESYGU6CV;
+						LastSwiftMigration = 1140;
 						ProvisioningStyle = Automatic;
 					};
 					5034764A24552CFD00C3DAD3 = {
@@ -959,6 +1070,7 @@
 					5034766524552D0600C3DAD3 = {
 						CreatedOnToolsVersion = 11.4;
 						DevelopmentTeam = V6ESYGU6CV;
+						LastSwiftMigration = 1140;
 						ProvisioningStyle = Automatic;
 					};
 					5034766D24552D0700C3DAD3 = {
@@ -1082,34 +1194,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		181BFC3E457D8747E95F19F8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/WaterMeData/WaterMeData.framework",
-				"${BUILT_PRODUCTS_DIR}/WaterMeStore/WaterMeStore.framework",
-				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjcExceptionBridging.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeData.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeStore.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NoDeviceTests/Pods-NoDeviceTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		44B12411F1A3FF58FB1AB4B1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1186,24 +1270,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C7DEAEA357C7026D35E64870 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NoDeviceTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		CE2C00C5ABC8C486A49A15A3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1217,8 +1283,6 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SimpleImageViewer/SimpleImageViewer.framework",
-				"${BUILT_PRODUCTS_DIR}/WaterMeData/WaterMeData.framework",
-				"${BUILT_PRODUCTS_DIR}/WaterMeStore/WaterMeStore.framework",
 				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -1229,8 +1293,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimpleImageViewer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeData.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WaterMeStore.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1245,6 +1307,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				503476B724552EFE00C3DAD3 /* Receipt.swift in Sources */,
+				503476BE24552EFE00C3DAD3 /* NSCalendar+WaterMe.swift in Sources */,
+				503476AF24552EFE00C3DAD3 /* ItemAndSectionable.swift in Sources */,
+				503476B324552EFE00C3DAD3 /* UserFacingError.swift in Sources */,
+				503476B024552EFE00C3DAD3 /* ReminderGedeg.swift in Sources */,
+				503476B224552EFE00C3DAD3 /* ModelCompleteError.swift in Sources */,
+				503476C124552EFE00C3DAD3 /* PrivateKeys.swift in Sources */,
+				503476BD24552EFE00C3DAD3 /* BasicController.swift in Sources */,
+				503476BB24552EFE00C3DAD3 /* ReceiptController.swift in Sources */,
+				503476B124552EFE00C3DAD3 /* RealmError.swift in Sources */,
+				503476AE24552EFE00C3DAD3 /* SignificantTimePassedDetector.swift in Sources */,
+				503476C024552EFE00C3DAD3 /* Realm+WaterMe.swift in Sources */,
+				503476B624552EFE00C3DAD3 /* Reminder.swift in Sources */,
+				503476B924552EFE00C3DAD3 /* ReminderVesselIcon.swift in Sources */,
+				503476BC24552EFE00C3DAD3 /* ProController.swift in Sources */,
+				503476B824552EFE00C3DAD3 /* ReminderAndVesselValue.swift in Sources */,
+				503476B424552EFE00C3DAD3 /* NSErrors.swift in Sources */,
+				503476B524552EFE00C3DAD3 /* ReminderVessel.swift in Sources */,
+				503476BF24552EFE00C3DAD3 /* UIImage+WaterMe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1260,6 +1341,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				503476CA24552F9900C3DAD3 /* Basics.swift in Sources */,
+				503476CF24552F9900C3DAD3 /* InFlightTransaction.swift in Sources */,
+				503476C924552F9900C3DAD3 /* PurchaseController.swift in Sources */,
+				503476CC24552F9900C3DAD3 /* AppVersion.swift in Sources */,
+				503476CD24552F9900C3DAD3 /* TipJarProducts.swift in Sources */,
+				503476CB24552F9900C3DAD3 /* PrivateKeys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1450,6 +1537,7 @@
 			baseConfigurationReference = E8E5B63D3CF896070BB4FB5B /* Pods-Datum.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
@@ -1469,6 +1557,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.waterme.Datum;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1481,6 +1570,7 @@
 			baseConfigurationReference = 88952884FDA6B6CBC7C04EC5 /* Pods-Datum.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
@@ -1556,6 +1646,7 @@
 			baseConfigurationReference = AF36563AD39A2DB3AFCE0629 /* Pods-Store.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
@@ -1575,6 +1666,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.waterme.Store;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1587,6 +1679,7 @@
 			baseConfigurationReference = 2CAC2C606C2E2ECE9E07172A /* Pods-Store.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
@@ -1770,6 +1863,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C131DD70430D8850CFEDB2E7 /* Pods-WaterMe.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 250017;
@@ -1793,6 +1887,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8808A60674F2D186B72551A0 /* Pods-WaterMe.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 250017;
@@ -1813,7 +1908,6 @@
 		};
 		50C96A3D1EC2CFE8002802C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 873B951A014E32AA56354E11 /* Pods-NoDeviceTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
@@ -1829,7 +1923,6 @@
 		};
 		50C96A3E1EC2CFE8002802C1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD331A926B6818410B3325A0 /* Pods-NoDeviceTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = V6ESYGU6CV;

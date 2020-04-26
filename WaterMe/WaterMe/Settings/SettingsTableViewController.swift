@@ -22,8 +22,8 @@
 //
 
 import StoreKit
-import WaterMeData
-import WaterMeStore
+import Datum
+import Store
 import UIKit
 
 class SettingsTableViewController: StandardTableViewController {

@@ -21,7 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Foundation
+import UIKit
 
 public protocol SignificantTimePassedDetectorDelegate: class {
     func significantTimeDidPass(with reason: SignificantTimePassedDetector.Reason,
