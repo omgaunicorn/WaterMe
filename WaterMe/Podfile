@@ -20,6 +20,17 @@ target 'NoDeviceTests' do
   pod 'WaterMeStore', :path => 'WaterMeStore'
 end
 
+target 'Datum' do
+	use_frameworks!
+	pod 'RealmSwift'
+	pod 'XCGLogger'
+end
+
+target 'Store' do
+	use_frameworks!
+	pod 'XCGLogger'
+end
+
 post_install do |installer|
 
   #
