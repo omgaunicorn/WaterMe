@@ -323,8 +323,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1CD49FF23792A05DAB59D06B /* Pods-AdminConsole.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdminConsole.release.xcconfig"; path = "Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole.release.xcconfig"; sourceTree = "<group>"; };
-		403ED0B9FD8DFE91560E8B80 /* Pods-AdminConsole.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AdminConsole.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AdminConsole/Pods-AdminConsole.debug.xcconfig"; sourceTree = "<group>"; };
 		5002ADE323E6AC5600CBC2B9 /* NSObject+Runtime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
 		5002ADE423E6AC5F00CBC2B9 /* NSObject+Runtime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
 		500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderMainViewController.swift; sourceTree = "<group>"; };
@@ -1015,8 +1013,6 @@
 		D282BCF4E8B3004228E0F3BF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				403ED0B9FD8DFE91560E8B80 /* Pods-AdminConsole.debug.xcconfig */,
-				1CD49FF23792A05DAB59D06B /* Pods-AdminConsole.release.xcconfig */,
 				C131DD70430D8850CFEDB2E7 /* Pods-WaterMe.debug.xcconfig */,
 				8808A60674F2D186B72551A0 /* Pods-WaterMe.release.xcconfig */,
 				E8E5B63D3CF896070BB4FB5B /* Pods-Datum.debug.xcconfig */,
