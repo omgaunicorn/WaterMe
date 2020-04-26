@@ -1,0 +1,3 @@
+[submodule "WaterMe/GitSubmodules/SimpleImageViewer"]
+	path = WaterMe/GitSubmodules/SimpleImageViewer
+	url = https://jeffreybergier@github.com/jeffreybergier/SimpleImageViewer.git

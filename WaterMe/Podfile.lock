@@ -5,13 +5,11 @@ PODS:
   - Realm/Headers (3.21.0)
   - RealmSwift (3.21.0):
     - Realm (= 3.21.0)
-  - SimpleImageViewer (1.1.2)
 
 DEPENDENCIES:
   - CropViewController (~> 2.5.2)
   - RealmSwift
   - RealmSwift (~> 3.21.0)
-  - "SimpleImageViewer (from `git@github.com:jeffreybergier/SimpleImageViewer.git`, commit `2d244d0ff1598898b9cc79887b87b5489be7d166`)"
 
 SPEC REPOS:
   trunk:
@@ -19,22 +17,11 @@ SPEC REPOS:
     - Realm
     - RealmSwift
 
-EXTERNAL SOURCES:
-  SimpleImageViewer:
-    :commit: 2d244d0ff1598898b9cc79887b87b5489be7d166
-    :git: "git@github.com:jeffreybergier/SimpleImageViewer.git"
-
-CHECKOUT OPTIONS:
-  SimpleImageViewer:
-    :commit: 2d244d0ff1598898b9cc79887b87b5489be7d166
-    :git: "git@github.com:jeffreybergier/SimpleImageViewer.git"
-
 SPEC CHECKSUMS:
   CropViewController: 1aac40093c5739e60d992b04724a55d12a689a4c
   Realm: 38e9dcb19104b58407167d99f70d4995f7c16023
   RealmSwift: 3183cc1ad48378fbcd634311b22c0e6c44021152
-  SimpleImageViewer: 290c2f126b63c136da3a63ae9de70a0fd838c0a3
 
-PODFILE CHECKSUM: d75ecdbe389953feedb1bc3a217a48bc94f65057
+PODFILE CHECKSUM: 10e3aa35d2d533e661be9d5ac9b1e7fbaec7e030
 
 COCOAPODS: 1.8.4
