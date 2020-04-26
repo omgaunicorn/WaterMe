@@ -71,9 +71,7 @@
 		503476F324557A6A00C3DAD3 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = 503476F224557A6A00C3DAD3 /* ObjcExceptionBridging */; };
 		503476F524557A6A00C3DAD3 /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 503476F424557A6A00C3DAD3 /* XCGLogger */; };
 		503476F624557A7800C3DAD3 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
-		503476F724557A7800C3DAD3 /* SPMShim.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		503476FB24557A7D00C3DAD3 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
-		503476FC24557A7D00C3DAD3 /* SPMShim.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5034770224557CB200C3DAD3 /* Cheers in Frameworks */ = {isa = PBXBuildFile; productRef = 5034770124557CB200C3DAD3 /* Cheers */; };
 		50380EB4245584F800271545 /* SimpleImageViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50380EB1245584ED00271545 /* SimpleImageViewer.framework */; };
 		50380EB5245584F800271545 /* SimpleImageViewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50380EB1245584ED00271545 /* SimpleImageViewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -294,28 +292,6 @@
 				5034767C24552D0700C3DAD3 /* Store.framework in Embed Frameworks */,
 				50380EB5245584F800271545 /* SimpleImageViewer.framework in Embed Frameworks */,
 				5034765924552CFD00C3DAD3 /* Datum.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		503476FA24557A7800C3DAD3 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				503476F724557A7800C3DAD3 /* SPMShim.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		503476FF24557A7D00C3DAD3 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				503476FC24557A7D00C3DAD3 /* SPMShim.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1060,7 +1036,6 @@
 				5034763F24552CFD00C3DAD3 /* Sources */,
 				5034764024552CFD00C3DAD3 /* Frameworks */,
 				5034764124552CFD00C3DAD3 /* Resources */,
-				503476FF24557A7D00C3DAD3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1101,7 +1076,6 @@
 				5034766224552D0600C3DAD3 /* Sources */,
 				5034766324552D0600C3DAD3 /* Frameworks */,
 				5034766424552D0600C3DAD3 /* Resources */,
-				503476FA24557A7800C3DAD3 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
