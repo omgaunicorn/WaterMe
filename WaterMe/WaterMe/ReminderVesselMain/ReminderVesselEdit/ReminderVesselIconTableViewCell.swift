@@ -41,8 +41,8 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
         self.emojiImageView?.setIcon(icon)
     }
     
-    @IBAction private func iconButtonTapped(_ sender: NSObject?) {
-        self.iconButtonTapped?(sender as! UIView)
+    @IBAction private func iconButtonTapped(_ sender: UIView) {
+        self.iconButtonTapped?(sender)
     }
     
     override func awakeFromNib() {
