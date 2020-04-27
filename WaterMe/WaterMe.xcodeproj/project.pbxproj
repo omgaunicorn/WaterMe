@@ -616,10 +616,10 @@
 			isa = PBXGroup;
 			children = (
 				5034766824552D0600C3DAD3 /* Store.h */,
+				503476C424552F9900C3DAD3 /* PrivateKeys.swift */,
 				503476C524552F9900C3DAD3 /* AppVersion.swift */,
 				503476C324552F9900C3DAD3 /* Basics.swift */,
 				503476C824552F9900C3DAD3 /* InFlightTransaction.swift */,
-				503476C424552F9900C3DAD3 /* PrivateKeys.swift */,
 				503476C224552F9900C3DAD3 /* PurchaseController.swift */,
 				503476C624552F9900C3DAD3 /* TipJarProducts.swift */,
 				5034766924552D0600C3DAD3 /* Info.plist */,

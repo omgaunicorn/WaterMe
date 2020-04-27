@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
+   uuid = "5B7D2CCD-9F37-45DF-BABA-F1B009C78734"
    type = "3"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "FAFAF679-73ED-4ABA-BC8E-625CE6FAAA58"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
@@ -30,6 +32,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "3E2E022F-267D-4D49-9A35-382CC992AAA7"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
@@ -54,6 +57,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "8654C9E0-938B-4FE9-8401-C944B64B5006"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
@@ -78,6 +82,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "EF340F92-E06B-4DB1-B1F6-F3B3267FCCCA"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
@@ -102,6 +107,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "C99D8A54-5407-45BA-A747-7EDE24CCB205"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
@@ -126,6 +132,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "046A18DA-54A2-488B-80FB-48D9CC78FAAC"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
@@ -150,6 +157,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "B692EA52-C4C7-4F73-86A7-0B8E0520563E"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
@@ -174,6 +182,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "98D06FB1-E4FE-4273-AF1B-81B95AE023C0"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "Yes"
@@ -193,38 +202,6 @@
                   </ActionContent>
                </BreakpointActionProxy>
             </Actions>
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "static WaterMe.Style.(Font in _0D9FBCEEEDB34607CEB02E2F9A30D01F).emojiFont(ofSize: CoreGraphics.CGFloat) -&gt; __ObjC.UIFont"
-                  moduleName = "WaterMe"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jeffreybergier/Developer/SaturdayApps/WaterMe2/WaterMe/WaterMe/StyleExtensions.swift"
-                  timestampString = "549437510.511127"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "328"
-                  endingLineNumber = "328"
-                  offsetFromSymbolStart = "428">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "implicit closure #1 : @autoclosure () -&gt; Swift.Optional&lt;Any&gt; in static WaterMe.Style.(Font in _0D9FBCEEEDB34607CEB02E2F9A30D01F).emojiFont(ofSize: CoreGraphics.CGFloat) -&gt; __ObjC.UIFont"
-                  moduleName = "WaterMe"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jeffreybergier/Developer/SaturdayApps/WaterMe2/WaterMe/WaterMe/StyleExtensions.swift"
-                  timestampString = "549437510.51351"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "328"
-                  endingLineNumber = "328"
-                  offsetFromSymbolStart = "12">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
