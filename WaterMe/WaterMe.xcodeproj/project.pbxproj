@@ -67,11 +67,11 @@
 		503476EA24557A6200C3DAD3 /* SPMShim.h in Headers */ = {isa = PBXBuildFile; fileRef = 503476E824557A6200C3DAD3 /* SPMShim.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		503476ED24557A6200C3DAD3 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
 		503476EE24557A6200C3DAD3 /* SPMShim.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		503476F324557A6A00C3DAD3 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 503476F224557A6A00C3DAD3 /* SwiftPackageProductDependency */; };
-		503476F524557A6A00C3DAD3 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 503476F424557A6A00C3DAD3 /* SwiftPackageProductDependency */; };
+		503476F324557A6A00C3DAD3 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = 503476F224557A6A00C3DAD3 /* ObjcExceptionBridging */; };
+		503476F524557A6A00C3DAD3 /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 503476F424557A6A00C3DAD3 /* XCGLogger */; };
 		503476F624557A7800C3DAD3 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
 		503476FB24557A7D00C3DAD3 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
-		5034770224557CB200C3DAD3 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 5034770124557CB200C3DAD3 /* SwiftPackageProductDependency */; };
+		5034770224557CB200C3DAD3 /* Cheers in Frameworks */ = {isa = PBXBuildFile; productRef = 5034770124557CB200C3DAD3 /* Cheers */; };
 		50380EB4245584F800271545 /* SimpleImageViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50380EB1245584ED00271545 /* SimpleImageViewer.framework */; };
 		50380EB5245584F800271545 /* SimpleImageViewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50380EB1245584ED00271545 /* SimpleImageViewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */; };
@@ -416,6 +416,8 @@
 		508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCollectionViewCell.swift; sourceTree = "<group>"; };
 		508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalAddButtonTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionalAddButtonTableViewHeaderFooterView.xib; sourceTree = "<group>"; };
+		5091F36A2456E57D00FFB28F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5091F36B2456E57D00FFB28F /* it */ = {isa = PBXFileReference; lastKnownFileType = file; name = it; path = it.lproj/StarterRealm.realm; sourceTree = "<group>"; };
 		5096D190215474E1006E1019 /* UIApplication+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+WaterMe.swift"; sourceTree = "<group>"; };
 		5096D19221547658006E1019 /* UIView+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+WaterMe.swift"; sourceTree = "<group>"; };
 		5096D1952154775D006E1019 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -523,8 +525,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				503476F324557A6A00C3DAD3 /* BuildFile in Frameworks */,
-				503476F524557A6A00C3DAD3 /* BuildFile in Frameworks */,
+				503476F324557A6A00C3DAD3 /* ObjcExceptionBridging in Frameworks */,
+				503476F524557A6A00C3DAD3 /* XCGLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,7 +534,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5034770224557CB200C3DAD3 /* BuildFile in Frameworks */,
+				5034770224557CB200C3DAD3 /* Cheers in Frameworks */,
 				5034765824552CFD00C3DAD3 /* Datum.framework in Frameworks */,
 				503476ED24557A6200C3DAD3 /* SPMShim.framework in Frameworks */,
 				50380EB4245584F800271545 /* SimpleImageViewer.framework in Frameworks */,
@@ -559,7 +561,6 @@
 				A57C0C95377AE8CDD97CC03D /* Pods-WaterMe.debug.xcconfig */,
 				3AE4AF3D4A000A02D4AD368A /* Pods-WaterMe.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -1118,8 +1119,8 @@
 			);
 			name = SPMShim;
 			packageProductDependencies = (
-				503476F224557A6A00C3DAD3 /* SwiftPackageProductDependency */,
-				503476F424557A6A00C3DAD3 /* SwiftPackageProductDependency */,
+				503476F224557A6A00C3DAD3 /* ObjcExceptionBridging */,
+				503476F424557A6A00C3DAD3 /* XCGLogger */,
 			);
 			productName = SPMShim;
 			productReference = 503476E624557A6200C3DAD3 /* SPMShim.framework */;
@@ -1147,7 +1148,7 @@
 			);
 			name = WaterMe;
 			packageProductDependencies = (
-				5034770124557CB200C3DAD3 /* SwiftPackageProductDependency */,
+				5034770124557CB200C3DAD3 /* Cheers */,
 			);
 			productName = WaterMe;
 			productReference = 50BB0F501EBFCDE500850FF4 /* WaterMe.app */;
@@ -1237,11 +1238,12 @@
 			knownRegions = (
 				en,
 				Base,
+				it,
 			);
 			mainGroup = 50BB0F471EBFCDE500850FF4;
 			packageReferences = (
-				503476D02455792800C3DAD3 /* RemoteSwiftPackageReference */,
-				5034770024557CB200C3DAD3 /* RemoteSwiftPackageReference */,
+				503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */,
+				5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */,
 			);
 			productRefGroup = 50BB0F511EBFCDE500850FF4 /* Products */;
 			projectDirPath = "";
@@ -1684,6 +1686,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				5065AA26200EC62F00C7F0CC /* en */,
+				5091F36A2456E57D00FFB28F /* it */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1692,6 +1695,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				5065AA29200EC73400C7F0CC /* en */,
+				5091F36B2456E57D00FFB28F /* it */,
 			);
 			name = StarterRealm.realm;
 			sourceTree = "<group>";
@@ -2016,6 +2020,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -2074,6 +2079,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -2291,7 +2297,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		503476D02455792800C3DAD3 /* RemoteSwiftPackageReference */ = {
+		503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DaveWoodCom/XCGLogger";
 			requirement = {
@@ -2299,7 +2305,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		5034770024557CB200C3DAD3 /* RemoteSwiftPackageReference */ = {
+		5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onmyway133/Cheers";
 			requirement = {
@@ -2310,19 +2316,19 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		503476F224557A6A00C3DAD3 /* SwiftPackageProductDependency */ = {
+		503476F224557A6A00C3DAD3 /* ObjcExceptionBridging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 503476D02455792800C3DAD3 /* RemoteSwiftPackageReference */;
+			package = 503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */;
 			productName = ObjcExceptionBridging;
 		};
-		503476F424557A6A00C3DAD3 /* SwiftPackageProductDependency */ = {
+		503476F424557A6A00C3DAD3 /* XCGLogger */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 503476D02455792800C3DAD3 /* RemoteSwiftPackageReference */;
+			package = 503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */;
 			productName = XCGLogger;
 		};
-		5034770124557CB200C3DAD3 /* SwiftPackageProductDependency */ = {
+		5034770124557CB200C3DAD3 /* Cheers */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5034770024557CB200C3DAD3 /* RemoteSwiftPackageReference */;
+			package = 5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */;
 			productName = Cheers;
 		};
 /* End XCSwiftPackageProductDependency section */
