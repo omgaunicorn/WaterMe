@@ -64,5 +64,5 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 .DS_Store
-PrivateKeys.swift
-/WaterMe/WaterMe/emojione-apple.ttf
+## PrivateKeys.swift
+## /WaterMe/WaterMe/emojione-apple.ttf
