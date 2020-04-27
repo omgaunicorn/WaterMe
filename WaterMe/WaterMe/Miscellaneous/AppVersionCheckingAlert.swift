@@ -22,7 +22,7 @@
 //
 
 import UIKit
-import WaterMeStore
+import Store
 
 extension UIAlertController {
 

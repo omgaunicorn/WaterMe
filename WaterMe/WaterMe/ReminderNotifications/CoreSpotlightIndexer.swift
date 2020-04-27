@@ -21,7 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import WaterMeData
+import Datum
 import CoreSpotlight
 import MobileCoreServices
 

@@ -21,8 +21,8 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import WaterMeStore
-import WaterMeData
+import Store
+import Datum
 import XCGLogger
 import UserNotifications
 import AVFoundation

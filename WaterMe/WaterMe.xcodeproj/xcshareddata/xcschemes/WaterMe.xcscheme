@@ -37,6 +37,26 @@
          </BuildableReference>
       </MacroExpansion>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5034764A24552CFD00C3DAD3"
+               BuildableName = "DatumTests.xctest"
+               BlueprintName = "DatumTests"
+               ReferencedContainer = "container:WaterMe.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5034766D24552D0700C3DAD3"
+               BuildableName = "StoreTests.xctest"
+               BlueprintName = "StoreTests"
+               ReferencedContainer = "container:WaterMe.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

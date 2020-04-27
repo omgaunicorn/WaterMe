@@ -22,7 +22,7 @@
 //
 
 import UIKit
-import WaterMeData
+import Datum
 import RealmSwift
 
 protocol ReminderSummaryTableViewControllerDelegate: class {

@@ -24,18 +24,22 @@
 /// Intended to be filled out by end user
 /// Do not push private information into the repo
 public enum PrivateKeys {
+    
     public static var kRealmServer: URL {
         log.warning("Your Realm Object Server URL has not been configured.")
         fatalError("kRealmServer")
     }
+    
     public static var kEmailAddress: String {
         log.warning("Your Email Address Has Not Been Configured")
         return "EMAIL-ADDRESS@NOT-YET-CONFIGURED.NOT-A-TLD"
     }
+    
     public static var kEmailAddressURL: URL {
         log.warning("Your Email Address Has Not Been Configured")
         return URL(string: "mailto://" + kEmailAddress)!
     }
+    
     public static func kFrabicAPIKey(isReleaseBuild: Bool) -> String? {
         return nil
     }

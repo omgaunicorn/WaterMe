@@ -22,7 +22,7 @@
 //
 
 import Cheers
-import WaterMeStore
+import Store
 import UIKit
 
 typealias PurchaseThanksCompletion = (UIViewController?) -> Void

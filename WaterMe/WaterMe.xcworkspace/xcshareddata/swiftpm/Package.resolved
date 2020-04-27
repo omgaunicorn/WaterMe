@@ -1,0 +1,25 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Cheers",
+        "repositoryURL": "https://github.com/onmyway133/Cheers",
+        "state": {
+          "branch": "master",
+          "revision": "cfcdcfaadd66a8e07fbc7389c42341a2d7fd30a6",
+          "version": null
+        }
+      },
+      {
+        "package": "XCGLogger",
+        "repositoryURL": "https://github.com/DaveWoodCom/XCGLogger",
+        "state": {
+          "branch": null,
+          "revision": "a9c4667b247928a29bdd41be2ec2c8d304215a54",
+          "version": "7.0.1"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

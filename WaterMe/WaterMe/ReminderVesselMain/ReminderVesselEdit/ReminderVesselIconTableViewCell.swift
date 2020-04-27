@@ -21,7 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import WaterMeData
+import Datum
 import UIKit
 
 class ReminderVesselIconTableViewCell: UITableViewCell {
@@ -41,8 +41,8 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
         self.emojiImageView?.setIcon(icon)
     }
     
-    @IBAction private func iconButtonTapped(_ sender: NSObject?) {
-        self.iconButtonTapped?(sender as! UIView)
+    @IBAction private func iconButtonTapped(_ sender: UIView) {
+        self.iconButtonTapped?(sender)
     }
     
     override func awakeFromNib() {

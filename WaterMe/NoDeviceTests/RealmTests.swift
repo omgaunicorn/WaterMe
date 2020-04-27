@@ -21,7 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-@testable import WaterMeData
+@testable import Datum
 import XCTest
 
 class RealmTests: XCTestCase {
