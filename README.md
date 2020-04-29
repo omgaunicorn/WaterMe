@@ -3,7 +3,7 @@
 ![WaterMe App Icon](/WaterMe/WaterMe/Assets.xcassets/WaterMeIcon.imageset/all-1x.png)
 # WaterMe - Gardening Reminders
 
-WaterMe is an open source iOS application that is available for free on the App Store. Its a small app by any measure, but its my baby and I love it. According to Fabric analytics, the app has about 500 Daily Active Users and 2,400 monthly active users. WaterMe is under active development and I welcome feature requests and pull requests.
+WaterMe is an open source iOS application that is available for free on the App Store. Its a small app by any measure, but its my baby and I love it. According to Fabric analytics, the app has about 3,300 Monthly Active Devices with 42,000 Monthly Sessions. WaterMe is under active development and I welcome feature requests and pull requests.
 
 [📲 App Store Link](https://itunes.apple.com/app/waterme/id1089742494)<br>
 [🕊 TestFlight Link](https://testflight.apple.com/join/C9vDCb25)
