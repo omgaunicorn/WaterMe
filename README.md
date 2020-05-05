@@ -3,7 +3,7 @@
 ![WaterMe App Icon](/WaterMe/WaterMe/Assets.xcassets/WaterMeIcon.imageset/all-1x.png)
 # WaterMe - Gardening Reminders
 
-WaterMe is an open source iOS application that is available for free on the App Store. Its a small app by any measure, but its my baby and I love it. According to Fabric analytics, the app has about 500 Daily Active Users and 2,400 monthly active users. WaterMe is under active development and I welcome feature requests and pull requests.
+WaterMe is an open source iOS application that is available for free on the App Store. Its a small app by any measure, but its my baby and I love it. According to Fabric analytics, the app has about 3,300 Monthly Active Devices with 42,000 Monthly Sessions. WaterMe is under active development and I welcome feature requests and pull requests.
 
 [📲 App Store Link](https://itunes.apple.com/app/waterme/id1089742494)<br>
 [🕊 TestFlight Link](https://testflight.apple.com/join/C9vDCb25)
@@ -12,7 +12,7 @@ WaterMe is an open source iOS application that is available for free on the App 
 
 1  |2  |3  |4  |5
 :-:|:-:|:-:|:-:|:-:
-![1](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/01.png)|![2](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/02.png)|![3](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/03.png)|![4](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/04.png)|![5](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/05.png)
+![1](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/en-01.png)|![2](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/en-02.png)|![3](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/en-03.png)|![4](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/en-04.png)|![5](/Screenshots/2.5/5.8%20-%20iPhone%2011%20Pro/en-05.png)
 
 ## App Store Description
 
@@ -105,7 +105,7 @@ There are 3 files that are placeholders for storage in the repository. Please do
 1. [`emojione-apple.ttc`](/WaterMe/WaterMe/emojione-apple.ttc)
     - WaterMe uses [EmojiOne](https://www.emojione.com) emoji rather than the built-in emoji. This is because Apple rejected the app for using Apple's artwork. Using this alternative emoji font avoid this rejection.
     - The font file is not mine so I don't want to commit it into the repo. The application works fine without this font, it just can't be submitted to the app store. 
-1. `PrivateKeys.swift`: [File 1](/WaterMe/WaterMeData/Source/PrivateKeys.swift), [File 2](/WaterMe/WaterMeStore/Source/PrivateKeys.swift)
+1. `PrivateKeys.swift`: [File 1](/WaterMe/Datum/Datum/PrivateKeys.swift), [File 2](/WaterMe/Store/Store/PrivateKeys.swift)
     - These files store keys that I don't want commited to the repo.
     - These files have placeholder values and the app can handle not having this information without crashing.
     - However, it can't be submitted to the App Store without this information
