@@ -52,16 +52,55 @@ internal class ReminderVesselQueryImp: ReminderVesselQuery {
     }
 }
 
-public class ReminderVesselCollection: DatumCollection<AnyRealmCollection<ReminderVessel>> {
-    public subscript(index: Int) -> ReminderVessel {
-        get {
-            return self.collection[index]
-        }
-    }
-    public func compactMap<ElementOfResult>(_ transform: (ReminderVessel) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
-        return try self.collection.compactMap(transform)
-    }
+public class ReminderVesselCollection: DatumCollection<ReminderVessel, AnyRealmCollection<ReminderVessel>> {
+    public var isInvalidated: Bool { return self.collection.isInvalidated }
     public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
         return self.collection.index(matching: predicateFormat, args)
+    }
+}
+
+public enum ReminderVesselChange {
+    case error(Error)
+    case change(changedDisplayName: Bool, changedIconEmoji: Bool, changedReminders: Bool, changedPointlessBloop: Bool)
+    case deleted
+}
+
+public protocol ReminderVesselObservable {
+    func datum_observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken
+    func datum_observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken
+}
+
+extension ReminderVessel: ReminderVesselObservable {
+    public func datum_observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken {
+        return self.observe { realmChange in
+            switch realmChange {
+            case .error(let error):
+                block(.error(error))
+            case .change(let properties):
+                let changedDisplayName = ReminderVessel.propertyChangesContainDisplayName(properties)
+                let changedIconEmoji = ReminderVessel.propertyChangesContainIconEmoji(properties)
+                let changedReminders = ReminderVessel.propertyChangesContainReminders(properties)
+                let changedPointlessBloop = ReminderVessel.propertyChangesContainPointlessBloop(properties)
+                block(.change(changedDisplayName: changedDisplayName,
+                              changedIconEmoji: changedIconEmoji,
+                              changedReminders: changedReminders,
+                              changedPointlessBloop: changedPointlessBloop))
+            case .deleted:
+                block(.deleted)
+            }
+        }
+    }
+    
+    public func datum_observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
+        return self.reminders.observe { realmChange in
+            switch realmChange {
+            case .initial(let data):
+                block(.initial(data: .init(AnyRealmCollection(data))))
+            case .update(_, let deletions, let insertions, let modifications):
+                block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
+            case .error(let error):
+                block(.error(error: error))
+            }
+        }
     }
 }

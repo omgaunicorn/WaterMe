@@ -84,13 +84,13 @@ extension ReminderVessel: ModelCompleteCheckable {
 }
 
 extension ReminderVessel {
-    public class func propertyChangesContainDisplayName(_ properties: [PropertyChange]) -> Bool {
+    internal class func propertyChangesContainDisplayName(_ properties: [PropertyChange]) -> Bool {
         _ = \ReminderVessel.displayName // here to cause a compile error if this changes
         let matches = properties.filter({ $0.name == "displayName" })
         let contains = !matches.isEmpty
         return contains
     }
-    public class func propertyChangesContainIconEmoji(_ properties: [PropertyChange]) -> Bool {
+    internal class func propertyChangesContainIconEmoji(_ properties: [PropertyChange]) -> Bool {
         _ = \ReminderVessel.iconImageData
         _ = \ReminderVessel.iconEmojiString // here to cause a compile error if this changes
         let dataMatches = properties.filter({ $0.name == "iconImageData" })
@@ -98,13 +98,13 @@ extension ReminderVessel {
         let contains = !dataMatches.isEmpty || !emojiMatches.isEmpty
         return contains
     }
-    public class func propertyChangesContainReminders(_ properties: [PropertyChange]) -> Bool {
+    internal class func propertyChangesContainReminders(_ properties: [PropertyChange]) -> Bool {
         _ = \ReminderVessel.reminders // here to cause a compile error if this changes
         let matches = properties.filter({ $0.name == "reminders" })
         let contains = !matches.isEmpty
         return contains
     }
-    public class func propertyChangesContainPointlessBloop(_ properties: [PropertyChange]) -> Bool {
+    internal class func propertyChangesContainPointlessBloop(_ properties: [PropertyChange]) -> Bool {
         _ = \ReminderVessel.bloop // here to cause a compile error if this changes
         let matches = properties.filter({ $0.name == "bloop" })
         let contains = !matches.isEmpty

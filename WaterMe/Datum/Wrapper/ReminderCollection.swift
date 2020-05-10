@@ -52,15 +52,8 @@ internal class ReminderQueryImp: ReminderQuery {
     }
 }
 
-public class ReminderCollection: DatumCollection<AnyRealmCollection<Reminder>> {
-    public subscript(index: Int) -> Reminder {
-        get {
-            return self.collection[index]
-        }
-    }
-    public func compactMap<ElementOfResult>(_ transform: (Reminder) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
-        return try self.collection.compactMap(transform)
-    }
+public class ReminderCollection: DatumCollection<Reminder, AnyRealmCollection<Reminder>> {
+    public var isInvalidated: Bool { return self.collection.isInvalidated }
     public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
         return self.collection.index(matching: predicateFormat, args)
     }

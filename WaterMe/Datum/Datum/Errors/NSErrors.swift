@@ -27,12 +27,11 @@ extension NSError {
 
     private static let kDomain = "WaterMe"
 
-    public convenience init(reminderVesselPropertyChangeUnknownCaseErrorWithChangedKeyPaths keypaths: [String]) {
+    public convenience init(reminderVesselPropertyChangeUnknownCaseError: Bool?) {
         let code = 1001
         let message = "Unhandled case for ReminderVessel property changes."
         let userInfo: [String : Any] = [
             NSLocalizedFailureReasonErrorKey : message,
-            NSDebugDescriptionErrorKey : keypaths
         ]
         self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
     }
