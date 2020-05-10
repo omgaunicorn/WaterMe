@@ -22,7 +22,6 @@
 //
 
 import Datum
-import RealmSwift
 import IntentsUI
 import UIKit
 
@@ -101,8 +100,8 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         }
     }
     
-    private func reminderChanged(_ changes: ObjectChange) {
-        switch changes {
+    private func reminderChanged(_ change: ReminderChange) {
+        switch change {
         case .change:
             self.tableViewController?.tableView.reloadData()
         case .error(let error):
@@ -256,10 +255,10 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     }
     
     private func startNotifications() {
-      self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
+      self.notificationToken = self.reminderResult?.value?.datum_observe({ [weak self] in self?.reminderChanged($0) })
     }
     
-    private var notificationToken: NotificationToken?
+    private var notificationToken: ObservationToken?
     
     deinit {
       self.notificationToken?.invalidate()

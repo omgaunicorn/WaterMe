@@ -39,7 +39,7 @@ internal class ReminderQueryImp: ReminderQuery {
         self.collection = collection
     }
     func observe(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
-        let token = self.collection.observe { realmChange in
+        return self.collection.observe { realmChange in
             switch realmChange {
             case .initial(let data):
                 block(.initial(data: .init(data)))
@@ -49,7 +49,6 @@ internal class ReminderQueryImp: ReminderQuery {
                 block(.error(error: error))
             }
         }
-        return token
     }
 }
 
@@ -64,5 +63,30 @@ public class ReminderCollection: DatumCollection<AnyRealmCollection<Reminder>> {
     }
     public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
         return self.collection.index(matching: predicateFormat, args)
+    }
+}
+
+public enum ReminderChange {
+    case error(Error)
+    case change
+    case deleted
+}
+
+public protocol ReminderObservable {
+    func datum_observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken
+}
+
+extension Reminder: ReminderObservable {
+    public func datum_observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken {
+        return self.observe { realmChange in
+            switch realmChange {
+            case .error(let error):
+                block(.error(error))
+            case .change:
+                block(.change)
+            case .deleted:
+                block(.deleted)
+            }
+        }
     }
 }

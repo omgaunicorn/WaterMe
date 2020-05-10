@@ -24,7 +24,6 @@
 import UIKit
 import SimpleImageViewer
 import Datum
-import RealmSwift
 
 class ReminderSummaryViewController: StandardViewController {
 
@@ -79,7 +78,7 @@ class ReminderSummaryViewController: StandardViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
+        self.notificationToken = self.reminderResult?.value?.datum_observe({ [weak self] in self?.reminderChanged($0) })
         self.updateViewForPresentation()
         self.userActivityDelegate.currentReminderAndVessel = { [weak self] in
             // should be unowned because this object should not exist longer
@@ -133,10 +132,10 @@ class ReminderSummaryViewController: StandardViewController {
         }
     }
 
-    private func reminderChanged(_ changes: ObjectChange) {
-        switch changes {
+    private func reminderChanged(_ change: ReminderChange) {
+        switch change {
         case .change:
-            guard let reminder = self.reminderResult.value else { return }
+            guard let reminder = self.reminderResult.value else { fallthrough }
             self.reminderID = Reminder.Identifier(reminder: reminder)
             self.tableViewController.tableView.reloadData()
         case .deleted, .error:
@@ -151,7 +150,7 @@ class ReminderSummaryViewController: StandardViewController {
         }
     }
 
-    private var notificationToken: NotificationToken?
+    private var notificationToken: ObservationToken?
     deinit {
         self.notificationToken?.invalidate()
     }

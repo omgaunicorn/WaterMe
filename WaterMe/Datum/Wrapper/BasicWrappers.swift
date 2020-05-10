@@ -34,4 +34,5 @@ public class DatumCollection<C: RandomAccessCollection> {
 public protocol ObservationToken {
     func invalidate()
 }
+
 extension NotificationToken: ObservationToken {}

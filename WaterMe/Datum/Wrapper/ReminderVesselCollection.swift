@@ -39,7 +39,7 @@ internal class ReminderVesselQueryImp: ReminderVesselQuery {
         self.collection = collection
     }
     func observe(_ block: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken {
-        let token = self.collection.observe { realmChange in
+        return self.collection.observe { realmChange in
             switch realmChange {
             case .initial(let data):
                 block(.initial(data: .init(data)))
@@ -49,7 +49,6 @@ internal class ReminderVesselQueryImp: ReminderVesselQuery {
                 block(.error(error: error))
             }
         }
-        return token
     }
 }
 
