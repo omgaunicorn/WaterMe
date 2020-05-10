@@ -643,7 +643,7 @@
 				48A7B0922467AD6F00DC0861 /* Info.plist */,
 			);
 			name = Calculate;
-			path = Calculate/Calculate;
+			path = Frameworks/Calculate/Calculate;
 			sourceTree = "<group>";
 		};
 		48A7B09D2467AD6F00DC0861 /* CalculateTests */ = {
@@ -653,7 +653,7 @@
 				48A7B0A02467AD6F00DC0861 /* Info.plist */,
 			);
 			name = CalculateTests;
-			path = Calculate/CalculateTests;
+			path = Frameworks/Calculate/CalculateTests;
 			sourceTree = "<group>";
 		};
 		48B77ED82466C8C600EF25D3 /* Wrapper */ = {
@@ -726,7 +726,7 @@
 				5034764624552CFD00C3DAD3 /* Info.plist */,
 			);
 			name = Datum;
-			path = Datum/Datum;
+			path = Frameworks/Datum/Datum;
 			sourceTree = "<group>";
 		};
 		5034765124552CFD00C3DAD3 /* DatumTests */ = {
@@ -736,7 +736,7 @@
 				5034765424552CFD00C3DAD3 /* Info.plist */,
 			);
 			name = DatumTests;
-			path = Datum/DatumTests;
+			path = Frameworks/Datum/DatumTests;
 			sourceTree = "<group>";
 		};
 		5034766724552D0600C3DAD3 /* Store */ = {
@@ -749,7 +749,7 @@
 				5034766924552D0600C3DAD3 /* Info.plist */,
 			);
 			name = Store;
-			path = Store/Store;
+			path = Frameworks/Store/Store;
 			sourceTree = "<group>";
 		};
 		5034767424552D0700C3DAD3 /* StoreTests */ = {
@@ -759,7 +759,7 @@
 				5034767724552D0700C3DAD3 /* Info.plist */,
 			);
 			name = StoreTests;
-			path = Store/StoreTests;
+			path = Frameworks/Store/StoreTests;
 			sourceTree = "<group>";
 		};
 		5034769524552EFE00C3DAD3 /* HelperClasses */ = {
