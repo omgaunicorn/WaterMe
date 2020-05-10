@@ -1,15 +1,15 @@
 //
-//  DatumTests.swift
-//  DatumTests
+//  CalculateTests.swift
+//  CalculateTests
 //
-//  Created by Jeffrey Bergier on 2020/04/26.
+//  Created by jbergier on 2020/05/10.
 //  Copyright © 2020 Saturday Apps. All rights reserved.
 //
 
 import XCTest
-@testable import Datum
+@testable import Calculate
 
-class DatumTests: XCTestCase {
+class CalculateTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

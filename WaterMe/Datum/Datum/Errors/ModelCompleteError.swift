@@ -21,7 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Foundation
+import Calculate
 
 public struct ModelCompleteError {
     public var _actions: [RecoveryAction]

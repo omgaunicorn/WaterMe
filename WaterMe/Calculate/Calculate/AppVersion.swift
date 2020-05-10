@@ -111,3 +111,14 @@ extension AppVersion {
         task.resume()
     }
 }
+
+extension HTTPURLResponse {
+    internal var successfulStatusCode: Bool {
+        switch self.statusCode {
+        case 200..<400:
+            return true
+        default:
+            return false
+        }
+    }
+}

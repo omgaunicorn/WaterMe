@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Calculate
 import RealmSwift
 import Foundation
 
@@ -171,6 +172,23 @@ extension Reminder {
             case .note:
                 return #keyPath(Reminder.note)
             }
+        }
+    }
+}
+
+internal extension Reminder.Section {
+    var dateInterval: DateInterval {
+        switch self {
+        case .late:
+            return ReminderDateCalculator.late()
+        case .today:
+            return ReminderDateCalculator.today()
+        case .tomorrow:
+            return ReminderDateCalculator.tomorrow()
+        case .thisWeek:
+            return ReminderDateCalculator.thisWeek()
+        case .later:
+            return ReminderDateCalculator.later()
         }
     }
 }

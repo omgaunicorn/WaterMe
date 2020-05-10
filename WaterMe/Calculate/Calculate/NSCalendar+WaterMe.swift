@@ -71,15 +71,15 @@ extension Calendar {
     }
 }
 
-enum ReminderDateCalculator {
+public enum ReminderDateCalculator {
 
-    static func late(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
+    public static func late(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
         let beginningOfTime = Date.distantPast
         let startOfNow = calendar.startOfDay(for: now)
         return DateInterval(start: beginningOfTime, end: startOfNow)
     }
 
-    static func today(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
+    public static func today(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
         // get the range of NOW
         let range = calendar.dateInterval(of: .day, for: now)!
         // get the previous end so all values are contiguous
@@ -88,7 +88,7 @@ enum ReminderDateCalculator {
         return DateInterval(start: previousEnd, end: range.end)
     }
 
-    static func tomorrow(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
+    public static func tomorrow(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
         // get tomorrow
         let tomorrow = calendar.date(byAdding: .day, value: 1, to: now)!
         // get the range of tomorrow
@@ -99,7 +99,7 @@ enum ReminderDateCalculator {
         return DateInterval(start: previousEnd, end: range.end)
     }
 
-    static func thisWeek(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
+    public static func thisWeek(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
         // find the start of next week using NOW as the reference
         let rangeOfWeekContainingToday = calendar.dateInterval(of: .weekOfMonth, for: now)!
         let endOfWeekContainingToday = rangeOfWeekContainingToday.end
@@ -117,26 +117,9 @@ enum ReminderDateCalculator {
         }
     }
 
-    static func later(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
+    public static func later(calendar: Calendar = Calendar.current, now: Date = Date()) -> DateInterval {
         let startOfNextWeek = self.thisWeek(calendar: calendar, now: now).end
         let endOfDays = Date.distantFuture
         return DateInterval(start: startOfNextWeek, end: endOfDays)
-    }
-}
-
-internal extension Reminder.Section {
-    var dateInterval: DateInterval {
-        switch self {
-        case .late:
-            return ReminderDateCalculator.late()
-        case .today:
-            return ReminderDateCalculator.today()
-        case .tomorrow:
-            return ReminderDateCalculator.tomorrow()
-        case .thisWeek:
-            return ReminderDateCalculator.thisWeek()
-        case .later:
-            return ReminderDateCalculator.later()
-        }
     }
 }

@@ -21,8 +21,8 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import RealmSwift
+import Calculate
 
 public class ReminderVessel: Object {
 
