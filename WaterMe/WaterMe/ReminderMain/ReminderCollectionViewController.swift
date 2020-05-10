@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import RealmSwift
 import Datum
 import UIKit
 

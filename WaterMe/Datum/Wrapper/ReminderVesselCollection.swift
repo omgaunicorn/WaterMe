@@ -21,12 +21,48 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-public protocol ReminderVesselCollection {
-    func observe(_: (ReminderVesselCollectionChange) -> Void) -> ObservationToken
+import RealmSwift
+
+public protocol ReminderVesselQuery {
+    func observe(_: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken
 }
 
 public enum ReminderVesselCollectionChange {
-    case initial(data: [ReminderVessel])
-    case update(insertions: Int, deletions: Int, modifications: Int)
-    case error(error: DatumError)
+    case initial(data: ReminderVesselCollection)
+    case update(insertions: [Int], deletions: [Int], modifications: [Int])
+    case error(error: Error)
+}
+
+internal class ReminderVesselQueryImp: ReminderVesselQuery {
+    private let collection: AnyRealmCollection<ReminderVessel>
+    init(_ collection: AnyRealmCollection<ReminderVessel>) {
+        self.collection = collection
+    }
+    func observe(_ block: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken {
+        let token = self.collection.observe { realmChange in
+            switch realmChange {
+            case .initial(let data):
+                block(.initial(data: .init(data)))
+            case .update(_, let deletions, let insertions, let modifications):
+                block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
+            case .error(let error):
+                block(.error(error: error))
+            }
+        }
+        return token
+    }
+}
+
+public class ReminderVesselCollection: DatumCollection<AnyRealmCollection<ReminderVessel>> {
+    public subscript(index: Int) -> ReminderVessel {
+        get {
+            return self.collection[index]
+        }
+    }
+    public func compactMap<ElementOfResult>(_ transform: (ReminderVessel) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
+        return try self.collection.compactMap(transform)
+    }
+    public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
+        return self.collection.index(matching: predicateFormat, args)
+    }
 }

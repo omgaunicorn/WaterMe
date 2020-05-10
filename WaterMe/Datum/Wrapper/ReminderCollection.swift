@@ -23,17 +23,17 @@
 
 import RealmSwift
 
-public protocol ReminderCollection {
+public protocol ReminderQuery {
     func observe(_: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken
 }
 
 public enum ReminderCollectionChange {
-    case initial(data: ReminderDatumCollection)
+    case initial(data: ReminderCollection)
     case update(insertions: [Int], deletions: [Int], modifications: [Int])
     case error(error: Error)
 }
 
-internal class ReminderCollectionImp: ReminderCollection {
+internal class ReminderQueryImp: ReminderQuery {
     private let collection: AnyRealmCollection<Reminder>
     init(_ collection: AnyRealmCollection<Reminder>) {
         self.collection = collection
@@ -53,7 +53,7 @@ internal class ReminderCollectionImp: ReminderCollection {
     }
 }
 
-public class ReminderDatumCollection: DatumCollection<AnyRealmCollection<Reminder>> {
+public class ReminderCollection: DatumCollection<AnyRealmCollection<Reminder>> {
     public subscript(index: Int) -> Reminder {
         get {
             return self.collection[index]

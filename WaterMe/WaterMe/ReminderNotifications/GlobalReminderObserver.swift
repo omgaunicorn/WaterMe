@@ -40,7 +40,7 @@ class GlobalReminderObserver {
     private let significantTimePassedDetector = SignificantTimePassedDetector()
     private let basicRC: BasicController
 
-    private var data: ReminderDatumCollection?
+    private var data: ReminderCollection?
     private var timer: Timer?
 
     private let taskName = String(describing: GlobalReminderObserver.self) + UUID().uuidString

@@ -22,7 +22,6 @@
 //
 
 import Datum
-import RealmSwift
 import UIKit
 
 class ReminderVesselCollectionViewController: StandardCollectionViewController, HasBasicController {
@@ -36,7 +35,7 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
         }
     }
     
-    internal var data: Result<AnyRealmCollection<ReminderVessel>, RealmError>?
+    internal var data: Result<ReminderVesselCollection, DatumError>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,19 +58,19 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
         
         guard let result = self.basicRC?.allVessels() else { return }
         switch result {
-        case .failure:
-            self.data = result
+        case .failure(let error):
+            self.data = .failure(error)
         case .success(let collection):
           self.notificationToken = collection.observe({ [weak self] changes in self?.dataChanged(changes) })
         }
     }
     
-    private func dataChanged(_ changes: RealmCollectionChange<AnyRealmCollection<ReminderVessel>>) {
+    private func dataChanged(_ changes: ReminderVesselCollectionChange) {
         switch changes {
         case .initial(let data):
             self.data = .success(data)
             self.collectionView?.reloadData()
-        case .update(_, deletions: let del, insertions: let ins, modifications: let mod):
+        case .update(let ins, let del, let mod):
             self.collectionView?.performBatchUpdates({
                 self.collectionView?.insertItems(at: ins.map({ IndexPath(row: $0, section: 0) }))
                 self.collectionView?.deleteItems(at: del.map({ IndexPath(row: $0, section: 0) }))
@@ -118,7 +117,7 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
         }
     }
     
-    private var notificationToken: NotificationToken?
+    private var notificationToken: ObservationToken?
     
     deinit {
       self.notificationToken?.invalidate()
