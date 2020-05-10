@@ -1,9 +1,9 @@
 //
-//  RealmError.swift
-//  WaterMeData
+//  ReminderVesselCollection.swift
+//  Datum
 //
-//  Created by Jeffrey Bergier on 8/12/17.
-//  Copyright © 2017 Saturday Apps.
+//  Created by Jeffrey Bergier on 2020/05/09.
+//  Copyright © 2020 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
 //
@@ -21,17 +21,12 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Foundation
+public protocol ReminderVesselCollection {
+    func observe(_: (ReminderVesselCollectionChange) -> Void) -> ObservationToken
+}
 
-// TODO: Delete this after finishing Realm Abstraction
-public typealias RealmError = DatumError
-
-public enum DatumError: Error {
-    case loadError
-    case createError
-    case writeError
-    case readError
-    case objectDeleted
-    case unableToDeleteLastReminder
-    case imageCouldntBeCompressedEnough
+public enum ReminderVesselCollectionChange {
+    case initial(data: [ReminderVessel])
+    case update(insertions: Int, deletions: Int, modifications: Int)
+    case error(error: DatumError)
 }

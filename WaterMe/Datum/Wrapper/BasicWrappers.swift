@@ -1,9 +1,9 @@
 //
-//  RealmError.swift
-//  WaterMeData
+//  BasicWrappers.swift
+//  Datum
 //
-//  Created by Jeffrey Bergier on 8/12/17.
-//  Copyright © 2017 Saturday Apps.
+//  Created by Jeffrey Bergier on 2020/05/10.
+//  Copyright © 2020 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
 //
@@ -21,17 +21,17 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Foundation
+import RealmSwift
 
-// TODO: Delete this after finishing Realm Abstraction
-public typealias RealmError = DatumError
-
-public enum DatumError: Error {
-    case loadError
-    case createError
-    case writeError
-    case readError
-    case objectDeleted
-    case unableToDeleteLastReminder
-    case imageCouldntBeCompressedEnough
+public class DatumCollection<C: RandomAccessCollection> {
+    public var count: Int { return self.collection.count }
+    internal let collection: C
+    init(_ collection: C) {
+        self.collection = collection
+    }
 }
+
+public protocol ObservationToken {
+    func invalidate()
+}
+extension NotificationToken: ObservationToken {}

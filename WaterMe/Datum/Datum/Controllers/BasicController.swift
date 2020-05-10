@@ -113,14 +113,21 @@ public class BasicController {
     }
 
     public func allReminders(sorted: Reminder.SortOrder = .nextPerformDate,
-                             ascending: Bool = true) -> Result<AnyRealmCollection<Reminder>, RealmError>
+                             ascending: Bool = true) -> Result<ReminderCollection, DatumError>
     {
-        return self.realm.map({ AnyRealmCollection($0.objects(Reminder.self).sorted(byKeyPath: sorted.keyPath, ascending: ascending)) })
+        return self.realm.map {
+            ReminderCollectionImp(
+                AnyRealmCollection($0.objects(Reminder.self)
+                    .sorted(byKeyPath: sorted.keyPath,
+                            ascending: ascending)
+                )
+            )
+        }
     }
 
     public func reminders(in section: Reminder.Section,
                           sorted: Reminder.SortOrder = .nextPerformDate,
-                          ascending: Bool = true) -> Result<AnyRealmCollection<Reminder>, RealmError>
+                          ascending: Bool = true) -> Result<ReminderCollection, DatumError>
     {
         return self.realm.map() { realm in
             let range = section.dateInterval
@@ -141,10 +148,10 @@ public class BasicController {
                                       type: .equalTo)
                 let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [nilCheck, andPredicate])
                 let collection = realm.objects(Reminder.self).filter(orPredicate).sorted(byKeyPath: sorted.keyPath, ascending: ascending)
-                return AnyRealmCollection(collection)
+                return ReminderCollectionImp(AnyRealmCollection(collection))
             } else {
                 let collection = realm.objects(Reminder.self).filter(andPredicate).sorted(byKeyPath: sorted.keyPath, ascending: ascending)
-                return AnyRealmCollection(collection)
+                return ReminderCollectionImp(AnyRealmCollection(collection))
             }
         }
     }

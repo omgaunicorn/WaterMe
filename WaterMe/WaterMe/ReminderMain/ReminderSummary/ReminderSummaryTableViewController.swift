@@ -23,7 +23,6 @@
 
 import UIKit
 import Datum
-import RealmSwift
 
 protocol ReminderSummaryTableViewControllerDelegate: class {
     var reminderResult: Result<Reminder, RealmError>! { get }

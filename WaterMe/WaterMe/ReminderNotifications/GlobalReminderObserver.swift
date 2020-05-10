@@ -22,7 +22,6 @@
 //
 
 import Datum
-import RealmSwift
 import UserNotifications
 
 class GlobalReminderObserver {
@@ -41,7 +40,7 @@ class GlobalReminderObserver {
     private let significantTimePassedDetector = SignificantTimePassedDetector()
     private let basicRC: BasicController
 
-    private var data: AnyRealmCollection<Reminder>?
+    private var data: ReminderDatumCollection?
     private var timer: Timer?
 
     private let taskName = String(describing: GlobalReminderObserver.self) + UUID().uuidString
@@ -71,7 +70,7 @@ class GlobalReminderObserver {
         self.resetTimer()
     }
 
-    private func dataChanged(_ changes: RealmCollectionChange<AnyRealmCollection<Reminder>>) {
+    private func dataChanged(_ changes: ReminderCollectionChange) {
         switch changes {
         case .initial(let data):
             self.data = data
@@ -132,7 +131,7 @@ class GlobalReminderObserver {
         self.timer?.fire()
     }
 
-    private var token: NotificationToken?
+    private var token: ObservationToken?
 
     deinit {
         self.token?.invalidate()

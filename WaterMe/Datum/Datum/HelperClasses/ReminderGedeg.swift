@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import RealmSwift
 import Foundation
 
 /**
@@ -34,7 +33,7 @@ import Foundation
 open class ReminderGedeg: NSObject {
 
     private let updateBatcher = Batcher()
-    private(set) var reminders: [Reminder.Section : AnyRealmCollection<Reminder>] = [:]
+    private(set) var reminders: [Reminder.Section : ReminderDatumCollection] = [:]
     public var lastError: RealmError?
 
     open var allDataReadyClosure: ((Bool) -> Void)?
@@ -61,14 +60,14 @@ open class ReminderGedeg: NSObject {
         }
     }
 
-    private func collection(for section: Reminder.Section, changed changes: RealmCollectionChange<AnyRealmCollection<Reminder>>) {
+    private func collection(for section: Reminder.Section, changed changes: ReminderCollectionChange) {
         switch changes {
         case .initial(let data):
             self.reminders[section] = data
             if self.allSectionsFinishedLoading == true {
                 self.allDataReady(success: true)
             }
-        case .update(_, deletions: let del, insertions: let ins, modifications: let mod):
+        case .update(insertions: let del, deletions: let ins, modifications: let mod):
             self.updateBatcher.appendUpdateExtendingTimer(Update(section: section, deletions: del, insertions: ins, modifications: mod))
         case .error(let error):
             self.lastError = .loadError
@@ -170,7 +169,7 @@ open class ReminderGedeg: NSObject {
         return indexPath
     }
 
-    private var tokens: [NotificationToken] = []
+    private var tokens: [ObservationToken] = []
 
     deinit {
         self.tokens.forEach({ $0.invalidate() })
