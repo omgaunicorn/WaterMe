@@ -5,13 +5,12 @@ target 'WaterMe' do
 	use_frameworks!
 	
 	pod 'CropViewController', '~> 2.5.2'
-	pod 'RealmSwift', '~> 3.21.0'
 end
 
 target 'Datum' do
 	platform :ios, '11.0'
 	use_frameworks!
-	pod 'RealmSwift'
+	pod 'RealmSwift', '~> 3.21.0'
 end
 
 post_install do |installer|
