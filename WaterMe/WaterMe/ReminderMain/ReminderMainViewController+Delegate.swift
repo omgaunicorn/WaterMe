@@ -186,7 +186,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         }
     }
 
-    private func present(error: RealmError, with completion: (() -> Void)?) {
+    private func present(error: DatumError, with completion: (() -> Void)?) {
         UIAlertController.presentAlertVC(for: error, over: self)
     }
 }

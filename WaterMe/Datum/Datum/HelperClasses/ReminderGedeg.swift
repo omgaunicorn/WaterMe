@@ -34,7 +34,7 @@ open class ReminderGedeg: NSObject {
 
     private let updateBatcher = Batcher()
     private(set) var reminders: [Reminder.Section : ReminderCollection] = [:]
-    public var lastError: RealmError?
+    public var lastError: DatumError?
 
     open var allDataReadyClosure: ((Bool) -> Void)?
 

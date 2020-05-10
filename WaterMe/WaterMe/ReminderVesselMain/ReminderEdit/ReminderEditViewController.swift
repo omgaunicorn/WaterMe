@@ -67,7 +67,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
                                                                 action: #selector(self.doneButtonTapped(_:)))
 
     var basicRC: BasicController?
-    private(set) var reminderResult: Result<Reminder, RealmError>?
+    private(set) var reminderResult: Result<Reminder, DatumError>?
     private var completionHandler: CompletionHandler?
     private var userActivityCompletion: NSUserActivityContinuedHandler?
     //swiftlint:disable:next weak_delegate

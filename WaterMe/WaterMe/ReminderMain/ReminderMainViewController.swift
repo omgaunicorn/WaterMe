@@ -26,7 +26,7 @@ import UIKit
 
 class ReminderMainViewController: StandardViewController, HasProController, HasBasicController {
     
-    class func newVC(basic: Result<BasicController, RealmError>,
+    class func newVC(basic: Result<BasicController, DatumError>,
                      pro: ProController? = nil) -> UINavigationController
     {
         let sb = UIStoryboard(name: "ReminderMain", bundle: Bundle(for: self))
@@ -46,7 +46,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     private(set) weak var collectionVC: ReminderCollectionViewController?
     private(set) weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     private var appUpdateAvailableVC: UIViewController?
-    private var applicationDidFinishLaunchingError: RealmError?
+    private var applicationDidFinishLaunchingError: DatumError?
     var userActivityResultToContinue: [UserActivityResult] = []
 
     var isReady: ReadyState = []

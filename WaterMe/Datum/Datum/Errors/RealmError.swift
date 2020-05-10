@@ -23,9 +23,6 @@
 
 import Foundation
 
-// TODO: Delete this after finishing Realm Abstraction
-public typealias RealmError = DatumError
-
 public enum DatumError: Error {
     case loadError
     case createError

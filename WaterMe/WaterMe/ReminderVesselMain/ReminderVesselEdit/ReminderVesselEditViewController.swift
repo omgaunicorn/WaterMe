@@ -60,7 +60,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
     
     var basicRC: BasicController?
-    private(set) var vesselResult: Result<ReminderVessel, RealmError>?
+    private(set) var vesselResult: Result<ReminderVessel, DatumError>?
     private(set) var completionHandler: CompletionHandler!
     private var userActivityCompletion: NSUserActivityContinuedHandler?
     //swiftlint:disable:next weak_delegate

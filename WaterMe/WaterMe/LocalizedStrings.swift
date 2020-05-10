@@ -459,7 +459,7 @@ extension PurchaseThanksViewController {
     }
 }
 
-extension RealmError {
+extension DatumError {
     enum LocalizedString {
         static let deleteTitle =
             NSLocalizedString("Error Deleting",

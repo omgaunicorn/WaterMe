@@ -23,7 +23,7 @@
 
 import Datum
 
-extension RealmError: UserFacingError {
+extension DatumError: UserFacingError {
 
     public var title: String? {
         switch self {
