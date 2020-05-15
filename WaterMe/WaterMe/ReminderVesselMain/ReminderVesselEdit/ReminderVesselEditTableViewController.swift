@@ -322,11 +322,11 @@ extension ReminderVesselEditTableViewController {
         var localizedTitle: String {
             switch self {
             case .photo:
-                return ReminderVessel.LocalizedString.photo
+                return ReminderVesselWrapper.LocalizedString.photo
             case .name:
-                return ReminderVessel.LocalizedString.name
+                return ReminderVesselWrapper.LocalizedString.name
             case .reminders:
-                return ReminderVessel.LocalizedString.reminders
+                return ReminderVesselWrapper.LocalizedString.reminders
             case .siriShortcuts:
                 return "Siri Shortcuts"
             }

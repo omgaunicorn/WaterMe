@@ -179,16 +179,16 @@ extension ReminderUserNotificationController.LocalizedString {
     fileprivate static func localizedNotificationBody(from items: [String?]) -> String {
         switch items.count {
         case 1:
-            let item1 = items[0] ?? ReminderVessel.LocalizedString.untitledPlant
+            let item1 = items[0] ?? ReminderVesselWrapper.LocalizedString.untitledPlant
             let string = String(format: self.bodyOneItem, item1)
             return string
         case 2:
-            let item1 = items[0] ?? ReminderVessel.LocalizedString.untitledPlant
-            let item2 = items[1] ?? ReminderVessel.LocalizedString.untitledPlant
+            let item1 = items[0] ?? ReminderVesselWrapper.LocalizedString.untitledPlant
+            let item2 = items[1] ?? ReminderVesselWrapper.LocalizedString.untitledPlant
             let string = String(format: self.bodyTwoItems, item1, item2)
             return string
         default:
-            let item1 = items[0] ?? ReminderVessel.LocalizedString.untitledPlant
+            let item1 = items[0] ?? ReminderVesselWrapper.LocalizedString.untitledPlant
             let string = String(format: self.bodyManyItems, item1, items.count - 1)
             return string
         }

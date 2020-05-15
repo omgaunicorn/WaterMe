@@ -23,7 +23,7 @@
 
 import RealmSwift
 
-public class ReminderVessel: Object {
+internal class ReminderVessel: Object {
     @objc internal dynamic var uuid = UUID().uuidString
     @objc internal dynamic var displayName: String?
     @objc internal dynamic var iconImageData: Data?
@@ -31,7 +31,7 @@ public class ReminderVessel: Object {
     @objc internal dynamic var bloop = false
     @objc internal dynamic var kindString = ReminderVesselKind.plant.rawValue
     internal let reminders = List<Reminder>()
-    override public class func primaryKey() -> String {
+    override internal class func primaryKey() -> String {
         return #keyPath(ReminderVessel.uuid)
     }
 }

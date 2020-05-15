@@ -44,7 +44,7 @@ extension Reminder {
 }
 
 extension Reminder: ModelCompleteCheckable {
-    public var isModelComplete: ModelCompleteError? {
+    internal var isModelComplete: ModelCompleteError? {
         switch self.kind {
         case .fertilize, .water, .trim, .mist:
             return nil

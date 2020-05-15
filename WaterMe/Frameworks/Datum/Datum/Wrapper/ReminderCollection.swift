@@ -23,14 +23,25 @@
 
 import RealmSwift
 
-public protocol ReminderQuery {
-    func observe(_: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken
+public class ReminderCollection {
+    private let collection: DatumCollection<ReminderWrapper, Reminder, AnyRealmCollection<Reminder>>
+    internal init(_ collection: AnyRealmCollection<Reminder>, transform: @escaping (Reminder) -> ReminderWrapper) {
+        self.collection = .init(collection, transform: transform)
+    }
+    
+    public var count: Int { return self.collection.collection.count }
+    public var isInvalidated: Bool { return self.collection.collection.isInvalidated }
+    public subscript(index: Int) -> ReminderWrapper { self.collection[index] }
+    public func compactMap<E>(_ transform: (ReminderWrapper) throws -> E?) rethrows -> [E] {
+        return try self.collection.compactMap(transform)
+    }
+    public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
+        return self.collection.collection.index(matching: predicateFormat, args)
+    }
 }
 
-public enum ReminderCollectionChange {
-    case initial(data: ReminderCollection)
-    case update(insertions: [Int], deletions: [Int], modifications: [Int])
-    case error(error: Error)
+public protocol ReminderQuery {
+    func observe(_: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken
 }
 
 internal class ReminderQueryImp: ReminderQuery {
@@ -52,17 +63,16 @@ internal class ReminderQueryImp: ReminderQuery {
     }
 }
 
-public class ReminderCollection: DatumCollection<ReminderWrapper, Reminder, AnyRealmCollection<Reminder>> {
-    public var isInvalidated: Bool { return self.collection.isInvalidated }
-    public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
-        return self.collection.index(matching: predicateFormat, args)
-    }
-}
-
 public enum ReminderChange {
     case error(Error)
     case change
     case deleted
+}
+
+public enum ReminderCollectionChange {
+    case initial(data: ReminderCollection)
+    case update(insertions: [Int], deletions: [Int], modifications: [Int])
+    case error(error: Error)
 }
 
 public protocol ReminderObservable {

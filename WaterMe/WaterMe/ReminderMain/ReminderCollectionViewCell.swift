@@ -63,7 +63,7 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         let vesselNameStyle = vesselName != nil ?
             Font.reminderVesselCollectionViewCellPrimary(nil) :
             Font.reminderVesselCollectionViewCellPrimaryDisabled
-        self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
+        self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? ReminderVesselWrapper.LocalizedString.untitledPlant,
                                                            font: vesselNameStyle)
 
         // other stuff

@@ -23,7 +23,7 @@
 
 import RealmSwift
 
-public class Reminder: Object {
+internal class Reminder: Object {
     @objc internal private(set) dynamic var uuid = UUID().uuidString
     @objc internal dynamic var interval = Reminder.defaultInterval
     @objc internal dynamic var note: String?
@@ -33,7 +33,7 @@ public class Reminder: Object {
     @objc internal dynamic var bloop = false
     internal let performed = List<ReminderPerform>()
     internal let vessels = LinkingObjects(fromType: ReminderVessel.self, property: "reminders") //#keyPath(ReminderVessel.reminders)
-    public override class func primaryKey() -> String {
+    internal override class func primaryKey() -> String {
         return #keyPath(Reminder.uuid)
     }
 }

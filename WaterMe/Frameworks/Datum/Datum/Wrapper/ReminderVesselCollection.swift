@@ -23,14 +23,27 @@
 
 import RealmSwift
 
-public protocol ReminderVesselQuery {
-    func observe(_: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken
+public class ReminderVesselCollection {
+    private let collection: DatumCollection<ReminderVesselWrapper, ReminderVessel, AnyRealmCollection<ReminderVessel>>
+    internal init(_ collection: AnyRealmCollection<ReminderVessel>,
+                  transform: @escaping (ReminderVessel) -> ReminderVesselWrapper)
+    {
+        self.collection = .init(collection, transform: transform)
+    }
+    
+    public var count: Int { return self.collection.collection.count }
+    public var isInvalidated: Bool { return self.collection.collection.isInvalidated }
+    public subscript(index: Int) -> ReminderVesselWrapper { self.collection[index] }
+    public func compactMap<E>(_ transform: (ReminderVesselWrapper) throws -> E?) rethrows -> [E] {
+        return try self.collection.compactMap(transform)
+    }
+    public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
+        return self.collection.collection.index(matching: predicateFormat, args)
+    }
 }
 
-public enum ReminderVesselCollectionChange {
-    case initial(data: ReminderVesselCollection)
-    case update(insertions: [Int], deletions: [Int], modifications: [Int])
-    case error(error: Error)
+public protocol ReminderVesselQuery {
+    func observe(_: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken
 }
 
 internal class ReminderVesselQueryImp: ReminderVesselQuery {
@@ -52,17 +65,16 @@ internal class ReminderVesselQueryImp: ReminderVesselQuery {
     }
 }
 
-public class ReminderVesselCollection: DatumCollection<ReminderVesselWrapper, ReminderVessel, AnyRealmCollection<ReminderVessel>> {
-    public var isInvalidated: Bool { return self.collection.isInvalidated }
-    public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
-        return self.collection.index(matching: predicateFormat, args)
-    }
-}
-
 public enum ReminderVesselChange {
     case error(Error)
     case change(changedDisplayName: Bool, changedIconEmoji: Bool, changedReminders: Bool, changedPointlessBloop: Bool)
     case deleted
+}
+
+public enum ReminderVesselCollectionChange {
+    case initial(data: ReminderVesselCollection)
+    case update(insertions: [Int], deletions: [Int], modifications: [Int])
+    case error(error: Error)
 }
 
 public protocol ReminderVesselObservable {

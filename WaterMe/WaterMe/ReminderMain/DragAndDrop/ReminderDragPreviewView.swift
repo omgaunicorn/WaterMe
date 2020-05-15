@@ -72,7 +72,7 @@ class ReminderDragPreviewView: UIView {
         let vesselNameStyle = vesselName != nil ?
             Font.reminderVesselDragPreviewViewPrimary :
             Font.reminderVesselDragPreviewViewPrimaryDisabled
-        self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
+        self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? ReminderVesselWrapper.LocalizedString.untitledPlant,
                                                            font: vesselNameStyle)
 
         // other stuff

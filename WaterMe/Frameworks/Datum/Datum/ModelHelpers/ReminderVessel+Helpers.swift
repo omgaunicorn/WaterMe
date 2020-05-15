@@ -42,7 +42,7 @@ extension ReminderVessel {
 }
 
 extension ReminderVessel: ModelCompleteCheckable {
-    public var isModelComplete: ModelCompleteError? {
+    internal var isModelComplete: ModelCompleteError? {
         let issues: [RecoveryAction] = [
             self.icon == nil ? .reminderVesselMissingIcon : nil,
             self.displayName == nil ? .reminderVesselMissingName : nil,
