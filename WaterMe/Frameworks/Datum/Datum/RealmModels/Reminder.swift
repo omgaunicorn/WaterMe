@@ -21,9 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Calculate
 import RealmSwift
-import Foundation
 
 public class Reminder: Object {
     @objc internal private(set) dynamic var uuid = UUID().uuidString

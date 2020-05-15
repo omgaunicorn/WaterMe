@@ -164,8 +164,8 @@ public class BasicController {
 
     public func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVesselWrapper, DatumError> {
         return self.realm.flatMap() { realm -> Result<ReminderVesselWrapper, DatumError> in
-            guard let reminder = realm.object(ofType: ReminderVessel.self, forPrimaryKey: identifier.reminderVesselIdentifier)
-                else { return .failure(.objectDeleted) }
+            guard let reminder = realm.object(ofType: ReminderVessel.self, forPrimaryKey: identifier.uuid)
+            else { return .failure(.objectDeleted) }
             return .success(.init(reminder))
         }
     }

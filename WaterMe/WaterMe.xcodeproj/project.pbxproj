@@ -804,8 +804,8 @@
 		5034769E24552EFE00C3DAD3 /* RealmModels */ = {
 			isa = PBXGroup;
 			children = (
-				5034769F24552EFE00C3DAD3 /* ReminderVessel.swift */,
 				503476A024552EFE00C3DAD3 /* Reminder.swift */,
+				5034769F24552EFE00C3DAD3 /* ReminderVessel.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
