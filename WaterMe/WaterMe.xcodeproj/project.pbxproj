@@ -66,7 +66,6 @@
 		503476B424552EFE00C3DAD3 /* NSErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769D24552EFE00C3DAD3 /* NSErrors.swift */; };
 		503476B524552EFE00C3DAD3 /* ReminderVessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769F24552EFE00C3DAD3 /* ReminderVessel.swift */; };
 		503476B624552EFE00C3DAD3 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A024552EFE00C3DAD3 /* Reminder.swift */; };
-		503476B724552EFE00C3DAD3 /* Receipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A124552EFE00C3DAD3 /* Receipt.swift */; };
 		503476B824552EFE00C3DAD3 /* ReminderAndVesselValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A224552EFE00C3DAD3 /* ReminderAndVesselValue.swift */; };
 		503476B924552EFE00C3DAD3 /* ReminderVesselIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A324552EFE00C3DAD3 /* ReminderVesselIcon.swift */; };
 		503476BB24552EFE00C3DAD3 /* ReceiptController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A624552EFE00C3DAD3 /* ReceiptController.swift */; };
@@ -421,7 +420,6 @@
 		5034769D24552EFE00C3DAD3 /* NSErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSErrors.swift; sourceTree = "<group>"; };
 		5034769F24552EFE00C3DAD3 /* ReminderVessel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVessel.swift; sourceTree = "<group>"; };
 		503476A024552EFE00C3DAD3 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
-		503476A124552EFE00C3DAD3 /* Receipt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Receipt.swift; sourceTree = "<group>"; };
 		503476A224552EFE00C3DAD3 /* ReminderAndVesselValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderAndVesselValue.swift; sourceTree = "<group>"; };
 		503476A324552EFE00C3DAD3 /* ReminderVesselIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselIcon.swift; sourceTree = "<group>"; };
 		503476A624552EFE00C3DAD3 /* ReceiptController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptController.swift; sourceTree = "<group>"; };
@@ -645,6 +643,7 @@
 				4832F533246E7BF8001B77F6 /* Reminder+Helpers.swift */,
 				4832F535246E7C05001B77F6 /* ReminderVessel+Helpers.swift */,
 				503476A324552EFE00C3DAD3 /* ReminderVesselIcon.swift */,
+				503476A224552EFE00C3DAD3 /* ReminderAndVesselValue.swift */,
 			);
 			path = ModelHelpers;
 			sourceTree = "<group>";
@@ -807,8 +806,6 @@
 			children = (
 				5034769F24552EFE00C3DAD3 /* ReminderVessel.swift */,
 				503476A024552EFE00C3DAD3 /* Reminder.swift */,
-				503476A124552EFE00C3DAD3 /* Receipt.swift */,
-				503476A224552EFE00C3DAD3 /* ReminderAndVesselValue.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -1674,7 +1671,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4832F52D246E2406001B77F6 /* ReminderWrapper.swift in Sources */,
-				503476B724552EFE00C3DAD3 /* Receipt.swift in Sources */,
 				503476AF24552EFE00C3DAD3 /* ItemAndSectionable.swift in Sources */,
 				503476B024552EFE00C3DAD3 /* ReminderGedeg.swift in Sources */,
 				503476B224552EFE00C3DAD3 /* ModelCompleteError.swift in Sources */,
