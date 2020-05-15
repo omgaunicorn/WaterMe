@@ -1,5 +1,5 @@
 //
-//  ReminderVesselWrapper.swift
+//  ReminderVessel+Helpers.swift
 //  Datum
 //
 //  Created by Jeffrey Bergier on 2020/05/15.
@@ -20,17 +20,3 @@
 //  You should have received a copy of the GNU General Public License
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
-
-public struct ReminderVesselWrapper: ModelCompleteCheckable {
-    internal let wrappedObject: ReminderVessel
-    internal init(_ wrappedObject: ReminderVessel) {
-        self.wrappedObject = wrappedObject
-    }
-    
-    public var uuid: String { self.wrappedObject.uuid }
-    public var displayName: String? { self.wrappedObject.displayName }
-    public var icon: ReminderVesselIcon? { self.wrappedObject.icon }
-    public var kind: ReminderVesselKind { self.wrappedObject.kind }
-    public var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
-    public var shortLabelSafeDisplayName: String? { self.wrappedObject.shortLabelSafeDisplayName }
-}

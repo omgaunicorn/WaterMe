@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4832F52D246E2406001B77F6 /* ReminderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F52C246E2406001B77F6 /* ReminderWrapper.swift */; };
 		4832F531246E5CE6001B77F6 /* ReminderVesselWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */; };
+		4832F534246E7BF8001B77F6 /* Reminder+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F533246E7BF8001B77F6 /* Reminder+Helpers.swift */; };
+		4832F536246E7C05001B77F6 /* ReminderVessel+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F535246E7C05001B77F6 /* ReminderVessel+Helpers.swift */; };
 		48A7B0DC2467FCB100DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
 		48A7B0E32467FCB100DC0861 /* CalculateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7B0E22467FCB100DC0861 /* CalculateTests.swift */; };
 		48A7B0E52467FCB100DC0861 /* Calculate.h in Headers */ = {isa = PBXBuildFile; fileRef = 48A7B0D52467FCB100DC0861 /* Calculate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -358,6 +360,8 @@
 		39DFC7BD15912D3CEA99F795 /* Pods-Datum.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Datum.debug.xcconfig"; path = "Target Support Files/Pods-Datum/Pods-Datum.debug.xcconfig"; sourceTree = "<group>"; };
 		4832F52C246E2406001B77F6 /* ReminderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderWrapper.swift; sourceTree = "<group>"; };
 		4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVesselWrapper.swift; sourceTree = "<group>"; };
+		4832F533246E7BF8001B77F6 /* Reminder+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+Helpers.swift"; sourceTree = "<group>"; };
+		4832F535246E7C05001B77F6 /* ReminderVessel+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderVessel+Helpers.swift"; sourceTree = "<group>"; };
 		48A7B0D32467FCB100DC0861 /* Calculate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Calculate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48A7B0D52467FCB100DC0861 /* Calculate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Calculate.h; sourceTree = "<group>"; };
 		48A7B0D62467FCB100DC0861 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -635,6 +639,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4832F532246E7BDD001B77F6 /* ModelHelpers */ = {
+			isa = PBXGroup;
+			children = (
+				4832F533246E7BF8001B77F6 /* Reminder+Helpers.swift */,
+				4832F535246E7C05001B77F6 /* ReminderVessel+Helpers.swift */,
+				503476A324552EFE00C3DAD3 /* ReminderVesselIcon.swift */,
+			);
+			path = ModelHelpers;
+			sourceTree = "<group>";
+		};
 		48A7B0D42467FCB100DC0861 /* Calculate */ = {
 			isa = PBXGroup;
 			children = (
@@ -728,6 +742,7 @@
 				503476A524552EFE00C3DAD3 /* Controllers */,
 				5034769924552EFE00C3DAD3 /* Errors */,
 				5034769524552EFE00C3DAD3 /* HelperClasses */,
+				4832F532246E7BDD001B77F6 /* ModelHelpers */,
 				5034769E24552EFE00C3DAD3 /* RealmModels */,
 				5034764624552CFD00C3DAD3 /* Info.plist */,
 			);
@@ -794,7 +809,6 @@
 				503476A024552EFE00C3DAD3 /* Reminder.swift */,
 				503476A124552EFE00C3DAD3 /* Receipt.swift */,
 				503476A224552EFE00C3DAD3 /* ReminderAndVesselValue.swift */,
-				503476A324552EFE00C3DAD3 /* ReminderVesselIcon.swift */,
 			);
 			path = RealmModels;
 			sourceTree = "<group>";
@@ -1674,11 +1688,13 @@
 				503476B624552EFE00C3DAD3 /* Reminder.swift in Sources */,
 				48B77EDC2466C8FD00EF25D3 /* ReminderCollection.swift in Sources */,
 				503476B924552EFE00C3DAD3 /* ReminderVesselIcon.swift in Sources */,
+				4832F536246E7C05001B77F6 /* ReminderVessel+Helpers.swift in Sources */,
 				503476BC24552EFE00C3DAD3 /* ProController.swift in Sources */,
 				503476B824552EFE00C3DAD3 /* ReminderAndVesselValue.swift in Sources */,
 				503476B424552EFE00C3DAD3 /* NSErrors.swift in Sources */,
 				503476B524552EFE00C3DAD3 /* ReminderVessel.swift in Sources */,
 				503476BF24552EFE00C3DAD3 /* UIImage+WaterMe.swift in Sources */,
+				4832F534246E7BF8001B77F6 /* Reminder+Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
