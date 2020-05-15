@@ -39,14 +39,14 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
                 let vc = ImagePickerCropperViewController.newCameraVC() { image, vc in
                     vc.dismiss(animated: true, completion: nil)
                     guard let image = image else { return }
-                    self.updateIcon(ReminderVessel.Icon(rawImage: image))
+                    self.updateIcon(ReminderVesselIcon(rawImage: image))
                 }
                 self.present(vc, animated: true, completion: nil)
             case .photos:
                 let vc = ImagePickerCropperViewController.newPhotosVC() { image, vc in
                     vc.dismiss(animated: true, completion: nil)
                     guard let image = image else { return }
-                    self.updateIcon(ReminderVessel.Icon(rawImage: image))
+                    self.updateIcon(ReminderVesselIcon(rawImage: image))
                 }
                 self.present(vc, animated: true, completion: nil)
             case .emoji:
@@ -169,7 +169,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         }
     }
 
-    private func updateIcon(_ icon: ReminderVessel.Icon) {
+    private func updateIcon(_ icon: ReminderVesselIcon) {
         guard let vessel = self.vesselResult?.value, let basicRC = self.basicRC else {
             assertionFailure("Missing ReminderVessel or Realm Controller")
             return

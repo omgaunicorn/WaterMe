@@ -98,7 +98,7 @@ class EmojiImageView: UIView {
     private weak var label: UILabel?
     private weak var imageViewMaskLayer: CAShapeLayer?
 
-    func setIcon(_ icon: ReminderVessel.Icon?, for controlState: UIControl.State = .normal) {
+    func setIcon(_ icon: ReminderVesselIcon?, for controlState: UIControl.State = .normal) {
 
         guard let icon = icon else {
             self.alpha = 0.4

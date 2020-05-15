@@ -34,7 +34,7 @@ class ReminderVesselIconTableViewCell: UITableViewCell {
     
     var iconButtonTapped: ((UIView) -> Void)?
     
-    func configure(with icon: ReminderVessel.Icon?) {
+    func configure(with icon: ReminderVesselIcon?) {
         self.cameraButton?.setTitle(nil, for: .normal)
         self.cameraButton?.setImage(#imageLiteral(resourceName: "Camera"), for: .normal)
         self.cameraButton?.accessibilityLabel = UIAlertController.LocalizedString.buttonTitleChoosePhoto

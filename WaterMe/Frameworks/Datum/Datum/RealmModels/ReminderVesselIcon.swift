@@ -23,62 +23,59 @@
 
 import UIKit
 
-extension ReminderVessel {
+public enum ReminderVesselIcon {
+    case emoji(String), image(UIImage)
     
-    public enum Icon {
-        case emoji(String), image(UIImage)
-
-        internal init?(rawImage: UIImage?, emojiString: String?) {
-            if let emoji = emojiString {
-                // self = .emoji(emoji) // produced an error
-                self.init(emojiString: emoji)
-            } else if let image = rawImage {
-                self.init(rawImage: image)
-            } else {
-                return nil
-            }
+    internal init?(rawImage: UIImage?, emojiString: String?) {
+        if let emoji = emojiString {
+            // self = .emoji(emoji) // produced an error
+            self.init(emojiString: emoji)
+        } else if let image = rawImage {
+            self.init(rawImage: image)
+        } else {
+            return nil
         }
-
-        // Hack: Needed just for the initializer above. Otherwise it produced an error.
-        // self used before self.init
-        private init(emojiString: String) {
-            self = .emoji(emojiString)
+    }
+    
+    // Hack: Needed just for the initializer above. Otherwise it produced an error.
+    // self used before self.init
+    private init(emojiString: String) {
+        self = .emoji(emojiString)
+    }
+    
+    public init(rawImage: UIImage) {
+        // all of this code assumes we're cropping to square image
+        // it also assumes that we're converting it to a new image with a scale of 1
+        let smallestDimension = rawImage.size.width > rawImage.size.height ? rawImage.size.height : rawImage.size.width
+        let smallestScaledDimension = smallestDimension * rawImage.scale
+        let originalSquareSize = CGSize(width: smallestScaledDimension, height: smallestScaledDimension)
+        let cropped = rawImage.cropping(to: originalSquareSize)
+        let max = UIImage.style_maxSize
+        let reducedSize = originalSquareSize.width > max ? CGSize(width: max, height: max) : originalSquareSize
+        let resized = cropped.resize(toTargetSize: reducedSize)
+        self = .image(resized)
+    }
+    
+    public var image: UIImage? {
+        switch self {
+        case .image(let image):
+            return image
+        case .emoji:
+            return nil
         }
-        
-        public init(rawImage: UIImage) {
-            // all of this code assumes we're cropping to square image
-            // it also assumes that we're converting it to a new image with a scale of 1
-            let smallestDimension = rawImage.size.width > rawImage.size.height ? rawImage.size.height : rawImage.size.width
-            let smallestScaledDimension = smallestDimension * rawImage.scale
-            let originalSquareSize = CGSize(width: smallestScaledDimension, height: smallestScaledDimension)
-            let cropped = rawImage.cropping(to: originalSquareSize)
-            let max = UIImage.style_maxSize
-            let reducedSize = originalSquareSize.width > max ? CGSize(width: max, height: max) : originalSquareSize
-            let resized = cropped.resize(toTargetSize: reducedSize)
-            self = .image(resized)
-        }
-
-        public var image: UIImage? {
-            switch self {
-            case .image(let image):
-                return image
-            case .emoji:
-                return nil
-            }
-        }
-
-        public var emoji: String? {
-            switch self {
-            case .image:
-                return nil
-            case .emoji(let string):
-                return string
-            }
+    }
+    
+    public var emoji: String? {
+        switch self {
+        case .image:
+            return nil
+        case .emoji(let string):
+            return string
         }
     }
 }
 
-extension ReminderVessel.Icon {
+extension ReminderVesselIcon {
     
     internal init?(rawImageData: Data?, emojiString: String?) {
         if let data = rawImageData, let image = UIImage(data: data) {

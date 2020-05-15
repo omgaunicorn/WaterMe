@@ -162,7 +162,7 @@ public class BasicController {
         return result
     }
 
-    public func reminderVessel(matching identifier: ReminderVessel.Identifier) -> Result<ReminderVessel, DatumError> {
+    public func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVessel, DatumError> {
         return self.realm.flatMap() { realm -> Result<ReminderVessel, DatumError> in
             guard let reminder = realm.object(ofType: ReminderVessel.self, forPrimaryKey: identifier.reminderVesselIdentifier)
                 else { return .failure(.objectDeleted) }
@@ -209,7 +209,7 @@ public class BasicController {
         }
     }
     
-    public func newReminderVessel(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, reminders: [ReminderWrapper]? = nil) -> Result<ReminderVessel, DatumError> {
+    public func newReminderVessel(displayName: String? = nil, icon: ReminderVesselIcon? = nil, reminders: [ReminderWrapper]? = nil) -> Result<ReminderVessel, DatumError> {
         return self.realm.flatMap() { realm in
             let v = ReminderVessel()
             if let displayName = displayName?.nonEmptyString { // make sure the string is not empty
@@ -232,7 +232,7 @@ public class BasicController {
     }
     
     public func update(displayName: String? = nil,
-                       icon: ReminderVessel.Icon? = nil,
+                       icon: ReminderVesselIcon? = nil,
                        in vessel: ReminderVessel) -> Result<Void, DatumError>
     {
         guard vessel.isInvalidated == false else { return .failure(.objectDeleted) }
@@ -300,7 +300,7 @@ public class BasicController {
             realm.beginWrite()
             let vessel = ReminderVessel()
             vessel.displayName = vesselName
-            vessel.icon = ReminderVessel.Icon(rawImage: vesselImage, emojiString: vesselEmoji)
+            vessel.icon = ReminderVesselIcon(rawImage: vesselImage, emojiString: vesselEmoji)
             let reminder = Reminder()
             reminder.interval = reminderInterval?.intValue ?? -1
             if let lastPerformDate = reminderLastPerformDate {

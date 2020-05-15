@@ -96,7 +96,7 @@ extension ReminderMainViewController {
         return nil
     }
 
-    private func continueActivityEditReminderVessel(with identifier: ReminderVessel.Identifier,
+    private func continueActivityEditReminderVessel(with identifier: ReminderVesselIdentifier,
                                                     completion: @escaping NSUserActivityContinuedHandler) -> UserActivityError?
     {
         guard

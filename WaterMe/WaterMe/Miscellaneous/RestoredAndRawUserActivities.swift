@@ -26,7 +26,7 @@ import CoreSpotlight
 
 public enum RestoredUserActivity {
     case editReminder(ReminderIdentifier)
-    case editReminderVessel(ReminderVessel.Identifier)
+    case editReminderVessel(ReminderVesselIdentifier)
     case viewReminder(ReminderIdentifier)
     case performReminder(ReminderIdentifier)
 }

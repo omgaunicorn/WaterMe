@@ -63,13 +63,13 @@ public struct ReminderValue: Hashable {
 
 public struct ReminderVesselValue: Hashable {
 
-    public var uuid: ReminderVessel.Identifier
+    public var uuid: ReminderVesselIdentifier
     public var name: String?
     public var imageData: Data?
 
     public init?(reminderVessel: ReminderVessel?) {
         guard let reminderVessel = reminderVessel else { return nil }
-        self.uuid = ReminderVessel.Identifier(reminderVessel: reminderVessel)
+        self.uuid = ReminderVesselIdentifier(reminderVessel: reminderVessel)
         self.name = reminderVessel.shortLabelSafeDisplayName
         self.imageData = reminderVessel.iconImageData
     }

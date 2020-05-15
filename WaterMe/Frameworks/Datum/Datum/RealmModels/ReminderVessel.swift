@@ -24,22 +24,22 @@
 import RealmSwift
 import Calculate
 
-public class ReminderVessel: Object {
+public struct ReminderVesselIdentifier: UUIDRepresentable, Hashable {
+    public var reminderVesselIdentifier: String
+    public init(reminderVessel: ReminderVessel) {
+        self.reminderVesselIdentifier = reminderVessel.uuid
+    }
+    public init(rawValue: String) {
+        self.reminderVesselIdentifier = rawValue
+    }
+    public var uuid: String { return self.reminderVesselIdentifier }
+}
 
-    public struct Identifier: UUIDRepresentable, Hashable {
-        public var reminderVesselIdentifier: String
-        public init(reminderVessel: ReminderVessel) {
-            self.reminderVesselIdentifier = reminderVessel.uuid
-        }
-        public init(rawValue: String) {
-            self.reminderVesselIdentifier = rawValue
-        }
-        public var uuid: String { return self.reminderVesselIdentifier }
-    }
-    
-    public enum Kind: String {
-        case plant
-    }
+public enum ReminderVesselKind: String {
+    case plant
+}
+
+public class ReminderVessel: Object {
     
     @objc public internal(set) dynamic var uuid = UUID().uuidString
     @objc public internal(set) dynamic var displayName: String?
@@ -47,8 +47,8 @@ public class ReminderVessel: Object {
     
     @objc public private(set) dynamic var iconImageData: Data?
     @objc private dynamic var iconEmojiString: String?
-    public internal(set) var icon: Icon? {
-        get { return Icon(rawImageData: self.iconImageData, emojiString: self.iconEmojiString) }
+    public internal(set) var icon: ReminderVesselIcon? {
+        get { return ReminderVesselIcon(rawImageData: self.iconImageData, emojiString: self.iconEmojiString) }
         set {
             self.iconImageData = newValue?.dataValue
             self.iconEmojiString = newValue?.stringValue
@@ -56,9 +56,9 @@ public class ReminderVessel: Object {
     }
 
     @objc internal dynamic var bloop = false
-    @objc private dynamic var kindString = Kind.plant.rawValue
-    public internal(set) var kind: Kind {
-        get { return Kind(rawValue: self.kindString) ?? .plant }
+    @objc private dynamic var kindString = ReminderVesselKind.plant.rawValue
+    public internal(set) var kind: ReminderVesselKind {
+        get { return ReminderVesselKind(rawValue: self.kindString) ?? .plant }
         set { self.kindString = newValue.rawValue }
     }
     
