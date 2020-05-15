@@ -24,16 +24,15 @@
 import RealmSwift
 
 public struct ReminderWrapper {
+    internal var wrappedObject: Reminder
+    internal init(_ wrappedObject: Reminder) {
+        self.performed = .init(wrappedObject.performed)
+        self.wrappedObject = wrappedObject
+    }
     
     public static var minimumInterval: Int { Reminder.minimumInterval }
     public static var maximumInterval: Int { Reminder.maximumInterval }
     public static var defaultInterval: Int { Reminder.defaultInterval }
-    
-    internal var wrappedObject: Reminder
-    
-    internal init(_ reminder: Reminder) {
-        self.wrappedObject = reminder
-    }
     
     public var kind: ReminderKind { self.wrappedObject.kind }
     public var uuid: String { self.wrappedObject.uuid }
@@ -41,7 +40,29 @@ public struct ReminderWrapper {
     public var note: String? { self.wrappedObject.note }
     public var nextPerformDate: Date? { self.wrappedObject.nextPerformDate }
     public var vessel: ReminderVessel? { self.wrappedObject.vessel }
-    public var performed: LazyMapSequence<List<ReminderPerform>, ReminderPerform> { self.wrappedObject.performed.lazy.map({ $0 }) }
     public var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
+    public let performed: ReminderPerformCollection
+}
+
+public struct ReminderPerformCollection {
+    private var collection: List<ReminderPerform>
+    internal init(_ collection: List<ReminderPerform>) {
+        self.collection = collection
+    }
     
+    public var count: Int { self.collection.count }
+    public subscript(index: Int) -> ReminderPerformWrapper { .init(self.collection[index]) }
+    public var last: ReminderPerformWrapper? {
+        guard let last = self.collection.last else { return nil }
+        return .init(last)
+    }
+}
+
+public struct ReminderPerformWrapper {
+    internal var wrappedObject: ReminderPerform
+    internal init(_ wrappedObject: ReminderPerform) {
+        self.wrappedObject = wrappedObject
+    }
+    
+    public var date: Date { self.wrappedObject.date }
 }

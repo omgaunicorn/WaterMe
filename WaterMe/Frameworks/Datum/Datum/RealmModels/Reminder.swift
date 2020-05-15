@@ -61,8 +61,8 @@ public class Reminder: Object {
     }
 }
 
-public class ReminderPerform: Object {
-    @objc public internal(set) dynamic var date = Date()
+internal class ReminderPerform: Object {
+    @objc internal dynamic var date = Date()
     @objc internal dynamic var bloop = false
 }
 
