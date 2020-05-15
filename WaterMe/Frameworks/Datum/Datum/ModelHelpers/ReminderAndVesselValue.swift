@@ -65,7 +65,7 @@ public struct ReminderVesselValue: Hashable {
     public var name: String?
     public var imageData: Data?
 
-    internal init?(reminderVessel: ReminderVessel?) {
+    internal init?(reminderVessel: __rlm_ReminderVessel?) {
         guard let reminderVessel = reminderVessel else { return nil }
         self.uuid = ReminderVesselIdentifier(reminderVessel: reminderVessel)
         self.name = reminderVessel.shortLabelSafeDisplayName

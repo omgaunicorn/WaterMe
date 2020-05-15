@@ -28,7 +28,7 @@ extension Reminder {
     internal static let maximumInterval: Int = 180
     internal static let defaultInterval: Int = 7
     
-    internal var vessel: ReminderVessel? { return self.vessels.first }
+    internal var vessel: __rlm_ReminderVessel? { return self.vessels.first }
     internal var kind: ReminderKind {
         get { return self.kindValue }
         set { self.update(with: newValue) }

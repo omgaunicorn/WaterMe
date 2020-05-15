@@ -24,9 +24,9 @@
 import RealmSwift
 
 public class ReminderVesselCollection {
-    private let collection: AnyRealmCollection<ReminderVessel>
-    private let transform: (ReminderVessel) -> ReminderVesselWrapper = { .init($0) }
-    internal init(_ collection: AnyRealmCollection<ReminderVessel>) {
+    private let collection: AnyRealmCollection<__rlm_ReminderVessel>
+    private let transform: (__rlm_ReminderVessel) -> ReminderVesselWrapper = { .init($0) }
+    internal init(_ collection: AnyRealmCollection<__rlm_ReminderVessel>) {
         self.collection = collection
     }
     
@@ -39,8 +39,8 @@ public protocol ReminderVesselQuery {
 }
 
 internal class ReminderVesselQueryImp: ReminderVesselQuery {
-    private let collection: AnyRealmCollection<ReminderVessel>
-    init(_ collection: AnyRealmCollection<ReminderVessel>) {
+    private let collection: AnyRealmCollection<__rlm_ReminderVessel>
+    init(_ collection: AnyRealmCollection<__rlm_ReminderVessel>) {
         self.collection = collection
     }
     func observe(_ block: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken {
@@ -81,10 +81,10 @@ extension ReminderVesselWrapper: ReminderVesselObservable {
             case .error(let error):
                 block(.error(error))
             case .change(let properties):
-                let changedDisplayName = ReminderVessel.propertyChangesContainDisplayName(properties)
-                let changedIconEmoji = ReminderVessel.propertyChangesContainIconEmoji(properties)
-                let changedReminders = ReminderVessel.propertyChangesContainReminders(properties)
-                let changedPointlessBloop = ReminderVessel.propertyChangesContainPointlessBloop(properties)
+                let changedDisplayName = __rlm_ReminderVessel.propertyChangesContainDisplayName(properties)
+                let changedIconEmoji = __rlm_ReminderVessel.propertyChangesContainIconEmoji(properties)
+                let changedReminders = __rlm_ReminderVessel.propertyChangesContainReminders(properties)
+                let changedPointlessBloop = __rlm_ReminderVessel.propertyChangesContainPointlessBloop(properties)
                 block(.change(changedDisplayName: changedDisplayName,
                               changedIconEmoji: changedIconEmoji,
                               changedReminders: changedReminders,

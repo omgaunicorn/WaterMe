@@ -35,7 +35,9 @@ internal class __Reminder: Object {
     @objc internal dynamic var descriptionString: String?
     @objc internal dynamic var bloop = false
     internal let performed = List<ReminderPerform>()
-    internal let vessels = LinkingObjects(fromType: ReminderVessel.self, property: "reminders") //#keyPath(ReminderVessel.reminders)
+                           //#keyPath(__rlm_ReminderVessel.reminders)
+    internal let vessels = LinkingObjects(fromType: __rlm_ReminderVessel.self,
+                                          property: "reminders")
     internal override class func primaryKey() -> String {
         return #keyPath(Reminder.uuid)
     }

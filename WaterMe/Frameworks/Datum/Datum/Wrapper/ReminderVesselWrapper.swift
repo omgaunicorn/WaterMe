@@ -22,8 +22,8 @@
 //
 
 public struct ReminderVesselWrapper: ModelCompleteCheckable {
-    internal let wrappedObject: ReminderVessel
-    internal init(_ wrappedObject: ReminderVessel) {
+    internal let wrappedObject: __rlm_ReminderVessel
+    internal init(_ wrappedObject: __rlm_ReminderVessel) {
         self.wrappedObject = wrappedObject
     }
     

@@ -87,7 +87,7 @@ public class BasicController {
         self.kind = kind
         var realmConfig = Realm.Configuration()
         realmConfig.schemaVersion = 14
-        realmConfig.objectTypes = [ReminderVessel.self, Reminder.self, ReminderPerform.self]
+        realmConfig.objectTypes = [__rlm_ReminderVessel.self, Reminder.self, ReminderPerform.self]
         switch kind {
         case .local:
             try type(of: self).createLocalRealmDirectoryIfNeeded()
@@ -106,8 +106,8 @@ public class BasicController {
 
     public func allVessels() -> Result<ReminderVesselQuery, DatumError> {
         return self.realm.map() { realm in
-            let kp = #keyPath(ReminderVessel.displayName)
-            let collection = realm.objects(ReminderVessel.self).sorted(byKeyPath: kp)
+            let kp = #keyPath(__rlm_ReminderVessel.displayName)
+            let collection = realm.objects(__rlm_ReminderVessel.self).sorted(byKeyPath: kp)
             return ReminderVesselQueryImp(AnyRealmCollection(collection))
         }
     }
@@ -164,7 +164,7 @@ public class BasicController {
 
     public func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVesselWrapper, DatumError> {
         return self.realm.flatMap() { realm -> Result<ReminderVesselWrapper, DatumError> in
-            guard let reminder = realm.object(ofType: ReminderVessel.self, forPrimaryKey: identifier.uuid)
+            guard let reminder = realm.object(ofType: __rlm_ReminderVessel.self, forPrimaryKey: identifier.uuid)
             else { return .failure(.objectDeleted) }
             return .success(.init(reminder))
         }
@@ -212,7 +212,7 @@ public class BasicController {
     
     public func newReminderVessel(displayName: String? = nil, icon: ReminderVesselIcon? = nil, reminders: [ReminderWrapper]? = nil) -> Result<ReminderVesselWrapper, DatumError> {
         return self.realm.flatMap() { realm in
-            let v = ReminderVessel()
+            let v = __rlm_ReminderVessel()
             if let displayName = displayName?.nonEmptyString { // make sure the string is not empty
                 v.displayName = displayName
             }
@@ -300,7 +300,7 @@ public class BasicController {
     {
         return self.realm.flatMap() { realm in
             realm.beginWrite()
-            let vessel = ReminderVessel()
+            let vessel = __rlm_ReminderVessel()
             vessel.displayName = vesselName
             vessel.icon = ReminderVesselIcon(rawImage: vesselImage, emojiString: vesselEmoji)
             let reminder = Reminder()
@@ -333,7 +333,7 @@ public class BasicController {
         return result
     }
     
-    private func delete(vessel: ReminderVessel, inOpenRealm realm: Realm) {
+    private func delete(vessel: __rlm_ReminderVessel, inOpenRealm realm: Realm) {
         for reminder in vessel.reminders {
             self.delete(reminder: reminder, inOpenRealm: realm)
         }
