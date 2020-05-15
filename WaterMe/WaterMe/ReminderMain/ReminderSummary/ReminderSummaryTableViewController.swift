@@ -25,7 +25,7 @@ import UIKit
 import Datum
 
 protocol ReminderSummaryTableViewControllerDelegate: class {
-    var reminderResult: Result<Reminder, DatumError>! { get }
+    var reminderResult: Result<ReminderWrapper, DatumError>! { get }
     var isPresentedAsPopover: Bool { get }
     func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController)
     func userChose(toViewImage image: UIImage, rowDeselectionHandler: @escaping () -> Void, within: ReminderSummaryTableViewController)

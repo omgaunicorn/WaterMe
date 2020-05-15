@@ -30,13 +30,13 @@ protocol ReminderVesselEditTableViewControllerDelegate: class {
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?,
                               sender: PopoverSender)
-    func userChose(reminder: Reminder,
+    func userChose(reminder: ReminderWrapper,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
     func userChose(siriShortcut: ReminderVesselEditTableViewController.SiriShortcut,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
-    func userDeleted(reminder: Reminder,
+    func userDeleted(reminder: ReminderWrapper,
                      controller: ReminderVesselEditTableViewController?) -> Bool
 }
 

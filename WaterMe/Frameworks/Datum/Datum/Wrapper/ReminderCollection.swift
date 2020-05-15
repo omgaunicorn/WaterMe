@@ -42,7 +42,7 @@ internal class ReminderQueryImp: ReminderQuery {
         return self.collection.observe { realmChange in
             switch realmChange {
             case .initial(let data):
-                block(.initial(data: .init(data)))
+                block(.initial(data: .init(data, transform: { ReminderWrapper($0) })))
             case .update(_, let deletions, let insertions, let modifications):
                 block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
             case .error(let error):
@@ -52,7 +52,7 @@ internal class ReminderQueryImp: ReminderQuery {
     }
 }
 
-public class ReminderCollection: DatumCollection<Reminder, AnyRealmCollection<Reminder>> {
+public class ReminderCollection: DatumCollection<ReminderWrapper, Reminder, AnyRealmCollection<Reminder>> {
     public var isInvalidated: Bool { return self.collection.isInvalidated }
     public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
         return self.collection.index(matching: predicateFormat, args)
@@ -69,9 +69,9 @@ public protocol ReminderObservable {
     func datum_observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken
 }
 
-extension Reminder: ReminderObservable {
+extension ReminderWrapper: ReminderObservable {
     public func datum_observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken {
-        return self.observe { realmChange in
+        return self.wrappedObject.observe { realmChange in
             switch realmChange {
             case .error(let error):
                 block(.error(error))

@@ -52,7 +52,7 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         self.reset()
     }
     
-    func configure(with reminder: Reminder?) {
+    func configure(with reminder: ReminderWrapper?) {
         guard let reminder = reminder else { self.reset(); return; }
 
         // configure date

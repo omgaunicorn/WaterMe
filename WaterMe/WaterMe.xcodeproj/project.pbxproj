@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4832F52D246E2406001B77F6 /* ReminderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F52C246E2406001B77F6 /* ReminderWrapper.swift */; };
 		48A7B0DC2467FCB100DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
 		48A7B0E32467FCB100DC0861 /* CalculateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7B0E22467FCB100DC0861 /* CalculateTests.swift */; };
 		48A7B0E52467FCB100DC0861 /* Calculate.h in Headers */ = {isa = PBXBuildFile; fileRef = 48A7B0D52467FCB100DC0861 /* Calculate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -354,6 +355,7 @@
 		05C61A2024090D8F5C884F5B /* Pods_WaterMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaterMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C074CD7B6C03DE4F5780D73 /* Pods-Datum.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Datum.release.xcconfig"; path = "Target Support Files/Pods-Datum/Pods-Datum.release.xcconfig"; sourceTree = "<group>"; };
 		39DFC7BD15912D3CEA99F795 /* Pods-Datum.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Datum.debug.xcconfig"; path = "Target Support Files/Pods-Datum/Pods-Datum.debug.xcconfig"; sourceTree = "<group>"; };
+		4832F52C246E2406001B77F6 /* ReminderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderWrapper.swift; sourceTree = "<group>"; };
 		48A7B0D32467FCB100DC0861 /* Calculate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Calculate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48A7B0D52467FCB100DC0861 /* Calculate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Calculate.h; sourceTree = "<group>"; };
 		48A7B0D62467FCB100DC0861 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -635,9 +637,9 @@
 			isa = PBXGroup;
 			children = (
 				48A7B0D52467FCB100DC0861 /* Calculate.h */,
+				48A7B0F02467FDF500DC0861 /* PrivateKeys.swift */,
 				48A7B0F32467FDF500DC0861 /* AppVersion.swift */,
 				48A7B0F22467FDF500DC0861 /* NSCalendar+WaterMe.swift */,
-				48A7B0F02467FDF500DC0861 /* PrivateKeys.swift */,
 				48A7B0F12467FDF500DC0861 /* SignificantTimePassedDetector.swift */,
 				48A7B0F42467FDF600DC0861 /* UserFacingError.swift */,
 				48A7B0D62467FCB100DC0861 /* Info.plist */,
@@ -662,6 +664,7 @@
 				48B77EDF24677FD600EF25D3 /* BasicWrappers.swift */,
 				48B77EDB2466C8FD00EF25D3 /* ReminderCollection.swift */,
 				48B77EDD2466CAB700EF25D3 /* ReminderVesselCollection.swift */,
+				4832F52C246E2406001B77F6 /* ReminderWrapper.swift */,
 			);
 			path = Wrapper;
 			sourceTree = "<group>";
@@ -1653,6 +1656,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4832F52D246E2406001B77F6 /* ReminderWrapper.swift in Sources */,
 				503476B724552EFE00C3DAD3 /* Receipt.swift in Sources */,
 				503476AF24552EFE00C3DAD3 /* ItemAndSectionable.swift in Sources */,
 				503476B024552EFE00C3DAD3 /* ReminderGedeg.swift in Sources */,

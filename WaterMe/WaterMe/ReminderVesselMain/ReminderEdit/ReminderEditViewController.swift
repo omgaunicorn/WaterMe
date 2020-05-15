@@ -28,7 +28,7 @@ import UIKit
 class ReminderEditViewController: StandardViewController, HasBasicController {
     
     enum Purpose {
-        case new(ReminderVessel), existing(Reminder)
+        case new(ReminderVessel), existing(ReminderWrapper)
     }
     typealias CompletionHandler = (UIViewController) -> Void
     
@@ -67,7 +67,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
                                                                 action: #selector(self.doneButtonTapped(_:)))
 
     var basicRC: BasicController?
-    private(set) var reminderResult: Result<Reminder, DatumError>?
+    private(set) var reminderResult: Result<ReminderWrapper, DatumError>?
     private var completionHandler: CompletionHandler?
     private var userActivityCompletion: NSUserActivityContinuedHandler?
     //swiftlint:disable:next weak_delegate

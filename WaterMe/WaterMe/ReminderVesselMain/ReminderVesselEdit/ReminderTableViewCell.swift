@@ -41,7 +41,7 @@ class ReminderTableViewCell: UITableViewCell {
 
     fileprivate let formatter = DateComponentsFormatter.newReminderIntervalFormatter
     
-    func configure(with reminder: Reminder?) {
+    func configure(with reminder: ReminderWrapper?) {
         guard let reminder = reminder else { self.reset(); return; }
         
         // do stuff that is the same for all cases

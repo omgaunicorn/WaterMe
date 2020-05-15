@@ -170,11 +170,11 @@ public class BasicController {
         }
     }
 
-    public func reminder(matching identifier: Reminder.Identifier) -> Result<Reminder, DatumError> {
-        return self.realm.flatMap() { realm -> Result<Reminder, DatumError> in
+    public func reminder(matching identifier: Reminder.Identifier) -> Result<ReminderWrapper, DatumError> {
+        return self.realm.flatMap() { realm -> Result<ReminderWrapper, DatumError> in
             guard let reminder = realm.object(ofType: Reminder.self, forPrimaryKey: identifier.reminderIdentifier)
-                else { return .failure(.objectDeleted) }
-            return .success(reminder)
+            else { return .failure(.objectDeleted) }
+            return .success(.init(reminder))
         }
     }
 
@@ -199,13 +199,13 @@ public class BasicController {
         }
     }
     
-    public func newReminder(for vessel: ReminderVessel) -> Result<Reminder, DatumError> {
+    public func newReminder(for vessel: ReminderVessel) -> Result<ReminderWrapper, DatumError> {
         return self.realm.flatMap() { realm in
             let reminder = Reminder()
             realm.beginWrite()
             realm.add(reminder)
             vessel.reminders.append(reminder)
-            return realm.waterMe_commitWrite().map({ reminder })
+            return realm.waterMe_commitWrite().map({ .init(reminder) })
         }
     }
     
@@ -264,8 +264,9 @@ public class BasicController {
     public func update(kind: Reminder.Kind? = nil,
                        interval: Int? = nil,
                        note: String? = nil,
-                       in reminder: Reminder) -> Result<Void, DatumError>
+                       in reminder: ReminderWrapper) -> Result<Void, DatumError>
     {
+        let reminder = reminder.wrappedObject
         guard reminder.isInvalidated == false else { return .failure(.objectDeleted) }
         return self.realm.flatMap() { realm in
             realm.beginWrite()
@@ -336,7 +337,8 @@ public class BasicController {
         realm.delete(vessel)
     }
         
-    public func delete(reminder: Reminder) -> Result<Void, DatumError> {
+    public func delete(reminder: ReminderWrapper) -> Result<Void, DatumError> {
+        let reminder = reminder.wrappedObject
         if let vessel = reminder.vessel, vessel.reminders.count <= 1 {
             return .failure(.unableToDeleteLastReminder) 
         }

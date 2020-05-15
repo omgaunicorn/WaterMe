@@ -122,7 +122,7 @@ open class ReminderGedeg: NSObject {
         return count
     }
 
-    public func reminder(at indexPath: IndexPath) -> Reminder? {
+    public func reminder(at indexPath: IndexPath) -> ReminderWrapper? {
         guard let section = Reminder.Section(rawValue: indexPath.section) else {
             let message = "Invalid Section Passed In"
             assertionFailure(message)

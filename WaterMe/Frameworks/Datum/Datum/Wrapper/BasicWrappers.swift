@@ -23,19 +23,17 @@
 
 import RealmSwift
 
-public class DatumCollection<T: RealmSwift.Object, C: RandomAccessCollection> where C.Element == T, C.Index == Int {
+public class DatumCollection<U, T: RealmSwift.Object, C: RandomAccessCollection> where C.Element == T, C.Index == Int {
     public var count: Int { return self.collection.count }
     internal let collection: C
-    init(_ collection: C) {
+    private let transform: (T) -> U
+    init(_ collection: C, transform: @escaping (T) -> U) {
         self.collection = collection
+        self.transform = transform
     }
-    public subscript(index: Int) -> T {
-        get {
-            return self.collection[index]
-        }
-    }
-    public func compactMap<ElementOfResult>(_ transform: (T) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
-        return try self.collection.compactMap(transform)
+    public subscript(index: Int) -> U { self.transform(self.collection[index]) }
+    public func compactMap<ElementOfResult>(_ transform: (U) throws -> ElementOfResult?) rethrows -> [ElementOfResult] {
+        return try self.collection.compactMap { try transform(self.transform($0)) }
     }
 }
 

@@ -64,7 +64,7 @@ extension InfoTableViewCell {
                                font: .reminderSummarySublabel)
     }
     
-    func configureUnimportant(with reminder: Reminder?) {
+    func configureUnimportant(with reminder: ReminderWrapper?) {
         _ = {
             let vesselName = reminder?.vessel?.displayName
             let vesselNameStyle = vesselName != nil ?
@@ -93,7 +93,7 @@ extension InfoTableViewCell {
         }()
     }
 
-    func configureImportant(with reminder: Reminder?) {
+    func configureImportant(with reminder: ReminderWrapper?) {
         _ = {
             guard let reminderName = reminder?.kind.localizedLongString else { return }
             self.label0?.attributedText = NSAttributedString(string: reminderName,
