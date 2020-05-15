@@ -24,19 +24,20 @@
 import RealmSwift
 
 public class ReminderCollection {
-    private let collection: DatumCollection<ReminderWrapper, Reminder, AnyRealmCollection<Reminder>>
-    internal init(_ collection: AnyRealmCollection<Reminder>, transform: @escaping (Reminder) -> ReminderWrapper) {
-        self.collection = .init(collection, transform: transform)
+    private let collection: AnyRealmCollection<Reminder>
+    private let transform: (Reminder) -> ReminderWrapper = { .init($0) }
+    internal init(_ collection: AnyRealmCollection<Reminder>) {
+        self.collection = collection
     }
     
-    public var count: Int { return self.collection.collection.count }
-    public var isInvalidated: Bool { return self.collection.collection.isInvalidated }
-    public subscript(index: Int) -> ReminderWrapper { self.collection[index] }
+    public var count: Int { self.collection.count }
+    public var isInvalidated: Bool { self.collection.isInvalidated }
+    public subscript(index: Int) -> ReminderWrapper { self.transform(self.collection[index]) }
     public func compactMap<E>(_ transform: (ReminderWrapper) throws -> E?) rethrows -> [E] {
-        return try self.collection.compactMap(transform)
+        return try self.collection.compactMap { try transform(self.transform($0)) }
     }
     public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
-        return self.collection.collection.index(matching: predicateFormat, args)
+        return self.collection.index(matching: predicateFormat, args)
     }
 }
 
@@ -53,7 +54,7 @@ internal class ReminderQueryImp: ReminderQuery {
         return self.collection.observe { realmChange in
             switch realmChange {
             case .initial(let data):
-                block(.initial(data: .init(data, transform: { ReminderWrapper($0) })))
+                block(.initial(data: .init(data)))
             case .update(_, let deletions, let insertions, let modifications):
                 block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
             case .error(let error):

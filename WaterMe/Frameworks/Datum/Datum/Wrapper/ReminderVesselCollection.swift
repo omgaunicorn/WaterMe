@@ -24,22 +24,14 @@
 import RealmSwift
 
 public class ReminderVesselCollection {
-    private let collection: DatumCollection<ReminderVesselWrapper, ReminderVessel, AnyRealmCollection<ReminderVessel>>
-    internal init(_ collection: AnyRealmCollection<ReminderVessel>,
-                  transform: @escaping (ReminderVessel) -> ReminderVesselWrapper)
-    {
-        self.collection = .init(collection, transform: transform)
+    private let collection: AnyRealmCollection<ReminderVessel>
+    private let transform: (ReminderVessel) -> ReminderVesselWrapper = { .init($0) }
+    internal init(_ collection: AnyRealmCollection<ReminderVessel>) {
+        self.collection = collection
     }
     
-    public var count: Int { return self.collection.collection.count }
-    public var isInvalidated: Bool { return self.collection.collection.isInvalidated }
-    public subscript(index: Int) -> ReminderVesselWrapper { self.collection[index] }
-    public func compactMap<E>(_ transform: (ReminderVesselWrapper) throws -> E?) rethrows -> [E] {
-        return try self.collection.compactMap(transform)
-    }
-    public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
-        return self.collection.collection.index(matching: predicateFormat, args)
-    }
+    public var count: Int { self.collection.count }
+    public subscript(index: Int) -> ReminderVesselWrapper { self.transform(self.collection[index]) }
 }
 
 public protocol ReminderVesselQuery {
@@ -55,7 +47,7 @@ internal class ReminderVesselQueryImp: ReminderVesselQuery {
         return self.collection.observe { realmChange in
             switch realmChange {
             case .initial(let data):
-                block(.initial(data: .init(data, transform: { .init($0) })))
+                block(.initial(data: .init(data)))
             case .update(_, let deletions, let insertions, let modifications):
                 block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
             case .error(let error):
@@ -107,7 +99,7 @@ extension ReminderVesselWrapper: ReminderVesselObservable {
         return self.wrappedObject.reminders.observe { realmChange in
             switch realmChange {
             case .initial(let data):
-                block(.initial(data: .init(AnyRealmCollection(data), transform: { ReminderWrapper($0) })))
+                block(.initial(data: .init(AnyRealmCollection(data))))
             case .update(_, let deletions, let insertions, let modifications):
                 block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
             case .error(let error):

@@ -23,19 +23,6 @@
 
 import RealmSwift
 
-internal class DatumCollection<U, T: RealmSwift.Object, C: RandomAccessCollection> where C.Element == T, C.Index == Int {
-    internal let collection: C
-    private let transform: (T) -> U
-    init(_ collection: C, transform: @escaping (T) -> U) {
-        self.collection = collection
-        self.transform = transform
-    }
-    public subscript(index: Int) -> U { self.transform(self.collection[index]) }
-    public func compactMap<E>(_ transform: (U) throws -> E?) rethrows -> [E] {
-        return try self.collection.compactMap { try transform(self.transform($0)) }
-    }
-}
-
 public protocol ObservationToken {
     func invalidate()
 }
