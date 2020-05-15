@@ -28,7 +28,7 @@ import UIKit
 class ReminderEditViewController: StandardViewController, HasBasicController {
     
     enum Purpose {
-        case new(ReminderVessel), existing(ReminderWrapper)
+        case new(ReminderVesselWrapper), existing(ReminderWrapper)
     }
     typealias CompletionHandler = (UIViewController) -> Void
     

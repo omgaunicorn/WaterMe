@@ -162,11 +162,11 @@ public class BasicController {
         return result
     }
 
-    public func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVessel, DatumError> {
-        return self.realm.flatMap() { realm -> Result<ReminderVessel, DatumError> in
+    public func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVesselWrapper, DatumError> {
+        return self.realm.flatMap() { realm -> Result<ReminderVesselWrapper, DatumError> in
             guard let reminder = realm.object(ofType: ReminderVessel.self, forPrimaryKey: identifier.reminderVesselIdentifier)
                 else { return .failure(.objectDeleted) }
-            return .success(reminder)
+            return .success(.init(reminder))
         }
     }
 
@@ -199,7 +199,8 @@ public class BasicController {
         }
     }
     
-    public func newReminder(for vessel: ReminderVessel) -> Result<ReminderWrapper, DatumError> {
+    public func newReminder(for vessel: ReminderVesselWrapper) -> Result<ReminderWrapper, DatumError> {
+        let vessel = vessel.wrappedObject
         return self.realm.flatMap() { realm in
             let reminder = Reminder()
             realm.beginWrite()
@@ -209,7 +210,7 @@ public class BasicController {
         }
     }
     
-    public func newReminderVessel(displayName: String? = nil, icon: ReminderVesselIcon? = nil, reminders: [ReminderWrapper]? = nil) -> Result<ReminderVessel, DatumError> {
+    public func newReminderVessel(displayName: String? = nil, icon: ReminderVesselIcon? = nil, reminders: [ReminderWrapper]? = nil) -> Result<ReminderVesselWrapper, DatumError> {
         return self.realm.flatMap() { realm in
             let v = ReminderVessel()
             if let displayName = displayName?.nonEmptyString { // make sure the string is not empty
@@ -227,14 +228,15 @@ public class BasicController {
             }
             realm.beginWrite()
             realm.add(v)
-            return realm.waterMe_commitWrite().map({ v })
+            return realm.waterMe_commitWrite().map({ .init(v) })
         }
     }
     
     public func update(displayName: String? = nil,
                        icon: ReminderVesselIcon? = nil,
-                       in vessel: ReminderVessel) -> Result<Void, DatumError>
+                       in vessel: ReminderVesselWrapper) -> Result<Void, DatumError>
     {
+        let vessel = vessel.wrappedObject
         guard vessel.isInvalidated == false else { return .failure(.objectDeleted) }
         return self.realm.flatMap() { realm in
             realm.beginWrite()
@@ -315,7 +317,8 @@ public class BasicController {
         }
     }
         
-    public func delete(vessel: ReminderVessel) -> Result<Void, DatumError> {
+    public func delete(vessel: ReminderVesselWrapper) -> Result<Void, DatumError> {
+        let vessel = vessel.wrappedObject
         let reminderValues = Array(vessel.reminders.map({ ReminderValue(reminder: $0) }))
         let vesselValue = ReminderVesselValue(reminderVessel: vessel)
         let result: Result<Void, DatumError> = self.realm.flatMap() { realm in

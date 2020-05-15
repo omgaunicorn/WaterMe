@@ -38,7 +38,7 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
         self.prepareForReuse()
     }
     
-    func configure(with vessel: ReminderVessel) {
+    func configure(with vessel: ReminderVesselWrapper) {
         let vesselName = vessel.displayName
         let vesselNameStyle = vesselName != nil ?
             Font.reminderVesselCollectionViewCellPrimary(nil) :

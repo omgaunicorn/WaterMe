@@ -113,7 +113,6 @@ extension ReminderVessel {
 }
 
 extension ReminderVessel {
-
     public var shortLabelSafeDisplayName: String? {
         let name = self.displayName ?? ""
         let characterLimit = 20

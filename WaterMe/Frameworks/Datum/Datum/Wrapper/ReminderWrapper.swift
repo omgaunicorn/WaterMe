@@ -23,10 +23,11 @@
 
 import RealmSwift
 
-public struct ReminderWrapper {
+public struct ReminderWrapper: ModelCompleteCheckable {
     internal var wrappedObject: Reminder
     internal init(_ wrappedObject: Reminder) {
         self.performed = .init(wrappedObject.performed)
+        self.vessel = wrappedObject.vessel.map { .init($0) }
         self.wrappedObject = wrappedObject
     }
     
@@ -39,8 +40,8 @@ public struct ReminderWrapper {
     public var interval: Int { self.wrappedObject.interval }
     public var note: String? { self.wrappedObject.note }
     public var nextPerformDate: Date? { self.wrappedObject.nextPerformDate }
-    public var vessel: ReminderVessel? { self.wrappedObject.vessel }
     public var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
+    public let vessel: ReminderVesselWrapper?
     public let performed: ReminderPerformCollection
 }
 

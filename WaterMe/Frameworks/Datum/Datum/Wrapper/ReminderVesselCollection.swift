@@ -42,7 +42,7 @@ internal class ReminderVesselQueryImp: ReminderVesselQuery {
         return self.collection.observe { realmChange in
             switch realmChange {
             case .initial(let data):
-                block(.initial(data: .init(data, transform: { $0 })))
+                block(.initial(data: .init(data, transform: { .init($0) })))
             case .update(_, let deletions, let insertions, let modifications):
                 block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
             case .error(let error):
@@ -52,7 +52,7 @@ internal class ReminderVesselQueryImp: ReminderVesselQuery {
     }
 }
 
-public class ReminderVesselCollection: DatumCollection<ReminderVessel, ReminderVessel, AnyRealmCollection<ReminderVessel>> {
+public class ReminderVesselCollection: DatumCollection<ReminderVesselWrapper, ReminderVessel, AnyRealmCollection<ReminderVessel>> {
     public var isInvalidated: Bool { return self.collection.isInvalidated }
     public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
         return self.collection.index(matching: predicateFormat, args)
@@ -70,9 +70,9 @@ public protocol ReminderVesselObservable {
     func datum_observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken
 }
 
-extension ReminderVessel: ReminderVesselObservable {
+extension ReminderVesselWrapper: ReminderVesselObservable {
     public func datum_observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken {
-        return self.observe { realmChange in
+        return self.wrappedObject.observe { realmChange in
             switch realmChange {
             case .error(let error):
                 block(.error(error))
@@ -92,7 +92,7 @@ extension ReminderVessel: ReminderVesselObservable {
     }
     
     public func datum_observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
-        return self.reminders.observe { realmChange in
+        return self.wrappedObject.reminders.observe { realmChange in
             switch realmChange {
             case .initial(let data):
                 block(.initial(data: .init(AnyRealmCollection(data), transform: { ReminderWrapper($0) })))
