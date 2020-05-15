@@ -23,7 +23,10 @@
 
 import RealmSwift
 
-internal class Reminder: Object {
+internal typealias Reminder = __Reminder
+
+@objc(Reminder)
+internal class __Reminder: Object {
     @objc internal private(set) dynamic var uuid = UUID().uuidString
     @objc internal dynamic var interval = Reminder.defaultInterval
     @objc internal dynamic var note: String?

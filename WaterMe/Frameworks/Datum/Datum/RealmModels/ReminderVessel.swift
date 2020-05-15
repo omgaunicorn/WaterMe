@@ -23,7 +23,10 @@
 
 import RealmSwift
 
-internal class ReminderVessel: Object {
+internal typealias ReminderVessel = __ReminderVessel
+
+@objc(ReminderVessel)
+internal class __ReminderVessel: Object {
     @objc internal dynamic var uuid = UUID().uuidString
     @objc internal dynamic var displayName: String?
     @objc internal dynamic var iconImageData: Data?
