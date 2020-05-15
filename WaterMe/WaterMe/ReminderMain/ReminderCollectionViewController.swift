@@ -26,7 +26,7 @@ import Datum
 import UIKit
 
 protocol ReminderCollectionViewControllerDelegate: class {
-    func userDidSelect(reminderID: Reminder.Identifier,
+    func userDidSelect(reminderID: ReminderIdentifier,
                        from view: UIView,
                        userActivityContinuation: NSUserActivityContinuedHandler?,
                        deselectAnimated: @escaping (Bool) -> Void,
@@ -102,7 +102,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         self.reminders?.allDataReadyClosure = { [weak self] in self?.allDataReady?($0) }
     }
 
-    func programmaticalySelectReminder(with identifier: Reminder.Identifier) -> (IndexPath, ((Bool) -> Void))? {
+    func programmaticalySelectReminder(with identifier: ReminderIdentifier) -> (IndexPath, ((Bool) -> Void))? {
         guard
             let collectionView = self.collectionView,
             let indexPath = self.reminders?.indexPathOfReminder(with: identifier)
@@ -111,7 +111,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         return (indexPath, { collectionView.deselectItem(at: indexPath, animated: $0) })
     }
 
-    func indexPathOfReminder(with identifier: Reminder.Identifier) -> IndexPath? {
+    func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath? {
         return self.reminders?.indexPathOfReminder(with: identifier)
     }
 
@@ -137,7 +137,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
                                                                      withReuseIdentifier: ReminderHeaderCollectionReusableView.reuseID,
                                                                      for: indexPath)
         if let header = header as? ReminderHeaderCollectionReusableView,
-            let section = Reminder.Section(rawValue: indexPath.section)
+            let section = ReminderSection(rawValue: indexPath.section)
         {
             header.section = section
         }
@@ -155,7 +155,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
             let reminder = self.reminders?.reminder(at: indexPath),
             let cell = collectionView.cellForItem(at: indexPath)
         else { return }
-        let identifier = Reminder.Identifier(reminder: reminder)
+        let identifier = ReminderIdentifier(reminder: reminder)
         self.delegate?.userDidSelect(reminderID: identifier,
                                      from: cell,
                                      userActivityContinuation: nil,

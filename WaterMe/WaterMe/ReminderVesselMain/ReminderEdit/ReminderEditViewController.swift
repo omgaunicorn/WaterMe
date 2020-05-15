@@ -118,7 +118,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         self.userDirtiedUserActivity()
     }
     
-    private func update(kind: Reminder.Kind? = nil,
+    private func update(kind: ReminderKind? = nil,
                         interval: Int? = nil,
                         note: String? = nil,
                         fromKeyboard: Bool = false)
@@ -267,7 +267,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
 
 extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
 
-    func userChangedKind(to newKind: Reminder.Kind,
+    func userChangedKind(to newKind: ReminderKind,
                          byUsingKeyboard usingKeyboard: Bool,
                          within: ReminderEditTableViewController)
     {

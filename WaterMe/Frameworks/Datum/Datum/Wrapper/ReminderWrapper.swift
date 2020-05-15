@@ -25,13 +25,17 @@ import RealmSwift
 
 public struct ReminderWrapper {
     
+    public static var minimumInterval: Int { Reminder.minimumInterval }
+    public static var maximumInterval: Int { Reminder.maximumInterval }
+    public static var defaultInterval: Int { Reminder.defaultInterval }
+    
     internal var wrappedObject: Reminder
     
     internal init(_ reminder: Reminder) {
         self.wrappedObject = reminder
     }
     
-    public var kind: Reminder.Kind { self.wrappedObject.kind }
+    public var kind: ReminderKind { self.wrappedObject.kind }
     public var uuid: String { self.wrappedObject.uuid }
     public var interval: Int { self.wrappedObject.interval }
     public var note: String? { self.wrappedObject.note }

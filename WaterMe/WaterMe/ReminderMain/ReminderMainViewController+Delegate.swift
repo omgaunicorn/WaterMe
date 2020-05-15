@@ -40,7 +40,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         self.plantsBBI.isEnabled = true
     }
 
-    func userDidPerformDrop(with reminders: [Reminder.Identifier],
+    func userDidPerformDrop(with reminders: [ReminderIdentifier],
                             onTargetZoneWithin controller: ReminderFinishDropTargetViewController?)
     {
         // We donated a new activity when the drag started
@@ -64,7 +64,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         }
     }
 
-    func userDidSelect(reminderID: Reminder.Identifier,
+    func userDidSelect(reminderID: ReminderIdentifier,
                        from view: UIView,
                        userActivityContinuation: NSUserActivityContinuedHandler?,
                        deselectAnimated: @escaping (Bool) -> Void,
@@ -114,7 +114,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         self.present(alert, animated: true, completion: nil)
     }
 
-    func userChoseEditReminder(with identifier: Reminder.Identifier,
+    func userChoseEditReminder(with identifier: ReminderIdentifier,
                                basicRC: BasicController,
                                userActivityCompletion: NSUserActivityContinuedHandler? = nil,
                                completion: ((Bool) -> Void)?)
@@ -134,7 +134,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         }
     }
 
-    func userChoseEditVessel(withReminderIdentifier identifier: Reminder.Identifier,
+    func userChoseEditVessel(withReminderIdentifier identifier: ReminderIdentifier,
                              basicRC: BasicController,
                              completion: ((Bool) -> Void)?)
     {
@@ -152,7 +152,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
         }
     }
 
-    private func userChosePerformReminders(with identifiers: [Reminder.Identifier],
+    private func userChosePerformReminders(with identifiers: [ReminderIdentifier],
                                            in _: UIAlertAction?,
                                            from view: UIView,
                                            basicRC: BasicController,

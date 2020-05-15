@@ -26,7 +26,7 @@ import UIKit
 
 enum Font {
     case sectionHeaderBold(ReminderHeaderCollectionReusableView.SectionOrTint)
-    case sectionHeaderRegular(Reminder.Section)
+    case sectionHeaderRegular(ReminderSection)
     case selectableTableViewCell
     case selectableTableViewCellDisabled
     case selectableTableViewCellHelper

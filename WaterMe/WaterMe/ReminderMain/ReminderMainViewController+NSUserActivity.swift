@@ -65,7 +65,7 @@ extension ReminderMainViewController {
         }
     }
 
-    private func continueActivityPerformReminders(with identifier: Reminder.Identifier,
+    private func continueActivityPerformReminders(with identifier: ReminderIdentifier,
                                                   completion: @escaping NSUserActivityContinuedHandler) -> UserActivityError?
     {
         guard let dropVC = self.dropTargetViewController else { return .restorationFailed }
@@ -80,7 +80,7 @@ extension ReminderMainViewController {
         return nil
     }
 
-    private func continueActivityEditReminder(with identifier: Reminder.Identifier,
+    private func continueActivityEditReminder(with identifier: ReminderIdentifier,
                                               completion: @escaping NSUserActivityContinuedHandler) -> UserActivityError?
     {
         guard
@@ -115,7 +115,7 @@ extension ReminderMainViewController {
         return nil
     }
 
-    private func continueActivityViewReminder(with identifier: Reminder.Identifier,
+    private func continueActivityViewReminder(with identifier: ReminderIdentifier,
                                               completion: @escaping NSUserActivityContinuedHandler) -> UserActivityError?
     {
         guard

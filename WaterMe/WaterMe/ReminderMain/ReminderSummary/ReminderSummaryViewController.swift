@@ -27,13 +27,13 @@ import Datum
 
 class ReminderSummaryViewController: StandardViewController {
 
-    typealias Completion = (Action, Reminder.Identifier, UIViewController) -> Void
+    typealias Completion = (Action, ReminderIdentifier, UIViewController) -> Void
     enum Action {
         case cancel, performReminder, editReminderVessel, editReminder
     }
 
     // swiftlint:disable:next function_parameter_count
-    class func newVC(reminderID: Reminder.Identifier,
+    class func newVC(reminderID: ReminderIdentifier,
                      basicController: BasicController,
                      hapticGenerator: UIFeedbackGenerator,
                      sourceView: UIView,
@@ -70,7 +70,7 @@ class ReminderSummaryViewController: StandardViewController {
     var reminderResult: Result<ReminderWrapper, DatumError>!
     private var completion: Completion!
     private var userActivityContinuation: NSUserActivityContinuedHandler?
-    private var reminderID: Reminder.Identifier!
+    private var reminderID: ReminderIdentifier!
     private weak var tableViewController: ReminderSummaryTableViewController!
     private weak var haptic: UIFeedbackGenerator?
     //swiftlint:disable:next weak_delegate
@@ -136,7 +136,7 @@ class ReminderSummaryViewController: StandardViewController {
         switch change {
         case .change:
             guard let reminder = self.reminderResult.value else { fallthrough }
-            self.reminderID = Reminder.Identifier(reminder: reminder)
+            self.reminderID = ReminderIdentifier(reminder: reminder)
             self.tableViewController.tableView.reloadData()
         case .deleted, .error:
             self.completion(.cancel, self.reminderID, self)

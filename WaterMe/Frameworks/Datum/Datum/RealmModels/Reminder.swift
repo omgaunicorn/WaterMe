@@ -26,31 +26,21 @@ import RealmSwift
 import Foundation
 
 public class Reminder: Object {
-
-    public enum Section: Int, CaseIterable {
-        case late, today, tomorrow, thisWeek, later
-    }
     
-    public static let minimumInterval: Int = 1
-    public static let maximumInterval: Int = 180
-    public static let defaultInterval: Int = 7
+    internal static let minimumInterval: Int = 1
+    internal static let maximumInterval: Int = 180
+    internal static let defaultInterval: Int = 7
     
-    public enum Kind: Hashable {
-        case water, fertilize, trim, mist, move(location: String?), other(description: String?)
-        public static let count = 6
-    }
-    
-    // MARK: Public Interface
-    public var kind: Kind {
+    internal var kind: ReminderKind {
         get { return self.kindValue }
         set { self.update(with: newValue) }
     }
-    @objc public private(set) dynamic var uuid = UUID().uuidString
-    @objc public internal(set) dynamic var interval = Reminder.defaultInterval
-    @objc public internal(set) dynamic var note: String?
-    @objc public internal(set) dynamic var nextPerformDate: Date?
-    public let performed = List<ReminderPerform>()
-    public var vessel: ReminderVessel? { return self.vessels.first }
+    @objc internal private(set) dynamic var uuid = UUID().uuidString
+    @objc internal dynamic var interval = Reminder.defaultInterval
+    @objc internal dynamic var note: String?
+    @objc internal dynamic var nextPerformDate: Date?
+    internal let performed = List<ReminderPerform>()
+    internal var vessel: ReminderVessel? { return self.vessels.first }
     
     // MARK: Implementation Details
     @objc internal dynamic var kindString: String = Reminder.kCaseWaterValue
@@ -85,7 +75,7 @@ extension Reminder {
     fileprivate static let kCaseMoveValue = "kReminderKindCaseMoveValue"
     fileprivate static let kCaseOtherValue = "kReminderKindCaseOtherValue"
     
-    fileprivate func update(with kind: Reminder.Kind) {
+    fileprivate func update(with kind: ReminderKind) {
         switch kind {
         case .water:
             self.kindString = type(of: self).kCaseWaterValue
@@ -104,7 +94,7 @@ extension Reminder {
         }
     }
     
-    fileprivate var kindValue: Reminder.Kind {
+    fileprivate var kindValue: ReminderKind {
         switch self.kindString {
         case type(of: self).kCaseWaterValue:
             return .water
@@ -144,43 +134,48 @@ extension Reminder: ModelCompleteCheckable {
     }
 }
 
-extension Reminder {
-    public struct Identifier: UUIDRepresentable, Hashable {
-        public var reminderIdentifier: String
-        // TODO: Maybe delete this init
-        public init(reminder: Reminder) {
-            self.reminderIdentifier = reminder.uuid
+public enum ReminderSection: Int, CaseIterable {
+    case late, today, tomorrow, thisWeek, later
+}
+
+public enum ReminderKind: Hashable {
+    case water, fertilize, trim, mist, move(location: String?), other(description: String?)
+    public static let count = 6
+}
+
+public struct ReminderIdentifier: UUIDRepresentable, Hashable {
+    public var reminderIdentifier: String
+    // TODO: Maybe delete this init
+    internal init(reminder: Reminder) {
+        self.reminderIdentifier = reminder.uuid
+    }
+    public init(reminder: ReminderWrapper) {
+        self.reminderIdentifier = reminder.uuid
+    }
+    public init(rawValue: String) {
+        self.reminderIdentifier = rawValue
+    }
+    public var uuid: String { return self.reminderIdentifier }
+}
+
+public enum ReminderSortOrder {
+    case nextPerformDate, interval, kind, note
+    
+    internal var keyPath: String {
+        switch self {
+        case .interval:
+            return #keyPath(Reminder.interval)
+        case .kind:
+            return #keyPath(Reminder.kindString)
+        case .nextPerformDate:
+            return #keyPath(Reminder.nextPerformDate)
+        case .note:
+            return #keyPath(Reminder.note)
         }
-        public init(reminder: ReminderWrapper) {
-            self.reminderIdentifier = reminder.uuid
-        }
-        public init(rawValue: String) {
-            self.reminderIdentifier = rawValue
-        }
-        public var uuid: String { return self.reminderIdentifier }
     }
 }
 
-extension Reminder {
-    public enum SortOrder {
-        case nextPerformDate, interval, kind, note
-
-        internal var keyPath: String {
-            switch self {
-            case .interval:
-                return #keyPath(Reminder.interval)
-            case .kind:
-                return #keyPath(Reminder.kindString)
-            case .nextPerformDate:
-                return #keyPath(Reminder.nextPerformDate)
-            case .note:
-                return #keyPath(Reminder.note)
-            }
-        }
-    }
-}
-
-internal extension Reminder.Section {
+internal extension ReminderSection {
     var dateInterval: DateInterval {
         switch self {
         case .late:

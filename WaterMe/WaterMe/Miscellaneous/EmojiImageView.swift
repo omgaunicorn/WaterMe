@@ -125,7 +125,7 @@ class EmojiImageView: UIView {
         }
     }
 
-    func setKind(_ kind: Reminder.Kind?, for controlState: UIControl.State = .normal) {
+    func setKind(_ kind: ReminderKind?, for controlState: UIControl.State = .normal) {
 
         guard let kind = kind else {
             self.alpha = 0.4

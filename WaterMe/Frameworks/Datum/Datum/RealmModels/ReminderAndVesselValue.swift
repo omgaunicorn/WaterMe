@@ -45,17 +45,17 @@ public struct ReminderAndVesselValue: Hashable {
 
 public struct ReminderValue: Hashable {
 
-    public var uuid: Reminder.Identifier
+    public var uuid: ReminderIdentifier
     public var nextPerformDate: Date?
-    public var kind: Reminder.Kind
+    public var kind: ReminderKind
 
     internal init(reminder: Reminder) {
-        self.uuid = Reminder.Identifier(reminder: reminder)
+        self.uuid = ReminderIdentifier(reminder: reminder)
         self.nextPerformDate = reminder.nextPerformDate
         self.kind = reminder.kind
     }
     public init(reminder: ReminderWrapper) {
-        self.uuid = Reminder.Identifier(reminder: reminder)
+        self.uuid = ReminderIdentifier(reminder: reminder)
         self.nextPerformDate = reminder.nextPerformDate
         self.kind = reminder.kind
     }

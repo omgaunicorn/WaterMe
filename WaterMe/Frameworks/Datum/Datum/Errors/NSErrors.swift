@@ -92,7 +92,7 @@ extension NSError {
         self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
     }
 
-    internal convenience init(dataForSectionWasNilInNumberOfItemsInSection section: Reminder.Section) {
+    internal convenience init(dataForSectionWasNilInNumberOfItemsInSection section: ReminderSection) {
         let code = 1007
         let message = "No Data was Present when getting numberOfItemsInSection for Section: \(section)"
         let userInfo: [String : Any] = [

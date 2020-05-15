@@ -33,8 +33,8 @@ class ReminderKindTableViewCell: SimpleLabelTableViewCell {
         self.prepareForReuse()
     }
     
-    func configure(rowNumber: Int, compareWith compare: Reminder.Kind) {
-        let id = Reminder.Kind(row: rowNumber)
+    func configure(rowNumber: Int, compareWith compare: ReminderKind) {
+        let id = ReminderKind(row: rowNumber)
         self.label.attributedText = NSAttributedString(string: id.localizedShortString, font: .selectableTableViewCell)
         self.accessoryType = id.isSameKind(as: compare) ? .checkmark : .none
     }
@@ -46,7 +46,7 @@ class ReminderKindTableViewCell: SimpleLabelTableViewCell {
     
 }
 
-extension Reminder.Kind {
+extension ReminderKind {
     var localizedLongString: String {
         switch self {
         case .water:
@@ -96,7 +96,7 @@ extension Reminder.Kind {
         }
     }
     // swiftlint:disable:next cyclomatic_complexity
-    fileprivate func isSameKind(as other: Reminder.Kind) -> Bool {
+    fileprivate func isSameKind(as other: ReminderKind) -> Bool {
         switch self {
         case .water:
             guard case .water = other else { return false }

@@ -200,7 +200,7 @@ extension EmailDeveloperViewController {
     }
 }
 
-extension Reminder.Kind {
+extension ReminderKind {
     enum LocalizedString {
         static let waterLong =
             NSLocalizedString("Water Plant",
@@ -492,7 +492,7 @@ extension DatumError {
     }
 }
 
-extension Reminder.Section {
+extension ReminderSection {
     enum LocalizedString {
         static let late =
             NSLocalizedString("Late",
@@ -558,7 +558,7 @@ extension UserActivityConfigurator {
                 return String.localizedStringWithFormat(localizedString, vesselName)
             }
         }
-        static func editReminderTitle(for reminderKind: Reminder.Kind,
+        static func editReminderTitle(for reminderKind: ReminderKind,
                                       andVesselName vesselName: String?) -> String
         {
             let localizedString = NSLocalizedString("Edit %@ %@ Reminder",
@@ -570,7 +570,7 @@ extension UserActivityConfigurator {
                 return String.localizedStringWithFormat(localizedString, reminderKind.localizedSpotlightString, vesselName)
             }
         }
-        static func viewReminderTitle(for reminderKind: Reminder.Kind,
+        static func viewReminderTitle(for reminderKind: ReminderKind,
                                       andVesselName vesselName: String?) -> String
         {
             let localizedString = NSLocalizedString("View %@ %@ Reminder",
@@ -582,7 +582,7 @@ extension UserActivityConfigurator {
                 return String.localizedStringWithFormat(localizedString, reminderKind.localizedSpotlightString, vesselName)
             }
         }
-        static func performReminderTitle(for reminderKind: Reminder.Kind,
+        static func performReminderTitle(for reminderKind: ReminderKind,
                                          andVesselName vesselName: String?) -> String
         {
             let localizedString = NSLocalizedString("Mark %@ %@ as Done",

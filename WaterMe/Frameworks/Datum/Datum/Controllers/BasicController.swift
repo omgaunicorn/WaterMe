@@ -112,7 +112,7 @@ public class BasicController {
         }
     }
 
-    public func allReminders(sorted: Reminder.SortOrder = .nextPerformDate,
+    public func allReminders(sorted: ReminderSortOrder = .nextPerformDate,
                              ascending: Bool = true) -> Result<ReminderQuery, DatumError>
     {
         return self.realm.map {
@@ -125,8 +125,8 @@ public class BasicController {
         }
     }
 
-    public func reminders(in section: Reminder.Section,
-                          sorted: Reminder.SortOrder = .nextPerformDate,
+    public func reminders(in section: ReminderSection,
+                          sorted: ReminderSortOrder = .nextPerformDate,
                           ascending: Bool = true) -> Result<ReminderQuery, DatumError>
     {
         return self.realm.map() { realm in
@@ -156,7 +156,7 @@ public class BasicController {
         }
     }
 
-    public func appendNewPerformToReminders(with identifiers: [Reminder.Identifier]) -> Result<Void, DatumError> {
+    public func appendNewPerformToReminders(with identifiers: [ReminderIdentifier]) -> Result<Void, DatumError> {
         let result = self.reminders(matching: identifiers).flatMap({ self.appendNewPerform(to: $0) })
         self.userDidPerformReminder?()
         return result
@@ -170,7 +170,7 @@ public class BasicController {
         }
     }
 
-    public func reminder(matching identifier: Reminder.Identifier) -> Result<ReminderWrapper, DatumError> {
+    public func reminder(matching identifier: ReminderIdentifier) -> Result<ReminderWrapper, DatumError> {
         return self.realm.flatMap() { realm -> Result<ReminderWrapper, DatumError> in
             guard let reminder = realm.object(ofType: Reminder.self, forPrimaryKey: identifier.reminderIdentifier)
             else { return .failure(.objectDeleted) }
@@ -178,7 +178,7 @@ public class BasicController {
         }
     }
 
-    internal func reminders(matching identifiers: [Reminder.Identifier]) -> Result<[Reminder], DatumError> {
+    internal func reminders(matching identifiers: [ReminderIdentifier]) -> Result<[Reminder], DatumError> {
         return self.realm.map() { realm in
             return identifiers.compactMap({ realm.object(ofType: Reminder.self, forPrimaryKey: $0.reminderIdentifier) })
         }
@@ -209,7 +209,7 @@ public class BasicController {
         }
     }
     
-    public func newReminderVessel(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, reminders: [Reminder]? = nil) -> Result<ReminderVessel, DatumError> {
+    public func newReminderVessel(displayName: String? = nil, icon: ReminderVessel.Icon? = nil, reminders: [ReminderWrapper]? = nil) -> Result<ReminderVessel, DatumError> {
         return self.realm.flatMap() { realm in
             let v = ReminderVessel()
             if let displayName = displayName?.nonEmptyString { // make sure the string is not empty
@@ -219,7 +219,7 @@ public class BasicController {
                 v.icon = icon
             }
             if let reminders = reminders, reminders.isEmpty == false {
-                v.reminders.append(objectsIn: reminders)
+                v.reminders.append(objectsIn: reminders.map({ $0.wrappedObject }))
             } else {
                 // enforce at least one reminder rule
                 let reminder = Reminder()
@@ -261,7 +261,7 @@ public class BasicController {
         }
     }
     
-    public func update(kind: Reminder.Kind? = nil,
+    public func update(kind: ReminderKind? = nil,
                        interval: Int? = nil,
                        note: String? = nil,
                        in reminder: ReminderWrapper) -> Result<Void, DatumError>

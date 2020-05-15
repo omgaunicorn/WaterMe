@@ -33,7 +33,7 @@ import Foundation
 open class ReminderGedeg: NSObject {
 
     private let updateBatcher = Batcher()
-    private(set) var reminders: [Reminder.Section : ReminderCollection] = [:]
+    private(set) var reminders: [ReminderSection : ReminderCollection] = [:]
     public var lastError: DatumError?
 
     open var allDataReadyClosure: ((Bool) -> Void)?
@@ -48,7 +48,7 @@ open class ReminderGedeg: NSObject {
         self.updateBatcher.batchFired = { [unowned self] changes in
             self.batchedUpdates(ins: changes.ins, dels: changes.dels, mods: changes.mods)
         }
-        for section in Reminder.Section.allCases {
+        for section in ReminderSection.allCases {
             let result = basicRC.reminders(in: section, sorted: .nextPerformDate, ascending: true)
             switch result {
             case .success(let reminders):
@@ -60,7 +60,7 @@ open class ReminderGedeg: NSObject {
         }
     }
 
-    private func collection(for section: Reminder.Section, changed changes: ReminderCollectionChange) {
+    private func collection(for section: ReminderSection, changed changes: ReminderCollectionChange) {
         switch changes {
         case .initial(let data):
             self.reminders[section] = data
@@ -92,7 +92,7 @@ open class ReminderGedeg: NSObject {
         // check if the reminders.count matches the number of sections
         // if this sanity check fails, something unexpected has happened
         let reminderCount = self.reminders.count
-        if reminderCount != Reminder.Section.allCases.count {
+        if reminderCount != ReminderSection.allCases.count {
             let error = NSError(numberOfSectionsMistmatch: nil)
             assertionFailure(String(describing: error))
             BasicController.errorThrown?(error)
@@ -102,7 +102,7 @@ open class ReminderGedeg: NSObject {
     }
 
     public func numberOfItems(inSection section: Int) -> Int {
-        guard let section = Reminder.Section(rawValue: section) else {
+        guard let section = ReminderSection(rawValue: section) else {
             let message = "Invalid Section Passed In"
             assertionFailure(message)
             log.error(message)
@@ -123,7 +123,7 @@ open class ReminderGedeg: NSObject {
     }
 
     public func reminder(at indexPath: IndexPath) -> ReminderWrapper? {
-        guard let section = Reminder.Section(rawValue: indexPath.section) else {
+        guard let section = ReminderSection(rawValue: indexPath.section) else {
             let message = "Invalid Section Passed In"
             assertionFailure(message)
             log.error(message)
@@ -160,7 +160,7 @@ open class ReminderGedeg: NSObject {
         return data[row]
     }
 
-    public func indexPathOfReminder(with identifier: Reminder.Identifier) -> IndexPath? {
+    public func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath? {
         var indexPath: IndexPath?
         for (section, collection) in self.reminders {
             guard let row = collection.index(matching: "uuid = %@", identifier.reminderIdentifier) else { continue }
@@ -200,7 +200,7 @@ open class ReminderGedeg: NSObject {
 
 extension ReminderGedeg {
     fileprivate struct Update {
-        public var section: Reminder.Section
+        public var section: ReminderSection
         public var deletions: [Int]
         public var insertions: [Int]
         public var modifications: [Int]
