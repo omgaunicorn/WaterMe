@@ -184,6 +184,8 @@
 		50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */; };
 		50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */; };
 		50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */; };
+		50EE8435246FAB39006B93AD /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 50EE8434246FAB39006B93AD /* Realm */; };
+		50EE8437246FAB39006B93AD /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 50EE8436246FAB39006B93AD /* RealmSwift */; };
 		50F388E01FF6D9C10031ED45 /* CoreDataMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */; };
 		50F388E41FF6DA490031ED45 /* WaterMeData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50F388E11FF6DA490031ED45 /* WaterMeData.xcdatamodeld */; };
 		50F6C0591FA02EBB005F378F /* ReminderGedegDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */; };
@@ -575,6 +577,8 @@
 			files = (
 				503476FB24557A7D00C3DAD3 /* SPMShim.framework in Frameworks */,
 				48A7B1042467FE3800DC0861 /* Calculate.framework in Frameworks */,
+				50EE8435246FAB39006B93AD /* Realm in Frameworks */,
+				50EE8437246FAB39006B93AD /* RealmSwift in Frameworks */,
 				57401705F40C9F729F5B2F79 /* Pods_Datum.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1218,6 +1222,10 @@
 				48A7B1072467FE3800DC0861 /* PBXTargetDependency */,
 			);
 			name = Datum;
+			packageProductDependencies = (
+				50EE8434246FAB39006B93AD /* Realm */,
+				50EE8436246FAB39006B93AD /* RealmSwift */,
+			);
 			productName = Datum;
 			productReference = 5034764324552CFD00C3DAD3 /* Datum.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1429,6 +1437,7 @@
 			packageReferences = (
 				503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */,
 				5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */,
+				50EE8433246FAB39006B93AD /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = 50BB0F511EBFCDE500850FF4 /* Products */;
 			projectDirPath = "";
@@ -2702,6 +2711,14 @@
 				kind = branch;
 			};
 		};
+		50EE8433246FAB39006B93AD /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2719,6 +2736,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */;
 			productName = Cheers;
+		};
+		50EE8434246FAB39006B93AD /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50EE8433246FAB39006B93AD /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		50EE8436246FAB39006B93AD /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50EE8433246FAB39006B93AD /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 

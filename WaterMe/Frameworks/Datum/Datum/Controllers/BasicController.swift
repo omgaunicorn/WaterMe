@@ -22,6 +22,7 @@
 //
 
 import RealmSwift
+import UIKit
 
 public protocol HasBasicController {
     var basicRC: BasicController? { get set }
@@ -58,7 +59,7 @@ public class BasicController {
     // MARK: Initialization
 
     public enum Kind {
-        case local, sync(SyncUser)
+        case local
     }
     
     public let kind: Kind
@@ -93,9 +94,6 @@ public class BasicController {
             try type(of: self).createLocalRealmDirectoryIfNeeded()
             try type(of: self).copyRealmFromBundleIfNeeded()
             realmConfig.fileURL = type(of: self).localRealmFile
-        case .sync: /*(let user)*/
-            // let url = user.realmURL(withAppName: "WaterMeBasic")
-            fatalError("Syncing Realms are Not Implemented for WaterMe Yet")
         }
         self.config = realmConfig
     }

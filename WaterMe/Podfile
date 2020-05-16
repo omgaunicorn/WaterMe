@@ -10,7 +10,7 @@ end
 target 'Datum' do
 	platform :ios, '11.0'
 	use_frameworks!
-	pod 'RealmSwift', '~> 3.21.0'
+	## pod 'RealmSwift', '~> 3.21.0'
 end
 
 post_install do |installer|

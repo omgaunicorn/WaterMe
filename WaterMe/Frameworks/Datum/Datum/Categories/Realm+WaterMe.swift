@@ -65,21 +65,6 @@ extension CKContainer {
     }
 }
 
-extension SyncUser {
-    public static func cloudKitUser(with cloudKitID: CKRecord.ID, completionHandler: ((Result<SyncUser, Swift.Error>) -> Void)?) {
-        let server = PrivateKeys.kRealmServer
-        let credential = SyncCredentials.cloudKit(token: cloudKitID.recordName)
-        SyncUser.logIn(with: credential, server: server) { user, error in
-            guard let user = user else { completionHandler?(.failure(error!)); return; }
-            completionHandler?(.success(user))
-        }
-    }
-    internal func realmURL(withAppName appName: String, userPath: String? = nil) -> URL {
-        let userPath = userPath ?? "~/"
-        return self.authenticationServer!.realmURL(withAppName: appName, userPath: userPath)
-    }
-}
-
 extension String {
     public var nonEmptyString: String? {
         let stripped = self.trimmingCharacters(in: .whitespacesAndNewlines)
