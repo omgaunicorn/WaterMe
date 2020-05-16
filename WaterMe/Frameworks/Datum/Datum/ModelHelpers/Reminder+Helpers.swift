@@ -23,7 +23,7 @@
 
 import Calculate
 
-extension Reminder {
+extension __rlm_Reminder {
     internal static let minimumInterval: Int = 1
     internal static let maximumInterval: Int = 180
     internal static let defaultInterval: Int = 7
@@ -43,7 +43,7 @@ extension Reminder {
     }
 }
 
-extension Reminder: ModelCompleteCheckable {
+extension __rlm_Reminder: ModelCompleteCheckable {
     internal var isModelComplete: ModelCompleteError? {
         switch self.kind {
         case .fertilize, .water, .trim, .mist:
@@ -60,7 +60,7 @@ extension Reminder: ModelCompleteCheckable {
     }
 }
 
-extension Reminder {
+extension __rlm_Reminder {
     
     internal static let kCaseWaterValue = "kReminderKindCaseWaterValue"
     fileprivate static let kCaseTrimValue = "kReminderKindCaseTrimValue"
@@ -136,7 +136,7 @@ public enum ReminderKind: Hashable {
 public struct ReminderIdentifier: UUIDRepresentable, Hashable {
     public var reminderIdentifier: String
     // TODO: Maybe delete this init
-    internal init(reminder: Reminder) {
+    internal init(reminder: __rlm_Reminder) {
         self.reminderIdentifier = reminder.uuid
     }
     public init(reminder: ReminderWrapper) {
@@ -153,13 +153,13 @@ public enum ReminderSortOrder {
     internal var keyPath: String {
         switch self {
         case .interval:
-            return #keyPath(Reminder.interval)
+            return #keyPath(__rlm_Reminder.interval)
         case .kind:
-            return #keyPath(Reminder.kindString)
+            return #keyPath(__rlm_Reminder.kindString)
         case .nextPerformDate:
-            return #keyPath(Reminder.nextPerformDate)
+            return #keyPath(__rlm_Reminder.nextPerformDate)
         case .note:
-            return #keyPath(Reminder.note)
+            return #keyPath(__rlm_Reminder.note)
         }
     }
 }

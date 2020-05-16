@@ -23,15 +23,13 @@
 
 import RealmSwift
 
-internal typealias Reminder = __Reminder
-
 @objc(Reminder)
-internal class __Reminder: Object {
+internal class __rlm_Reminder: Object {
     @objc internal private(set) dynamic var uuid = UUID().uuidString
-    @objc internal dynamic var interval = Reminder.defaultInterval
+    @objc internal dynamic var interval = __rlm_Reminder.defaultInterval
     @objc internal dynamic var note: String?
     @objc internal dynamic var nextPerformDate: Date?
-    @objc internal dynamic var kindString: String = Reminder.kCaseWaterValue
+    @objc internal dynamic var kindString: String = __rlm_Reminder.kCaseWaterValue
     @objc internal dynamic var descriptionString: String?
     @objc internal dynamic var bloop = false
     internal let performed = List<ReminderPerform>()
@@ -39,7 +37,7 @@ internal class __Reminder: Object {
     internal let vessels = LinkingObjects(fromType: __rlm_ReminderVessel.self,
                                           property: "reminders")
     internal override class func primaryKey() -> String {
-        return #keyPath(Reminder.uuid)
+        return #keyPath(__rlm_Reminder.uuid)
     }
 }
 

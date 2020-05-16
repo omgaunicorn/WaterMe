@@ -49,7 +49,7 @@ public struct ReminderValue: Hashable {
     public var nextPerformDate: Date?
     public var kind: ReminderKind
 
-    internal init(reminder: Reminder) {
+    internal init(reminder: __rlm_Reminder) {
         self.uuid = ReminderIdentifier(reminder: reminder)
         self.nextPerformDate = reminder.nextPerformDate
         self.kind = reminder.kind

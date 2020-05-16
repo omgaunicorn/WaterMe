@@ -31,7 +31,7 @@ internal class __rlm_ReminderVessel: Object {
     @objc internal dynamic var iconEmojiString: String?
     @objc internal dynamic var bloop = false
     @objc internal dynamic var kindString = ReminderVesselKind.plant.rawValue
-    internal let reminders = List<Reminder>()
+    internal let reminders = List<__rlm_Reminder>()
     override internal class func primaryKey() -> String {
         return #keyPath(__rlm_ReminderVessel.uuid)
     }
