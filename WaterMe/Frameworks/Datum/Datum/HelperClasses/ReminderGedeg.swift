@@ -67,8 +67,10 @@ open class ReminderGedeg: NSObject {
             if self.allSectionsFinishedLoading == true {
                 self.allDataReady(success: true)
             }
-        case .update(insertions: let del, deletions: let ins, modifications: let mod):
-            self.updateBatcher.appendUpdateExtendingTimer(Update(section: section, deletions: del, insertions: ins, modifications: mod))
+        case .update(let ins, let del, let mod):
+            self.updateBatcher.appendUpdateExtendingTimer(
+                Update(section: section, deletions: del, insertions: ins, modifications: mod)
+            )
         case .error(let error):
             self.lastError = .loadError
             BasicController.errorThrown?(error)
@@ -182,7 +184,11 @@ open class ReminderGedeg: NSObject {
         func appendUpdateExtendingTimer(_ update: Update) {
             self.timer?.invalidate()
             self.updates.append(update)
-            self.timer = Timer.scheduledTimer(timeInterval: 0.001, target: self, selector: #selector(self.timerFired(_:)), userInfo: nil, repeats: false)
+            self.timer = Timer.scheduledTimer(timeInterval: 0.001,
+                                              target: self,
+                                              selector: #selector(self.timerFired(_:)),
+                                              userInfo: nil,
+                                              repeats: false)
         }
         @objc private func timerFired(_ timer: Timer?) {
             timer?.invalidate()
