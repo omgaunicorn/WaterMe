@@ -53,7 +53,7 @@ public protocol BasicController: class {
     // MARK: Read
     func allVessels() -> Result<ReminderVesselQuery, DatumError>
     func allReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<ReminderQuery, DatumError>
-    func reminders(in section: ReminderSection, sorted: ReminderSortOrder, ascending: Bool) -> Result<ReminderQuery, DatumError>
+    func groupedReminders() -> GroupedReminderCollection
     func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVesselWrapper, DatumError>
     func reminder(matching identifier: ReminderIdentifier) -> Result<ReminderWrapper, DatumError>
 

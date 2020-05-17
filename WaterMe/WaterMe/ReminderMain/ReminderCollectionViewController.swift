@@ -44,7 +44,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     var basicRC: BasicController?
     var allDataReady: ((Bool) -> Void)?
 
-    private(set) var reminders: ReminderGedeg?
+    private(set) var reminders: GroupedReminderCollection?
     private let significantTimePassedDetector = SignificantTimePassedDetector()
     weak var delegate: ReminderCollectionViewControllerDelegate?
 
@@ -96,10 +96,24 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
     
     private func hardReloadData() {
-        self.reminders = ReminderGedegDataSource(basicRC: self.basicRC,
-                                                 managedCollectionView: self.collectionView,
-                                                 collectionViewReplacer: self)
-        self.reminders?.allDataReadyClosure = { [weak self] in self?.allDataReady?($0) }
+        self.reminders = self.basicRC?.groupedReminders()
+        self.reminders?.changeObserver = { [weak self] in self?.remindersChanged($0) }
+    }
+
+    private func remindersChanged(_ change: GroupedReminderCollectionChange) {
+        switch change {
+        case .initial:
+            self.collectionView.reloadData()
+        case .update(let ins, let dels, let mods):
+            let cv = self.collectionView!
+            cv.performBatchUpdates({
+                cv.insertItems(at: ins)
+                cv.deleteItems(at: dels)
+                cv.reloadItems(at: mods)
+            }, completion: nil)
+        case .error(let error):
+            UIAlertController.presentAlertVC(for: error, over: self, completionHandler: nil)
+        }
     }
 
     func programmaticalySelectReminder(with identifier: ReminderIdentifier) -> (IndexPath, ((Bool) -> Void))? {
@@ -125,7 +139,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReminderCollectionViewCell.reuseID, for: indexPath)
-        let reminder = self.reminders?.reminder(at: indexPath)
+        let reminder = self.reminders?[indexPath]
         if let reminder = reminder, let cell = cell as? ReminderCollectionViewCell {
             cell.configure(with: reminder)
         }
@@ -152,7 +166,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard
-            let reminder = self.reminders?.reminder(at: indexPath),
+            let reminder = self.reminders?[indexPath],
             let cell = collectionView.cellForItem(at: indexPath)
         else { return }
         let identifier = ReminderIdentifier(reminder: reminder)
@@ -220,7 +234,7 @@ extension ReminderCollectionViewController: UICollectionViewDelegateFlowLayout {
 extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 
     private func dragItemForReminder(at indexPath: IndexPath) -> UIDragItem? {
-        guard let reminder = self.reminders?.reminder(at: indexPath) else { return nil }
+        guard let reminder = self.reminders?[indexPath] else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
         // only make the "small" preview show on iPhones. On iPads, there is plenty of space
         let tc = self.view.traitCollection
