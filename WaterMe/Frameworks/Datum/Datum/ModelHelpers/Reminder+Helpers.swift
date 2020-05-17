@@ -23,18 +23,18 @@
 
 import Calculate
 
-extension __rlm_Reminder {
+extension RLM_Reminder {
     internal static let minimumInterval: Int = 1
     internal static let maximumInterval: Int = 180
     internal static let defaultInterval: Int = 7
     
-    internal var vessel: __rlm_ReminderVessel? { return self.vessels.first }
+    internal var vessel: RLM_ReminderVessel? { return self.vessels.first }
     internal var kind: ReminderKind {
         get { return self.kindValue }
         set { self.update(with: newValue) }
     }
     
-    internal func recalculateNextPerformDate(comparisonPerform: ReminderPerform? = nil) {
+    internal func recalculateNextPerformDate(comparisonPerform: RLM_ReminderPerform? = nil) {
         if let lastPerform = comparisonPerform ?? self.performed.last {
             self.nextPerformDate = lastPerform.date + TimeInterval(self.interval * 24 * 60 * 60)
         } else {
@@ -43,7 +43,7 @@ extension __rlm_Reminder {
     }
 }
 
-extension __rlm_Reminder: ModelCompleteCheckable {
+extension RLM_Reminder: ModelCompleteCheckable {
     internal var isModelComplete: ModelCompleteError? {
         switch self.kind {
         case .fertilize, .water, .trim, .mist:
@@ -60,7 +60,7 @@ extension __rlm_Reminder: ModelCompleteCheckable {
     }
 }
 
-extension __rlm_Reminder {
+extension RLM_Reminder {
     
     internal static let kCaseWaterValue = "kReminderKindCaseWaterValue"
     fileprivate static let kCaseTrimValue = "kReminderKindCaseTrimValue"
@@ -136,7 +136,7 @@ public enum ReminderKind: Hashable {
 public struct ReminderIdentifier: UUIDRepresentable, Hashable {
     public var reminderIdentifier: String
     // TODO: Maybe delete this init
-    internal init(reminder: __rlm_Reminder) {
+    internal init(reminder: RLM_Reminder) {
         self.reminderIdentifier = reminder.uuid
     }
     public init(reminder: ReminderWrapper) {
@@ -153,13 +153,13 @@ public enum ReminderSortOrder {
     internal var keyPath: String {
         switch self {
         case .interval:
-            return #keyPath(__rlm_Reminder.interval)
+            return #keyPath(RLM_Reminder.interval)
         case .kind:
-            return #keyPath(__rlm_Reminder.kindString)
+            return #keyPath(RLM_Reminder.kindString)
         case .nextPerformDate:
-            return #keyPath(__rlm_Reminder.nextPerformDate)
+            return #keyPath(RLM_Reminder.nextPerformDate)
         case .note:
-            return #keyPath(__rlm_Reminder.note)
+            return #keyPath(RLM_Reminder.note)
         }
     }
 }

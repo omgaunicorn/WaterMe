@@ -24,15 +24,15 @@
 import RealmSwift
 
 @objc(ReminderVessel)
-internal class __rlm_ReminderVessel: Object {
+internal class RLM_ReminderVessel: Object {
     @objc internal dynamic var uuid = UUID().uuidString
     @objc internal dynamic var displayName: String?
     @objc internal dynamic var iconImageData: Data?
     @objc internal dynamic var iconEmojiString: String?
     @objc internal dynamic var bloop = false
     @objc internal dynamic var kindString = ReminderVesselKind.plant.rawValue
-    internal let reminders = List<__rlm_Reminder>()
+    internal let reminders = List<RLM_Reminder>()
     override internal class func primaryKey() -> String {
-        return #keyPath(__rlm_ReminderVessel.uuid)
+        return #keyPath(RLM_ReminderVessel.uuid)
     }
 }

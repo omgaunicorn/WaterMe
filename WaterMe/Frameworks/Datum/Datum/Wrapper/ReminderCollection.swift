@@ -24,9 +24,9 @@
 import RealmSwift
 
 public class ReminderCollection {
-    private let collection: AnyRealmCollection<__rlm_Reminder>
-    private let transform: (__rlm_Reminder) -> ReminderWrapper = { .init($0) }
-    internal init(_ collection: AnyRealmCollection<__rlm_Reminder>) {
+    private let collection: AnyRealmCollection<RLM_Reminder>
+    private let transform: (RLM_Reminder) -> ReminderWrapper = { .init($0) }
+    internal init(_ collection: AnyRealmCollection<RLM_Reminder>) {
         self.collection = collection
     }
     
@@ -46,8 +46,8 @@ public protocol ReminderQuery {
 }
 
 internal class ReminderQueryImp: ReminderQuery {
-    private let collection: AnyRealmCollection<__rlm_Reminder>
-    init(_ collection: AnyRealmCollection<__rlm_Reminder>) {
+    private let collection: AnyRealmCollection<RLM_Reminder>
+    init(_ collection: AnyRealmCollection<RLM_Reminder>) {
         self.collection = collection
     }
     func observe(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
