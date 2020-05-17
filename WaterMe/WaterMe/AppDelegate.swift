@@ -41,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
     private(set) var reminderObserver: GlobalReminderObserver?
     private lazy var basicControllerResult = BasicController.new(of: .local)
+    private let coreData = CD_BasicController.new()
 
     let purchaseController = PurchaseController()
     var coreDataMigrator: CoreDataMigratable? = CoreDataMigrator()
