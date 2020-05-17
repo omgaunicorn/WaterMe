@@ -547,7 +547,6 @@
 		50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMigrator.swift; sourceTree = "<group>"; };
 		50F388E21FF6DA490031ED45 /* WaterMe_CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WaterMe_CoreData.xcdatamodel; sourceTree = "<group>"; };
 		50F388E31FF6DA490031ED45 /* WaterMe_CoreData 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WaterMe_CoreData 2.xcdatamodel"; sourceTree = "<group>"; };
-		50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderGedegDataSource.swift; sourceTree = "<group>"; };
 		631A78D2A52353B959ACC60F /* Pods-WaterMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.debug.xcconfig"; path = "Target Support Files/Pods-WaterMe/Pods-WaterMe.debug.xcconfig"; sourceTree = "<group>"; };
 		63BF41E0600A5040BB00985C /* Pods_Datum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Datum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B520DBE9A9F5455A5582AEF1 /* Pods-WaterMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.release.xcconfig"; path = "Target Support Files/Pods-WaterMe/Pods-WaterMe.release.xcconfig"; sourceTree = "<group>"; };
@@ -710,7 +709,6 @@
 				502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */,
 				50BDC03D1F9A3E21002281C3 /* BlurryBackgroundBottomLineCollectionReusableView.swift */,
 				506DFA4C201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift */,
-				50F6C0581FA02EBB005F378F /* ReminderGedegDataSource.swift */,
 				506A6216200561D5008EF601 /* DragAndDrop */,
 				5010C22C213F777E00D1832C /* ReminderSummary */,
 			);

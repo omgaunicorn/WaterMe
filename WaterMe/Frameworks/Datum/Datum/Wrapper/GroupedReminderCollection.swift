@@ -27,12 +27,14 @@ public enum GroupedReminderCollectionChange {
     case error(error: DatumError)
 }
 
-public protocol GroupedReminderCollection {
+public protocol GroupedReminderCollection: ItemAndSectionable {
     var changeObserver: ((GroupedReminderCollectionChange) -> Void)? { get set }
-    var numberOfSections: Int { get }
     subscript(indexPath: IndexPath) -> ReminderWrapper? { get }
-    func numberOfItems(inSection: Int) -> Int
     func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath?
+
+    // Inherited from ItemAndSectionable
+    // func numberOfItems(inSection: Int) -> Int
+    // var numberOfSections: Int { get }
 }
 
 internal class RLM_GroupedReminderCollectionImp: GroupedReminderCollection {

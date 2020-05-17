@@ -105,12 +105,9 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         case .initial:
             self.collectionView.reloadData()
         case .update(let ins, let dels, let mods):
-            let cv = self.collectionView!
-            cv.performBatchUpdates({
-                cv.insertItems(at: ins)
-                cv.deleteItems(at: dels)
-                cv.reloadItems(at: mods)
-            }, completion: nil)
+            self.performSuperSafeCollectionViewUpdate(insertions: ins,
+                                                      deletions: dels,
+                                                      modifications: mods)
         case .error(let error):
             UIAlertController.presentAlertVC(for: error, over: self, completionHandler: nil)
         }
@@ -209,15 +206,6 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
 }
 
-extension ReminderCollectionViewController: CollectionViewReplacer {
-    func collectionViewReplacementRecommended() {
-        self.replaceCollectionView()
-        self.configureCollectionView()
-        self.delegate?.forceUpdateCollectionViewInsets()
-        self.hardReloadData()
-    }
-}
-
 extension ReminderCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let kind = ReminderHeaderCollectionReusableView.self
@@ -285,6 +273,76 @@ extension ReminderCollectionViewController: SignificantTimePassedDetectorDelegat
             Analytics.log(event: Analytics.Event.stpReloadNotification)
         }
         log.info("Reloading Data...")
+        self.hardReloadData()
+    }
+}
+
+extension ReminderCollectionViewController {
+    func performSuperSafeCollectionViewUpdate(insertions     ins: [IndexPath],
+                                              deletions     dels: [IndexPath],
+                                              modifications mods: [IndexPath]) {
+        guard let cv = self.collectionView else {
+            let error = "CollectionView is NIL. Something really bad happened."
+            log.error(error)
+            assertionFailure(error)
+            return
+        }
+        let allEmpty = ins.isEmpty && dels.isEmpty && mods.isEmpty
+        guard allEmpty == false else {
+            // there is nothing to be done, so bail out early
+            return
+        }
+        guard cv.window != nil else {
+            // we're not in the view hierarchy
+            // no need for animated stuff to happen
+            cv.reloadData()
+            return
+        }
+
+        // sanity checking can only be done when the collectionview
+        // is in the window hierarchy. Otherwise its internal state
+        // does not update. So it will pass the first sanity check
+        // but after that its internal state is stale
+        // so it will fail them
+        let failureReason = ItemAndSectionSanityCheckFailureReason.check(old: cv,
+                                                                         new: self.reminders!,
+                                                                         delta: (ins, dels))
+        guard failureReason == nil else {
+            let error = NSError(errorFromSanityCheckFailureReason: failureReason!)
+            Analytics.log(error: error)
+            log.error(error)
+            cv.reloadData()
+            return
+        }
+        TCF.try({
+            cv.performBatchUpdates({
+                cv.insertItems(at: ins)
+                cv.deleteItems(at: dels)
+                cv.reloadItems(at: mods)
+            }, completion: { success in
+                guard success == false else { return }
+                let message = "CollectionView failed to Reload Sections: This usually happens when data changes really fast"
+                log.warning(message)
+                cv.reloadData()
+            })
+        }, shouldCatch: { exception in
+            guard case .internalInconsistencyException = exception.name else {
+                return false
+            }
+            let error = NSError(collectionViewBatchUpdateException: exception)
+            Analytics.log(error: error)
+            log.error(error)
+            return true
+        }, finally: { exceptionWasCaught in
+            guard exceptionWasCaught == true else { return }
+            self.replaceDamagedCollectionView()
+        })
+    }
+
+    private func replaceDamagedCollectionView() {
+        self.replaceCollectionView()
+        self.configureCollectionView()
+        self.delegate?.forceUpdateCollectionViewInsets()
         self.hardReloadData()
     }
 }
