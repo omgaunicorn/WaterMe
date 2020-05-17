@@ -30,49 +30,33 @@ extension Realm {
             return .success(())
         } catch {
             log.error(error)
-            BasicController.errorThrown?(error)
             return .failure(.writeError)
         }
     }
 }
 
-public class BasicController {
+internal class RLM_BasicController: BasicController {
 
     // MARK: Observation Closures
 
-    public static var errorThrown: ((Error) -> Void)?
-    public var remindersDeleted: (([ReminderValue]) -> Void)?
-    public var reminderVesselsDeleted: (([ReminderVesselValue]) -> Void)?
+    internal var remindersDeleted: (([ReminderValue]) -> Void)?
+    internal var reminderVesselsDeleted: (([ReminderVesselValue]) -> Void)?
+    internal var userDidPerformReminder: (() -> Void)?
     
     // MARK: Initialization
 
-    public enum Kind {
-        case local, sync(SyncUser)
-    }
-    
-    public let kind: Kind
+    internal let kind: ControllerKind
     private let config: Realm.Configuration
     private var realm: Result<Realm, DatumError> {
         do {
             return try .success(Realm(configuration: self.config))
         } catch {
             log.error(error)
-            type(of: self).errorThrown?(error)
             return .failure(.loadError)
         }
     }
 
-    public class func new(of kind: Kind) -> Result<BasicController, DatumError> {
-        do {
-            let bc = try BasicController(kind: kind)
-            return .success(bc)
-        } catch {
-            self.errorThrown?(error)
-            return .failure(.createError)
-        }
-    }
-
-    private init(kind: Kind) throws {
+    internal init(kind: ControllerKind) throws {
         self.kind = kind
         var realmConfig = Realm.Configuration()
         realmConfig.schemaVersion = 14
@@ -91,9 +75,7 @@ public class BasicController {
     
     // MARK: WaterMeClient API
 
-    public var userDidPerformReminder: (() -> Void)?
-
-    public func allVessels() -> Result<ReminderVesselQuery, DatumError> {
+    internal func allVessels() -> Result<ReminderVesselQuery, DatumError> {
         return self.realm.map() { realm in
             let kp = #keyPath(RLM_ReminderVessel.displayName)
             let collection = realm.objects(RLM_ReminderVessel.self).sorted(byKeyPath: kp)
@@ -101,7 +83,7 @@ public class BasicController {
         }
     }
 
-    public func allReminders(sorted: ReminderSortOrder = .nextPerformDate,
+    internal func allReminders(sorted: ReminderSortOrder = .nextPerformDate,
                              ascending: Bool = true) -> Result<ReminderQuery, DatumError>
     {
         return self.realm.map {
@@ -114,7 +96,7 @@ public class BasicController {
         }
     }
 
-    public func reminders(in section: ReminderSection,
+    internal func reminders(in section: ReminderSection,
                           sorted: ReminderSortOrder = .nextPerformDate,
                           ascending: Bool = true) -> Result<ReminderQuery, DatumError>
     {
@@ -147,13 +129,13 @@ public class BasicController {
         }
     }
 
-    public func appendNewPerformToReminders(with identifiers: [ReminderIdentifier]) -> Result<Void, DatumError> {
+    internal func appendNewPerformToReminders(with identifiers: [ReminderIdentifier]) -> Result<Void, DatumError> {
         let result = self.reminders(matching: identifiers).flatMap({ self.appendNewPerform(to: $0) })
         self.userDidPerformReminder?()
         return result
     }
 
-    public func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVesselWrapper, DatumError> {
+    internal func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVesselWrapper, DatumError> {
         return self.realm.flatMap() { realm -> Result<ReminderVesselWrapper, DatumError> in
             guard let reminder = realm.object(ofType: RLM_ReminderVessel.self, forPrimaryKey: identifier.uuid)
             else { return .failure(.objectDeleted) }
@@ -161,7 +143,7 @@ public class BasicController {
         }
     }
 
-    public func reminder(matching identifier: ReminderIdentifier) -> Result<ReminderWrapper, DatumError> {
+    internal func reminder(matching identifier: ReminderIdentifier) -> Result<ReminderWrapper, DatumError> {
         return self.realm.flatMap() { realm -> Result<ReminderWrapper, DatumError> in
             guard let reminder = realm.object(ofType: RLM_Reminder.self, forPrimaryKey: identifier.reminderIdentifier)
             else { return .failure(.objectDeleted) }
@@ -190,7 +172,7 @@ public class BasicController {
         }
     }
     
-    public func newReminder(for vessel: ReminderVesselWrapper) -> Result<ReminderWrapper, DatumError> {
+    internal func newReminder(for vessel: ReminderVesselWrapper) -> Result<ReminderWrapper, DatumError> {
         let vessel = vessel.wrappedObject
         return self.realm.flatMap() { realm in
             let reminder = RLM_Reminder()
@@ -201,7 +183,7 @@ public class BasicController {
         }
     }
     
-    public func newReminderVessel(displayName: String? = nil, icon: ReminderVesselIcon? = nil, reminders: [ReminderWrapper]? = nil) -> Result<ReminderVesselWrapper, DatumError> {
+    internal func newReminderVessel(displayName: String? = nil, icon: ReminderVesselIcon? = nil, reminders: [ReminderWrapper]? = nil) -> Result<ReminderVesselWrapper, DatumError> {
         return self.realm.flatMap() { realm in
             let v = RLM_ReminderVessel()
             if let displayName = displayName?.nonEmptyString { // make sure the string is not empty
@@ -223,7 +205,7 @@ public class BasicController {
         }
     }
     
-    public func update(displayName: String? = nil,
+    internal func update(displayName: String? = nil,
                        icon: ReminderVesselIcon? = nil,
                        in vessel: ReminderVesselWrapper) -> Result<Void, DatumError>
     {
@@ -254,7 +236,7 @@ public class BasicController {
         }
     }
     
-    public func update(kind: ReminderKind? = nil,
+    internal func update(kind: ReminderKind? = nil,
                        interval: Int? = nil,
                        note: String? = nil,
                        in reminder: ReminderWrapper) -> Result<Void, DatumError>
@@ -283,11 +265,11 @@ public class BasicController {
         }
     }
 
-    public func coreDataMigration(vesselName: String?,
-                                  vesselImage: UIImage?,
-                                  vesselEmoji: String?,
-                                  reminderInterval: NSNumber?,
-                                  reminderLastPerformDate: Date?) -> Result<Void, DatumError>
+    internal func coreDataMigration(vesselName: String?,
+                                    vesselImage: UIImage?,
+                                    vesselEmoji: String?,
+                                    reminderInterval: NSNumber?,
+                                    reminderLastPerformDate: Date?) -> Result<Void, DatumError>
     {
         return self.realm.flatMap() { realm in
             realm.beginWrite()
@@ -308,7 +290,7 @@ public class BasicController {
         }
     }
         
-    public func delete(vessel: ReminderVesselWrapper) -> Result<Void, DatumError> {
+    internal func delete(vessel: ReminderVesselWrapper) -> Result<Void, DatumError> {
         let vessel = vessel.wrappedObject
         let reminderValues = Array(vessel.reminders.map({ ReminderValue(reminder: $0) }))
         let vesselValue = ReminderVesselValue(reminderVessel: vessel)
@@ -331,7 +313,7 @@ public class BasicController {
         realm.delete(vessel)
     }
         
-    public func delete(reminder: ReminderWrapper) -> Result<Void, DatumError> {
+    internal func delete(reminder: ReminderWrapper) -> Result<Void, DatumError> {
         let reminder = reminder.wrappedObject
         if let vessel = reminder.vessel, vessel.reminders.count <= 1 {
             return .failure(.unableToDeleteLastReminder) 
@@ -356,7 +338,7 @@ public class BasicController {
     }
 }
 
-extension BasicController {
+extension RLM_BasicController {
     private class var localRealmDirectory: URL {
         let appsupport = FileManager.default.urls(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first!
         let url = appsupport.appendingPathComponent("WaterMe", isDirectory: true).appendingPathComponent("Free", isDirectory: true)

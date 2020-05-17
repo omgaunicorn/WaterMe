@@ -83,7 +83,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
             return
         }
         self.notificationToken?.invalidate() // stop the update notifications from causing the tableview to reload
-        let updateResult = basicRC.update(displayName: newName, in: vessel)
+        let updateResult = basicRC.update(displayName: newName, icon: nil, in: vessel)
         switch updateResult {
         case .failure(let error):
             UIAlertController.presentAlertVC(for: error, over: self) { _ in
@@ -174,7 +174,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
             assertionFailure("Missing ReminderVessel or Realm Controller")
             return
         }
-        let updateResult = basicRC.update(icon: icon, in: vessel)
+        let updateResult = basicRC.update(displayName: nil, icon: icon, in: vessel)
         guard case .failure(let error) = updateResult else { return }
         UIAlertController.presentAlertVC(for: error, over: self)
     }

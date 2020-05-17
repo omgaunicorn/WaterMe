@@ -73,7 +73,6 @@ open class ReminderGedeg: NSObject {
             )
         case .error(let error):
             self.lastError = .loadError
-            BasicController.errorThrown?(error)
             log.error(error)
             self.allDataReady(success: false)
         }
@@ -97,7 +96,6 @@ open class ReminderGedeg: NSObject {
         if reminderCount != ReminderSection.allCases.count {
             let error = NSError(numberOfSectionsMistmatch: nil)
             assertionFailure(String(describing: error))
-            BasicController.errorThrown?(error)
             log.error(error)
         }
         return reminderCount
@@ -117,7 +115,6 @@ open class ReminderGedeg: NSObject {
         guard let count = self.reminders[section]?.count else {
             let error = NSError(dataForSectionWasNilInNumberOfItemsInSection: section)
             assertionFailure(String(describing: error))
-            BasicController.errorThrown?(error)
             log.error(error)
             return 0
         }
@@ -141,7 +138,6 @@ open class ReminderGedeg: NSObject {
         guard let data = reminders[section] else {
             let error = NSError(dataForSectionWasNilInReminderAtIndexPath: indexPath)
             assertionFailure(String(describing: error))
-            BasicController.errorThrown?(error)
             log.error(error)
             return nil
         }
@@ -154,7 +150,6 @@ open class ReminderGedeg: NSObject {
         guard data.count > row else {
             let error = NSError(outOfBoundsRowAtIndexPath: indexPath)
             assertionFailure(String(describing: error))
-            BasicController.errorThrown?(error)
             log.error(error)
             return nil
         }

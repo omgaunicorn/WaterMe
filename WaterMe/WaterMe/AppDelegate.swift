@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // swiftlint:disable:next weak_delegate
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
     private(set) var reminderObserver: GlobalReminderObserver?
-    private lazy var basicControllerResult = BasicController.new(of: .local)
+    private lazy var basicControllerResult = NewBasicController(of: .local)
 
     let purchaseController = PurchaseController()
     var coreDataMigrator: CoreDataMigratable? = CoreDataMigrator()
@@ -149,14 +149,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 ud.requestReviewDate = Date()
             }
         }()
-
-        // Basic Controller error handling closure
-        // There is no easy way for my Dynamic Frameworks to be able to use Crashlytics
-        // So in the places where they can throw errors, I introduced a static var so we can see them here
-        BasicController.errorThrown = { error in
-            log.error(error)
-            Analytics.log(error: error)
-        }
 
         // configure my notification delegate
         UNUserNotificationCenter.current().delegate = self.notificationUIDelegate

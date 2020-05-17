@@ -68,9 +68,8 @@
 		503476B624552EFE00C3DAD3 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A024552EFE00C3DAD3 /* Reminder.swift */; };
 		503476B824552EFE00C3DAD3 /* ReminderAndVesselValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A224552EFE00C3DAD3 /* ReminderAndVesselValue.swift */; };
 		503476B924552EFE00C3DAD3 /* ReminderVesselIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A324552EFE00C3DAD3 /* ReminderVesselIcon.swift */; };
-		503476BB24552EFE00C3DAD3 /* ReceiptController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A624552EFE00C3DAD3 /* ReceiptController.swift */; };
-		503476BC24552EFE00C3DAD3 /* ProController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A724552EFE00C3DAD3 /* ProController.swift */; };
 		503476BD24552EFE00C3DAD3 /* RLM_BasicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A824552EFE00C3DAD3 /* RLM_BasicController.swift */; };
+		503476BC24552EFE00C3DAD3 /* ProController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476A724552EFE00C3DAD3 /* ProController.swift */; };
 		503476BF24552EFE00C3DAD3 /* UIImage+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476AB24552EFE00C3DAD3 /* UIImage+WaterMe.swift */; };
 		503476C024552EFE00C3DAD3 /* Realm+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476AC24552EFE00C3DAD3 /* Realm+WaterMe.swift */; };
 		503476C924552F9900C3DAD3 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476C224552F9900C3DAD3 /* PurchaseController.swift */; };
@@ -423,9 +422,8 @@
 		503476A024552EFE00C3DAD3 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		503476A224552EFE00C3DAD3 /* ReminderAndVesselValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderAndVesselValue.swift; sourceTree = "<group>"; };
 		503476A324552EFE00C3DAD3 /* ReminderVesselIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselIcon.swift; sourceTree = "<group>"; };
-		503476A624552EFE00C3DAD3 /* ReceiptController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiptController.swift; sourceTree = "<group>"; };
-		503476A724552EFE00C3DAD3 /* ProController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProController.swift; sourceTree = "<group>"; };
 		503476A824552EFE00C3DAD3 /* RLM_BasicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLM_BasicController.swift; sourceTree = "<group>"; };
+		503476A724552EFE00C3DAD3 /* ProController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProController.swift; sourceTree = "<group>"; };
 		503476AB24552EFE00C3DAD3 /* UIImage+WaterMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+WaterMe.swift"; sourceTree = "<group>"; };
 		503476AC24552EFE00C3DAD3 /* Realm+WaterMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Realm+WaterMe.swift"; sourceTree = "<group>"; };
 		503476C224552F9900C3DAD3 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
@@ -815,10 +813,9 @@
 		503476A524552EFE00C3DAD3 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				503476A624552EFE00C3DAD3 /* ReceiptController.swift */,
+				5090FD832470E280003B03D1 /* BasicController.swift */,
 				503476A724552EFE00C3DAD3 /* ProController.swift */,
 				503476A824552EFE00C3DAD3 /* RLM_BasicController.swift */,
-				5090FD832470E280003B03D1 /* BasicController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1681,7 +1678,6 @@
 				48B77EE024677FD600EF25D3 /* BasicWrappers.swift in Sources */,
 				503476BD24552EFE00C3DAD3 /* RLM_BasicController.swift in Sources */,
 				4832F531246E5CE6001B77F6 /* ReminderVesselWrapper.swift in Sources */,
-				503476BB24552EFE00C3DAD3 /* ReceiptController.swift in Sources */,
 				503476B124552EFE00C3DAD3 /* RealmError.swift in Sources */,
 				503476C024552EFE00C3DAD3 /* Realm+WaterMe.swift in Sources */,
 				48B77EDE2466CAB700EF25D3 /* ReminderVesselCollection.swift in Sources */,
@@ -1689,8 +1685,8 @@
 				48B77EDC2466C8FD00EF25D3 /* ReminderCollection.swift in Sources */,
 				503476B924552EFE00C3DAD3 /* ReminderVesselIcon.swift in Sources */,
 				4832F536246E7C05001B77F6 /* ReminderVessel+Helpers.swift in Sources */,
-				503476BC24552EFE00C3DAD3 /* ProController.swift in Sources */,
 				503476B824552EFE00C3DAD3 /* ReminderAndVesselValue.swift in Sources */,
+				503476BC24552EFE00C3DAD3 /* ProController.swift in Sources */,
 				503476B424552EFE00C3DAD3 /* NSErrors.swift in Sources */,
 				503476B524552EFE00C3DAD3 /* ReminderVessel.swift in Sources */,
 				503476BF24552EFE00C3DAD3 /* UIImage+WaterMe.swift in Sources */,
