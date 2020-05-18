@@ -57,8 +57,8 @@ internal class ReminderQueryImp: ReminderQuery {
                 block(.initial(data: .init(data)))
             case .update(_, let deletions, let insertions, let modifications):
                 block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
-            case .error(let error):
-                block(.error(error: error))
+            case .error:
+                block(.error(error: .readError))
             }
         }
     }
@@ -70,11 +70,7 @@ public enum ReminderChange {
     case deleted
 }
 
-public enum ReminderCollectionChange {
-    case initial(data: ReminderCollection)
-    case update(insertions: [Int], deletions: [Int], modifications: [Int])
-    case error(error: Error)
-}
+public typealias ReminderCollectionChange = CollectionChange<ReminderCollection, Int>
 
 public protocol ReminderObservable {
     func datum_observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken

@@ -23,6 +23,12 @@
 
 import RealmSwift
 
+public enum CollectionChange<T, U> {
+    case initial(data: T)
+    case update(insertions: [U], deletions: [U], modifications: [U])
+    case error(error: DatumError)
+}
+
 public protocol ObservationToken {
     func invalidate()
 }

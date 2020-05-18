@@ -109,6 +109,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
                                                       deletions: dels,
                                                       modifications: mods)
         case .error(let error):
+            self.reminders = nil
             UIAlertController.presentAlertVC(for: error, over: self, completionHandler: nil)
         }
     }

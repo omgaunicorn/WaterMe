@@ -50,8 +50,8 @@ internal class ReminderVesselQueryImp: ReminderVesselQuery {
                 block(.initial(data: .init(data)))
             case .update(_, let deletions, let insertions, let modifications):
                 block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
-            case .error(let error):
-                block(.error(error: error))
+            case .error:
+                block(.error(error: .readError))
             }
         }
     }
@@ -63,11 +63,7 @@ public enum ReminderVesselChange {
     case deleted
 }
 
-public enum ReminderVesselCollectionChange {
-    case initial(data: ReminderVesselCollection)
-    case update(insertions: [Int], deletions: [Int], modifications: [Int])
-    case error(error: Error)
-}
+public typealias ReminderVesselCollectionChange = CollectionChange<ReminderVesselCollection, Int>
 
 public protocol ReminderVesselObservable {
     func datum_observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken
@@ -102,8 +98,8 @@ extension ReminderVesselWrapper: ReminderVesselObservable {
                 block(.initial(data: .init(AnyRealmCollection(data))))
             case .update(_, let deletions, let insertions, let modifications):
                 block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
-            case .error(let error):
-                block(.error(error: error))
+            case .error:
+                block(.error(error: .readError))
             }
         }
     }

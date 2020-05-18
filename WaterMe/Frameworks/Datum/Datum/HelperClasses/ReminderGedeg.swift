@@ -66,7 +66,7 @@ internal class ReminderGedeg: NSObject {
         case .initial(let data):
             self.reminders[section] = data
             if self.allSectionsFinishedLoading == true {
-                self.changesObserved(.initial)
+                self.changesObserved(.initial(data: ()))
             }
         case .update(let ins, let del, let mod):
             self.updateBatcher.appendUpdateExtendingTimer(

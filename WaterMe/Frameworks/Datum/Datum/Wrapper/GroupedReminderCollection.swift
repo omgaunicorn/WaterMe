@@ -21,11 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-public enum GroupedReminderCollectionChange {
-    case initial
-    case update(insertions: [IndexPath], deletions: [IndexPath], modifications: [IndexPath])
-    case error(error: DatumError)
-}
+public typealias GroupedReminderCollectionChange = CollectionChange<Void, IndexPath>
 
 public protocol GroupedReminderCollection: ItemAndSectionable {
     var changeObserver: ((GroupedReminderCollectionChange) -> Void)? { get set }
