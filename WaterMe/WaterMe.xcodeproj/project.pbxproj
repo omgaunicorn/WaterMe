@@ -142,6 +142,10 @@
 		509A0869215FFF1C00389339 /* ClosureDelegatingAddVoiceShortcutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509A0868215FFF1C00389339 /* ClosureDelegatingAddVoiceShortcutViewController.swift */; };
 		50A3BAC8214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3BAC7214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift */; };
 		50A3DF9B1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */; };
+		50A41A4624740E8300D61DF5 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 50A41A4524740E8300D61DF5 /* Realm */; };
+		50A41A4824740E8300D61DF5 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 50A41A4724740E8300D61DF5 /* RealmSwift */; };
+		50A41A5E247413AA00D61DF5 /* CropViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A41A532474137D00D61DF5 /* CropViewController.framework */; };
+		50A41A5F247413AA00D61DF5 /* CropViewController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50A41A532474137D00D61DF5 /* CropViewController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */; };
 		50B511A51EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B511A41EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib */; };
 		50B511A71EFE144700ED1DF4 /* ReminderKindTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B511A61EFE144700ED1DF4 /* ReminderKindTableViewCell.swift */; };
@@ -188,8 +192,6 @@
 		50F388E01FF6D9C10031ED45 /* CoreDataMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */; };
 		50F388E41FF6DA490031ED45 /* WaterMeData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50F388E11FF6DA490031ED45 /* WaterMeData.xcdatamodeld */; };
 		50F7A360200844390063A1FC /* StarterRealm.realm in Resources */ = {isa = PBXBuildFile; fileRef = 50F7A362200844390063A1FC /* StarterRealm.realm */; };
-		57401705F40C9F729F5B2F79 /* Pods_Datum.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63BF41E0600A5040BB00985C /* Pods_Datum.framework */; };
-		8E596A62CF7860F0B7A7B5CC /* Pods_WaterMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05C61A2024090D8F5C884F5B /* Pods_WaterMe.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -326,6 +328,48 @@
 			remoteGlobalIDString = A0BF70A61EDC5B1400109F6E;
 			remoteInfo = SimpleImageViewer;
 		};
+		50A41A522474137D00D61DF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50A41A492474137C00D61DF5 /* TOCropViewControllerExample.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2238CF3C1FC029A90081B957;
+			remoteInfo = CropViewController;
+		};
+		50A41A542474137D00D61DF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50A41A492474137C00D61DF5 /* TOCropViewControllerExample.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 144B8CC91D22CAFF0085D774;
+			remoteInfo = TOCropViewController;
+		};
+		50A41A562474137D00D61DF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50A41A492474137C00D61DF5 /* TOCropViewControllerExample.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2234246A1ABBC0CD00BBC2B1;
+			remoteInfo = TOCropViewControllerExample;
+		};
+		50A41A582474137D00D61DF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50A41A492474137C00D61DF5 /* TOCropViewControllerExample.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2238CF201FC0269C0081B957;
+			remoteInfo = CropViewControllerExample;
+		};
+		50A41A5A2474137D00D61DF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50A41A492474137C00D61DF5 /* TOCropViewControllerExample.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2F5062DC1F53E2D900AA9F14;
+			remoteInfo = "TOCropViewControllerExample-Extension";
+		};
+		50A41A5C2474137D00D61DF5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 50A41A492474137C00D61DF5 /* TOCropViewControllerExample.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 220611971B2E6777001A467B;
+			remoteInfo = TOCropViewControllerTests;
+		};
 		50C96A3F1EC2D047002802C1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
@@ -343,6 +387,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				503476EE24557A6200C3DAD3 /* SPMShim.framework in Embed Frameworks */,
+				50A41A5F247413AA00D61DF5 /* CropViewController.framework in Embed Frameworks */,
 				5034767C24552D0700C3DAD3 /* Store.framework in Embed Frameworks */,
 				48A7B0E92467FCB100DC0861 /* Calculate.framework in Embed Frameworks */,
 				50380EB5245584F800271545 /* SimpleImageViewer.framework in Embed Frameworks */,
@@ -354,9 +399,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		05C61A2024090D8F5C884F5B /* Pods_WaterMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WaterMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1C074CD7B6C03DE4F5780D73 /* Pods-Datum.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Datum.release.xcconfig"; path = "Target Support Files/Pods-Datum/Pods-Datum.release.xcconfig"; sourceTree = "<group>"; };
-		39DFC7BD15912D3CEA99F795 /* Pods-Datum.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Datum.debug.xcconfig"; path = "Target Support Files/Pods-Datum/Pods-Datum.debug.xcconfig"; sourceTree = "<group>"; };
 		4832F52C246E2406001B77F6 /* ReminderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderWrapper.swift; sourceTree = "<group>"; };
 		4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVesselWrapper.swift; sourceTree = "<group>"; };
 		4832F533246E7BF8001B77F6 /* Reminder+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+Helpers.swift"; sourceTree = "<group>"; };
@@ -496,6 +538,7 @@
 		509A0868215FFF1C00389339 /* ClosureDelegatingAddVoiceShortcutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosureDelegatingAddVoiceShortcutViewController.swift; sourceTree = "<group>"; };
 		50A3BAC7214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderSummaryReminderVesselIconTableViewCell.swift; sourceTree = "<group>"; };
 		50A3DF9A1EE3362B00F0B966 /* EmojiPickerCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPickerCollectionViewController.swift; sourceTree = "<group>"; };
+		50A41A492474137C00D61DF5 /* TOCropViewControllerExample.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TOCropViewControllerExample.xcodeproj; path = GitSubmodules/TOCropViewController/TOCropViewControllerExample.xcodeproj; sourceTree = "<group>"; };
 		50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastPerformedTableViewCell.swift; sourceTree = "<group>"; };
 		50B511A41EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		50B511A61EFE144700ED1DF4 /* ReminderKindTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderKindTableViewCell.swift; sourceTree = "<group>"; };
@@ -547,9 +590,6 @@
 		50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMigrator.swift; sourceTree = "<group>"; };
 		50F388E21FF6DA490031ED45 /* WaterMe_CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WaterMe_CoreData.xcdatamodel; sourceTree = "<group>"; };
 		50F388E31FF6DA490031ED45 /* WaterMe_CoreData 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WaterMe_CoreData 2.xcdatamodel"; sourceTree = "<group>"; };
-		631A78D2A52353B959ACC60F /* Pods-WaterMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.debug.xcconfig"; path = "Target Support Files/Pods-WaterMe/Pods-WaterMe.debug.xcconfig"; sourceTree = "<group>"; };
-		63BF41E0600A5040BB00985C /* Pods_Datum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Datum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B520DBE9A9F5455A5582AEF1 /* Pods-WaterMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WaterMe.release.xcconfig"; path = "Target Support Files/Pods-WaterMe/Pods-WaterMe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -573,9 +613,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50A41A4824740E8300D61DF5 /* RealmSwift in Frameworks */,
+				50A41A4624740E8300D61DF5 /* Realm in Frameworks */,
 				503476FB24557A7D00C3DAD3 /* SPMShim.framework in Frameworks */,
 				48A7B1042467FE3800DC0861 /* Calculate.framework in Frameworks */,
-				57401705F40C9F729F5B2F79 /* Pods_Datum.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -621,9 +662,9 @@
 				5034770224557CB200C3DAD3 /* Cheers in Frameworks */,
 				5034765824552CFD00C3DAD3 /* Datum.framework in Frameworks */,
 				503476ED24557A6200C3DAD3 /* SPMShim.framework in Frameworks */,
+				50A41A5E247413AA00D61DF5 /* CropViewController.framework in Frameworks */,
 				50380EB4245584F800271545 /* SimpleImageViewer.framework in Frameworks */,
 				5034767B24552D0700C3DAD3 /* Store.framework in Frameworks */,
-				8E596A62CF7860F0B7A7B5CC /* Pods_WaterMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -689,10 +730,6 @@
 		49D2E6637FA631F9A2F393B5 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				39DFC7BD15912D3CEA99F795 /* Pods-Datum.debug.xcconfig */,
-				1C074CD7B6C03DE4F5780D73 /* Pods-Datum.release.xcconfig */,
-				631A78D2A52353B959ACC60F /* Pods-WaterMe.debug.xcconfig */,
-				B520DBE9A9F5455A5582AEF1 /* Pods-WaterMe.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -959,6 +996,19 @@
 			path = StyleSheets;
 			sourceTree = "<group>";
 		};
+		50A41A4A2474137C00D61DF5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				50A41A532474137D00D61DF5 /* CropViewController.framework */,
+				50A41A552474137D00D61DF5 /* TOCropViewController.framework */,
+				50A41A572474137D00D61DF5 /* TOCropViewControllerExample.app */,
+				50A41A592474137D00D61DF5 /* CropViewControllerExample.app */,
+				50A41A5B2474137D00D61DF5 /* TOCropViewControllerExample-Extension.appex */,
+				50A41A5D2474137D00D61DF5 /* TOCropViewControllerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		50B779CA2154138D00AC6240 /* Miscellaneous */ = {
 			isa = PBXGroup;
 			children = (
@@ -1118,9 +1168,8 @@
 				50380E99245584B900271545 /* SimpleImageViewer.framework */,
 				5034763B24552BCF00C3DAD3 /* Store.framework */,
 				5034761324552B5200C3DAD3 /* Datum.framework */,
+				50A41A492474137C00D61DF5 /* TOCropViewControllerExample.xcodeproj */,
 				50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */,
-				63BF41E0600A5040BB00985C /* Pods_Datum.framework */,
-				05C61A2024090D8F5C884F5B /* Pods_WaterMe.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1205,7 +1254,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5034765A24552CFD00C3DAD3 /* Build configuration list for PBXNativeTarget "Datum" */;
 			buildPhases = (
-				A6DE91AFE296DB42E340214B /* [CP] Check Pods Manifest.lock */,
 				5034763E24552CFD00C3DAD3 /* Headers */,
 				5034763F24552CFD00C3DAD3 /* Sources */,
 				5034764024552CFD00C3DAD3 /* Frameworks */,
@@ -1218,6 +1266,10 @@
 				48A7B1072467FE3800DC0861 /* PBXTargetDependency */,
 			);
 			name = Datum;
+			packageProductDependencies = (
+				50A41A4524740E8300D61DF5 /* Realm */,
+				50A41A4724740E8300D61DF5 /* RealmSwift */,
+			);
 			productName = Datum;
 			productReference = 5034764324552CFD00C3DAD3 /* Datum.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1306,13 +1358,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50BB0F621EBFCDE500850FF4 /* Build configuration list for PBXNativeTarget "WaterMe" */;
 			buildPhases = (
-				94CE027D4C105FCBEEF27CBE /* [CP] Check Pods Manifest.lock */,
 				50BB0F7A1EC214AC00850FF4 /* Swiftlint */,
 				50BB0F4C1EBFCDE500850FF4 /* Sources */,
 				50BB0F4D1EBFCDE500850FF4 /* Frameworks */,
 				50BB0F4E1EBFCDE500850FF4 /* Resources */,
 				5034765D24552CFD00C3DAD3 /* Embed Frameworks */,
-				BEF4FD7738CE83D552C7D11D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1429,6 +1479,7 @@
 			packageReferences = (
 				503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */,
 				5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */,
+				50A41A3E24740E3100D61DF5 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = 50BB0F511EBFCDE500850FF4 /* Products */;
 			projectDirPath = "";
@@ -1436,6 +1487,10 @@
 				{
 					ProductGroup = 50380EA9245584ED00271545 /* Products */;
 					ProjectRef = 50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */;
+				},
+				{
+					ProductGroup = 50A41A4A2474137C00D61DF5 /* Products */;
+					ProjectRef = 50A41A492474137C00D61DF5 /* TOCropViewControllerExample.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -1473,6 +1528,48 @@
 			fileType = wrapper.cfbundle;
 			path = SimpleImageViewerTests.xctest;
 			remoteRef = 50380EB2245584ED00271545 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		50A41A532474137D00D61DF5 /* CropViewController.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CropViewController.framework;
+			remoteRef = 50A41A522474137D00D61DF5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		50A41A552474137D00D61DF5 /* TOCropViewController.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = TOCropViewController.framework;
+			remoteRef = 50A41A542474137D00D61DF5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		50A41A572474137D00D61DF5 /* TOCropViewControllerExample.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TOCropViewControllerExample.app;
+			remoteRef = 50A41A562474137D00D61DF5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		50A41A592474137D00D61DF5 /* CropViewControllerExample.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CropViewControllerExample.app;
+			remoteRef = 50A41A582474137D00D61DF5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		50A41A5B2474137D00D61DF5 /* TOCropViewControllerExample-Extension.appex */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.app-extension";
+			path = "TOCropViewControllerExample-Extension.appex";
+			remoteRef = 50A41A5A2474137D00D61DF5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		50A41A5D2474137D00D61DF5 /* TOCropViewControllerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TOCropViewControllerTests.xctest;
+			remoteRef = 50A41A5C2474137D00D61DF5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1581,67 +1678,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
-		};
-		94CE027D4C105FCBEEF27CBE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-WaterMe-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A6DE91AFE296DB42E340214B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Datum-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BEF4FD7738CE83D552C7D11D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WaterMe/Pods-WaterMe-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2076,7 +2112,6 @@
 		};
 		5034765B24552CFD00C3DAD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 39DFC7BD15912D3CEA99F795 /* Pods-Datum.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
@@ -2113,7 +2148,6 @@
 		};
 		5034765C24552CFD00C3DAD3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1C074CD7B6C03DE4F5780D73 /* Pods-Datum.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_ENABLE_MODULES = YES;
@@ -2501,7 +2535,6 @@
 		};
 		50BB0F631EBFCDE500850FF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 631A78D2A52353B959ACC60F /* Pods-WaterMe.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2528,7 +2561,6 @@
 		};
 		50BB0F641EBFCDE500850FF4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B520DBE9A9F5455A5582AEF1 /* Pods-WaterMe.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -2702,6 +2734,14 @@
 				kind = branch;
 			};
 		};
+		50A41A3E24740E3100D61DF5 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.4.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2719,6 +2759,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */;
 			productName = Cheers;
+		};
+		50A41A4524740E8300D61DF5 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50A41A3E24740E3100D61DF5 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		50A41A4724740E8300D61DF5 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50A41A3E24740E3100D61DF5 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 
