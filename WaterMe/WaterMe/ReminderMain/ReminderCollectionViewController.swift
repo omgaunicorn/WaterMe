@@ -44,7 +44,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     var basicRC: BasicController?
     var allDataReady: ((Bool) -> Void)?
 
-    private(set) var reminders: ReminderGedeg?
+    private(set) var reminders: GroupedReminderCollection?
     private let significantTimePassedDetector = SignificantTimePassedDetector()
     weak var delegate: ReminderCollectionViewControllerDelegate?
 
@@ -96,10 +96,22 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
     
     private func hardReloadData() {
-        self.reminders = ReminderGedegDataSource(basicRC: self.basicRC,
-                                                 managedCollectionView: self.collectionView,
-                                                 collectionViewReplacer: self)
-        self.reminders?.allDataReadyClosure = { [weak self] in self?.allDataReady?($0) }
+        self.reminders = self.basicRC?.groupedReminders()
+        self.reminders?.changeObserver = { [weak self] in self?.remindersChanged($0) }
+    }
+
+    private func remindersChanged(_ change: GroupedReminderCollectionChange) {
+        switch change {
+        case .initial:
+            self.collectionView.reloadData()
+        case .update(let ins, let dels, let mods):
+            self.performSuperSafeCollectionViewUpdate(insertions: ins,
+                                                      deletions: dels,
+                                                      modifications: mods)
+        case .error(let error):
+            self.reminders = nil
+            UIAlertController.presentAlertVC(for: error, over: self, completionHandler: nil)
+        }
     }
 
     func programmaticalySelectReminder(with identifier: ReminderIdentifier) -> (IndexPath, ((Bool) -> Void))? {
@@ -125,7 +137,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReminderCollectionViewCell.reuseID, for: indexPath)
-        let reminder = self.reminders?.reminder(at: indexPath)
+        let reminder = self.reminders?[indexPath]
         if let reminder = reminder, let cell = cell as? ReminderCollectionViewCell {
             cell.configure(with: reminder)
         }
@@ -152,7 +164,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard
-            let reminder = self.reminders?.reminder(at: indexPath),
+            let reminder = self.reminders?[indexPath],
             let cell = collectionView.cellForItem(at: indexPath)
         else { return }
         let identifier = ReminderIdentifier(reminder: reminder)
@@ -195,15 +207,6 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
 }
 
-extension ReminderCollectionViewController: CollectionViewReplacer {
-    func collectionViewReplacementRecommended() {
-        self.replaceCollectionView()
-        self.configureCollectionView()
-        self.delegate?.forceUpdateCollectionViewInsets()
-        self.hardReloadData()
-    }
-}
-
 extension ReminderCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let kind = ReminderHeaderCollectionReusableView.self
@@ -220,7 +223,7 @@ extension ReminderCollectionViewController: UICollectionViewDelegateFlowLayout {
 extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 
     private func dragItemForReminder(at indexPath: IndexPath) -> UIDragItem? {
-        guard let reminder = self.reminders?.reminder(at: indexPath) else { return nil }
+        guard let reminder = self.reminders?[indexPath] else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
         // only make the "small" preview show on iPhones. On iPads, there is plenty of space
         let tc = self.view.traitCollection
@@ -271,6 +274,76 @@ extension ReminderCollectionViewController: SignificantTimePassedDetectorDelegat
             Analytics.log(event: Analytics.Event.stpReloadNotification)
         }
         log.info("Reloading Data...")
+        self.hardReloadData()
+    }
+}
+
+extension ReminderCollectionViewController {
+    func performSuperSafeCollectionViewUpdate(insertions     ins: [IndexPath],
+                                              deletions     dels: [IndexPath],
+                                              modifications mods: [IndexPath]) {
+        guard let cv = self.collectionView else {
+            let error = "CollectionView is NIL. Something really bad happened."
+            log.error(error)
+            assertionFailure(error)
+            return
+        }
+        let allEmpty = ins.isEmpty && dels.isEmpty && mods.isEmpty
+        guard allEmpty == false else {
+            // there is nothing to be done, so bail out early
+            return
+        }
+        guard cv.window != nil else {
+            // we're not in the view hierarchy
+            // no need for animated stuff to happen
+            cv.reloadData()
+            return
+        }
+
+        // sanity checking can only be done when the collectionview
+        // is in the window hierarchy. Otherwise its internal state
+        // does not update. So it will pass the first sanity check
+        // but after that its internal state is stale
+        // so it will fail them
+        let failureReason = ItemAndSectionSanityCheckFailureReason.check(old: cv,
+                                                                         new: self.reminders!,
+                                                                         delta: (ins, dels))
+        guard failureReason == nil else {
+            let error = NSError(errorFromSanityCheckFailureReason: failureReason!)
+            Analytics.log(error: error)
+            log.error(error)
+            cv.reloadData()
+            return
+        }
+        TCF.try({
+            cv.performBatchUpdates({
+                cv.insertItems(at: ins)
+                cv.deleteItems(at: dels)
+                cv.reloadItems(at: mods)
+            }, completion: { success in
+                guard success == false else { return }
+                let message = "CollectionView failed to Reload Sections: This usually happens when data changes really fast"
+                log.warning(message)
+                cv.reloadData()
+            })
+        }, shouldCatch: { exception in
+            guard case .internalInconsistencyException = exception.name else {
+                return false
+            }
+            let error = NSError(collectionViewBatchUpdateException: exception)
+            Analytics.log(error: error)
+            log.error(error)
+            return true
+        }, finally: { exceptionWasCaught in
+            guard exceptionWasCaught == true else { return }
+            self.replaceDamagedCollectionView()
+        })
+    }
+
+    private func replaceDamagedCollectionView() {
+        self.replaceCollectionView()
+        self.configureCollectionView()
+        self.delegate?.forceUpdateCollectionViewInsets()
         self.hardReloadData()
     }
 }

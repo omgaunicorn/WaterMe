@@ -49,7 +49,7 @@ public struct ReminderValue: Hashable {
     public var nextPerformDate: Date?
     public var kind: ReminderKind
 
-    internal init(reminder: __rlm_Reminder) {
+    internal init(reminder: RLM_Reminder) {
         self.uuid = ReminderIdentifier(reminder: reminder)
         self.nextPerformDate = reminder.nextPerformDate
         self.kind = reminder.kind
@@ -65,7 +65,7 @@ public struct ReminderVesselValue: Hashable {
     public var name: String?
     public var imageData: Data?
 
-    internal init?(reminderVessel: __rlm_ReminderVessel?) {
+    internal init?(reminderVessel: RLM_ReminderVessel?) {
         guard let reminderVessel = reminderVessel else { return nil }
         self.uuid = ReminderVesselIdentifier(reminderVessel: reminderVessel)
         self.name = reminderVessel.shortLabelSafeDisplayName

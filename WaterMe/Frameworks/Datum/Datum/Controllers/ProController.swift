@@ -34,20 +34,4 @@ extension HasProController {
     }
 }
 
-public class ProController {
-    /*
-    public let config: Realm.Configuration
-    public var realm: Realm {
-        return try! Realm(configuration: self.config)
-    }
-    
-    public init(user: SyncUser) {
-        var realmConfig = Realm.Configuration()
-        realmConfig.schemaVersion = 4
-        realmConfig.objectTypes = []
-        let url = user.realmURL(withAppName: "WaterMePro")
-        realmConfig.syncConfiguration = SyncConfiguration(user: user, realmURL: url, enableSSLValidation: true)
-        self.config = realmConfig
-    }
- */
-}
+public protocol ProController { }

@@ -24,24 +24,25 @@
 import RealmSwift
 
 @objc(Reminder)
-internal class __rlm_Reminder: Object {
+internal class RLM_Reminder: Object {
     @objc internal private(set) dynamic var uuid = UUID().uuidString
-    @objc internal dynamic var interval = __rlm_Reminder.defaultInterval
+    @objc internal dynamic var interval = RLM_Reminder.defaultInterval
     @objc internal dynamic var note: String?
     @objc internal dynamic var nextPerformDate: Date?
-    @objc internal dynamic var kindString: String = __rlm_Reminder.kCaseWaterValue
+    @objc internal dynamic var kindString: String = RLM_Reminder.kCaseWaterValue
     @objc internal dynamic var descriptionString: String?
     @objc internal dynamic var bloop = false
-    internal let performed = List<ReminderPerform>()
+    internal let performed = List<RLM_ReminderPerform>()
                            //#keyPath(__rlm_ReminderVessel.reminders)
-    internal let vessels = LinkingObjects(fromType: __rlm_ReminderVessel.self,
+    internal let vessels = LinkingObjects(fromType: RLM_ReminderVessel.self,
                                           property: "reminders")
     internal override class func primaryKey() -> String {
-        return #keyPath(__rlm_Reminder.uuid)
+        return #keyPath(RLM_Reminder.uuid)
     }
 }
 
-internal class ReminderPerform: Object {
+@objc(ReminderPerform)
+internal class RLM_ReminderPerform: Object {
     @objc internal dynamic var date = Date()
     @objc internal dynamic var bloop = false
 }
