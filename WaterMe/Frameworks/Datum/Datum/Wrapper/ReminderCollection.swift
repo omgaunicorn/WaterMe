@@ -24,9 +24,9 @@
 import RealmSwift
 
 public class ReminderCollection {
-    private let collection: AnyRealmCollection<__rlm_Reminder>
-    private let transform: (__rlm_Reminder) -> ReminderWrapper = { .init($0) }
-    internal init(_ collection: AnyRealmCollection<__rlm_Reminder>) {
+    private let collection: AnyRealmCollection<RLM_Reminder>
+    private let transform: (RLM_Reminder) -> ReminderWrapper = { .init($0) }
+    internal init(_ collection: AnyRealmCollection<RLM_Reminder>) {
         self.collection = collection
     }
     
@@ -46,8 +46,8 @@ public protocol ReminderQuery {
 }
 
 internal class ReminderQueryImp: ReminderQuery {
-    private let collection: AnyRealmCollection<__rlm_Reminder>
-    init(_ collection: AnyRealmCollection<__rlm_Reminder>) {
+    private let collection: AnyRealmCollection<RLM_Reminder>
+    init(_ collection: AnyRealmCollection<RLM_Reminder>) {
         self.collection = collection
     }
     func observe(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
@@ -57,8 +57,8 @@ internal class ReminderQueryImp: ReminderQuery {
                 block(.initial(data: .init(data)))
             case .update(_, let deletions, let insertions, let modifications):
                 block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
-            case .error(let error):
-                block(.error(error: error))
+            case .error:
+                block(.error(error: .readError))
             }
         }
     }
@@ -70,11 +70,7 @@ public enum ReminderChange {
     case deleted
 }
 
-public enum ReminderCollectionChange {
-    case initial(data: ReminderCollection)
-    case update(insertions: [Int], deletions: [Int], modifications: [Int])
-    case error(error: Error)
-}
+public typealias ReminderCollectionChange = CollectionChange<ReminderCollection, Int>
 
 public protocol ReminderObservable {
     func datum_observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken
