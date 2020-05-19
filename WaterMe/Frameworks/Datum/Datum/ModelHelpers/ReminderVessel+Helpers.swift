@@ -24,7 +24,7 @@
 import RealmSwift
 import Calculate
 
-extension __rlm_ReminderVessel {
+extension RLM_ReminderVessel {
     internal var icon: ReminderVesselIcon? {
         get {
             return ReminderVesselIcon(rawImageData: self.iconImageData,
@@ -41,7 +41,7 @@ extension __rlm_ReminderVessel {
     }
 }
 
-extension __rlm_ReminderVessel: ModelCompleteCheckable {
+extension RLM_ReminderVessel: ModelCompleteCheckable {
     internal var isModelComplete: ModelCompleteError? {
         let issues: [RecoveryAction] = [
             self.icon == nil ? .reminderVesselMissingIcon : nil,
@@ -56,36 +56,36 @@ extension __rlm_ReminderVessel: ModelCompleteCheckable {
     }
 }
 
-extension __rlm_ReminderVessel {
+extension RLM_ReminderVessel {
     internal class func propertyChangesContainDisplayName(_ properties: [PropertyChange]) -> Bool {
-        _ = \__rlm_ReminderVessel.displayName // here to cause a compile error if this changes
+        _ = \RLM_ReminderVessel.displayName // here to cause a compile error if this changes
         let matches = properties.filter({ $0.name == "displayName" })
         let contains = !matches.isEmpty
         return contains
     }
     internal class func propertyChangesContainIconEmoji(_ properties: [PropertyChange]) -> Bool {
-        _ = \__rlm_ReminderVessel.iconImageData
-        _ = \__rlm_ReminderVessel.iconEmojiString // here to cause a compile error if this changes
+        _ = \RLM_ReminderVessel.iconImageData
+        _ = \RLM_ReminderVessel.iconEmojiString // here to cause a compile error if this changes
         let dataMatches = properties.filter({ $0.name == "iconImageData" })
         let emojiMatches = properties.filter({ $0.name == "iconEmojiString" })
         let contains = !dataMatches.isEmpty || !emojiMatches.isEmpty
         return contains
     }
     internal class func propertyChangesContainReminders(_ properties: [PropertyChange]) -> Bool {
-        _ = \__rlm_ReminderVessel.reminders // here to cause a compile error if this changes
+        _ = \RLM_ReminderVessel.reminders // here to cause a compile error if this changes
         let matches = properties.filter({ $0.name == "reminders" })
         let contains = !matches.isEmpty
         return contains
     }
     internal class func propertyChangesContainPointlessBloop(_ properties: [PropertyChange]) -> Bool {
-        _ = \__rlm_ReminderVessel.bloop // here to cause a compile error if this changes
+        _ = \RLM_ReminderVessel.bloop // here to cause a compile error if this changes
         let matches = properties.filter({ $0.name == "bloop" })
         let contains = !matches.isEmpty
         return contains
     }
 }
 
-extension __rlm_ReminderVessel {
+extension RLM_ReminderVessel {
     internal var shortLabelSafeDisplayName: String? {
         let name = self.displayName ?? ""
         let characterLimit = 20
@@ -102,7 +102,7 @@ extension __rlm_ReminderVessel {
 
 public struct ReminderVesselIdentifier: UUIDRepresentable, Hashable {
     public private(set) var uuid: String
-    internal init(reminderVessel: __rlm_ReminderVessel) {
+    internal init(reminderVessel: RLM_ReminderVessel) {
         self.uuid = reminderVessel.uuid
     }
     public init(rawValue: String) {

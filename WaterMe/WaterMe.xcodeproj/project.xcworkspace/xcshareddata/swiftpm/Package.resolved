@@ -11,6 +11,7 @@
         }
       },
       {
+<<<<<<< HEAD
         "package": "Realm",
         "repositoryURL": "https://github.com/realm/realm-cocoa.git",
         "state": {
@@ -29,6 +30,8 @@
         }
       },
       {
+=======
+>>>>>>> feature/abstract-realm
         "package": "XCGLogger",
         "repositoryURL": "https://github.com/DaveWoodCom/XCGLogger",
         "state": {

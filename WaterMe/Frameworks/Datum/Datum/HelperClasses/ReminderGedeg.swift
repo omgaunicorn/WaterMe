@@ -30,23 +30,22 @@ import Foundation
  Gedeg == Grouper / Degrouper
  */
 
-open class ReminderGedeg: NSObject {
+internal class ReminderGedeg: NSObject {
 
+    internal private(set) var reminders: [ReminderSection : ReminderCollection] = [:]
     private let updateBatcher = Batcher()
-    private(set) var reminders: [ReminderSection : ReminderCollection] = [:]
-    public var lastError: DatumError?
+    private let changesObserved: ((GroupedReminderCollectionChange) -> Void)
 
-    open var allDataReadyClosure: ((Bool) -> Void)?
-
-    open var allSectionsFinishedLoading: Bool {
+    internal var allSectionsFinishedLoading: Bool {
         return self.reminders.count == self.tokens.count
     }
 
-    public init?(basicRC: BasicController?) {
+    internal init?(basicRC: RLM_BasicController?, observer: @escaping (GroupedReminderCollectionChange) -> Void) {
+        self.changesObserved = observer
         super.init()
         guard let basicRC = basicRC else { return nil }
         self.updateBatcher.batchFired = { [unowned self] changes in
-            self.batchedUpdates(ins: changes.ins, dels: changes.dels, mods: changes.mods)
+            self.changesObserved(.update(insertions: changes.ins, deletions: changes.dels, modifications: changes.mods))
         }
         for section in ReminderSection.allCases {
             let result = basicRC.reminders(in: section, sorted: .nextPerformDate, ascending: true)
@@ -55,7 +54,9 @@ open class ReminderGedeg: NSObject {
                 let token = reminders.observe({ [weak self] in self?.collection(for: section, changed: $0) })
                 self.tokens += [token]
             case .failure(let error):
-                self.lastError = error
+                self.invalidate()
+                self.changesObserved(.error(error: error))
+                return
             }
         }
     }
@@ -65,27 +66,20 @@ open class ReminderGedeg: NSObject {
         case .initial(let data):
             self.reminders[section] = data
             if self.allSectionsFinishedLoading == true {
-                self.allDataReady(success: true)
+                self.changesObserved(.initial(data: ()))
             }
         case .update(let ins, let del, let mod):
             self.updateBatcher.appendUpdateExtendingTimer(
                 Update(section: section, deletions: del, insertions: ins, modifications: mod)
             )
         case .error(let error):
-            self.lastError = .loadError
-            BasicController.errorThrown?(error)
+            self.invalidate()
+            self.changesObserved(.error(error: .readError))
             log.error(error)
-            self.allDataReady(success: false)
         }
     }
 
-    open func allDataReady(success: Bool) {
-        self.allDataReadyClosure?(success)
-    }
-
-    open func batchedUpdates(ins: [IndexPath], dels: [IndexPath], mods: [IndexPath]) { }
-
-    public var numberOfSections: Int {
+    internal var numberOfSections: Int {
         // if we haven't finished loading data, always return 0
         guard self.allSectionsFinishedLoading == true else {
             return 0
@@ -97,13 +91,12 @@ open class ReminderGedeg: NSObject {
         if reminderCount != ReminderSection.allCases.count {
             let error = NSError(numberOfSectionsMistmatch: nil)
             assertionFailure(String(describing: error))
-            BasicController.errorThrown?(error)
             log.error(error)
         }
         return reminderCount
     }
 
-    public func numberOfItems(inSection section: Int) -> Int {
+    internal func numberOfItems(inSection section: Int) -> Int {
         guard let section = ReminderSection(rawValue: section) else {
             let message = "Invalid Section Passed In"
             assertionFailure(message)
@@ -117,14 +110,13 @@ open class ReminderGedeg: NSObject {
         guard let count = self.reminders[section]?.count else {
             let error = NSError(dataForSectionWasNilInNumberOfItemsInSection: section)
             assertionFailure(String(describing: error))
-            BasicController.errorThrown?(error)
             log.error(error)
             return 0
         }
         return count
     }
 
-    public func reminder(at indexPath: IndexPath) -> ReminderWrapper? {
+    internal func reminder(at indexPath: IndexPath) -> ReminderWrapper? {
         guard let section = ReminderSection(rawValue: indexPath.section) else {
             let message = "Invalid Section Passed In"
             assertionFailure(message)
@@ -141,7 +133,6 @@ open class ReminderGedeg: NSObject {
         guard let data = reminders[section] else {
             let error = NSError(dataForSectionWasNilInReminderAtIndexPath: indexPath)
             assertionFailure(String(describing: error))
-            BasicController.errorThrown?(error)
             log.error(error)
             return nil
         }
@@ -154,7 +145,6 @@ open class ReminderGedeg: NSObject {
         guard data.count > row else {
             let error = NSError(outOfBoundsRowAtIndexPath: indexPath)
             assertionFailure(String(describing: error))
-            BasicController.errorThrown?(error)
             log.error(error)
             return nil
         }
@@ -162,7 +152,7 @@ open class ReminderGedeg: NSObject {
         return data[row]
     }
 
-    public func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath? {
+    internal func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath? {
         var indexPath: IndexPath?
         for (section, collection) in self.reminders {
             guard let row = collection.index(matching: "uuid = %@", identifier.reminderIdentifier) else { continue }
@@ -173,8 +163,13 @@ open class ReminderGedeg: NSObject {
 
     private var tokens: [ObservationToken] = []
 
-    deinit {
+    private func invalidate() {
         self.tokens.forEach({ $0.invalidate() })
+        self.tokens = []
+    }
+
+    deinit {
+        self.invalidate()
     }
 
     private class Batcher {
