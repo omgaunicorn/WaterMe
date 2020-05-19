@@ -23,7 +23,7 @@
 
 import CoreData
 
-public class CD_BasicController {
+public class CD_BasicController: BasicController {
 
     public class func new() -> Result<CD_BasicController, DatumError> {
         var result: Result<CD_BasicController, DatumError> = .failure(.loadError)

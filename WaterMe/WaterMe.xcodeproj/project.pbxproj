@@ -122,6 +122,8 @@
 		5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */; };
 		5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */; };
 		5089D125214F458200140F68 /* AppVersionCheckingAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5089D124214F458200140F68 /* AppVersionCheckingAlert.swift */; };
+		508B2EC924741F4800A497E4 /* WaterMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 508B2EC724741F4800A497E4 /* WaterMe.xcdatamodeld */; };
+		508B2ECB24741F6200A497E4 /* CD_BasicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508B2ECA24741F6100A497E4 /* CD_BasicController.swift */; };
 		508D1C262174151300C71BE9 /* ShortcutSuggester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508D1C252174151300C71BE9 /* ShortcutSuggester.swift */; };
 		508E61551F8ACC5E00B28DD8 /* ReminderMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 508E61541F8ACC5E00B28DD8 /* ReminderMain.storyboard */; };
 		508E61571F8AD57400B28DD8 /* ReminderCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508E61561F8AD57400B28DD8 /* ReminderCollectionViewController.swift */; };
@@ -516,6 +518,8 @@
 		5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCropperViewController.swift; sourceTree = "<group>"; };
 		5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPhotoAlertController.swift; sourceTree = "<group>"; };
 		5089D124214F458200140F68 /* AppVersionCheckingAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCheckingAlert.swift; sourceTree = "<group>"; };
+		508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.6.0.001.xcdatamodel; sourceTree = "<group>"; };
+		508B2ECA24741F6100A497E4 /* CD_BasicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_BasicController.swift; sourceTree = "<group>"; };
 		508D1C252174151300C71BE9 /* ShortcutSuggester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSuggester.swift; sourceTree = "<group>"; };
 		508E61541F8ACC5E00B28DD8 /* ReminderMain.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReminderMain.storyboard; sourceTree = "<group>"; };
 		508E61561F8AD57400B28DD8 /* ReminderCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCollectionViewController.swift; sourceTree = "<group>"; };
@@ -779,6 +783,7 @@
 				5034769924552EFE00C3DAD3 /* Errors */,
 				5034769524552EFE00C3DAD3 /* HelperClasses */,
 				4832F532246E7BDD001B77F6 /* ModelHelpers */,
+				508B2EBE24741F2A00A497E4 /* CoreDataModels */,
 				5034769E24552EFE00C3DAD3 /* RealmModels */,
 				5034764624552CFD00C3DAD3 /* Info.plist */,
 			);
@@ -852,6 +857,7 @@
 			children = (
 				5090FD832470E280003B03D1 /* BasicController.swift */,
 				503476A724552EFE00C3DAD3 /* ProController.swift */,
+				508B2ECA24741F6100A497E4 /* CD_BasicController.swift */,
 				503476A824552EFE00C3DAD3 /* RLM_BasicController.swift */,
 			);
 			path = Controllers;
@@ -982,6 +988,14 @@
 				5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */,
 			);
 			path = DragAndDrop;
+			sourceTree = "<group>";
+		};
+		508B2EBE24741F2A00A497E4 /* CoreDataModels */ = {
+			isa = PBXGroup;
+			children = (
+				508B2EC724741F4800A497E4 /* WaterMe.xcdatamodeld */,
+			);
+			path = CoreDataModels;
 			sourceTree = "<group>";
 		};
 		5096D1942154773D006E1019 /* StyleSheets */ = {
@@ -1713,6 +1727,7 @@
 				503476B224552EFE00C3DAD3 /* ModelCompleteError.swift in Sources */,
 				48B77EE024677FD600EF25D3 /* BasicWrappers.swift in Sources */,
 				5090739E247115E90041099E /* GroupedReminderCollection.swift in Sources */,
+				508B2ECB24741F6200A497E4 /* CD_BasicController.swift in Sources */,
 				503476BD24552EFE00C3DAD3 /* RLM_BasicController.swift in Sources */,
 				4832F531246E5CE6001B77F6 /* ReminderVesselWrapper.swift in Sources */,
 				503476B124552EFE00C3DAD3 /* RealmError.swift in Sources */,
@@ -1727,6 +1742,7 @@
 				503476B424552EFE00C3DAD3 /* NSErrors.swift in Sources */,
 				503476B524552EFE00C3DAD3 /* ReminderVessel.swift in Sources */,
 				503476BF24552EFE00C3DAD3 /* UIImage+WaterMe.swift in Sources */,
+				508B2EC924741F4800A497E4 /* WaterMe.xcdatamodeld in Sources */,
 				4832F534246E7BF8001B77F6 /* Reminder+Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2773,6 +2789,16 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
+		508B2EC724741F4800A497E4 /* WaterMe.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */,
+			);
+			currentVersion = 508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */;
+			path = WaterMe.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		50F388E11FF6DA490031ED45 /* WaterMeData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
