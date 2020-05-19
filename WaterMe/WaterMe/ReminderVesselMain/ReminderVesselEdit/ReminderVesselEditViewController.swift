@@ -46,7 +46,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             vc.vesselResult = .success(vessel)
         } else {
             Analytics.log(event: Analytics.CRUD_Op_RV.create)
-            vc.vesselResult = basicController?.newReminderVessel()
+            vc.vesselResult = basicController?.newReminderVessel(displayName: nil, icon: nil, reminders: nil)
         }
         vc.userActivity = NSUserActivity(kind: .editReminderVessel,
                                          delegate: vc.userActivityDelegate)

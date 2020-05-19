@@ -24,16 +24,16 @@
 import RealmSwift
 
 public struct ReminderWrapper: ModelCompleteCheckable {
-    internal var wrappedObject: __rlm_Reminder
-    internal init(_ wrappedObject: __rlm_Reminder) {
+    internal var wrappedObject: RLM_Reminder
+    internal init(_ wrappedObject: RLM_Reminder) {
         self.performed = .init(wrappedObject.performed)
         self.vessel = wrappedObject.vessel.map { .init($0) }
         self.wrappedObject = wrappedObject
     }
     
-    public static var minimumInterval: Int { __rlm_Reminder.minimumInterval }
-    public static var maximumInterval: Int { __rlm_Reminder.maximumInterval }
-    public static var defaultInterval: Int { __rlm_Reminder.defaultInterval }
+    public static var minimumInterval: Int { RLM_Reminder.minimumInterval }
+    public static var maximumInterval: Int { RLM_Reminder.maximumInterval }
+    public static var defaultInterval: Int { RLM_Reminder.defaultInterval }
     
     public var kind: ReminderKind { self.wrappedObject.kind }
     public var uuid: String { self.wrappedObject.uuid }
@@ -46,8 +46,8 @@ public struct ReminderWrapper: ModelCompleteCheckable {
 }
 
 public struct ReminderPerformCollection {
-    private var collection: List<ReminderPerform>
-    internal init(_ collection: List<ReminderPerform>) {
+    private var collection: List<RLM_ReminderPerform>
+    internal init(_ collection: List<RLM_ReminderPerform>) {
         self.collection = collection
     }
     
@@ -60,8 +60,8 @@ public struct ReminderPerformCollection {
 }
 
 public struct ReminderPerformWrapper {
-    internal var wrappedObject: ReminderPerform
-    internal init(_ wrappedObject: ReminderPerform) {
+    internal var wrappedObject: RLM_ReminderPerform
+    internal init(_ wrappedObject: RLM_ReminderPerform) {
         self.wrappedObject = wrappedObject
     }
     

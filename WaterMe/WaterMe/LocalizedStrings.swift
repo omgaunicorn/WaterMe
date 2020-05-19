@@ -425,15 +425,6 @@ extension CoreDataMigratorViewController {
     }
 }
 
-extension BasicController {
-    static let starterDBPlantName =
-        NSLocalizedString("Tap on Me",
-                          comment: "First Launch: When the user opens the app for the first time, there is one plant shown in the app. It is called something that will make the user tap on it.")
-    static let starterDBNote =
-        NSLocalizedString("Welcome to WaterMe! This is your first plant. Use the button below to edit this plant and make it your own. When you’re ready to add all your plants, tap the ‘Add Plant’ button at the top right of the screen.",
-                          comment: "First Launch: When the user opens the app for the first time, there is one plant shown in the app. When the user taps on the plant, this is the note shown that tells them how to use the app.")
-}
-
 extension PurchaseThanksViewController {
     enum LocalizedString {
         static let title =
