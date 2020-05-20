@@ -72,7 +72,7 @@ public protocol BasicController: class {
 
 public func NewBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
     do {
-        let bc = try CD_BasicController(kind: kind)
+        let bc = try RLM_BasicController(kind: kind)
         return .success(bc)
     } catch {
         return .failure(.createError)

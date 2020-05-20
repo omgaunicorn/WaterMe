@@ -238,7 +238,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     
     func startNotifications() {
         self.notificationToken =
-            self.vesselResult?.value?.datum_observe({ [weak self] in self?.vesselChanged($0) })
+            self.vesselResult?.value?.observe({ [weak self] in self?.vesselChanged($0) })
     }
     
     var notificationToken: ObservationToken?

@@ -144,7 +144,7 @@ internal class RLM_BasicController: BasicController {
         return self.realm.flatMap() { realm -> Result<ReminderVesselWrapper, DatumError> in
             guard let reminder = realm.object(ofType: RLM_ReminderVessel.self, forPrimaryKey: identifier.uuid)
             else { return .failure(.objectDeleted) }
-            return .success(.init(reminder))
+            return .success(RLM_ReminderVesselWrapper(reminder))
         }
     }
 
@@ -178,7 +178,7 @@ internal class RLM_BasicController: BasicController {
     }
     
     internal func newReminder(for vessel: ReminderVesselWrapper) -> Result<ReminderWrapper, DatumError> {
-        let vessel = vessel.wrappedObject
+        let vessel = (vessel as! RLM_ReminderVesselWrapper).wrappedObject
         return self.realm.flatMap() { realm in
             let reminder = RLM_Reminder()
             realm.beginWrite()
@@ -206,7 +206,7 @@ internal class RLM_BasicController: BasicController {
             }
             realm.beginWrite()
             realm.add(v)
-            return realm.waterMe_commitWrite().map({ .init(v) })
+            return realm.waterMe_commitWrite().map({ RLM_ReminderVesselWrapper(v) })
         }
     }
     
@@ -214,7 +214,7 @@ internal class RLM_BasicController: BasicController {
                        icon: ReminderVesselIcon? = nil,
                        in vessel: ReminderVesselWrapper) -> Result<Void, DatumError>
     {
-        let vessel = vessel.wrappedObject
+        let vessel = (vessel as! RLM_ReminderVesselWrapper).wrappedObject
         guard vessel.isInvalidated == false else { return .failure(.objectDeleted) }
         return self.realm.flatMap() { realm in
             realm.beginWrite()
@@ -296,7 +296,7 @@ internal class RLM_BasicController: BasicController {
     }
         
     internal func delete(vessel: ReminderVesselWrapper) -> Result<Void, DatumError> {
-        let vessel = vessel.wrappedObject
+        let vessel = (vessel as! RLM_ReminderVesselWrapper).wrappedObject
         let reminderValues = Array(vessel.reminders.map({ ReminderValue(reminder: $0) }))
         let vesselValue = ReminderVesselValue(reminderVessel: vessel)
         let result: Result<Void, DatumError> = self.realm.flatMap() { realm in

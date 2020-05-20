@@ -73,6 +73,9 @@ public struct ReminderVesselValue: Hashable {
     }
     
     public init?(reminderVessel: ReminderVesselWrapper?) {
-        self.init(reminderVessel: reminderVessel?.wrappedObject)
+        if let wrapper = reminderVessel as? RLM_ReminderVesselWrapper {
+            self.init(reminderVessel: wrapper.wrappedObject)
+        }
+        return nil
     }
 }

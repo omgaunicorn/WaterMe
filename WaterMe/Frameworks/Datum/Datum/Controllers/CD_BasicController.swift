@@ -64,7 +64,15 @@ internal class CD_BasicController: BasicController {
                            icon: ReminderVesselIcon?,
                            reminders: [ReminderWrapper]?) -> Result<ReminderVesselWrapper, DatumError>
     {
-        return .failure(.loadError)
+        let context = self.container.viewContext
+        let vessel = CD_ReminderVessel(context: context)
+        self.container.viewContext.insert(vessel)
+        do {
+            try context.save()
+            fatalError()
+        } catch {
+            return .failure(.writeError)
+        }
     }
 
     // MARK: Read

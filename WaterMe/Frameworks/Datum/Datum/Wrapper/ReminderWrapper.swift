@@ -27,7 +27,7 @@ public struct ReminderWrapper: ModelCompleteCheckable {
     internal var wrappedObject: RLM_Reminder
     internal init(_ wrappedObject: RLM_Reminder) {
         self.performed = .init(wrappedObject.performed)
-        self.vessel = wrappedObject.vessel.map { .init($0) }
+        self.vessel = wrappedObject.vessel.map { RLM_ReminderVesselWrapper($0) }
         self.wrappedObject = wrappedObject
     }
     

@@ -25,7 +25,7 @@ import RealmSwift
 
 public class ReminderVesselCollection {
     private let collection: AnyRealmCollection<RLM_ReminderVessel>
-    private let transform: (RLM_ReminderVessel) -> ReminderVesselWrapper = { .init($0) }
+    private let transform: (RLM_ReminderVessel) -> ReminderVesselWrapper = { RLM_ReminderVesselWrapper($0) }
     internal init(_ collection: AnyRealmCollection<RLM_ReminderVessel>) {
         self.collection = collection
     }
@@ -64,43 +64,3 @@ public enum ReminderVesselChange {
 }
 
 public typealias ReminderVesselCollectionChange = CollectionChange<ReminderVesselCollection, Int>
-
-public protocol ReminderVesselObservable {
-    func datum_observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken
-    func datum_observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken
-}
-
-extension ReminderVesselWrapper: ReminderVesselObservable {
-    public func datum_observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken {
-        return self.wrappedObject.observe { realmChange in
-            switch realmChange {
-            case .error(let error):
-                block(.error(error))
-            case .change(let properties):
-                let changedDisplayName = RLM_ReminderVessel.propertyChangesContainDisplayName(properties)
-                let changedIconEmoji = RLM_ReminderVessel.propertyChangesContainIconEmoji(properties)
-                let changedReminders = RLM_ReminderVessel.propertyChangesContainReminders(properties)
-                let changedPointlessBloop = RLM_ReminderVessel.propertyChangesContainPointlessBloop(properties)
-                block(.change(changedDisplayName: changedDisplayName,
-                              changedIconEmoji: changedIconEmoji,
-                              changedReminders: changedReminders,
-                              changedPointlessBloop: changedPointlessBloop))
-            case .deleted:
-                block(.deleted)
-            }
-        }
-    }
-    
-    public func datum_observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
-        return self.wrappedObject.reminders.observe { realmChange in
-            switch realmChange {
-            case .initial(let data):
-                block(.initial(data: .init(AnyRealmCollection(data))))
-            case .update(_, let deletions, let insertions, let modifications):
-                block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
-            case .error:
-                block(.error(error: .readError))
-            }
-        }
-    }
-}

@@ -54,7 +54,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         self.notificationToken?.invalidate()
         self.remindersData = nil
         self.tableView.reloadData()
-        self.notificationToken = self.delegate?.vesselResult?.value?.datum_observeReminders
+        self.notificationToken = self.delegate?.vesselResult?.value?.observeReminders
             { [weak self] in
                 self?.remindersChanged($0)
             }
@@ -64,7 +64,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         self.notificationToken?.invalidate()
         self.remindersData = nil
         self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
-        self.notificationToken = self.delegate?.vesselResult?.value?.datum_observeReminders
+        self.notificationToken = self.delegate?.vesselResult?.value?.observeReminders
             { [weak self] in
                 self?.remindersChanged($0)
             }
@@ -322,11 +322,11 @@ extension ReminderVesselEditTableViewController {
         var localizedTitle: String {
             switch self {
             case .photo:
-                return ReminderVesselWrapper.LocalizedString.photo
+                return LocalizedString.ReminderVessel.photo
             case .name:
-                return ReminderVesselWrapper.LocalizedString.name
+                return LocalizedString.ReminderVessel.name
             case .reminders:
-                return ReminderVesselWrapper.LocalizedString.reminders
+                return LocalizedString.ReminderVessel.reminders
             case .siriShortcuts:
                 return "Siri Shortcuts"
             }
