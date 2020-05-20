@@ -11,6 +11,8 @@
 		4832F531246E5CE6001B77F6 /* ReminderVesselWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */; };
 		4832F534246E7BF8001B77F6 /* Reminder+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F533246E7BF8001B77F6 /* Reminder+Helpers.swift */; };
 		4832F536246E7C05001B77F6 /* ReminderVessel+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F535246E7C05001B77F6 /* ReminderVessel+Helpers.swift */; };
+		48939E9324751D88007D73E1 /* RLM_GroupedReminderCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939E9224751D88007D73E1 /* RLM_GroupedReminderCollection.swift */; };
+		48939E9D24751DB0007D73E1 /* CD_GroupedReminderCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939E9C24751DB0007D73E1 /* CD_GroupedReminderCollection.swift */; };
 		48A7B0DC2467FCB100DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
 		48A7B0E32467FCB100DC0861 /* CalculateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7B0E22467FCB100DC0861 /* CalculateTests.swift */; };
 		48A7B0E52467FCB100DC0861 /* Calculate.h in Headers */ = {isa = PBXBuildFile; fileRef = 48A7B0D52467FCB100DC0861 /* Calculate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -29,8 +31,8 @@
 		48B77EE024677FD600EF25D3 /* BasicWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B77EDF24677FD600EF25D3 /* BasicWrappers.swift */; };
 		5002ADE523E6AC5F00CBC2B9 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5002ADE423E6AC5F00CBC2B9 /* NSObject+Runtime.m */; };
 		500679AF1F4BF3DB00F8100D /* ReminderMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */; };
-		500D24072474C1800070162E /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 500D24062474C1800070162E /* SwiftPackageProductDependency */; };
-		500D24092474C1800070162E /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 500D24082474C1800070162E /* SwiftPackageProductDependency */; };
+		500D24072474C1800070162E /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 500D24062474C1800070162E /* Realm */; };
+		500D24092474C1800070162E /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 500D24082474C1800070162E /* RealmSwift */; };
 		500D240A2474C18C0070162E /* CropViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 500D23FA2474C1560070162E /* CropViewController.framework */; };
 		500D240B2474C18C0070162E /* CropViewController.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 500D23FA2474C1560070162E /* CropViewController.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5010C22E213F779F00D1832C /* ReminderSummary.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5010C22D213F779F00D1832C /* ReminderSummary.storyboard */; };
@@ -82,11 +84,11 @@
 		503476EA24557A6200C3DAD3 /* SPMShim.h in Headers */ = {isa = PBXBuildFile; fileRef = 503476E824557A6200C3DAD3 /* SPMShim.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		503476ED24557A6200C3DAD3 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
 		503476EE24557A6200C3DAD3 /* SPMShim.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		503476F324557A6A00C3DAD3 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 503476F224557A6A00C3DAD3 /* SwiftPackageProductDependency */; };
-		503476F524557A6A00C3DAD3 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 503476F424557A6A00C3DAD3 /* SwiftPackageProductDependency */; };
+		503476F324557A6A00C3DAD3 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = 503476F224557A6A00C3DAD3 /* ObjcExceptionBridging */; };
+		503476F524557A6A00C3DAD3 /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 503476F424557A6A00C3DAD3 /* XCGLogger */; };
 		503476F624557A7800C3DAD3 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
 		503476FB24557A7D00C3DAD3 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
-		5034770224557CB200C3DAD3 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = 5034770124557CB200C3DAD3 /* SwiftPackageProductDependency */; };
+		5034770224557CB200C3DAD3 /* Cheers in Frameworks */ = {isa = PBXBuildFile; productRef = 5034770124557CB200C3DAD3 /* Cheers */; };
 		50380EB4245584F800271545 /* SimpleImageViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50380EB1245584ED00271545 /* SimpleImageViewer.framework */; };
 		50380EB5245584F800271545 /* SimpleImageViewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50380EB1245584ED00271545 /* SimpleImageViewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */; };
@@ -405,6 +407,8 @@
 		4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVesselWrapper.swift; sourceTree = "<group>"; };
 		4832F533246E7BF8001B77F6 /* Reminder+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+Helpers.swift"; sourceTree = "<group>"; };
 		4832F535246E7C05001B77F6 /* ReminderVessel+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderVessel+Helpers.swift"; sourceTree = "<group>"; };
+		48939E9224751D88007D73E1 /* RLM_GroupedReminderCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLM_GroupedReminderCollection.swift; sourceTree = "<group>"; };
+		48939E9C24751DB0007D73E1 /* CD_GroupedReminderCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_GroupedReminderCollection.swift; sourceTree = "<group>"; };
 		48A7B0D32467FCB100DC0861 /* Calculate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Calculate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48A7B0D52467FCB100DC0861 /* Calculate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Calculate.h; sourceTree = "<group>"; };
 		48A7B0D62467FCB100DC0861 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -617,8 +621,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				500D24092474C1800070162E /* BuildFile in Frameworks */,
-				500D24072474C1800070162E /* BuildFile in Frameworks */,
+				500D24092474C1800070162E /* RealmSwift in Frameworks */,
+				500D24072474C1800070162E /* Realm in Frameworks */,
 				503476FB24557A7D00C3DAD3 /* SPMShim.framework in Frameworks */,
 				48A7B1042467FE3800DC0861 /* Calculate.framework in Frameworks */,
 			);
@@ -653,8 +657,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				503476F324557A6A00C3DAD3 /* BuildFile in Frameworks */,
-				503476F524557A6A00C3DAD3 /* BuildFile in Frameworks */,
+				503476F324557A6A00C3DAD3 /* ObjcExceptionBridging in Frameworks */,
+				503476F524557A6A00C3DAD3 /* XCGLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,7 +667,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48A7B0E82467FCB100DC0861 /* Calculate.framework in Frameworks */,
-				5034770224557CB200C3DAD3 /* BuildFile in Frameworks */,
+				5034770224557CB200C3DAD3 /* Cheers in Frameworks */,
 				5034765824552CFD00C3DAD3 /* Datum.framework in Frameworks */,
 				503476ED24557A6200C3DAD3 /* SPMShim.framework in Frameworks */,
 				500D240A2474C18C0070162E /* CropViewController.framework in Frameworks */,
@@ -725,6 +729,8 @@
 				48B77EDB2466C8FD00EF25D3 /* ReminderCollection.swift */,
 				48B77EDD2466CAB700EF25D3 /* ReminderVesselCollection.swift */,
 				5090739D247115E90041099E /* GroupedReminderCollection.swift */,
+				48939E9C24751DB0007D73E1 /* CD_GroupedReminderCollection.swift */,
+				48939E9224751D88007D73E1 /* RLM_GroupedReminderCollection.swift */,
 				4832F52C246E2406001B77F6 /* ReminderWrapper.swift */,
 				4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */,
 			);
@@ -1281,8 +1287,8 @@
 			);
 			name = Datum;
 			packageProductDependencies = (
-				500D24062474C1800070162E /* SwiftPackageProductDependency */,
-				500D24082474C1800070162E /* SwiftPackageProductDependency */,
+				500D24062474C1800070162E /* Realm */,
+				500D24082474C1800070162E /* RealmSwift */,
 			);
 			productName = Datum;
 			productReference = 5034764324552CFD00C3DAD3 /* Datum.framework */;
@@ -1361,8 +1367,8 @@
 			);
 			name = SPMShim;
 			packageProductDependencies = (
-				503476F224557A6A00C3DAD3 /* SwiftPackageProductDependency */,
-				503476F424557A6A00C3DAD3 /* SwiftPackageProductDependency */,
+				503476F224557A6A00C3DAD3 /* ObjcExceptionBridging */,
+				503476F424557A6A00C3DAD3 /* XCGLogger */,
 			);
 			productName = SPMShim;
 			productReference = 503476E624557A6200C3DAD3 /* SPMShim.framework */;
@@ -1389,7 +1395,7 @@
 			);
 			name = WaterMe;
 			packageProductDependencies = (
-				5034770124557CB200C3DAD3 /* SwiftPackageProductDependency */,
+				5034770124557CB200C3DAD3 /* Cheers */,
 			);
 			productName = WaterMe;
 			productReference = 50BB0F501EBFCDE500850FF4 /* WaterMe.app */;
@@ -1491,9 +1497,9 @@
 			);
 			mainGroup = 50BB0F471EBFCDE500850FF4;
 			packageReferences = (
-				503476D02455792800C3DAD3 /* RemoteSwiftPackageReference */,
-				5034770024557CB200C3DAD3 /* RemoteSwiftPackageReference */,
-				500D24052474C1800070162E /* RemoteSwiftPackageReference */,
+				503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */,
+				5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */,
+				500D24052474C1800070162E /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 			);
 			productRefGroup = 50BB0F511EBFCDE500850FF4 /* Products */;
 			projectDirPath = "";
@@ -1723,6 +1729,7 @@
 				5090FD842470E280003B03D1 /* BasicController.swift in Sources */,
 				4832F52D246E2406001B77F6 /* ReminderWrapper.swift in Sources */,
 				503476AF24552EFE00C3DAD3 /* ItemAndSectionable.swift in Sources */,
+				48939E9324751D88007D73E1 /* RLM_GroupedReminderCollection.swift in Sources */,
 				503476B024552EFE00C3DAD3 /* ReminderGedeg.swift in Sources */,
 				503476B224552EFE00C3DAD3 /* ModelCompleteError.swift in Sources */,
 				48B77EE024677FD600EF25D3 /* BasicWrappers.swift in Sources */,
@@ -1730,6 +1737,7 @@
 				508B2ECB24741F6200A497E4 /* CD_BasicController.swift in Sources */,
 				503476BD24552EFE00C3DAD3 /* RLM_BasicController.swift in Sources */,
 				4832F531246E5CE6001B77F6 /* ReminderVesselWrapper.swift in Sources */,
+				48939E9D24751DB0007D73E1 /* CD_GroupedReminderCollection.swift in Sources */,
 				503476B124552EFE00C3DAD3 /* RealmError.swift in Sources */,
 				503476C024552EFE00C3DAD3 /* Realm+WaterMe.swift in Sources */,
 				48B77EDE2466CAB700EF25D3 /* ReminderVesselCollection.swift in Sources */,
@@ -2734,7 +2742,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		500D24052474C1800070162E /* RemoteSwiftPackageReference */ = {
+		500D24052474C1800070162E /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-cocoa.git";
 			requirement = {
@@ -2742,7 +2750,7 @@
 				minimumVersion = 4.4.1;
 			};
 		};
-		503476D02455792800C3DAD3 /* RemoteSwiftPackageReference */ = {
+		503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/DaveWoodCom/XCGLogger";
 			requirement = {
@@ -2750,7 +2758,7 @@
 				minimumVersion = 7.0.0;
 			};
 		};
-		5034770024557CB200C3DAD3 /* RemoteSwiftPackageReference */ = {
+		5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onmyway133/Cheers";
 			requirement = {
@@ -2761,29 +2769,29 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		500D24062474C1800070162E /* SwiftPackageProductDependency */ = {
+		500D24062474C1800070162E /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 500D24052474C1800070162E /* RemoteSwiftPackageReference */;
+			package = 500D24052474C1800070162E /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = Realm;
 		};
-		500D24082474C1800070162E /* SwiftPackageProductDependency */ = {
+		500D24082474C1800070162E /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 500D24052474C1800070162E /* RemoteSwiftPackageReference */;
+			package = 500D24052474C1800070162E /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
 		};
-		503476F224557A6A00C3DAD3 /* SwiftPackageProductDependency */ = {
+		503476F224557A6A00C3DAD3 /* ObjcExceptionBridging */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 503476D02455792800C3DAD3 /* RemoteSwiftPackageReference */;
+			package = 503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */;
 			productName = ObjcExceptionBridging;
 		};
-		503476F424557A6A00C3DAD3 /* SwiftPackageProductDependency */ = {
+		503476F424557A6A00C3DAD3 /* XCGLogger */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 503476D02455792800C3DAD3 /* RemoteSwiftPackageReference */;
+			package = 503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */;
 			productName = XCGLogger;
 		};
-		5034770124557CB200C3DAD3 /* SwiftPackageProductDependency */ = {
+		5034770124557CB200C3DAD3 /* Cheers */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 5034770024557CB200C3DAD3 /* RemoteSwiftPackageReference */;
+			package = 5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */;
 			productName = Cheers;
 		};
 /* End XCSwiftPackageProductDependency section */

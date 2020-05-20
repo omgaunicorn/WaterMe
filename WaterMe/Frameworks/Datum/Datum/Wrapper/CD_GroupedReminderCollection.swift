@@ -1,8 +1,8 @@
 //
-//  GroupedReminderCollection.swift
+//  CD_GroupedReminderCollection.swift
 //  Datum
 //
-//  Created by Jeffrey Bergier on 2020/05/17.
+//  Created by Jeffrey Bergier on 2020/05/20.
 //  Copyright © 2020 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
@@ -21,14 +21,23 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-public typealias GroupedReminderCollectionChange = CollectionChange<Void, IndexPath>
+internal class CD_GroupedReminderCollectionImp: GroupedReminderCollection {
 
-public protocol GroupedReminderCollection: ItemAndSectionable {
-    var changeObserver: ((GroupedReminderCollectionChange) -> Void)? { get set }
-    subscript(indexPath: IndexPath) -> ReminderWrapper? { get }
-    func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath?
+    var changeObserver: ((GroupedReminderCollectionChange) -> Void)?
 
-    // Inherited from ItemAndSectionable
-    // func numberOfItems(inSection: Int) -> Int
-    // var numberOfSections: Int { get }
+    var numberOfSections: Int {
+        return 0
+    }
+
+    subscript(indexPath: IndexPath) -> ReminderWrapper? {
+        return nil
+    }
+
+    func numberOfItems(inSection section: Int) -> Int {
+        return 0
+    }
+
+    internal func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath? {
+        return nil
+    }
 }

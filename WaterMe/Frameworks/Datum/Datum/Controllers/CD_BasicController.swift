@@ -22,34 +22,112 @@
 //
 
 import CoreData
+import UIKit
 
-public class CD_BasicController: BasicController {
+internal class CD_BasicController: BasicController {
 
-    public class func new() -> Result<CD_BasicController, DatumError> {
-        var result: Result<CD_BasicController, DatumError> = .failure(.loadError)
-        guard let url = Bundle(for: CD_BasicController.self).url(forResource: "WaterMe",
-                                                           withExtension: "momd"),
-              let mom = NSManagedObjectModel(contentsOf: url)
-        else { return result }
+    init(kind: ControllerKind) throws {
+        guard 
+            let url = Bundle(for: CD_BasicController.self).url(forResource: "WaterMe",
+                                                               withExtension: "momd"),
+            let mom = NSManagedObjectModel(contentsOf: url)
+        else { throw DatumError.createError }
         let container = NSPersistentContainer(name: "WaterMe", managedObjectModel: mom)
         let lock = DispatchSemaphore(value: 0)
-        container.loadPersistentStores() { _, error in
-            defer { lock.signal() }
-            guard error == nil else { return }
-            let bc = CD_BasicController(container: container)
-            result = .success(bc)
+        var error: Error?
+        container.loadPersistentStores() { _, _error in
+			error = _error
+            lock.signal()
         }
         lock.wait()
-        return result
-    }
-
-    private let container: NSPersistentContainer
-
-    private init(container: NSPersistentContainer) {
+		guard error == nil else { throw error! }
+        self.kind = .local
         self.container = container
     }
 
-    public func allVessels() -> Result<ReminderVesselQuery, DatumError> {
-        fatalError()
+    // MARK: Properties
+    
+    var remindersDeleted: (([ReminderValue]) -> Void)?
+    var reminderVesselsDeleted: (([ReminderVesselValue]) -> Void)?
+    var userDidPerformReminder: (() -> Void)?
+
+    let kind: ControllerKind
+    private let container: NSPersistentContainer
+
+    // MARK: Create
+    
+    func newReminder(for vessel: ReminderVesselWrapper) -> Result<ReminderWrapper, DatumError> {
+        return .failure(.loadError)
+    }
+    
+    func newReminderVessel(displayName: String?,
+                           icon: ReminderVesselIcon?,
+                           reminders: [ReminderWrapper]?) -> Result<ReminderVesselWrapper, DatumError>
+    {
+        return .failure(.loadError)
+    }
+
+    // MARK: Read
+    
+    func allVessels() -> Result<ReminderVesselQuery, DatumError> {
+        return .failure(.loadError)
+    }
+    
+    func allReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<ReminderQuery, DatumError> {
+        return .failure(.loadError)
+    }
+    
+    func groupedReminders() -> GroupedReminderCollection {
+        return CD_GroupedReminderCollectionImp()
+    }
+    
+    func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVesselWrapper, DatumError> {
+        return .failure(.loadError)
+    }
+    
+    func reminder(matching identifier: ReminderIdentifier) -> Result<ReminderWrapper, DatumError> {
+        return .failure(.loadError)
+    }
+
+    // MARK: Update
+    
+    func update(displayName: String?,
+                icon: ReminderVesselIcon?,
+                in vessel: ReminderVesselWrapper) -> Result<Void, DatumError>
+    {
+        return .failure(.loadError)
+    }
+    
+    func update(kind: ReminderKind?,
+                interval: Int?,
+                note: String?,
+                in reminder: ReminderWrapper) -> Result<Void, DatumError>
+    {
+        return .failure(.loadError)
+    }
+    
+    func appendNewPerformToReminders(with identifiers: [ReminderIdentifier]) -> Result<Void, DatumError> {
+        return .failure(.loadError)
+    }
+
+    // MARK: Delete
+    
+    func delete(vessel: ReminderVesselWrapper) -> Result<Void, DatumError> {
+        return .failure(.loadError)
+    }
+    
+    func delete(reminder: ReminderWrapper) -> Result<Void, DatumError> {
+        return .failure(.loadError)
+    }
+
+    // MARK: Random
+    
+    func coreDataMigration(vesselName: String?,
+                           vesselImage: UIImage?,
+                           vesselEmoji: String?,
+                           reminderInterval: NSNumber?,
+                           reminderLastPerformDate: Date?) -> Result<Void, DatumError>
+    {
+        return .failure(.loadError)
     }
 }
