@@ -25,7 +25,7 @@ import RealmSwift
 
 public class ReminderCollection {
     private let collection: AnyRealmCollection<RLM_Reminder>
-    private let transform: (RLM_Reminder) -> ReminderWrapper = { .init($0) }
+    private let transform: (RLM_Reminder) -> ReminderWrapper = { RLM_ReminderWrapper($0) }
     internal init(_ collection: AnyRealmCollection<RLM_Reminder>) {
         self.collection = collection
     }
@@ -71,22 +71,3 @@ public enum ReminderChange {
 }
 
 public typealias ReminderCollectionChange = CollectionChange<ReminderCollection, Int>
-
-public protocol ReminderObservable {
-    func datum_observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken
-}
-
-extension ReminderWrapper: ReminderObservable {
-    public func datum_observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken {
-        return self.wrappedObject.observe { realmChange in
-            switch realmChange {
-            case .error(let error):
-                block(.error(error))
-            case .change:
-                block(.change)
-            case .deleted:
-                block(.deleted)
-            }
-        }
-    }
-}

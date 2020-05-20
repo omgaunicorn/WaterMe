@@ -26,7 +26,7 @@ import RealmSwift
 @objc(Reminder)
 internal class RLM_Reminder: Object {
     @objc internal private(set) dynamic var uuid = UUID().uuidString
-    @objc internal dynamic var interval = RLM_Reminder.defaultInterval
+    @objc internal dynamic var interval = ReminderConstants.defaultInterval
     @objc internal dynamic var note: String?
     @objc internal dynamic var nextPerformDate: Date?
     @objc internal dynamic var kindString: String = RLM_Reminder.kCaseWaterValue

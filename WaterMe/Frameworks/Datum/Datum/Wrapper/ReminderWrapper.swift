@@ -23,47 +23,30 @@
 
 import RealmSwift
 
-public struct ReminderWrapper: ModelCompleteCheckable {
-    internal var wrappedObject: RLM_Reminder
-    internal init(_ wrappedObject: RLM_Reminder) {
-        self.performed = .init(wrappedObject.performed)
-        self.vessel = wrappedObject.vessel.map { RLM_ReminderVesselWrapper($0) }
-        self.wrappedObject = wrappedObject
-    }
-    
-    public static var minimumInterval: Int { RLM_Reminder.minimumInterval }
-    public static var maximumInterval: Int { RLM_Reminder.maximumInterval }
-    public static var defaultInterval: Int { RLM_Reminder.defaultInterval }
-    
-    public var kind: ReminderKind { self.wrappedObject.kind }
-    public var uuid: String { self.wrappedObject.uuid }
-    public var interval: Int { self.wrappedObject.interval }
-    public var note: String? { self.wrappedObject.note }
-    public var nextPerformDate: Date? { self.wrappedObject.nextPerformDate }
-    public var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
-    public let vessel: ReminderVesselWrapper?
-    public let performed: ReminderPerformCollection
+public enum ReminderConstants {
+    public static let minimumInterval: Int = 1
+    public static let maximumInterval: Int = 180
+    public static let defaultInterval: Int = 7
 }
 
-public struct ReminderPerformCollection {
-    private var collection: List<RLM_ReminderPerform>
-    internal init(_ collection: List<RLM_ReminderPerform>) {
-        self.collection = collection
-    }
-    
-    public var count: Int { self.collection.count }
-    public subscript(index: Int) -> ReminderPerformWrapper { .init(self.collection[index]) }
-    public var last: ReminderPerformWrapper? {
-        guard let last = self.collection.last else { return nil }
-        return .init(last)
-    }
+public protocol ReminderWrapper: ModelCompleteCheckable {
+    var kind: ReminderKind { get }
+    var uuid: String { get }
+    var interval: Int { get }
+    var note: String? { get }
+    var nextPerformDate: Date? { get }
+    var isModelComplete: ModelCompleteError? { get }
+    var vessel: ReminderVesselWrapper? { get }
+    var performed: ReminderPerformCollection { get }
+    func observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken
 }
 
-public struct ReminderPerformWrapper {
-    internal var wrappedObject: RLM_ReminderPerform
-    internal init(_ wrappedObject: RLM_ReminderPerform) {
-        self.wrappedObject = wrappedObject
-    }
-    
-    public var date: Date { self.wrappedObject.date }
+public protocol ReminderPerformCollection {
+    var count: Int { get }
+    subscript(index: Int) -> ReminderPerformWrapper { get }
+    var last: ReminderPerformWrapper? { get }
+}
+
+public protocol ReminderPerformWrapper {
+    var date: Date { get }
 }

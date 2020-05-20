@@ -23,11 +23,7 @@
 
 import Calculate
 
-extension RLM_Reminder {
-    internal static let minimumInterval: Int = 1
-    internal static let maximumInterval: Int = 180
-    internal static let defaultInterval: Int = 7
-    
+extension RLM_Reminder {    
     internal var vessel: RLM_ReminderVessel? { return self.vessels.first }
     internal var kind: ReminderKind {
         get { return self.kindValue }
@@ -134,18 +130,10 @@ public enum ReminderKind: Hashable {
 }
 
 public struct ReminderIdentifier: UUIDRepresentable, Hashable {
-    public var reminderIdentifier: String
-    // TODO: Maybe delete this init
-    internal init(reminder: RLM_Reminder) {
-        self.reminderIdentifier = reminder.uuid
-    }
-    public init(reminder: ReminderWrapper) {
-        self.reminderIdentifier = reminder.uuid
-    }
+    public var uuid: String
     public init(rawValue: String) {
-        self.reminderIdentifier = rawValue
+        self.uuid = rawValue
     }
-    public var uuid: String { return self.reminderIdentifier }
 }
 
 public enum ReminderSortOrder {

@@ -78,7 +78,7 @@ class ReminderSummaryViewController: StandardViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.notificationToken = self.reminderResult?.value?.datum_observe({ [weak self] in self?.reminderChanged($0) })
+        self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
         self.updateViewForPresentation()
         self.userActivityDelegate.currentReminderAndVessel = { [weak self] in
             // should be unowned because this object should not exist longer
@@ -136,7 +136,7 @@ class ReminderSummaryViewController: StandardViewController {
         switch change {
         case .change:
             guard let reminder = self.reminderResult.value else { fallthrough }
-            self.reminderID = ReminderIdentifier(reminder: reminder)
+            self.reminderID = ReminderIdentifier(rawValue: reminder.uuid)
             self.tableViewController.tableView.reloadData()
         case .deleted, .error:
             self.completion(.cancel, self.reminderID, self)

@@ -49,13 +49,16 @@ public struct ReminderValue: Hashable {
     public var nextPerformDate: Date?
     public var kind: ReminderKind
 
-    internal init(reminder: RLM_Reminder) {
-        self.uuid = ReminderIdentifier(reminder: reminder)
+    public init(reminder: ReminderWrapper) {
+        self.uuid = ReminderIdentifier(rawValue: reminder.uuid)
         self.nextPerformDate = reminder.nextPerformDate
         self.kind = reminder.kind
     }
-    public init(reminder: ReminderWrapper) {
-        self.init(reminder: reminder.wrappedObject)
+    
+    internal init(reminder: RLM_Reminder) {
+        self.uuid = ReminderIdentifier(rawValue: reminder.uuid)
+        self.nextPerformDate = reminder.nextPerformDate
+        self.kind = reminder.kind
     }
 }
 
@@ -64,18 +67,25 @@ public struct ReminderVesselValue: Hashable {
     public var uuid: ReminderVesselIdentifier
     public var name: String?
     public var imageData: Data?
-
-    internal init?(reminderVessel: RLM_ReminderVessel?) {
+    
+    public init?(reminderVessel: ReminderVesselWrapper?) {
         guard let reminderVessel = reminderVessel else { return nil }
-        self.uuid = ReminderVesselIdentifier(reminderVessel: reminderVessel)
+        self.uuid = ReminderVesselIdentifier(rawValue: reminderVessel.uuid)
+        self.name = reminderVessel.shortLabelSafeDisplayName
+        self.imageData = (reminderVessel as! HasIconImageData).iconImageData
+    }
+    
+    internal init(reminderVessel: RLM_ReminderVessel) {
+        self.uuid = ReminderVesselIdentifier(rawValue: reminderVessel.uuid)
         self.name = reminderVessel.shortLabelSafeDisplayName
         self.imageData = reminderVessel.iconImageData
     }
-    
-    public init?(reminderVessel: ReminderVesselWrapper?) {
-        if let wrapper = reminderVessel as? RLM_ReminderVesselWrapper {
-            self.init(reminderVessel: wrapper.wrappedObject)
-        }
-        return nil
-    }
+}
+
+internal protocol HasIconImageData {
+    var iconImageData: Data? { get }
+}
+
+extension RLM_ReminderVesselWrapper: HasIconImageData {
+    var iconImageData: Data? { self.wrappedObject.iconImageData }
 }

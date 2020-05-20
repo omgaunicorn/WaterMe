@@ -255,7 +255,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     }
     
     private func startNotifications() {
-      self.notificationToken = self.reminderResult?.value?.datum_observe({ [weak self] in self?.reminderChanged($0) })
+      self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
     }
     
     private var notificationToken: ObservationToken?

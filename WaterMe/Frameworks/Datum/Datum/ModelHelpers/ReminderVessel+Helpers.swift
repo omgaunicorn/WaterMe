@@ -102,9 +102,6 @@ extension RLM_ReminderVessel {
 
 public struct ReminderVesselIdentifier: UUIDRepresentable, Hashable {
     public private(set) var uuid: String
-    internal init(reminderVessel: RLM_ReminderVessel) {
-        self.uuid = reminderVessel.uuid
-    }
     public init(rawValue: String) {
         self.uuid = rawValue
     }

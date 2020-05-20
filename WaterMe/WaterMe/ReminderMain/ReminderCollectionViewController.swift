@@ -167,7 +167,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
             let reminder = self.reminders?[indexPath],
             let cell = collectionView.cellForItem(at: indexPath)
         else { return }
-        let identifier = ReminderIdentifier(reminder: reminder)
+        let identifier = ReminderIdentifier(rawValue: reminder.uuid)
         self.delegate?.userDidSelect(reminderID: identifier,
                                      from: cell,
                                      userActivityContinuation: nil,

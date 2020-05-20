@@ -150,15 +150,15 @@ internal class RLM_BasicController: BasicController {
 
     internal func reminder(matching identifier: ReminderIdentifier) -> Result<ReminderWrapper, DatumError> {
         return self.realm.flatMap() { realm -> Result<ReminderWrapper, DatumError> in
-            guard let reminder = realm.object(ofType: RLM_Reminder.self, forPrimaryKey: identifier.reminderIdentifier)
+            guard let reminder = realm.object(ofType: RLM_Reminder.self, forPrimaryKey: identifier.uuid)
             else { return .failure(.objectDeleted) }
-            return .success(.init(reminder))
+            return .success(RLM_ReminderWrapper(reminder))
         }
     }
 
     internal func reminders(matching identifiers: [ReminderIdentifier]) -> Result<[RLM_Reminder], DatumError> {
         return self.realm.map() { realm in
-            return identifiers.compactMap({ realm.object(ofType: RLM_Reminder.self, forPrimaryKey: $0.reminderIdentifier) })
+            return identifiers.compactMap({ realm.object(ofType: RLM_Reminder.self, forPrimaryKey: $0.uuid) })
         }
     }
 
@@ -184,7 +184,7 @@ internal class RLM_BasicController: BasicController {
             realm.beginWrite()
             realm.add(reminder)
             vessel.reminders.append(reminder)
-            return realm.waterMe_commitWrite().map({ .init(reminder) })
+            return realm.waterMe_commitWrite().map({ RLM_ReminderWrapper(reminder) })
         }
     }
     
@@ -198,7 +198,7 @@ internal class RLM_BasicController: BasicController {
                 v.icon = icon
             }
             if let reminders = reminders, reminders.isEmpty == false {
-                v.reminders.append(objectsIn: reminders.map({ $0.wrappedObject }))
+                v.reminders.append(objectsIn: reminders.map({ ($0 as! RLM_ReminderWrapper).wrappedObject }))
             } else {
                 // enforce at least one reminder rule
                 let reminder = RLM_Reminder()
@@ -246,7 +246,7 @@ internal class RLM_BasicController: BasicController {
                        note: String? = nil,
                        in reminder: ReminderWrapper) -> Result<Void, DatumError>
     {
-        let reminder = reminder.wrappedObject
+        let reminder = (reminder as! RLM_ReminderWrapper).wrappedObject
         guard reminder.isInvalidated == false else { return .failure(.objectDeleted) }
         return self.realm.flatMap() { realm in
             realm.beginWrite()
@@ -319,7 +319,7 @@ internal class RLM_BasicController: BasicController {
     }
         
     internal func delete(reminder: ReminderWrapper) -> Result<Void, DatumError> {
-        let reminder = reminder.wrappedObject
+        let reminder = (reminder as! RLM_ReminderWrapper).wrappedObject
         if let vessel = reminder.vessel, vessel.reminders.count <= 1 {
             return .failure(.unableToDeleteLastReminder) 
         }
