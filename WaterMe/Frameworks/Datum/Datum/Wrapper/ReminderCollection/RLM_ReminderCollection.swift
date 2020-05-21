@@ -25,18 +25,18 @@ import RealmSwift
 
 internal class RLM_ReminderCollection: ReminderCollection {
     private let collection: AnyRealmCollection<RLM_Reminder>
-    private let transform: (RLM_Reminder) -> ReminderWrapper = { RLM_ReminderWrapper($0) }
+    private let transform: (RLM_Reminder) -> Reminder = { RLM_ReminderWrapper($0) }
     internal init(_ collection: AnyRealmCollection<RLM_Reminder>) {
         self.collection = collection
     }
     
-    public var count: Int { self.collection.count }
-    public var isInvalidated: Bool { self.collection.isInvalidated }
-    public subscript(index: Int) -> ReminderWrapper { self.transform(self.collection[index]) }
-    public func compactMap<E>(_ transform: (ReminderWrapper) throws -> E?) rethrows -> [E] {
+    var count: Int { self.collection.count }
+    var isInvalidated: Bool { self.collection.isInvalidated }
+    subscript(index: Int) -> Reminder { self.transform(self.collection[index]) }
+    func compactMap<E>(_ transform: (Reminder) throws -> E?) rethrows -> [E] {
         return try self.collection.compactMap { try transform(self.transform($0)) }
     }
-    public func index(matching predicateFormat: String, _ args: Any...) -> Int? {
+    func index(matching predicateFormat: String, _ args: Any...) -> Int? {
         return self.collection.index(matching: predicateFormat, args)
     }
 }

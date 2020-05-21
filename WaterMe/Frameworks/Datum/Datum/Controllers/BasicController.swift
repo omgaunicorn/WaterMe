@@ -47,24 +47,24 @@ public protocol BasicController: class {
     var kind: ControllerKind { get }
 
     // MARK: Create
-    func newReminder(for vessel: ReminderVesselWrapper) -> Result<ReminderWrapper, DatumError>
-    func newReminderVessel(displayName: String?, icon: ReminderVesselIcon?, reminders: [ReminderWrapper]?) -> Result<ReminderVesselWrapper, DatumError>
+    func newReminder(for vessel: ReminderVessel) -> Result<Reminder, DatumError>
+    func newReminderVessel(displayName: String?, icon: ReminderVesselIcon?, reminders: [Reminder]?) -> Result<ReminderVessel, DatumError>
 
     // MARK: Read
     func allVessels() -> Result<ReminderVesselQuery, DatumError>
     func allReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<ReminderQuery, DatumError>
     func groupedReminders() -> GroupedReminderCollection
-    func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVesselWrapper, DatumError>
-    func reminder(matching identifier: ReminderIdentifier) -> Result<ReminderWrapper, DatumError>
+    func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVessel, DatumError>
+    func reminder(matching identifier: ReminderIdentifier) -> Result<Reminder, DatumError>
 
     // MARK: Update
-    func update(displayName: String?, icon: ReminderVesselIcon?, in vessel: ReminderVesselWrapper) -> Result<Void, DatumError>
-    func update(kind: ReminderKind?, interval: Int?, note: String?, in reminder: ReminderWrapper) -> Result<Void, DatumError>
+    func update(displayName: String?, icon: ReminderVesselIcon?, in vessel: ReminderVessel) -> Result<Void, DatumError>
+    func update(kind: ReminderKind?, interval: Int?, note: String?, in reminder: Reminder) -> Result<Void, DatumError>
     func appendNewPerformToReminders(with identifiers: [ReminderIdentifier]) -> Result<Void, DatumError>
 
     // MARK: Delete
-    func delete(vessel: ReminderVesselWrapper) -> Result<Void, DatumError>
-    func delete(reminder: ReminderWrapper) -> Result<Void, DatumError>
+    func delete(vessel: ReminderVessel) -> Result<Void, DatumError>
+    func delete(reminder: Reminder) -> Result<Void, DatumError>
 
     // MARK: Random
     func coreDataMigration(vesselName: String?, vesselImage: UIImage?, vesselEmoji: String?, reminderInterval: NSNumber?, reminderLastPerformDate: Date?) -> Result<Void, DatumError>

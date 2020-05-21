@@ -26,8 +26,8 @@ import RealmSwift
 public protocol ReminderCollection {
     var count: Int { get }
     var isInvalidated: Bool { get }
-    subscript(index: Int) -> ReminderWrapper { get }
-    func compactMap<E>(_ transform: (ReminderWrapper) throws -> E?) rethrows -> [E]
+    subscript(index: Int) -> Reminder { get }
+    func compactMap<E>(_ transform: (Reminder) throws -> E?) rethrows -> [E]
     func index(matching predicateFormat: String, _ args: Any...) -> Int?
 }
 

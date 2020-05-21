@@ -25,13 +25,13 @@ import RealmSwift
 
 internal class RLM_ReminderVesselCollection: ReminderVesselCollection {
     private let collection: AnyRealmCollection<RLM_ReminderVessel>
-    private let transform: (RLM_ReminderVessel) -> ReminderVesselWrapper = { RLM_ReminderVesselWrapper($0) }
+    private let transform: (RLM_ReminderVessel) -> ReminderVessel = { RLM_ReminderVesselWrapper($0) }
     internal init(_ collection: AnyRealmCollection<RLM_ReminderVessel>) {
         self.collection = collection
     }
     
     public var count: Int { self.collection.count }
-    public subscript(index: Int) -> ReminderVesselWrapper { self.transform(self.collection[index]) }
+    public subscript(index: Int) -> ReminderVessel { self.transform(self.collection[index]) }
 }
 
 internal class RLM_ReminderVesselQuery: ReminderVesselQuery {

@@ -23,7 +23,7 @@
 
 import RealmSwift
 
-internal struct RLM_ReminderVesselWrapper: ReminderVesselWrapper {
+internal struct RLM_ReminderVesselWrapper: ReminderVessel {
     internal let wrappedObject: RLM_ReminderVessel
     internal init(_ wrappedObject: RLM_ReminderVessel) {
         self.wrappedObject = wrappedObject
@@ -38,7 +38,7 @@ internal struct RLM_ReminderVesselWrapper: ReminderVesselWrapper {
 }
 
 extension RLM_ReminderVesselWrapper {
-    public func observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken {
+    func observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken {
         return self.wrappedObject.observe { realmChange in
             switch realmChange {
             case .error(let error):
@@ -58,7 +58,7 @@ extension RLM_ReminderVesselWrapper {
         }
     }
     
-    public func observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
+    func observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
         return self.wrappedObject.reminders.observe { realmChange in
             switch realmChange {
             case .initial(let data):

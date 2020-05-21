@@ -29,7 +29,7 @@ internal class CD_GroupedReminderCollectionImp: GroupedReminderCollection {
         return 0
     }
 
-    subscript(indexPath: IndexPath) -> ReminderWrapper? {
+    subscript(indexPath: IndexPath) -> Reminder? {
         return nil
     }
 

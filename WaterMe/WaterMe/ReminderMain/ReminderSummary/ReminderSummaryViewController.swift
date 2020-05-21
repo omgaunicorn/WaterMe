@@ -67,7 +67,7 @@ class ReminderSummaryViewController: StandardViewController {
     
     private(set) var isPresentedAsPopover = false
 
-    var reminderResult: Result<ReminderWrapper, DatumError>!
+    var reminderResult: Result<Reminder, DatumError>!
     private var completion: Completion!
     private var userActivityContinuation: NSUserActivityContinuedHandler?
     private var reminderID: ReminderIdentifier!

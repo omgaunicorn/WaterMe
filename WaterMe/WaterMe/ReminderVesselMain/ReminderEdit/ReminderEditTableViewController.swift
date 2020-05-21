@@ -25,7 +25,7 @@ import Datum
 import UIKit
 
 protocol ReminderEditTableViewControllerDelegate: class {
-    var reminderResult: Result<ReminderWrapper, DatumError>? { get }
+    var reminderResult: Result<Reminder, DatumError>? { get }
     func userChangedKind(to newKind: ReminderKind,
                          byUsingKeyboard usingKeyboard: Bool,
                          within: ReminderEditTableViewController)

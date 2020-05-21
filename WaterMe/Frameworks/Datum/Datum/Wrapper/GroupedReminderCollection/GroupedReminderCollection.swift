@@ -25,7 +25,7 @@ public typealias GroupedReminderCollectionChange = CollectionChange<Void, IndexP
 
 public protocol GroupedReminderCollection: ItemAndSectionable {
     var changeObserver: ((GroupedReminderCollectionChange) -> Void)? { get set }
-    subscript(indexPath: IndexPath) -> ReminderWrapper? { get }
+    subscript(indexPath: IndexPath) -> Reminder? { get }
     func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath?
 
     // Inherited from ItemAndSectionable

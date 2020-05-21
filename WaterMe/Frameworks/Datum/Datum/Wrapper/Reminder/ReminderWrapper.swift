@@ -29,14 +29,14 @@ public enum ReminderConstants {
     public static let defaultInterval: Int = 7
 }
 
-public protocol ReminderWrapper: ModelCompleteCheckable {
+public protocol Reminder: ModelCompleteCheckable {
     var kind: ReminderKind { get }
     var uuid: String { get }
     var interval: Int { get }
     var note: String? { get }
     var nextPerformDate: Date? { get }
     var isModelComplete: ModelCompleteError? { get }
-    var vessel: ReminderVesselWrapper? { get }
+    var vessel: ReminderVessel? { get }
     var performed: ReminderPerformCollection { get }
     func observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken
 }

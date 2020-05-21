@@ -25,7 +25,7 @@ import RealmSwift
 
 public protocol ReminderVesselCollection {
     var count: Int { get }
-    subscript(index: Int) -> ReminderVesselWrapper { get }
+    subscript(index: Int) -> ReminderVessel { get }
 }
 
 public protocol ReminderVesselQuery {

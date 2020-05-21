@@ -21,7 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-public protocol ReminderVesselWrapper: ModelCompleteCheckable {
+public protocol ReminderVessel: ModelCompleteCheckable {
     var uuid: String { get }
     var displayName: String? { get }
     var icon: ReminderVesselIcon? { get }

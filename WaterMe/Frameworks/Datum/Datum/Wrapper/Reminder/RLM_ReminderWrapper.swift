@@ -23,7 +23,7 @@
 
 import RealmSwift
 
-internal struct RLM_ReminderWrapper: ReminderWrapper {
+internal struct RLM_ReminderWrapper: Reminder {
     internal var wrappedObject: RLM_Reminder
     internal init(_ wrappedObject: RLM_Reminder) {
         self.performed = RLM_ReminderPerformCollection(wrappedObject.performed)
@@ -37,7 +37,7 @@ internal struct RLM_ReminderWrapper: ReminderWrapper {
     var note: String? { self.wrappedObject.note }
     var nextPerformDate: Date? { self.wrappedObject.nextPerformDate }
     var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
-    let vessel: ReminderVesselWrapper?
+    let vessel: ReminderVessel?
     let performed: ReminderPerformCollection
 }
 

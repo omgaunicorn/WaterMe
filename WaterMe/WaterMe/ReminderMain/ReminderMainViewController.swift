@@ -338,7 +338,7 @@ extension ReminderMainViewController: ReminderFinishDropTargetViewControllerDele
     }
 }
 
-extension ReminderWrapper {
+extension Reminder {
     var localizedAlertTitle: String {
         if let displayName = self.vessel?.shortLabelSafeDisplayName {
             let format = ReminderMainViewController.LocalizedString.reminderAlertTitle

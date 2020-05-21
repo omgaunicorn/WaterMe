@@ -56,13 +56,13 @@ internal class CD_BasicController: BasicController {
 
     // MARK: Create
     
-    func newReminder(for vessel: ReminderVesselWrapper) -> Result<ReminderWrapper, DatumError> {
+    func newReminder(for vessel: ReminderVessel) -> Result<Reminder, DatumError> {
         return .failure(.loadError)
     }
     
     func newReminderVessel(displayName: String?,
                            icon: ReminderVesselIcon?,
-                           reminders: [ReminderWrapper]?) -> Result<ReminderVesselWrapper, DatumError>
+                           reminders: [Reminder]?) -> Result<ReminderVessel, DatumError>
     {
         let context = self.container.viewContext
         let vessel = CD_ReminderVessel(context: context)
@@ -89,11 +89,11 @@ internal class CD_BasicController: BasicController {
         return CD_GroupedReminderCollectionImp()
     }
     
-    func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVesselWrapper, DatumError> {
+    func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVessel, DatumError> {
         return .failure(.loadError)
     }
     
-    func reminder(matching identifier: ReminderIdentifier) -> Result<ReminderWrapper, DatumError> {
+    func reminder(matching identifier: ReminderIdentifier) -> Result<Reminder, DatumError> {
         return .failure(.loadError)
     }
 
@@ -101,7 +101,7 @@ internal class CD_BasicController: BasicController {
     
     func update(displayName: String?,
                 icon: ReminderVesselIcon?,
-                in vessel: ReminderVesselWrapper) -> Result<Void, DatumError>
+                in vessel: ReminderVessel) -> Result<Void, DatumError>
     {
         return .failure(.loadError)
     }
@@ -109,7 +109,7 @@ internal class CD_BasicController: BasicController {
     func update(kind: ReminderKind?,
                 interval: Int?,
                 note: String?,
-                in reminder: ReminderWrapper) -> Result<Void, DatumError>
+                in reminder: Reminder) -> Result<Void, DatumError>
     {
         return .failure(.loadError)
     }
@@ -120,11 +120,11 @@ internal class CD_BasicController: BasicController {
 
     // MARK: Delete
     
-    func delete(vessel: ReminderVesselWrapper) -> Result<Void, DatumError> {
+    func delete(vessel: ReminderVessel) -> Result<Void, DatumError> {
         return .failure(.loadError)
     }
     
-    func delete(reminder: ReminderWrapper) -> Result<Void, DatumError> {
+    func delete(reminder: Reminder) -> Result<Void, DatumError> {
         return .failure(.loadError)
     }
 

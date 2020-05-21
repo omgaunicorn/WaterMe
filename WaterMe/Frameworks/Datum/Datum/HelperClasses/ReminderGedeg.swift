@@ -116,7 +116,7 @@ internal class ReminderGedeg: NSObject {
         return count
     }
 
-    internal func reminder(at indexPath: IndexPath) -> ReminderWrapper? {
+    internal func reminder(at indexPath: IndexPath) -> Reminder? {
         guard let section = ReminderSection(rawValue: indexPath.section) else {
             let message = "Invalid Section Passed In"
             assertionFailure(message)

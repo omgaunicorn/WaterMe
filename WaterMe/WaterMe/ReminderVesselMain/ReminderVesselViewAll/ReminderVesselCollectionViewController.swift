@@ -26,7 +26,7 @@ import UIKit
 
 class ReminderVesselCollectionViewController: StandardCollectionViewController, HasBasicController {
     
-    var vesselChosen: ((ReminderVesselWrapper) -> Void)?
+    var vesselChosen: ((ReminderVessel) -> Void)?
         
     var basicRC: BasicController? {
         didSet {

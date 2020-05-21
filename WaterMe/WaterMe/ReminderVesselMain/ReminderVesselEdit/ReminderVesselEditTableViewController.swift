@@ -25,18 +25,18 @@ import Datum
 import UIKit
 
 protocol ReminderVesselEditTableViewControllerDelegate: class {
-    var vesselResult: Result<ReminderVesselWrapper, DatumError>? { get }
+    var vesselResult: Result<ReminderVessel, DatumError>? { get }
     func userChangedName(to: String, controller: ReminderVesselEditTableViewController?)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?,
                               sender: PopoverSender)
-    func userChose(reminder: ReminderWrapper,
+    func userChose(reminder: Reminder,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
     func userChose(siriShortcut: ReminderVesselEditTableViewController.SiriShortcut,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
-    func userDeleted(reminder: ReminderWrapper,
+    func userDeleted(reminder: Reminder,
                      controller: ReminderVesselEditTableViewController?) -> Bool
 }
 

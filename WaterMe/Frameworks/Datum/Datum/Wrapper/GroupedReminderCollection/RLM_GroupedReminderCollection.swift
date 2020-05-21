@@ -44,7 +44,7 @@ internal class RLM_GroupedReminderCollectionImp: GroupedReminderCollection {
         return self.reminderGedeg?.numberOfSections ?? 0
     }
 
-    subscript(indexPath: IndexPath) -> ReminderWrapper? {
+    subscript(indexPath: IndexPath) -> Reminder? {
         return self.reminderGedeg?.reminder(at: indexPath)
     }
 
