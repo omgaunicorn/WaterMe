@@ -17,6 +17,10 @@
 		48939EA124752759007D73E1 /* CD_ReminderVesselWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EA024752759007D73E1 /* CD_ReminderVesselWrapper.swift */; };
 		48939EA3247527D0007D73E1 /* RLM_ReminderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EA2247527D0007D73E1 /* RLM_ReminderWrapper.swift */; };
 		48939EA5247527DA007D73E1 /* CD_ReminderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EA4247527DA007D73E1 /* CD_ReminderWrapper.swift */; };
+		48939EA7247607A6007D73E1 /* RLM_ReminderVesselCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EA6247607A6007D73E1 /* RLM_ReminderVesselCollection.swift */; };
+		48939EA9247607E3007D73E1 /* CD_ReminderVesselCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EA8247607E3007D73E1 /* CD_ReminderVesselCollection.swift */; };
+		48939EAB2476092C007D73E1 /* RLM_ReminderCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EAA2476092C007D73E1 /* RLM_ReminderCollection.swift */; };
+		48939EAD24760943007D73E1 /* CD_ReminderCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EAC24760943007D73E1 /* CD_ReminderCollection.swift */; };
 		48A7B0DC2467FCB100DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
 		48A7B0E32467FCB100DC0861 /* CalculateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7B0E22467FCB100DC0861 /* CalculateTests.swift */; };
 		48A7B0E52467FCB100DC0861 /* Calculate.h in Headers */ = {isa = PBXBuildFile; fileRef = 48A7B0D52467FCB100DC0861 /* Calculate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -417,6 +421,10 @@
 		48939EA024752759007D73E1 /* CD_ReminderVesselWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_ReminderVesselWrapper.swift; sourceTree = "<group>"; };
 		48939EA2247527D0007D73E1 /* RLM_ReminderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLM_ReminderWrapper.swift; sourceTree = "<group>"; };
 		48939EA4247527DA007D73E1 /* CD_ReminderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_ReminderWrapper.swift; sourceTree = "<group>"; };
+		48939EA6247607A6007D73E1 /* RLM_ReminderVesselCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLM_ReminderVesselCollection.swift; sourceTree = "<group>"; };
+		48939EA8247607E3007D73E1 /* CD_ReminderVesselCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_ReminderVesselCollection.swift; sourceTree = "<group>"; };
+		48939EAA2476092C007D73E1 /* RLM_ReminderCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLM_ReminderCollection.swift; sourceTree = "<group>"; };
+		48939EAC24760943007D73E1 /* CD_ReminderCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_ReminderCollection.swift; sourceTree = "<group>"; };
 		48A7B0D32467FCB100DC0861 /* Calculate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Calculate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48A7B0D52467FCB100DC0861 /* Calculate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Calculate.h; sourceTree = "<group>"; };
 		48A7B0D62467FCB100DC0861 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -735,7 +743,11 @@
 			children = (
 				48B77EDF24677FD600EF25D3 /* BasicWrappers.swift */,
 				48B77EDB2466C8FD00EF25D3 /* ReminderCollection.swift */,
+				48939EAC24760943007D73E1 /* CD_ReminderCollection.swift */,
+				48939EAA2476092C007D73E1 /* RLM_ReminderCollection.swift */,
 				48B77EDD2466CAB700EF25D3 /* ReminderVesselCollection.swift */,
+				48939EA8247607E3007D73E1 /* CD_ReminderVesselCollection.swift */,
+				48939EA6247607A6007D73E1 /* RLM_ReminderVesselCollection.swift */,
 				4832F52C246E2406001B77F6 /* ReminderWrapper.swift */,
 				48939EA4247527DA007D73E1 /* CD_ReminderWrapper.swift */,
 				48939EA2247527D0007D73E1 /* RLM_ReminderWrapper.swift */,
@@ -1740,6 +1752,7 @@
 			files = (
 				48939EA124752759007D73E1 /* CD_ReminderVesselWrapper.swift in Sources */,
 				5090FD842470E280003B03D1 /* BasicController.swift in Sources */,
+				48939EA9247607E3007D73E1 /* CD_ReminderVesselCollection.swift in Sources */,
 				48939E9F2475273B007D73E1 /* RLM_ReminderVesselWrapper.swift in Sources */,
 				4832F52D246E2406001B77F6 /* ReminderWrapper.swift in Sources */,
 				48939EA5247527DA007D73E1 /* CD_ReminderWrapper.swift in Sources */,
@@ -1758,15 +1771,18 @@
 				48B77EDE2466CAB700EF25D3 /* ReminderVesselCollection.swift in Sources */,
 				503476B624552EFE00C3DAD3 /* Reminder.swift in Sources */,
 				48B77EDC2466C8FD00EF25D3 /* ReminderCollection.swift in Sources */,
+				48939EAB2476092C007D73E1 /* RLM_ReminderCollection.swift in Sources */,
 				503476B924552EFE00C3DAD3 /* ReminderVesselIcon.swift in Sources */,
 				4832F536246E7C05001B77F6 /* ReminderVessel+Helpers.swift in Sources */,
 				503476B824552EFE00C3DAD3 /* ReminderAndVesselValue.swift in Sources */,
 				503476BC24552EFE00C3DAD3 /* ProController.swift in Sources */,
+				48939EAD24760943007D73E1 /* CD_ReminderCollection.swift in Sources */,
 				503476B424552EFE00C3DAD3 /* NSErrors.swift in Sources */,
 				503476B524552EFE00C3DAD3 /* ReminderVessel.swift in Sources */,
 				503476BF24552EFE00C3DAD3 /* UIImage+WaterMe.swift in Sources */,
 				508B2EC924741F4800A497E4 /* WaterMe.xcdatamodeld in Sources */,
 				48939EA3247527D0007D73E1 /* RLM_ReminderWrapper.swift in Sources */,
+				48939EA7247607A6007D73E1 /* RLM_ReminderVesselCollection.swift in Sources */,
 				4832F534246E7BF8001B77F6 /* Reminder+Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

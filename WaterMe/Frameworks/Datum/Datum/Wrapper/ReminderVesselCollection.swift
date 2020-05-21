@@ -23,38 +23,13 @@
 
 import RealmSwift
 
-public class ReminderVesselCollection {
-    private let collection: AnyRealmCollection<RLM_ReminderVessel>
-    private let transform: (RLM_ReminderVessel) -> ReminderVesselWrapper = { RLM_ReminderVesselWrapper($0) }
-    internal init(_ collection: AnyRealmCollection<RLM_ReminderVessel>) {
-        self.collection = collection
-    }
-    
-    public var count: Int { self.collection.count }
-    public subscript(index: Int) -> ReminderVesselWrapper { self.transform(self.collection[index]) }
+public protocol ReminderVesselCollection {
+    var count: Int { get }
+    subscript(index: Int) -> ReminderVesselWrapper { get }
 }
 
 public protocol ReminderVesselQuery {
     func observe(_: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken
-}
-
-internal class ReminderVesselQueryImp: ReminderVesselQuery {
-    private let collection: AnyRealmCollection<RLM_ReminderVessel>
-    init(_ collection: AnyRealmCollection<RLM_ReminderVessel>) {
-        self.collection = collection
-    }
-    func observe(_ block: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken {
-        return self.collection.observe { realmChange in
-            switch realmChange {
-            case .initial(let data):
-                block(.initial(data: .init(data)))
-            case .update(_, let deletions, let insertions, let modifications):
-                block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
-            case .error:
-                block(.error(error: .readError))
-            }
-        }
-    }
 }
 
 public enum ReminderVesselChange {

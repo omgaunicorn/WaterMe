@@ -62,7 +62,7 @@ extension RLM_ReminderVesselWrapper {
         return self.wrappedObject.reminders.observe { realmChange in
             switch realmChange {
             case .initial(let data):
-                block(.initial(data: .init(AnyRealmCollection(data))))
+                block(.initial(data: RLM_ReminderCollection(AnyRealmCollection(data))))
             case .update(_, let deletions, let insertions, let modifications):
                 block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
             case .error:

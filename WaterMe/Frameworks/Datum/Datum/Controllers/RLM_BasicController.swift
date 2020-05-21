@@ -80,7 +80,7 @@ internal class RLM_BasicController: BasicController {
         return self.realm.map() { realm in
             let kp = #keyPath(RLM_ReminderVessel.displayName)
             let collection = realm.objects(RLM_ReminderVessel.self).sorted(byKeyPath: kp)
-            return ReminderVesselQueryImp(AnyRealmCollection(collection))
+            return RLM_ReminderVesselQuery(AnyRealmCollection(collection))
         }
     }
 
@@ -88,7 +88,7 @@ internal class RLM_BasicController: BasicController {
                              ascending: Bool = true) -> Result<ReminderQuery, DatumError>
     {
         return self.realm.map {
-            ReminderQueryImp(
+            RLM_ReminderQuery(
                 AnyRealmCollection($0.objects(RLM_Reminder.self)
                     .sorted(byKeyPath: sorted.keyPath,
                             ascending: ascending)
@@ -126,10 +126,10 @@ internal class RLM_BasicController: BasicController {
                 )
                 let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [nilCheck, andPredicate])
                 let collection = realm.objects(RLM_Reminder.self).filter(orPredicate).sorted(byKeyPath: sorted.keyPath, ascending: ascending)
-                return ReminderQueryImp(AnyRealmCollection(collection))
+                return RLM_ReminderQuery(AnyRealmCollection(collection))
             } else {
                 let collection = realm.objects(RLM_Reminder.self).filter(andPredicate).sorted(byKeyPath: sorted.keyPath, ascending: ascending)
-                return ReminderQueryImp(AnyRealmCollection(collection))
+                return RLM_ReminderQuery(AnyRealmCollection(collection))
             }
         }
     }
