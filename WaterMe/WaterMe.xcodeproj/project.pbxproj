@@ -713,6 +713,56 @@
 			path = ModelHelpers;
 			sourceTree = "<group>";
 		};
+		48939EAE24760A6E007D73E1 /* ReminderCollection */ = {
+			isa = PBXGroup;
+			children = (
+				48B77EDB2466C8FD00EF25D3 /* ReminderCollection.swift */,
+				48939EAC24760943007D73E1 /* CD_ReminderCollection.swift */,
+				48939EAA2476092C007D73E1 /* RLM_ReminderCollection.swift */,
+			);
+			path = ReminderCollection;
+			sourceTree = "<group>";
+		};
+		48939EAF24760A80007D73E1 /* ReminderVesselCollection */ = {
+			isa = PBXGroup;
+			children = (
+				48B77EDD2466CAB700EF25D3 /* ReminderVesselCollection.swift */,
+				48939EA8247607E3007D73E1 /* CD_ReminderVesselCollection.swift */,
+				48939EA6247607A6007D73E1 /* RLM_ReminderVesselCollection.swift */,
+			);
+			path = ReminderVesselCollection;
+			sourceTree = "<group>";
+		};
+		48939EB024760A8D007D73E1 /* Reminder */ = {
+			isa = PBXGroup;
+			children = (
+				4832F52C246E2406001B77F6 /* ReminderWrapper.swift */,
+				48939EA4247527DA007D73E1 /* CD_ReminderWrapper.swift */,
+				48939EA2247527D0007D73E1 /* RLM_ReminderWrapper.swift */,
+			);
+			path = Reminder;
+			sourceTree = "<group>";
+		};
+		48939EB124760AA3007D73E1 /* ReminderVessel */ = {
+			isa = PBXGroup;
+			children = (
+				4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */,
+				48939EA024752759007D73E1 /* CD_ReminderVesselWrapper.swift */,
+				48939E9E2475273B007D73E1 /* RLM_ReminderVesselWrapper.swift */,
+			);
+			path = ReminderVessel;
+			sourceTree = "<group>";
+		};
+		48939EB224760ACD007D73E1 /* GroupedReminderCollection */ = {
+			isa = PBXGroup;
+			children = (
+				5090739D247115E90041099E /* GroupedReminderCollection.swift */,
+				48939E9C24751DB0007D73E1 /* CD_GroupedReminderCollection.swift */,
+				48939E9224751D88007D73E1 /* RLM_GroupedReminderCollection.swift */,
+			);
+			path = GroupedReminderCollection;
+			sourceTree = "<group>";
+		};
 		48A7B0D42467FCB100DC0861 /* Calculate */ = {
 			isa = PBXGroup;
 			children = (
@@ -742,21 +792,11 @@
 			isa = PBXGroup;
 			children = (
 				48B77EDF24677FD600EF25D3 /* BasicWrappers.swift */,
-				48B77EDB2466C8FD00EF25D3 /* ReminderCollection.swift */,
-				48939EAC24760943007D73E1 /* CD_ReminderCollection.swift */,
-				48939EAA2476092C007D73E1 /* RLM_ReminderCollection.swift */,
-				48B77EDD2466CAB700EF25D3 /* ReminderVesselCollection.swift */,
-				48939EA8247607E3007D73E1 /* CD_ReminderVesselCollection.swift */,
-				48939EA6247607A6007D73E1 /* RLM_ReminderVesselCollection.swift */,
-				4832F52C246E2406001B77F6 /* ReminderWrapper.swift */,
-				48939EA4247527DA007D73E1 /* CD_ReminderWrapper.swift */,
-				48939EA2247527D0007D73E1 /* RLM_ReminderWrapper.swift */,
-				4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */,
-				48939EA024752759007D73E1 /* CD_ReminderVesselWrapper.swift */,
-				48939E9E2475273B007D73E1 /* RLM_ReminderVesselWrapper.swift */,
-				5090739D247115E90041099E /* GroupedReminderCollection.swift */,
-				48939E9C24751DB0007D73E1 /* CD_GroupedReminderCollection.swift */,
-				48939E9224751D88007D73E1 /* RLM_GroupedReminderCollection.swift */,
+				48939EB024760A8D007D73E1 /* Reminder */,
+				48939EB124760AA3007D73E1 /* ReminderVessel */,
+				48939EAE24760A6E007D73E1 /* ReminderCollection */,
+				48939EAF24760A80007D73E1 /* ReminderVesselCollection */,
+				48939EB224760ACD007D73E1 /* GroupedReminderCollection */,
 			);
 			path = Wrapper;
 			sourceTree = "<group>";
