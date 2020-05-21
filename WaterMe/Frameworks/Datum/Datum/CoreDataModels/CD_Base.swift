@@ -35,4 +35,8 @@ internal class CD_Base: NSManagedObject {
         self.dateCreated = now
         self.dateModified = now
     }
+    
+    func datum_willSave() {
+        self.dateModified = Date()
+    }
 }

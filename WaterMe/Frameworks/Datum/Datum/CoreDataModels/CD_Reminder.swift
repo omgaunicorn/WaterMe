@@ -37,6 +37,11 @@ internal class CD_Reminder: CD_Base {
         self.kindString = ReminderKind.kCaseWaterValue
         self.interval = Int32(ReminderConstants.defaultInterval)
     }
+    
+    override func datum_willSave() {
+        super.datum_willSave()
+        // TODO: Add nextPerformDate update here
+    }
 }
 
 @objc(CD_ReminderPerform)
