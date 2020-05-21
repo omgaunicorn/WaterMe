@@ -23,19 +23,8 @@
 
 import UIKit
 
-public protocol HasBasicController {
-    var basicRC: BasicController? { get set }
-}
-
-extension HasBasicController {
-    public mutating func configure(with basicRC: BasicController?) {
-        guard let basicRC = basicRC else { return }
-        self.basicRC = basicRC
-    }
-}
-
-public enum ControllerKind {
-    case local, sync
+public func NewBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
+    return testing_NewCDBasicController(of: kind)
 }
 
 public protocol BasicController: class {
@@ -70,9 +59,33 @@ public protocol BasicController: class {
     func coreDataMigration(vesselName: String?, vesselImage: UIImage?, vesselEmoji: String?, reminderInterval: NSNumber?, reminderLastPerformDate: Date?) -> Result<Void, DatumError>
 }
 
-public func NewBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
+public protocol HasBasicController {
+    var basicRC: BasicController? { get set }
+}
+
+extension HasBasicController {
+    public mutating func configure(with basicRC: BasicController?) {
+        guard let basicRC = basicRC else { return }
+        self.basicRC = basicRC
+    }
+}
+
+public enum ControllerKind {
+    case local, sync
+}
+
+internal func testing_NewRLMBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
     do {
         let bc = try RLM_BasicController(kind: kind)
+        return .success(bc)
+    } catch {
+        return .failure(.createError)
+    }
+}
+
+internal func testing_NewCDBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
+    do {
+        let bc = try CD_BasicController(kind: kind)
         return .success(bc)
     } catch {
         return .failure(.createError)
