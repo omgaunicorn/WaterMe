@@ -29,7 +29,7 @@ internal class RLM_Reminder: Object {
     @objc internal dynamic var interval = ReminderConstants.defaultInterval
     @objc internal dynamic var note: String?
     @objc internal dynamic var nextPerformDate: Date?
-    @objc internal dynamic var kindString: String = RLM_Reminder.kCaseWaterValue
+    @objc internal dynamic var kindString: String = ReminderKind.kCaseWaterValue
     @objc internal dynamic var descriptionString: String?
     @objc internal dynamic var bloop = false
     internal let performed = List<RLM_ReminderPerform>()

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="2.6.0.001">
-    <entity name="CD_Base" representedClassName="CD_Base" isAbstract="YES" syncable="YES" codeGenerationType="class">
+    <entity name="CD_Base" representedClassName="CD_Base" isAbstract="YES" syncable="YES">
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateModified" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
-    <entity name="CD_Reminder" representedClassName="CD_Reminder" parentEntity="CD_Base" syncable="YES" codeGenerationType="class">
+    <entity name="CD_Reminder" representedClassName="CD_Reminder" parentEntity="CD_Base" syncable="YES">
         <attribute name="descriptionString" optional="YES" attributeType="String"/>
-        <attribute name="interval" optional="YES" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
+        <attribute name="interval" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="kindString" attributeType="String"/>
         <attribute name="nextPerformDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="note" optional="YES" attributeType="String"/>
         <relationship name="performed" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderPerform"/>
         <relationship name="vessel" maxCount="1" deletionRule="Nullify" destinationEntity="CD_ReminderVessel" inverseName="reminders" inverseEntity="CD_ReminderVessel"/>
     </entity>
-    <entity name="CD_ReminderPerform" representedClassName="CD_ReminderPerform" parentEntity="CD_Base" syncable="YES" codeGenerationType="class">
+    <entity name="CD_ReminderPerform" representedClassName="CD_ReminderPerform" parentEntity="CD_Base" syncable="YES">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
-    <entity name="CD_ReminderVessel" representedClassName="CD_ReminderVessel" parentEntity="CD_Base" syncable="YES" codeGenerationType="class">
+    <entity name="CD_ReminderVessel" representedClassName="CD_ReminderVessel" parentEntity="CD_Base" syncable="YES">
         <attribute name="displayName" optional="YES" attributeType="String"/>
         <attribute name="iconEmojiString" optional="YES" attributeType="String"/>
         <attribute name="iconImageData" optional="YES" attributeType="Binary"/>
@@ -24,9 +24,9 @@
         <relationship name="reminders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_Reminder" inverseName="vessel" inverseEntity="CD_Reminder"/>
     </entity>
     <elements>
-        <element name="CD_Reminder" positionX="-63" positionY="-18" width="128" height="28"/>
-        <element name="CD_ReminderVessel" positionX="-54" positionY="-9" width="128" height="28"/>
-        <element name="CD_ReminderPerform" positionX="-36" positionY="9" width="128" height="28"/>
-        <element name="CD_Base" positionX="-18" positionY="18" width="128" height="28"/>
+        <element name="CD_Base" positionX="-18" positionY="18" width="128" height="73"/>
+        <element name="CD_Reminder" positionX="-63" positionY="-18" width="128" height="148"/>
+        <element name="CD_ReminderPerform" positionX="-36" positionY="9" width="128" height="58"/>
+        <element name="CD_ReminderVessel" positionX="-54" positionY="-9" width="128" height="118"/>
     </elements>
 </model>

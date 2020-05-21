@@ -106,7 +106,3 @@ public struct ReminderVesselIdentifier: UUIDRepresentable, Hashable {
         self.uuid = rawValue
     }
 }
-
-public enum ReminderVesselKind: String {
-    case plant
-}

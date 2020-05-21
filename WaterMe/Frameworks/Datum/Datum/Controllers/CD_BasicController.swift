@@ -66,11 +66,12 @@ internal class CD_BasicController: BasicController {
     {
         let context = self.container.viewContext
         let vessel = CD_ReminderVessel(context: context)
+        self.updateDates(on: vessel)
         self.container.viewContext.insert(vessel)
         do {
             try context.save()
             fatalError()
-        } catch {
+        } catch(let error) {
             return .failure(.writeError)
         }
     }
@@ -137,5 +138,12 @@ internal class CD_BasicController: BasicController {
                            reminderLastPerformDate: Date?) -> Result<Void, DatumError>
     {
         return .failure(.loadError)
+    }
+    
+    // MARK: Private
+    
+    private func updateDates(on object: CD_Base) {
+        let now = Date()
+        object.dateModified = now
     }
 }
