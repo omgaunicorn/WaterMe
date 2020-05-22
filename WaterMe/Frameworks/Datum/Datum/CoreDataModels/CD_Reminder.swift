@@ -31,6 +31,8 @@ internal class CD_Reminder: CD_Base {
     @NSManaged var descriptionString: String?
     @NSManaged var nextPerformDate: Date?
     @NSManaged var note: String?
+    @NSManaged var performed: [CD_ReminderPerform]
+    @NSManaged weak var vessel: CD_ReminderVessel?
     
     override func awakeFromInsert() {
         super.awakeFromInsert()
@@ -40,11 +42,18 @@ internal class CD_Reminder: CD_Base {
     
     override func datum_willSave() {
         super.datum_willSave()
-        // TODO: Add nextPerformDate update here
+        if let lastPerformedDate = self.performed.last?.date {
+            let cal = Calendar.current
+            self.nextPerformDate = cal.dateByAddingNumberOfDays(Int(self.interval),
+                                                                to: lastPerformedDate)
+        } else {
+            self.nextPerformDate = nil
+        }
+        
     }
 }
 
 @objc(CD_ReminderPerform)
 internal class CD_ReminderPerform: CD_Base {
-    @NSManaged var nextPerformDate: Date
+    @NSManaged var date: Date
 }
