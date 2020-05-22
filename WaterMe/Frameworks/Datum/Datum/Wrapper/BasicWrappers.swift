@@ -34,3 +34,14 @@ public protocol ObservationToken {
 }
 
 extension NotificationToken: ObservationToken {}
+
+typealias Token = NotificationCenterTokenWrapper
+internal struct NotificationCenterTokenWrapper: ObservationToken {
+    static func wrap(_ block: () -> NSObjectProtocol) -> NotificationCenterTokenWrapper {
+        return .init(token: block())
+    }
+    var token: NSObjectProtocol
+    func invalidate() {
+        NotificationCenter.default.removeObserver(self.token)
+    }
+}

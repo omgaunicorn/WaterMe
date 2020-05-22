@@ -37,7 +37,31 @@ internal struct CD_ReminderVesselWrapper: ReminderVessel {
     public var shortLabelSafeDisplayName: String? { self.wrappedObject.shortLabelSafeDisplayName }
     
     func observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken {
-        fatalError()
+        Token.wrap { [weak wrappedObject] in
+            NotificationCenter.default.addObserver(forName: .NSManagedObjectContextDidSave,
+                                                   object: nil,
+                                                   queue: nil)
+            { [weak wrappedObject] notification in
+                guard let wrappedObject = wrappedObject else { return }
+                let queue = DispatchQueue.main
+                let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? NSSet
+                if updatedObjects?.contains(wrappedObject) == true {
+                    queue.async {
+                        // TODO: Maybe calculate the actual changes if needed
+                        block(.change(changedDisplayName: true,
+                                      changedIconEmoji: true,
+                                      changedReminders: true,
+                                      changedPointlessBloop: true))
+                    }
+                    return
+                }
+                let deletedObjects = notification.userInfo?[NSDeletedObjectsKey] as? NSSet
+                if deletedObjects?.contains(wrappedObject) == true {
+                    queue.async { block(.deleted) }
+                    return
+                }
+            }
+        }
     }
     
     func observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {

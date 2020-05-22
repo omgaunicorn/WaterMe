@@ -21,7 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Foundation
+import CoreData
 
 internal struct CD_ReminderWrapper: Reminder {
     internal var wrappedObject: CD_Reminder
@@ -39,11 +39,27 @@ internal struct CD_ReminderWrapper: Reminder {
     var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
     let vessel: ReminderVessel?
     let performed: ReminderPerformCollection
-}
 
-extension CD_ReminderWrapper {
-    internal func observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken {
-        fatalError()
+    func observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken {
+        Token.wrap { [weak wrappedObject] in
+            NotificationCenter.default.addObserver(forName: .NSManagedObjectContextDidSave,
+                                                   object: nil,
+                                                   queue: nil)
+            { [weak wrappedObject] notification in
+                guard let wrappedObject = wrappedObject else { return }
+                let queue = DispatchQueue.main
+                let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? NSSet
+                if updatedObjects?.contains(wrappedObject) == true {
+                    queue.async { block(.change) }
+                    return
+                }
+                let deletedObjects = notification.userInfo?[NSDeletedObjectsKey] as? NSSet
+                if deletedObjects?.contains(wrappedObject) == true {
+                    queue.async { block(.deleted) }
+                    return
+                }
+            }
+        }
     }
 }
 
