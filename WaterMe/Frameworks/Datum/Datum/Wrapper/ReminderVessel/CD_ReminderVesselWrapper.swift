@@ -22,3 +22,25 @@
 //
 
 import CoreData
+
+internal struct CD_ReminderVesselWrapper: ReminderVessel {
+    internal let wrappedObject: CD_ReminderVessel
+    internal init(_ wrappedObject: CD_ReminderVessel) {
+        self.wrappedObject = wrappedObject
+    }
+    
+    public var uuid: String { self.wrappedObject.objectID.uriRepresentation().absoluteString }
+    public var displayName: String? { self.wrappedObject.displayName }
+    public var icon: ReminderVesselIcon? { self.wrappedObject.icon }
+    public var kind: ReminderVesselKind { self.wrappedObject.kind }
+    public var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
+    public var shortLabelSafeDisplayName: String? { self.wrappedObject.shortLabelSafeDisplayName }
+    
+    func observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken {
+        fatalError()
+    }
+    
+    func observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
+        fatalError()
+    }
+}

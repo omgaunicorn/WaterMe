@@ -71,7 +71,7 @@ internal class CD_BasicController: BasicController {
         self.container.viewContext.insert(vessel)
         do {
             try context.save()
-            fatalError()
+            return .success(CD_ReminderVesselWrapper(vessel))
         } catch(let error) {
             return .failure(.writeError)
         }
