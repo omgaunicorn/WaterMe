@@ -68,6 +68,13 @@ internal class CD_BasicController: BasicController {
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let vessel = CD_ReminderVessel(context: context)
+        var reminders = reminders?.compactMap { ($0 as? CD_ReminderWrapper)?.wrappedObject } ?? []
+        if reminders.isEmpty {
+            let newReminder = CD_Reminder(context: context)
+            newReminder.vessel = vessel
+            context.insert(newReminder)
+            reminders.append(newReminder)
+        }
         self.container.viewContext.insert(vessel)
         do {
             try context.save()

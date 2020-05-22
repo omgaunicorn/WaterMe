@@ -23,6 +23,40 @@
 
 import Calculate
 
+// MARK: Core Data
+
+extension CD_Reminder {
+    internal var kind: ReminderKind {
+        get {
+            return .init(rawValue: (self.kindString, self.descriptionString))
+        }
+        set {
+            let raw = newValue.rawValue
+            self.kindString = raw.primary
+            raw.secondary.map { self.descriptionString = $0 }
+        }
+    }
+}
+
+extension CD_Reminder: ModelCompleteCheckable {
+    internal var isModelComplete: ModelCompleteError? {
+        switch self.kind {
+        case .fertilize, .water, .trim, .mist:
+            return nil
+        case .move(let description):
+            return description?.nonEmptyString == nil ?
+                ModelCompleteError(_actions: [.reminderMissingMoveLocation, .cancel, .saveAnyway])
+                : nil
+        case .other(let description):
+            return description?.nonEmptyString == nil ?
+                ModelCompleteError(_actions: [.reminderMissingOtherDescription, .cancel, .saveAnyway])
+                : nil
+        }
+    }
+}
+
+// MARK: Realm
+
 extension RLM_Reminder {    
     internal var vessel: RLM_ReminderVessel? { return self.vessels.first }
     internal var kind: ReminderKind {

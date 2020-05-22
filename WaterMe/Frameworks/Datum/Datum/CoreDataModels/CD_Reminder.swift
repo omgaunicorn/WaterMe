@@ -32,7 +32,7 @@ internal class CD_Reminder: CD_Base {
     @NSManaged var nextPerformDate: Date?
     @NSManaged var note: String?
     @NSManaged var performed: [CD_ReminderPerform]
-    @NSManaged weak var vessel: CD_ReminderVessel?
+    @NSManaged var vessel: CD_ReminderVessel!
     
     override func awakeFromInsert() {
         super.awakeFromInsert()
@@ -56,4 +56,5 @@ internal class CD_Reminder: CD_Base {
 @objc(CD_ReminderPerform)
 internal class CD_ReminderPerform: CD_Base {
     @NSManaged var date: Date
+    @NSManaged var reminder: CD_Reminder
 }

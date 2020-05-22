@@ -22,3 +22,50 @@
 //
 
 import Foundation
+
+internal struct CD_ReminderWrapper: Reminder {
+    internal var wrappedObject: CD_Reminder
+    internal init(_ wrappedObject: CD_Reminder) {
+        self.performed = CD_ReminderPerformCollection(wrappedObject)
+        self.vessel = CD_ReminderVesselWrapper(wrappedObject.vessel)
+        self.wrappedObject = wrappedObject
+    }
+    
+    var kind: ReminderKind { self.wrappedObject.kind }
+    var uuid: String { self.wrappedObject.objectID.uriRepresentation().absoluteString }
+    var interval: Int { Int(self.wrappedObject.interval) }
+    var note: String? { self.wrappedObject.note }
+    var nextPerformDate: Date? { self.wrappedObject.nextPerformDate }
+    var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
+    let vessel: ReminderVessel?
+    let performed: ReminderPerformCollection
+}
+
+extension CD_ReminderWrapper {
+    internal func observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken {
+        fatalError()
+    }
+}
+
+internal struct CD_ReminderPerformCollection: ReminderPerformCollection {
+    private weak var wrappedObject: CD_Reminder!
+    init(_ wrappedObject: CD_Reminder) {
+        self.wrappedObject = wrappedObject
+    }
+    
+    var count: Int { self.wrappedObject.performed.count }
+    subscript(index: Int) -> ReminderPerformWrapper { CD_ReminderPerformWrapper(self.wrappedObject.performed[index]) }
+    var last: ReminderPerformWrapper? {
+        guard let last = self.wrappedObject.performed.last else { return nil }
+        return CD_ReminderPerformWrapper(last)
+    }
+}
+
+internal struct CD_ReminderPerformWrapper: ReminderPerformWrapper {
+    internal var wrappedObject: CD_ReminderPerform
+    internal init(_ wrappedObject: CD_ReminderPerform) {
+        self.wrappedObject = wrappedObject
+    }
+    internal var date: Date { self.wrappedObject.date }
+}
+

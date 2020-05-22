@@ -30,6 +30,7 @@ internal class CD_ReminderVessel: CD_Base {
     @NSManaged var iconEmojiString: String?
     @NSManaged var iconImageData: Data?
     @NSManaged var kindString: String
+    @NSManaged var reminders: [CD_Reminder]
     
     override func awakeFromInsert() {
         super.awakeFromInsert()
