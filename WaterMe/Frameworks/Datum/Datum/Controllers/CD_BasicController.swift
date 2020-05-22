@@ -65,8 +65,8 @@ internal class CD_BasicController: BasicController {
                            reminders: [Reminder]?) -> Result<ReminderVessel, DatumError>
     {
         let context = self.container.viewContext
-        let token = self.willSaveToken(context)
-        defer { self.didSave(token: token) }
+        let token = context.datum_willSave()
+        defer { context.datum_didSave(token) }
         let vessel = CD_ReminderVessel(context: context)
         self.container.viewContext.insert(vessel)
         do {
@@ -140,22 +140,25 @@ internal class CD_BasicController: BasicController {
     {
         return .failure(.loadError)
     }
-    
-    // MARK: Private
-    
-    private func willSaveToken(_ ctx: NSManagedObjectContext) -> Any {
+}
+
+extension NSManagedObjectContext {
+    fileprivate func datum_willSave() -> Any {
         return NotificationCenter.default.addObserver(forName: .NSManagedObjectContextWillSave,
-                                                      object: ctx,
+                                                      object: self,
                                                       queue: nil)
         { notification in
-            guard let context = notification.object as? NSManagedObjectContext else { return }
+            guard let context = notification.object as? NSManagedObjectContext else {
+                assertionFailure("Core Data Dates Not Updated")
+                return
+            }
             context.insertedObjects
                 .union(context.updatedObjects)
                 .forEach { ($0 as? CD_Base)?.datum_willSave() }
         }
     }
     
-    private func didSave(token: Any) {
+    fileprivate func datum_didSave(_ token: Any) {
         NotificationCenter.default.removeObserver(token)
     }
 }
