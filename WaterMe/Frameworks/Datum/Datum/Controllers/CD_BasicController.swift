@@ -66,7 +66,7 @@ internal class CD_BasicController: BasicController {
         mutable.add(reminder)
         do {
             try context.save()
-            let wrapper = CD_ReminderWrapper(reminder, context: { [unowned container] in container.viewContext })
+            let wrapper = CD_ReminderWrapper(reminder, context: { self.container.viewContext })
             return .success(wrapper)
         } catch {
             return .failure(.writeError)
@@ -91,7 +91,7 @@ internal class CD_BasicController: BasicController {
         context.insert(vessel)
         do {
             try context.save()
-            let wrapper = CD_ReminderVesselWrapper(vessel, context: { [unowned container] in container.viewContext })
+            let wrapper = CD_ReminderVesselWrapper(vessel, context: { self.container.viewContext })
             return .success(wrapper)
         } catch {
             return .failure(.writeError)
@@ -108,24 +108,44 @@ internal class CD_BasicController: BasicController {
                                              managedObjectContext: context,
                                              sectionNameKeyPath: nil,
                                              cacheName: nil)
-        let query = CD_ReminderVesselQuery(frc, context: { [unowned container] in container.viewContext })
+        let query = CD_ReminderVesselQuery(frc, context: { self.container.viewContext })
         return .success(query)
     }
     
     func allReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<ReminderQuery, DatumError> {
-        return .failure(.loadError)
+        let context = self.container.viewContext
+        let fr = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
+        fr.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_Reminder.nextPerformDate), ascending: true)]
+        let frc = NSFetchedResultsController(fetchRequest: fr,
+                                             managedObjectContext: context,
+                                             sectionNameKeyPath: nil,
+                                             cacheName: nil)
+        let query = CD_ReminderQuery(frc, context: { self.container.viewContext })
+        return .success(query)
     }
     
     func groupedReminders() -> GroupedReminderCollection {
         return CD_GroupedReminderCollectionImp()
     }
     
-    func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVessel, DatumError> {
-        return .failure(.loadError)
+    func reminderVessel(matching _id: ReminderVesselIdentifier) -> Result<ReminderVessel, DatumError> {
+        let coordinator = self.container.persistentStoreCoordinator
+        let context = self.container.viewContext
+        guard
+            let id = coordinator.managedObjectID(forURIRepresentation: URL(string: _id.uuid)!),
+            let reminderVessel = context.object(with: id) as? CD_ReminderVessel
+        else { return .failure(.objectDeleted) }
+        return .success(CD_ReminderVesselWrapper(reminderVessel, context: { self.container.viewContext }))
     }
     
-    func reminder(matching identifier: ReminderIdentifier) -> Result<Reminder, DatumError> {
-        return .failure(.loadError)
+    func reminder(matching _id: ReminderIdentifier) -> Result<Reminder, DatumError> {
+        let coordinator = self.container.persistentStoreCoordinator
+        let context = self.container.viewContext
+        guard
+            let id = coordinator.managedObjectID(forURIRepresentation: URL(string: _id.uuid)!),
+            let reminder = context.object(with: id) as? CD_Reminder
+        else { return .failure(.objectDeleted) }
+        return .success(CD_ReminderWrapper(reminder, context: { self.container.viewContext }))
     }
 
     // MARK: Update
@@ -157,7 +177,25 @@ internal class CD_BasicController: BasicController {
                 note: String?,
                 in reminder: Reminder) -> Result<Void, DatumError>
     {
-        return .failure(.loadError)
+        let context = self.container.viewContext
+        let token = context.datum_willSave()
+        defer { context.datum_didSave(token) }
+        let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
+        if let kind = kind {
+            reminder.kind = kind
+        }
+        if let interval = interval {
+            reminder.interval = Int32(interval)
+        }
+        if let note = note {
+            reminder.note = note
+        }
+        do {
+            try context.save()
+            return .success(())
+        } catch {
+            return .failure(.writeError)
+        }
     }
     
     func appendNewPerformToReminders(with _ids: [ReminderIdentifier]) -> Result<Void, DatumError> {
