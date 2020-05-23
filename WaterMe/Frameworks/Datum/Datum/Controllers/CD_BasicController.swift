@@ -124,7 +124,22 @@ internal class CD_BasicController: BasicController {
                 icon: ReminderVesselIcon?,
                 in vessel: ReminderVessel) -> Result<Void, DatumError>
     {
-        return .failure(.loadError)
+        let context = self.container.viewContext
+        let token = context.datum_willSave()
+        defer { context.datum_didSave(token) }
+        let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
+        if let displayName = displayName {
+            vessel.displayName = displayName
+        }
+        if let icon = icon {
+            vessel.icon = icon
+        }
+        do {
+            try context.save()
+            return .success(())
+        } catch {
+            return .failure(.writeError)
+        }
     }
     
     func update(kind: ReminderKind?,
@@ -142,7 +157,15 @@ internal class CD_BasicController: BasicController {
     // MARK: Delete
     
     func delete(vessel: ReminderVessel) -> Result<Void, DatumError> {
-        return .failure(.loadError)
+        let context = self.container.viewContext
+        let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
+        context.delete(vessel)
+        do {
+            try context.save()
+            return .success(())
+        } catch {
+            return .failure(.writeError)
+        }
     }
     
     func delete(reminder: Reminder) -> Result<Void, DatumError> {
