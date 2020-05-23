@@ -22,3 +22,44 @@
 //
 
 import CoreData
+
+internal class CD_ReminderVesselCollection: ReminderVesselCollection {
+    private let controller: CD_ReminderVesselQuery.Controller
+    init(_ controller: CD_ReminderVesselQuery.Controller) {
+        self.controller = controller
+    }
+    var count: Int { self.controller.fetchedObjects?.count ?? 0 }
+    subscript(index: Int) -> ReminderVessel {
+        return CD_ReminderVesselWrapper(self.controller.object(at: IndexPath(row: index, section: 0)))
+    }
+}
+
+internal class CD_ReminderVesselQuery: NSObject, ReminderVesselQuery {
+    typealias Controller = NSFetchedResultsController<CD_ReminderVessel>
+    private var controller: Controller!
+    init(_ controller: Controller) {
+        self.controller = controller
+        super.init()
+        self.controller.delegate = self
+    }
+    func observe(_ block: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken {
+        DispatchQueue.main.async {
+            do {
+                try self.controller.performFetch()
+                block(.initial(data: CD_ReminderVesselCollection(self.controller)))
+            } catch {
+                block(.error(error: .readError))
+            }
+        }
+        return self
+    }
+}
+
+extension CD_ReminderVesselQuery: NSFetchedResultsControllerDelegate { }
+
+extension CD_ReminderVesselQuery: ObservationToken {
+    func invalidate() {
+        self.controller.delegate = nil
+        self.controller = nil
+    }
+}

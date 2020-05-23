@@ -22,3 +22,53 @@
 //
 
 import CoreData
+
+internal class CD_ReminderCollection: ReminderCollection {
+    private let controller: CD_ReminderQuery.Controller
+    private let transform: (CD_Reminder) -> Reminder = { CD_ReminderWrapper($0) }
+    init(_ controller: CD_ReminderQuery.Controller) {
+        self.controller = controller
+    }
+    var count: Int { self.controller.fetchedObjects?.count ?? 0 }
+    subscript(index: Int) -> Reminder {
+        return self.transform(self.controller.object(at: IndexPath(row: index, section: 0)))
+    }
+    var isInvalidated: Bool { false }
+    func compactMap<E>(_ transform: (Reminder) throws -> E?) rethrows -> [E] {
+        return try self.controller.fetchedObjects?.compactMap { try transform(self.transform($0)) } ?? []
+    }
+    func index(matching predicateFormat: String, _ args: Any...) -> Int? {
+        // TODO: Fix this
+        return nil
+    }
+}
+
+internal class CD_ReminderQuery: NSObject, ReminderQuery {
+    typealias Controller = NSFetchedResultsController<CD_Reminder>
+    private var controller: Controller!
+    init(_ controller: Controller) {
+        self.controller = controller
+        super.init()
+        self.controller.delegate = self
+    }
+    func observe(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
+        DispatchQueue.main.async {
+            do {
+                try self.controller.performFetch()
+                block(.initial(data: CD_ReminderCollection(self.controller)))
+            } catch {
+                block(.error(error: .readError))
+            }
+        }
+        return self
+    }
+}
+
+extension CD_ReminderQuery: NSFetchedResultsControllerDelegate { }
+
+extension CD_ReminderQuery: ObservationToken {
+    func invalidate() {
+        self.controller.delegate = nil
+        self.controller = nil
+    }
+}
