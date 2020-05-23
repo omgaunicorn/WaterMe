@@ -160,8 +160,29 @@ internal class CD_BasicController: BasicController {
         return .failure(.loadError)
     }
     
-    func appendNewPerformToReminders(with identifiers: [ReminderIdentifier]) -> Result<Void, DatumError> {
-        return .failure(.loadError)
+    func appendNewPerformToReminders(with _ids: [ReminderIdentifier]) -> Result<Void, DatumError> {
+        let coordinator = self.container.persistentStoreCoordinator
+        let ids = _ids.compactMap { coordinator.managedObjectID(forURIRepresentation: URL(string: $0.uuid)!) }
+        assert(ids.count == _ids.count, "We lost an object")
+        let context = self.container.viewContext
+        let token = context.datum_willSave()
+        defer { context.datum_didSave(token) }
+        let reminders = ids.compactMap { context.object(with: $0) as? CD_Reminder }
+        assert(reminders.count == _ids.count, "We lost an object")
+        reminders.forEach { reminder in
+            let perform = CD_ReminderPerform(context: context)
+            context.insert(perform)
+            perform.reminder = reminder
+            let mutable = reminder.mutableSetValue(forKey: #keyPath(CD_Reminder.performed))
+            mutable.add(perform)
+            reminder.updateDates(basedOnAppendedPerformDate: perform.date)
+        }
+        do {
+            try context.save()
+            return .success(())
+        } catch {
+            return .failure(.writeError)
+        }
     }
 
     // MARK: Delete

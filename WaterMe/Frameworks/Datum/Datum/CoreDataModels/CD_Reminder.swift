@@ -41,16 +41,11 @@ internal class CD_Reminder: CD_Base {
         self.interval = Int32(ReminderConstants.defaultInterval)
     }
     
-    override func datum_willSave() {
-        super.datum_willSave()
-//        if let lastPerformedDate = self.performed.last?.date {
-//            let cal = Calendar.current
-//            self.nextPerformDate = cal.dateByAddingNumberOfDays(Int(self.interval),
-//                                                                to: lastPerformedDate)
-//        } else {
-//            self.nextPerformDate = nil
-//        }
-        
+    internal func updateDates(basedOnAppendedPerformDate newDate: Date) {
+        self.lastPerformedDate = newDate
+        let cal = Calendar.current
+        self.nextPerformDate = cal.dateByAddingNumberOfDays(Int(self.interval),
+                                                            to: newDate)
     }
 }
 
