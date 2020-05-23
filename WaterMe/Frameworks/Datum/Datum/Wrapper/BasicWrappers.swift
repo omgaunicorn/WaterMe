@@ -39,6 +39,12 @@ public protocol ObservationToken: class {
 extension NotificationToken: ObservationToken {}
 extension NSKeyValueObservation: ObservationToken {}
 
+extension Array where Element == ObservationToken {
+    public func invalidateTokens() {
+        self.forEach { $0.invalidate() }
+    }
+}
+
 internal enum Token {
     static func wrap(_ block: () -> NSObjectProtocol) -> NCTokenWrapper {
         return .init(tokens: [block()])

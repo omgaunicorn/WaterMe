@@ -68,6 +68,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
 
     var basicRC: BasicController?
     private(set) var reminderResult: Result<Reminder, DatumError>?
+    private(set) var reminderPerform: ReminderPerformCollection?
     private var completionHandler: CompletionHandler?
     private var userActivityCompletion: NSUserActivityContinuedHandler?
     //swiftlint:disable:next weak_delegate
@@ -95,6 +96,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         self.userActivityCompletion?([self])
         self.userActivityCompletion = nil
         if case .failure(let error) = self.reminderResult! {
+            self.stopNotifications()
             self.reminderResult = nil
             UIAlertController.presentAlertVC(for: error, over: self) { _ in
                 self.completionHandler?(self)
@@ -111,13 +113,29 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             log.error(error)
             fallthrough
         case .deleted:
+            self.stopNotifications()
             self.reminderResult = nil
-            self.notificationToken?.invalidate()
-            self.notificationToken = nil
             self.completionHandler?(self)
         }
         // dirty the user activity because the item changed
         self.userDirtiedUserActivity()
+    }
+    
+    private func reminderPerformsChanged(_ change: ReminderPerformCollectionChange) {
+        switch change {
+        case .initial(let data):
+            self.reminderPerform = data
+            self.tableViewController?.tableView.reloadData()
+        case .update:
+            // TODO: Fix this to just reload section
+            self.tableViewController?.tableView.reloadData()
+        case .error(let error):
+            self.stopNotifications()
+            self.reminderResult = nil
+            UIAlertController.presentAlertVC(for: error, over: self) { _ in
+                self.completionHandler?(self)
+            }
+        }
     }
     
     private func update(kind: ReminderKind? = nil,
@@ -136,7 +154,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         // if this came from the keyboard stop notifications
         // so the keyboard doesn't get dismissed because of tableview reloads
         if fromKeyboard == true {
-          self.notificationToken?.invalidate()
+            self.stopNotifications()
         }
         // after we exit this scope, we need to turn notifications back on
         // again, only if the from keyboard variable is true
@@ -258,13 +276,20 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     }
     
     private func startNotifications() {
-      self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
+        let token1 = self.reminderResult?.value?.observe { [weak self] in self?.reminderChanged($0) }
+        let token2 = self.reminderResult?.value?.observePerforms { [weak self] in self?.reminderPerformsChanged($0) }
+        self.tokens = [token1, token2].compactMap { $0 }
     }
     
-    private var notificationToken: ObservationToken?
+    private func stopNotifications() {
+        self.tokens.invalidateTokens()
+        self.tokens = []
+    }
+    
+    private var tokens: [ObservationToken] = []
     
     deinit {
-      self.notificationToken?.invalidate()
+        self.stopNotifications()
     }
 }
 
