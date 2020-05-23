@@ -34,8 +34,17 @@ public protocol ReminderVesselQuery {
 
 public enum ReminderVesselChange {
     case error(Error)
-    case change(changedDisplayName: Bool, changedIconEmoji: Bool, changedReminders: Bool, changedPointlessBloop: Bool)
+    case change(Details)
     case deleted
+}
+
+extension ReminderVesselChange {
+    public struct Details {
+        public var changedDisplayName = false
+        public var changedIconEmoji = false
+        public var changedReminders = false
+        public var changedPointlessBloop = false
+    }
 }
 
 public typealias ReminderVesselCollectionChange = CollectionChange<ReminderVesselCollection, Int>

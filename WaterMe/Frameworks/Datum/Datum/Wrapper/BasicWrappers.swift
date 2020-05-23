@@ -30,20 +30,44 @@ public enum CollectionChange<T, U> {
     case error(error: DatumError)
 }
 
-public protocol ObservationToken {
+public protocol ObservationToken: class {
     func invalidate()
 }
 
 extension NotificationToken: ObservationToken {}
+extension NSKeyValueObservation: ObservationToken {}
 
-typealias Token = NotificationCenterTokenWrapper
-internal struct NotificationCenterTokenWrapper: ObservationToken {
-    static func wrap(_ block: () -> NSObjectProtocol) -> NotificationCenterTokenWrapper {
-        return .init(token: block())
+internal enum Token {
+    static func wrap(_ block: () -> NSObjectProtocol) -> NCTokenWrapper {
+        return .init(tokens: [block()])
     }
-    var token: NSObjectProtocol
+    static func wrap(_ block: () -> ObservationToken) -> TokenWrapper {
+        return .init(tokens: [block()])
+    }
+    static func wrap(_ block: () -> [ObservationToken]) -> TokenWrapper {
+        return .init(tokens: block())
+    }
+}
+
+internal class NCTokenWrapper: ObservationToken {
+    private var tokens: [NSObjectProtocol]
+    init(tokens: [NSObjectProtocol]) {
+        self.tokens = tokens
+    }
     func invalidate() {
-        NotificationCenter.default.removeObserver(self.token)
+        let nv = NotificationCenter.default
+        self.tokens.forEach { nv.removeObserver($0) }
+    }
+}
+
+internal class TokenWrapper: ObservationToken {
+    private var tokens: [ObservationToken]
+    init(tokens: [ObservationToken]) {
+        self.tokens = tokens
+    }
+    func invalidate() {
+        self.tokens.forEach { $0.invalidate() }
+        self.tokens = []
     }
 }
 

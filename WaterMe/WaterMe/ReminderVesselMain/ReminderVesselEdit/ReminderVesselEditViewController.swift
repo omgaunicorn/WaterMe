@@ -105,7 +105,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
 
     private func vesselChanged(_ changes: ReminderVesselChange) {
         switch changes {
-        case .change(let changedDisplayName, let changedIconEmoji, let changedReminders, let changedPointlessBloop):
+        case .change(let deets):
             /*
              BUGFIX: http://crashes.to/s/5a4715f46b9
              I think this fixes this bug crash. Its caused because this change notification was telling the icon and name section to reload
@@ -115,7 +115,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
 
              This fixes the problem by checking which properties changed and only reloads the icon/name section if the reminder section did not change
             */
-            switch (changedDisplayName, changedIconEmoji, changedReminders, changedPointlessBloop) {
+            switch (deets.changedDisplayName, deets.changedIconEmoji, deets.changedReminders, deets.changedPointlessBloop) {
             case (true, _, false, _),
                  (_, true, false, _):
                 // changed icon or name but NOT reminders

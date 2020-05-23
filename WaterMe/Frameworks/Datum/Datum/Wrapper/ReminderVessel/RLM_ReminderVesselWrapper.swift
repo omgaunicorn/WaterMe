@@ -48,10 +48,10 @@ extension RLM_ReminderVesselWrapper {
                 let changedIconEmoji = RLM_ReminderVessel.propertyChangesContainIconEmoji(properties)
                 let changedReminders = RLM_ReminderVessel.propertyChangesContainReminders(properties)
                 let changedPointlessBloop = RLM_ReminderVessel.propertyChangesContainPointlessBloop(properties)
-                block(.change(changedDisplayName: changedDisplayName,
-                              changedIconEmoji: changedIconEmoji,
-                              changedReminders: changedReminders,
-                              changedPointlessBloop: changedPointlessBloop))
+                block(.change(.init(changedDisplayName: changedDisplayName,
+                                    changedIconEmoji: changedIconEmoji,
+                                    changedReminders: changedReminders,
+                                    changedPointlessBloop: changedPointlessBloop)))
             case .deleted:
                 block(.deleted)
             }

@@ -39,31 +39,34 @@ internal struct CD_ReminderVesselWrapper: ReminderVessel {
     public var shortLabelSafeDisplayName: String? { self.wrappedObject.shortLabelSafeDisplayName }
     
     func observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken {
-        Token.wrap { [weak wrappedObject] in
-            NotificationCenter.default.addObserver(forName: .NSManagedObjectContextDidSave,
-                                                   object: nil,
-                                                   queue: nil)
-            { [weak wrappedObject] notification in
-                guard let wrappedObject = wrappedObject else { return }
-                let queue = DispatchQueue.main
-                let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? NSSet
-                if updatedObjects?.contains(wrappedObject) == true {
-                    queue.async {
-                        // TODO: Maybe calculate the actual changes if needed
-                        block(.change(changedDisplayName: true,
-                                      changedIconEmoji: true,
-                                      changedReminders: true,
-                                      changedPointlessBloop: true))
-                    }
-                    return
-                }
-                let deletedObjects = notification.userInfo?[NSDeletedObjectsKey] as? NSSet
-                if deletedObjects?.contains(wrappedObject) == true {
-                    queue.async { block(.deleted) }
-                    return
-                }
+        let queue = DispatchQueue.main
+        let vessel = self.wrappedObject
+        let token1 = vessel.observe(\.displayName) { _, _ in
+            queue.async { block(.change(.init(changedDisplayName: true))) }
+        }
+        let token2 = vessel.observe(\.iconEmojiString) { _, _ in
+            queue.async { block(.change(.init(changedIconEmoji: true))) }
+        }
+        let token3 = vessel.observe(\.iconImageData) { _, _ in
+            queue.async { block(.change(.init(changedIconEmoji: true))) }
+        }
+        let token4 = vessel.observe(\.kindString) { _, _ in
+            queue.async { block(.change(.init(changedPointlessBloop: true))) }
+        }
+        
+        let token5 = NotificationCenter.default.addObserver(forName: .NSManagedObjectContextDidSave,
+                                                            object: nil,
+                                                            queue: nil)
+        { [weak wrappedObject] notification in
+            guard let wrappedObject = wrappedObject else { return }
+            let deletedObjects = notification.userInfo?[NSDeletedObjectsKey] as? NSSet
+            if deletedObjects?.contains(wrappedObject) == true {
+                queue.async { block(.deleted) }
+                return
             }
         }
+        
+        return Token.wrap { [token1, token2, token3, token4, Token.wrap { token5 }] }
     }
     
     func observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
