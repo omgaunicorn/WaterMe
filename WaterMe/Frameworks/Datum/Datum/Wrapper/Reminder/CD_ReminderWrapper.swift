@@ -25,9 +25,9 @@ import CoreData
 
 internal struct CD_ReminderWrapper: Reminder {
     internal var wrappedObject: CD_Reminder
-    internal init(_ wrappedObject: CD_Reminder) {
+    internal init(_ wrappedObject: CD_Reminder, reminderController: @escaping LazyReminderController) {
         self.performed = CD_ReminderPerformCollection(wrappedObject)
-        self.vessel = CD_ReminderVesselWrapper(wrappedObject.vessel)
+        self.vessel = CD_ReminderVesselWrapper(wrappedObject.vessel, reminderController: reminderController)
         self.wrappedObject = wrappedObject
     }
     

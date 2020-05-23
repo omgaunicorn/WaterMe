@@ -78,11 +78,12 @@ internal class CD_BasicController: BasicController {
         context.insert(vessel)
         do {
             try context.save()
-            var wrapper = CD_ReminderVesselWrapper(vessel)
-            wrapper.reminderController = { NSFetchedResultsController(fetchRequest: $0,
-                                                                      managedObjectContext: context,
-                                                                      sectionNameKeyPath: nil,
-                                                                      cacheName: nil) }
+            let wrapper = CD_ReminderVesselWrapper(vessel) {
+                NSFetchedResultsController(fetchRequest: $0,
+                                           managedObjectContext: context,
+                                           sectionNameKeyPath: nil,
+                                           cacheName: nil)
+            }
             return .success(wrapper)
         } catch(let error) {
             return .failure(.writeError)
@@ -99,7 +100,13 @@ internal class CD_BasicController: BasicController {
                                              managedObjectContext: context,
                                              sectionNameKeyPath: nil,
                                              cacheName: nil)
-        return .success(CD_ReminderVesselQuery(frc))
+        let query = CD_ReminderVesselQuery(frc) {
+            NSFetchedResultsController(fetchRequest: $0,
+                                       managedObjectContext: context,
+                                       sectionNameKeyPath: nil,
+                                       cacheName: nil)
+        }
+        return .success(query)
     }
     
     func allReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<ReminderQuery, DatumError> {

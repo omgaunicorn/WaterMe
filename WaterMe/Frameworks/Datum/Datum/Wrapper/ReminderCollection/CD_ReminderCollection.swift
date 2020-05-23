@@ -23,19 +23,23 @@
 
 import CoreData
 
+internal typealias LazyReminderController = (NSFetchRequest<CD_Reminder>) -> NSFetchedResultsController<CD_Reminder>
+
 internal class CD_ReminderCollection: ReminderCollection {
     private let controller: CD_ReminderQuery.Controller
-    private let transform: (CD_Reminder) -> Reminder = { CD_ReminderWrapper($0) }
-    init(_ controller: CD_ReminderQuery.Controller) {
+    private let reminderController: LazyReminderController
+    private let transform: (CD_Reminder, @escaping LazyReminderController) -> Reminder = { CD_ReminderWrapper($0, reminderController: $1) }
+    init(_ controller: CD_ReminderQuery.Controller, reminderController: @escaping LazyReminderController) {
         self.controller = controller
+        self.reminderController = reminderController
     }
     var count: Int { self.controller.fetchedObjects?.count ?? 0 }
     subscript(index: Int) -> Reminder {
-        return self.transform(self.controller.object(at: IndexPath(row: index, section: 0)))
+        return self.transform(self.controller.object(at: IndexPath(row: index, section: 0)), self.reminderController)
     }
     var isInvalidated: Bool { false }
     func compactMap<E>(_ transform: (Reminder) throws -> E?) rethrows -> [E] {
-        return try self.controller.fetchedObjects?.compactMap { try transform(self.transform($0)) } ?? []
+        return try self.controller.fetchedObjects?.compactMap { try transform(self.transform($0, self.reminderController)) } ?? []
     }
     func index(matching predicateFormat: String, _ args: Any...) -> Int? {
         // TODO: Fix this
@@ -46,9 +50,11 @@ internal class CD_ReminderCollection: ReminderCollection {
 internal class CD_ReminderQuery: ReminderQuery {
     typealias Controller = NSFetchedResultsController<CD_Reminder>
     private var controller: Controller!
+    private var reminderController: LazyReminderController!
     private var delegate: UpdatingFetchedResultsControllerDelegate!
-    init(_ controller: Controller) {
+    init(_ controller: Controller, reminderController: @escaping LazyReminderController) {
         self.controller = controller
+        self.reminderController = reminderController
     }
     func observe(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
         self.delegate = .init() { block(.update(Transform_Update_IndexToInt($0))) }
@@ -56,7 +62,7 @@ internal class CD_ReminderQuery: ReminderQuery {
         DispatchQueue.main.async {
             do {
                 try self.controller.performFetch()
-                block(.initial(data: CD_ReminderCollection(self.controller)))
+                block(.initial(data: CD_ReminderCollection(self.controller, reminderController: self.reminderController)))
             } catch {
                 block(.error(error: .readError))
             }
@@ -70,5 +76,6 @@ extension CD_ReminderQuery: ObservationToken {
         self.controller.delegate = nil
         self.controller = nil
         self.delegate = nil
+        self.reminderController = nil
     }
 }
