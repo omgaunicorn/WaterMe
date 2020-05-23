@@ -34,15 +34,16 @@ internal class CD_ReminderVesselCollection: ReminderVesselCollection {
     }
 }
 
-internal class CD_ReminderVesselQuery: NSObject, ReminderVesselQuery {
+internal class CD_ReminderVesselQuery: ReminderVesselQuery {
     typealias Controller = NSFetchedResultsController<CD_ReminderVessel>
     private var controller: Controller!
+    private var delegate: UpdatingFetchedResultsControllerDelegate!
     init(_ controller: Controller) {
         self.controller = controller
-        super.init()
-        self.controller.delegate = self
     }
     func observe(_ block: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken {
+        self.delegate = .init() { block(.update(Transform_Update_IndexToInt($0))) }
+        self.controller.delegate = self.delegate
         DispatchQueue.main.async {
             do {
                 try self.controller.performFetch()
@@ -55,11 +56,10 @@ internal class CD_ReminderVesselQuery: NSObject, ReminderVesselQuery {
     }
 }
 
-extension CD_ReminderVesselQuery: NSFetchedResultsControllerDelegate { }
-
 extension CD_ReminderVesselQuery: ObservationToken {
     func invalidate() {
         self.controller.delegate = nil
         self.controller = nil
+        self.delegate = nil
     }
 }

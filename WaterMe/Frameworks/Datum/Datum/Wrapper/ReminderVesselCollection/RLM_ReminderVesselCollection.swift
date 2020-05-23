@@ -45,7 +45,7 @@ internal class RLM_ReminderVesselQuery: ReminderVesselQuery {
             case .initial(let data):
                 block(.initial(data: RLM_ReminderVesselCollection(data)))
             case .update(_, let deletions, let insertions, let modifications):
-                block(.update(insertions: insertions, deletions: deletions, modifications: modifications))
+                block(.update((insertions: insertions, deletions: deletions, modifications: modifications)))
             case .error:
                 block(.error(error: .readError))
             }

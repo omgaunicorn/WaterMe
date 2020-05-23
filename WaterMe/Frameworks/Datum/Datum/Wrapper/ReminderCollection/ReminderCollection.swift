@@ -42,3 +42,4 @@ public enum ReminderChange {
 }
 
 public typealias ReminderCollectionChange = CollectionChange<ReminderCollection, Int>
+public typealias Update<U> = (insertions: [U], deletions: [U], modifications: [U])

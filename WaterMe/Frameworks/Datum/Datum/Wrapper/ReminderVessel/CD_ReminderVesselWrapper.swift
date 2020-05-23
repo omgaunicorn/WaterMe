@@ -24,8 +24,9 @@
 import CoreData
 
 internal struct CD_ReminderVesselWrapper: ReminderVessel {
+    internal typealias ReminderController = (NSFetchRequest<CD_Reminder>) -> NSFetchedResultsController<CD_Reminder>
     internal let wrappedObject: CD_ReminderVessel
-    internal var reminderController: ((NSFetchRequest<CD_Reminder>) -> NSFetchedResultsController<CD_Reminder>)?
+    internal var reminderController: ReminderController!
     internal init(_ wrappedObject: CD_ReminderVessel) {
         self.wrappedObject = wrappedObject
     }
