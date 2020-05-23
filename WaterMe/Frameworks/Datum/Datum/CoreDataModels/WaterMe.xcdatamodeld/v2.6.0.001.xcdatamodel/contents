@@ -8,6 +8,7 @@
         <attribute name="descriptionString" optional="YES" attributeType="String"/>
         <attribute name="interval" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="kindString" attributeType="String"/>
+        <attribute name="lastPerformDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="nextPerformDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="note" optional="YES" attributeType="String"/>
         <relationship name="performed" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderPerform" inverseName="reminder" inverseEntity="CD_ReminderPerform"/>
@@ -26,7 +27,7 @@
     </entity>
     <elements>
         <element name="CD_Base" positionX="285.828125" positionY="-57.45703125" width="128" height="73"/>
-        <element name="CD_Reminder" positionX="343.71875" positionY="242.9921875" width="128" height="148"/>
+        <element name="CD_Reminder" positionX="343.71875" positionY="242.9921875" width="128" height="163"/>
         <element name="CD_ReminderPerform" positionX="135.9609375" positionY="366.51171875" width="128" height="73"/>
         <element name="CD_ReminderVessel" positionX="535.96875" positionY="60.83984375" width="128" height="118"/>
     </elements>
