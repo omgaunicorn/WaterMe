@@ -89,3 +89,7 @@ internal protocol HasIconImageData {
 extension RLM_ReminderVesselWrapper: HasIconImageData {
     var iconImageData: Data? { self.wrappedObject.iconImageData }
 }
+
+extension CD_ReminderVesselWrapper: HasIconImageData {
+    var iconImageData: Data? { self.wrappedObject.iconImageData }
+}

@@ -75,10 +75,15 @@ internal class CD_BasicController: BasicController {
             context.insert(newReminder)
             reminders.append(newReminder)
         }
-        self.container.viewContext.insert(vessel)
+        context.insert(vessel)
         do {
             try context.save()
-            return .success(CD_ReminderVesselWrapper(vessel))
+            var wrapper = CD_ReminderVesselWrapper(vessel)
+            wrapper.reminderController = { NSFetchedResultsController(fetchRequest: $0,
+                                                                      managedObjectContext: context,
+                                                                      sectionNameKeyPath: nil,
+                                                                      cacheName: nil) }
+            return .success(wrapper)
         } catch(let error) {
             return .failure(.writeError)
         }

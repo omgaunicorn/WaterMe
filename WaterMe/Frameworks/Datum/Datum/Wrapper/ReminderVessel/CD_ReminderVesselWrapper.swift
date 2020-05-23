@@ -25,6 +25,7 @@ import CoreData
 
 internal struct CD_ReminderVesselWrapper: ReminderVessel {
     internal let wrappedObject: CD_ReminderVessel
+    internal var reminderController: ((NSFetchRequest<CD_Reminder>) -> NSFetchedResultsController<CD_Reminder>)?
     internal init(_ wrappedObject: CD_ReminderVessel) {
         self.wrappedObject = wrappedObject
     }
@@ -65,6 +66,11 @@ internal struct CD_ReminderVesselWrapper: ReminderVessel {
     }
     
     func observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
-        fatalError()
+        let request = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
+        request.predicate = NSPredicate(format: "\(#keyPath(CD_Reminder.vessel))== %@", self.wrappedObject)
+        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_Reminder.dateCreated), ascending: false)]
+        let controller = self.reminderController!(request)
+        let query = CD_ReminderQuery(controller)
+        return query.observe(block)
     }
 }

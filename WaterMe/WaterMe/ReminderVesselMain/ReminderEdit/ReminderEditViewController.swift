@@ -96,7 +96,9 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         self.userActivityCompletion = nil
         if case .failure(let error) = self.reminderResult! {
             self.reminderResult = nil
-            UIAlertController.presentAlertVC(for: error, over: self)
+            UIAlertController.presentAlertVC(for: error, over: self) { _ in
+                self.completionHandler?(self)
+            }
         }
     }
     
@@ -208,13 +210,14 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     @IBAction private func doneButtonTapped(_ _sender: Any) {
         Analytics.log(event: Analytics.CRUD_Op_R.update)
         self.view.endEditing(false)
-        guard
-            let sender = _sender as? UIBarButtonItem,
-            let reminder = self.reminderResult?.value
-        else {
+        guard let sender = _sender as? UIBarButtonItem else {
             let message = "Expected UIBarButtonItem to call this method"
             log.error(message)
             assertionFailure(message)
+            self.completionHandler?(self)
+            return
+        }
+        guard let reminder = self.reminderResult?.value else {
             self.completionHandler?(self)
             return
         }
