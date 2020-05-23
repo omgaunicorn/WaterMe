@@ -85,18 +85,20 @@ internal class UpdatingFetchedResultsControllerDelegate: NSObject, NSFetchedResu
                     didChange anObject: Any,
                     at index: IndexPath?,
                     for type: NSFetchedResultsChangeType,
-                    newIndexPath: IndexPath?)
+                    newIndexPath newIndex: IndexPath?)
     {
         switch type {
         case .insert:
-            index.map { self.changeInFlight.insertions.append($0) }
+            self.changeInFlight.insertions.append(newIndex!)
         case .move:
-            index.map { self.changeInFlight.deletions.append($0) }
-            newIndexPath.map { self.changeInFlight.insertions.append($0) }
+            self.changeInFlight.deletions.append(index!)
+            self.changeInFlight.insertions.append(newIndex!)
         case .update:
-            index.map { self.changeInFlight.modifications.append($0) }
+            self.changeInFlight.modifications.append(newIndex!)
         case .delete:
-            index.map { self.changeInFlight.deletions.append($0) }
+            self.changeInFlight.deletions.append(index!)
+        @unknown default:
+            break
         }
     }
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
