@@ -1,8 +1,8 @@
 //
-//  CD_ReminderVessel.swift
+//  RLM_ReminderPerformCollection.swift
 //  Datum
 //
-//  Created by Jeffrey Bergier on 2020/05/21.
+//  Created by Jeffrey Bergier on 2020/05/23.
 //  Copyright © 2020 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
@@ -21,19 +21,3 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import CoreData
-
-@objc(CD_ReminderVessel)
-internal class CD_ReminderVessel: CD_Base {
-    
-    @NSManaged var displayName: String?
-    @NSManaged var iconEmojiString: String?
-    @NSManaged var iconImageData: Data?
-    @NSManaged var kindString: String
-    @NSManaged var reminders: NSSet
-    
-    override func awakeFromInsert() {
-        super.awakeFromInsert()
-        self.kindString = ReminderVesselKind.plant.rawValue
-    }
-}

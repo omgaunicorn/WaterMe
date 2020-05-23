@@ -1,8 +1,8 @@
 //
-//  CD_ReminderCollection.swift
+//  CD_ReminderPerformCollection.swift
 //  Datum
 //
-//  Created by Jeffrey Bergier on 2020/05/21.
+//  Created by Jeffrey Bergier on 2020/05/23.
 //  Copyright © 2020 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
@@ -23,33 +23,30 @@
 
 import CoreData
 
-internal typealias LazyContext = () -> NSManagedObjectContext
-
-internal class CD_ReminderCollection: ReminderCollection {
-    private let controller: CD_ReminderQuery.Controller
-    private let context: LazyContext
-    private let transform: (CD_Reminder, @escaping LazyContext) -> Reminder = { CD_ReminderWrapper($0, context: $1) }
+internal struct CD_ReminderPerformCollection: ReminderPerformCollection {
     
-    init(_ controller: CD_ReminderQuery.Controller, context: @escaping LazyContext) {
+    private let controller: CD_ReminderPerformQuery.Controller
+    private let context: LazyContext
+    private let transform: (CD_ReminderPerform) -> ReminderPerformWrapper = { CD_ReminderPerformWrapper($0) }
+    
+    init(_ controller: CD_ReminderPerformQuery.Controller, context: @escaping LazyContext) {
         self.controller = controller
         self.context = context
     }
+    
     var count: Int { self.controller.fetchedObjects?.count ?? 0 }
-    subscript(index: Int) -> Reminder {
-        return self.transform(self.controller.object(at: IndexPath(row: index, section: 0)), self.context)
+    subscript(index: Int) -> ReminderPerformWrapper {
+        let reminderPerform = self.controller.fetchedObjects![index]
+        return self.transform(reminderPerform)
     }
-    var isInvalidated: Bool { false }
-    func compactMap<E>(_ transform: (Reminder) throws -> E?) rethrows -> [E] {
-        return try self.controller.fetchedObjects?.compactMap { try transform(self.transform($0, self.context)) } ?? []
-    }
-    func index(matching predicateFormat: String, _ args: Any...) -> Int? {
-        // TODO: Fix this
-        return nil
+    var last: ReminderPerformWrapper? {
+        guard let last = self.controller.fetchedObjects?.last else { return nil }
+        return CD_ReminderPerformWrapper(last)
     }
 }
 
-internal class CD_ReminderQuery: ReminderQuery {
-    typealias Controller = NSFetchedResultsController<CD_Reminder>
+internal class CD_ReminderPerformQuery: ReminderPerformQuery {
+    typealias Controller = NSFetchedResultsController<CD_ReminderPerform>
     private let controller: Controller
     private let context: LazyContext
     private var delegate: UpdatingFetchedResultsControllerDelegate?
@@ -59,13 +56,13 @@ internal class CD_ReminderQuery: ReminderQuery {
         self.context = context
     }
     
-    func observe(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
+    func observe(_ block: @escaping (ReminderPerformCollectionChange) -> Void) -> ObservationToken {
         self.delegate = .init() { block(.update(Transform_Update_IndexToInt($0))) }
         self.controller.delegate = self.delegate
         DispatchQueue.main.async {
             do {
                 try self.controller.performFetch()
-                block(.initial(data: CD_ReminderCollection(self.controller, context: self.context)))
+                block(.initial(data: CD_ReminderPerformCollection(self.controller, context: self.context)))
             } catch {
                 block(.error(error: .readError))
             }
@@ -74,7 +71,7 @@ internal class CD_ReminderQuery: ReminderQuery {
     }
 }
 
-extension CD_ReminderQuery: ObservationToken {
+extension CD_ReminderPerformQuery: ObservationToken {
     func invalidate() {
         self.controller.delegate = nil
         self.delegate = nil

@@ -24,10 +24,13 @@
 import CoreData
 
 internal struct CD_ReminderWrapper: Reminder {
-    internal var wrappedObject: CD_Reminder
-    internal init(_ wrappedObject: CD_Reminder, reminderController: @escaping LazyReminderController) {
-        self.performed = CD_ReminderPerformCollection(wrappedObject)
-        self.vessel = CD_ReminderVesselWrapper(wrappedObject.vessel, reminderController: reminderController)
+    
+    internal let wrappedObject: CD_Reminder
+    private let context: LazyContext
+    
+    internal init(_ wrappedObject: CD_Reminder, context: @escaping LazyContext) {
+        self.context = context
+        self.vessel = CD_ReminderVesselWrapper(wrappedObject.vessel, context: context)
         self.wrappedObject = wrappedObject
     }
     
@@ -38,7 +41,6 @@ internal struct CD_ReminderWrapper: Reminder {
     var nextPerformDate: Date? { self.wrappedObject.nextPerformDate }
     var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
     let vessel: ReminderVessel?
-    let performed: ReminderPerformCollection
 
     func observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken {
         Token.wrap { [weak wrappedObject] in
@@ -61,19 +63,18 @@ internal struct CD_ReminderWrapper: Reminder {
             }
         }
     }
-}
-
-internal struct CD_ReminderPerformCollection: ReminderPerformCollection {
-    private weak var wrappedObject: CD_Reminder!
-    init(_ wrappedObject: CD_Reminder) {
-        self.wrappedObject = wrappedObject
-    }
     
-    var count: Int { self.wrappedObject.performed.count }
-    subscript(index: Int) -> ReminderPerformWrapper { CD_ReminderPerformWrapper(self.wrappedObject.performed[index]) }
-    var last: ReminderPerformWrapper? {
-        guard let last = self.wrappedObject.performed.last else { return nil }
-        return CD_ReminderPerformWrapper(last)
+    func observePerforms(_ block: @escaping (ReminderPerformCollectionChange) -> Void) -> ObservationToken {
+        let request = CD_ReminderPerform.fetchRequest() as! NSFetchRequest<CD_ReminderPerform>
+        request.predicate = NSPredicate(format: "\(#keyPath(CD_ReminderPerform.reminder)) == %@", self.wrappedObject)
+        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_ReminderPerform.date), ascending: false)]
+        let context = self.context()
+        let controller = NSFetchedResultsController(fetchRequest: request,
+                                                    managedObjectContext: context,
+                                                    sectionNameKeyPath: nil,
+                                                    cacheName: nil)
+        let query = CD_ReminderPerformQuery(controller, context: self.context)
+        return query.observe(block)
     }
 }
 

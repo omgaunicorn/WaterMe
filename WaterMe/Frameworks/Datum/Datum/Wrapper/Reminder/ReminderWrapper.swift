@@ -37,14 +37,8 @@ public protocol Reminder: ModelCompleteCheckable {
     var nextPerformDate: Date? { get }
     var isModelComplete: ModelCompleteError? { get }
     var vessel: ReminderVessel? { get }
-    var performed: ReminderPerformCollection { get }
     func observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken
-}
-
-public protocol ReminderPerformCollection {
-    var count: Int { get }
-    subscript(index: Int) -> ReminderPerformWrapper { get }
-    var last: ReminderPerformWrapper? { get }
+    func observePerforms(_ block: @escaping (ReminderPerformCollectionChange) -> Void) -> ObservationToken
 }
 
 public protocol ReminderPerformWrapper {

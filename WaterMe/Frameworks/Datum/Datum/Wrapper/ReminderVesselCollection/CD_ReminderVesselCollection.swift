@@ -25,35 +25,41 @@ import CoreData
 
 internal class CD_ReminderVesselCollection: ReminderVesselCollection {
     private let controller: CD_ReminderVesselQuery.Controller
-    private var reminderController: LazyReminderController!
-    init(_ controller: CD_ReminderVesselQuery.Controller, reminderController: @escaping LazyReminderController) {
+    private var context: LazyContext!
+    
+    init(_ controller: CD_ReminderVesselQuery.Controller, context: @escaping LazyContext) {
         self.controller = controller
-        self.reminderController = reminderController
+        self.context = context
     }
+    
     var count: Int { self.controller.fetchedObjects?.count ?? 0 }
     subscript(index: Int) -> ReminderVessel {
-        return CD_ReminderVesselWrapper(self.controller.object(at: IndexPath(row: index, section: 0)),
-                                        reminderController: self.reminderController)
+        let reminderVessel = self.controller.object(at: IndexPath(row: index, section: 0))
+        return CD_ReminderVesselWrapper(reminderVessel,
+                                        context: self.context)
     }
 }
 
 internal class CD_ReminderVesselQuery: ReminderVesselQuery {
     typealias Controller = NSFetchedResultsController<CD_ReminderVessel>
-    private var controller: Controller!
-    private var reminderController: LazyReminderController!
-    private var delegate: UpdatingFetchedResultsControllerDelegate!
-    init(_ controller: Controller, reminderController: @escaping LazyReminderController) {
+    
+    private let controller: Controller
+    private let context: LazyContext
+    private var delegate: UpdatingFetchedResultsControllerDelegate?
+    
+    init(_ controller: Controller, context: @escaping LazyContext) {
         self.controller = controller
-        self.reminderController = reminderController
+        self.context = context
     }
+    
     func observe(_ block: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken {
         self.delegate = .init() { block(.update(Transform_Update_IndexToInt($0))) }
         self.controller.delegate = self.delegate
         DispatchQueue.main.async {
             do {
                 try self.controller.performFetch()
-                block(.initial(data: CD_ReminderVesselCollection(self.controller,
-                                                                 reminderController: self.reminderController)))
+                let collection = CD_ReminderVesselCollection(self.controller, context: self.context)
+                block(.initial(data: collection))
             } catch {
                 block(.error(error: .readError))
             }
@@ -65,8 +71,6 @@ internal class CD_ReminderVesselQuery: ReminderVesselQuery {
 extension CD_ReminderVesselQuery: ObservationToken {
     func invalidate() {
         self.controller.delegate = nil
-        self.controller = nil
         self.delegate = nil
-        self.reminderController = nil
     }
 }

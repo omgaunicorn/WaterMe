@@ -30,6 +30,8 @@ public enum CollectionChange<T, U> {
     case error(error: DatumError)
 }
 
+public typealias Update<U> = (insertions: [U], deletions: [U], modifications: [U])
+
 public protocol ObservationToken: class {
     func invalidate()
 }

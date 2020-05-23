@@ -25,10 +25,10 @@ import CoreData
 
 internal struct CD_ReminderVesselWrapper: ReminderVessel {
     internal let wrappedObject: CD_ReminderVessel
-    internal let reminderController: LazyReminderController
-    internal init(_ wrappedObject: CD_ReminderVessel, reminderController: @escaping LazyReminderController) {
+    internal let context: LazyContext
+    internal init(_ wrappedObject: CD_ReminderVessel, context: @escaping LazyContext) {
         self.wrappedObject = wrappedObject
-        self.reminderController = reminderController
+        self.context = context
     }
     
     public var uuid: String { self.wrappedObject.objectID.uriRepresentation().absoluteString }
@@ -71,10 +71,14 @@ internal struct CD_ReminderVesselWrapper: ReminderVessel {
     
     func observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
         let request = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
-        request.predicate = NSPredicate(format: "\(#keyPath(CD_Reminder.vessel))== %@", self.wrappedObject)
+        request.predicate = NSPredicate(format: "\(#keyPath(CD_Reminder.vessel)) == %@", self.wrappedObject)
         request.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_Reminder.dateCreated), ascending: false)]
-        let controller = self.reminderController(request)
-        let query = CD_ReminderQuery(controller, reminderController: self.reminderController)
+        let context = self.context()
+        let controller = NSFetchedResultsController(fetchRequest: request,
+                                                    managedObjectContext: context,
+                                                    sectionNameKeyPath: nil,
+                                                    cacheName: nil)
+        let query = CD_ReminderQuery(controller, context: self.context)
         return query.observe(block)
     }
 }

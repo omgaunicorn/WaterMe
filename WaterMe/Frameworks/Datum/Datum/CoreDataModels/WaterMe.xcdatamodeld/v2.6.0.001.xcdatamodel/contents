@@ -10,7 +10,7 @@
         <attribute name="kindString" attributeType="String"/>
         <attribute name="nextPerformDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="note" optional="YES" attributeType="String"/>
-        <relationship name="performed" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="CD_ReminderPerform" inverseName="reminder" inverseEntity="CD_ReminderPerform"/>
+        <relationship name="performed" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderPerform" inverseName="reminder" inverseEntity="CD_ReminderPerform"/>
         <relationship name="vessel" maxCount="1" deletionRule="Nullify" destinationEntity="CD_ReminderVessel" inverseName="reminders" inverseEntity="CD_ReminderVessel"/>
     </entity>
     <entity name="CD_ReminderPerform" representedClassName="CD_ReminderPerform" parentEntity="CD_Base" syncable="YES">

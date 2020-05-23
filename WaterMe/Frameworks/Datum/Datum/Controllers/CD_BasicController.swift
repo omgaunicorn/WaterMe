@@ -57,7 +57,20 @@ internal class CD_BasicController: BasicController {
     // MARK: Create
     
     func newReminder(for vessel: ReminderVessel) -> Result<Reminder, DatumError> {
-        return .failure(.loadError)
+        let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
+        let context = self.container.viewContext
+        let token = context.datum_willSave()
+        defer { context.datum_didSave(token) }
+        let reminder = CD_Reminder(context: context)
+        let mutable = vessel.mutableSetValue(forKey: #keyPath(CD_ReminderVessel.reminders))
+        mutable.add(reminder)
+        do {
+            try context.save()
+            let wrapper = CD_ReminderWrapper(reminder, context: { [unowned container] in container.viewContext })
+            return .success(wrapper)
+        } catch {
+            return .failure(.writeError)
+        }
     }
     
     func newReminderVessel(displayName: String?,
@@ -78,14 +91,9 @@ internal class CD_BasicController: BasicController {
         context.insert(vessel)
         do {
             try context.save()
-            let wrapper = CD_ReminderVesselWrapper(vessel) {
-                NSFetchedResultsController(fetchRequest: $0,
-                                           managedObjectContext: context,
-                                           sectionNameKeyPath: nil,
-                                           cacheName: nil)
-            }
+            let wrapper = CD_ReminderVesselWrapper(vessel, context: { [unowned container] in container.viewContext })
             return .success(wrapper)
-        } catch(let error) {
+        } catch {
             return .failure(.writeError)
         }
     }
@@ -100,12 +108,7 @@ internal class CD_BasicController: BasicController {
                                              managedObjectContext: context,
                                              sectionNameKeyPath: nil,
                                              cacheName: nil)
-        let query = CD_ReminderVesselQuery(frc) {
-            NSFetchedResultsController(fetchRequest: $0,
-                                       managedObjectContext: context,
-                                       sectionNameKeyPath: nil,
-                                       cacheName: nil)
-        }
+        let query = CD_ReminderVesselQuery(frc, context: { [unowned container] in container.viewContext })
         return .success(query)
     }
     
