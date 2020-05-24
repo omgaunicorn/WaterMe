@@ -30,7 +30,7 @@ internal class CD_Reminder: CD_Base {
     @NSManaged var kindString: String
     @NSManaged var descriptionString: String?
     @NSManaged var nextPerformDate: Date?
-    @NSManaged var lastPerformedDate: Date?
+    @NSManaged var lastPerformDate: Date?
     @NSManaged var note: String?
     @NSManaged var performed: NSSet
     @NSManaged var vessel: CD_ReminderVessel
@@ -42,7 +42,7 @@ internal class CD_Reminder: CD_Base {
     }
     
     internal func updateDates(basedOnAppendedPerformDate newDate: Date) {
-        self.lastPerformedDate = newDate
+        self.lastPerformDate = newDate
         let cal = Calendar.current
         self.nextPerformDate = cal.dateByAddingNumberOfDays(Int(self.interval),
                                                             to: newDate)

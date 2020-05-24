@@ -56,7 +56,7 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         guard let reminder = reminder else { self.reset(); return; }
 
         // configure date
-        self.lastPerformedDate = reminder.lastPerformedDate
+        self.lastPerformedDate = reminder.lastPerformDate
         
         // vessel name style
         let vesselName = reminder.vessel?.displayName

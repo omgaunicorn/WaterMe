@@ -76,7 +76,7 @@ extension InfoTableViewCell {
                                                                          font: .reminderSummarySublabel)
         }()
         _ = {
-            let lastPerformedDate = reminder?.lastPerformedDate
+            let lastPerformedDate = reminder?.lastPerformDate
             let dateString = self.timeAgoDateFormatter.timeAgoString(for: lastPerformedDate)
             self.label1?.attributedText = NSAttributedString(string: dateString,
                                                              font: .reminderSummaryPrimaryLabel)

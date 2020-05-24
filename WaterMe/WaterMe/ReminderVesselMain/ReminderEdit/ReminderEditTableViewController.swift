@@ -26,7 +26,6 @@ import UIKit
 
 protocol ReminderEditTableViewControllerDelegate: class {
     var reminderResult: Result<Reminder, DatumError>? { get }
-    var reminderPerform: ReminderPerformCollection? { get }
     func userChangedKind(to newKind: ReminderKind,
                          byUsingKeyboard usingKeyboard: Bool,
                          within: ReminderEditTableViewController)
@@ -180,7 +179,7 @@ class ReminderEditTableViewController: StandardTableViewController {
             let id = LastPerformedTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? LastPerformedTableViewCell
-            cell?.configureWith(lastPerformedDate: self.delegate?.reminderPerform?.last?.date)
+            cell?.configureWith(lastPerformedDate: reminder.lastPerformDate)
             return _cell
         }
     }

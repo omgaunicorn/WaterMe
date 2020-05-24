@@ -35,7 +35,7 @@ public protocol Reminder: ModelCompleteCheckable {
     var interval: Int { get }
     var note: String? { get }
     var nextPerformDate: Date? { get }
-    var lastPerformedDate: Date? { get }
+    var lastPerformDate: Date? { get }
     var isModelComplete: ModelCompleteError? { get }
     var vessel: ReminderVessel? { get }
     func observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken

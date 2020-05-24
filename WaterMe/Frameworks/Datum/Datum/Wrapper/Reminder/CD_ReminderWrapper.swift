@@ -39,7 +39,7 @@ internal struct CD_ReminderWrapper: Reminder {
     var interval: Int { Int(self.wrappedObject.interval) }
     var note: String? { self.wrappedObject.note }
     var nextPerformDate: Date? { self.wrappedObject.nextPerformDate }
-    var lastPerformedDate: Date? { self.wrappedObject.lastPerformedDate }
+    var lastPerformDate: Date? { self.wrappedObject.lastPerformDate }
     var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
     let vessel: ReminderVessel?
 

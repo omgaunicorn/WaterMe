@@ -35,7 +35,7 @@ internal struct RLM_ReminderWrapper: Reminder {
     var interval: Int { self.wrappedObject.interval }
     var note: String? { self.wrappedObject.note }
     var nextPerformDate: Date? { self.wrappedObject.nextPerformDate }
-    var lastPerformedDate: Date? { self.wrappedObject.performed.last?.date }
+    var lastPerformDate: Date? { self.wrappedObject.performed.last?.date }
     var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
     let vessel: ReminderVessel?
 }

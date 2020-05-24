@@ -68,7 +68,6 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
 
     var basicRC: BasicController?
     private(set) var reminderResult: Result<Reminder, DatumError>?
-    private(set) var reminderPerform: ReminderPerformCollection?
     private var completionHandler: CompletionHandler?
     private var userActivityCompletion: NSUserActivityContinuedHandler?
     //swiftlint:disable:next weak_delegate
@@ -119,23 +118,6 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         }
         // dirty the user activity because the item changed
         self.userDirtiedUserActivity()
-    }
-    
-    private func reminderPerformsChanged(_ change: ReminderPerformCollectionChange) {
-        switch change {
-        case .initial(let data):
-            self.reminderPerform = data
-            self.tableViewController?.tableView.reloadData()
-        case .update:
-            // TODO: Fix this to just reload section
-            self.tableViewController?.tableView.reloadData()
-        case .error(let error):
-            self.stopNotifications()
-            self.reminderResult = nil
-            UIAlertController.presentAlertVC(for: error, over: self) { _ in
-                self.completionHandler?(self)
-            }
-        }
     }
     
     private func update(kind: ReminderKind? = nil,
@@ -277,8 +259,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     
     private func startNotifications() {
         let token1 = self.reminderResult?.value?.observe { [weak self] in self?.reminderChanged($0) }
-        let token2 = self.reminderResult?.value?.observePerforms { [weak self] in self?.reminderPerformsChanged($0) }
-        self.tokens = [token1, token2].compactMap { $0 }
+        self.tokens = [token1].compactMap { $0 }
     }
     
     private func stopNotifications() {

@@ -112,7 +112,9 @@ internal class UpdatingFetchedResultsControllerDelegate: NSObject, NSFetchedResu
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         let changeInFlight = self.changeInFlight!
         self.changeInFlight = nil
-        self.block(changeInFlight)
+        DispatchQueue.main.async {
+            self.block(changeInFlight)
+        }
     }
 }
 
