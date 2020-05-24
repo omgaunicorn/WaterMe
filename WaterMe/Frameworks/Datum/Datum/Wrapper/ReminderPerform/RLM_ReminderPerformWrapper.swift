@@ -1,8 +1,8 @@
 //
-//  ReminderCollection.swift
+//  RLM_ReminderPerformWrapper.swift
 //  Datum
 //
-//  Created by Jeffrey Bergier on 2020/05/09.
+//  Created by Jeffrey Bergier on 2020/05/24.
 //  Copyright © 2020 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
@@ -23,22 +23,10 @@
 
 import RealmSwift
 
-public protocol ReminderCollection {
-    var count: Int { get }
-    var isInvalidated: Bool { get }
-    subscript(index: Int) -> Reminder { get }
-    func compactMap<E>(_ transform: (Reminder) throws -> E?) rethrows -> [E]
-    func index(matching predicateFormat: String, _ args: Any...) -> Int?
+internal struct RLM_ReminderPerformWrapper: ReminderPerformWrapper {
+    internal var wrappedObject: RLM_ReminderPerform
+    internal init(_ wrappedObject: RLM_ReminderPerform) {
+        self.wrappedObject = wrappedObject
+    }
+    internal var date: Date { self.wrappedObject.date }
 }
-
-public protocol ReminderQuery {
-    func observe(_: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken
-}
-
-public enum ReminderChange {
-    case error(Error)
-    case change
-    case deleted
-}
-
-public typealias ReminderCollectionChange = CollectionChange<ReminderCollection, Int>

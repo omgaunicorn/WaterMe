@@ -41,7 +41,3 @@ public protocol Reminder: ModelCompleteCheckable {
     func observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken
     func observePerforms(_ block: @escaping (ReminderPerformCollectionChange) -> Void) -> ObservationToken
 }
-
-public protocol ReminderPerformWrapper {
-    var date: Date { get }
-}

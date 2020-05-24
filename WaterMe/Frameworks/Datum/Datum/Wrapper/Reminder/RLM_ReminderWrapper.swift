@@ -38,10 +38,8 @@ internal struct RLM_ReminderWrapper: Reminder {
     var lastPerformDate: Date? { self.wrappedObject.performed.last?.date }
     var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
     let vessel: ReminderVessel?
-}
 
-extension RLM_ReminderWrapper {
-    internal func observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken {
+    func observe(_ block: @escaping (ReminderChange) -> Void) -> ObservationToken {
         return self.wrappedObject.observe { realmChange in
             switch realmChange {
             case .error(let error):
@@ -53,30 +51,8 @@ extension RLM_ReminderWrapper {
             }
         }
     }
-    func observePerforms(_ block: @escaping (ReminderPerformCollectionChange) -> Void) -> ObservationToken {
-        // TODO: Fix later
-        fatalError()
-    }
-}
-
-internal struct RLM_ReminderPerformCollection: ReminderPerformCollection {
-    private var collection: List<RLM_ReminderPerform>
-    init(_ collection: List<RLM_ReminderPerform>) {
-        self.collection = collection
-    }
     
-    var count: Int { self.collection.count }
-    subscript(index: Int) -> ReminderPerformWrapper { RLM_ReminderPerformWrapper(self.collection[index]) }
-    var last: ReminderPerformWrapper? {
-        guard let last = self.collection.last else { return nil }
-        return RLM_ReminderPerformWrapper(last)
+    func observePerforms(_ block: @escaping (ReminderPerformCollectionChange) -> Void) -> ObservationToken {
+        fatalError("Not Implemented")
     }
-}
-
-internal struct RLM_ReminderPerformWrapper: ReminderPerformWrapper {
-    internal var wrappedObject: RLM_ReminderPerform
-    internal init(_ wrappedObject: RLM_ReminderPerform) {
-        self.wrappedObject = wrappedObject
-    }
-    internal var date: Date { self.wrappedObject.date }
 }

@@ -30,3 +30,5 @@ public protocol ReminderPerformCollection {
 public protocol ReminderPerformQuery {
     func observe(_: @escaping (ReminderPerformCollectionChange) -> Void) -> ObservationToken
 }
+
+public typealias ReminderPerformCollectionChange = CollectionChange<ReminderPerformCollection, Int>

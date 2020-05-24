@@ -66,24 +66,7 @@ internal struct CD_ReminderWrapper: Reminder {
     }
     
     func observePerforms(_ block: @escaping (ReminderPerformCollectionChange) -> Void) -> ObservationToken {
-        let request = CD_ReminderPerform.fetchRequest() as! NSFetchRequest<CD_ReminderPerform>
-        request.predicate = NSPredicate(format: "\(#keyPath(CD_ReminderPerform.reminder)) == %@", self.wrappedObject)
-        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_ReminderPerform.date), ascending: false)]
-        let context = self.context()
-        let controller = NSFetchedResultsController(fetchRequest: request,
-                                                    managedObjectContext: context,
-                                                    sectionNameKeyPath: nil,
-                                                    cacheName: nil)
-        let query = CD_ReminderPerformQuery(controller, context: self.context)
-        return query.observe(block)
+        fatalError("Not implemented")
     }
-}
-
-internal struct CD_ReminderPerformWrapper: ReminderPerformWrapper {
-    internal var wrappedObject: CD_ReminderPerform
-    internal init(_ wrappedObject: CD_ReminderPerform) {
-        self.wrappedObject = wrappedObject
-    }
-    internal var date: Date { self.wrappedObject.date }
 }
 

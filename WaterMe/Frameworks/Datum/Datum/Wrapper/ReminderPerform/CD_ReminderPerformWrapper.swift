@@ -1,8 +1,8 @@
 //
-//  RLM_ReminderPerformCollection.swift
+//  CD_ReminderPerformWrapper.swift
 //  Datum
 //
-//  Created by Jeffrey Bergier on 2020/05/23.
+//  Created by Jeffrey Bergier on 2020/05/24.
 //  Copyright © 2020 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
@@ -21,3 +21,12 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import CoreData
+
+internal struct CD_ReminderPerformWrapper: ReminderPerformWrapper {
+    internal var wrappedObject: CD_ReminderPerform
+    internal init(_ wrappedObject: CD_ReminderPerform) {
+        self.wrappedObject = wrappedObject
+    }
+    internal var date: Date { self.wrappedObject.date }
+}
