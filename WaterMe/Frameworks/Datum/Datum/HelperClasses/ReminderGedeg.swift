@@ -108,7 +108,7 @@ internal class ReminderGedeg: NSObject {
         // the data could still be NIL
         // previously this was force unwrapped
         guard let count = self.reminders[section]?.count else {
-            let error = NSError(dataForSectionWasNilInNumberOfItemsInSection: section)
+            let error = NSError(dataForSectionWasNilInNumberOfItemsInSection: section.rawValue)
             assertionFailure(String(describing: error))
             log.error(error)
             return 0
