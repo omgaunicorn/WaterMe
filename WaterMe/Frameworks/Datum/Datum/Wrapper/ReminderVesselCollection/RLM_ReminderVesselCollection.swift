@@ -23,23 +23,22 @@
 
 import RealmSwift
 
-internal class RLM_ReminderVesselCollection: ReminderVesselCollection {
+internal class RLM_ReminderVesselCollection: Datum.Collection {
     private let collection: AnyRealmCollection<RLM_ReminderVessel>
     private let transform: (RLM_ReminderVessel) -> ReminderVessel = { RLM_ReminderVesselWrapper($0) }
     internal init(_ collection: AnyRealmCollection<RLM_ReminderVessel>) {
         self.collection = collection
     }
-    
     public var count: Int { self.collection.count }
     public subscript(index: Int) -> ReminderVessel { self.transform(self.collection[index]) }
 }
 
-internal class RLM_ReminderVesselQuery: ReminderVesselQuery {
+internal class RLM_ReminderVesselQuery: CollectionQuery {
     private let collection: AnyRealmCollection<RLM_ReminderVessel>
     init(_ collection: AnyRealmCollection<RLM_ReminderVessel>) {
         self.collection = collection
     }
-    func observe(_ block: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken {
+    func observe(_ block: @escaping (CollectionChange<RLM_ReminderVesselCollection, Int>) -> Void) -> ObservationToken {
         return self.collection.observe { realmChange in
             switch realmChange {
             case .initial(let data):

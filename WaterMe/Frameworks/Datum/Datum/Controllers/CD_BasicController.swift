@@ -100,7 +100,7 @@ internal class CD_BasicController: BasicController {
 
     // MARK: Read
     
-    func allVessels() -> Result<ReminderVesselQuery, DatumError> {
+    internal func allVessels() -> Result<AnyCollectionQuery<ReminderVessel, Int>, DatumError> {
         let context = self.container.viewContext
         let fr = CD_ReminderVessel.fetchRequest() as! NSFetchRequest<CD_ReminderVessel>
         fr.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_ReminderVessel.displayName), ascending: true)]
@@ -109,7 +109,7 @@ internal class CD_BasicController: BasicController {
                                              sectionNameKeyPath: nil,
                                              cacheName: nil)
         let query = CD_ReminderVesselQuery(frc, context: { self.container.viewContext })
-        return .success(query)
+        return .success(AnyCollectionQuery(query))
     }
     
     func allReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<ReminderQuery, DatumError> {

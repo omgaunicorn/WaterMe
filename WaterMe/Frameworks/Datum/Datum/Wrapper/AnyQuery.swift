@@ -27,15 +27,20 @@ public protocol CollectionQuery {
     func observe(_: @escaping (CollectionChange<Collection, Index>) -> Void) -> ObservationToken
 }
 
-public struct AnyCollectionQuery<Collection: Datum.Collection, Index>: CollectionQuery {
+public struct AnyCollectionQuery<Element, Index>: CollectionQuery {
 
-    private let _observe: (@escaping (CollectionChange<Collection, Index>) -> Void) -> ObservationToken
+    private let _observe: (@escaping (CollectionChange<AnyCollection<Element, Index>, Index>) -> Void) -> ObservationToken
     
-    internal init<T: CollectionQuery>(_ query: T) where T.Collection == Collection, T.Index == Index, T.Collection.Index == Index {
-        _observe = query.observe
+    internal init<T: CollectionQuery>(_ query: T)
+        where T.Collection.Element == Element,
+              T.Index == Index,
+              T.Collection.Index == Index
+    {
+//        _observe = query.observe
+        fatalError()
     }
     
-    public func observe(_ closure: @escaping (CollectionChange<Collection, Index>) -> Void) -> ObservationToken {
+    public func observe(_ closure: @escaping (CollectionChange<AnyCollection<Element, Index>, Index>) -> Void) -> ObservationToken {
         return _observe(closure)
     }
 }

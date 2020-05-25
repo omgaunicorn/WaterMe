@@ -76,11 +76,15 @@ internal class RLM_BasicController: BasicController {
     
     // MARK: WaterMeClient API
 
-    internal func allVessels() -> Result<ReminderVesselQuery, DatumError> {
+    internal func allVessels() -> Result<AnyCollectionQuery<ReminderVessel, Int>, DatumError> {
         return self.realm.map() { realm in
             let kp = #keyPath(RLM_ReminderVessel.displayName)
             let collection = realm.objects(RLM_ReminderVessel.self).sorted(byKeyPath: kp)
-            return RLM_ReminderVesselQuery(AnyRealmCollection(collection))
+            return AnyCollectionQuery(
+                RLM_ReminderVesselQuery(
+                    AnyRealmCollection(collection)
+                )
+            )
         }
     }
 

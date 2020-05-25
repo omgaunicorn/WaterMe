@@ -23,7 +23,7 @@
 
 import CoreData
 
-internal class CD_ReminderVesselCollection: ReminderVesselCollection {
+internal class CD_ReminderVesselCollection: Datum.Collection {
     private let controller: CD_ReminderVesselQuery.Controller
     private var context: LazyContext!
     
@@ -40,7 +40,8 @@ internal class CD_ReminderVesselCollection: ReminderVesselCollection {
     }
 }
 
-internal class CD_ReminderVesselQuery: ReminderVesselQuery {
+internal class CD_ReminderVesselQuery: CollectionQuery {
+    
     typealias Controller = NSFetchedResultsController<CD_ReminderVessel>
     
     private let controller: Controller
@@ -52,7 +53,7 @@ internal class CD_ReminderVesselQuery: ReminderVesselQuery {
         self.context = context
     }
     
-    func observe(_ block: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken {
+    func observe(_ block: @escaping (CollectionChange<CD_ReminderVesselCollection, Int>) -> Void) -> ObservationToken {
         self.delegate = .init() { block(.update(Transform_Update_IndexToInt($0))) }
         self.controller.delegate = self.delegate
         DispatchQueue.main.async {
