@@ -53,14 +53,14 @@ internal class CD_ReminderVesselQuery: CollectionQuery {
         self.context = context
     }
     
-    func observe(_ block: @escaping (CollectionChange<CD_ReminderVesselCollection, Int>) -> Void) -> ObservationToken {
+    func observe(_ block: @escaping (CollectionChange<AnyCollection<ReminderVessel, Int>, Int>) -> Void) -> ObservationToken {
         self.delegate = .init() { block(.update(Transform_Update_IndexToInt($0))) }
         self.controller.delegate = self.delegate
         DispatchQueue.main.async {
             do {
                 try self.controller.performFetch()
                 let collection = CD_ReminderVesselCollection(self.controller, context: self.context)
-                block(.initial(data: collection))
+                block(.initial(data: AnyCollection(collection)))
             } catch {
                 block(.error(error: .readError))
             }

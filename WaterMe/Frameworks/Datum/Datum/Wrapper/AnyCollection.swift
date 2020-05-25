@@ -30,8 +30,8 @@ public protocol Collection {
 
 public struct AnyCollection<Element, Index>: Collection {
     
-    private let _subscript: (Index) -> Element
     private let _count: () -> Int
+    private let _subscript: (Index) -> Element
     
     internal init<T: Collection>(_ collection: T) where T.Element == Element, T.Index == Index {
         _subscript = { collection[$0] }
@@ -39,7 +39,7 @@ public struct AnyCollection<Element, Index>: Collection {
     }
     
     public var count: Int {
-        return 0
+        return _count()
     }
     
     public subscript(index: Index) -> Element {

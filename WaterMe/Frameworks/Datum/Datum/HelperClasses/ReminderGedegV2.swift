@@ -34,15 +34,14 @@ internal class ReminderGedegV2<
     Query: CollectionQuery,
     Section: Hashable & RawRepresentable
     > : NSObject, ObservationToken
-    where Query.Collection.Index == Int,
-          Query.Index == Int,
+    where Query.Index == Int,
           Section.RawValue == Int
 {
     
-    internal typealias InputChange = CollectionChange<Query.Collection, Query.Index>
+    internal typealias InputChange = CollectionChange<AnyCollection<Query.Element, Query.Index>, Query.Index>
     internal typealias OutputChange = CollectionChange<ReminderGedegV2, IndexPath>
     
-    private var data: [Section : Query.Collection] = [:]
+    private var data: [Section : AnyCollection<Query.Element, Query.Index>] = [:]
     private let queries: [Section : Query]
     private let updateBatcher = Batcher()
     
@@ -104,7 +103,7 @@ internal class ReminderGedegV2<
         return collection.count
     }
 
-    internal func reminder(at indexPath: IndexPath) -> Query.Collection.Element? {
+    internal func reminder(at indexPath: IndexPath) -> Query.Element? {
         guard
             let section = Section(rawValue: indexPath.section),
             let collection = self.data[section]

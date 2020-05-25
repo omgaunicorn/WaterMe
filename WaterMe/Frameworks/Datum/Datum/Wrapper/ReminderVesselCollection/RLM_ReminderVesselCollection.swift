@@ -38,11 +38,11 @@ internal class RLM_ReminderVesselQuery: CollectionQuery {
     init(_ collection: AnyRealmCollection<RLM_ReminderVessel>) {
         self.collection = collection
     }
-    func observe(_ block: @escaping (CollectionChange<RLM_ReminderVesselCollection, Int>) -> Void) -> ObservationToken {
+    func observe(_ block: @escaping (CollectionChange<AnyCollection<ReminderVessel, Int>, Int>) -> Void) -> ObservationToken {
         return self.collection.observe { realmChange in
             switch realmChange {
             case .initial(let data):
-                block(.initial(data: RLM_ReminderVesselCollection(data)))
+                block(.initial(data: AnyCollection(RLM_ReminderVesselCollection(data))))
             case .update(_, let deletions, let insertions, let modifications):
                 block(.update((insertions: insertions, deletions: deletions, modifications: modifications)))
             case .error:

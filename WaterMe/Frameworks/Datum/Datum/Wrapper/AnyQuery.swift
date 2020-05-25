@@ -23,8 +23,8 @@
 
 public protocol CollectionQuery {
     associatedtype Index
-    associatedtype Collection: Datum.Collection
-    func observe(_: @escaping (CollectionChange<Collection, Index>) -> Void) -> ObservationToken
+    associatedtype Element
+    func observe(_: @escaping (CollectionChange<AnyCollection<Element, Index>, Index>) -> Void) -> ObservationToken
 }
 
 public struct AnyCollectionQuery<Element, Index>: CollectionQuery {
@@ -32,12 +32,10 @@ public struct AnyCollectionQuery<Element, Index>: CollectionQuery {
     private let _observe: (@escaping (CollectionChange<AnyCollection<Element, Index>, Index>) -> Void) -> ObservationToken
     
     internal init<T: CollectionQuery>(_ query: T)
-        where T.Collection.Element == Element,
-              T.Index == Index,
-              T.Collection.Index == Index
+        where T.Element == Element,
+              T.Index == Index
     {
-//        _observe = query.observe
-        fatalError()
+        _observe = query.observe
     }
     
     public func observe(_ closure: @escaping (CollectionChange<AnyCollection<Element, Index>, Index>) -> Void) -> ObservationToken {
