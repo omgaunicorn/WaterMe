@@ -51,8 +51,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
     }
     
     func reloadAll() {
-        self.notificationToken?.invalidate()
-        self.remindersData = nil
+        self.invalidateTokens()
         self.tableView.reloadData()
         self.notificationToken = self.delegate?.vesselResult?.value?.observeReminders
             { [weak self] in
@@ -61,8 +60,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
     }
     
     func reloadReminders() {
-        self.notificationToken?.invalidate()
-        self.remindersData = nil
+        self.invalidateTokens()
         self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
         self.notificationToken = self.delegate?.vesselResult?.value?.observeReminders
             { [weak self] in
@@ -307,6 +305,13 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                             heightForRowAt indexPath: IndexPath) -> CGFloat
     {
         return UITableView.automaticDimension
+    }
+    
+    func invalidateTokens() {
+        self.notificationToken?.invalidate()
+        self.notificationToken = nil
+        self.remindersData = nil
+        self.tableView.reloadData()
     }
     
     private var notificationToken: ObservationToken?

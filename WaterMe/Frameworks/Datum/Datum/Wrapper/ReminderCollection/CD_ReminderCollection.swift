@@ -59,15 +59,18 @@ internal class CD_ReminderQuery: ReminderQuery {
         self.context = context
     }
     
-    func observe(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
-        self.delegate = .init() { block(.update(Transform_Update_IndexToInt($0))) }
+    func observe(_ closure: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
+        self.delegate = .init() { [weak self] in
+            guard self?.delegate != nil else { return }
+            closure(.update(Transform_Update_IndexToInt($0)))
+        }
         self.controller.delegate = self.delegate
         DispatchQueue.main.async {
             do {
                 try self.controller.performFetch()
-                block(.initial(data: CD_ReminderCollection(self.controller, context: self.context)))
+                closure(.initial(data: CD_ReminderCollection(self.controller, context: self.context)))
             } catch {
-                block(.error(error: .readError))
+                closure(.error(error: .readError))
             }
         }
         return self

@@ -152,10 +152,10 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     }
 
     private func reminderVesselWasDeleted() {
+        self.tableViewController?.invalidateTokens()
         self.vesselResult = nil
         self.notificationToken?.invalidate()
         self.notificationToken = nil
-        self.tableViewController?.reloadAll()
         self.completionHandler?(self)
     }
     
