@@ -1,8 +1,8 @@
 //
-//  ReminderVesselCollection.swift
+//  AnyCollection.swift
 //  Datum
 //
-//  Created by Jeffrey Bergier on 2020/05/09.
+//  Created by Jeffrey Bergier on 2020/05/25.
 //  Copyright © 2020 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
@@ -21,30 +21,28 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import RealmSwift
-
-public protocol ReminderVesselCollection {
+public protocol Collection {
+    associatedtype Element
+    associatedtype Index
     var count: Int { get }
-    subscript(index: Int) -> ReminderVessel { get }
+    subscript(index: Index) -> Element { get }
 }
 
-public protocol ReminderVesselQuery {
-    func observe(_: @escaping (ReminderVesselCollectionChange) -> Void) -> ObservationToken
-}
-
-public enum ReminderVesselChange {
-    case error(Error)
-    case change(Details)
-    case deleted
-}
-
-extension ReminderVesselChange {
-    public struct Details {
-        public var changedDisplayName = false
-        public var changedIconEmoji = false
-        public var changedReminders = false
-        public var changedPointlessBloop = false
+public struct AnyCollection<Element, Index>: Collection {
+    
+    private let _subscript: (Index) -> Element
+    private let _count: () -> Int
+    
+    internal init<T: Collection>(_ collection: T) where T.Element == Element, T.Index == Index {
+        _subscript = { collection[$0] }
+        _count = { collection.count }
+    }
+    
+    public var count: Int {
+        return 0
+    }
+    
+    public subscript(index: Index) -> Element {
+        return _subscript(index)
     }
 }
-
-public typealias ReminderVesselCollectionChange = CollectionChange<ReminderVesselCollection, Int>

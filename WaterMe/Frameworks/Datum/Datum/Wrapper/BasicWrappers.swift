@@ -24,20 +24,9 @@
 import RealmSwift
 import CoreData
 
-public protocol BaseCollection {
-    associatedtype Element
-    var count: Int { get }
-    subscript(index: Int) -> Element { get }
-}
-
-public protocol CollectionQuery {
-    associatedtype Index
-    associatedtype Collection: BaseCollection
-    func observe(_: @escaping (CollectionChange<Collection, Index>) -> Void) -> ObservationToken
-}
-public enum CollectionChange<T, U> {
-    case initial(data: T)
-    case update(Update<U>)
+public enum CollectionChange<Collection, Deets> {
+    case initial(data: Collection)
+    case update(Update<Deets>)
     case error(error: DatumError)
 }
 

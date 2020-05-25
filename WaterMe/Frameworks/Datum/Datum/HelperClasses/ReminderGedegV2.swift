@@ -30,9 +30,13 @@ import Foundation
  Gedeg == Grouper / Degrouper
  */
 
-internal class ReminderGedegV2<Query: CollectionQuery, Section: Hashable & RawRepresentable>
-    : NSObject, ObservationToken
-    where Query.Index == Int, Section.RawValue == Int
+internal class ReminderGedegV2<
+    Query: CollectionQuery,
+    Section: Hashable & RawRepresentable
+    > : NSObject, ObservationToken
+    where Query.Collection.Index == Int,
+          Query.Index == Int,
+          Section.RawValue == Int
 {
     
     internal typealias InputChange = CollectionChange<Query.Collection, Query.Index>
