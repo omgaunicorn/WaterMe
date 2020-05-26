@@ -28,8 +28,12 @@ public protocol BaseCollection {
     subscript(index: Index) -> Element { get }
 }
 
+public protocol LookupCollection: BaseCollection {
+    func index(of item: Element) -> Index?
+}
+
 public struct AnyCollection<Element, Index>: BaseCollection {
-    
+
     private let _count: () -> Int
     private let _subscript: (Index) -> Element
     
@@ -44,5 +48,15 @@ public struct AnyCollection<Element, Index>: BaseCollection {
     
     public subscript(index: Index) -> Element {
         return _subscript(index)
+    }
+}
+
+extension BaseCollection where Index == Int {
+    public func compactMap<NewElement>(_ transform: (Element) throws -> NewElement?) rethrows -> [NewElement] {
+        return try (0..<self.count).compactMap { try transform(self[$0]) }
+    }
+    
+    public func map<NewElement>(_ transform: (Element) throws -> NewElement) rethrows -> [NewElement] {
+        return try (0..<self.count).map { try transform(self[$0]) }
     }
 }
