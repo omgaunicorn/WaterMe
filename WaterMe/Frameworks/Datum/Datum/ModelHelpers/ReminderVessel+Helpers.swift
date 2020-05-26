@@ -91,13 +91,6 @@ extension RLM_ReminderVessel {
     }
 }
 
-public struct ReminderVesselIdentifier: UUIDRepresentable, Hashable {
-    public private(set) var uuid: String
-    public init(rawValue: String) {
-        self.uuid = rawValue
-    }
-}
-
 extension RLM_ReminderVessel: ModelCompleteCheckable {
     internal var isModelComplete: ModelCompleteError? {
         let issues: [RecoveryAction] = [

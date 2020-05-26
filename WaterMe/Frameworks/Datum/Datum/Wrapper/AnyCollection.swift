@@ -28,10 +28,6 @@ public protocol BaseCollection {
     subscript(index: Index) -> Element { get }
 }
 
-public protocol LookupCollection: BaseCollection {
-    func index(of item: Element) -> Index?
-}
-
 public struct AnyCollection<Element, Index>: BaseCollection {
 
     private let _count: () -> Int

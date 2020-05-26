@@ -45,18 +45,18 @@ public struct ReminderAndVesselValue: Hashable {
 
 public struct ReminderValue: Hashable {
 
-    public var uuid: ReminderIdentifier
+    public var uuid: Identifier
     public var nextPerformDate: Date?
     public var kind: ReminderKind
 
     public init(reminder: Reminder) {
-        self.uuid = ReminderIdentifier(rawValue: reminder.uuid)
+        self.uuid = Identifier(rawValue: reminder.uuid)
         self.nextPerformDate = reminder.nextPerformDate
         self.kind = reminder.kind
     }
     
     internal init(reminder: RLM_Reminder) {
-        self.uuid = ReminderIdentifier(rawValue: reminder.uuid)
+        self.uuid = Identifier(rawValue: reminder.uuid)
         self.nextPerformDate = reminder.nextPerformDate
         self.kind = reminder.kind
     }
@@ -64,19 +64,19 @@ public struct ReminderValue: Hashable {
 
 public struct ReminderVesselValue: Hashable {
 
-    public var uuid: ReminderVesselIdentifier
+    public var uuid: Identifier
     public var name: String?
     public var imageData: Data?
     
     public init?(reminderVessel: ReminderVessel?) {
         guard let reminderVessel = reminderVessel else { return nil }
-        self.uuid = ReminderVesselIdentifier(rawValue: reminderVessel.uuid)
+        self.uuid = Identifier(rawValue: reminderVessel.uuid)
         self.name = reminderVessel.shortLabelSafeDisplayName
         self.imageData = (reminderVessel as! HasIconImageData).iconImageData
     }
     
     internal init(reminderVessel: RLM_ReminderVessel) {
-        self.uuid = ReminderVesselIdentifier(rawValue: reminderVessel.uuid)
+        self.uuid = Identifier(rawValue: reminderVessel.uuid)
         self.name = reminderVessel.shortLabelSafeDisplayName
         self.imageData = reminderVessel.iconImageData
     }

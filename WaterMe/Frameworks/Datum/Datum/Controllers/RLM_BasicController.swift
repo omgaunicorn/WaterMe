@@ -138,13 +138,13 @@ internal class RLM_BasicController: BasicController {
         }
     }
 
-    internal func appendNewPerformToReminders(with identifiers: [ReminderIdentifier]) -> Result<Void, DatumError> {
+    internal func appendNewPerformToReminders(with identifiers: [Identifier]) -> Result<Void, DatumError> {
         let result = self.reminders(matching: identifiers).flatMap({ self.appendNewPerform(to: $0) })
         self.userDidPerformReminder?()
         return result
     }
 
-    internal func reminderVessel(matching identifier: ReminderVesselIdentifier) -> Result<ReminderVessel, DatumError> {
+    internal func reminderVessel(matching identifier: Identifier) -> Result<ReminderVessel, DatumError> {
         return self.realm.flatMap() { realm -> Result<ReminderVessel, DatumError> in
             guard let reminder = realm.object(ofType: RLM_ReminderVessel.self, forPrimaryKey: identifier.uuid)
             else { return .failure(.objectDeleted) }
@@ -152,7 +152,7 @@ internal class RLM_BasicController: BasicController {
         }
     }
 
-    internal func reminder(matching identifier: ReminderIdentifier) -> Result<Reminder, DatumError> {
+    internal func reminder(matching identifier: Identifier) -> Result<Reminder, DatumError> {
         return self.realm.flatMap() { realm -> Result<Reminder, DatumError> in
             guard let reminder = realm.object(ofType: RLM_Reminder.self, forPrimaryKey: identifier.uuid)
             else { return .failure(.objectDeleted) }
@@ -160,7 +160,7 @@ internal class RLM_BasicController: BasicController {
         }
     }
 
-    internal func reminders(matching identifiers: [ReminderIdentifier]) -> Result<[RLM_Reminder], DatumError> {
+    internal func reminders(matching identifiers: [Identifier]) -> Result<[RLM_Reminder], DatumError> {
         return self.realm.map() { realm in
             return identifiers.compactMap({ realm.object(ofType: RLM_Reminder.self, forPrimaryKey: $0.uuid) })
         }

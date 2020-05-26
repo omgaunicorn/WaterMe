@@ -26,7 +26,7 @@ import Datum
 import UIKit
 
 protocol ReminderCollectionViewControllerDelegate: class {
-    func userDidSelect(reminderID: ReminderIdentifier,
+    func userDidSelect(reminderID: Identifier,
                        from view: UIView,
                        userActivityContinuation: NSUserActivityContinuedHandler?,
                        deselectAnimated: @escaping (Bool) -> Void,
@@ -115,7 +115,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         }
     }
 
-    func programmaticalySelectReminder(with identifier: ReminderIdentifier) -> (IndexPath, ((Bool) -> Void))? {
+    func programmaticalySelectReminder(with identifier: Identifier) -> (IndexPath, ((Bool) -> Void))? {
         guard
             let collectionView = self.collectionView,
             let indexPath = self.reminders?.indexPathOfReminder(with: identifier)
@@ -124,7 +124,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         return (indexPath, { collectionView.deselectItem(at: indexPath, animated: $0) })
     }
 
-    func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath? {
+    func indexPathOfReminder(with identifier: Identifier) -> IndexPath? {
         return self.reminders?.indexPathOfReminder(with: identifier)
     }
 
@@ -168,7 +168,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
             let reminder = self.reminders?[indexPath],
             let cell = collectionView.cellForItem(at: indexPath)
         else { return }
-        let identifier = ReminderIdentifier(rawValue: reminder.uuid)
+        let identifier = Identifier(rawValue: reminder.uuid)
         self.delegate?.userDidSelect(reminderID: identifier,
                                      from: cell,
                                      userActivityContinuation: nil,

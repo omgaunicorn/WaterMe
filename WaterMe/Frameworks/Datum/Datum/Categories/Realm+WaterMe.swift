@@ -83,7 +83,3 @@ extension String {
         }
     }
 }
-
-public protocol UUIDRepresentable {
-    var uuid: String { get }
-}

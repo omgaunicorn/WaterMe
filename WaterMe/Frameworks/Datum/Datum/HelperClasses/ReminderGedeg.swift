@@ -153,7 +153,7 @@ internal class ReminderGedeg: NSObject {
         return data[row]
     }
 
-    internal func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath? {
+    internal func indexPathOfReminder(with identifier: Identifier) -> IndexPath? {
         var indexPath: IndexPath?
         for (section, collection) in self.reminders {
             guard let row = collection.index(matching: "uuid = %@", identifier.uuid) else { continue }

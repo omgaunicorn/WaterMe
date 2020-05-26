@@ -13,6 +13,7 @@
 		4832F536246E7C05001B77F6 /* ReminderVessel+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F535246E7C05001B77F6 /* ReminderVessel+Helpers.swift */; };
 		483C96E0247BDEB200D45200 /* AnyCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C96DF247BDEB100D45200 /* AnyCollection.swift */; };
 		483C96EA247BE02200D45200 /* AnyQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C96E9247BE02200D45200 /* AnyQuery.swift */; };
+		483C96EF247D0FA700D45200 /* AnyLookupCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C96EE247D0FA700D45200 /* AnyLookupCollection.swift */; };
 		4841F7A124793C7700E42751 /* ReminderPerformCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4841F7A024793C7700E42751 /* ReminderPerformCollection.swift */; };
 		485482E2247A0FB000E3D4F0 /* ReminderPerformWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485482E0247A0DC200E3D4F0 /* ReminderPerformWrapper.swift */; };
 		485482E4247A0FC500E3D4F0 /* CD_ReminderPerformWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485482E3247A0FC500E3D4F0 /* CD_ReminderPerformWrapper.swift */; };
@@ -427,6 +428,7 @@
 		4832F535246E7C05001B77F6 /* ReminderVessel+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderVessel+Helpers.swift"; sourceTree = "<group>"; };
 		483C96DF247BDEB100D45200 /* AnyCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyCollection.swift; sourceTree = "<group>"; };
 		483C96E9247BE02200D45200 /* AnyQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyQuery.swift; sourceTree = "<group>"; };
+		483C96EE247D0FA700D45200 /* AnyLookupCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyLookupCollection.swift; sourceTree = "<group>"; };
 		4841F7A024793C7700E42751 /* ReminderPerformCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPerformCollection.swift; sourceTree = "<group>"; };
 		485482E0247A0DC200E3D4F0 /* ReminderPerformWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPerformWrapper.swift; sourceTree = "<group>"; };
 		485482E3247A0FC500E3D4F0 /* CD_ReminderPerformWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_ReminderPerformWrapper.swift; sourceTree = "<group>"; };
@@ -831,6 +833,7 @@
 			children = (
 				48B77EDF24677FD600EF25D3 /* BasicWrappers.swift */,
 				483C96DF247BDEB100D45200 /* AnyCollection.swift */,
+				483C96EE247D0FA700D45200 /* AnyLookupCollection.swift */,
 				483C96E9247BE02200D45200 /* AnyQuery.swift */,
 				48939EB024760A8D007D73E1 /* Reminder */,
 				485482D7247A0D8D00E3D4F0 /* ReminderPerform */,
@@ -1850,6 +1853,7 @@
 				503476B024552EFE00C3DAD3 /* ReminderGedeg.swift in Sources */,
 				503476B224552EFE00C3DAD3 /* ModelCompleteError.swift in Sources */,
 				48B77EE024677FD600EF25D3 /* BasicWrappers.swift in Sources */,
+				483C96EF247D0FA700D45200 /* AnyLookupCollection.swift in Sources */,
 				5090739E247115E90041099E /* GroupedReminderCollection.swift in Sources */,
 				508B2ECB24741F6200A497E4 /* CD_BasicController.swift in Sources */,
 				503476BD24552EFE00C3DAD3 /* RLM_BasicController.swift in Sources */,

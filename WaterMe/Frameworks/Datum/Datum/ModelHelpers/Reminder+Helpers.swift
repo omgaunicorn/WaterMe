@@ -114,13 +114,6 @@ public enum ReminderSection: Int, CaseIterable {
     }
 }
 
-public struct ReminderIdentifier: UUIDRepresentable, Hashable {
-    public var uuid: String
-    public init(rawValue: String) {
-        self.uuid = rawValue
-    }
-}
-
 public enum ReminderSortOrder {
     case nextPerformDate, interval, kind, note
     internal var keyPath: String {

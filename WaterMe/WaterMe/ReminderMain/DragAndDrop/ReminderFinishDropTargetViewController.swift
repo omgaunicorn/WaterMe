@@ -29,7 +29,7 @@ protocol ReminderFinishDropTargetViewControllerDelegate: class {
     func userDidStartDrag(with values: [ReminderAndVesselValue],
                           within: ReminderFinishDropTargetViewController)
     func animateAlongSideDropTargetViewResize(within: ReminderFinishDropTargetViewController) -> (() -> Void)?
-    func userDidPerformDrop(with reminders: [ReminderIdentifier],
+    func userDidPerformDrop(with reminders: [Identifier],
                             onTargetZoneWithin controller: ReminderFinishDropTargetViewController?)
 }
 

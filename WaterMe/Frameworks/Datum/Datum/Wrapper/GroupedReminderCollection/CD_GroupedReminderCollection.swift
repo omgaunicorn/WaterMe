@@ -37,7 +37,7 @@ internal class CD_GroupedReminderCollectionImp: GroupedReminderCollection {
         return 0
     }
 
-    internal func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath? {
+    internal func indexPathOfReminder(with identifier: Identifier) -> IndexPath? {
         return nil
     }
 }

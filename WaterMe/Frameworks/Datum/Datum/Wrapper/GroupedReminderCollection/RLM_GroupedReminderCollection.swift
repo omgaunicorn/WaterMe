@@ -52,7 +52,7 @@ internal class RLM_GroupedReminderCollectionImp: GroupedReminderCollection {
         return self.reminderGedeg?.numberOfItems(inSection: section) ?? 0
     }
 
-    internal func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath? {
+    internal func indexPathOfReminder(with identifier: Identifier) -> IndexPath? {
         return self.reminderGedeg?.indexPathOfReminder(with: identifier)
     }
 }

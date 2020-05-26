@@ -128,7 +128,7 @@ internal class CD_BasicController: BasicController {
         return CD_GroupedReminderCollectionImp()
     }
     
-    func reminderVessel(matching _id: ReminderVesselIdentifier) -> Result<ReminderVessel, DatumError> {
+    func reminderVessel(matching _id: Identifier) -> Result<ReminderVessel, DatumError> {
         let coordinator = self.container.persistentStoreCoordinator
         let context = self.container.viewContext
         guard
@@ -138,7 +138,7 @@ internal class CD_BasicController: BasicController {
         return .success(CD_ReminderVesselWrapper(reminderVessel, context: { self.container.viewContext }))
     }
     
-    func reminder(matching _id: ReminderIdentifier) -> Result<Reminder, DatumError> {
+    func reminder(matching _id: Identifier) -> Result<Reminder, DatumError> {
         let coordinator = self.container.persistentStoreCoordinator
         let context = self.container.viewContext
         guard
@@ -198,7 +198,7 @@ internal class CD_BasicController: BasicController {
         }
     }
     
-    func appendNewPerformToReminders(with _ids: [ReminderIdentifier]) -> Result<Void, DatumError> {
+    func appendNewPerformToReminders(with _ids: [Identifier]) -> Result<Void, DatumError> {
         let coordinator = self.container.persistentStoreCoordinator
         let ids = _ids.compactMap { coordinator.managedObjectID(forURIRepresentation: URL(string: $0.uuid)!) }
         assert(ids.count == _ids.count, "We lost an object")
