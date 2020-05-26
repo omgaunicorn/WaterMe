@@ -24,32 +24,40 @@
 public protocol BaseCollection {
     associatedtype Element
     associatedtype Index
-    var count: Int { get }
-    subscript(index: Index) -> Element { get }
+    subscript(index: Index) -> Element? { get }
+    /// Intended to give count of grouping above item at `index`.
+    /// Pass `nil` to get the number of sections
+    /// Convenience `count: Int` property provided as conditional conformance `where Index == Int`
+    /// Convenience `numberOfSections: Int` property provided as conditional conformance `where Index == IndexPath`
+    func count(at index: Index?) -> Int?
     func index(of item: Element) -> Index?
     func indexOfItem(with identifier: Identifier) -> Index?
 }
 
 public struct AnyCollection<Element, Index>: BaseCollection {
 
-    private let _count: () -> Int
-    private let _subscript: (Index) -> Element
+    private let _count: (Index?) -> Int?
+    private let _subscript: (Index) -> Element?
     private let _index1: (Element) -> Index?
     private let _index2: (Identifier) -> Index?
     
     internal init<T: BaseCollection>(_ collection: T) where T.Element == Element, T.Index == Index {
         _subscript = { collection[$0] }
-        _count = { collection.count }
+        _count =  collection.count
         _index1 = collection.index
         _index2 = collection.indexOfItem
     }
     
-    public var count: Int {
-        return _count()
+    public subscript(index: Index) -> Element? {
+        return _subscript(index)
     }
     
-    public subscript(index: Index) -> Element {
-        return _subscript(index)
+    /// Intended to give count of grouping above item at `index`.
+    /// Pass `nil` to get the number of sections
+    /// Convenience `count: Int` property provided as conditional conformance `where Index == Int`
+    /// Convenience `numberOfSections: Int` property provided as conditional conformance `where Index == IndexPath`
+    public func count(at index: Index?) -> Int? {
+        return _count(index)
     }
     
     public func index(of item: Element) -> Index? {
@@ -62,11 +70,21 @@ public struct AnyCollection<Element, Index>: BaseCollection {
 }
 
 extension BaseCollection where Index == Int {
-    public func compactMap<NewElement>(_ transform: (Element) throws -> NewElement?) rethrows -> [NewElement] {
+    public var count: Int {
+        return self.count(at: 0) ?? 0
+    }
+    
+    public func compactMap<NewElement>(_ transform: (Element?) throws -> NewElement?) rethrows -> [NewElement] {
         return try (0..<self.count).compactMap { try transform(self[$0]) }
     }
     
-    public func map<NewElement>(_ transform: (Element) throws -> NewElement) rethrows -> [NewElement] {
+    public func map<NewElement>(_ transform: (Element?) throws -> NewElement) rethrows -> [NewElement?] {
         return try (0..<self.count).map { try transform(self[$0]) }
+    }
+}
+
+extension BaseCollection where Index ==  IndexPath {
+    public var numberOfSections: Int {
+        return self.count(at: nil) ?? 0
     }
 }

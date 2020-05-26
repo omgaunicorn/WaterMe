@@ -35,11 +35,14 @@ internal class CD_ReminderCollection: BaseCollection {
         self.controller = controller
         self.context = context
     }
-    
-    var count: Int { self.controller.fetchedObjects?.count ?? 0 }
-    
-    subscript(index: Int) -> Reminder {
+        
+    subscript(index: Int) -> Reminder? {
         return self.transform(self.controller.object(at: IndexPath(row: index, section: 0)), self.context)
+    }
+    
+    func count(at index: Int?) -> Int? {
+        guard index != nil else { return 1 }
+        return self.controller.fetchedObjects?.count
     }
     
     func compactMap<E>(_ transform: (Reminder) throws -> E?) rethrows -> [E] {

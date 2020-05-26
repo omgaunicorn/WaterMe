@@ -32,15 +32,18 @@ internal class CD_ReminderVesselCollection: BaseCollection {
         self.controller = controller
         self.context = context
     }
-    
-    var count: Int { self.controller.fetchedObjects?.count ?? 0 }
-    
-    subscript(index: Int) -> ReminderVessel {
+        
+    subscript(index: Int) -> ReminderVessel? {
         let reminderVessel = self.controller.object(at: IndexPath(row: index, section: 0))
         return CD_ReminderVesselWrapper(reminderVessel,
                                         context: self.context)
     }
     
+    func count(at index: Int?) -> Int? {
+        guard index != nil else { return 1 }
+        return self.controller.fetchedObjects?.count
+    }
+
     func index(of item: ReminderVessel) -> Int? {
         // TODO: Fix this
         return nil

@@ -31,9 +31,13 @@ internal class RLM_ReminderVesselCollection: BaseCollection {
     internal init(_ collection: AnyRealmCollection<RLM_ReminderVessel>) {
         self.collection = collection
     }
-    public var count: Int { self.collection.count }
     
-    public subscript(index: Int) -> ReminderVessel { self.transform(self.collection[index]) }
+    public subscript(index: Int) -> ReminderVessel? { self.transform(self.collection[index]) }
+    
+    func count(at index: Int?) -> Int? {
+        guard index != nil else { return 1 }
+        return self.collection.count
+    }
     
     func index(of item: ReminderVessel) -> Int? {
         // TODO: Fix this

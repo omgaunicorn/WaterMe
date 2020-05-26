@@ -32,13 +32,14 @@ internal class RLM_ReminderCollection: BaseCollection {
         self.collection = collection
     }
     
-    var count: Int { self.collection.count }
+    subscript(index: Int) -> Reminder? { self.transform(self.collection[index]) }
     
-    var isInvalidated: Bool { self.collection.isInvalidated }
+    func count(at index: Int?) -> Int? {
+        guard index != nil else { return 1 }
+        return self.collection.count
+    }
     
-    subscript(index: Int) -> Reminder { self.transform(self.collection[index]) }
-    
-    func compactMap<NewElement>(_ transform: (Reminder) throws -> NewElement?) rethrows -> [NewElement] {
+    func compactMap<NewElement>(_ transform: (Element?) throws -> NewElement?) rethrows -> [NewElement] {
         return try self.collection.compactMap { try transform(self.transform($0)) }
     }
     
