@@ -32,19 +32,13 @@ public protocol ReminderVessel: ModelCompleteCheckable {
     func observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken
 }
 
-public enum ReminderVesselChange {
-    case error(Error)
-    case change(Details)
-    case deleted
-}
+public typealias ReminderVesselChange = ItemChange<ReminderVesselChanges>
 
-extension ReminderVesselChange {
-    public struct Details {
-        public var changedDisplayName = false
-        public var changedIconEmoji = false
-        public var changedReminders = false
-        public var changedPointlessBloop = false
-    }
+public struct ReminderVesselChanges {
+    public var changedDisplayName = false
+    public var changedIconEmoji = false
+    public var changedReminders = false
+    public var changedPointlessBloop = false
 }
 
 public typealias ReminderVesselCollection = AnyCollection<ReminderVessel, Int>

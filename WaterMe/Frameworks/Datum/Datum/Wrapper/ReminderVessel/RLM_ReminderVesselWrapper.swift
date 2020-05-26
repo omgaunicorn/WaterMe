@@ -41,8 +41,8 @@ extension RLM_ReminderVesselWrapper {
     func observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken {
         return self.wrappedObject.observe { realmChange in
             switch realmChange {
-            case .error(let error):
-                block(.error(error))
+            case .error:
+                block(.error(.readError))
             case .change(let properties):
                 let changedDisplayName = RLM_ReminderVessel.propertyChangesContainDisplayName(properties)
                 let changedIconEmoji = RLM_ReminderVessel.propertyChangesContainIconEmoji(properties)

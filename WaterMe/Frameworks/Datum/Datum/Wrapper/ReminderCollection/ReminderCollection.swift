@@ -35,10 +35,4 @@ public protocol ReminderQuery {
     func observe(_: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken
 }
 
-public enum ReminderChange {
-    case error(Error)
-    case change
-    case deleted
-}
-
 public typealias ReminderCollectionChange = CollectionChange<ReminderCollection, Int>

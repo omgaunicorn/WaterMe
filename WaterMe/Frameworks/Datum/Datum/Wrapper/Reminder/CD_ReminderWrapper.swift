@@ -53,7 +53,7 @@ internal struct CD_ReminderWrapper: Reminder {
                 let queue = DispatchQueue.main
                 let updatedObjects = notification.userInfo?[NSUpdatedObjectsKey] as? NSSet
                 if updatedObjects?.contains(wrappedObject) == true {
-                    queue.async { block(.change) }
+                    queue.async { block(.change(())) }
                     return
                 }
                 let deletedObjects = notification.userInfo?[NSDeletedObjectsKey] as? NSSet

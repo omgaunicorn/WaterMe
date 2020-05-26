@@ -150,8 +150,8 @@ internal class ReminderGedegV2<
     }
 
     private class Batcher {
-        typealias OutputUpdate = Update<IndexPath>
-        typealias InputUpdate = Update<Query.Index>
+        typealias OutputUpdate = CollectionChangeUpdate<IndexPath>
+        typealias InputUpdate = CollectionChangeUpdate<Query.Index>
         private var timer: Timer?
         private var updates = [OutputUpdate]()
         var batchFired: ((OutputChange) -> Void)?

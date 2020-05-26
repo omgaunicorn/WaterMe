@@ -43,9 +43,9 @@ internal struct RLM_ReminderWrapper: Reminder {
         return self.wrappedObject.observe { realmChange in
             switch realmChange {
             case .error(let error):
-                block(.error(error))
+                block(.error(.readError))
             case .change:
-                block(.change)
+                block(.change(()))
             case .deleted:
                 block(.deleted)
             }

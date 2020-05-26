@@ -24,13 +24,19 @@
 import RealmSwift
 import CoreData
 
+public enum ItemChange<Deets> {
+    case error(DatumError)
+    case change(Deets)
+    case deleted
+}
+
 public enum CollectionChange<Collection, Deets> {
     case initial(data: Collection)
-    case update(Update<Deets>)
+    case update(CollectionChangeUpdate<Deets>)
     case error(error: DatumError)
 }
 
-public struct Update<U> {
+public struct CollectionChangeUpdate<U> {
     public var insertions: [U] = []
     public var deletions: [U] = []
     public var modifications: [U] = []
@@ -39,16 +45,16 @@ public struct Update<U> {
     }
 }
 
-extension Update where U == Int {
-    public func transformed(newSection section: Int) -> Update<IndexPath> {
+extension CollectionChangeUpdate where U == Int {
+    public func transformed(newSection section: Int) -> CollectionChangeUpdate<IndexPath> {
         return .init(insertions: self.insertions.map { IndexPath(row: $0, section: section) },
                      deletions: self.deletions.map { IndexPath(row: $0, section: section) },
                      modifications: self.modifications.map { IndexPath(row: $0, section: section) })
     }
 }
 
-extension Update where U == IndexPath {
-    public func transformed() -> Update<Int> {
+extension CollectionChangeUpdate where U == IndexPath {
+    public func transformed() -> CollectionChangeUpdate<Int> {
         return .init(insertions: self.insertions.map { $0.row },
                      deletions: self.deletions.map { $0.row },
                      modifications: self.modifications.map { $0.row })
@@ -103,9 +109,9 @@ internal class TokenWrapper: ObservationToken {
 }
 
 internal class UpdatingFetchedResultsControllerDelegate: NSObject, NSFetchedResultsControllerDelegate {
-    private var changeInFlight: Update<IndexPath>!
-    private let block: (Update<IndexPath>) -> Void
-    internal init(_ block: @escaping (Update<IndexPath>) -> Void) {
+    private var changeInFlight: CollectionChangeUpdate<IndexPath>!
+    private let block: (CollectionChangeUpdate<IndexPath>) -> Void
+    internal init(_ block: @escaping (CollectionChangeUpdate<IndexPath>) -> Void) {
         self.block = block
         super.init()
     }
