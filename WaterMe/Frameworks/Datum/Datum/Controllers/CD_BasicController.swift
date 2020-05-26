@@ -239,7 +239,15 @@ internal class CD_BasicController: BasicController {
     }
     
     func delete(reminder: Reminder) -> Result<Void, DatumError> {
-        return .failure(.loadError)
+        let context = self.container.viewContext
+        let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
+        context.delete(reminder)
+        do {
+            try context.save()
+            return .success(())
+        } catch {
+            return .failure(.writeError)
+        }
     }
 
     // MARK: Random
