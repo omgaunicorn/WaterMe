@@ -33,7 +33,7 @@ import Foundation
 internal class ReminderGedegV2<
     Query: CollectionQuery,
     Section: Hashable & RawRepresentable
-    > : NSObject, ObservationToken
+    > : NSObject, BaseCollection, ObservationToken
     where Query.Index == Int,
           Section.RawValue == Int
 {
@@ -41,23 +41,31 @@ internal class ReminderGedegV2<
     internal typealias InputChange = CollectionChange<AnyCollection<Query.Element, Query.Index>, Query.Index>
     internal typealias OutputChange = CollectionChange<ReminderGedegV2, IndexPath>
     
+    // MARK: IVAR Storage
+    
     private var data: [Section : AnyCollection<Query.Element, Query.Index>] = [:]
     private let queries: [Section : Query]
     private let updateBatcher = Batcher()
     
+    // TODO: Consider removing the closure from here. Its not used
     private var currentObserver: (closure: ((OutputChange) -> Void)?, tokens: [ObservationToken])?
 
-    internal var allSectionsFinishedLoading: Bool {
+    private var allSectionsFinishedLoading: Bool {
         return self.data.count == self.queries.count
     }
+    
+    // MARK: INIT
 
-    internal init?(queries: [Section : Query]) {
+    init?(queries: [Section : Query]) {
         self.queries = queries
         super.init()
     }
     
-    internal func observe(_ block: @escaping (OutputChange) -> Void) -> ObservationToken {
-        guard self.currentObserver == nil else { return self }
+    func observe(_ block: @escaping (OutputChange) -> Void) -> ObservationToken {
+        guard self.currentObserver == nil else {
+            assertionFailure("")
+            return self
+        }
         self.updateBatcher.batchFired = block
         var tokens = [ObservationToken]()
         for (section, query) in self.queries {
@@ -81,21 +89,25 @@ internal class ReminderGedegV2<
         self.currentObserver = (block, tokens)
         return self
     }
+    
+    // MARK: BaseCollection
 
-    internal var numberOfSections: Int {
+    func count(at index: IndexPath?) -> Int? {
         // if we haven't finished loading data, always return 0
         guard self.allSectionsFinishedLoading == true else {
             return 0
         }
-        return self.data.count
-    }
-
-    internal func numberOfItems(inSection _section: Int) -> Int {
+        
+        // if NIL, return `numberOfSections`
+        guard let index = index else {
+            return self.data.count
+        }
+        
         guard
-            let section = Section(rawValue: _section),
+            let section = Section(rawValue: index.section),
             let collection = self.data[section]
         else {
-            let error = NSError(dataForSectionWasNilInNumberOfItemsInSection: _section)
+            let error = NSError(dataForSectionWasNilInNumberOfItemsInSection: index.section)
             assertionFailure(error.localizedDescription)
             log.error(error)
             return 0
@@ -103,12 +115,17 @@ internal class ReminderGedegV2<
         return collection.count
     }
 
-    internal func reminder(at indexPath: IndexPath) -> Query.Element? {
+    subscript(index: IndexPath) -> Query.Element? {
+        // if we haven't finished loading data, always return 0
+        guard self.allSectionsFinishedLoading == true else {
+            return nil
+        }
+        
         guard
-            let section = Section(rawValue: indexPath.section),
+            let section = Section(rawValue: index.section),
             let collection = self.data[section]
         else {
-            let error = NSError(dataForSectionWasNilInReminderAtIndexPath: indexPath)
+            let error = NSError(dataForSectionWasNilInReminderAtIndexPath: index)
             assertionFailure(String(describing: error))
             log.error(error)
             return nil
@@ -118,9 +135,9 @@ internal class ReminderGedegV2<
         // FIXME: Crasher Workaround - http://crashes.to/s/ba8c0f6c9ad
         // Sometimes this method is called when an index out of bounds.
         // This should not happen, but this check works around it.
-        let row = indexPath.row
+        let row = index.row
         guard collection.count > row else {
-            let error = NSError(outOfBoundsRowAtIndexPath: indexPath)
+            let error = NSError(outOfBoundsRowAtIndexPath: index)
             assertionFailure(String(describing: error))
             log.error(error)
             return nil
@@ -128,17 +145,35 @@ internal class ReminderGedegV2<
 
         return collection[row]
     }
+    
+    func index(of item: Query.Element) -> IndexPath? {
+        // if we haven't finished loading data, always return 0
+        guard self.allSectionsFinishedLoading == true else {
+            return nil
+        }
+        
+        for (section, collection) in self.data {
+            guard let row = collection.index(of: item) else { continue }
+            return IndexPath(row: row, section: section.rawValue)
+        }
+        return nil
+    }
+    
+    func indexOfItem(with identifier: Identifier) -> IndexPath? {
+        // if we haven't finished loading data, always return 0
+        guard self.allSectionsFinishedLoading == true else {
+            return nil
+        }
+        
+        for (section, collection) in self.data {
+            guard let row = collection.indexOfItem(with: identifier) else { continue }
+            return IndexPath(row: row, section: section.rawValue)
+        }
+        return nil
+    }
 
-    // TODO: Try to add this back
-//    internal func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath? {
-//        var indexPath: IndexPath?
-//        for (section, collection) in self.reminders {
-//            guard let row = collection.index(matching: "uuid = %@", identifier.uuid) else { continue }
-//            indexPath = IndexPath(row: row, section: section.rawValue)
-//        }
-//        return indexPath
-//    }
-
+    // MARK: ObservationToken
+    
     internal func invalidate() {
         let tokens = self.currentObserver?.tokens
         self.currentObserver = nil
@@ -148,6 +183,8 @@ internal class ReminderGedegV2<
     deinit {
         self.invalidate()
     }
+    
+    // MARK: Group the Updates
 
     private class Batcher {
         typealias OutputUpdate = CollectionChangeUpdate<IndexPath>
