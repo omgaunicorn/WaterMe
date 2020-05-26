@@ -30,6 +30,38 @@ public struct Identifier: Hashable, Codable {
 
 public protocol LookupCollection: BaseCollection {
     func index(of item: Element) -> Index?
+    func indexOfItem(with identifier: Identifier) -> Index?
+}
+
+public struct AnyLookupCollection<Element, Index>: LookupCollection {
+
+    private let _count: () -> Int
+    private let _subscript: (Index) -> Element
+    private let _index1: (Element) -> Index?
+    private let _index2: (Identifier) -> Index?
+    
+    internal init<T: LookupCollection>(_ collection: T) where T.Element == Element, T.Index == Index {
+        _subscript = { collection[$0] }
+        _count = { collection.count }
+        _index1 = collection.index
+        _index2 = collection.indexOfItem
+    }
+    
+    public var count: Int {
+        return _count()
+    }
+    
+    public subscript(index: Index) -> Element {
+        return _subscript(index)
+    }
+    
+    public func index(of item: Element) -> Index? {
+        return _index1(item)
+    }
+    
+    public func indexOfItem(with identifier: Identifier) -> Index? {
+        return _index2(identifier)
+    }
 }
 
 
