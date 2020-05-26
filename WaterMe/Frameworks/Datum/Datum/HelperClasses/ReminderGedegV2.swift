@@ -33,13 +33,14 @@ import Foundation
 internal class ReminderGedegV2<
     Query: CollectionQuery,
     Section: Hashable & RawRepresentable
-    > : NSObject, BaseCollection, ObservationToken
+    >
+    : NSObject, BaseCollection, CollectionQuery, ObservationToken
     where Query.Index == Int,
           Section.RawValue == Int
 {
     
     internal typealias InputChange = CollectionChange<AnyCollection<Query.Element, Query.Index>, Query.Index>
-    internal typealias OutputChange = CollectionChange<ReminderGedegV2, IndexPath>
+    internal typealias OutputChange = CollectionChange<AnyCollection<Query.Element, IndexPath>, IndexPath>
     
     // MARK: IVAR Storage
     
@@ -61,6 +62,8 @@ internal class ReminderGedegV2<
         super.init()
     }
     
+    // MARK: CollectionQuery
+    
     func observe(_ block: @escaping (OutputChange) -> Void) -> ObservationToken {
         guard self.currentObserver == nil else {
             assertionFailure("")
@@ -75,7 +78,7 @@ internal class ReminderGedegV2<
                 case .initial(let data):
                     self.data[section] = data
                     if self.allSectionsFinishedLoading {
-                        block(.initial(data: self))
+                        block(.initial(data: AnyCollection(self)))
                     }
                 case .update(let change):
                     self.updateBatcher.append(change: change, for: section)
