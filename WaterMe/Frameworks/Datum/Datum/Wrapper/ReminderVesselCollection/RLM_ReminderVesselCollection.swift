@@ -23,7 +23,7 @@
 
 import RealmSwift
 
-internal class RLM_ReminderVesselCollection: Datum.Collection {
+internal class RLM_ReminderVesselCollection: BaseCollection {
     private let collection: AnyRealmCollection<RLM_ReminderVessel>
     private let transform: (RLM_ReminderVessel) -> ReminderVessel = { RLM_ReminderVesselWrapper($0) }
     internal init(_ collection: AnyRealmCollection<RLM_ReminderVessel>) {

@@ -23,7 +23,7 @@
 
 import CoreData
 
-internal class CD_ReminderVesselCollection: Datum.Collection {
+internal class CD_ReminderVesselCollection: BaseCollection {
     private let controller: CD_ReminderVesselQuery.Controller
     private var context: LazyContext!
     

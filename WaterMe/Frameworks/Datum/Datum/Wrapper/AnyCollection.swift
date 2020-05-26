@@ -21,19 +21,19 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-public protocol Collection {
+public protocol BaseCollection {
     associatedtype Element
     associatedtype Index
     var count: Int { get }
     subscript(index: Index) -> Element { get }
 }
 
-public struct AnyCollection<Element, Index>: Collection {
+public struct AnyCollection<Element, Index>: BaseCollection {
     
     private let _count: () -> Int
     private let _subscript: (Index) -> Element
     
-    internal init<T: Collection>(_ collection: T) where T.Element == Element, T.Index == Index {
+    internal init<T: BaseCollection>(_ collection: T) where T.Element == Element, T.Index == Index {
         _subscript = { collection[$0] }
         _count = { collection.count }
     }
