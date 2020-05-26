@@ -89,13 +89,16 @@ internal class RLM_BasicController: BasicController {
     }
 
     internal func allReminders(sorted: ReminderSortOrder = .nextPerformDate,
-                             ascending: Bool = true) -> Result<ReminderQuery, DatumError>
+                               ascending: Bool = true)
+                               -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     {
         return self.realm.map {
-            RLM_ReminderQuery(
-                AnyRealmCollection($0.objects(RLM_Reminder.self)
-                    .sorted(byKeyPath: sorted.keyPath,
-                            ascending: ascending)
+            AnyCollectionQuery(
+                RLM_ReminderQuery(
+                    AnyRealmCollection($0.objects(RLM_Reminder.self)
+                        .sorted(byKeyPath: sorted.keyPath,
+                                ascending: ascending)
+                    )
                 )
             )
         }
@@ -106,8 +109,9 @@ internal class RLM_BasicController: BasicController {
     }
 
     internal func reminders(in section: ReminderSection,
-                          sorted: ReminderSortOrder = .nextPerformDate,
-                          ascending: Bool = true) -> Result<ReminderQuery, DatumError>
+                            sorted: ReminderSortOrder = .nextPerformDate,
+                            ascending: Bool = true)
+                            -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     {
         return self.realm.map() { realm in
             let range = section.dateInterval
@@ -130,10 +134,10 @@ internal class RLM_BasicController: BasicController {
                 )
                 let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [nilCheck, andPredicate])
                 let collection = realm.objects(RLM_Reminder.self).filter(orPredicate).sorted(byKeyPath: sorted.keyPath, ascending: ascending)
-                return RLM_ReminderQuery(AnyRealmCollection(collection))
+                return AnyCollectionQuery(RLM_ReminderQuery(AnyRealmCollection(collection)))
             } else {
                 let collection = realm.objects(RLM_Reminder.self).filter(andPredicate).sorted(byKeyPath: sorted.keyPath, ascending: ascending)
-                return RLM_ReminderQuery(AnyRealmCollection(collection))
+                return AnyCollectionQuery(RLM_ReminderQuery(AnyRealmCollection(collection)))
             }
         }
     }

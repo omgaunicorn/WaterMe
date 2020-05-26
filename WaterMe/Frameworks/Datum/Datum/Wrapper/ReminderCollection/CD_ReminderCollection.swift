@@ -25,7 +25,8 @@ import CoreData
 
 internal typealias LazyContext = () -> NSManagedObjectContext
 
-internal class CD_ReminderCollection: ReminderCollection {
+internal class CD_ReminderCollection: BaseCollection {
+    
     private let controller: CD_ReminderQuery.Controller
     private let context: LazyContext
     private let transform: (CD_Reminder, @escaping LazyContext) -> Reminder = { CD_ReminderWrapper($0, context: $1) }
@@ -34,21 +35,33 @@ internal class CD_ReminderCollection: ReminderCollection {
         self.controller = controller
         self.context = context
     }
+    
     var count: Int { self.controller.fetchedObjects?.count ?? 0 }
+    
     subscript(index: Int) -> Reminder {
         return self.transform(self.controller.object(at: IndexPath(row: index, section: 0)), self.context)
     }
-    var isInvalidated: Bool { false }
+    
     func compactMap<E>(_ transform: (Reminder) throws -> E?) rethrows -> [E] {
         return try self.controller.fetchedObjects?.compactMap { try transform(self.transform($0, self.context)) } ?? []
     }
-    func index(matching predicateFormat: String, _ args: Any...) -> Int? {
+    
+    func index(of item: Reminder) -> Int? {
+        // TODO: Fix this
+        return nil
+    }
+    
+    func indexOfItem(with identifier: Identifier) -> Int? {
         // TODO: Fix this
         return nil
     }
 }
 
-internal class CD_ReminderQuery: ReminderQuery {
+internal class CD_ReminderQuery: CollectionQuery {
+    
+    typealias Index = Int
+    typealias Element = Reminder
+    
     typealias Controller = NSFetchedResultsController<CD_Reminder>
     private let controller: Controller
     private let context: LazyContext
@@ -68,7 +81,7 @@ internal class CD_ReminderQuery: ReminderQuery {
         DispatchQueue.main.async {
             do {
                 try self.controller.performFetch()
-                closure(.initial(data: CD_ReminderCollection(self.controller, context: self.context)))
+                closure(.initial(data: AnyCollection(CD_ReminderCollection(self.controller, context: self.context))))
             } catch {
                 closure(.error(error: .readError))
             }

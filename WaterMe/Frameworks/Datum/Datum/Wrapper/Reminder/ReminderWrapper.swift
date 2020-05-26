@@ -43,3 +43,5 @@ public protocol Reminder: ModelCompleteCheckable {
 }
 
 public typealias ReminderChange = ItemChange<Void>
+public typealias ReminderCollection = AnyCollection<Reminder, Int>
+public typealias ReminderCollectionChange = CollectionChange<ReminderCollection, Int>

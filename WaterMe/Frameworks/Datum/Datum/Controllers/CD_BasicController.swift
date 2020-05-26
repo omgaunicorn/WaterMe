@@ -112,7 +112,8 @@ internal class CD_BasicController: BasicController {
         return .success(AnyCollectionQuery(query))
     }
     
-    func allReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<ReminderQuery, DatumError> {
+    func allReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<AnyCollectionQuery<Reminder, Int>, DatumError> {
+
         let context = self.container.viewContext
         let fr = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
         fr.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_Reminder.nextPerformDate), ascending: true)]
@@ -121,7 +122,7 @@ internal class CD_BasicController: BasicController {
                                              sectionNameKeyPath: nil,
                                              cacheName: nil)
         let query = CD_ReminderQuery(frc, context: { self.container.viewContext })
-        return .success(query)
+        return .success(AnyCollectionQuery(query))
     }
     
     func groupedReminders() -> GroupedReminderCollection {

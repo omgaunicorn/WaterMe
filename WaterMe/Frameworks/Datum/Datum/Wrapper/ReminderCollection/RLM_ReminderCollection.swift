@@ -23,34 +23,49 @@
 
 import RealmSwift
 
-internal class RLM_ReminderCollection: ReminderCollection {
+internal class RLM_ReminderCollection: BaseCollection {
+    
     private let collection: AnyRealmCollection<RLM_Reminder>
     private let transform: (RLM_Reminder) -> Reminder = { RLM_ReminderWrapper($0) }
+    
     internal init(_ collection: AnyRealmCollection<RLM_Reminder>) {
         self.collection = collection
     }
     
     var count: Int { self.collection.count }
+    
     var isInvalidated: Bool { self.collection.isInvalidated }
+    
     subscript(index: Int) -> Reminder { self.transform(self.collection[index]) }
-    func compactMap<E>(_ transform: (Reminder) throws -> E?) rethrows -> [E] {
+    
+    func compactMap<NewElement>(_ transform: (Reminder) throws -> NewElement?) rethrows -> [NewElement] {
         return try self.collection.compactMap { try transform(self.transform($0)) }
     }
-    func index(matching predicateFormat: String, _ args: Any...) -> Int? {
-        return self.collection.index(matching: predicateFormat, args)
+    
+    func index(of item: Reminder) -> Int? {
+        // TODO: Fix this
+        return nil
+    }
+    
+    func indexOfItem(with identifier: Identifier) -> Int? {
+        // TODO: Fix this
+        return nil
     }
 }
 
-internal class RLM_ReminderQuery: ReminderQuery {
+internal class RLM_ReminderQuery: CollectionQuery {
+    
     private let collection: AnyRealmCollection<RLM_Reminder>
+    
     init(_ collection: AnyRealmCollection<RLM_Reminder>) {
         self.collection = collection
     }
+    
     func observe(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
         return self.collection.observe { realmChange in
             switch realmChange {
             case .initial(let data):
-                block(.initial(data: RLM_ReminderCollection(data)))
+                block(.initial(data: AnyCollection(RLM_ReminderCollection(data))))
             case .update(_, let deletions, let insertions, let modifications):
                 block(.update(.init(insertions: insertions, deletions: deletions, modifications: modifications)))
             case .error:

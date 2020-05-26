@@ -154,12 +154,16 @@ internal class ReminderGedeg: NSObject {
     }
 
     internal func indexPathOfReminder(with identifier: Identifier) -> IndexPath? {
+        // TODO: Fix this
+        return nil
+        /*
         var indexPath: IndexPath?
         for (section, collection) in self.reminders {
             guard let row = collection.index(matching: "uuid = %@", identifier.uuid) else { continue }
             indexPath = IndexPath(row: row, section: section.rawValue)
         }
         return indexPath
+         */
     }
 
     private var tokens: [ObservationToken] = []

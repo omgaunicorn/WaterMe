@@ -26,16 +26,22 @@ public protocol BaseCollection {
     associatedtype Index
     var count: Int { get }
     subscript(index: Index) -> Element { get }
+    func index(of item: Element) -> Index?
+    func indexOfItem(with identifier: Identifier) -> Index?
 }
 
 public struct AnyCollection<Element, Index>: BaseCollection {
 
     private let _count: () -> Int
     private let _subscript: (Index) -> Element
+    private let _index1: (Element) -> Index?
+    private let _index2: (Identifier) -> Index?
     
     internal init<T: BaseCollection>(_ collection: T) where T.Element == Element, T.Index == Index {
         _subscript = { collection[$0] }
         _count = { collection.count }
+        _index1 = collection.index
+        _index2 = collection.indexOfItem
     }
     
     public var count: Int {
@@ -44,6 +50,14 @@ public struct AnyCollection<Element, Index>: BaseCollection {
     
     public subscript(index: Index) -> Element {
         return _subscript(index)
+    }
+    
+    public func index(of item: Element) -> Index? {
+        return _index1(item)
+    }
+    
+    public func indexOfItem(with identifier: Identifier) -> Index? {
+        return _index2(identifier)
     }
 }
 

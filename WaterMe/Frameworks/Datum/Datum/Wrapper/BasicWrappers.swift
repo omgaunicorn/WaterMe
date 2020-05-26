@@ -24,6 +24,13 @@
 import RealmSwift
 import CoreData
 
+public struct Identifier: Hashable, Codable {
+    public var uuid: String
+    public init(rawValue: String) {
+        self.uuid = rawValue
+    }
+}
+
 public enum ItemChange<Deets> {
     case error(DatumError)
     case change(Deets)

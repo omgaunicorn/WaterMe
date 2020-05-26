@@ -24,6 +24,7 @@
 import CoreData
 
 internal class CD_ReminderVesselCollection: BaseCollection {
+    
     private let controller: CD_ReminderVesselQuery.Controller
     private var context: LazyContext!
     
@@ -33,10 +34,21 @@ internal class CD_ReminderVesselCollection: BaseCollection {
     }
     
     var count: Int { self.controller.fetchedObjects?.count ?? 0 }
+    
     subscript(index: Int) -> ReminderVessel {
         let reminderVessel = self.controller.object(at: IndexPath(row: index, section: 0))
         return CD_ReminderVesselWrapper(reminderVessel,
                                         context: self.context)
+    }
+    
+    func index(of item: ReminderVessel) -> Int? {
+        // TODO: Fix this
+        return nil
+    }
+    
+    func indexOfItem(with identifier: Identifier) -> Int? {
+        // TODO: Fix this
+        return nil
     }
 }
 

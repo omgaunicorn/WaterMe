@@ -146,6 +146,9 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
             // this was sometimes causing a crash because the underlying object was deleted
             // But in reality the underlying object should always be set to NIL if it gets deleted
             let data = self.remindersData
+            
+            // TODO: Removing this because Core Data doesn't have this concept
+            /*
             let invalidated = data?.isInvalidated ?? false
             guard invalidated == false else {
                 let error = NSError(underlyingObjectInvalidated: nil)
@@ -154,6 +157,8 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 Analytics.log(error: error)
                 return 0
             }
+            */
+            
             return data?.count ?? 0
         case .siriShortcuts:
             return SiriShortcut.allCases.count
