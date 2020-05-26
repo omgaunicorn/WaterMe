@@ -45,7 +45,7 @@ internal class ReminderGedeg: NSObject {
         super.init()
         guard let basicRC = basicRC else { return nil }
         self.updateBatcher.batchFired = { [unowned self] changes in
-            self.changesObserved(.update((insertions: changes.ins, deletions: changes.dels, modifications: changes.mods)))
+            self.changesObserved(.update(.init(insertions: changes.ins, deletions: changes.dels, modifications: changes.mods)))
         }
         for section in ReminderSection.allCases {
             let result = basicRC.reminders(in: section, sorted: .nextPerformDate, ascending: true)
@@ -68,9 +68,10 @@ internal class ReminderGedeg: NSObject {
             if self.allSectionsFinishedLoading == true {
                 self.changesObserved(.initial(data: ()))
             }
-        case .update(let ins, let del, let mod):
+        case .update(let updates):
+            let (ins, dels, mods) = updates.ez
             self.updateBatcher.appendUpdateExtendingTimer(
-                Update(section: section, deletions: del, insertions: ins, modifications: mod)
+                Update(section: section, deletions: dels, insertions: ins, modifications: mods)
             )
         case .error(let error):
             self.invalidate()

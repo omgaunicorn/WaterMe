@@ -157,7 +157,7 @@ internal class ReminderGedegV2<
         var batchFired: ((OutputChange) -> Void)?
         func append(change: InputUpdate, for section: Section) {
             self.timer?.invalidate()
-            let transformed = Transform_Update_IntToIndex(change, section.rawValue)
+            let transformed = change.transformed(newSection: section.rawValue)
             self.updates.append(transformed)
             self.timer = Timer.scheduledTimer(timeInterval: 0.001,
                                               target: self,
@@ -174,9 +174,9 @@ internal class ReminderGedegV2<
             let ins = Set(updates.flatMap { $0.insertions })
             let dels = Set(updates.flatMap { $0.deletions })
             let mods = Set(updates.flatMap { $0.modifications })
-            self.batchFired?(.update((insertions: Array(ins),
-                                      deletions: Array(dels),
-                                      modifications: Array(mods))))
+            self.batchFired?(.update(.init(insertions: Array(ins),
+                                           deletions: Array(dels),
+                                           modifications: Array(mods))))
         }
     }
 }

@@ -62,7 +62,7 @@ internal class CD_ReminderQuery: ReminderQuery {
     func observe(_ closure: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
         self.delegate = .init() { [weak self] in
             guard self?.delegate != nil else { return }
-            closure(.update(Transform_Update_IndexToInt($0)))
+            closure(.update($0.transformed()))
         }
         self.controller.delegate = self.delegate
         DispatchQueue.main.async {

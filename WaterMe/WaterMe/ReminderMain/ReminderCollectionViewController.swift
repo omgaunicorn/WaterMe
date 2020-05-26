@@ -104,7 +104,8 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         switch change {
         case .initial:
             self.collectionView.reloadData()
-        case .update(let ins, let dels, let mods):
+        case .update(let updates):
+            let (ins, dels, mods) = updates.ez
             self.performSuperSafeCollectionViewUpdate(insertions: ins,
                                                       deletions: dels,
                                                       modifications: mods)

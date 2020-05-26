@@ -102,7 +102,9 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         case .initial(let data):
             self.remindersData = data
             self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
-        case .update(let insertions, let deletions, let modifications):
+        case .update(let updates):
+            let updates = updates.transformed(newSection: Section.reminders.rawValue)
+            let (ins, dels, mods) = updates.ez
             guard self.delegate?.vesselResult != nil, self.remindersData != nil else {
                 let error = NSError(reminderChangeFiredAfterListOrParentVesselWereSetToNil: nil)
                 assertionFailure(String(describing: error))
@@ -111,9 +113,6 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 return
             }
             self.tableView.beginUpdates()
-            let ins = insertions.map({ IndexPath(row: $0, section: Section.reminders.rawValue) })
-            let dels = deletions.map({ IndexPath(row: $0, section: Section.reminders.rawValue)})
-            let mods = modifications.map({ IndexPath(row: $0, section: Section.reminders.rawValue) })
             self.tableView.insertRows(at: ins, with: .automatic)
             self.tableView.deleteRows(at: dels, with: .automatic)
             self.tableView.reloadRows(at: mods, with: .automatic)

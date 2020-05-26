@@ -30,7 +30,30 @@ public enum CollectionChange<Collection, Deets> {
     case error(error: DatumError)
 }
 
-public typealias Update<U> = (insertions: [U], deletions: [U], modifications: [U])
+public struct Update<U> {
+    public var insertions: [U] = []
+    public var deletions: [U] = []
+    public var modifications: [U] = []
+    public var ez: (insertions: [U], deletions: [U], modifications: [U]) {
+        return (self.insertions, self.deletions, self.modifications)
+    }
+}
+
+extension Update where U == Int {
+    public func transformed(newSection section: Int) -> Update<IndexPath> {
+        return .init(insertions: self.insertions.map { IndexPath(row: $0, section: section) },
+                     deletions: self.deletions.map { IndexPath(row: $0, section: section) },
+                     modifications: self.modifications.map { IndexPath(row: $0, section: section) })
+    }
+}
+
+extension Update where U == IndexPath {
+    public func transformed() -> Update<Int> {
+        return .init(insertions: self.insertions.map { $0.row },
+                     deletions: self.deletions.map { $0.row },
+                     modifications: self.modifications.map { $0.row })
+    }
+}
 
 public protocol ObservationToken: class {
     func invalidate()
@@ -87,7 +110,7 @@ internal class UpdatingFetchedResultsControllerDelegate: NSObject, NSFetchedResu
         super.init()
     }
     func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        self.changeInFlight = (insertions: [], deletions: [], modifications: [])
+        self.changeInFlight = .init()
     }
     func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
                     didChange anObject: Any,
@@ -116,14 +139,4 @@ internal class UpdatingFetchedResultsControllerDelegate: NSObject, NSFetchedResu
             self.block(changeInFlight)
         }
     }
-}
-
-internal let Transform_Update_IntToIndex: (Update<Int>, Int) -> Update<IndexPath> = { update, section in
-    return (update.insertions.map { IndexPath(row: $0, section: section) },
-            update.deletions.map { IndexPath(row: $0, section: section) },
-            update.modifications.map { IndexPath(row: $0, section: section) })
-}
-
-internal let Transform_Update_IndexToInt: (Update<IndexPath>) -> Update<Int> = {
-    return ($0.insertions.map { $0.row }, $0.deletions.map { $0.row }, $0.modifications.map { $0.row })
 }
