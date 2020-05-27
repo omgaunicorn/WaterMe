@@ -46,3 +46,18 @@ internal class RLM_ReminderPerform: Object {
     @objc internal dynamic var date = Date()
     @objc internal dynamic var bloop = false
 }
+
+extension RLM_Reminder {
+    static func keyPath(for sortOrder: ReminderSortOrder) -> String {
+        switch sortOrder {
+        case .interval:
+            return #keyPath(RLM_Reminder.interval)
+        case .kind:
+            return #keyPath(RLM_Reminder.kindString)
+        case .nextPerformDate:
+            return #keyPath(RLM_Reminder.nextPerformDate)
+        case .note:
+            return #keyPath(RLM_Reminder.note)
+        }
+    }
+}

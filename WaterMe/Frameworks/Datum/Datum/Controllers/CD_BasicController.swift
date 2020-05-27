@@ -112,8 +112,9 @@ internal class CD_BasicController: BasicController {
         return .success(AnyCollectionQuery(query))
     }
     
-    func allReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<AnyCollectionQuery<Reminder, Int>, DatumError> {
-
+    func allReminders(sorted: ReminderSortOrder,
+                      ascending: Bool) -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
+    {
         let context = self.container.viewContext
         let fr = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
         fr.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_Reminder.nextPerformDate), ascending: true)]
@@ -125,9 +126,64 @@ internal class CD_BasicController: BasicController {
         return .success(AnyCollectionQuery(query))
     }
     
-    func groupedReminders() -> Result<AnyCollectionQuery<Reminder, IndexPath>, DatumError> {
-        return .failure(.loadError)
+    internal func groupedReminders() -> Result<AnyCollectionQuery<Reminder, IndexPath>, DatumError> {
+        var failure: DatumError?
+        let _queries = ReminderSection.allCases.compactMap
+        { section -> (ReminderSection, AnyCollectionQuery<Reminder, Int>)? in
+            let result = self.reminders(in: section)
+            switch result {
+            case .failure(let error):
+                failure = error
+                return nil
+            case .success(let query):
+                return (section, query)
+            }
+        }
+        if let failure = failure { return .failure(failure) }
+        let queries = Dictionary(_queries) { (first, _) in first }
+        let query = GroupedCollection(queries: queries)
+        return .success(AnyCollectionQuery(query))
     }
+
+    private func reminders(in section: ReminderSection,
+                           sorted: ReminderSortOrder = .nextPerformDate,
+                           ascending: Bool = true)
+                           -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
+    {
+        let fetchRequest = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
+        fetchRequest.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
+        let range = section.dateInterval
+        let andPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+            NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.nextPerformDate)),
+                                  rightExpression: NSExpression(forConstantValue: range.start),
+                                  modifier: .direct,
+                                  type: .greaterThanOrEqualTo),
+            NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.nextPerformDate)),
+                                  rightExpression: NSExpression(forConstantValue: range.end),
+                                  modifier: .direct,
+                                  type: .lessThan)
+        ])
+        if case .late = section {
+            let nilCheck = NSComparisonPredicate(
+                leftExpression: NSExpression(forKeyPath:#keyPath(CD_Reminder.nextPerformDate)),
+                rightExpression: NSExpression(forConstantValue: nil),
+                modifier: .direct,
+                type: .equalTo
+            )
+            let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [nilCheck, andPredicate])
+            fetchRequest.predicate = orPredicate
+        } else {
+            fetchRequest.predicate = andPredicate
+        }
+        let context = self.container.viewContext
+        let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                    managedObjectContext: context,
+                                                    sectionNameKeyPath: nil,
+                                                    cacheName: nil)
+        let query = CD_ReminderQuery(controller, context: { self.container.viewContext })
+        return .success(AnyCollectionQuery(query))
+    }
+
     
     func reminderVessel(matching _id: Identifier) -> Result<ReminderVessel, DatumError> {
         let coordinator = self.container.persistentStoreCoordinator

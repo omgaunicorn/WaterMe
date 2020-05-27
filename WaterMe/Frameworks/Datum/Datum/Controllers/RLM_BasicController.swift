@@ -96,7 +96,7 @@ internal class RLM_BasicController: BasicController {
             AnyCollectionQuery(
                 RLM_ReminderQuery(
                     AnyRealmCollection($0.objects(RLM_Reminder.self)
-                        .sorted(byKeyPath: sorted.keyPath,
+                        .sorted(byKeyPath: RLM_Reminder.keyPath(for: sorted),
                                 ascending: ascending)
                     )
                 )
@@ -130,6 +130,7 @@ internal class RLM_BasicController: BasicController {
     {
         return self.realm.map() { realm in
             let range = section.dateInterval
+            let sortKeyPath = RLM_Reminder.keyPath(for: sorted)
             let andPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
                 NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(RLM_Reminder.nextPerformDate)),
                                       rightExpression: NSExpression(forConstantValue: range.start),
@@ -148,10 +149,10 @@ internal class RLM_BasicController: BasicController {
                     type: .equalTo
                 )
                 let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [nilCheck, andPredicate])
-                let collection = realm.objects(RLM_Reminder.self).filter(orPredicate).sorted(byKeyPath: sorted.keyPath, ascending: ascending)
+                let collection = realm.objects(RLM_Reminder.self).filter(orPredicate).sorted(byKeyPath: sortKeyPath, ascending: ascending)
                 return AnyCollectionQuery(RLM_ReminderQuery(AnyRealmCollection(collection)))
             } else {
-                let collection = realm.objects(RLM_Reminder.self).filter(andPredicate).sorted(byKeyPath: sorted.keyPath, ascending: ascending)
+                let collection = realm.objects(RLM_Reminder.self).filter(andPredicate).sorted(byKeyPath: sortKeyPath, ascending: ascending)
                 return AnyCollectionQuery(RLM_ReminderQuery(AnyRealmCollection(collection)))
             }
         }

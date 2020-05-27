@@ -54,3 +54,20 @@ internal class CD_ReminderPerform: CD_Base {
     @NSManaged var date: Date
     @NSManaged var reminder: CD_Reminder
 }
+
+extension CD_Reminder {
+    static func sortDescriptor(for sortOrder: ReminderSortOrder,
+                               ascending: Bool) -> NSSortDescriptor
+    {
+        switch sortOrder {
+        case .interval:
+            return .init(key: #keyPath(CD_Reminder.interval), ascending: ascending)
+        case .kind:
+            return .init(key: #keyPath(CD_Reminder.kindString), ascending: ascending)
+        case .nextPerformDate:
+            return .init(key: #keyPath(CD_Reminder.nextPerformDate), ascending: ascending)
+        case .note:
+            return .init(key: #keyPath(CD_Reminder.note), ascending: ascending)
+        }
+    }
+}

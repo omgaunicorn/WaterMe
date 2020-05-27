@@ -116,16 +116,4 @@ public enum ReminderSection: Int, CaseIterable {
 
 public enum ReminderSortOrder {
     case nextPerformDate, interval, kind, note
-    internal var keyPath: String {
-        switch self {
-        case .interval:
-            return #keyPath(RLM_Reminder.interval)
-        case .kind:
-            return #keyPath(RLM_Reminder.kindString)
-        case .nextPerformDate:
-            return #keyPath(RLM_Reminder.nextPerformDate)
-        case .note:
-            return #keyPath(RLM_Reminder.note)
-        }
-    }
 }
