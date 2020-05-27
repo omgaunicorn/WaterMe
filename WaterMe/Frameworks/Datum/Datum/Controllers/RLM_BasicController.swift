@@ -104,11 +104,26 @@ internal class RLM_BasicController: BasicController {
         }
     }
 
-    func groupedReminders() -> Result<AnyCollectionQuery<Reminder, IndexPath>, DatumError> {
-        return .failure(.loadError)
+    internal func groupedReminders() -> Result<AnyCollectionQuery<Reminder, IndexPath>, DatumError> {
+        var failure: DatumError?
+        let _queries = ReminderSection.allCases.compactMap
+        { section -> (ReminderSection, AnyCollectionQuery<Reminder, Int>)? in
+            let result = self.reminders(in: section)
+            switch result {
+            case .failure(let error):
+                failure = error
+                return nil
+            case .success(let query):
+                return (section, query)
+            }
+        }
+        if let failure = failure { return .failure(failure) }
+        let queries = Dictionary(_queries) { (first, _) in first }
+        let query = GroupedCollection(queries: queries)
+        return .success(AnyCollectionQuery(query))
     }
 
-    internal func reminders(in section: ReminderSection,
+    private func reminders(in section: ReminderSection,
                             sorted: ReminderSortOrder = .nextPerformDate,
                             ascending: Bool = true)
                             -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>

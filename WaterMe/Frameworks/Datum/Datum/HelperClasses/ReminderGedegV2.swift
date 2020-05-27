@@ -31,8 +31,8 @@ import Foundation
  */
 
 internal class GroupedCollection<
-    Query: CollectionQuery,
-    Section: Hashable & RawRepresentable
+    Section: Hashable & RawRepresentable,
+    Query: CollectionQuery
     >
     : NSObject, BaseCollection, CollectionQuery, ObservationToken
     where Query.Index == Int,
@@ -57,7 +57,7 @@ internal class GroupedCollection<
     
     // MARK: INIT
 
-    init?(queries: [Section : Query]) {
+    init(queries: [Section : Query]) {
         self.queries = queries
         super.init()
     }
