@@ -70,7 +70,7 @@ enum Color {
         }
     }
 
-    static func color(for section: Reminder.Section) -> UIColor {
+    static func color(for section: ReminderSection) -> UIColor {
         switch section {
         case .late:
             return _late

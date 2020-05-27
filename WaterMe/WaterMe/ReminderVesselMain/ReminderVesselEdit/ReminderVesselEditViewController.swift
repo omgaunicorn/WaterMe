@@ -21,7 +21,6 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import RealmSwift
 import Datum
 import UIKit
 
@@ -30,7 +29,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     typealias CompletionHandler = (UIViewController) -> Void
     
     class func newVC(basicController: BasicController?,
-                     editVessel vessel: ReminderVessel? = nil,
+                     editVessel vessel: ReminderVesselWrapper? = nil,
                      userActivityCompletion: NSUserActivityContinuedHandler? = nil,
                      completionHandler: @escaping CompletionHandler) -> UIViewController
     {
@@ -47,7 +46,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             vc.vesselResult = .success(vessel)
         } else {
             Analytics.log(event: Analytics.CRUD_Op_RV.create)
-            vc.vesselResult = basicController?.newReminderVessel()
+            vc.vesselResult = basicController?.newReminderVessel(displayName: nil, icon: nil, reminders: nil)
         }
         vc.userActivity = NSUserActivity(kind: .editReminderVessel,
                                          delegate: vc.userActivityDelegate)
@@ -61,7 +60,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
     
     var basicRC: BasicController?
-    private(set) var vesselResult: Result<ReminderVessel, RealmError>?
+    private(set) var vesselResult: Result<ReminderVesselWrapper, DatumError>?
     private(set) var completionHandler: CompletionHandler!
     private var userActivityCompletion: NSUserActivityContinuedHandler?
     //swiftlint:disable:next weak_delegate
@@ -104,9 +103,9 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         self.tableViewController?.delegate = self
     }
 
-    private func vesselChanged(_ changes: ObjectChange) {
+    private func vesselChanged(_ changes: ReminderVesselChange) {
         switch changes {
-        case .change(let properties):
+        case .change(let changedDisplayName, let changedIconEmoji, let changedReminders, let changedPointlessBloop):
             /*
              BUGFIX: http://crashes.to/s/5a4715f46b9
              I think this fixes this bug crash. Its caused because this change notification was telling the icon and name section to reload
@@ -116,11 +115,6 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
 
              This fixes the problem by checking which properties changed and only reloads the icon/name section if the reminder section did not change
             */
-            let changedDisplayName = ReminderVessel.propertyChangesContainDisplayName(properties)
-            let changedIconEmoji = ReminderVessel.propertyChangesContainIconEmoji(properties)
-            let changedReminders = ReminderVessel.propertyChangesContainReminders(properties)
-            let changedPointlessBloop = ReminderVessel.propertyChangesContainPointlessBloop(properties)
-
             switch (changedDisplayName, changedIconEmoji, changedReminders, changedPointlessBloop) {
             case (true, _, false, _),
                  (_, true, false, _):
@@ -140,7 +134,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
                 // error notification when unhandled changes happen. I want to know about these in analytics
                 // so I can troubleshoot this further if needed.
                 // if nothing happens here, I can remove this and the pointless bloop test.
-                let error = NSError(reminderVesselPropertyChangeUnknownCaseErrorWithChangedKeyPaths: properties.map({ $0.name }))
+                let error = NSError(reminderVesselPropertyChangeUnknownCaseError: nil)
                 assertionFailure(String(describing: error))
                 Analytics.log(error: error)
                 log.warning(error)
@@ -244,10 +238,10 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     
     func startNotifications() {
         self.notificationToken =
-            self.vesselResult?.value?.observe({ [weak self] in self?.vesselChanged($0) })
+            self.vesselResult?.value?.datum_observe({ [weak self] in self?.vesselChanged($0) })
     }
     
-    var notificationToken: NotificationToken?
+    var notificationToken: ObservationToken?
     
     deinit {
         self.notificationToken?.invalidate()

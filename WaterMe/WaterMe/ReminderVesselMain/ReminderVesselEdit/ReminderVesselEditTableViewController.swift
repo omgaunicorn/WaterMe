@@ -22,22 +22,21 @@
 //
 
 import Datum
-import RealmSwift
 import UIKit
 
 protocol ReminderVesselEditTableViewControllerDelegate: class {
-    var vesselResult: Result<ReminderVessel, RealmError>? { get }
+    var vesselResult: Result<ReminderVesselWrapper, DatumError>? { get }
     func userChangedName(to: String, controller: ReminderVesselEditTableViewController?)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?,
                               sender: PopoverSender)
-    func userChose(reminder: Reminder,
+    func userChose(reminder: ReminderWrapper,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
     func userChose(siriShortcut: ReminderVesselEditTableViewController.SiriShortcut,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
-    func userDeleted(reminder: Reminder,
+    func userDeleted(reminder: ReminderWrapper,
                      controller: ReminderVesselEditTableViewController?) -> Bool
 }
 
@@ -55,7 +54,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         self.notificationToken?.invalidate()
         self.remindersData = nil
         self.tableView.reloadData()
-        self.notificationToken = self.delegate?.vesselResult?.value?.reminders.observe()
+        self.notificationToken = self.delegate?.vesselResult?.value?.datum_observeReminders
             { [weak self] in
                 self?.remindersChanged($0)
             }
@@ -65,7 +64,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         self.notificationToken?.invalidate()
         self.remindersData = nil
         self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
-        self.notificationToken = self.delegate?.vesselResult?.value?.reminders.observe()
+        self.notificationToken = self.delegate?.vesselResult?.value?.datum_observeReminders
             { [weak self] in
                 self?.remindersChanged($0)
             }
@@ -98,14 +97,14 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         self.reloadAll()
     }
     
-    private var remindersData: List<Reminder>?
+    private var remindersData: ReminderCollection?
     
-    private func remindersChanged(_ changes: RealmCollectionChange<List<Reminder>>) {
+    private func remindersChanged(_ changes: ReminderCollectionChange) {
         switch changes {
         case .initial(let data):
             self.remindersData = data
             self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
-        case .update(_, let deletions, let insertions, let modifications):
+        case .update(let insertions, let deletions, let modifications):
             guard self.delegate?.vesselResult != nil, self.remindersData != nil else {
                 let error = NSError(reminderChangeFiredAfterListOrParentVesselWereSetToNil: nil)
                 assertionFailure(String(describing: error))
@@ -310,7 +309,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         return UITableView.automaticDimension
     }
     
-    private var notificationToken: NotificationToken?
+    private var notificationToken: ObservationToken?
     
     deinit {
         self.notificationToken?.invalidate()
@@ -323,11 +322,11 @@ extension ReminderVesselEditTableViewController {
         var localizedTitle: String {
             switch self {
             case .photo:
-                return ReminderVessel.LocalizedString.photo
+                return ReminderVesselWrapper.LocalizedString.photo
             case .name:
-                return ReminderVessel.LocalizedString.name
+                return ReminderVesselWrapper.LocalizedString.name
             case .reminders:
-                return ReminderVessel.LocalizedString.reminders
+                return ReminderVesselWrapper.LocalizedString.reminders
             case .siriShortcuts:
                 return "Siri Shortcuts"
             }

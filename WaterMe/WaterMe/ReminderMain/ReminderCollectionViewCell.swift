@@ -52,7 +52,7 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         self.reset()
     }
     
-    func configure(with reminder: Reminder?) {
+    func configure(with reminder: ReminderWrapper?) {
         guard let reminder = reminder else { self.reset(); return; }
 
         // configure date
@@ -63,7 +63,7 @@ class ReminderCollectionViewCell: UICollectionViewCell {
         let vesselNameStyle = vesselName != nil ?
             Font.reminderVesselCollectionViewCellPrimary(nil) :
             Font.reminderVesselCollectionViewCellPrimaryDisabled
-        self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
+        self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? ReminderVesselWrapper.LocalizedString.untitledPlant,
                                                            font: vesselNameStyle)
 
         // other stuff

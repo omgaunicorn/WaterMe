@@ -39,14 +39,14 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
                 let vc = ImagePickerCropperViewController.newCameraVC() { image, vc in
                     vc.dismiss(animated: true, completion: nil)
                     guard let image = image else { return }
-                    self.updateIcon(ReminderVessel.Icon(rawImage: image))
+                    self.updateIcon(ReminderVesselIcon(rawImage: image))
                 }
                 self.present(vc, animated: true, completion: nil)
             case .photos:
                 let vc = ImagePickerCropperViewController.newPhotosVC() { image, vc in
                     vc.dismiss(animated: true, completion: nil)
                     guard let image = image else { return }
-                    self.updateIcon(ReminderVessel.Icon(rawImage: image))
+                    self.updateIcon(ReminderVesselIcon(rawImage: image))
                 }
                 self.present(vc, animated: true, completion: nil)
             case .emoji:
@@ -83,7 +83,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
             return
         }
         self.notificationToken?.invalidate() // stop the update notifications from causing the tableview to reload
-        let updateResult = basicRC.update(displayName: newName, in: vessel)
+        let updateResult = basicRC.update(displayName: newName, icon: nil, in: vessel)
         switch updateResult {
         case .failure(let error):
             UIAlertController.presentAlertVC(for: error, over: self) { _ in
@@ -108,7 +108,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         self.present(addReminderVC, animated: true, completion: nil)
     }
 
-    func userChose(reminder: Reminder,
+    func userChose(reminder: ReminderWrapper,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
     {
@@ -151,7 +151,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         self.present(vc, animated: true, completion: nil)
     }
 
-    func userDeleted(reminder: Reminder,
+    func userDeleted(reminder: ReminderWrapper,
                      controller: ReminderVesselEditTableViewController?) -> Bool
     {
         self.view.endEditing(false)
@@ -169,12 +169,12 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         }
     }
 
-    private func updateIcon(_ icon: ReminderVessel.Icon) {
+    private func updateIcon(_ icon: ReminderVesselIcon) {
         guard let vessel = self.vesselResult?.value, let basicRC = self.basicRC else {
             assertionFailure("Missing ReminderVessel or Realm Controller")
             return
         }
-        let updateResult = basicRC.update(icon: icon, in: vessel)
+        let updateResult = basicRC.update(displayName: nil, icon: icon, in: vessel)
         guard case .failure(let error) = updateResult else { return }
         UIAlertController.presentAlertVC(for: error, over: self)
     }

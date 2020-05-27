@@ -26,14 +26,14 @@ import UIKit
 
 class ReminderDragPreviewView: UIView {
 
-    private class func newView(for reminder: Reminder) -> ReminderDragPreviewView {
+    private class func newView(for reminder: ReminderWrapper) -> ReminderDragPreviewView {
         // swiftlint:disable:next force_cast
         let v = self.nib.instantiate(withOwner: nil, options: nil).first as! ReminderDragPreviewView
         v.configure(with: reminder)
         return v
     }
 
-    class func dragPreview(for reminder: Reminder) -> UIDragPreview {
+    class func dragPreview(for reminder: ReminderWrapper) -> UIDragPreview {
         let v = self.newView(for: reminder)
         let p = UIDragPreview(view: v)
         p.parameters.visiblePath = UIBezierPath(roundedRect: v.bounds,
@@ -64,7 +64,7 @@ class ReminderDragPreviewView: UIView {
         self.reset()
     }
 
-    func configure(with reminder: Reminder?) {
+    func configure(with reminder: ReminderWrapper?) {
         guard let reminder = reminder else { self.reset(); return; }
 
         // vessel name style
@@ -72,7 +72,7 @@ class ReminderDragPreviewView: UIView {
         let vesselNameStyle = vesselName != nil ?
             Font.reminderVesselDragPreviewViewPrimary :
             Font.reminderVesselDragPreviewViewPrimaryDisabled
-        self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? ReminderVessel.LocalizedString.untitledPlant,
+        self.labelOne?.attributedText = NSAttributedString(string: vesselName ?? ReminderVesselWrapper.LocalizedString.untitledPlant,
                                                            font: vesselNameStyle)
 
         // other stuff

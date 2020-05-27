@@ -105,7 +105,7 @@ There are 3 files that are placeholders for storage in the repository. Please do
 1. [`emojione-apple.ttc`](/WaterMe/WaterMe/emojione-apple.ttc)
     - WaterMe uses [EmojiOne](https://www.emojione.com) emoji rather than the built-in emoji. This is because Apple rejected the app for using Apple's artwork. Using this alternative emoji font avoid this rejection.
     - The font file is not mine so I don't want to commit it into the repo. The application works fine without this font, it just can't be submitted to the app store. 
-1. `PrivateKeys.swift`: [File 1](/WaterMe/Datum/Datum/PrivateKeys.swift), [File 2](/WaterMe/Store/Store/PrivateKeys.swift)
-    - These files store keys that I don't want commited to the repo.
-    - These files have placeholder values and the app can handle not having this information without crashing.
+1. `PrivateKeys.swift`: [File 1](/WaterMe/Frameworks/Calculate/Calculate/PrivateKeys.swift)
+    - This file stores keys that I don't want commited to the repo.
+    - This file has placeholder values and the app can handle not having this information without crashing.
     - However, it can't be submitted to the App Store without this information

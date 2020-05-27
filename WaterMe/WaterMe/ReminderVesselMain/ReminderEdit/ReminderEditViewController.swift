@@ -22,14 +22,13 @@
 //
 
 import Datum
-import RealmSwift
 import IntentsUI
 import UIKit
 
 class ReminderEditViewController: StandardViewController, HasBasicController {
     
     enum Purpose {
-        case new(ReminderVessel), existing(Reminder)
+        case new(ReminderVesselWrapper), existing(ReminderWrapper)
     }
     typealias CompletionHandler = (UIViewController) -> Void
     
@@ -68,7 +67,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
                                                                 action: #selector(self.doneButtonTapped(_:)))
 
     var basicRC: BasicController?
-    private(set) var reminderResult: Result<Reminder, RealmError>?
+    private(set) var reminderResult: Result<ReminderWrapper, DatumError>?
     private var completionHandler: CompletionHandler?
     private var userActivityCompletion: NSUserActivityContinuedHandler?
     //swiftlint:disable:next weak_delegate
@@ -101,8 +100,8 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         }
     }
     
-    private func reminderChanged(_ changes: ObjectChange) {
-        switch changes {
+    private func reminderChanged(_ change: ReminderChange) {
+        switch change {
         case .change:
             self.tableViewController?.tableView.reloadData()
         case .error(let error):
@@ -119,7 +118,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         self.userDirtiedUserActivity()
     }
     
-    private func update(kind: Reminder.Kind? = nil,
+    private func update(kind: ReminderKind? = nil,
                         interval: Int? = nil,
                         note: String? = nil,
                         fromKeyboard: Bool = false)
@@ -256,10 +255,10 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     }
     
     private func startNotifications() {
-      self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
+      self.notificationToken = self.reminderResult?.value?.datum_observe({ [weak self] in self?.reminderChanged($0) })
     }
     
-    private var notificationToken: NotificationToken?
+    private var notificationToken: ObservationToken?
     
     deinit {
       self.notificationToken?.invalidate()
@@ -268,7 +267,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
 
 extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
 
-    func userChangedKind(to newKind: Reminder.Kind,
+    func userChangedKind(to newKind: ReminderKind,
                          byUsingKeyboard usingKeyboard: Bool,
                          within: ReminderEditTableViewController)
     {

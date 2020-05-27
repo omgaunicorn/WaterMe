@@ -21,6 +21,7 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Calculate
 import StoreKit
 import Datum
 import Store
@@ -35,7 +36,7 @@ class SettingsTableViewController: StandardTableViewController {
             self.tableView.reloadSections(IndexSet([Sections.tipJar.rawValue]), with: .automatic)
         }
     }
-    var avatarIcon: ReminderVessel.Icon? {
+    var avatarIcon: ReminderVesselIcon? {
         didSet {
             self.tableView.reloadRows(at: [IndexPath(row: TipJarRows.info.rawValue, section: Sections.tipJar.rawValue)], with: .automatic)
         }
@@ -227,7 +228,7 @@ extension SettingsTableViewController {
 }
 
 extension URLSession {
-    func downloadAvatar(completion: @escaping (ReminderVessel.Icon?) -> Void) {
+    func downloadAvatar(completion: @escaping (ReminderVesselIcon?) -> Void) {
         guard let kAvatarURL = PrivateKeys.kAvatarURL else {
             log.error("PrivateKeys.kAvatarURL was NIL")
             completion(nil)
@@ -249,7 +250,7 @@ extension URLSession {
                 }
                 return
             }
-            let icon = ReminderVessel.Icon(rawImage: image)
+            let icon = ReminderVesselIcon(rawImage: image)
             DispatchQueue.main.async {
                 completion(icon)
             }

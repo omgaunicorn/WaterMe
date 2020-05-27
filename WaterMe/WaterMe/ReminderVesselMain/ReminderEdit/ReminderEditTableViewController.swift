@@ -25,8 +25,8 @@ import Datum
 import UIKit
 
 protocol ReminderEditTableViewControllerDelegate: class {
-    var reminderResult: Result<Reminder, RealmError>? { get }
-    func userChangedKind(to newKind: Reminder.Kind,
+    var reminderResult: Result<ReminderWrapper, DatumError>? { get }
+    func userChangedKind(to newKind: ReminderKind,
                          byUsingKeyboard usingKeyboard: Bool,
                          within: ReminderEditTableViewController)
     func userDidSelectChangeInterval(popoverSourceView: UIView?,
@@ -75,7 +75,7 @@ class ReminderEditTableViewController: StandardTableViewController {
             self.tableView.deselectRow(at: indexPath, animated: true)
             // let the deselection happen before changing the tableview
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-                let new = Reminder.Kind(row: indexPath.row)
+                let new = ReminderKind(row: indexPath.row)
                 self.delegate?.userChangedKind(to: new,
                                                byUsingKeyboard: false,
                                                within: self)
@@ -208,8 +208,8 @@ class ReminderEditTableViewController: StandardTableViewController {
         self.view.endEditing(false)
     }
     
-    private func updated(text newText: String, for oldKind: Reminder.Kind) {
-        let newKind: Reminder.Kind
+    private func updated(text newText: String, for oldKind: ReminderKind) {
+        let newKind: ReminderKind
         defer {
             self.delegate?.userChangedKind(to: newKind,
                                            byUsingKeyboard: true,
@@ -217,9 +217,9 @@ class ReminderEditTableViewController: StandardTableViewController {
         }
         switch oldKind {
         case .move:
-            newKind = Reminder.Kind.move(location: newText)
+            newKind = ReminderKind.move(location: newText)
         case .other:
-            newKind = Reminder.Kind.other(description: newText)
+            newKind = ReminderKind.other(description: newText)
         default:
             fatalError("Wrong Kind Encountered")
         }
@@ -251,7 +251,7 @@ extension ReminderEditTableViewController {
     }
     private enum Section {
         case kind, details, interval, notes, siriShortcuts, performed
-        static func count(for kind: Reminder.Kind) -> Int {
+        static func count(for kind: ReminderKind) -> Int {
             switch kind {
             case .fertilize, .water, .trim, .mist:
                 return 5
@@ -260,7 +260,7 @@ extension ReminderEditTableViewController {
             }
         }
         // swiftlint:disable:next cyclomatic_complexity
-        init(section: Int, for kind: Reminder.Kind) {
+        init(section: Int, for kind: ReminderKind) {
             switch kind {
             case .fertilize, .water, .trim, .mist:
                 switch section {
@@ -312,7 +312,7 @@ extension ReminderEditTableViewController {
                 return ReminderEditViewController.LocalizedString.sectionTitleLastPerformed
             }
         }
-        func numberOfRows(for kind: Reminder.Kind) -> Int {
+        func numberOfRows(for kind: ReminderKind) -> Int {
             switch self {
             case .kind:
                 return type(of: kind).count
@@ -326,7 +326,7 @@ extension ReminderEditTableViewController {
 }
 
 fileprivate extension TextFieldTableViewCell {
-    func configure(with kind: Reminder.Kind) {
+    func configure(with kind: ReminderKind) {
         switch kind {
         case .move(let location):
             self.setLabelText(ReminderEditViewController.LocalizedString.dataEntryLabelMove,

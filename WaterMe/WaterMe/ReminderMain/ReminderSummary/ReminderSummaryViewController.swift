@@ -24,17 +24,16 @@
 import UIKit
 import SimpleImageViewer
 import Datum
-import RealmSwift
 
 class ReminderSummaryViewController: StandardViewController {
 
-    typealias Completion = (Action, Reminder.Identifier, UIViewController) -> Void
+    typealias Completion = (Action, ReminderIdentifier, UIViewController) -> Void
     enum Action {
         case cancel, performReminder, editReminderVessel, editReminder
     }
 
     // swiftlint:disable:next function_parameter_count
-    class func newVC(reminderID: Reminder.Identifier,
+    class func newVC(reminderID: ReminderIdentifier,
                      basicController: BasicController,
                      hapticGenerator: UIFeedbackGenerator,
                      sourceView: UIView,
@@ -68,10 +67,10 @@ class ReminderSummaryViewController: StandardViewController {
     
     private(set) var isPresentedAsPopover = false
 
-    var reminderResult: Result<Reminder, RealmError>!
+    var reminderResult: Result<ReminderWrapper, DatumError>!
     private var completion: Completion!
     private var userActivityContinuation: NSUserActivityContinuedHandler?
-    private var reminderID: Reminder.Identifier!
+    private var reminderID: ReminderIdentifier!
     private weak var tableViewController: ReminderSummaryTableViewController!
     private weak var haptic: UIFeedbackGenerator?
     //swiftlint:disable:next weak_delegate
@@ -79,7 +78,7 @@ class ReminderSummaryViewController: StandardViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
+        self.notificationToken = self.reminderResult?.value?.datum_observe({ [weak self] in self?.reminderChanged($0) })
         self.updateViewForPresentation()
         self.userActivityDelegate.currentReminderAndVessel = { [weak self] in
             // should be unowned because this object should not exist longer
@@ -133,11 +132,11 @@ class ReminderSummaryViewController: StandardViewController {
         }
     }
 
-    private func reminderChanged(_ changes: ObjectChange) {
-        switch changes {
+    private func reminderChanged(_ change: ReminderChange) {
+        switch change {
         case .change:
-            guard let reminder = self.reminderResult.value else { return }
-            self.reminderID = Reminder.Identifier(reminder: reminder)
+            guard let reminder = self.reminderResult.value else { fallthrough }
+            self.reminderID = ReminderIdentifier(reminder: reminder)
             self.tableViewController.tableView.reloadData()
         case .deleted, .error:
             self.completion(.cancel, self.reminderID, self)
@@ -151,7 +150,7 @@ class ReminderSummaryViewController: StandardViewController {
         }
     }
 
-    private var notificationToken: NotificationToken?
+    private var notificationToken: ObservationToken?
     deinit {
         self.notificationToken?.invalidate()
     }

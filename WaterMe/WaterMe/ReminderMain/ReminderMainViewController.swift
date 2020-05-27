@@ -26,7 +26,7 @@ import UIKit
 
 class ReminderMainViewController: StandardViewController, HasProController, HasBasicController {
     
-    class func newVC(basic: Result<BasicController, RealmError>,
+    class func newVC(basic: Result<BasicController, DatumError>,
                      pro: ProController? = nil) -> UINavigationController
     {
         let sb = UIStoryboard(name: "ReminderMain", bundle: Bundle(for: self))
@@ -46,7 +46,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     private(set) weak var collectionVC: ReminderCollectionViewController?
     private(set) weak var dropTargetViewController: ReminderFinishDropTargetViewController?
     private var appUpdateAvailableVC: UIViewController?
-    private var applicationDidFinishLaunchingError: RealmError?
+    private var applicationDidFinishLaunchingError: DatumError?
     var userActivityResultToContinue: [UserActivityResult] = []
 
     var isReady: ReadyState = []
@@ -142,11 +142,6 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             self.present(vc, animated: true, completion: nil)
         } else if let error = self.applicationDidFinishLaunchingError {
             self.applicationDidFinishLaunchingError = nil
-            UIAlertController.presentAlertVC(for: error, over: self) { _ in
-                self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
-            }
-        } else if let error = self.collectionVC?.reminders?.lastError {
-            self.collectionVC?.reminders?.lastError = nil
             UIAlertController.presentAlertVC(for: error, over: self) { _ in
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
@@ -343,7 +338,7 @@ extension ReminderMainViewController: ReminderFinishDropTargetViewControllerDele
     }
 }
 
-extension Reminder {
+extension ReminderWrapper {
     var localizedAlertTitle: String {
         if let displayName = self.vessel?.shortLabelSafeDisplayName {
             let format = ReminderMainViewController.LocalizedString.reminderAlertTitle

@@ -21,9 +21,10 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import Calculate
 import Datum
 
-extension RealmError: UserFacingError {
+extension DatumError: UserFacingError {
 
     public var title: String? {
         switch self {

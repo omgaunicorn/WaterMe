@@ -23,6 +23,7 @@
 
 import UIKit
 import Store
+import Calculate
 
 extension UIAlertController {
 

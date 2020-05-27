@@ -54,9 +54,9 @@ class ReminderIntervalPickerViewController: StandardViewController {
     @IBOutlet private weak var pickerView: UIPickerView?
 
     private var completionHandler: CompletionHandler!
-    private var existingValue: Int = Reminder.defaultInterval
+    private var existingValue: Int = ReminderWrapper.defaultInterval
     
-    private let data: [Int] = (Reminder.minimumInterval...Reminder.maximumInterval).map({ $0 })
+    private let data: [Int] = (ReminderWrapper.minimumInterval...ReminderWrapper.maximumInterval).map({ $0 })
     private let formatter = DateComponentsFormatter.newReminderIntervalFormatter
     private var rowCache: [Int : NSAttributedString] = [:]
     private var heightCache: CGFloat?

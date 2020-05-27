@@ -38,7 +38,6 @@ extension UICollectionView {
 }
 
 // Extensions for ReminderGedeg
-extension ReminderGedeg: ItemAndSectionable {}
 extension UICollectionView: ItemAndSectionable {}
 extension UITableView: ItemAndSectionable {
     public func numberOfItems(inSection section: Int) -> Int {

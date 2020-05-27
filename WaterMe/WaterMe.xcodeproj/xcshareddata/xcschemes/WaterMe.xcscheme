@@ -57,6 +57,26 @@
                ReferencedContainer = "container:WaterMe.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "48A7B0962467AD6F00DC0861"
+               BuildableName = "CalculateTests.xctest"
+               BlueprintName = "CalculateTests"
+               ReferencedContainer = "container:WaterMe.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "48A7B0DA2467FCB100DC0861"
+               BuildableName = "CalculateTests.xctest"
+               BlueprintName = "CalculateTests"
+               ReferencedContainer = "container:WaterMe.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
