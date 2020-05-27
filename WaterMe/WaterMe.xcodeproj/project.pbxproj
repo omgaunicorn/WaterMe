@@ -43,7 +43,7 @@
 		48A7B0FF2467FE3100DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
 		48A7B1042467FE3800DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
 		48B77EE024677FD600EF25D3 /* BasicWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B77EDF24677FD600EF25D3 /* BasicWrappers.swift */; };
-		48F4F8DB247A4B1C0014CA28 /* ReminderGedegV2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F4F8DA247A4B1C0014CA28 /* ReminderGedegV2.swift */; };
+		48F4F8DB247A4B1C0014CA28 /* GroupedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F4F8DA247A4B1C0014CA28 /* GroupedCollection.swift */; };
 		5002ADE523E6AC5F00CBC2B9 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5002ADE423E6AC5F00CBC2B9 /* NSObject+Runtime.m */; };
 		500679AF1F4BF3DB00F8100D /* ReminderMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */; };
 		500D24072474C1800070162E /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 500D24062474C1800070162E /* Realm */; };
@@ -450,7 +450,7 @@
 		48A7B0F32467FDF500DC0861 /* AppVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		48A7B0F42467FDF600DC0861 /* UserFacingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFacingError.swift; sourceTree = "<group>"; };
 		48B77EDF24677FD600EF25D3 /* BasicWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicWrappers.swift; sourceTree = "<group>"; };
-		48F4F8DA247A4B1C0014CA28 /* ReminderGedegV2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderGedegV2.swift; sourceTree = "<group>"; };
+		48F4F8DA247A4B1C0014CA28 /* GroupedCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupedCollection.swift; sourceTree = "<group>"; };
 		5002ADE323E6AC5600CBC2B9 /* NSObject+Runtime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
 		5002ADE423E6AC5F00CBC2B9 /* NSObject+Runtime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
 		500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderMainViewController.swift; sourceTree = "<group>"; };
@@ -780,12 +780,12 @@
 			path = ReminderVessel;
 			sourceTree = "<group>";
 		};
-		48939EB224760ACD007D73E1 /* GroupedReminderCollection */ = {
+		48939EB224760ACD007D73E1 /* GroupedCollection */ = {
 			isa = PBXGroup;
 			children = (
-				48F4F8DA247A4B1C0014CA28 /* ReminderGedegV2.swift */,
+				48F4F8DA247A4B1C0014CA28 /* GroupedCollection.swift */,
 			);
-			path = GroupedReminderCollection;
+			path = GroupedCollection;
 			sourceTree = "<group>";
 		};
 		48A7B0D42467FCB100DC0861 /* Calculate */ = {
@@ -825,7 +825,7 @@
 				48939EAE24760A6E007D73E1 /* ReminderCollection */,
 				4841F79724793C3E00E42751 /* ReminderPerformCollection */,
 				48939EAF24760A80007D73E1 /* ReminderVesselCollection */,
-				48939EB224760ACD007D73E1 /* GroupedReminderCollection */,
+				48939EB224760ACD007D73E1 /* GroupedCollection */,
 			);
 			path = Wrapper;
 			sourceTree = "<group>";
@@ -1851,7 +1851,7 @@
 				48939EAD24760943007D73E1 /* CD_ReminderCollection.swift in Sources */,
 				4856E30B2476743600B02577 /* CD_Reminder.swift in Sources */,
 				485482E2247A0FB000E3D4F0 /* ReminderPerformWrapper.swift in Sources */,
-				48F4F8DB247A4B1C0014CA28 /* ReminderGedegV2.swift in Sources */,
+				48F4F8DB247A4B1C0014CA28 /* GroupedCollection.swift in Sources */,
 				503476B424552EFE00C3DAD3 /* NSErrors.swift in Sources */,
 				503476B524552EFE00C3DAD3 /* ReminderVessel.swift in Sources */,
 				4841F7A124793C7700E42751 /* ReminderPerformCollection.swift in Sources */,
