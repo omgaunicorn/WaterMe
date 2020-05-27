@@ -28,6 +28,7 @@ internal class CD_Base: NSManagedObject {
     
     @NSManaged var dateModified: Date
     @NSManaged var dateCreated: Date
+    @NSManaged var bloop: Bool
     
     override func awakeFromInsert() {
         super.awakeFromInsert()

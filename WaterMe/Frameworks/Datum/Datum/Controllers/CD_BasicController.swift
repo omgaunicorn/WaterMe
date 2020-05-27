@@ -221,6 +221,7 @@ internal class CD_BasicController: BasicController {
         if let icon = icon {
             vessel.icon = icon
         }
+        vessel.reminders.forEach { ($0 as! CD_Base).bloop.toggle() }
         do {
             try context.save()
             return .success(())
@@ -247,6 +248,7 @@ internal class CD_BasicController: BasicController {
         if let note = note {
             reminder.note = note
         }
+        reminder.vessel.bloop.toggle()
         do {
             try context.save()
             return .success(())

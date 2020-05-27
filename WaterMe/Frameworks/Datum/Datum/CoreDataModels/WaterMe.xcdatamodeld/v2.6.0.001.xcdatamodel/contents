@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19E287" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="2.6.0.001">
     <entity name="CD_Base" representedClassName="CD_Base" isAbstract="YES" syncable="YES">
+        <attribute name="bloop" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateModified" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
@@ -26,7 +27,7 @@
         <relationship name="reminders" toMany="YES" minCount="1" deletionRule="Cascade" destinationEntity="CD_Reminder" inverseName="vessel" inverseEntity="CD_Reminder"/>
     </entity>
     <elements>
-        <element name="CD_Base" positionX="285.828125" positionY="-57.45703125" width="128" height="73"/>
+        <element name="CD_Base" positionX="285.828125" positionY="-57.45703125" width="128" height="88"/>
         <element name="CD_Reminder" positionX="343.71875" positionY="242.9921875" width="128" height="163"/>
         <element name="CD_ReminderPerform" positionX="135.9609375" positionY="366.51171875" width="128" height="73"/>
         <element name="CD_ReminderVessel" positionX="535.96875" positionY="60.83984375" width="128" height="118"/>
