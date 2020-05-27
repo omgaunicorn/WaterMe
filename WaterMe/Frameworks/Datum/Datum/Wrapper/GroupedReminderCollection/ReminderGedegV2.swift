@@ -21,13 +21,8 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import Foundation
-
 /**
- Contains a bunch of functions that take a collection of Reminders and produce indexpaths and vice versa
- IndexPaths represent reminders grouped by when they need to be performed next
- i.e. Today, Tomorrow, This Week, Later
- Gedeg == Grouper / Degrouper
+ Groups changes from a bunch of different queries so they appear like one big query
  */
 
 internal class GroupedCollection<
