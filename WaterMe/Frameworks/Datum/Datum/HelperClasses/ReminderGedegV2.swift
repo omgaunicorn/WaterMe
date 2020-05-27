@@ -30,7 +30,7 @@ import Foundation
  Gedeg == Grouper / Degrouper
  */
 
-internal class ReminderGedegV2<
+internal class GroupedCollection<
     Query: CollectionQuery,
     Section: Hashable & RawRepresentable
     >

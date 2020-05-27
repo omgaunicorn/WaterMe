@@ -104,8 +104,8 @@ internal class RLM_BasicController: BasicController {
         }
     }
 
-    internal func groupedReminders() -> GroupedReminderCollection {
-        return RLM_GroupedReminderCollectionImp(basicController: self)
+    func groupedReminders() -> Result<AnyCollectionQuery<Reminder, IndexPath>, DatumError> {
+        return .failure(.loadError)
     }
 
     internal func reminders(in section: ReminderSection,

@@ -21,8 +21,6 @@
 		4856E30B2476743600B02577 /* CD_Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856E30A2476743600B02577 /* CD_Reminder.swift */; };
 		4856E30D247674BE00B02577 /* CD_ReminderVessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856E30C247674BE00B02577 /* CD_ReminderVessel.swift */; };
 		4856E30F2476770200B02577 /* ReminderKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856E30E2476770200B02577 /* ReminderKind.swift */; };
-		48939E9324751D88007D73E1 /* RLM_GroupedReminderCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939E9224751D88007D73E1 /* RLM_GroupedReminderCollection.swift */; };
-		48939E9D24751DB0007D73E1 /* CD_GroupedReminderCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939E9C24751DB0007D73E1 /* CD_GroupedReminderCollection.swift */; };
 		48939E9F2475273B007D73E1 /* RLM_ReminderVesselWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939E9E2475273B007D73E1 /* RLM_ReminderVesselWrapper.swift */; };
 		48939EA124752759007D73E1 /* CD_ReminderVesselWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EA024752759007D73E1 /* CD_ReminderVesselWrapper.swift */; };
 		48939EA3247527D0007D73E1 /* RLM_ReminderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EA2247527D0007D73E1 /* RLM_ReminderWrapper.swift */; };
@@ -83,7 +81,6 @@
 		5034767B24552D0700C3DAD3 /* Store.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5034766624552D0600C3DAD3 /* Store.framework */; };
 		5034767C24552D0700C3DAD3 /* Store.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5034766624552D0600C3DAD3 /* Store.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		503476AF24552EFE00C3DAD3 /* ItemAndSectionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769724552EFE00C3DAD3 /* ItemAndSectionable.swift */; };
-		503476B024552EFE00C3DAD3 /* ReminderGedeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769824552EFE00C3DAD3 /* ReminderGedeg.swift */; };
 		503476B124552EFE00C3DAD3 /* RealmError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769A24552EFE00C3DAD3 /* RealmError.swift */; };
 		503476B224552EFE00C3DAD3 /* ModelCompleteError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769B24552EFE00C3DAD3 /* ModelCompleteError.swift */; };
 		503476B424552EFE00C3DAD3 /* NSErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769D24552EFE00C3DAD3 /* NSErrors.swift */; };
@@ -153,7 +150,6 @@
 		508E615A1F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */; };
 		508FFCAF1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */; };
 		508FFCB01EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */; };
-		5090739E247115E90041099E /* GroupedReminderCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5090739D247115E90041099E /* GroupedReminderCollection.swift */; };
 		5090FD842470E280003B03D1 /* BasicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5090FD832470E280003B03D1 /* BasicController.swift */; };
 		5096D191215474E1006E1019 /* UIApplication+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D190215474E1006E1019 /* UIApplication+WaterMe.swift */; };
 		5096D19321547659006E1019 /* UIView+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D19221547658006E1019 /* UIView+WaterMe.swift */; };
@@ -1843,15 +1839,11 @@
 				485482E4247A0FC500E3D4F0 /* CD_ReminderPerformWrapper.swift in Sources */,
 				503476AF24552EFE00C3DAD3 /* ItemAndSectionable.swift in Sources */,
 				4856E30F2476770200B02577 /* ReminderKind.swift in Sources */,
-				48939E9324751D88007D73E1 /* RLM_GroupedReminderCollection.swift in Sources */,
-				503476B024552EFE00C3DAD3 /* ReminderGedeg.swift in Sources */,
 				503476B224552EFE00C3DAD3 /* ModelCompleteError.swift in Sources */,
 				48B77EE024677FD600EF25D3 /* BasicWrappers.swift in Sources */,
-				5090739E247115E90041099E /* GroupedReminderCollection.swift in Sources */,
 				508B2ECB24741F6200A497E4 /* CD_BasicController.swift in Sources */,
 				503476BD24552EFE00C3DAD3 /* RLM_BasicController.swift in Sources */,
 				4832F531246E5CE6001B77F6 /* ReminderVesselWrapper.swift in Sources */,
-				48939E9D24751DB0007D73E1 /* CD_GroupedReminderCollection.swift in Sources */,
 				503476B124552EFE00C3DAD3 /* RealmError.swift in Sources */,
 				503476C024552EFE00C3DAD3 /* Realm+WaterMe.swift in Sources */,
 				485482E6247A0FD200E3D4F0 /* RLM_ReminderPerformWrapper.swift in Sources */,

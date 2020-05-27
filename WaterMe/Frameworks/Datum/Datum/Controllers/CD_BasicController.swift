@@ -125,8 +125,8 @@ internal class CD_BasicController: BasicController {
         return .success(AnyCollectionQuery(query))
     }
     
-    func groupedReminders() -> GroupedReminderCollection {
-        return CD_GroupedReminderCollectionImp()
+    func groupedReminders() -> Result<AnyCollectionQuery<Reminder, IndexPath>, DatumError> {
+        return .failure(.loadError)
     }
     
     func reminderVessel(matching _id: Identifier) -> Result<ReminderVessel, DatumError> {
