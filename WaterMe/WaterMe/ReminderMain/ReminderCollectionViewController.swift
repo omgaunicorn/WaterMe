@@ -328,11 +328,6 @@ extension ReminderCollectionViewController {
             return
         }
 
-        // sanity checking can only be done when the collectionview
-        // is in the window hierarchy. Otherwise its internal state
-        // does not update. So it will pass the first sanity check
-        // but after that its internal state is stale
-        // so it will fail them
         let failureReason = ItemAndSectionSanityCheckFailureReason.check(old: cv,
                                                                          new: reminders,
                                                                          delta: (ins, dels))

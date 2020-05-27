@@ -23,7 +23,7 @@
 
 import RealmSwift
 
-internal struct RLM_ReminderPerformWrapper: ReminderPerformWrapper {
+internal struct RLM_ReminderPerformWrapper: ReminderPerform {
     internal var wrappedObject: RLM_ReminderPerform
     internal init(_ wrappedObject: RLM_ReminderPerform) {
         self.wrappedObject = wrappedObject

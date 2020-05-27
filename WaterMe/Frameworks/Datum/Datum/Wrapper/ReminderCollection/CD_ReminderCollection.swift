@@ -45,10 +45,6 @@ internal class CD_ReminderCollection: BaseCollection {
         return self.controller.fetchedObjects?.count
     }
     
-    func compactMap<E>(_ transform: (Reminder) throws -> E?) rethrows -> [E] {
-        return try self.controller.fetchedObjects?.compactMap { try transform(self.transform($0, self.context)) } ?? []
-    }
-    
     func index(of item: Reminder) -> Int? {
         // TODO: Fix this
         return nil

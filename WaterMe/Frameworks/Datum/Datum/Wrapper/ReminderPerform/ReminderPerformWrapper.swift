@@ -21,6 +21,9 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-public protocol ReminderPerformWrapper {
+public protocol ReminderPerform {
     var date: Date { get }
 }
+
+public typealias ReminderPerformCollection = AnyCollection<ReminderPerform, Int>
+public typealias ReminderPerformCollectionChange = CollectionChange<ReminderPerformCollection, Int>

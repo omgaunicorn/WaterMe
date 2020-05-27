@@ -23,7 +23,7 @@
 
 import CoreData
 
-internal struct CD_ReminderPerformWrapper: ReminderPerformWrapper {
+internal struct CD_ReminderPerformWrapper: ReminderPerform {
     internal var wrappedObject: CD_ReminderPerform
     internal init(_ wrappedObject: CD_ReminderPerform) {
         self.wrappedObject = wrappedObject
