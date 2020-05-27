@@ -84,7 +84,7 @@ extension RecoveryAction: RecoveryActionSelectable {
             return LocalizedString.missingPhoto
         case .reminderVesselMissingName:
             return LocalizedString.missingName
-        case .reminverVesselMissingReminder:
+        case .reminderVesselMissingReminder:
             return LocalizedString.missingReminders
         }
     }

@@ -223,7 +223,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
                                               sender: .right(sender))
                 case .reminderVesselMissingName:
                     self.tableViewController?.nameTextFieldBecomeFirstResponder()
-                case .reminverVesselMissingReminder:
+                case .reminderVesselMissingReminder:
                     self.userChoseAddReminder(controller: self.tableViewController)
                 }
             }
