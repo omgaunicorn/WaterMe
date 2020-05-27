@@ -40,13 +40,12 @@ internal class RLM_ReminderVesselCollection: BaseCollection {
     }
     
     func index(of item: ReminderVessel) -> Int? {
-        // TODO: Fix this
-        return nil
+        let vessel = (item as! RLM_ReminderVesselWrapper).wrappedObject
+        return self.collection.index(of: vessel)
     }
     
     func indexOfItem(with identifier: Identifier) -> Int? {
-        // TODO: Fix this
-        return nil
+        return self.collection.index(matching: "\(#keyPath(RLM_ReminderVessel.uuid)) == %@", identifier.uuid)
     }
 }
 

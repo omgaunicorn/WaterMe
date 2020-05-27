@@ -44,13 +44,12 @@ internal class RLM_ReminderCollection: BaseCollection {
     }
     
     func index(of item: Reminder) -> Int? {
-        // TODO: Fix this
-        return nil
+        let reminder = (item as! RLM_ReminderWrapper).wrappedObject
+        return self.collection.index(of: reminder)
     }
     
     func indexOfItem(with identifier: Identifier) -> Int? {
-        // TODO: Fix this
-        return nil
+        return self.collection.index(matching: "\(#keyPath(RLM_Reminder.uuid)) == %@", identifier.uuid)
     }
 }
 

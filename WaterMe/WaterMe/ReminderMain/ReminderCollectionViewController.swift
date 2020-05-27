@@ -132,14 +132,10 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     func programmaticalySelectReminder(with identifier: Identifier) -> (IndexPath, ((Bool) -> Void))? {
         guard
             let collectionView = self.collectionView,
-            let indexPath = self.indexPathOfReminder(with: identifier)
+            let indexPath = self.reminders?.value?.indexOfItem(with: identifier)
         else { return nil }
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
         return (indexPath, { collectionView.deselectItem(at: indexPath, animated: $0) })
-    }
-
-    func indexPathOfReminder(with identifier: Identifier) -> IndexPath? {
-        return self.reminders?.value?.indexOfItem(with: identifier)
     }
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -196,7 +192,6 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
 
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
-        // TODO: Fix launch sizing being wrong for `isAccessibilityCategory`
         let tc = self.view.traitCollection
         switch (tc.horizontalSizeClassIsCompact,
                 tc.verticalSizeClassIsRegular,

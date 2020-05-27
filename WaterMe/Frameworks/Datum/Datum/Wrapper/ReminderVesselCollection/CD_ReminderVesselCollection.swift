@@ -44,13 +44,20 @@ internal class CD_ReminderVesselCollection: BaseCollection {
         return self.controller.fetchedObjects?.count
     }
 
-    func index(of item: ReminderVessel) -> Int? {
-        // TODO: Fix this
+    func index(of lhs: ReminderVessel) -> Int? {
+        let lhs = (lhs as! CD_ReminderVesselWrapper).wrappedObject
+        for (idx, rhs) in (self.controller.fetchedObjects ?? []).enumerated()  {
+            guard lhs.objectID == rhs.objectID else { continue }
+            return idx
+        }
         return nil
     }
     
     func indexOfItem(with identifier: Identifier) -> Int? {
-        // TODO: Fix this
+        for (idx, vessel) in (self.controller.fetchedObjects ?? []).enumerated()  {
+            guard vessel.objectID.uriRepresentation().absoluteString == identifier.uuid else { continue }
+            return idx
+        }
         return nil
     }
 }
