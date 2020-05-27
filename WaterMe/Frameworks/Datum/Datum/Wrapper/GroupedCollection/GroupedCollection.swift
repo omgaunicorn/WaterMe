@@ -208,7 +208,12 @@ internal class GroupedCollection<
             self.updates = []
             let ins = Set(updates.flatMap { $0.insertions })
             let dels = Set(updates.flatMap { $0.deletions })
-            let mods = Set(updates.flatMap { $0.modifications })
+            // for some reason core data puts an insert and a modification
+            // of the same item. But when grouped, this causes the
+            // collectionview to throw an exception.
+            let mods = Set(
+                updates.flatMap { $0.modifications }
+            ).subtracting(ins)
             self.batchFired?(.update(.init(insertions: Array(ins),
                                            deletions: Array(dels),
                                            modifications: Array(mods))))

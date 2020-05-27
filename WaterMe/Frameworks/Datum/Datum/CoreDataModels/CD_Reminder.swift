@@ -51,8 +51,14 @@ internal class CD_Reminder: CD_Base {
 
 @objc(CD_ReminderPerform)
 internal class CD_ReminderPerform: CD_Base {
+    
     @NSManaged var date: Date
     @NSManaged var reminder: CD_Reminder
+    
+    override func awakeFromInsert() {
+        super.awakeFromInsert()
+        self.date = Date()
+    }
 }
 
 extension CD_Reminder {

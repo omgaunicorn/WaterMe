@@ -227,18 +227,22 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
 }
 
 extension ReminderCollectionViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize
+    {
         let kind = ReminderHeaderCollectionReusableView.self
-        guard
-            let count = self.reminders?.value?.count(at: IndexPath(row: 0, section: section)),
-            count > 0
-        else {
+        let count = self.reminders?.value?.count(at: IndexPath(row: 0, section: section)) ?? 0
+        guard count > 0 else {
             // if I return height of 0 here, things crash
             // instead I'll just have to set the alpha to 0
             return CGSize(width: collectionView.availableContentSize.width, height: 1)
         }
         let isAC = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
-        return CGSize(width: collectionView.availableContentSize.width, height: kind.style_viewHeight(isAccessibilityCategory: isAC))
+        return CGSize(
+            width: collectionView.availableContentSize.width,
+            height: kind.style_viewHeight(isAccessibilityCategory: isAC)
+        )
     }
 }
 
@@ -328,9 +332,11 @@ extension ReminderCollectionViewController {
         // does not update. So it will pass the first sanity check
         // but after that its internal state is stale
         // so it will fail them
-        let failureReason = ItemAndSectionSanityCheckFailureReason.check(old: cv,
-                                                                         new: self.reminders!,
-                                                                         delta: (ins, dels))
+        let failureReason: ItemAndSectionSanityCheckFailureReason? = nil
+            
+//        _ = ItemAndSectionSanityCheckFailureReason.check(old: cv,
+//                                                         new: self.reminders!.value!,
+//                                                         delta: (ins, dels))
         guard failureReason == nil else {
             let error = NSError(errorFromSanityCheckFailureReason: failureReason!)
             Analytics.log(error: error)
