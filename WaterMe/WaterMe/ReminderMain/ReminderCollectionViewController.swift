@@ -309,10 +309,11 @@ extension ReminderCollectionViewController {
                                               deletions     dels: [IndexPath],
                                               modifications mods: [IndexPath])
     {
-        guard let cv = self.collectionView else {
-            let error = "CollectionView is NIL. Something really bad happened."
+        guard let reminders = self.reminders?.value, let cv = self.collectionView else {
+            let error = "CollectionView or Reminders are NIL. Something really bad happened."
             log.error(error)
             assertionFailure(error)
+            self.collectionView?.reloadData()
             return
         }
         let allEmpty = ins.isEmpty && dels.isEmpty && mods.isEmpty
@@ -332,11 +333,10 @@ extension ReminderCollectionViewController {
         // does not update. So it will pass the first sanity check
         // but after that its internal state is stale
         // so it will fail them
-        let failureReason: ItemAndSectionSanityCheckFailureReason? = nil
-            
-//        _ = ItemAndSectionSanityCheckFailureReason.check(old: cv,
-//                                                         new: self.reminders!.value!,
-//                                                         delta: (ins, dels))
+        let failureReason = ItemAndSectionSanityCheckFailureReason.check(old: cv,
+                                                                         new: reminders,
+                                                                         delta: (ins, dels))
+        
         guard failureReason == nil else {
             let error = NSError(errorFromSanityCheckFailureReason: failureReason!)
             Analytics.log(error: error)

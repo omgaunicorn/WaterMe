@@ -88,3 +88,9 @@ extension BaseCollection where Index ==  IndexPath {
         return self.count(at: nil) ?? 0
     }
 }
+
+extension AnyCollection: ItemAndSectionable where Index == IndexPath {
+    public func numberOfItems(inSection section: Int) -> Int {
+        return count(at: IndexPath(row: 0, section: section)) ?? 0
+    }
+}
