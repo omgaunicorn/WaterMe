@@ -3,7 +3,22 @@
 //  DatumTests
 //
 //  Created by Jeffrey Bergier on 2020/04/26.
-//  Copyright © 2020 Jeffrey Bergier. All rights reserved.
+//  Copyright © 2020 Saturday Apps.
+//
+//  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
+//
+//  WaterMe is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  WaterMe is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
 import XCTest
@@ -21,14 +36,17 @@ class DatumTestsBase: XCTestCase {
 
     override func setUpWithError() throws {
         self.basicController = type(of: self).newBasicController()
-        for x in 0..<2 {
+    }
+    
+    func setUpSmall() throws {
+        for x in 1...2 {
             let num = x*100
             let vessel = try self.basicController.newReminderVessel(
-                displayName: "x\(num)番花",
+                displayName: "\(num)番花",
                 icon: .emoji("🤬"),
                 reminders: nil
             ).get()
-            for y in 0..<3 {
+            for y in 1...3 {
                 let reminder = try self.basicController.newReminder(for: vessel).get()
                 try self.basicController.update(
                     kind: .water,
@@ -36,7 +54,7 @@ class DatumTestsBase: XCTestCase {
                     note: "Vessel: \(vessel.displayName!): Reminder: \(y*100)",
                     in: reminder
                 ).get()
-                for _ in 0..<10 {
+                for _ in 1...10 {
                     try self.basicController.appendNewPerformToReminders(with: [.init(rawValue: reminder.uuid)]).get()
                 }
             }
@@ -44,13 +62,16 @@ class DatumTestsBase: XCTestCase {
     }
 
     override func tearDownWithError() throws {
+        self.token?.invalidate()
+        self.token = nil
         // Delete Core Data and Realm Store
         let fm = FileManager.default
         let appSupport = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
         try fm.removeItem(at: appSupport)
     }
     
-    func test123() {
+    /*
+    func test_basicController() {
         let query = try! self.basicController.groupedReminders().get()
         let wait = XCTestExpectation()
         self.token = query.observe { changes in
@@ -77,6 +98,34 @@ class DatumTestsBase: XCTestCase {
             }
         }
         self.wait(for: [wait], timeout: 0.1)
-    }
+    }*/
 
+}
+
+extension CollectionQuery {
+    func test_observe_loadData(_ closure: @escaping (AnyCollection<Element, Index>) -> Void) -> ObservationToken {
+        return self.observe() { change in
+            switch change {
+            case .initial(let data):
+                closure(data)
+            case .update:
+                XCTFail()
+            case .error:
+                XCTFail()
+            }
+        }
+    }
+    
+    func test_observe_receiveUpdates(_ closure: @escaping (CollectionChangeUpdate<Index>) -> Void) -> ObservationToken {
+        return self.observe() { change in
+            switch change {
+            case .initial:
+                break
+            case .update(let updates):
+                closure(updates)
+            case .error:
+                XCTFail()
+            }
+        }
+    }
 }
