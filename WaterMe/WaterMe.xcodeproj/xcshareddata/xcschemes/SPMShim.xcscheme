@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5034764224552CFD00C3DAD3"
-               BuildableName = "Datum.framework"
-               BlueprintName = "Datum"
+               BlueprintIdentifier = "503476E524557A6200C3DAD3"
+               BuildableName = "SPMShim.framework"
+               BlueprintName = "SPMShim"
                ReferencedContainer = "container:WaterMe.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,28 +28,6 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5034764A24552CFD00C3DAD3"
-               BuildableName = "DatumTests.xctest"
-               BlueprintName = "DatumTests"
-               ReferencedContainer = "container:WaterMe.xcodeproj">
-            </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "DatumTestsBase">
-               </Test>
-               <Test
-                  Identifier = "ReminderCollectionTests">
-               </Test>
-               <Test
-                  Identifier = "ReminderVesselCollectionTests">
-               </Test>
-            </SkippedTests>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -72,9 +50,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "5034764224552CFD00C3DAD3"
-            BuildableName = "Datum.framework"
-            BlueprintName = "Datum"
+            BlueprintIdentifier = "503476E524557A6200C3DAD3"
+            BuildableName = "SPMShim.framework"
+            BlueprintName = "SPMShim"
             ReferencedContainer = "container:WaterMe.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
