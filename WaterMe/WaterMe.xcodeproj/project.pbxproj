@@ -221,13 +221,6 @@
 			remoteGlobalIDString = 48A7B0D22467FCB100DC0861;
 			remoteInfo = Calculate;
 		};
-		48A7B0DF2467FCB100DC0861 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50BB0F4F1EBFCDE500850FF4;
-			remoteInfo = WaterMe;
-		};
 		48A7B0E62467FCB100DC0861 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
@@ -305,13 +298,6 @@
 			remoteGlobalIDString = 5034764224552CFD00C3DAD3;
 			remoteInfo = Datum;
 		};
-		5034764F24552CFD00C3DAD3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50BB0F4F1EBFCDE500850FF4;
-			remoteInfo = WaterMe;
-		};
 		5034765624552CFD00C3DAD3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
@@ -325,13 +311,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5034766524552D0600C3DAD3;
 			remoteInfo = Store;
-		};
-		5034767224552D0700C3DAD3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50BB0F4F1EBFCDE500850FF4;
-			remoteInfo = WaterMe;
 		};
 		5034767924552D0700C3DAD3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1356,7 +1335,6 @@
 			);
 			dependencies = (
 				48A7B0DE2467FCB100DC0861 /* PBXTargetDependency */,
-				48A7B0E02467FCB100DC0861 /* PBXTargetDependency */,
 			);
 			name = CalculateTests;
 			productName = CalculateTests;
@@ -1399,7 +1377,6 @@
 			);
 			dependencies = (
 				5034764E24552CFD00C3DAD3 /* PBXTargetDependency */,
-				5034765024552CFD00C3DAD3 /* PBXTargetDependency */,
 			);
 			name = DatumTests;
 			productName = DatumTests;
@@ -1438,7 +1415,6 @@
 			);
 			dependencies = (
 				5034767124552D0700C3DAD3 /* PBXTargetDependency */,
-				5034767324552D0700C3DAD3 /* PBXTargetDependency */,
 			);
 			name = StoreTests;
 			productName = StoreTests;
@@ -2014,11 +1990,6 @@
 			target = 48A7B0D22467FCB100DC0861 /* Calculate */;
 			targetProxy = 48A7B0DD2467FCB100DC0861 /* PBXContainerItemProxy */;
 		};
-		48A7B0E02467FCB100DC0861 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50BB0F4F1EBFCDE500850FF4 /* WaterMe */;
-			targetProxy = 48A7B0DF2467FCB100DC0861 /* PBXContainerItemProxy */;
-		};
 		48A7B0E72467FCB100DC0861 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 48A7B0D22467FCB100DC0861 /* Calculate */;
@@ -2044,11 +2015,6 @@
 			target = 5034764224552CFD00C3DAD3 /* Datum */;
 			targetProxy = 5034764D24552CFD00C3DAD3 /* PBXContainerItemProxy */;
 		};
-		5034765024552CFD00C3DAD3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50BB0F4F1EBFCDE500850FF4 /* WaterMe */;
-			targetProxy = 5034764F24552CFD00C3DAD3 /* PBXContainerItemProxy */;
-		};
 		5034765724552CFD00C3DAD3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5034764224552CFD00C3DAD3 /* Datum */;
@@ -2058,11 +2024,6 @@
 			isa = PBXTargetDependency;
 			target = 5034766524552D0600C3DAD3 /* Store */;
 			targetProxy = 5034767024552D0700C3DAD3 /* PBXContainerItemProxy */;
-		};
-		5034767324552D0700C3DAD3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50BB0F4F1EBFCDE500850FF4 /* WaterMe */;
-			targetProxy = 5034767224552D0700C3DAD3 /* PBXContainerItemProxy */;
 		};
 		5034767A24552D0700C3DAD3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

@@ -89,12 +89,12 @@ class ReminderVesselCollectionTests: DatumTestsBase {
         let query = try! self.basicController.allVessels().get()
         let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
         let wait = XCTestExpectation()
-        wait.expectedFulfillmentCount = 1
         self.token = query.test_observe_receiveUpdates() { (_, changes) in
             wait.fulfill()
             XCTAssertEqual(changes.insertions.count, 0)
             XCTAssertEqual(changes.modifications.count, 0)
             XCTAssertEqual(changes.deletions.count, 1)
+            XCTAssertEqual(changes.moves.count, 0)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             try! self.basicController.delete(vessel: vessel).get()
@@ -117,10 +117,12 @@ extension CD_ReminderVesselCollectionTests {
                 XCTAssertEqual(changes.insertions.count, 1)
                 XCTAssertEqual(changes.modifications.count, 0)
                 XCTAssertEqual(changes.deletions.count, 0)
+                XCTAssertEqual(changes.moves.count, 0)
             case 1:
                 XCTAssertEqual(changes.insertions.count, 0)
                 XCTAssertEqual(changes.modifications.count, 1)
                 XCTAssertEqual(changes.deletions.count, 0)
+                XCTAssertEqual(changes.moves.count, 0)
             default:
                 XCTFail()
             }
@@ -142,20 +144,22 @@ extension CD_ReminderVesselCollectionTests {
             wait.fulfill()
             switch hitCount {
             case 0:
-                XCTAssertEqual(changes.insertions.count, 1)
+                XCTAssertEqual(changes.insertions.count, 0)
                 XCTAssertEqual(changes.modifications.count, 0)
-                XCTAssertEqual(changes.deletions.count, 1)
+                XCTAssertEqual(changes.deletions.count, 0)
+                XCTAssertEqual(changes.moves.count, 1)
             case 1:
                 XCTAssertEqual(changes.insertions.count, 0)
                 XCTAssertEqual(changes.modifications.count, 1)
                 XCTAssertEqual(changes.deletions.count, 0)
+                XCTAssertEqual(changes.moves.count, 0)
             default:
                 XCTFail()
             }
             hitCount += 1
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            try! self.basicController.update(displayName: "a name", icon: nil, in: vessel).get()
+            try! self.basicController.update(displayName: "ZZZzzz", icon: nil, in: vessel).get()
         }
         self.wait(for: [wait], timeout: 0.3)
     }
@@ -172,6 +176,7 @@ extension RLM_ReminderVesselCollectionTests {
             XCTAssertEqual(changes.insertions.count, 1)
             XCTAssertEqual(changes.modifications.count, 0)
             XCTAssertEqual(changes.deletions.count, 0)
+            XCTAssertEqual(changes.moves.count, 0)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
@@ -189,9 +194,10 @@ extension RLM_ReminderVesselCollectionTests {
             XCTAssertEqual(changes.insertions.count, 1)
             XCTAssertEqual(changes.modifications.count, 0)
             XCTAssertEqual(changes.deletions.count, 1)
+            XCTAssertEqual(changes.moves.count, 0)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            try! self.basicController.update(displayName: "a name", icon: nil, in: vessel).get()
+            try! self.basicController.update(displayName: "ZZZzzz", icon: nil, in: vessel).get()
         }
         self.wait(for: [wait], timeout: 0.3)
     }

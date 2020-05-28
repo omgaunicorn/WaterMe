@@ -85,35 +85,17 @@ class ReminderCollectionTests: DatumTestsBase {
         self.wait(for: [wait], timeout: 0.1)
     }
     
-    func test_update_insert() {
-        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
-        let wait = XCTestExpectation()
-        self.token = query.test_observe_receiveUpdates() { [unowned self] (_, changes) in
-            wait.fulfill()
-            self.token?.invalidate()
-            self.token = nil
-            XCTAssertEqual(changes.insertions.count, 1)
-            XCTAssertEqual(changes.modifications.count, 0)
-            XCTAssertEqual(changes.deletions.count, 0)
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
-        }
-        self.wait(for: [wait], timeout: 0.3)
-    }
-    
     func test_update_modifications() {
         let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
         let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
         let reminder = try! self.basicController.newReminder(for: vessel).get()
         let wait = XCTestExpectation()
-        self.token = query.test_observe_receiveUpdates() { [unowned self] (_, changes) in
+        self.token = query.test_observe_receiveUpdates() { (_, changes) in
             wait.fulfill()
-            self.token?.invalidate()
-            self.token = nil
             XCTAssertEqual(changes.insertions.count, 0)
             XCTAssertEqual(changes.modifications.count, 1)
             XCTAssertEqual(changes.deletions.count, 0)
+            XCTAssertEqual(changes.moves.count, 0)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             try! self.basicController.update(kind: .mist, interval: 10, note: "a new note", in: reminder).get()
@@ -125,18 +107,65 @@ class ReminderCollectionTests: DatumTestsBase {
         let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
         let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
         let wait = XCTestExpectation()
-        self.token = query.test_observe_receiveUpdates() { [unowned self] (_, changes) in
+        self.token = query.test_observe_receiveUpdates() { (_, changes) in
             wait.fulfill()
-            self.token?.invalidate()
-            self.token = nil
             XCTAssertEqual(changes.insertions.count, 0)
             XCTAssertEqual(changes.modifications.count, 0)
             XCTAssertEqual(changes.deletions.count, 1)
+            XCTAssertEqual(changes.moves.count, 0)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             try! self.basicController.delete(vessel: vessel).get()
         }
         self.wait(for: [wait], timeout: 0.3)
     }
-    
+}
+
+extension CD_ReminderCollectionTests {
+    func test_update_insert() {
+        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let wait = XCTestExpectation()
+        wait.expectedFulfillmentCount = 2
+        var hitCount = 0
+        self.token = query.test_observe_receiveUpdates() { (_, changes) in
+            wait.fulfill()
+            switch hitCount {
+            case 0:
+                XCTAssertEqual(changes.insertions.count, 1)
+                XCTAssertEqual(changes.modifications.count, 0)
+                XCTAssertEqual(changes.deletions.count, 0)
+                XCTAssertEqual(changes.moves.count, 0)
+            case 1:
+                XCTAssertEqual(changes.insertions.count, 0)
+                XCTAssertEqual(changes.modifications.count, 1)
+                XCTAssertEqual(changes.deletions.count, 0)
+                XCTAssertEqual(changes.moves.count, 0)
+            default:
+                XCTFail()
+            }
+            hitCount += 1
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
+        }
+        self.wait(for: [wait], timeout: 0.3)
+    }
+}
+
+extension RLM_ReminderCollectionTests {
+    func test_update_insert() {
+        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let wait = XCTestExpectation()
+        self.token = query.test_observe_receiveUpdates() { (_, changes) in
+            wait.fulfill()
+            XCTAssertEqual(changes.insertions.count, 1)
+            XCTAssertEqual(changes.modifications.count, 0)
+            XCTAssertEqual(changes.deletions.count, 0)
+            XCTAssertEqual(changes.moves.count, 0)
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
+        }
+        self.wait(for: [wait], timeout: 0.3)
+    }
 }
