@@ -115,13 +115,14 @@ extension CollectionQuery {
         }
     }
     
-    func test_observe_receiveUpdates(_ closure: @escaping (CollectionChangeUpdate<Index>) -> Void) -> ObservationToken {
+    func test_observe_receiveUpdates(_ closure: @escaping ((AnyCollection<Element, Index>, CollectionChangeUpdate<Index>)) -> Void) -> ObservationToken {
+        var data: AnyCollection<Element, Index>!
         return self.observe() { change in
             switch change {
-            case .initial:
-                break
+            case .initial(let _data):
+                data = _data
             case .update(let updates):
-                closure(updates)
+                closure((data, updates))
             case .error:
                 XCTFail()
             }
