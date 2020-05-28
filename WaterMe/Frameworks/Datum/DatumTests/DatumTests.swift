@@ -26,16 +26,15 @@ import XCTest
 
 class DatumTestsBase: XCTestCase {
     
-    class func newBasicController() -> BasicController {
-//        fatalError("Subclass to provide Realm or CD Basic Controller for testing")
-        return try! testing_NewRLMBasicController(of: .local).get()
+    func newBasicController() -> BasicController {
+        fatalError("Subclass to provide Realm or CD Basic Controller for testing")
     }
     
     private(set) var basicController: BasicController!
     internal var token: ObservationToken!
 
     override func setUpWithError() throws {
-        self.basicController = type(of: self).newBasicController()
+        self.basicController = self.newBasicController()
     }
     
     func setUpSmall() throws {

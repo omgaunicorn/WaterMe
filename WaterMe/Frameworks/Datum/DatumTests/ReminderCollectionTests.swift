@@ -43,4 +43,46 @@ class ReminderCollectionTests: DatumTestsBase {
         self.wait(for: [wait], timeout: 0.1)
     }
     
+    func test_map() {
+        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let wait = XCTestExpectation()
+        self.token = query.test_observe_loadData() { data in
+            wait.fulfill()
+            let preCount = data.count
+            let mapped: [String?] = data.map() { $0!.note }
+            XCTAssertEqual(preCount, mapped.count)
+            XCTAssertNil(mapped[0])
+            XCTAssertEqual(mapped[preCount-1]!, data[preCount-1]!.note!)
+        }
+        self.wait(for: [wait], timeout: 0.1)
+    }
+    
+    func test_compactMap() {
+        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let wait = XCTestExpectation()
+        self.token = query.test_observe_loadData() { data in
+            wait.fulfill()
+            let preCount = data.count
+            let mapped: [String] = data.compactMap() { $0!.note }
+            XCTAssertEqual(mapped.count, preCount-2) // 2 of the notes in this collection are nil
+            XCTAssertEqual(mapped.last!, data[preCount-1]!.note!)
+        }
+        self.wait(for: [wait], timeout: 0.1)
+    }
+    
+    func test_indexOfReminder() {
+        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let wait = XCTestExpectation()
+        let inputIndex = 3
+        self.token = query.test_observe_loadData() { data in
+            wait.fulfill()
+            let inputReminder = data[inputIndex]!
+            let outputIndex = data.index(of: inputReminder)!
+            let outputReminder = data[outputIndex]!
+            XCTAssertEqual(outputIndex, inputIndex)
+            XCTAssertEqual(inputReminder.uuid, outputReminder.uuid)
+        }
+        self.wait(for: [wait], timeout: 0.1)
+    }
+    
 }

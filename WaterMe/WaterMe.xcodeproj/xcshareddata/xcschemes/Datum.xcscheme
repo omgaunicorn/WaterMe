@@ -30,7 +30,6 @@
       <Testables>
          <TestableReference
             skipped = "NO"
-            parallelizable = "YES"
             testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
@@ -39,6 +38,14 @@
                BlueprintName = "DatumTests"
                ReferencedContainer = "container:WaterMe.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "DatumTestsBase">
+               </Test>
+               <Test
+                  Identifier = "ReminderCollectionTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

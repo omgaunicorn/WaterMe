@@ -78,7 +78,7 @@ extension BaseCollection where Index == Int {
         return try (0..<self.count).compactMap { try transform(self[$0]) }
     }
     
-    public func map<NewElement>(_ transform: (Element?) throws -> NewElement) rethrows -> [NewElement?] {
+    public func map<T>(_ transform: (Element?) throws -> T) rethrows -> [T]  {
         return try (0..<self.count).map { try transform(self[$0]) }
     }
 }

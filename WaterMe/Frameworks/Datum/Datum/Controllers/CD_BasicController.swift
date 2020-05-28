@@ -89,6 +89,12 @@ internal class CD_BasicController: BasicController {
             reminders.append(newReminder)
         }
         context.insert(vessel)
+        if let displayName = displayName {
+            vessel.displayName = displayName
+        }
+        if let icon = icon {
+            vessel.icon = icon
+        }
         do {
             try context.save()
             let wrapper = CD_ReminderVesselWrapper(vessel, context: { self.container.viewContext })
