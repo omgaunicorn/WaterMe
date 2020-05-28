@@ -47,9 +47,8 @@ public struct CollectionChangeUpdate<U> {
     public var insertions: [U] = []
     public var deletions: [U] = []
     public var modifications: [U] = []
-    public var moves: [(from: U, to: U)] = []
-    public var ez: (insertions: [U], deletions: [U], modifications: [U], moves: [(from: U, to: U)]) {
-        return (self.insertions, self.deletions, self.modifications, self.moves)
+    public var ez: (insertions: [U], deletions: [U], modifications: [U]) {
+        return (self.insertions, self.deletions, self.modifications)
     }
 }
 
@@ -57,9 +56,7 @@ extension CollectionChangeUpdate where U == Int {
     public func transformed(newSection section: Int) -> CollectionChangeUpdate<IndexPath> {
         return .init(insertions: self.insertions.map { IndexPath(row: $0, section: section) },
                      deletions: self.deletions.map { IndexPath(row: $0, section: section) },
-                     modifications: self.modifications.map { IndexPath(row: $0, section: section) },
-                     moves: self.moves.map { (from: IndexPath(row: $0.from, section: section),
-                                              to: IndexPath(row: $0.to, section: section)) })
+                     modifications: self.modifications.map { IndexPath(row: $0, section: section) })
     }
 }
 
@@ -67,8 +64,7 @@ extension CollectionChangeUpdate where U == IndexPath {
     public func transformed() -> CollectionChangeUpdate<Int> {
         return .init(insertions: self.insertions.map { $0.row },
                      deletions: self.deletions.map { $0.row },
-                     modifications: self.modifications.map { $0.row },
-                     moves: self.moves.map { (from: $0.from.row, to: $0.to.row) })
+                     modifications: self.modifications.map { $0.row })
     }
 }
 
@@ -139,7 +135,8 @@ internal class UpdatingFetchedResultsControllerDelegate: NSObject, NSFetchedResu
         case .insert:
             self.changeInFlight.insertions.append(newIndex!)
         case .move:
-            self.changeInFlight.moves.append((from: index!, to: newIndex!))
+            self.changeInFlight.deletions.append(index!)
+            self.changeInFlight.insertions.append(newIndex!)
         case .update:
             self.changeInFlight.modifications.append(newIndex!)
         case .delete:
