@@ -95,7 +95,6 @@ class ReminderCollectionTests: DatumTestsBase {
             XCTAssertEqual(changes.insertions.count, 0)
             XCTAssertEqual(changes.modifications.count, 1)
             XCTAssertEqual(changes.deletions.count, 0)
-            XCTAssertEqual(changes.moves.count, 0)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             try! self.basicController.update(kind: .mist, interval: 10, note: "a new note", in: reminder).get()
@@ -112,7 +111,6 @@ class ReminderCollectionTests: DatumTestsBase {
             XCTAssertEqual(changes.insertions.count, 0)
             XCTAssertEqual(changes.modifications.count, 0)
             XCTAssertEqual(changes.deletions.count, 1)
-            XCTAssertEqual(changes.moves.count, 0)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             try! self.basicController.delete(vessel: vessel).get()
@@ -134,12 +132,10 @@ extension CD_ReminderCollectionTests {
                 XCTAssertEqual(changes.insertions.count, 1)
                 XCTAssertEqual(changes.modifications.count, 0)
                 XCTAssertEqual(changes.deletions.count, 0)
-                XCTAssertEqual(changes.moves.count, 0)
             case 1:
                 XCTAssertEqual(changes.insertions.count, 0)
                 XCTAssertEqual(changes.modifications.count, 1)
                 XCTAssertEqual(changes.deletions.count, 0)
-                XCTAssertEqual(changes.moves.count, 0)
             default:
                 XCTFail()
             }
@@ -161,7 +157,6 @@ extension RLM_ReminderCollectionTests {
             XCTAssertEqual(changes.insertions.count, 1)
             XCTAssertEqual(changes.modifications.count, 0)
             XCTAssertEqual(changes.deletions.count, 0)
-            XCTAssertEqual(changes.moves.count, 0)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
