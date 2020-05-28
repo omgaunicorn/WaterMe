@@ -63,10 +63,6 @@ class DatumTestsBase: XCTestCase {
     override func tearDownWithError() throws {
         self.token?.invalidate()
         self.token = nil
-        // Delete Core Data and Realm Store
-        let fm = FileManager.default
-        let appSupport = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        try fm.removeItem(at: appSupport)
     }
     
     /*

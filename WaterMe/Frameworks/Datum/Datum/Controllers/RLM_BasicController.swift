@@ -57,7 +57,7 @@ internal class RLM_BasicController: BasicController {
         }
     }
 
-    internal init(kind: ControllerKind) throws {
+    internal init(kind: ControllerKind, forTesting: Bool) throws {
         self.kind = kind
         var realmConfig = Realm.Configuration()
         realmConfig.schemaVersion = 14
@@ -66,7 +66,11 @@ internal class RLM_BasicController: BasicController {
         case .local:
             try type(of: self).createLocalRealmDirectoryIfNeeded()
             try type(of: self).copyRealmFromBundleIfNeeded()
-            realmConfig.fileURL = type(of: self).localRealmFile
+            if forTesting {
+                realmConfig.inMemoryIdentifier = String(Int.random(in: 100_000...1_000_000))
+            } else {
+                realmConfig.fileURL = type(of: self).localRealmFile
+            }
         case .sync: /*(let user)*/
             // let url = user.realmURL(withAppName: "WaterMeBasic")
             fatalError("Syncing Realms are Not Implemented for WaterMe Yet")

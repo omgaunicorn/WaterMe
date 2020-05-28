@@ -25,14 +25,25 @@ import CoreData
 import UIKit
 
 internal class CD_BasicController: BasicController {
-
-    init(kind: ControllerKind) throws {
-        guard 
-            let url = Bundle(for: CD_BasicController.self).url(forResource: "WaterMe",
-                                                               withExtension: "momd"),
+    
+    class func container(forTesting: Bool) -> NSPersistentContainer? {
+        guard
+            let url = Bundle(for: CD_BasicController.self)
+                            .url(forResource: "WaterMe", withExtension: "momd"),
             let mom = NSManagedObjectModel(contentsOf: url)
-        else { throw DatumError.createError }
+        else { return nil }
         let container = NSPersistentContainer(name: "WaterMe", managedObjectModel: mom)
+        if forTesting {
+            let description = NSPersistentStoreDescription()
+            description.type = NSInMemoryStoreType
+            container.persistentStoreDescriptions = [description]
+        }
+        return container
+    }
+
+    init(kind: ControllerKind, forTesting: Bool) throws {
+        guard  let container = CD_BasicController.container(forTesting: forTesting)
+            else { throw DatumError.createError }
         let lock = DispatchSemaphore(value: 0)
         var error: Error?
         container.loadPersistentStores() { _, _error in

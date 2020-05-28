@@ -24,7 +24,12 @@
 import UIKit
 
 public func NewBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
-    return testing_NewCDBasicController(of: kind)
+    do {
+        let bc = try CD_BasicController(kind: kind, forTesting: false)
+        return .success(bc)
+    } catch {
+        return .failure(.createError)
+    }
 }
 
 public protocol BasicController: class {
@@ -76,7 +81,7 @@ public enum ControllerKind {
 
 internal func testing_NewRLMBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
     do {
-        let bc = try RLM_BasicController(kind: kind)
+        let bc = try RLM_BasicController(kind: kind, forTesting: true)
         return .success(bc)
     } catch {
         return .failure(.createError)
@@ -85,7 +90,7 @@ internal func testing_NewRLMBasicController(of kind: ControllerKind) -> Result<B
 
 internal func testing_NewCDBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
     do {
-        let bc = try CD_BasicController(kind: kind)
+        let bc = try CD_BasicController(kind: kind, forTesting: true)
         return .success(bc)
     } catch {
         return .failure(.createError)
