@@ -67,7 +67,10 @@ internal class RLM_ReminderQuery: CollectionQuery {
             case .initial(let data):
                 block(.initial(data: AnyCollection(RLM_ReminderCollection(data))))
             case .update(_, let deletions, let insertions, let modifications):
-                block(.update(.init(insertions: insertions, deletions: deletions, modifications: modifications)))
+                block(.update(.init(insertions: insertions,
+                                    deletions: deletions,
+                                    modifications: modifications,
+                                    moves: [])))
             case .error:
                 block(.error(error: .readError))
             }
