@@ -31,7 +31,7 @@ class ReminderCollectionTests: DatumTestsBase {
         try self.setUpSmall()
     }
     
-    func test_loadReminderCollection() {
+    func test_load() {
         let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData() { data in
@@ -70,17 +70,33 @@ class ReminderCollectionTests: DatumTestsBase {
         self.wait(for: [wait], timeout: 0.1)
     }
     
-    func test_indexOfReminder() {
+    func test_indexOfItem() {
         let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()
         let inputIndex = 3
         self.token = query.test_observe_loadData() { data in
             wait.fulfill()
-            let inputReminder = data[inputIndex]!
-            let outputIndex = data.index(of: inputReminder)!
-            let outputReminder = data[outputIndex]!
+            let input = data[inputIndex]!
+            let outputIndex = data.index(of: input)!
+            let output = data[outputIndex]!
             XCTAssertEqual(outputIndex, inputIndex)
-            XCTAssertEqual(inputReminder.uuid, outputReminder.uuid)
+            XCTAssertEqual(input.uuid, output.uuid)
+        }
+        self.wait(for: [wait], timeout: 0.1)
+    }
+    
+    func test_indexOfIdentifier() {
+        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let wait = XCTestExpectation()
+        let inputIndex = 3
+        self.token = query.test_observe_loadData() { data in
+            wait.fulfill()
+            let input = data[inputIndex]!
+            let inputIdentifier = Identifier(rawValue: input.uuid)
+            let outputIndex = data.indexOfItem(with: inputIdentifier)!
+            let output = data[outputIndex]!
+            XCTAssertEqual(outputIndex, inputIndex)
+            XCTAssertEqual(input.uuid, output.uuid)
         }
         self.wait(for: [wait], timeout: 0.1)
     }
