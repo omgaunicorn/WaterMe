@@ -41,6 +41,9 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "BasicControllerReadTests">
+               </Test>
+               <Test
                   Identifier = "DatumTestsBase">
                </Test>
                <Test

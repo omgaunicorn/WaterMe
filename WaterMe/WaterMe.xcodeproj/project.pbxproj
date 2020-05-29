@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		481565A32480D24900402045 /* GroupedReminderCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481565A22480D24900402045 /* GroupedReminderCollectionTests.swift */; };
+		481565AD2480DB1C00402045 /* BasicControllerReadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481565AC2480DB1C00402045 /* BasicControllerReadTests.swift */; };
 		4832F52D246E2406001B77F6 /* ReminderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F52C246E2406001B77F6 /* ReminderWrapper.swift */; };
 		4832F531246E5CE6001B77F6 /* ReminderVesselWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */; };
 		4832F534246E7BF8001B77F6 /* Reminder+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F533246E7BF8001B77F6 /* Reminder+Helpers.swift */; };
@@ -399,6 +400,7 @@
 
 /* Begin PBXFileReference section */
 		481565A22480D24900402045 /* GroupedReminderCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedReminderCollectionTests.swift; sourceTree = "<group>"; };
+		481565AC2480DB1C00402045 /* BasicControllerReadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicControllerReadTests.swift; sourceTree = "<group>"; };
 		4832F52C246E2406001B77F6 /* ReminderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderWrapper.swift; sourceTree = "<group>"; };
 		4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVesselWrapper.swift; sourceTree = "<group>"; };
 		4832F533246E7BF8001B77F6 /* Reminder+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+Helpers.swift"; sourceTree = "<group>"; };
@@ -886,6 +888,7 @@
 				488CCDBC247F7DFF00E92036 /* ReminderCollectionTests.swift */,
 				48F5604F247FA9060049F14D /* ReminderVesselCollectionTests.swift */,
 				481565A22480D24900402045 /* GroupedReminderCollectionTests.swift */,
+				481565AC2480DB1C00402045 /* BasicControllerReadTests.swift */,
 				48F56045247F8C470049F14D /* RealmCoreDataTestSubclasses.swift */,
 				5034765424552CFD00C3DAD3 /* Info.plist */,
 			);
@@ -1844,6 +1847,7 @@
 				48F56050247FA9060049F14D /* ReminderVesselCollectionTests.swift in Sources */,
 				5034765324552CFD00C3DAD3 /* DatumTests.swift in Sources */,
 				481565A32480D24900402045 /* GroupedReminderCollectionTests.swift in Sources */,
+				481565AD2480DB1C00402045 /* BasicControllerReadTests.swift in Sources */,
 				488CCDC6247F7E8000E92036 /* ReminderCollectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

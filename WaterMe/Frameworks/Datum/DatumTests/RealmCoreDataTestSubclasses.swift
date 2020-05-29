@@ -58,3 +58,15 @@ class CD_GroupedReminderCollectionTests: GroupedReminderCollectionTests {
         return try! testing_NewCDBasicController(of: .local).get()
     }
 }
+
+class RLM_BasicControllerReadTests: BasicControllerReadTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewRLMBasicController(of: .local).get()
+    }
+}
+
+class CD_BasicControllerReadTests: BasicControllerReadTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewCDBasicController(of: .local).get()
+    }
+}
