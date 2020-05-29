@@ -62,6 +62,20 @@
                ReferencedContainer = "container:WaterMe.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "48A7B0DA2467FCB100DC0861"
+               BuildableName = "CalculateTests.xctest"
+               BlueprintName = "CalculateTests"
+               ReferencedContainer = "container:WaterMe.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -92,7 +106,13 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "BasicControllerReadTests">
+               </Test>
+               <Test
                   Identifier = "DatumTestsBase">
+               </Test>
+               <Test
+                  Identifier = "GroupedReminderCollectionTests">
                </Test>
                <Test
                   Identifier = "ReminderCollectionTests">
