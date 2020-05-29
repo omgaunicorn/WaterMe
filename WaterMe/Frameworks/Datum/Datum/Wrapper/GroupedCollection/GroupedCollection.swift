@@ -106,9 +106,8 @@ internal class GroupedCollection<
             let collection = self.data[section]
         else {
             let error = NSError(dataForSectionWasNilInNumberOfItemsInSection: index.section)
-            assertionFailure(error.localizedDescription)
             log.error(error)
-            return 0
+            return nil
         }
         return collection.count
     }
