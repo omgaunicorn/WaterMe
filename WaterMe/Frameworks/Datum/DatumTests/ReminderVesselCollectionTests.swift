@@ -32,7 +32,7 @@ class ReminderVesselCollectionTests: DatumTestsBase {
     }
     
     func test_load() {
-        let query = try! self.basicController.allVessels().get()
+        let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData() { data in
             wait.fulfill()
@@ -44,7 +44,7 @@ class ReminderVesselCollectionTests: DatumTestsBase {
     }
     
     func test_map() {
-        let query = try! self.basicController.allVessels().get()
+        let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData() { data in
             wait.fulfill()
@@ -58,7 +58,7 @@ class ReminderVesselCollectionTests: DatumTestsBase {
     }
     
     func test_compactMap() {
-        let query = try! self.basicController.allVessels().get()
+        let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData() { data in
             wait.fulfill()
@@ -71,7 +71,7 @@ class ReminderVesselCollectionTests: DatumTestsBase {
     }
     
     func test_indexOfItem() {
-        let query = try! self.basicController.allVessels().get()
+        let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
         let wait = XCTestExpectation()
         let inputIndex = 1
         self.token = query.test_observe_loadData() { data in
@@ -86,7 +86,7 @@ class ReminderVesselCollectionTests: DatumTestsBase {
     }
     
     func test_indexOfIdentifier() {
-        let query = try! self.basicController.allVessels().get()
+        let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
         let wait = XCTestExpectation()
         let inputIndex = 1
         self.token = query.test_observe_loadData() { data in
@@ -102,7 +102,7 @@ class ReminderVesselCollectionTests: DatumTestsBase {
     }
     
     func test_update_deletions() {
-        let query = try! self.basicController.allVessels().get()
+        let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
         let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_receiveUpdates() { (_, changes) in
@@ -121,7 +121,7 @@ class ReminderVesselCollectionTests: DatumTestsBase {
 extension CD_ReminderVesselCollectionTests {
     
     func test_update_insert() {
-        let query = try! self.basicController.allVessels().get()
+        let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
         let wait = XCTestExpectation()
         wait.expectedFulfillmentCount = 2
         var hitCount = 0
@@ -148,7 +148,7 @@ extension CD_ReminderVesselCollectionTests {
     }
     
     func test_update_modifications() {
-        let query = try! self.basicController.allVessels().get()
+        let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
         let vessel = try! self.basicController.newReminderVessel(displayName: "ZZZzzz",
                                                                  icon: .emoji("🤨"),
                                                                  reminders: nil).get()
@@ -184,7 +184,7 @@ extension CD_ReminderVesselCollectionTests {
 extension RLM_ReminderVesselCollectionTests {
     
     func test_update_insert() {
-        let query = try! self.basicController.allVessels().get()
+        let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
         let wait = XCTestExpectation()
         wait.expectedFulfillmentCount = 1
         self.token = query.test_observe_receiveUpdates() { (_, changes) in
@@ -200,7 +200,7 @@ extension RLM_ReminderVesselCollectionTests {
     }
     
     func test_update_modifications() {
-        let query = try! self.basicController.allVessels().get()
+        let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
         let vessel = try! self.basicController.newReminderVessel(displayName: "ZZZzzz",
                                                                  icon: .emoji("🤨"),
                                                                  reminders: nil).get()

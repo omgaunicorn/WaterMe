@@ -56,7 +56,7 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
         self.notificationToken = nil
         self.data = nil
         
-        guard let result = self.basicRC?.allVessels() else { return }
+        guard let result = self.basicRC?.allVessels(sorted: .displayName, ascending: true) else { return }
         switch result {
         case .failure(let error):
             self.data = .failure(error)

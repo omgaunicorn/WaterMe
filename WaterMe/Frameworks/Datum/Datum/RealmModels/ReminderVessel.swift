@@ -36,3 +36,14 @@ internal class RLM_ReminderVessel: Object {
         return #keyPath(RLM_ReminderVessel.uuid)
     }
 }
+
+extension RLM_ReminderVessel {
+    static func keyPath(for sortOrder: ReminderVesselSortOrder) -> String {
+        switch sortOrder {
+        case .displayName:
+            return #keyPath(RLM_ReminderVessel.displayName)
+        case .kind:
+            return #keyPath(RLM_Reminder.kindString)
+        }
+    }
+}

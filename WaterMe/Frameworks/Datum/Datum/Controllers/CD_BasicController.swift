@@ -117,10 +117,13 @@ internal class CD_BasicController: BasicController {
 
     // MARK: Read
     
-    internal func allVessels() -> Result<AnyCollectionQuery<ReminderVessel, Int>, DatumError> {
+    internal func allVessels(sorted: ReminderVesselSortOrder,
+                             ascending: Bool)
+                             -> Result<AnyCollectionQuery<ReminderVessel, Int>, DatumError>
+    {
         let context = self.container.viewContext
         let fr = CD_ReminderVessel.fetchRequest() as! NSFetchRequest<CD_ReminderVessel>
-        fr.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_ReminderVessel.displayName), ascending: true)]
+        fr.sortDescriptors = [CD_ReminderVessel.sortDescriptor(for: sorted, ascending: ascending)]
         let frc = NSFetchedResultsController<CD_ReminderVessel>(fetchRequest: fr,
                                              managedObjectContext: context,
                                              sectionNameKeyPath: nil,
@@ -134,7 +137,7 @@ internal class CD_BasicController: BasicController {
     {
         let context = self.container.viewContext
         let fr = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
-        fr.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_Reminder.nextPerformDate), ascending: true)]
+        fr.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
         let frc = NSFetchedResultsController(fetchRequest: fr,
                                              managedObjectContext: context,
                                              sectionNameKeyPath: nil,

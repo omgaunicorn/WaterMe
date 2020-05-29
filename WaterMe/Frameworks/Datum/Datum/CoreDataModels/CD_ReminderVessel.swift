@@ -37,3 +37,16 @@ internal class CD_ReminderVessel: CD_Base {
         self.kindString = ReminderVesselKind.plant.rawValue
     }
 }
+
+extension CD_ReminderVessel {
+    static func sortDescriptor(for sortOrder: ReminderVesselSortOrder,
+                               ascending: Bool) -> NSSortDescriptor
+    {
+        switch sortOrder {
+        case .displayName:
+            return .init(key: #keyPath(CD_ReminderVessel.displayName), ascending: ascending)
+        case .kind:
+            return .init(key: #keyPath(CD_ReminderVessel.kindString), ascending: ascending)
+        }
+    }
+}

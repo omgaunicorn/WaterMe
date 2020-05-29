@@ -24,6 +24,9 @@
 import RealmSwift
 import Calculate
 
+public enum ReminderVesselSortOrder {
+    case displayName, kind
+}
 
 // MARK: Core Data
 
