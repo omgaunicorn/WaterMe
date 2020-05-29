@@ -44,6 +44,9 @@
                   Identifier = "DatumTestsBase">
                </Test>
                <Test
+                  Identifier = "GroupedReminderCollectionTests">
+               </Test>
+               <Test
                   Identifier = "ReminderCollectionTests">
                </Test>
                <Test

@@ -46,3 +46,15 @@ class CD_ReminderVesselCollectionTests: ReminderVesselCollectionTests {
         return try! testing_NewCDBasicController(of: .local).get()
     }
 }
+
+class RLM_GroupedReminderCollectionTests: GroupedReminderCollectionTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewRLMBasicController(of: .local).get()
+    }
+}
+
+class CD_GroupedReminderCollectionTests: GroupedReminderCollectionTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewCDBasicController(of: .local).get()
+    }
+}
