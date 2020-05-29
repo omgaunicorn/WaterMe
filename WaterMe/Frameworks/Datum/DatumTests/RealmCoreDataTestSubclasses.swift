@@ -70,3 +70,15 @@ class CD_BasicControllerReadTests: BasicControllerReadTests {
         return try! testing_NewCDBasicController(of: .local).get()
     }
 }
+
+class RLM_BasicControllerCreateUpdateTests: BasicControllerCreateUpdateTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewRLMBasicController(of: .local).get()
+    }
+}
+
+class CD_BasicControllerCreateUpdateTests: BasicControllerCreateUpdateTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewCDBasicController(of: .local).get()
+    }
+}

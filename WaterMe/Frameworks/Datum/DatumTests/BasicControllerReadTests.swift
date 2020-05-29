@@ -259,5 +259,4 @@ class BasicControllerReadTests: DatumTestsBase {
         XCTAssertEqual(input.note!, output.note!)
         XCTAssertEqual(input.interval, output.interval)
     }
-    
 }
