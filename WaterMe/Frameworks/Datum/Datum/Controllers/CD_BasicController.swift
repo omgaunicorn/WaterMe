@@ -73,6 +73,7 @@ internal class CD_BasicController: BasicController {
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let reminder = CD_Reminder(context: context)
+        context.insert(reminder)
         let mutable = vessel.mutableSetValue(forKey: #keyPath(CD_ReminderVessel.reminders))
         mutable.add(reminder)
         do {
@@ -85,21 +86,20 @@ internal class CD_BasicController: BasicController {
     }
     
     func newReminderVessel(displayName: String?,
-                           icon: ReminderVesselIcon?,
-                           reminders: [Reminder]?) -> Result<ReminderVessel, DatumError>
+                           icon: ReminderVesselIcon?)
+                           -> Result<ReminderVessel, DatumError>
     {
         let context = self.container.viewContext
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let vessel = CD_ReminderVessel(context: context)
-        var reminders = reminders?.compactMap { ($0 as? CD_ReminderWrapper)?.wrappedObject } ?? []
-        if reminders.isEmpty {
-            let newReminder = CD_Reminder(context: context)
-            newReminder.vessel = vessel
-            context.insert(newReminder)
-            reminders.append(newReminder)
-        }
+        // enforce at least 1 reminder
+        let newReminder = CD_Reminder(context: context)
+        context.insert(newReminder)
         context.insert(vessel)
+        let mutable = vessel.mutableSetValue(forKey: #keyPath(CD_ReminderVessel.reminders))
+        mutable.add(newReminder)
+        newReminder.vessel = vessel
         if let displayName = displayName {
             vessel.displayName = displayName
         }

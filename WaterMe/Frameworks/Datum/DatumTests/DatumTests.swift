@@ -42,8 +42,7 @@ class DatumTestsBase: XCTestCase {
             let num = x*100
             let vessel = try self.basicController.newReminderVessel(
                 displayName: "\(num)番花",
-                icon: .emoji("🤬"),
-                reminders: nil
+                icon: .emoji("🤬")
             ).get()
             for y in 1...3 {
                 let reminder = try self.basicController.newReminder(for: vessel).get()

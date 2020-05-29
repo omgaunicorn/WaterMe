@@ -103,7 +103,7 @@ class ReminderVesselCollectionTests: DatumTestsBase {
     
     func test_update_deletions() {
         let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
-        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
+        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_receiveUpdates() { (_, changes) in
             wait.fulfill()
@@ -142,7 +142,7 @@ extension CD_ReminderVesselCollectionTests {
             hitCount += 1
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
+            _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
         }
         self.wait(for: [wait], timeout: 0.3)
     }
@@ -150,8 +150,7 @@ extension CD_ReminderVesselCollectionTests {
     func test_update_modifications() {
         let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
         let vessel = try! self.basicController.newReminderVessel(displayName: "ZZZzzz",
-                                                                 icon: .emoji("🤨"),
-                                                                 reminders: nil).get()
+                                                                 icon: .emoji("🤨")).get()
         let wait = XCTestExpectation()
         wait.expectedFulfillmentCount = 2
         var hitCount = 0
@@ -194,7 +193,7 @@ extension RLM_ReminderVesselCollectionTests {
             XCTAssertEqual(changes.deletions.count, 0)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
+            _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
         }
         self.wait(for: [wait], timeout: 0.3)
     }
@@ -202,8 +201,7 @@ extension RLM_ReminderVesselCollectionTests {
     func test_update_modifications() {
         let query = try! self.basicController.allVessels(sorted: .displayName, ascending: true).get()
         let vessel = try! self.basicController.newReminderVessel(displayName: "ZZZzzz",
-                                                                 icon: .emoji("🤨"),
-                                                                 reminders: nil).get()
+                                                                 icon: .emoji("🤨")).get()
         let wait = XCTestExpectation()
         wait.expectedFulfillmentCount = 1
         self.token = query.test_observe_receiveUpdates() { (_, changes) in

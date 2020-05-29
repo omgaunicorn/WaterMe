@@ -220,7 +220,10 @@ internal class RLM_BasicController: BasicController {
         }
     }
     
-    internal func newReminderVessel(displayName: String? = nil, icon: ReminderVesselIcon? = nil, reminders: [Reminder]? = nil) -> Result<ReminderVessel, DatumError> {
+    internal func newReminderVessel(displayName: String? = nil,
+                                    icon: ReminderVesselIcon? = nil)
+                                    -> Result<ReminderVessel, DatumError>
+    {
         return self.realm.flatMap() { realm in
             let v = RLM_ReminderVessel()
             if let displayName = displayName?.nonEmptyString { // make sure the string is not empty
@@ -229,13 +232,10 @@ internal class RLM_BasicController: BasicController {
             if let icon = icon {
                 v.icon = icon
             }
-            if let reminders = reminders, reminders.isEmpty == false {
-                v.reminders.append(objectsIn: reminders.map({ ($0 as! RLM_ReminderWrapper).wrappedObject }))
-            } else {
-                // enforce at least one reminder rule
-                let reminder = RLM_Reminder()
-                v.reminders.append(reminder)
-            }
+            // enforce at least one reminder rule
+            let reminder = RLM_Reminder()
+            v.reminders.append(reminder)
+            
             realm.beginWrite()
             realm.add(v)
             return realm.waterMe_commitWrite().map({ RLM_ReminderVesselWrapper(v) })

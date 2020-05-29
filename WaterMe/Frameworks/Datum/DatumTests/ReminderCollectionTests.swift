@@ -103,7 +103,7 @@ class ReminderCollectionTests: DatumTestsBase {
     
     func test_update_modifications() {
         let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
-        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
+        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
         let reminder = try! self.basicController.newReminder(for: vessel).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_receiveUpdates() { (_, changes) in
@@ -120,7 +120,7 @@ class ReminderCollectionTests: DatumTestsBase {
     
     func test_update_deletions() {
         let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
-        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
+        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_receiveUpdates() { (_, changes) in
             wait.fulfill()
@@ -158,7 +158,7 @@ extension CD_ReminderCollectionTests {
             hitCount += 1
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
+            _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
         }
         self.wait(for: [wait], timeout: 0.3)
     }
@@ -175,7 +175,7 @@ extension RLM_ReminderCollectionTests {
             XCTAssertEqual(changes.deletions.count, 0)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil, reminders: nil).get()
+            _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
         }
         self.wait(for: [wait], timeout: 0.3)
     }
