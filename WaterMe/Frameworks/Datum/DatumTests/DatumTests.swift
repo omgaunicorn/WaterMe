@@ -48,7 +48,9 @@ class DatumTestsBase: XCTestCase {
                 let reminder = try self.basicController.newReminder(for: vessel).get()
                 try self.basicController.update(
                     kind: .water,
-                    interval: 2,
+                    // this time period is important to make sure that no reminders
+                    // switch between this week and later when running tests
+                    interval: 20,
                     note: "Vessel: \(vessel.displayName!): Reminder: \(y*100)",
                     in: reminder
                 ).get()
