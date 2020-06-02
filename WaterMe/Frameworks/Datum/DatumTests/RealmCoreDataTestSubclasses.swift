@@ -82,3 +82,15 @@ class CD_BasicControllerCreateUpdateTests: BasicControllerCreateUpdateTests {
         return try! testing_NewCDBasicController(of: .local).get()
     }
 }
+
+class RLM_BasicControllerDeleteTests: BasicControllerDeleteTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewRLMBasicController(of: .local).get()
+    }
+}
+
+class CD_BasicControllerDeleteTests: BasicControllerDeleteTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewCDBasicController(of: .local).get()
+    }
+}

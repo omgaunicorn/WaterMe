@@ -58,6 +58,9 @@
                   Identifier = "BasicControllerCreateUpdateTests">
                </Test>
                <Test
+                  Identifier = "BasicControllerDeleteTests">
+               </Test>
+               <Test
                   Identifier = "BasicControllerReadTests">
                </Test>
                <Test
