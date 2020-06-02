@@ -30,8 +30,49 @@ class BasicControllerDeleteTests: DatumTestsBase {
         try super.setUpWithError()
     }
     
-    func test_something() {
-        XCTFail()
+//    func delete(vessel: ReminderVessel) -> Result<Void, DatumError>
+    
+    func test_delete_vessel() {
+        let item = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
+        let wait = XCTestExpectation()
+        self.token = item.observe { change in
+            switch change {
+            case .change:
+                // Core Data is still firing updates after
+                // deletions. Not sure how to spot it.
+                break
+            case .deleted:
+                wait.fulfill()
+            case .error:
+                XCTFail()
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            try! self.basicController.delete(vessel: item).get()
+        }
+        self.wait(for: [wait], timeout: 0.3)
+    }
+    
+    //    func delete(reminder: Reminder) -> Result<Void, DatumError>
+    
+    func test_delete_reminder() {
+        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
+        let item = try! self.basicController.newReminder(for: vessel).get()
+        let wait = XCTestExpectation()
+        self.token = item.observe { change in
+            switch change {
+            case .change:
+                XCTFail()
+            case .deleted:
+                wait.fulfill()
+            case .error:
+                XCTFail()
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            try! self.basicController.delete(reminder: item).get()
+        }
+        self.wait(for: [wait], timeout: 0.3)
     }
 
 }
