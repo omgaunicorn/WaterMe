@@ -235,12 +235,16 @@ internal class CD_BasicController: BasicController {
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
-        if let displayName = displayName {
+        var somethingChanged = false
+        if let displayName = displayName, vessel.displayName != displayName {
+            somethingChanged = true
             vessel.displayName = displayName
         }
-        if let icon = icon {
+        if let icon = icon, icon != vessel.icon {
+            somethingChanged = true
             vessel.icon = icon
         }
+        guard somethingChanged else { return .success(()) }
         vessel.reminders.forEach { ($0 as! CD_Base).bloop.toggle() }
         do {
             try context.save()
@@ -259,15 +263,23 @@ internal class CD_BasicController: BasicController {
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
-        if let kind = kind {
+        var somethingChanged = false
+        if let kind = kind, kind != reminder.kind {
+            somethingChanged = true
             reminder.kind = kind
         }
         if let interval = interval {
-            reminder.interval = Int32(interval)
+            let converted = Int32(interval)
+            if converted != reminder.interval {
+                somethingChanged = true
+                reminder.interval = converted
+            }
         }
-        if let note = note {
+        if let note = note, note != reminder.note {
+            somethingChanged = true
             reminder.note = note
         }
+        guard somethingChanged else { return .success(()) }
         reminder.vessel.bloop.toggle()
         do {
             try context.save()
@@ -306,6 +318,8 @@ internal class CD_BasicController: BasicController {
     
     func delete(vessel: ReminderVessel) -> Result<Void, DatumError> {
         let context = self.container.viewContext
+        let token = context.datum_willSave()
+        defer { context.datum_didSave(token) }
         let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
         context.delete(vessel)
         do {
@@ -318,6 +332,8 @@ internal class CD_BasicController: BasicController {
     
     func delete(reminder: Reminder) -> Result<Void, DatumError> {
         let context = self.container.viewContext
+        let token = context.datum_willSave()
+        defer { context.datum_didSave(token) }
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
         context.delete(reminder)
         do {

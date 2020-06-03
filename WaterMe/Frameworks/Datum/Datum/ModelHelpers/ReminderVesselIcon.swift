@@ -23,7 +23,7 @@
 
 import UIKit
 
-public enum ReminderVesselIcon {
+public enum ReminderVesselIcon: Hashable {
     case emoji(String), image(UIImage)
     
     internal init?(rawImage: UIImage?, emojiString: String?) {
