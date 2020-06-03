@@ -121,6 +121,9 @@
                   Identifier = "GroupedReminderCollectionTests">
                </Test>
                <Test
+                  Identifier = "ModelTests">
+               </Test>
+               <Test
                   Identifier = "ReminderCollectionTests">
                </Test>
                <Test

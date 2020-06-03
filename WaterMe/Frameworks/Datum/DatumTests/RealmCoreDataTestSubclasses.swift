@@ -94,3 +94,15 @@ class CD_BasicControllerDeleteTests: BasicControllerDeleteTests {
         return try! testing_NewCDBasicController(of: .local).get()
     }
 }
+
+class RLM_ModelTests: ModelTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewRLMBasicController(of: .local).get()
+    }
+}
+
+class CD_ModelTests: ModelTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewCDBasicController(of: .local).get()
+    }
+}
