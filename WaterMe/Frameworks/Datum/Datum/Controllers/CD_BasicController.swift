@@ -32,12 +32,18 @@ internal class CD_BasicController: BasicController {
                             .url(forResource: "WaterMe", withExtension: "momd"),
             let mom = NSManagedObjectModel(contentsOf: url)
         else { return nil }
-        let container = NSPersistentContainer(name: "WaterMe", managedObjectModel: mom)
-        if forTesting {
-            let description = NSPersistentStoreDescription()
-            description.type = NSInMemoryStoreType
-            container.persistentStoreDescriptions = [description]
+        
+        // when not testing, return normal persistent container
+        guard forTesting else {
+            return NSPersistentContainer(name: "WaterMe", managedObjectModel: mom)
         }
+        
+        // when testing make in-memory container
+        let randomName = String(Int.random(in: 100_000...1_000_000))
+        let container = NSPersistentContainer(name: randomName, managedObjectModel: mom)
+        let description = NSPersistentStoreDescription()
+        description.type = NSInMemoryStoreType
+        container.persistentStoreDescriptions = [description]
         return container
     }
 
@@ -70,15 +76,16 @@ internal class CD_BasicController: BasicController {
     func newReminder(for vessel: ReminderVessel) -> Result<Reminder, DatumError> {
         let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
         let context = self.container.viewContext
+        assert(context === vessel.managedObjectContext!)
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
-        let reminder = CD_Reminder(context: context)
-        context.insert(reminder)
-        let mutable = vessel.mutableSetValue(forKey: #keyPath(CD_ReminderVessel.reminders))
-        mutable.add(reminder)
+        let newReminder = CD_Reminder(context: context)
+        context.insert(newReminder)
+        // core data hooks up the inverse relationship
+        newReminder.vessel = vessel
         do {
             try context.save()
-            let wrapper = CD_ReminderWrapper(reminder, context: { self.container.viewContext })
+            let wrapper = CD_ReminderWrapper(newReminder, context: { self.container.viewContext })
             return .success(wrapper)
         } catch {
             return .failure(.writeError)
@@ -97,8 +104,7 @@ internal class CD_BasicController: BasicController {
         let newReminder = CD_Reminder(context: context)
         context.insert(newReminder)
         context.insert(vessel)
-        let mutable = vessel.mutableSetValue(forKey: #keyPath(CD_ReminderVessel.reminders))
-        mutable.add(newReminder)
+        // core data hooks up the inverse relationship
         newReminder.vessel = vessel
         if let displayName = displayName {
             vessel.displayName = displayName
@@ -235,6 +241,7 @@ internal class CD_BasicController: BasicController {
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
+        assert(context === vessel.managedObjectContext)
         var somethingChanged = false
         if let displayName = displayName, vessel.displayName != displayName {
             somethingChanged = true
@@ -263,6 +270,7 @@ internal class CD_BasicController: BasicController {
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
+        assert(context === reminder.managedObjectContext)
         var somethingChanged = false
         if let kind = kind, kind != reminder.kind {
             somethingChanged = true
@@ -321,6 +329,7 @@ internal class CD_BasicController: BasicController {
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
+        assert(context === vessel.managedObjectContext)
         context.delete(vessel)
         do {
             try context.save()
@@ -335,6 +344,7 @@ internal class CD_BasicController: BasicController {
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
+        assert(context === reminder.managedObjectContext)
         context.delete(reminder)
         do {
             try context.save()
