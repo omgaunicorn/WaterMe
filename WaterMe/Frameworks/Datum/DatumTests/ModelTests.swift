@@ -30,8 +30,96 @@ class ModelTests: DatumTestsBase {
         try super.setUpWithError()
     }
     
-    func test_something() {
-        
+    func test_nilValues_vessel() {
+        let item = try! self.basicController.newReminderVessel(displayName: nil,
+                                                               icon: nil).get()
+        XCTAssertEqual(item.kind, .plant)
+        XCTAssertNil(item.displayName)
+        XCTAssertNil(item.icon)
+    }
+    
+    func test_realValues_vessel() {
+        let item = try! self.basicController.newReminderVessel(displayName: "お花水",
+                                                               icon: .emoji("🌵")).get()
+        XCTAssertEqual(item.kind, .plant)
+        XCTAssertEqual(item.displayName, "お花水")
+        XCTAssertEqual(item.icon?.emoji, "🌵")
+    }
+    
+    func test_updateName_vessel() {
+        let item = try! self.basicController.newReminderVessel(displayName: "お花水",
+                                                               icon: .emoji("🌵")).get()
+        let wait = XCTestExpectation()
+        self.token = item.observe() { change in
+            switch change {
+            case .change(let change):
+                XCTAssertTrue(change.changedDisplayName)
+                XCTAssertFalse(change.changedIconEmoji)
+                XCTAssertFalse(change.changedReminders)
+                XCTAssertFalse(change.changedPointlessBloop)
+                XCTAssertEqual(item.kind, .plant)
+                XCTAssertEqual(item.displayName, "ええええ")
+                XCTAssertEqual(item.icon?.emoji, "🌵")
+            case .deleted, .error:
+                XCTFail()
+            }
+            wait.fulfill()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            try! self.basicController.update(displayName: "ええええ", icon: nil, in: item).get()
+        }
+        self.wait(for: [wait], timeout: 0.3)
+    }
+    
+    func test_updateIcon_vessel() {
+        let item = try! self.basicController.newReminderVessel(displayName: "お花水",
+                                                               icon: .emoji("🌵")).get()
+        let wait = XCTestExpectation()
+        self.token = item.observe() { change in
+            switch change {
+            case .change(let change):
+                XCTAssertTrue(change.changedIconEmoji)
+                XCTAssertFalse(change.changedDisplayName)
+                XCTAssertFalse(change.changedReminders)
+                XCTAssertFalse(change.changedPointlessBloop)
+                XCTAssertEqual(item.kind, .plant)
+                XCTAssertEqual(item.displayName, "お花水")
+                XCTAssertEqual(item.icon?.emoji, "🧗‍♂️")
+            case .deleted, .error:
+                XCTFail()
+            }
+            wait.fulfill()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            try! self.basicController.update(displayName: nil, icon: .emoji("🧗‍♂️"), in: item).get()
+        }
+        self.wait(for: [wait], timeout: 0.3)
+    }
+    
+    func test_updateReminders_vessel() {
+        let item = try! self.basicController.newReminderVessel(displayName: nil,
+                                                               icon: nil).get()
+        let wait = XCTestExpectation()
+        wait.expectedFulfillmentCount = 2
+        self.token = item.observeReminders { changes in
+            switch changes {
+            case .initial(let data):
+                XCTAssertEqual(data.count, 1)
+                wait.fulfill()
+            case .update(let changes):
+                XCTAssertEqual(changes.insertions.count, 1)
+                XCTAssertEqual(changes.modifications.count, 0)
+                XCTAssertEqual(changes.deletions.count, 0)
+                wait.fulfill()
+            case .error:
+                XCTFail()
+            }
+            wait.fulfill()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            _ = try! self.basicController.newReminder(for: item).get()
+        }
+        self.wait(for: [wait], timeout: 0.3)
     }
 
 }
