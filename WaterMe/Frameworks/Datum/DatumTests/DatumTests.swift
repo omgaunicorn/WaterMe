@@ -64,6 +64,13 @@ class DatumTestsBase: XCTestCase {
     override func tearDownWithError() throws {
         self.token?.invalidate()
         self.token = nil
+        // Delete Core Data and Realm Store
+        let fm = FileManager.default
+        let appSupport = fm.urls(for: .documentDirectory, in: .userDomainMask).first!
+        try? fm.removeItem(at: appSupport.appendingPathComponent("WaterMe", isDirectory: true))
+        try? fm.removeItem(at: appSupport.appendingPathComponent("WaterMe.sqlite"))
+        try? fm.removeItem(at: appSupport.appendingPathComponent("WaterMe.sqlite-shm"))
+        try? fm.removeItem(at: appSupport.appendingPathComponent("WaterMe.sqlite-wal"))
     }
     
     /*
