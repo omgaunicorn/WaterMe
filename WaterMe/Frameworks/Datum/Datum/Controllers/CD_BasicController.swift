@@ -26,7 +26,10 @@ import UIKit
 
 internal class CD_BasicController: BasicController {
     
-    class func container(forTesting: Bool) -> NSPersistentContainer? {
+    private class func container(forTesting: Bool) -> NSPersistentContainer? {
+        // debug only sanity checks
+        assert(Thread.isMainThread)
+        
         guard
             let url = Bundle(for: CD_BasicController.self)
                             .url(forResource: "WaterMe", withExtension: "momd"),
@@ -48,6 +51,9 @@ internal class CD_BasicController: BasicController {
     }
 
     init(kind: ControllerKind, forTesting: Bool) throws {
+        // debug only sanity checks
+        assert(Thread.isMainThread)
+        
         guard  let container = CD_BasicController.container(forTesting: forTesting)
             else { throw DatumError.createError }
         let lock = DispatchSemaphore(value: 0)
@@ -76,7 +82,11 @@ internal class CD_BasicController: BasicController {
     func newReminder(for vessel: ReminderVessel) -> Result<Reminder, DatumError> {
         let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
         let context = self.container.viewContext
+        
+        // debug only sanity checks
+        assert(Thread.isMainThread)
         assert(context === vessel.managedObjectContext!)
+        
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let newReminder = CD_Reminder(context: context)
@@ -96,6 +106,9 @@ internal class CD_BasicController: BasicController {
                            icon: ReminderVesselIcon?)
                            -> Result<ReminderVessel, DatumError>
     {
+        // debug only sanity checks
+        assert(Thread.isMainThread)
+        
         let context = self.container.viewContext
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
@@ -127,6 +140,9 @@ internal class CD_BasicController: BasicController {
                              ascending: Bool)
                              -> Result<AnyCollectionQuery<ReminderVessel, Int>, DatumError>
     {
+        // debug only sanity checks
+        assert(Thread.isMainThread)
+        
         let context = self.container.viewContext
         let fr = CD_ReminderVessel.fetchRequest() as! NSFetchRequest<CD_ReminderVessel>
         fr.sortDescriptors = [CD_ReminderVessel.sortDescriptor(for: sorted, ascending: ascending)]
@@ -141,6 +157,9 @@ internal class CD_BasicController: BasicController {
     func allReminders(sorted: ReminderSortOrder,
                       ascending: Bool) -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     {
+        // debug only sanity checks
+        assert(Thread.isMainThread)
+        
         let context = self.container.viewContext
         let fr = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
         fr.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
@@ -153,6 +172,9 @@ internal class CD_BasicController: BasicController {
     }
     
     internal func groupedReminders() -> Result<AnyCollectionQuery<Reminder, IndexPath>, DatumError> {
+        // debug only sanity checks
+        assert(Thread.isMainThread)
+        
         var failure: DatumError?
         let _queries = ReminderSection.allCases.compactMap
         { section -> (ReminderSection, AnyCollectionQuery<Reminder, Int>)? in
@@ -176,6 +198,9 @@ internal class CD_BasicController: BasicController {
                            ascending: Bool = true)
                            -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     {
+        // debug only sanity checks
+        assert(Thread.isMainThread)
+        
         let fetchRequest = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
         fetchRequest.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
         let range = section.dateInterval
@@ -214,6 +239,10 @@ internal class CD_BasicController: BasicController {
     func reminderVessel(matching _id: Identifier) -> Result<ReminderVessel, DatumError> {
         let coordinator = self.container.persistentStoreCoordinator
         let context = self.container.viewContext
+        
+        // debug only sanity checks
+        assert(Thread.isMainThread)
+        
         guard
             let id = coordinator.managedObjectID(forURIRepresentation: URL(string: _id.uuid)!),
             let reminderVessel = context.object(with: id) as? CD_ReminderVessel
@@ -224,6 +253,10 @@ internal class CD_BasicController: BasicController {
     func reminder(matching _id: Identifier) -> Result<Reminder, DatumError> {
         let coordinator = self.container.persistentStoreCoordinator
         let context = self.container.viewContext
+        
+        // debug only sanity checks
+        assert(Thread.isMainThread)
+        
         guard
             let id = coordinator.managedObjectID(forURIRepresentation: URL(string: _id.uuid)!),
             let reminder = context.object(with: id) as? CD_Reminder
@@ -241,7 +274,11 @@ internal class CD_BasicController: BasicController {
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
+        
+        // debug only sanity checks
+        assert(Thread.isMainThread)
         assert(context === vessel.managedObjectContext)
+        
         var somethingChanged = false
         if let displayName = displayName, vessel.displayName != displayName {
             somethingChanged = true
@@ -270,7 +307,11 @@ internal class CD_BasicController: BasicController {
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
+        
+        // debug only sanity checks
+        assert(Thread.isMainThread)
         assert(context === reminder.managedObjectContext)
+        
         var somethingChanged = false
         if let kind = kind, kind != reminder.kind {
             somethingChanged = true
@@ -299,19 +340,24 @@ internal class CD_BasicController: BasicController {
     
     func appendNewPerformToReminders(with _ids: [Identifier]) -> Result<Void, DatumError> {
         let coordinator = self.container.persistentStoreCoordinator
-        let ids = _ids.compactMap { coordinator.managedObjectID(forURIRepresentation: URL(string: $0.uuid)!) }
-        assert(ids.count == _ids.count, "We lost an object")
+        let ids = _ids.compactMap {
+            coordinator.managedObjectID(forURIRepresentation: URL(string: $0.uuid)!)
+        }
         let context = self.container.viewContext
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let reminders = ids.compactMap { context.object(with: $0) as? CD_Reminder }
+        
+        // debug only sanity checks
+        assert(Thread.isMainThread)
+        assert(ids.count == _ids.count, "We lost an object")
         assert(reminders.count == _ids.count, "We lost an object")
+        
         reminders.forEach { reminder in
             let perform = CD_ReminderPerform(context: context)
             context.insert(perform)
+            // core data hooks up the inverse relationship
             perform.reminder = reminder
-            let mutable = reminder.mutableSetValue(forKey: #keyPath(CD_Reminder.performed))
-            mutable.add(perform)
             reminder.updateDates(basedOnAppendedPerformDate: perform.date)
         }
         do {
@@ -329,7 +375,11 @@ internal class CD_BasicController: BasicController {
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
+        
+        // debug only sanity checks
+        assert(Thread.isMainThread)
         assert(context === vessel.managedObjectContext)
+        
         context.delete(vessel)
         do {
             try context.save()
@@ -344,7 +394,11 @@ internal class CD_BasicController: BasicController {
         let token = context.datum_willSave()
         defer { context.datum_didSave(token) }
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
+        
+        // debug only sanity checks
+        assert(Thread.isMainThread)
         assert(context === reminder.managedObjectContext)
+        
         context.delete(reminder)
         do {
             try context.save()

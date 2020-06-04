@@ -26,10 +26,6 @@ import XCTest
 
 class BasicControllerDeleteTests: DatumTestsBase {
     
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-    
 //    func delete(vessel: ReminderVessel) -> Result<Void, DatumError>
     
     func test_delete_vessel() {

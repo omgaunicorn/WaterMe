@@ -26,10 +26,6 @@ import XCTest
 
 class BasicControllerCreateUpdateTests: DatumTestsBase {
     
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-    
 //    func update(displayName: String?, icon: ReminderVesselIcon?, in vessel: ReminderVessel) -> Result<Void, DatumError>
     
     func test_update_vessel_values() {

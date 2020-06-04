@@ -26,10 +26,6 @@ import XCTest
 
 class BasicControllerReadTests: DatumTestsBase {
     
-    override func setUpWithError() throws {
-        try super.setUpWithError()
-    }
-    
     // MARK: Vessels
     
     private func vesselSortingSetup() throws -> ReminderVessel {
