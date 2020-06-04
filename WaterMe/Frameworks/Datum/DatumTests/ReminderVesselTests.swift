@@ -26,7 +26,7 @@ import XCTest
 
 class ReminderVesselTests: DatumTestsBase {
     
-    func test_nilValues_vessel() {
+    func test_nilValues() {
         let item = try! self.basicController.newReminderVessel(displayName: nil,
                                                                icon: nil).get()
         XCTAssertEqual(item.kind, .plant)
@@ -34,7 +34,7 @@ class ReminderVesselTests: DatumTestsBase {
         XCTAssertNil(item.icon)
     }
     
-    func test_realValues_vessel() {
+    func test_realValues() {
         let item = try! self.basicController.newReminderVessel(displayName: "お花水",
                                                                icon: .emoji("🌵")).get()
         XCTAssertEqual(item.kind, .plant)
@@ -42,9 +42,20 @@ class ReminderVesselTests: DatumTestsBase {
         XCTAssertEqual(item.icon?.emoji, "🌵")
     }
     
-    func test_updateName_vessel() {
+    func test_modelComplete() {
+        let item = try! self.basicController.newReminderVessel(displayName: nil,
+                                                               icon: nil).get()
+        let itemError = item.isModelComplete
+        XCTAssertNotNil(itemError)
+        XCTAssertEqual(itemError?._actions[0], .reminderVesselMissingIcon)
+        XCTAssertEqual(itemError?._actions[1], .reminderVesselMissingName)
+        XCTAssertEqual(itemError?._actions[2], .cancel)
+        XCTAssertEqual(itemError?._actions[3], .saveAnyway)
+    }
+    
+    func test_update() {
         let item = try! self.basicController.newReminderVessel(displayName: "お花水",
-                                                               icon: .emoji("🌵")).get()
+                                                               icon: .emoji("🧗‍♂️")).get()
         let wait = XCTestExpectation()
         self.token = item.observe() { change in
             switch change {
@@ -55,31 +66,6 @@ class ReminderVesselTests: DatumTestsBase {
                 XCTAssertFalse(change.changedPointlessBloop)
                 XCTAssertEqual(item.kind, .plant)
                 XCTAssertEqual(item.displayName, "ええええ")
-                XCTAssertEqual(item.icon?.emoji, "🌵")
-            case .deleted, .error:
-                XCTFail()
-            }
-            wait.fulfill()
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            try! self.basicController.update(displayName: "ええええ", icon: nil, in: item).get()
-        }
-        self.wait(for: [wait], timeout: 0.3)
-    }
-    
-    func test_updateIcon_vessel() {
-        let item = try! self.basicController.newReminderVessel(displayName: "お花水",
-                                                               icon: .emoji("🌵")).get()
-        let wait = XCTestExpectation()
-        self.token = item.observe() { change in
-            switch change {
-            case .change(let change):
-                XCTAssertTrue(change.changedIconEmoji)
-                XCTAssertFalse(change.changedDisplayName)
-                XCTAssertFalse(change.changedReminders)
-                XCTAssertFalse(change.changedPointlessBloop)
-                XCTAssertEqual(item.kind, .plant)
-                XCTAssertEqual(item.displayName, "お花水")
                 XCTAssertEqual(item.icon?.emoji, "🧗‍♂️")
             case .deleted, .error:
                 XCTFail()
@@ -87,7 +73,7 @@ class ReminderVesselTests: DatumTestsBase {
             wait.fulfill()
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            try! self.basicController.update(displayName: nil, icon: .emoji("🧗‍♂️"), in: item).get()
+            try! self.basicController.update(displayName: "ええええ", icon: nil, in: item).get()
         }
         self.wait(for: [wait], timeout: 0.3)
     }

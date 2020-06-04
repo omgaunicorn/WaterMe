@@ -893,8 +893,8 @@
 			isa = PBXGroup;
 			children = (
 				5034765224552CFD00C3DAD3 /* DatumTests.swift */,
-				48AFA30D24871E9A002CAFDC /* ReminderVesselTests.swift */,
 				48AFA34B2488E67B002CAFDC /* ReminderTests.swift */,
+				48AFA30D24871E9A002CAFDC /* ReminderVesselTests.swift */,
 				488CCDBC247F7DFF00E92036 /* ReminderCollectionTests.swift */,
 				48F5604F247FA9060049F14D /* ReminderVesselCollectionTests.swift */,
 				481565A22480D24900402045 /* GroupedReminderCollectionTests.swift */,
