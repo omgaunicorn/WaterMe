@@ -45,7 +45,8 @@
 		48A7B0FF2467FE3100DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
 		48A7B1042467FE3800DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
 		48AFA304248646E6002CAFDC /* BasicControllerDeleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AFA303248646E6002CAFDC /* BasicControllerDeleteTests.swift */; };
-		48AFA30E24871E9A002CAFDC /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AFA30D24871E9A002CAFDC /* ModelTests.swift */; };
+		48AFA30E24871E9A002CAFDC /* ReminderVesselTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AFA30D24871E9A002CAFDC /* ReminderVesselTests.swift */; };
+		48AFA34C2488E67B002CAFDC /* ReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AFA34B2488E67B002CAFDC /* ReminderTests.swift */; };
 		48B77EE024677FD600EF25D3 /* BasicWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B77EDF24677FD600EF25D3 /* BasicWrappers.swift */; };
 		48DD0C1E248146580082C7E3 /* BasicControllerCreateUpdateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DD0C1D248146580082C7E3 /* BasicControllerCreateUpdateTests.swift */; };
 		48F4F8DB247A4B1C0014CA28 /* GroupedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F4F8DA247A4B1C0014CA28 /* GroupedCollection.swift */; };
@@ -438,7 +439,8 @@
 		48A7B0F32467FDF500DC0861 /* AppVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		48A7B0F42467FDF600DC0861 /* UserFacingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFacingError.swift; sourceTree = "<group>"; };
 		48AFA303248646E6002CAFDC /* BasicControllerDeleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicControllerDeleteTests.swift; sourceTree = "<group>"; };
-		48AFA30D24871E9A002CAFDC /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
+		48AFA30D24871E9A002CAFDC /* ReminderVesselTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVesselTests.swift; sourceTree = "<group>"; };
+		48AFA34B2488E67B002CAFDC /* ReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderTests.swift; sourceTree = "<group>"; };
 		48B77EDF24677FD600EF25D3 /* BasicWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicWrappers.swift; sourceTree = "<group>"; };
 		48DD0C1D248146580082C7E3 /* BasicControllerCreateUpdateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicControllerCreateUpdateTests.swift; sourceTree = "<group>"; };
 		48F4F8DA247A4B1C0014CA28 /* GroupedCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupedCollection.swift; sourceTree = "<group>"; };
@@ -891,7 +893,8 @@
 			isa = PBXGroup;
 			children = (
 				5034765224552CFD00C3DAD3 /* DatumTests.swift */,
-				48AFA30D24871E9A002CAFDC /* ModelTests.swift */,
+				48AFA30D24871E9A002CAFDC /* ReminderVesselTests.swift */,
+				48AFA34B2488E67B002CAFDC /* ReminderTests.swift */,
 				488CCDBC247F7DFF00E92036 /* ReminderCollectionTests.swift */,
 				48F5604F247FA9060049F14D /* ReminderVesselCollectionTests.swift */,
 				481565A22480D24900402045 /* GroupedReminderCollectionTests.swift */,
@@ -1852,7 +1855,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48AFA30E24871E9A002CAFDC /* ModelTests.swift in Sources */,
+				48AFA30E24871E9A002CAFDC /* ReminderVesselTests.swift in Sources */,
 				48F56046247F8C470049F14D /* RealmCoreDataTestSubclasses.swift in Sources */,
 				48F56050247FA9060049F14D /* ReminderVesselCollectionTests.swift in Sources */,
 				5034765324552CFD00C3DAD3 /* DatumTests.swift in Sources */,
@@ -1861,6 +1864,7 @@
 				481565AD2480DB1C00402045 /* BasicControllerReadTests.swift in Sources */,
 				48AFA304248646E6002CAFDC /* BasicControllerDeleteTests.swift in Sources */,
 				488CCDC6247F7E8000E92036 /* ReminderCollectionTests.swift in Sources */,
+				48AFA34C2488E67B002CAFDC /* ReminderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

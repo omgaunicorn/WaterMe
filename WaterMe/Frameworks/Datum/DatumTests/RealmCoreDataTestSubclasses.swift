@@ -95,13 +95,25 @@ class CD_BasicControllerDeleteTests: BasicControllerDeleteTests {
     }
 }
 
-class RLM_ModelTests: ModelTests {
+class RLM_ReminderVesselTests: ReminderVesselTests {
     override func newBasicController() -> BasicController {
         return try! testing_NewRLMBasicController(of: .local).get()
     }
 }
 
-class CD_ModelTests: ModelTests {
+class CD_ReminderVesselTests: ReminderVesselTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewCDBasicController(of: .local).get()
+    }
+}
+
+class RLM_ReminderTests: ReminderTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewRLMBasicController(of: .local).get()
+    }
+}
+
+class CD_ReminderTests: ReminderTests {
     override func newBasicController() -> BasicController {
         return try! testing_NewCDBasicController(of: .local).get()
     }

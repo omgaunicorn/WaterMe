@@ -24,7 +24,7 @@
 import XCTest
 @testable import Datum
 
-class ModelTests: DatumTestsBase {
+class ReminderVesselTests: DatumTestsBase {
     
     func test_nilValues_vessel() {
         let item = try! self.basicController.newReminderVessel(displayName: nil,
@@ -93,7 +93,7 @@ class ModelTests: DatumTestsBase {
     }
 }
 
-extension CD_ModelTests {
+extension CD_ReminderVesselTests {
     func test_updateReminders_vessel() {
         let item = try! self.basicController.newReminderVessel(displayName: nil,
                                                                icon: nil).get()
@@ -135,7 +135,7 @@ extension CD_ModelTests {
     }
 }
 
-extension RLM_ModelTests {
+extension RLM_ReminderVesselTests {
     func test_updateReminders_vessel() {
         let item = try! self.basicController.newReminderVessel(displayName: nil,
                                                                icon: nil).get()

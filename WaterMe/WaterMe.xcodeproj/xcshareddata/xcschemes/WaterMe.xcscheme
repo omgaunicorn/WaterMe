@@ -121,13 +121,16 @@
                   Identifier = "GroupedReminderCollectionTests">
                </Test>
                <Test
-                  Identifier = "ModelTests">
-               </Test>
-               <Test
                   Identifier = "ReminderCollectionTests">
                </Test>
                <Test
+                  Identifier = "ReminderTests">
+               </Test>
+               <Test
                   Identifier = "ReminderVesselCollectionTests">
+               </Test>
+               <Test
+                  Identifier = "ReminderVesselTests">
                </Test>
             </SkippedTests>
          </TestableReference>
