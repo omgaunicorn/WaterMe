@@ -75,7 +75,8 @@ internal class CD_BasicController: BasicController {
     var userDidPerformReminder: (() -> Void)?
 
     let kind: ControllerKind
-    private let container: NSPersistentContainer
+    // Internal only for testing. Should be private.
+    internal let container: NSPersistentContainer
 
     // MARK: Create
     

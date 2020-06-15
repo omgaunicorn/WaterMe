@@ -22,6 +22,7 @@
 //
 
 import XCTest
+import CoreData
 @testable import Datum
 
 class BasicControllerDeleteTests: DatumTestsBase {
@@ -71,4 +72,60 @@ class BasicControllerDeleteTests: DatumTestsBase {
         self.wait(for: [wait], timeout: 0.3)
     }
 
+}
+
+extension CD_BasicControllerDeleteTests {
+    func test_vessel_cascadingDeletes() {
+        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
+        let reminder = try! self.basicController.newReminder(for: vessel).get()
+        try! self.basicController.appendNewPerformToReminders(with: [.init(rawValue: reminder.uuid)]).get()
+        let bc = self.basicController as! CD_BasicController
+        let context = bc.container.viewContext
+        let vesselReq = CD_ReminderVessel.fetchRequest() as! NSFetchRequest<CD_ReminderVessel>
+        let reminderReq = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
+        let performReq = CD_ReminderPerform.fetchRequest() as! NSFetchRequest<CD_ReminderPerform>
+        let vesselRes1 = try! context.fetch(vesselReq)
+        let reminderRes1 = try! context.fetch(reminderReq)
+        let performRes1 = try! context.fetch(performReq)
+        XCTAssertEqual(vesselRes1.count, 1)
+        XCTAssertEqual(reminderRes1.count, 2)
+        XCTAssertEqual(performRes1.count, 1)
+
+        try! self.basicController.delete(vessel: vessel).get()
+
+        let vesselRes2 = try! context.fetch(vesselReq)
+        let reminderRes2 = try! context.fetch(reminderReq)
+        let performRes2 = try! context.fetch(performReq)
+
+        XCTAssertEqual(vesselRes2.count, 0)
+        XCTAssertEqual(reminderRes2.count, 0)
+        XCTAssertEqual(performRes2.count, 0)
+    }
+
+    func test_reminder_cascadingDeletes() {
+        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
+        let reminder = try! self.basicController.newReminder(for: vessel).get()
+        try! self.basicController.appendNewPerformToReminders(with: [.init(rawValue: reminder.uuid)]).get()
+        let bc = self.basicController as! CD_BasicController
+        let context = bc.container.viewContext
+        let vesselReq = CD_ReminderVessel.fetchRequest() as! NSFetchRequest<CD_ReminderVessel>
+        let reminderReq = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
+        let performReq = CD_ReminderPerform.fetchRequest() as! NSFetchRequest<CD_ReminderPerform>
+        let vesselRes1 = try! context.fetch(vesselReq)
+        let reminderRes1 = try! context.fetch(reminderReq)
+        let performRes1 = try! context.fetch(performReq)
+        XCTAssertEqual(vesselRes1.count, 1)
+        XCTAssertEqual(reminderRes1.count, 2)
+        XCTAssertEqual(performRes1.count, 1)
+
+        try! self.basicController.delete(reminder: reminder).get()
+
+        let vesselRes2 = try! context.fetch(vesselReq)
+        let reminderRes2 = try! context.fetch(reminderReq)
+        let performRes2 = try! context.fetch(performReq)
+
+        XCTAssertEqual(vesselRes2.count, 1)
+        XCTAssertEqual(reminderRes2.count, 1)
+        XCTAssertEqual(performRes2.count, 0)
+    }
 }

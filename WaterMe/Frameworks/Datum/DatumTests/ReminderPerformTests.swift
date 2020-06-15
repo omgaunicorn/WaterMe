@@ -32,10 +32,6 @@ class ReminderPerformTests: DatumTestsBase {
         return try! self.basicController.newReminder(for: vessel).get()
     }
 
-    func test_cascadingDeletes() {
-        // TODO:
-    }
-
 }
 
 extension CD_ReminderPerformTests {
