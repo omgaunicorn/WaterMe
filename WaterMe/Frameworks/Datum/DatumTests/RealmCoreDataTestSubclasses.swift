@@ -118,3 +118,15 @@ class CD_ReminderTests: ReminderTests {
         return try! testing_NewCDBasicController(of: .local).get()
     }
 }
+
+class RLM_ReminderPerformTests: ReminderPerformTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewRLMBasicController(of: .local).get()
+    }
+}
+
+class CD_ReminderPerformTests: ReminderPerformTests {
+    override func newBasicController() -> BasicController {
+        return try! testing_NewCDBasicController(of: .local).get()
+    }
+}

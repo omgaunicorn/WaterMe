@@ -159,6 +159,7 @@
 		508FFCAF1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */; };
 		508FFCB01EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */; };
 		5090FD842470E280003B03D1 /* BasicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5090FD832470E280003B03D1 /* BasicController.swift */; };
+		509459FF2497776E0090664A /* ReminderPerformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509459FE2497776E0090664A /* ReminderPerformTests.swift */; };
 		5096D191215474E1006E1019 /* UIApplication+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D190215474E1006E1019 /* UIApplication+WaterMe.swift */; };
 		5096D19321547659006E1019 /* UIView+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D19221547658006E1019 /* UIView+WaterMe.swift */; };
 		5096D1962154775D006E1019 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D1952154775D006E1019 /* Font.swift */; };
@@ -556,6 +557,7 @@
 		5090FD832470E280003B03D1 /* BasicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicController.swift; sourceTree = "<group>"; };
 		5091F36A2456E57D00FFB28F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5091F36B2456E57D00FFB28F /* it */ = {isa = PBXFileReference; lastKnownFileType = file; name = it; path = it.lproj/StarterRealm.realm; sourceTree = "<group>"; };
+		509459FE2497776E0090664A /* ReminderPerformTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPerformTests.swift; sourceTree = "<group>"; };
 		5096D190215474E1006E1019 /* UIApplication+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+WaterMe.swift"; sourceTree = "<group>"; };
 		5096D19221547658006E1019 /* UIView+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+WaterMe.swift"; sourceTree = "<group>"; };
 		5096D1952154775D006E1019 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -895,6 +897,7 @@
 				5034765224552CFD00C3DAD3 /* DatumTests.swift */,
 				48AFA34B2488E67B002CAFDC /* ReminderTests.swift */,
 				48AFA30D24871E9A002CAFDC /* ReminderVesselTests.swift */,
+				509459FE2497776E0090664A /* ReminderPerformTests.swift */,
 				488CCDBC247F7DFF00E92036 /* ReminderCollectionTests.swift */,
 				48F5604F247FA9060049F14D /* ReminderVesselCollectionTests.swift */,
 				481565A22480D24900402045 /* GroupedReminderCollectionTests.swift */,
@@ -1860,6 +1863,7 @@
 				48F56050247FA9060049F14D /* ReminderVesselCollectionTests.swift in Sources */,
 				5034765324552CFD00C3DAD3 /* DatumTests.swift in Sources */,
 				48DD0C1E248146580082C7E3 /* BasicControllerCreateUpdateTests.swift in Sources */,
+				509459FF2497776E0090664A /* ReminderPerformTests.swift in Sources */,
 				481565A32480D24900402045 /* GroupedReminderCollectionTests.swift in Sources */,
 				481565AD2480DB1C00402045 /* BasicControllerReadTests.swift in Sources */,
 				48AFA304248646E6002CAFDC /* BasicControllerDeleteTests.swift in Sources */,

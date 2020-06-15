@@ -73,6 +73,9 @@
                   Identifier = "ReminderCollectionTests">
                </Test>
                <Test
+                  Identifier = "ReminderPerformTests">
+               </Test>
+               <Test
                   Identifier = "ReminderTests">
                </Test>
                <Test
