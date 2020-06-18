@@ -106,6 +106,9 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "BasicControllerClosureTests">
+               </Test>
+               <Test
                   Identifier = "BasicControllerCreateUpdateTests">
                </Test>
                <Test
