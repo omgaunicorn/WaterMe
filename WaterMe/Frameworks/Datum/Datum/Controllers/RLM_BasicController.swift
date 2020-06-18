@@ -48,7 +48,8 @@ internal class RLM_BasicController: BasicController {
 
     internal let kind: ControllerKind
     private let config: Realm.Configuration
-    private var realm: Result<Realm, DatumError> {
+    // Internal only for testing. Should be private.
+    internal var realm: Result<Realm, DatumError> {
         do {
             return try .success(Realm(configuration: self.config))
         } catch {
