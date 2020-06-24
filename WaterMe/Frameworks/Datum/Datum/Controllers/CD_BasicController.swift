@@ -88,8 +88,8 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
         assert(context === vessel.managedObjectContext!)
         
-        let token = context.datum_willSave()
-        defer { context.datum_didSave(token) }
+        let token = self.willSave(context)
+        defer { self.didSave(token) }
         let newReminder = CD_Reminder(context: context)
         context.insert(newReminder)
         // core data hooks up the inverse relationship
@@ -111,8 +111,8 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
         
         let context = self.container.viewContext
-        let token = context.datum_willSave()
-        defer { context.datum_didSave(token) }
+        let token = self.willSave(context)
+        defer { self.didSave(token) }
         let vessel = CD_ReminderVessel(context: context)
         // enforce at least 1 reminder
         let newReminder = CD_Reminder(context: context)
@@ -272,8 +272,8 @@ internal class CD_BasicController: BasicController {
                 in vessel: ReminderVessel) -> Result<Void, DatumError>
     {
         let context = self.container.viewContext
-        let token = context.datum_willSave()
-        defer { context.datum_didSave(token) }
+        let token = self.willSave(context)
+        defer { self.didSave(token) }
         let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
         
         // debug only sanity checks
@@ -305,8 +305,8 @@ internal class CD_BasicController: BasicController {
                 in reminder: Reminder) -> Result<Void, DatumError>
     {
         let context = self.container.viewContext
-        let token = context.datum_willSave()
-        defer { context.datum_didSave(token) }
+        let token = self.willSave(context)
+        defer { self.didSave(token) }
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
         
         // debug only sanity checks
@@ -345,8 +345,8 @@ internal class CD_BasicController: BasicController {
             coordinator.managedObjectID(forURIRepresentation: URL(string: $0.uuid)!)
         }
         let context = self.container.viewContext
-        let token = context.datum_willSave()
-        defer { context.datum_didSave(token) }
+        let token = self.willSave(context)
+        defer { self.didSave(token) }
         let reminders = ids.compactMap { context.object(with: $0) as? CD_Reminder }
         
         // debug only sanity checks
@@ -373,8 +373,8 @@ internal class CD_BasicController: BasicController {
     
     func delete(vessel: ReminderVessel) -> Result<Void, DatumError> {
         let context = self.container.viewContext
-        let token = context.datum_willSave()
-        defer { context.datum_didSave(token) }
+        let token = self.willSave(context)
+        defer { self.didSave(token) }
         let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
         
         // debug only sanity checks
@@ -392,8 +392,8 @@ internal class CD_BasicController: BasicController {
     
     func delete(reminder: Reminder) -> Result<Void, DatumError> {
         let context = self.container.viewContext
-        let token = context.datum_willSave()
-        defer { context.datum_didSave(token) }
+        let token = self.willSave(context)
+        defer { self.didSave(token) }
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
         
         // debug only sanity checks
@@ -421,23 +421,46 @@ internal class CD_BasicController: BasicController {
     }
 }
 
-extension NSManagedObjectContext {
-    fileprivate func datum_willSave() -> Any {
+extension CD_BasicController {
+    fileprivate func willSave(_ context: NSManagedObjectContext) -> Any {
         return NotificationCenter.default.addObserver(forName: .NSManagedObjectContextWillSave,
-                                                      object: self,
+                                                      object: context,
                                                       queue: nil)
-        { notification in
+        { [weak self] notification in
             guard let context = notification.object as? NSManagedObjectContext else {
                 assertionFailure("Core Data Dates Not Updated")
                 return
             }
+            // Update Save Modified Dates in Objects
             context.insertedObjects
                 .union(context.updatedObjects)
                 .forEach { ($0 as? CD_Base)?.datum_willSave() }
+
+            // Capture Deleted Values for API Contract
+            // This must be done now because they will be deleted soon
+            let userDidPerformReminder = !context.insertedObjects.filter({ $0 is CD_ReminderPerform }).isEmpty
+            let deletedReminders = context.deletedObjects
+                .compactMap { ReminderValue(reminder: $0 as? CD_Reminder) }
+            let deletedReminderVessels = context.deletedObjects
+                .compactMap { ReminderVesselValue(reminderVessel: $0 as? CD_ReminderVessel) }
+
+            // Now, Dispatch because we want CoreData to save
+            // Then we can update any API Contracts
+            DispatchQueue.main.async {
+                if userDidPerformReminder {
+                    self?.userDidPerformReminder?()
+                }
+                if !deletedReminders.isEmpty {
+                    self?.remindersDeleted?(deletedReminders)
+                }
+                if !deletedReminderVessels.isEmpty {
+                    self?.reminderVesselsDeleted?(deletedReminderVessels)
+                }
+            }
         }
     }
     
-    fileprivate func datum_didSave(_ token: Any) {
+    fileprivate func didSave(_ token: Any) {
         NotificationCenter.default.removeObserver(token)
     }
 }
