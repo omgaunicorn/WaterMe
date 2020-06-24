@@ -83,4 +83,18 @@ class BasicControllerClosureTests: DatumTestsBase {
 
     //    var userDidPerformReminder: (() -> Void)? { get set }
 
+    func test_performedReminder() {
+        let exp = XCTestExpectation()
+        self.basicController.userDidPerformReminder = {
+            exp.fulfill()
+        }
+        let vessel = try! self.basicController.newReminderVessel(displayName: nil,
+                                                                 icon: nil).get()
+        let item1 = try! self.basicController.newReminder(for: vessel).get()
+        try! self.basicController.appendNewPerformToReminders(
+            with: [.init(rawValue: item1.uuid)]
+        ).get()
+        self.wait(for: [exp], timeout: 0.1)
+    }
+
 }
