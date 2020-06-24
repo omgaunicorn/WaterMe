@@ -26,9 +26,7 @@ import XCTest
 
 class BasicControllerClosureTests: DatumTestsBase {
 
-//    var remindersDeleted: (([ReminderValue]) -> Void)? { get set }
-//    var reminderVesselsDeleted: (([ReminderVesselValue]) -> Void)? { get set }
-//    var userDidPerformReminder: (() -> Void)? { get set }
+    //    var remindersDeleted: (([ReminderValue]) -> Void)? { get set }
 
     func test_remindersDeleted_byDeletingReminder() {
         let exp = XCTestExpectation()
@@ -65,6 +63,24 @@ class BasicControllerClosureTests: DatumTestsBase {
         try! self.basicController.delete(vessel: vessel).get()
         self.wait(for: [exp], timeout: 0.1)
     }
+
+    //    var reminderVesselsDeleted: (([ReminderVesselValue]) -> Void)? { get set }
+
+    func test_vesselsDeleted_byDeletingVessel() {
+        let exp = XCTestExpectation()
+        var vesselID: String!
+        self.basicController.reminderVesselsDeleted = { ids in
+            exp.fulfill()
+            XCTAssertEqual(ids.count, 1)
+            XCTAssertEqual(vesselID, ids[0].uuid.uuid)
+        }
+        let vessel = try! self.basicController.newReminderVessel(displayName: nil,
+                                                                 icon: nil).get()
+        vesselID = vessel.uuid
+        try! self.basicController.delete(vessel: vessel).get()
+        self.wait(for: [exp], timeout: 0.1)
     }
+
+    //    var userDidPerformReminder: (() -> Void)? { get set }
 
 }
