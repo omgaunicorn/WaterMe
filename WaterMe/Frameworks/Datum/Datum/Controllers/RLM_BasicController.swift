@@ -40,9 +40,9 @@ internal class RLM_BasicController: BasicController {
 
     // MARK: Observation Closures
 
-    internal var remindersDeleted: (([ReminderValue]) -> Void)?
-    internal var reminderVesselsDeleted: (([ReminderVesselValue]) -> Void)?
-    internal var userDidPerformReminder: (() -> Void)?
+    internal var remindersDeleted: ((Set<ReminderValue>) -> Void)?
+    internal var reminderVesselsDeleted: ((Set<ReminderVesselValue>) -> Void)?
+    internal var userDidPerformReminder: ((Set<ReminderValue>) -> Void)?
     
     // MARK: Initialization
 
@@ -168,8 +168,11 @@ internal class RLM_BasicController: BasicController {
     }
 
     internal func appendNewPerformToReminders(with identifiers: [Identifier]) -> Result<Void, DatumError> {
-        let result = self.reminders(matching: identifiers).flatMap({ self.appendNewPerform(to: $0) })
-        self.userDidPerformReminder?()
+        let reminders = self.reminders(matching: identifiers)
+        let result = reminders.flatMap({ self.appendNewPerform(to: $0) })
+        if case .success = result, case .success(let reminders) = reminders {
+            self.userDidPerformReminder?(Set(reminders.map { ReminderValue(reminder: $0) }))
+        }
         return result
     }
 
@@ -330,7 +333,7 @@ internal class RLM_BasicController: BasicController {
         
     internal func delete(vessel: ReminderVessel) -> Result<Void, DatumError> {
         let vessel = (vessel as! RLM_ReminderVesselWrapper).wrappedObject
-        let reminderValues = Array(vessel.reminders.map({ ReminderValue(reminder: $0) }))
+        let reminderValues = Set(vessel.reminders.map({ ReminderValue(reminder: $0) }))
         let vesselValue = ReminderVesselValue(reminderVessel: vessel)
         let result: Result<Void, DatumError> = self.realm.flatMap() { realm in
             realm.beginWrite()
@@ -339,7 +342,7 @@ internal class RLM_BasicController: BasicController {
         }
         if case .success = result {
             self.remindersDeleted?(reminderValues)
-            self.reminderVesselsDeleted?([vesselValue].compactMap({ $0 }))
+            self.reminderVesselsDeleted?([vesselValue])
         }
         return result
     }

@@ -70,11 +70,11 @@ internal class CD_BasicController: BasicController {
 
     // MARK: Properties
     
-    var remindersDeleted: (([ReminderValue]) -> Void)?
-    var reminderVesselsDeleted: (([ReminderVesselValue]) -> Void)?
-    var userDidPerformReminder: (() -> Void)?
+    internal var remindersDeleted: ((Set<ReminderValue>) -> Void)?
+    internal var reminderVesselsDeleted: ((Set<ReminderVesselValue>) -> Void)?
+    internal var userDidPerformReminder: ((Set<ReminderValue>) -> Void)?
 
-    let kind: ControllerKind
+    internal let kind: ControllerKind
     // Internal only for testing. Should be private.
     internal let container: NSPersistentContainer
 
@@ -438,7 +438,8 @@ extension CD_BasicController {
 
             // Capture Deleted Values for API Contract
             // This must be done now because they will be deleted soon
-            let userDidPerformReminder = !context.insertedObjects.filter({ $0 is CD_ReminderPerform }).isEmpty
+            let performedReminders = context.insertedObjects
+                .compactMap { ReminderValue(reminder: ($0 as? CD_ReminderPerform)?.reminder) }
             let deletedReminders = context.deletedObjects
                 .compactMap { ReminderValue(reminder: $0 as? CD_Reminder) }
             let deletedReminderVessels = context.deletedObjects
@@ -447,14 +448,14 @@ extension CD_BasicController {
             // Now, Dispatch because we want CoreData to save
             // Then we can update any API Contracts
             DispatchQueue.main.async {
-                if userDidPerformReminder {
-                    self?.userDidPerformReminder?()
+                if !performedReminders.isEmpty {
+                    self?.userDidPerformReminder?(Set(performedReminders))
                 }
                 if !deletedReminders.isEmpty {
-                    self?.remindersDeleted?(deletedReminders)
+                    self?.remindersDeleted?(Set(deletedReminders))
                 }
                 if !deletedReminderVessels.isEmpty {
-                    self?.reminderVesselsDeleted?(deletedReminderVessels)
+                    self?.reminderVesselsDeleted?(Set(deletedReminderVessels))
                 }
             }
         }

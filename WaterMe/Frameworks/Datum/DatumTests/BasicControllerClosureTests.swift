@@ -51,8 +51,8 @@ class BasicControllerClosureTests: DatumTestsBase {
         self.basicController.remindersDeleted = { ids in
             exp.fulfill()
             XCTAssertEqual(ids.count, 3)
-            XCTAssertEqual(item1UUID, ids[1].uuid.uuid)
-            XCTAssertEqual(item2UUID, ids[2].uuid.uuid)
+            XCTAssertEqual(ids.filter({ item1UUID == $0.uuid.uuid }).count, 1)
+            XCTAssertEqual(ids.filter({ item2UUID == $0.uuid.uuid }).count, 1)
         }
         let vessel = try! self.basicController.newReminderVessel(displayName: nil,
                                                                  icon: nil).get()
@@ -72,7 +72,7 @@ class BasicControllerClosureTests: DatumTestsBase {
         self.basicController.reminderVesselsDeleted = { ids in
             exp.fulfill()
             XCTAssertEqual(ids.count, 1)
-            XCTAssertEqual(vesselID, ids[0].uuid.uuid)
+            XCTAssertEqual(vesselID, ids.first!.uuid.uuid)
         }
         let vessel = try! self.basicController.newReminderVessel(displayName: nil,
                                                                  icon: nil).get()
@@ -85,14 +85,25 @@ class BasicControllerClosureTests: DatumTestsBase {
 
     func test_performedReminder() {
         let exp = XCTestExpectation()
-        self.basicController.userDidPerformReminder = {
+        var item1UUID: String!
+        var item2UUID: String!
+        self.basicController.userDidPerformReminder = { ids in
             exp.fulfill()
+            XCTAssertEqual(ids.count, 2)
+            XCTAssertEqual(ids.filter({ item1UUID == $0.uuid.uuid }).count, 1)
+            XCTAssertEqual(ids.filter({ item2UUID == $0.uuid.uuid }).count, 1)
         }
         let vessel = try! self.basicController.newReminderVessel(displayName: nil,
                                                                  icon: nil).get()
         let item1 = try! self.basicController.newReminder(for: vessel).get()
+        let item2 = try! self.basicController.newReminder(for: vessel).get()
+        item1UUID = item1.uuid
+        item2UUID = item2.uuid
         try! self.basicController.appendNewPerformToReminders(
-            with: [.init(rawValue: item1.uuid)]
+            with: [
+                .init(rawValue: item1.uuid),
+                .init(rawValue: item2.uuid)
+            ]
         ).get()
         self.wait(for: [exp], timeout: 0.1)
     }

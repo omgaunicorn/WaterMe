@@ -34,9 +34,9 @@ public func NewBasicController(of kind: ControllerKind) -> Result<BasicControlle
 
 public protocol BasicController: class {
 
-    var remindersDeleted: (([ReminderValue]) -> Void)? { get set }
-    var reminderVesselsDeleted: (([ReminderVesselValue]) -> Void)? { get set }
-    var userDidPerformReminder: (() -> Void)? { get set }
+    var remindersDeleted: ((Set<ReminderValue>) -> Void)? { get set }
+    var reminderVesselsDeleted: ((Set<ReminderVesselValue>) -> Void)? { get set }
+    var userDidPerformReminder: ((Set<ReminderValue>) -> Void)? { get set }
 
     var kind: ControllerKind { get }
 

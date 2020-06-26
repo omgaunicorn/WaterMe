@@ -26,8 +26,8 @@ import Intents
 
 protocol ShortcutSuggesterProtocol {
     static func perform(with values: [ReminderAndVesselValue])
-    static func deleteActivities(for vessels: [ReminderVesselValue])
-    static func deleteActivities(for reminders: [ReminderValue])
+    static func deleteActivities(for vessels: Set<ReminderVesselValue>)
+    static func deleteActivities(for reminders: Set<ReminderValue>)
 }
 
 @available(iOS 12.0, *)
@@ -37,7 +37,7 @@ class ShortcutSuggester: ShortcutSuggesterProtocol {
     private static let queue = DispatchQueue(label: taskName, qos: .utility)
     private static var backgroundTaskID: UIBackgroundTaskIdentifier?
 
-    class func deleteActivities(for reminders: [ReminderValue]) {
+    class func deleteActivities(for reminders: Set<ReminderValue>) {
         let ids = reminders.flatMap() { reminder in
             return [
                 NSUserActivity.uniqueString(for: .editReminder,
@@ -52,7 +52,7 @@ class ShortcutSuggester: ShortcutSuggesterProtocol {
                                                  completionHandler: {})
     }
 
-    class func deleteActivities(for vessels: [ReminderVesselValue]) {
+    class func deleteActivities(for vessels: Set<ReminderVesselValue>) {
         let ids = vessels.map({ NSUserActivity.uniqueString(for: .editReminderVessel,
                                                             and: [$0.uuid]) })
         NSUserActivity.deleteSavedUserActivities(withPersistentIdentifiers: ids,
