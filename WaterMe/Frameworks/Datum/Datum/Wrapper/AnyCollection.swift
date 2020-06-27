@@ -43,7 +43,7 @@ public struct AnyCollection<Element, Index>: BaseCollection {
     
     internal init<T: BaseCollection>(_ collection: T) where T.Element == Element, T.Index == Index {
         _subscript = { collection[$0] }
-        _count =  collection.count
+        _count  = collection.count
         _index1 = collection.index
         _index2 = collection.indexOfItem
     }
@@ -83,7 +83,7 @@ extension BaseCollection where Index == Int {
     }
 }
 
-extension BaseCollection where Index ==  IndexPath {
+extension BaseCollection where Index == IndexPath {
     public var numberOfSections: Int {
         return self.count(at: nil) ?? 0
     }

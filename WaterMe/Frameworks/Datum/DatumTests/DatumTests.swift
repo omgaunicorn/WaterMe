@@ -39,7 +39,7 @@ class DatumTestsBase: XCTestCase {
     
     func setUpSmall() throws {
         for x in 1...2 {
-            let num = x*100
+            let num = x * 100
             let vessel = try self.basicController.newReminderVessel(
                 displayName: "\(num)番花",
                 icon: .emoji("🤬")
@@ -51,7 +51,7 @@ class DatumTestsBase: XCTestCase {
                     // this time period is important to make sure that no reminders
                     // switch between this week and later when running tests
                     interval: 20,
-                    note: "Vessel: \(vessel.displayName!): Reminder: \(y*100)",
+                    note: "Vessel: \(vessel.displayName!): Reminder: \(y * 100)",
                     in: reminder
                 ).get()
                 for _ in 1...10 {
@@ -72,37 +72,6 @@ class DatumTestsBase: XCTestCase {
         try? fm.removeItem(at: appSupport.appendingPathComponent("WaterMe.sqlite-shm"))
         try? fm.removeItem(at: appSupport.appendingPathComponent("WaterMe.sqlite-wal"))
     }
-    
-    /*
-    func test_basicController() {
-        let query = try! self.basicController.groupedReminders().get()
-        let wait = XCTestExpectation()
-        self.token = query.observe { changes in
-            switch changes {
-            case .initial(let reminders):
-                for section in 0..<reminders.numberOfSections {
-                    let count = reminders.count(at: .init(row: 0, section: section))!
-                    switch section {
-                    case 0:
-                        XCTAssertEqual(count, 2)
-                    case 1,2,4:
-                        XCTAssertEqual(count, 0)
-                    case 3:
-                        XCTAssertEqual(count, 6)
-                    default:
-                        XCTFail()
-                    }
-                }
-                wait.fulfill()
-            case .update:
-                XCTFail()
-            case .error(let error):
-                XCTFail(error.localizedDescription)
-            }
-        }
-        self.wait(for: [wait], timeout: 0.1)
-    }*/
-
 }
 
 extension CollectionQuery {

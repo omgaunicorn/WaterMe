@@ -133,9 +133,9 @@ internal class RLM_BasicController: BasicController {
     }
 
     private func reminders(in section: ReminderSection,
-                            sorted: ReminderSortOrder = .nextPerformDate,
-                            ascending: Bool = true)
-                            -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
+                           sorted: ReminderSortOrder = .nextPerformDate,
+                           ascending: Bool = true)
+                           -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     {
         return self.realm.map() { realm in
             let range = section.dateInterval
@@ -247,8 +247,8 @@ internal class RLM_BasicController: BasicController {
     }
     
     internal func update(displayName: String? = nil,
-                       icon: ReminderVesselIcon? = nil,
-                       in vessel: ReminderVessel) -> Result<Void, DatumError>
+                         icon: ReminderVesselIcon? = nil,
+                         in vessel: ReminderVessel) -> Result<Void, DatumError>
     {
         let vessel = (vessel as! RLM_ReminderVesselWrapper).wrappedObject
         guard vessel.isInvalidated == false else { return .failure(.objectDeleted) }
@@ -278,9 +278,9 @@ internal class RLM_BasicController: BasicController {
     }
     
     internal func update(kind: ReminderKind? = nil,
-                       interval: Int? = nil,
-                       note: String? = nil,
-                       in reminder: Reminder) -> Result<Void, DatumError>
+                         interval: Int? = nil,
+                         note: String? = nil,
+                         in reminder: Reminder) -> Result<Void, DatumError>
     {
         let reminder = (reminder as! RLM_ReminderWrapper).wrappedObject
         guard reminder.isInvalidated == false else { return .failure(.objectDeleted) }

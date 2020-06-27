@@ -121,10 +121,8 @@
 		5049D1A31FACFA1B0076565E /* ReminderUserNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5049D1A21FACFA1B0076565E /* ReminderUserNotificationController.swift */; };
 		504A36FB214C7ECC009543C0 /* SimpleImageViewerSubclass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */; };
 		504B1BA7207332E20090CD7F /* TCF.m in Sources */ = {isa = PBXBuildFile; fileRef = 504B1BA6207332E20090CD7F /* TCF.m */; };
-		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
 		5051F8FA202BA2BE00741FF9 /* GlobalReminderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */; };
 		5051F8FC202BAB1C00741FF9 /* BadgeNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8FB202BAB1C00741FF9 /* BadgeNumberController.swift */; };
-		5051F8FE202BCBE900741FF9 /* OtherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8FD202BCBE900741FF9 /* OtherTests.swift */; };
 		50572E0A217040400053114C /* ReminderMainViewController+NSUserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50572E09217040400053114C /* ReminderMainViewController+NSUserActivity.swift */; };
 		505B8C28214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B8C27214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift */; };
 		5060A073249B9E1D00D96EFA /* BasicControllerClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5060A069249B9E1800D96EFA /* BasicControllerClosureTests.swift */; };
@@ -376,13 +374,6 @@
 			remoteGlobalIDString = A0BF70A61EDC5B1400109F6E;
 			remoteInfo = SimpleImageViewer;
 		};
-		50C96A3F1EC2D047002802C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50BB0F4F1EBFCDE500850FF4;
-			remoteInfo = WaterMe;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -517,10 +508,8 @@
 		504B1BA4207332E10090CD7F /* WaterMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WaterMe-Bridging-Header.h"; sourceTree = "<group>"; };
 		504B1BA5207332E20090CD7F /* TCF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCF.h; sourceTree = "<group>"; };
 		504B1BA6207332E20090CD7F /* TCF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCF.m; sourceTree = "<group>"; };
-		505086AE1ECBD43200745012 /* RealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
 		5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalReminderObserver.swift; sourceTree = "<group>"; };
 		5051F8FB202BAB1C00741FF9 /* BadgeNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeNumberController.swift; sourceTree = "<group>"; };
-		5051F8FD202BCBE900741FF9 /* OtherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherTests.swift; sourceTree = "<group>"; };
 		50572E09217040400053114C /* ReminderMainViewController+NSUserActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderMainViewController+NSUserActivity.swift"; sourceTree = "<group>"; };
 		505B8C27214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderSummaryTableViewCells+Models.swift"; sourceTree = "<group>"; };
 		5060A069249B9E1800D96EFA /* BasicControllerClosureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicControllerClosureTests.swift; sourceTree = "<group>"; };
@@ -598,8 +587,6 @@
 		50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderIntervalPickerViewController.swift; sourceTree = "<group>"; };
 		50C30E551EFF9349006003A1 /* ReminderIntervalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderIntervalTableViewCell.swift; sourceTree = "<group>"; };
 		50C96A311EC2BB03002802C1 /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
-		50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoDeviceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		50C96A3B1EC2CFE8002802C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50CA47E321690D360063F51E /* ReminderVesselCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderVesselCollectionViewCell.xib; sourceTree = "<group>"; };
 		50CA47E421690D360063F51E /* ReminderVesselMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselMainViewController.swift; sourceTree = "<group>"; };
 		50CA47E521690D360063F51E /* ReminderVesselCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -698,13 +685,6 @@
 				500D240A2474C18C0070162E /* CropViewController.framework in Frameworks */,
 				50380EB4245584F800271545 /* SimpleImageViewer.framework in Frameworks */,
 				5034767B24552D0700C3DAD3 /* Store.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		50C96A341EC2CFE8002802C1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -818,13 +798,6 @@
 				48939EB224760ACD007D73E1 /* GroupedCollection */,
 			);
 			path = Wrapper;
-			sourceTree = "<group>";
-		};
-		49D2E6637FA631F9A2F393B5 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		500679AD1F4BF3B700F8100D /* ReminderMain */ = {
@@ -1180,11 +1153,9 @@
 				5034765124552CFD00C3DAD3 /* DatumTests */,
 				5034767424552D0700C3DAD3 /* StoreTests */,
 				48A7B0E12467FCB100DC0861 /* CalculateTests */,
-				50C96A381EC2CFE8002802C1 /* NoDeviceTests */,
 				503476E724557A6200C3DAD3 /* SPMShim */,
 				50BB0F511EBFCDE500850FF4 /* Products */,
 				8CCD0EA6DFF9C0E9A378684C /* Frameworks */,
-				49D2E6637FA631F9A2F393B5 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1192,7 +1163,6 @@
 			isa = PBXGroup;
 			children = (
 				50BB0F501EBFCDE500850FF4 /* WaterMe.app */,
-				50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */,
 				5034764324552CFD00C3DAD3 /* Datum.framework */,
 				5034764B24552CFD00C3DAD3 /* DatumTests.xctest */,
 				5034766624552D0600C3DAD3 /* Store.framework */,
@@ -1230,16 +1200,6 @@
 				50BB0F5F1EBFCDE500850FF4 /* Info.plist */,
 			);
 			path = WaterMe;
-			sourceTree = "<group>";
-		};
-		50C96A381EC2CFE8002802C1 /* NoDeviceTests */ = {
-			isa = PBXGroup;
-			children = (
-				505086AE1ECBD43200745012 /* RealmTests.swift */,
-				5051F8FD202BCBE900741FF9 /* OtherTests.swift */,
-				50C96A3B1EC2CFE8002802C1 /* Info.plist */,
-			);
-			path = NoDeviceTests;
 			sourceTree = "<group>";
 		};
 		50CA47E221690D1E0063F51E /* ReminderVesselViewAll */ = {
@@ -1494,24 +1454,6 @@
 			productReference = 50BB0F501EBFCDE500850FF4 /* WaterMe.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50C96A361EC2CFE8002802C1 /* NoDeviceTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 50C96A3C1EC2CFE8002802C1 /* Build configuration list for PBXNativeTarget "NoDeviceTests" */;
-			buildPhases = (
-				50C96A331EC2CFE8002802C1 /* Sources */,
-				50C96A341EC2CFE8002802C1 /* Frameworks */,
-				50C96A351EC2CFE8002802C1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				50C96A401EC2D047002802C1 /* PBXTargetDependency */,
-			);
-			name = NoDeviceTests;
-			productName = NoDeviceTests;
-			productReference = 50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1568,12 +1510,6 @@
 							};
 						};
 					};
-					50C96A361EC2CFE8002802C1 = {
-						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = V6ESYGU6CV;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 50BB0F4F1EBFCDE500850FF4;
-					};
 				};
 			};
 			buildConfigurationList = 50BB0F4B1EBFCDE500850FF4 /* Build configuration list for PBXProject "WaterMe" */;
@@ -1606,7 +1542,6 @@
 			projectRoot = "";
 			targets = (
 				50BB0F4F1EBFCDE500850FF4 /* WaterMe */,
-				50C96A361EC2CFE8002802C1 /* NoDeviceTests */,
 				5034764224552CFD00C3DAD3 /* Datum */,
 				5034764A24552CFD00C3DAD3 /* DatumTests */,
 				5034766524552D0600C3DAD3 /* Store */,
@@ -1762,13 +1697,6 @@
 				50E3F2CB1FF70D27003245E3 /* CoreDataMigration.storyboard in Resources */,
 				5028190E200D14850044BEC8 /* SettingsInfoTableViewCell.xib in Resources */,
 				50BB0F6C1EC001C200850FF4 /* Videos in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		50C96A351EC2CFE8002802C1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2005,15 +1933,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		50C96A331EC2CFE8002802C1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5051F8FE202BCBE900741FF9 /* OtherTests.swift in Sources */,
-				505086AF1ECBD43200745012 /* RealmTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -2081,11 +2000,6 @@
 			isa = PBXTargetDependency;
 			name = SimpleImageViewer;
 			targetProxy = 50380EB62455850200271545 /* PBXContainerItemProxy */;
-		};
-		50C96A401EC2D047002802C1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50BB0F4F1EBFCDE500850FF4 /* WaterMe */;
-			targetProxy = 50C96A3F1EC2D047002802C1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2700,44 +2614,6 @@
 			};
 			name = Release;
 		};
-		50C96A3D1EC2CFE8002802C1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = V6ESYGU6CV;
-				INFOPLIST_FILE = NoDeviceTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.NoDeviceTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
-			};
-			name = Debug;
-		};
-		50C96A3E1EC2CFE8002802C1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = V6ESYGU6CV;
-				INFOPLIST_FILE = NoDeviceTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.NoDeviceTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2818,15 +2694,6 @@
 			buildConfigurations = (
 				50BB0F631EBFCDE500850FF4 /* Debug */,
 				50BB0F641EBFCDE500850FF4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		50C96A3C1EC2CFE8002802C1 /* Build configuration list for PBXNativeTarget "NoDeviceTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				50C96A3D1EC2CFE8002802C1 /* Debug */,
-				50C96A3E1EC2CFE8002802C1 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
