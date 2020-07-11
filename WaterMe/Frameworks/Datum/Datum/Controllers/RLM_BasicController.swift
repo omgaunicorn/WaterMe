@@ -22,6 +22,7 @@
 //
 
 import RealmSwift
+import UIKit
 
 extension Realm {
     internal func waterMe_commitWrite() -> Result<Void, DatumError> {
