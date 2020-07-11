@@ -49,8 +49,8 @@ extension OptionalAddButtonTableViewHeaderFooterView {
     }
 }
 
-extension ReminderVesselWrapper {
-    enum LocalizedString {
+enum LocalizedString {
+    enum ReminderVessel {
         static let untitledPlant =
             NSLocalizedString("My Plant",
                               comment: "Name shown to the user when they have not given the plant a specific name.")
@@ -542,7 +542,7 @@ extension UserActivityConfigurator {
         static func editVesselTitle(fromVesselName vesselName: String?) -> String {
             let localizedString = NSLocalizedString("Edit %@",
                                                     comment: "SiriShortcut: Title: EditPlant: Shows the plant name that the siri shortcut corresponds to.")
-            let vesselName = vesselName ?? ReminderVesselWrapper.LocalizedString.untitledPlant
+            let vesselName = vesselName ?? WaterMe.LocalizedString.ReminderVessel.untitledPlant
             if #available(iOS 12.0, *) {
                 return NSString.deferredLocalizedIntentsString(with: localizedString, vesselName) as String
             } else {
@@ -554,7 +554,7 @@ extension UserActivityConfigurator {
         {
             let localizedString = NSLocalizedString("Edit %@ %@ Reminder",
                                                     comment: "SiriShortcut: Title: ViewReminder: Shows the reminder kind and the name of the plant so the user knows what the SiriShortcut applies to.")
-            let vesselName = vesselName ?? ReminderVesselWrapper.LocalizedString.untitledPlant
+            let vesselName = vesselName ?? WaterMe.LocalizedString.ReminderVessel.untitledPlant
             if #available(iOS 12.0, *) {
                 return NSString.deferredLocalizedIntentsString(with: localizedString, reminderKind.localizedSpotlightString, vesselName) as String
             } else {
@@ -566,7 +566,7 @@ extension UserActivityConfigurator {
         {
             let localizedString = NSLocalizedString("View %@ %@ Reminder",
                                                     comment: "SiriShortcut: Title: ViewReminder: Shows the reminder kind and the name of the plant so the user knows what the SiriShortcut applies to.")
-            let vesselName = vesselName ?? ReminderVesselWrapper.LocalizedString.untitledPlant
+            let vesselName = vesselName ?? WaterMe.LocalizedString.ReminderVessel.untitledPlant
             if #available(iOS 12.0, *) {
                 return NSString.deferredLocalizedIntentsString(with: localizedString, reminderKind.localizedSpotlightString, vesselName) as String
             } else {
@@ -578,7 +578,7 @@ extension UserActivityConfigurator {
         {
             let localizedString = NSLocalizedString("Mark %@ %@ as Done",
                                                     comment: "SiriShortcut: Title: PerformReminder: Shows the reminder kind and the name of the plant so the user knows what the SiriShortcut applies to.")
-            let vesselName = vesselName ?? ReminderVesselWrapper.LocalizedString.untitledPlant
+            let vesselName = vesselName ?? WaterMe.LocalizedString.ReminderVessel.untitledPlant
             if #available(iOS 12.0, *) {
                 return NSString.deferredLocalizedIntentsString(with: localizedString, reminderKind.localizedSpotlightString, vesselName) as String
             } else {

@@ -7,10 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		481565A32480D24900402045 /* GroupedReminderCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481565A22480D24900402045 /* GroupedReminderCollectionTests.swift */; };
+		481565AD2480DB1C00402045 /* BasicControllerReadTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 481565AC2480DB1C00402045 /* BasicControllerReadTests.swift */; };
 		4832F52D246E2406001B77F6 /* ReminderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F52C246E2406001B77F6 /* ReminderWrapper.swift */; };
 		4832F531246E5CE6001B77F6 /* ReminderVesselWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */; };
 		4832F534246E7BF8001B77F6 /* Reminder+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F533246E7BF8001B77F6 /* Reminder+Helpers.swift */; };
 		4832F536246E7C05001B77F6 /* ReminderVessel+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4832F535246E7C05001B77F6 /* ReminderVessel+Helpers.swift */; };
+		483C96E0247BDEB200D45200 /* AnyCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C96DF247BDEB100D45200 /* AnyCollection.swift */; };
+		483C96EA247BE02200D45200 /* AnyQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 483C96E9247BE02200D45200 /* AnyQuery.swift */; };
+		485482E2247A0FB000E3D4F0 /* ReminderPerformWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485482E0247A0DC200E3D4F0 /* ReminderPerformWrapper.swift */; };
+		485482E4247A0FC500E3D4F0 /* CD_ReminderPerformWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485482E3247A0FC500E3D4F0 /* CD_ReminderPerformWrapper.swift */; };
+		485482E6247A0FD200E3D4F0 /* RLM_ReminderPerformWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485482E5247A0FD200E3D4F0 /* RLM_ReminderPerformWrapper.swift */; };
+		4856E3012476717800B02577 /* CD_Base.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856E3002476717800B02577 /* CD_Base.swift */; };
+		4856E30B2476743600B02577 /* CD_Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856E30A2476743600B02577 /* CD_Reminder.swift */; };
+		4856E30D247674BE00B02577 /* CD_ReminderVessel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856E30C247674BE00B02577 /* CD_ReminderVessel.swift */; };
+		4856E30F2476770200B02577 /* ReminderKind.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4856E30E2476770200B02577 /* ReminderKind.swift */; };
+		488CCDC6247F7E8000E92036 /* ReminderCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488CCDBC247F7DFF00E92036 /* ReminderCollectionTests.swift */; };
+		48939E9F2475273B007D73E1 /* RLM_ReminderVesselWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939E9E2475273B007D73E1 /* RLM_ReminderVesselWrapper.swift */; };
+		48939EA124752759007D73E1 /* CD_ReminderVesselWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EA024752759007D73E1 /* CD_ReminderVesselWrapper.swift */; };
+		48939EA3247527D0007D73E1 /* RLM_ReminderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EA2247527D0007D73E1 /* RLM_ReminderWrapper.swift */; };
+		48939EA5247527DA007D73E1 /* CD_ReminderWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EA4247527DA007D73E1 /* CD_ReminderWrapper.swift */; };
+		48939EA7247607A6007D73E1 /* RLM_ReminderVesselCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EA6247607A6007D73E1 /* RLM_ReminderVesselCollection.swift */; };
+		48939EA9247607E3007D73E1 /* CD_ReminderVesselCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EA8247607E3007D73E1 /* CD_ReminderVesselCollection.swift */; };
+		48939EAB2476092C007D73E1 /* RLM_ReminderCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EAA2476092C007D73E1 /* RLM_ReminderCollection.swift */; };
+		48939EAD24760943007D73E1 /* CD_ReminderCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48939EAC24760943007D73E1 /* CD_ReminderCollection.swift */; };
 		48A7B0DC2467FCB100DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
 		48A7B0E32467FCB100DC0861 /* CalculateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7B0E22467FCB100DC0861 /* CalculateTests.swift */; };
 		48A7B0E52467FCB100DC0861 /* Calculate.h in Headers */ = {isa = PBXBuildFile; fileRef = 48A7B0D52467FCB100DC0861 /* Calculate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,9 +44,14 @@
 		48A7B0FA2467FE2A00DC0861 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
 		48A7B0FF2467FE3100DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
 		48A7B1042467FE3800DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
-		48B77EDC2466C8FD00EF25D3 /* ReminderCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B77EDB2466C8FD00EF25D3 /* ReminderCollection.swift */; };
-		48B77EDE2466CAB700EF25D3 /* ReminderVesselCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B77EDD2466CAB700EF25D3 /* ReminderVesselCollection.swift */; };
+		48AFA304248646E6002CAFDC /* BasicControllerDeleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AFA303248646E6002CAFDC /* BasicControllerDeleteTests.swift */; };
+		48AFA30E24871E9A002CAFDC /* ReminderVesselTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AFA30D24871E9A002CAFDC /* ReminderVesselTests.swift */; };
+		48AFA34C2488E67B002CAFDC /* ReminderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AFA34B2488E67B002CAFDC /* ReminderTests.swift */; };
 		48B77EE024677FD600EF25D3 /* BasicWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48B77EDF24677FD600EF25D3 /* BasicWrappers.swift */; };
+		48DD0C1E248146580082C7E3 /* BasicControllerCreateUpdateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48DD0C1D248146580082C7E3 /* BasicControllerCreateUpdateTests.swift */; };
+		48F4F8DB247A4B1C0014CA28 /* GroupedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F4F8DA247A4B1C0014CA28 /* GroupedCollection.swift */; };
+		48F56046247F8C470049F14D /* RealmCoreDataTestSubclasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F56045247F8C470049F14D /* RealmCoreDataTestSubclasses.swift */; };
+		48F56050247FA9060049F14D /* ReminderVesselCollectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48F5604F247FA9060049F14D /* ReminderVesselCollectionTests.swift */; };
 		5002ADE523E6AC5F00CBC2B9 /* NSObject+Runtime.m in Sources */ = {isa = PBXBuildFile; fileRef = 5002ADE423E6AC5F00CBC2B9 /* NSObject+Runtime.m */; };
 		500679AF1F4BF3DB00F8100D /* ReminderMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */; };
 		500D24072474C1800070162E /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 500D24062474C1800070162E /* Realm */; };
@@ -64,7 +89,6 @@
 		5034767B24552D0700C3DAD3 /* Store.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5034766624552D0600C3DAD3 /* Store.framework */; };
 		5034767C24552D0700C3DAD3 /* Store.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5034766624552D0600C3DAD3 /* Store.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		503476AF24552EFE00C3DAD3 /* ItemAndSectionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769724552EFE00C3DAD3 /* ItemAndSectionable.swift */; };
-		503476B024552EFE00C3DAD3 /* ReminderGedeg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769824552EFE00C3DAD3 /* ReminderGedeg.swift */; };
 		503476B124552EFE00C3DAD3 /* RealmError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769A24552EFE00C3DAD3 /* RealmError.swift */; };
 		503476B224552EFE00C3DAD3 /* ModelCompleteError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769B24552EFE00C3DAD3 /* ModelCompleteError.swift */; };
 		503476B424552EFE00C3DAD3 /* NSErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034769D24552EFE00C3DAD3 /* NSErrors.swift */; };
@@ -97,12 +121,11 @@
 		5049D1A31FACFA1B0076565E /* ReminderUserNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5049D1A21FACFA1B0076565E /* ReminderUserNotificationController.swift */; };
 		504A36FB214C7ECC009543C0 /* SimpleImageViewerSubclass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */; };
 		504B1BA7207332E20090CD7F /* TCF.m in Sources */ = {isa = PBXBuildFile; fileRef = 504B1BA6207332E20090CD7F /* TCF.m */; };
-		505086AF1ECBD43200745012 /* RealmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505086AE1ECBD43200745012 /* RealmTests.swift */; };
 		5051F8FA202BA2BE00741FF9 /* GlobalReminderObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */; };
 		5051F8FC202BAB1C00741FF9 /* BadgeNumberController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8FB202BAB1C00741FF9 /* BadgeNumberController.swift */; };
-		5051F8FE202BCBE900741FF9 /* OtherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5051F8FD202BCBE900741FF9 /* OtherTests.swift */; };
 		50572E0A217040400053114C /* ReminderMainViewController+NSUserActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50572E09217040400053114C /* ReminderMainViewController+NSUserActivity.swift */; };
 		505B8C28214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B8C27214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift */; };
+		5060A073249B9E1D00D96EFA /* BasicControllerClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5060A069249B9E1800D96EFA /* BasicControllerClosureTests.swift */; };
 		5065AA1C200E872900C7F0CC /* UserFacingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065AA1B200E872900C7F0CC /* UserFacingError.swift */; };
 		5065AA25200EC62F00C7F0CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5065AA27200EC62F00C7F0CC /* Localizable.strings */; };
 		506A6218200562AC008EF601 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506A6217200562AC008EF601 /* Settings.storyboard */; };
@@ -126,14 +149,16 @@
 		5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */; };
 		5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */; };
 		5089D125214F458200140F68 /* AppVersionCheckingAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5089D124214F458200140F68 /* AppVersionCheckingAlert.swift */; };
+		508B2EC924741F4800A497E4 /* WaterMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 508B2EC724741F4800A497E4 /* WaterMe.xcdatamodeld */; };
+		508B2ECB24741F6200A497E4 /* CD_BasicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508B2ECA24741F6100A497E4 /* CD_BasicController.swift */; };
 		508D1C262174151300C71BE9 /* ShortcutSuggester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508D1C252174151300C71BE9 /* ShortcutSuggester.swift */; };
 		508E61551F8ACC5E00B28DD8 /* ReminderMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 508E61541F8ACC5E00B28DD8 /* ReminderMain.storyboard */; };
 		508E61571F8AD57400B28DD8 /* ReminderCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508E61561F8AD57400B28DD8 /* ReminderCollectionViewController.swift */; };
 		508E615A1F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */; };
 		508FFCAF1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */; };
 		508FFCB01EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */; };
-		5090739E247115E90041099E /* GroupedReminderCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5090739D247115E90041099E /* GroupedReminderCollection.swift */; };
 		5090FD842470E280003B03D1 /* BasicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5090FD832470E280003B03D1 /* BasicController.swift */; };
+		509459FF2497776E0090664A /* ReminderPerformTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 509459FE2497776E0090664A /* ReminderPerformTests.swift */; };
 		5096D191215474E1006E1019 /* UIApplication+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D190215474E1006E1019 /* UIApplication+WaterMe.swift */; };
 		5096D19321547659006E1019 /* UIView+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D19221547658006E1019 /* UIView+WaterMe.swift */; };
 		5096D1962154775D006E1019 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5096D1952154775D006E1019 /* Font.swift */; };
@@ -201,13 +226,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 48A7B0D22467FCB100DC0861;
 			remoteInfo = Calculate;
-		};
-		48A7B0DF2467FCB100DC0861 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50BB0F4F1EBFCDE500850FF4;
-			remoteInfo = WaterMe;
 		};
 		48A7B0E62467FCB100DC0861 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -286,13 +304,6 @@
 			remoteGlobalIDString = 5034764224552CFD00C3DAD3;
 			remoteInfo = Datum;
 		};
-		5034764F24552CFD00C3DAD3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50BB0F4F1EBFCDE500850FF4;
-			remoteInfo = WaterMe;
-		};
 		5034765624552CFD00C3DAD3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
@@ -306,13 +317,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5034766524552D0600C3DAD3;
 			remoteInfo = Store;
-		};
-		5034767224552D0700C3DAD3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50BB0F4F1EBFCDE500850FF4;
-			remoteInfo = WaterMe;
 		};
 		5034767924552D0700C3DAD3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -370,13 +374,6 @@
 			remoteGlobalIDString = A0BF70A61EDC5B1400109F6E;
 			remoteInfo = SimpleImageViewer;
 		};
-		50C96A3F1EC2D047002802C1 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 50BB0F4F1EBFCDE500850FF4;
-			remoteInfo = WaterMe;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -399,10 +396,30 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		481565A22480D24900402045 /* GroupedReminderCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedReminderCollectionTests.swift; sourceTree = "<group>"; };
+		481565AC2480DB1C00402045 /* BasicControllerReadTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicControllerReadTests.swift; sourceTree = "<group>"; };
 		4832F52C246E2406001B77F6 /* ReminderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderWrapper.swift; sourceTree = "<group>"; };
 		4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVesselWrapper.swift; sourceTree = "<group>"; };
 		4832F533246E7BF8001B77F6 /* Reminder+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reminder+Helpers.swift"; sourceTree = "<group>"; };
 		4832F535246E7C05001B77F6 /* ReminderVessel+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderVessel+Helpers.swift"; sourceTree = "<group>"; };
+		483C96DF247BDEB100D45200 /* AnyCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyCollection.swift; sourceTree = "<group>"; };
+		483C96E9247BE02200D45200 /* AnyQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyQuery.swift; sourceTree = "<group>"; };
+		485482E0247A0DC200E3D4F0 /* ReminderPerformWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPerformWrapper.swift; sourceTree = "<group>"; };
+		485482E3247A0FC500E3D4F0 /* CD_ReminderPerformWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_ReminderPerformWrapper.swift; sourceTree = "<group>"; };
+		485482E5247A0FD200E3D4F0 /* RLM_ReminderPerformWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLM_ReminderPerformWrapper.swift; sourceTree = "<group>"; };
+		4856E3002476717800B02577 /* CD_Base.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_Base.swift; sourceTree = "<group>"; };
+		4856E30A2476743600B02577 /* CD_Reminder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_Reminder.swift; sourceTree = "<group>"; };
+		4856E30C247674BE00B02577 /* CD_ReminderVessel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_ReminderVessel.swift; sourceTree = "<group>"; };
+		4856E30E2476770200B02577 /* ReminderKind.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderKind.swift; sourceTree = "<group>"; };
+		488CCDBC247F7DFF00E92036 /* ReminderCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCollectionTests.swift; sourceTree = "<group>"; };
+		48939E9E2475273B007D73E1 /* RLM_ReminderVesselWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLM_ReminderVesselWrapper.swift; sourceTree = "<group>"; };
+		48939EA024752759007D73E1 /* CD_ReminderVesselWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_ReminderVesselWrapper.swift; sourceTree = "<group>"; };
+		48939EA2247527D0007D73E1 /* RLM_ReminderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLM_ReminderWrapper.swift; sourceTree = "<group>"; };
+		48939EA4247527DA007D73E1 /* CD_ReminderWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_ReminderWrapper.swift; sourceTree = "<group>"; };
+		48939EA6247607A6007D73E1 /* RLM_ReminderVesselCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLM_ReminderVesselCollection.swift; sourceTree = "<group>"; };
+		48939EA8247607E3007D73E1 /* CD_ReminderVesselCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_ReminderVesselCollection.swift; sourceTree = "<group>"; };
+		48939EAA2476092C007D73E1 /* RLM_ReminderCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLM_ReminderCollection.swift; sourceTree = "<group>"; };
+		48939EAC24760943007D73E1 /* CD_ReminderCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CD_ReminderCollection.swift; sourceTree = "<group>"; };
 		48A7B0D32467FCB100DC0861 /* Calculate.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Calculate.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		48A7B0D52467FCB100DC0861 /* Calculate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Calculate.h; sourceTree = "<group>"; };
 		48A7B0D62467FCB100DC0861 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -414,9 +431,14 @@
 		48A7B0F22467FDF500DC0861 /* NSCalendar+WaterMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSCalendar+WaterMe.swift"; sourceTree = "<group>"; };
 		48A7B0F32467FDF500DC0861 /* AppVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppVersion.swift; sourceTree = "<group>"; };
 		48A7B0F42467FDF600DC0861 /* UserFacingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserFacingError.swift; sourceTree = "<group>"; };
-		48B77EDB2466C8FD00EF25D3 /* ReminderCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCollection.swift; sourceTree = "<group>"; };
-		48B77EDD2466CAB700EF25D3 /* ReminderVesselCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVesselCollection.swift; sourceTree = "<group>"; };
+		48AFA303248646E6002CAFDC /* BasicControllerDeleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicControllerDeleteTests.swift; sourceTree = "<group>"; };
+		48AFA30D24871E9A002CAFDC /* ReminderVesselTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVesselTests.swift; sourceTree = "<group>"; };
+		48AFA34B2488E67B002CAFDC /* ReminderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderTests.swift; sourceTree = "<group>"; };
 		48B77EDF24677FD600EF25D3 /* BasicWrappers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicWrappers.swift; sourceTree = "<group>"; };
+		48DD0C1D248146580082C7E3 /* BasicControllerCreateUpdateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicControllerCreateUpdateTests.swift; sourceTree = "<group>"; };
+		48F4F8DA247A4B1C0014CA28 /* GroupedCollection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupedCollection.swift; sourceTree = "<group>"; };
+		48F56045247F8C470049F14D /* RealmCoreDataTestSubclasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCoreDataTestSubclasses.swift; sourceTree = "<group>"; };
+		48F5604F247FA9060049F14D /* ReminderVesselCollectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderVesselCollectionTests.swift; sourceTree = "<group>"; };
 		5002ADE323E6AC5600CBC2B9 /* NSObject+Runtime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSObject+Runtime.h"; sourceTree = "<group>"; };
 		5002ADE423E6AC5F00CBC2B9 /* NSObject+Runtime.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Runtime.m"; sourceTree = "<group>"; };
 		500679AE1F4BF3DB00F8100D /* ReminderMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderMainViewController.swift; sourceTree = "<group>"; };
@@ -457,7 +479,6 @@
 		5034767524552D0700C3DAD3 /* StoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreTests.swift; sourceTree = "<group>"; };
 		5034767724552D0700C3DAD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5034769724552EFE00C3DAD3 /* ItemAndSectionable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemAndSectionable.swift; sourceTree = "<group>"; };
-		5034769824552EFE00C3DAD3 /* ReminderGedeg.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderGedeg.swift; sourceTree = "<group>"; };
 		5034769A24552EFE00C3DAD3 /* RealmError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmError.swift; sourceTree = "<group>"; };
 		5034769B24552EFE00C3DAD3 /* ModelCompleteError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelCompleteError.swift; sourceTree = "<group>"; };
 		5034769D24552EFE00C3DAD3 /* NSErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSErrors.swift; sourceTree = "<group>"; };
@@ -487,12 +508,11 @@
 		504B1BA4207332E10090CD7F /* WaterMe-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WaterMe-Bridging-Header.h"; sourceTree = "<group>"; };
 		504B1BA5207332E20090CD7F /* TCF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TCF.h; sourceTree = "<group>"; };
 		504B1BA6207332E20090CD7F /* TCF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TCF.m; sourceTree = "<group>"; };
-		505086AE1ECBD43200745012 /* RealmTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RealmTests.swift; sourceTree = "<group>"; };
 		5051F8F9202BA2BE00741FF9 /* GlobalReminderObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalReminderObserver.swift; sourceTree = "<group>"; };
 		5051F8FB202BAB1C00741FF9 /* BadgeNumberController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeNumberController.swift; sourceTree = "<group>"; };
-		5051F8FD202BCBE900741FF9 /* OtherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherTests.swift; sourceTree = "<group>"; };
 		50572E09217040400053114C /* ReminderMainViewController+NSUserActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderMainViewController+NSUserActivity.swift"; sourceTree = "<group>"; };
 		505B8C27214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderSummaryTableViewCells+Models.swift"; sourceTree = "<group>"; };
+		5060A069249B9E1800D96EFA /* BasicControllerClosureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicControllerClosureTests.swift; sourceTree = "<group>"; };
 		5065AA1B200E872900C7F0CC /* UserFacingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFacingError.swift; sourceTree = "<group>"; };
 		5065AA26200EC62F00C7F0CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5065AA29200EC73400C7F0CC /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/StarterRealm.realm; sourceTree = "<group>"; };
@@ -517,16 +537,18 @@
 		5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCropperViewController.swift; sourceTree = "<group>"; };
 		5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPhotoAlertController.swift; sourceTree = "<group>"; };
 		5089D124214F458200140F68 /* AppVersionCheckingAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCheckingAlert.swift; sourceTree = "<group>"; };
+		508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.6.0.001.xcdatamodel; sourceTree = "<group>"; };
+		508B2ECA24741F6100A497E4 /* CD_BasicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_BasicController.swift; sourceTree = "<group>"; };
 		508D1C252174151300C71BE9 /* ShortcutSuggester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSuggester.swift; sourceTree = "<group>"; };
 		508E61541F8ACC5E00B28DD8 /* ReminderMain.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReminderMain.storyboard; sourceTree = "<group>"; };
 		508E61561F8AD57400B28DD8 /* ReminderCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCollectionViewController.swift; sourceTree = "<group>"; };
 		508E61581F8AE3EC00B28DD8 /* ReminderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCollectionViewCell.swift; sourceTree = "<group>"; };
 		508FFCAD1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalAddButtonTableViewHeaderFooterView.swift; sourceTree = "<group>"; };
 		508FFCAE1EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OptionalAddButtonTableViewHeaderFooterView.xib; sourceTree = "<group>"; };
-		5090739D247115E90041099E /* GroupedReminderCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupedReminderCollection.swift; sourceTree = "<group>"; };
 		5090FD832470E280003B03D1 /* BasicController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicController.swift; sourceTree = "<group>"; };
 		5091F36A2456E57D00FFB28F /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5091F36B2456E57D00FFB28F /* it */ = {isa = PBXFileReference; lastKnownFileType = file; name = it; path = it.lproj/StarterRealm.realm; sourceTree = "<group>"; };
+		509459FE2497776E0090664A /* ReminderPerformTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderPerformTests.swift; sourceTree = "<group>"; };
 		5096D190215474E1006E1019 /* UIApplication+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+WaterMe.swift"; sourceTree = "<group>"; };
 		5096D19221547658006E1019 /* UIView+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+WaterMe.swift"; sourceTree = "<group>"; };
 		5096D1952154775D006E1019 /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
@@ -565,8 +587,6 @@
 		50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderIntervalPickerViewController.swift; sourceTree = "<group>"; };
 		50C30E551EFF9349006003A1 /* ReminderIntervalTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderIntervalTableViewCell.swift; sourceTree = "<group>"; };
 		50C96A311EC2BB03002802C1 /* Either.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
-		50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NoDeviceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		50C96A3B1EC2CFE8002802C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50CA47E321690D360063F51E /* ReminderVesselCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReminderVesselCollectionViewCell.xib; sourceTree = "<group>"; };
 		50CA47E421690D360063F51E /* ReminderVesselMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselMainViewController.swift; sourceTree = "<group>"; };
 		50CA47E521690D360063F51E /* ReminderVesselCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -668,13 +688,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		50C96A341EC2CFE8002802C1 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -685,8 +698,65 @@
 				4832F535246E7C05001B77F6 /* ReminderVessel+Helpers.swift */,
 				503476A324552EFE00C3DAD3 /* ReminderVesselIcon.swift */,
 				503476A224552EFE00C3DAD3 /* ReminderAndVesselValue.swift */,
+				4856E30E2476770200B02577 /* ReminderKind.swift */,
 			);
 			path = ModelHelpers;
+			sourceTree = "<group>";
+		};
+		485482D7247A0D8D00E3D4F0 /* ReminderPerform */ = {
+			isa = PBXGroup;
+			children = (
+				485482E0247A0DC200E3D4F0 /* ReminderPerformWrapper.swift */,
+				485482E3247A0FC500E3D4F0 /* CD_ReminderPerformWrapper.swift */,
+				485482E5247A0FD200E3D4F0 /* RLM_ReminderPerformWrapper.swift */,
+			);
+			path = ReminderPerform;
+			sourceTree = "<group>";
+		};
+		48939EAE24760A6E007D73E1 /* ReminderCollection */ = {
+			isa = PBXGroup;
+			children = (
+				48939EAC24760943007D73E1 /* CD_ReminderCollection.swift */,
+				48939EAA2476092C007D73E1 /* RLM_ReminderCollection.swift */,
+			);
+			path = ReminderCollection;
+			sourceTree = "<group>";
+		};
+		48939EAF24760A80007D73E1 /* ReminderVesselCollection */ = {
+			isa = PBXGroup;
+			children = (
+				48939EA8247607E3007D73E1 /* CD_ReminderVesselCollection.swift */,
+				48939EA6247607A6007D73E1 /* RLM_ReminderVesselCollection.swift */,
+			);
+			path = ReminderVesselCollection;
+			sourceTree = "<group>";
+		};
+		48939EB024760A8D007D73E1 /* Reminder */ = {
+			isa = PBXGroup;
+			children = (
+				4832F52C246E2406001B77F6 /* ReminderWrapper.swift */,
+				48939EA4247527DA007D73E1 /* CD_ReminderWrapper.swift */,
+				48939EA2247527D0007D73E1 /* RLM_ReminderWrapper.swift */,
+			);
+			path = Reminder;
+			sourceTree = "<group>";
+		};
+		48939EB124760AA3007D73E1 /* ReminderVessel */ = {
+			isa = PBXGroup;
+			children = (
+				4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */,
+				48939EA024752759007D73E1 /* CD_ReminderVesselWrapper.swift */,
+				48939E9E2475273B007D73E1 /* RLM_ReminderVesselWrapper.swift */,
+			);
+			path = ReminderVessel;
+			sourceTree = "<group>";
+		};
+		48939EB224760ACD007D73E1 /* GroupedCollection */ = {
+			isa = PBXGroup;
+			children = (
+				48F4F8DA247A4B1C0014CA28 /* GroupedCollection.swift */,
+			);
+			path = GroupedCollection;
 			sourceTree = "<group>";
 		};
 		48A7B0D42467FCB100DC0861 /* Calculate */ = {
@@ -718,20 +788,16 @@
 			isa = PBXGroup;
 			children = (
 				48B77EDF24677FD600EF25D3 /* BasicWrappers.swift */,
-				48B77EDB2466C8FD00EF25D3 /* ReminderCollection.swift */,
-				48B77EDD2466CAB700EF25D3 /* ReminderVesselCollection.swift */,
-				5090739D247115E90041099E /* GroupedReminderCollection.swift */,
-				4832F52C246E2406001B77F6 /* ReminderWrapper.swift */,
-				4832F530246E5CE6001B77F6 /* ReminderVesselWrapper.swift */,
+				483C96DF247BDEB100D45200 /* AnyCollection.swift */,
+				483C96E9247BE02200D45200 /* AnyQuery.swift */,
+				48939EB024760A8D007D73E1 /* Reminder */,
+				485482D7247A0D8D00E3D4F0 /* ReminderPerform */,
+				48939EB124760AA3007D73E1 /* ReminderVessel */,
+				48939EAE24760A6E007D73E1 /* ReminderCollection */,
+				48939EAF24760A80007D73E1 /* ReminderVesselCollection */,
+				48939EB224760ACD007D73E1 /* GroupedCollection */,
 			);
 			path = Wrapper;
-			sourceTree = "<group>";
-		};
-		49D2E6637FA631F9A2F393B5 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		500679AD1F4BF3B700F8100D /* ReminderMain */ = {
@@ -792,6 +858,7 @@
 				5034769924552EFE00C3DAD3 /* Errors */,
 				5034769524552EFE00C3DAD3 /* HelperClasses */,
 				4832F532246E7BDD001B77F6 /* ModelHelpers */,
+				508B2EBE24741F2A00A497E4 /* CoreDataModels */,
 				5034769E24552EFE00C3DAD3 /* RealmModels */,
 				5034764624552CFD00C3DAD3 /* Info.plist */,
 			);
@@ -803,6 +870,17 @@
 			isa = PBXGroup;
 			children = (
 				5034765224552CFD00C3DAD3 /* DatumTests.swift */,
+				48AFA34B2488E67B002CAFDC /* ReminderTests.swift */,
+				48AFA30D24871E9A002CAFDC /* ReminderVesselTests.swift */,
+				509459FE2497776E0090664A /* ReminderPerformTests.swift */,
+				488CCDBC247F7DFF00E92036 /* ReminderCollectionTests.swift */,
+				48F5604F247FA9060049F14D /* ReminderVesselCollectionTests.swift */,
+				481565A22480D24900402045 /* GroupedReminderCollectionTests.swift */,
+				481565AC2480DB1C00402045 /* BasicControllerReadTests.swift */,
+				48DD0C1D248146580082C7E3 /* BasicControllerCreateUpdateTests.swift */,
+				48AFA303248646E6002CAFDC /* BasicControllerDeleteTests.swift */,
+				5060A069249B9E1800D96EFA /* BasicControllerClosureTests.swift */,
+				48F56045247F8C470049F14D /* RealmCoreDataTestSubclasses.swift */,
 				5034765424552CFD00C3DAD3 /* Info.plist */,
 			);
 			name = DatumTests;
@@ -836,7 +914,6 @@
 			isa = PBXGroup;
 			children = (
 				5034769724552EFE00C3DAD3 /* ItemAndSectionable.swift */,
-				5034769824552EFE00C3DAD3 /* ReminderGedeg.swift */,
 			);
 			path = HelperClasses;
 			sourceTree = "<group>";
@@ -865,6 +942,7 @@
 			children = (
 				5090FD832470E280003B03D1 /* BasicController.swift */,
 				503476A724552EFE00C3DAD3 /* ProController.swift */,
+				508B2ECA24741F6100A497E4 /* CD_BasicController.swift */,
 				503476A824552EFE00C3DAD3 /* RLM_BasicController.swift */,
 			);
 			path = Controllers;
@@ -997,6 +1075,17 @@
 			path = DragAndDrop;
 			sourceTree = "<group>";
 		};
+		508B2EBE24741F2A00A497E4 /* CoreDataModels */ = {
+			isa = PBXGroup;
+			children = (
+				508B2EC724741F4800A497E4 /* WaterMe.xcdatamodeld */,
+				4856E3002476717800B02577 /* CD_Base.swift */,
+				4856E30A2476743600B02577 /* CD_Reminder.swift */,
+				4856E30C247674BE00B02577 /* CD_ReminderVessel.swift */,
+			);
+			path = CoreDataModels;
+			sourceTree = "<group>";
+		};
 		5096D1942154773D006E1019 /* StyleSheets */ = {
 			isa = PBXGroup;
 			children = (
@@ -1064,11 +1153,9 @@
 				5034765124552CFD00C3DAD3 /* DatumTests */,
 				5034767424552D0700C3DAD3 /* StoreTests */,
 				48A7B0E12467FCB100DC0861 /* CalculateTests */,
-				50C96A381EC2CFE8002802C1 /* NoDeviceTests */,
 				503476E724557A6200C3DAD3 /* SPMShim */,
 				50BB0F511EBFCDE500850FF4 /* Products */,
 				8CCD0EA6DFF9C0E9A378684C /* Frameworks */,
-				49D2E6637FA631F9A2F393B5 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1076,7 +1163,6 @@
 			isa = PBXGroup;
 			children = (
 				50BB0F501EBFCDE500850FF4 /* WaterMe.app */,
-				50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */,
 				5034764324552CFD00C3DAD3 /* Datum.framework */,
 				5034764B24552CFD00C3DAD3 /* DatumTests.xctest */,
 				5034766624552D0600C3DAD3 /* Store.framework */,
@@ -1114,16 +1200,6 @@
 				50BB0F5F1EBFCDE500850FF4 /* Info.plist */,
 			);
 			path = WaterMe;
-			sourceTree = "<group>";
-		};
-		50C96A381EC2CFE8002802C1 /* NoDeviceTests */ = {
-			isa = PBXGroup;
-			children = (
-				505086AE1ECBD43200745012 /* RealmTests.swift */,
-				5051F8FD202BCBE900741FF9 /* OtherTests.swift */,
-				50C96A3B1EC2CFE8002802C1 /* Info.plist */,
-			);
-			path = NoDeviceTests;
 			sourceTree = "<group>";
 		};
 		50CA47E221690D1E0063F51E /* ReminderVesselViewAll */ = {
@@ -1243,7 +1319,6 @@
 			);
 			dependencies = (
 				48A7B0DE2467FCB100DC0861 /* PBXTargetDependency */,
-				48A7B0E02467FCB100DC0861 /* PBXTargetDependency */,
 			);
 			name = CalculateTests;
 			productName = CalculateTests;
@@ -1286,7 +1361,6 @@
 			);
 			dependencies = (
 				5034764E24552CFD00C3DAD3 /* PBXTargetDependency */,
-				5034765024552CFD00C3DAD3 /* PBXTargetDependency */,
 			);
 			name = DatumTests;
 			productName = DatumTests;
@@ -1325,7 +1399,6 @@
 			);
 			dependencies = (
 				5034767124552D0700C3DAD3 /* PBXTargetDependency */,
-				5034767324552D0700C3DAD3 /* PBXTargetDependency */,
 			);
 			name = StoreTests;
 			productName = StoreTests;
@@ -1381,24 +1454,6 @@
 			productReference = 50BB0F501EBFCDE500850FF4 /* WaterMe.app */;
 			productType = "com.apple.product-type.application";
 		};
-		50C96A361EC2CFE8002802C1 /* NoDeviceTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 50C96A3C1EC2CFE8002802C1 /* Build configuration list for PBXNativeTarget "NoDeviceTests" */;
-			buildPhases = (
-				50C96A331EC2CFE8002802C1 /* Sources */,
-				50C96A341EC2CFE8002802C1 /* Frameworks */,
-				50C96A351EC2CFE8002802C1 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				50C96A401EC2D047002802C1 /* PBXTargetDependency */,
-			);
-			name = NoDeviceTests;
-			productName = NoDeviceTests;
-			productReference = 50C96A371EC2CFE8002802C1 /* NoDeviceTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1415,7 +1470,6 @@
 					};
 					48A7B0DA2467FCB100DC0861 = {
 						CreatedOnToolsVersion = 11.4;
-						TestTargetID = 50BB0F4F1EBFCDE500850FF4;
 					};
 					5034764224552CFD00C3DAD3 = {
 						CreatedOnToolsVersion = 11.4;
@@ -1427,7 +1481,6 @@
 						CreatedOnToolsVersion = 11.4;
 						DevelopmentTeam = V6ESYGU6CV;
 						ProvisioningStyle = Automatic;
-						TestTargetID = 50BB0F4F1EBFCDE500850FF4;
 					};
 					5034766524552D0600C3DAD3 = {
 						CreatedOnToolsVersion = 11.4;
@@ -1439,7 +1492,6 @@
 						CreatedOnToolsVersion = 11.4;
 						DevelopmentTeam = V6ESYGU6CV;
 						ProvisioningStyle = Automatic;
-						TestTargetID = 50BB0F4F1EBFCDE500850FF4;
 					};
 					503476E524557A6200C3DAD3 = {
 						CreatedOnToolsVersion = 11.4;
@@ -1457,12 +1509,6 @@
 								enabled = 0;
 							};
 						};
-					};
-					50C96A361EC2CFE8002802C1 = {
-						CreatedOnToolsVersion = 8.3.2;
-						DevelopmentTeam = V6ESYGU6CV;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 50BB0F4F1EBFCDE500850FF4;
 					};
 				};
 			};
@@ -1496,7 +1542,6 @@
 			projectRoot = "";
 			targets = (
 				50BB0F4F1EBFCDE500850FF4 /* WaterMe */,
-				50C96A361EC2CFE8002802C1 /* NoDeviceTests */,
 				5034764224552CFD00C3DAD3 /* Datum */,
 				5034764A24552CFD00C3DAD3 /* DatumTests */,
 				5034766524552D0600C3DAD3 /* Store */,
@@ -1655,13 +1700,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		50C96A351EC2CFE8002802C1 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
@@ -1706,27 +1744,43 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48939EA124752759007D73E1 /* CD_ReminderVesselWrapper.swift in Sources */,
 				5090FD842470E280003B03D1 /* BasicController.swift in Sources */,
+				483C96E0247BDEB200D45200 /* AnyCollection.swift in Sources */,
+				48939EA9247607E3007D73E1 /* CD_ReminderVesselCollection.swift in Sources */,
+				48939E9F2475273B007D73E1 /* RLM_ReminderVesselWrapper.swift in Sources */,
 				4832F52D246E2406001B77F6 /* ReminderWrapper.swift in Sources */,
+				48939EA5247527DA007D73E1 /* CD_ReminderWrapper.swift in Sources */,
+				485482E4247A0FC500E3D4F0 /* CD_ReminderPerformWrapper.swift in Sources */,
 				503476AF24552EFE00C3DAD3 /* ItemAndSectionable.swift in Sources */,
-				503476B024552EFE00C3DAD3 /* ReminderGedeg.swift in Sources */,
+				4856E30F2476770200B02577 /* ReminderKind.swift in Sources */,
 				503476B224552EFE00C3DAD3 /* ModelCompleteError.swift in Sources */,
 				48B77EE024677FD600EF25D3 /* BasicWrappers.swift in Sources */,
-				5090739E247115E90041099E /* GroupedReminderCollection.swift in Sources */,
+				508B2ECB24741F6200A497E4 /* CD_BasicController.swift in Sources */,
 				503476BD24552EFE00C3DAD3 /* RLM_BasicController.swift in Sources */,
 				4832F531246E5CE6001B77F6 /* ReminderVesselWrapper.swift in Sources */,
 				503476B124552EFE00C3DAD3 /* RealmError.swift in Sources */,
 				503476C024552EFE00C3DAD3 /* Realm+WaterMe.swift in Sources */,
-				48B77EDE2466CAB700EF25D3 /* ReminderVesselCollection.swift in Sources */,
+				485482E6247A0FD200E3D4F0 /* RLM_ReminderPerformWrapper.swift in Sources */,
+				483C96EA247BE02200D45200 /* AnyQuery.swift in Sources */,
 				503476B624552EFE00C3DAD3 /* Reminder.swift in Sources */,
-				48B77EDC2466C8FD00EF25D3 /* ReminderCollection.swift in Sources */,
+				4856E30D247674BE00B02577 /* CD_ReminderVessel.swift in Sources */,
+				48939EAB2476092C007D73E1 /* RLM_ReminderCollection.swift in Sources */,
 				503476B924552EFE00C3DAD3 /* ReminderVesselIcon.swift in Sources */,
+				4856E3012476717800B02577 /* CD_Base.swift in Sources */,
 				4832F536246E7C05001B77F6 /* ReminderVessel+Helpers.swift in Sources */,
 				503476B824552EFE00C3DAD3 /* ReminderAndVesselValue.swift in Sources */,
 				503476BC24552EFE00C3DAD3 /* ProController.swift in Sources */,
+				48939EAD24760943007D73E1 /* CD_ReminderCollection.swift in Sources */,
+				4856E30B2476743600B02577 /* CD_Reminder.swift in Sources */,
+				485482E2247A0FB000E3D4F0 /* ReminderPerformWrapper.swift in Sources */,
+				48F4F8DB247A4B1C0014CA28 /* GroupedCollection.swift in Sources */,
 				503476B424552EFE00C3DAD3 /* NSErrors.swift in Sources */,
 				503476B524552EFE00C3DAD3 /* ReminderVessel.swift in Sources */,
 				503476BF24552EFE00C3DAD3 /* UIImage+WaterMe.swift in Sources */,
+				508B2EC924741F4800A497E4 /* WaterMe.xcdatamodeld in Sources */,
+				48939EA3247527D0007D73E1 /* RLM_ReminderWrapper.swift in Sources */,
+				48939EA7247607A6007D73E1 /* RLM_ReminderVesselCollection.swift in Sources */,
 				4832F534246E7BF8001B77F6 /* Reminder+Helpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1735,7 +1789,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				48AFA30E24871E9A002CAFDC /* ReminderVesselTests.swift in Sources */,
+				48F56046247F8C470049F14D /* RealmCoreDataTestSubclasses.swift in Sources */,
+				5060A073249B9E1D00D96EFA /* BasicControllerClosureTests.swift in Sources */,
+				48F56050247FA9060049F14D /* ReminderVesselCollectionTests.swift in Sources */,
 				5034765324552CFD00C3DAD3 /* DatumTests.swift in Sources */,
+				48DD0C1E248146580082C7E3 /* BasicControllerCreateUpdateTests.swift in Sources */,
+				509459FF2497776E0090664A /* ReminderPerformTests.swift in Sources */,
+				481565A32480D24900402045 /* GroupedReminderCollectionTests.swift in Sources */,
+				481565AD2480DB1C00402045 /* BasicControllerReadTests.swift in Sources */,
+				48AFA304248646E6002CAFDC /* BasicControllerDeleteTests.swift in Sources */,
+				488CCDC6247F7E8000E92036 /* ReminderCollectionTests.swift in Sources */,
+				48AFA34C2488E67B002CAFDC /* ReminderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1868,15 +1933,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		50C96A331EC2CFE8002802C1 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5051F8FE202BCBE900741FF9 /* OtherTests.swift in Sources */,
-				505086AF1ECBD43200745012 /* RealmTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1884,11 +1940,6 @@
 			isa = PBXTargetDependency;
 			target = 48A7B0D22467FCB100DC0861 /* Calculate */;
 			targetProxy = 48A7B0DD2467FCB100DC0861 /* PBXContainerItemProxy */;
-		};
-		48A7B0E02467FCB100DC0861 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50BB0F4F1EBFCDE500850FF4 /* WaterMe */;
-			targetProxy = 48A7B0DF2467FCB100DC0861 /* PBXContainerItemProxy */;
 		};
 		48A7B0E72467FCB100DC0861 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1915,11 +1966,6 @@
 			target = 5034764224552CFD00C3DAD3 /* Datum */;
 			targetProxy = 5034764D24552CFD00C3DAD3 /* PBXContainerItemProxy */;
 		};
-		5034765024552CFD00C3DAD3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50BB0F4F1EBFCDE500850FF4 /* WaterMe */;
-			targetProxy = 5034764F24552CFD00C3DAD3 /* PBXContainerItemProxy */;
-		};
 		5034765724552CFD00C3DAD3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5034764224552CFD00C3DAD3 /* Datum */;
@@ -1929,11 +1975,6 @@
 			isa = PBXTargetDependency;
 			target = 5034766524552D0600C3DAD3 /* Store */;
 			targetProxy = 5034767024552D0700C3DAD3 /* PBXContainerItemProxy */;
-		};
-		5034767324552D0700C3DAD3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50BB0F4F1EBFCDE500850FF4 /* WaterMe */;
-			targetProxy = 5034767224552D0700C3DAD3 /* PBXContainerItemProxy */;
 		};
 		5034767A24552D0700C3DAD3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1959,11 +2000,6 @@
 			isa = PBXTargetDependency;
 			name = SimpleImageViewer;
 			targetProxy = 50380EB62455850200271545 /* PBXContainerItemProxy */;
-		};
-		50C96A401EC2D047002802C1 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 50BB0F4F1EBFCDE500850FF4 /* WaterMe */;
-			targetProxy = 50C96A3F1EC2D047002802C1 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2068,8 +2104,8 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = CalculateTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				INFOPLIST_FILE = Frameworks/Calculate/CalculateTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2081,7 +2117,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
 			};
 			name = Debug;
 		};
@@ -2094,8 +2129,8 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = CalculateTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				INFOPLIST_FILE = Frameworks/Calculate/CalculateTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2106,7 +2141,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
 			};
 			name = Release;
 		};
@@ -2190,8 +2224,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = DatumTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				INFOPLIST_FILE = Frameworks/Datum/DatumTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2203,7 +2237,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
 			};
 			name = Debug;
 		};
@@ -2217,8 +2250,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = DatumTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				INFOPLIST_FILE = Frameworks/Datum/DatumTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2229,7 +2262,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
 			};
 			name = Release;
 		};
@@ -2313,8 +2345,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = StoreTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				INFOPLIST_FILE = Frameworks/Store/StoreTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2326,7 +2358,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
 			};
 			name = Debug;
 		};
@@ -2340,8 +2371,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = StoreTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				INFOPLIST_FILE = Frameworks/Store/StoreTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2352,7 +2383,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
 			};
 			name = Release;
 		};
@@ -2539,7 +2569,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 255002;
+				CURRENT_PROJECT_VERSION = 256001;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2547,7 +2577,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.5;
+				MARKETING_VERSION = 2.5.6;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2565,7 +2595,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 255002;
+				CURRENT_PROJECT_VERSION = 256001;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2573,7 +2603,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.5;
+				MARKETING_VERSION = 2.5.6;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"RELEASE\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2581,44 +2611,6 @@
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		50C96A3D1EC2CFE8002802C1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = V6ESYGU6CV;
-				INFOPLIST_FILE = NoDeviceTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.NoDeviceTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
-			};
-			name = Debug;
-		};
-		50C96A3E1EC2CFE8002802C1 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = V6ESYGU6CV;
-				INFOPLIST_FILE = NoDeviceTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.NoDeviceTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaterMe.app/WaterMe";
 			};
 			name = Release;
 		};
@@ -2706,15 +2698,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		50C96A3C1EC2CFE8002802C1 /* Build configuration list for PBXNativeTarget "NoDeviceTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				50C96A3D1EC2CFE8002802C1 /* Debug */,
-				50C96A3E1EC2CFE8002802C1 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -2773,6 +2756,16 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
+		508B2EC724741F4800A497E4 /* WaterMe.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */,
+			);
+			currentVersion = 508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */;
+			path = WaterMe.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		50F388E11FF6DA490031ED45 /* WaterMeData.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

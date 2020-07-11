@@ -1,8 +1,8 @@
 //
-//  ReminderVesselWrapper.swift
+//  CD_ReminderPerformWrapper.swift
 //  Datum
 //
-//  Created by Jeffrey Bergier on 2020/05/15.
+//  Created by Jeffrey Bergier on 2020/05/24.
 //  Copyright © 2020 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
@@ -21,16 +21,12 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-public struct ReminderVesselWrapper: ModelCompleteCheckable {
-    internal let wrappedObject: RLM_ReminderVessel
-    internal init(_ wrappedObject: RLM_ReminderVessel) {
+import CoreData
+
+internal struct CD_ReminderPerformWrapper: ReminderPerform {
+    internal var wrappedObject: CD_ReminderPerform
+    internal init(_ wrappedObject: CD_ReminderPerform) {
         self.wrappedObject = wrappedObject
     }
-    
-    public var uuid: String { self.wrappedObject.uuid }
-    public var displayName: String? { self.wrappedObject.displayName }
-    public var icon: ReminderVesselIcon? { self.wrappedObject.icon }
-    public var kind: ReminderVesselKind { self.wrappedObject.kind }
-    public var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
-    public var shortLabelSafeDisplayName: String? { self.wrappedObject.shortLabelSafeDisplayName }
+    internal var date: Date { self.wrappedObject.date }
 }

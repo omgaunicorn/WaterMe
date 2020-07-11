@@ -27,13 +27,13 @@ import Datum
 
 class ReminderSummaryViewController: StandardViewController {
 
-    typealias Completion = (Action, ReminderIdentifier, UIViewController) -> Void
+    typealias Completion = (Action, Identifier, UIViewController) -> Void
     enum Action {
         case cancel, performReminder, editReminderVessel, editReminder
     }
 
     // swiftlint:disable:next function_parameter_count
-    class func newVC(reminderID: ReminderIdentifier,
+    class func newVC(reminderID: Identifier,
                      basicController: BasicController,
                      hapticGenerator: UIFeedbackGenerator,
                      sourceView: UIView,
@@ -67,10 +67,10 @@ class ReminderSummaryViewController: StandardViewController {
     
     private(set) var isPresentedAsPopover = false
 
-    var reminderResult: Result<ReminderWrapper, DatumError>!
+    var reminderResult: Result<Reminder, DatumError>!
     private var completion: Completion!
     private var userActivityContinuation: NSUserActivityContinuedHandler?
-    private var reminderID: ReminderIdentifier!
+    private var reminderID: Identifier!
     private weak var tableViewController: ReminderSummaryTableViewController!
     private weak var haptic: UIFeedbackGenerator?
     //swiftlint:disable:next weak_delegate
@@ -78,7 +78,7 @@ class ReminderSummaryViewController: StandardViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.notificationToken = self.reminderResult?.value?.datum_observe({ [weak self] in self?.reminderChanged($0) })
+        self.notificationToken = self.reminderResult?.value?.observe({ [weak self] in self?.reminderChanged($0) })
         self.updateViewForPresentation()
         self.userActivityDelegate.currentReminderAndVessel = { [weak self] in
             // should be unowned because this object should not exist longer
@@ -136,7 +136,7 @@ class ReminderSummaryViewController: StandardViewController {
         switch change {
         case .change:
             guard let reminder = self.reminderResult.value else { fallthrough }
-            self.reminderID = ReminderIdentifier(reminder: reminder)
+            self.reminderID = Identifier(rawValue: reminder.uuid)
             self.tableViewController.tableView.reloadData()
         case .deleted, .error:
             self.completion(.cancel, self.reminderID, self)

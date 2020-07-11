@@ -25,18 +25,18 @@ import Datum
 import UIKit
 
 protocol ReminderVesselEditTableViewControllerDelegate: class {
-    var vesselResult: Result<ReminderVesselWrapper, DatumError>? { get }
+    var vesselResult: Result<ReminderVessel, DatumError>? { get }
     func userChangedName(to: String, controller: ReminderVesselEditTableViewController?)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)
     func userChosePhotoChange(controller: ReminderVesselEditTableViewController?,
                               sender: PopoverSender)
-    func userChose(reminder: ReminderWrapper,
+    func userChose(reminder: Reminder,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
     func userChose(siriShortcut: ReminderVesselEditTableViewController.SiriShortcut,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
-    func userDeleted(reminder: ReminderWrapper,
+    func userDeleted(reminder: Reminder,
                      controller: ReminderVesselEditTableViewController?) -> Bool
 }
 
@@ -51,20 +51,18 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
     }
     
     func reloadAll() {
-        self.notificationToken?.invalidate()
-        self.remindersData = nil
+        self.invalidateTokens()
         self.tableView.reloadData()
-        self.notificationToken = self.delegate?.vesselResult?.value?.datum_observeReminders
+        self.notificationToken = self.delegate?.vesselResult?.value?.observeReminders
             { [weak self] in
                 self?.remindersChanged($0)
             }
     }
     
     func reloadReminders() {
-        self.notificationToken?.invalidate()
-        self.remindersData = nil
+        self.invalidateTokens()
         self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
-        self.notificationToken = self.delegate?.vesselResult?.value?.datum_observeReminders
+        self.notificationToken = self.delegate?.vesselResult?.value?.observeReminders
             { [weak self] in
                 self?.remindersChanged($0)
             }
@@ -104,7 +102,9 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         case .initial(let data):
             self.remindersData = data
             self.tableView.reloadSections(IndexSet([Section.reminders.rawValue]), with: .automatic)
-        case .update(let insertions, let deletions, let modifications):
+        case .update(let updates):
+            let updates = updates.transformed(newSection: Section.reminders.rawValue)
+            let (ins, dels, mods) = updates.ez
             guard self.delegate?.vesselResult != nil, self.remindersData != nil else {
                 let error = NSError(reminderChangeFiredAfterListOrParentVesselWereSetToNil: nil)
                 assertionFailure(String(describing: error))
@@ -113,9 +113,6 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 return
             }
             self.tableView.beginUpdates()
-            let ins = insertions.map({ IndexPath(row: $0, section: Section.reminders.rawValue) })
-            let dels = deletions.map({ IndexPath(row: $0, section: Section.reminders.rawValue)})
-            let mods = modifications.map({ IndexPath(row: $0, section: Section.reminders.rawValue) })
             self.tableView.insertRows(at: ins, with: .automatic)
             self.tableView.deleteRows(at: dels, with: .automatic)
             self.tableView.reloadRows(at: mods, with: .automatic)
@@ -149,6 +146,9 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
             // this was sometimes causing a crash because the underlying object was deleted
             // But in reality the underlying object should always be set to NIL if it gets deleted
             let data = self.remindersData
+            
+            // TODO: Removing this because Core Data doesn't have this concept
+            /*
             let invalidated = data?.isInvalidated ?? false
             guard invalidated == false else {
                 let error = NSError(underlyingObjectInvalidated: nil)
@@ -157,6 +157,8 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 Analytics.log(error: error)
                 return 0
             }
+            */
+            
             return data?.count ?? 0
         case .siriShortcuts:
             return SiriShortcut.allCases.count
@@ -309,6 +311,13 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         return UITableView.automaticDimension
     }
     
+    func invalidateTokens() {
+        self.notificationToken?.invalidate()
+        self.notificationToken = nil
+        self.remindersData = nil
+        self.tableView.reloadData()
+    }
+    
     private var notificationToken: ObservationToken?
     
     deinit {
@@ -322,11 +331,11 @@ extension ReminderVesselEditTableViewController {
         var localizedTitle: String {
             switch self {
             case .photo:
-                return ReminderVesselWrapper.LocalizedString.photo
+                return LocalizedString.ReminderVessel.photo
             case .name:
-                return ReminderVesselWrapper.LocalizedString.name
+                return LocalizedString.ReminderVessel.name
             case .reminders:
-                return ReminderVesselWrapper.LocalizedString.reminders
+                return LocalizedString.ReminderVessel.reminders
             case .siriShortcuts:
                 return "Siri Shortcuts"
             }

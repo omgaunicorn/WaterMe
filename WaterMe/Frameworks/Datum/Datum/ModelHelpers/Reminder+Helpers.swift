@@ -23,15 +23,51 @@
 
 import Calculate
 
-extension RLM_Reminder {
-    internal static let minimumInterval: Int = 1
-    internal static let maximumInterval: Int = 180
-    internal static let defaultInterval: Int = 7
-    
+// MARK: Core Data
+
+extension CD_Reminder {
+    internal var kind: ReminderKind {
+        get {
+            return .init(rawValue: (self.kindString, self.descriptionString))
+        }
+        set {
+            let raw = newValue.rawValue
+            self.kindString = raw.primary
+            raw.secondary.map { self.descriptionString = $0 }
+        }
+    }
+}
+
+extension CD_Reminder: ModelCompleteCheckable {
+    internal var isModelComplete: ModelCompleteError? {
+        switch self.kind {
+        case .fertilize, .water, .trim, .mist:
+            return nil
+        case .move(let description):
+            return description?.nonEmptyString == nil ?
+                ModelCompleteError(_actions: [.reminderMissingMoveLocation, .cancel, .saveAnyway])
+                : nil
+        case .other(let description):
+            return description?.nonEmptyString == nil ?
+                ModelCompleteError(_actions: [.reminderMissingOtherDescription, .cancel, .saveAnyway])
+                : nil
+        }
+    }
+}
+
+// MARK: Realm
+
+extension RLM_Reminder {    
     internal var vessel: RLM_ReminderVessel? { return self.vessels.first }
     internal var kind: ReminderKind {
-        get { return self.kindValue }
-        set { self.update(with: newValue) }
+        get {
+            return .init(rawValue: (self.kindString, self.descriptionString))
+        }
+        set {
+            let raw = newValue.rawValue
+            self.kindString = raw.primary
+            raw.secondary.map { self.descriptionString = $0 }
+        }
     }
     
     internal func recalculateNextPerformDate(comparisonPerform: RLM_ReminderPerform? = nil) {
@@ -60,56 +96,6 @@ extension RLM_Reminder: ModelCompleteCheckable {
     }
 }
 
-extension RLM_Reminder {
-    
-    internal static let kCaseWaterValue = "kReminderKindCaseWaterValue"
-    fileprivate static let kCaseTrimValue = "kReminderKindCaseTrimValue"
-    fileprivate static let kCaseMistValue = "kReminderKindCaseMistValue"
-    fileprivate static let kCaseFertilizeValue = "kReminderKindCaseFertilizeValue"
-    fileprivate static let kCaseMoveValue = "kReminderKindCaseMoveValue"
-    fileprivate static let kCaseOtherValue = "kReminderKindCaseOtherValue"
-    
-    fileprivate func update(with kind: ReminderKind) {
-        switch kind {
-        case .water:
-            self.kindString = type(of: self).kCaseWaterValue
-        case .fertilize:
-            self.kindString = type(of: self).kCaseFertilizeValue
-        case .trim:
-            self.kindString = type(of: self).kCaseTrimValue
-        case .mist:
-            self.kindString = type(of: self).kCaseMistValue
-        case .move(let location):
-            self.kindString = type(of: self).kCaseMoveValue
-            self.descriptionString = location?.nonEmptyString
-        case .other(let description):
-            self.kindString = type(of: self).kCaseOtherValue
-            self.descriptionString = description?.nonEmptyString
-        }
-    }
-    
-    fileprivate var kindValue: ReminderKind {
-        switch self.kindString {
-        case type(of: self).kCaseWaterValue:
-            return .water
-        case type(of: self).kCaseFertilizeValue:
-            return .fertilize
-        case type(of: self).kCaseTrimValue:
-            return .trim
-        case type(of: self).kCaseMistValue:
-            return .mist
-        case type(of: self).kCaseMoveValue:
-            let description = self.descriptionString?.nonEmptyString
-            return .move(location: description)
-        case type(of: self).kCaseOtherValue:
-            let description = self.descriptionString?.nonEmptyString
-            return .other(description: description)
-        default:
-            fatalError("Reminder.Kind: Invalid Case String Key")
-        }
-    }
-}
-
 public enum ReminderSection: Int, CaseIterable {
     case late, today, tomorrow, thisWeek, later
     var dateInterval: DateInterval {
@@ -128,38 +114,6 @@ public enum ReminderSection: Int, CaseIterable {
     }
 }
 
-public enum ReminderKind: Hashable {
-    case water, fertilize, trim, mist, move(location: String?), other(description: String?)
-    public static let count = 6
-}
-
-public struct ReminderIdentifier: UUIDRepresentable, Hashable {
-    public var reminderIdentifier: String
-    // TODO: Maybe delete this init
-    internal init(reminder: RLM_Reminder) {
-        self.reminderIdentifier = reminder.uuid
-    }
-    public init(reminder: ReminderWrapper) {
-        self.reminderIdentifier = reminder.uuid
-    }
-    public init(rawValue: String) {
-        self.reminderIdentifier = rawValue
-    }
-    public var uuid: String { return self.reminderIdentifier }
-}
-
 public enum ReminderSortOrder {
     case nextPerformDate, interval, kind, note
-    internal var keyPath: String {
-        switch self {
-        case .interval:
-            return #keyPath(RLM_Reminder.interval)
-        case .kind:
-            return #keyPath(RLM_Reminder.kindString)
-        case .nextPerformDate:
-            return #keyPath(RLM_Reminder.nextPerformDate)
-        case .note:
-            return #keyPath(RLM_Reminder.note)
-        }
-    }
 }

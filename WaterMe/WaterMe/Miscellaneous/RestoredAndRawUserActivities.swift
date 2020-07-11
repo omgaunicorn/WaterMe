@@ -25,10 +25,10 @@ import Datum
 import CoreSpotlight
 
 public enum RestoredUserActivity {
-    case editReminder(ReminderIdentifier)
-    case editReminderVessel(ReminderVesselIdentifier)
-    case viewReminder(ReminderIdentifier)
-    case performReminder(ReminderIdentifier)
+    case editReminder(Identifier)
+    case editReminderVessel(Identifier)
+    case viewReminder(Identifier)
+    case performReminder(Identifier)
 }
 
 public enum RawUserActivity: RawRepresentable {

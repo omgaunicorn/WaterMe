@@ -39,7 +39,8 @@ public enum ItemAndSectionSanityCheckFailureReason {
     // to avoid having an exception thrown
     public static func check(old: ItemAndSectionable,
                              new: ItemAndSectionable,
-                             delta: (ins: [IndexPath], dels: [IndexPath])) -> ItemAndSectionSanityCheckFailureReason?
+                             delta: (ins: [IndexPath], dels: [IndexPath]))
+                             -> ItemAndSectionSanityCheckFailureReason?
     {
         if let sectionCountMismatch = self.checkSectionMismatch(old: old, new: new) {
             return sectionCountMismatch

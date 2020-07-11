@@ -64,19 +64,19 @@ extension InfoTableViewCell {
                                font: .reminderSummarySublabel)
     }
     
-    func configureUnimportant(with reminder: ReminderWrapper?) {
+    func configureUnimportant(with reminder: Reminder?) {
         _ = {
             let vesselName = reminder?.vessel?.displayName
             let vesselNameStyle = vesselName != nil ?
                 Font.reminderSummaryPrimaryLabel :
                 Font.reminderSummaryPrimaryLabelValueNIL
-            self.label0?.attributedText = NSAttributedString(string: vesselName ?? ReminderVesselWrapper.LocalizedString.untitledPlant,
+            self.label0?.attributedText = NSAttributedString(string: vesselName ?? LocalizedString.ReminderVessel.untitledPlant,
                                                                       font: vesselNameStyle)
             self.sublabel0?.attributedText = NSAttributedString(string: ReminderSummaryViewController.LocalizedString.subheadPlantName,
                                                                          font: .reminderSummarySublabel)
         }()
         _ = {
-            let lastPerformedDate = reminder?.performed.last?.date
+            let lastPerformedDate = reminder?.lastPerformDate
             let dateString = self.timeAgoDateFormatter.timeAgoString(for: lastPerformedDate)
             self.label1?.attributedText = NSAttributedString(string: dateString,
                                                              font: .reminderSummaryPrimaryLabel)
@@ -93,7 +93,7 @@ extension InfoTableViewCell {
         }()
     }
 
-    func configureImportant(with reminder: ReminderWrapper?) {
+    func configureImportant(with reminder: Reminder?) {
         _ = {
             guard let reminderName = reminder?.kind.localizedLongString else { return }
             self.label0?.attributedText = NSAttributedString(string: reminderName,

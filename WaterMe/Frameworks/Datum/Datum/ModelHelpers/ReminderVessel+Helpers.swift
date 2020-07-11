@@ -24,6 +24,52 @@
 import RealmSwift
 import Calculate
 
+public enum ReminderVesselSortOrder {
+    case displayName, kind
+}
+
+// MARK: Core Data
+
+extension CD_ReminderVessel {
+    internal var icon: ReminderVesselIcon? {
+        get {
+            return ReminderVesselIcon(rawImageData: self.iconImageData,
+                                      emojiString: self.iconEmojiString)
+        }
+        set {
+            self.iconImageData = newValue?.dataValue
+            self.iconEmojiString = newValue?.stringValue
+        }
+    }
+    internal var kind: ReminderVesselKind {
+        get { return ReminderVesselKind(rawValue: self.kindString) ?? .plant }
+        set { self.kindString = newValue.rawValue }
+    }
+}
+
+extension CD_ReminderVessel: ModelCompleteCheckable {
+    internal var isModelComplete: ModelCompleteError? {
+        let issues: [RecoveryAction] = [
+            self.icon == nil ? .reminderVesselMissingIcon : nil,
+            self.displayName == nil ? .reminderVesselMissingName : nil,
+            self.reminders.count == 0 ? .reminderVesselMissingReminder : nil
+            ].compactMap({ $0 })
+        if issues.isEmpty {
+            return nil
+        } else {
+            return ModelCompleteError(_actions: issues + [.cancel, .saveAnyway])
+        }
+    }
+}
+
+extension CD_ReminderVessel {
+    internal var shortLabelSafeDisplayName: String? {
+        return self.displayName?.truncated(to: 20)
+    }
+}
+
+// MARK: Realm
+
 extension RLM_ReminderVessel {
     internal var icon: ReminderVesselIcon? {
         get {
@@ -41,12 +87,18 @@ extension RLM_ReminderVessel {
     }
 }
 
+extension RLM_ReminderVessel {
+    internal var shortLabelSafeDisplayName: String? {
+        return self.displayName?.truncated(to: 20)
+    }
+}
+
 extension RLM_ReminderVessel: ModelCompleteCheckable {
     internal var isModelComplete: ModelCompleteError? {
         let issues: [RecoveryAction] = [
             self.icon == nil ? .reminderVesselMissingIcon : nil,
             self.displayName == nil ? .reminderVesselMissingName : nil,
-            self.reminders.isEmpty ? .reminverVesselMissingReminder : nil
+            self.reminders.isEmpty ? .reminderVesselMissingReminder : nil
             ].compactMap({ $0 })
         if issues.isEmpty {
             return nil
@@ -83,33 +135,4 @@ extension RLM_ReminderVessel {
         let contains = !matches.isEmpty
         return contains
     }
-}
-
-extension RLM_ReminderVessel {
-    internal var shortLabelSafeDisplayName: String? {
-        let name = self.displayName ?? ""
-        let characterLimit = 20
-        guard name.count > characterLimit else { return self.displayName }
-        let endIndex = name.index(name.startIndex, offsetBy: characterLimit)
-        let substring = String(self.displayName![..<endIndex])
-        if let trimmed = substring.nonEmptyString {
-            return trimmed + "…"
-        } else {
-            return nil
-        }
-    }
-}
-
-public struct ReminderVesselIdentifier: UUIDRepresentable, Hashable {
-    public private(set) var uuid: String
-    internal init(reminderVessel: RLM_ReminderVessel) {
-        self.uuid = reminderVessel.uuid
-    }
-    public init(rawValue: String) {
-        self.uuid = rawValue
-    }
-}
-
-public enum ReminderVesselKind: String {
-    case plant
 }

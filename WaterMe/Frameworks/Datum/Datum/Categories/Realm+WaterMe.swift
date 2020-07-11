@@ -71,8 +71,15 @@ extension String {
         guard stripped.isEmpty == false else { return nil }
         return stripped
     }
-}
-
-public protocol UUIDRepresentable {
-    var uuid: String { get }
+    
+    internal func truncated(to length: Int) -> String? {
+        guard self.count > length else { return self }
+        let endIndex = self.index(self.startIndex, offsetBy: length)
+        let substring = String(self[..<endIndex])
+        if let trimmed = substring.nonEmptyString {
+            return trimmed + "…"
+        } else {
+            return nil
+        }
+    }
 }

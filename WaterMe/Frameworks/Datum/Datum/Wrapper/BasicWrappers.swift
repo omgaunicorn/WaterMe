@@ -22,15 +22,134 @@
 //
 
 import RealmSwift
+import CoreData
 
-public enum CollectionChange<T, U> {
-    case initial(data: T)
-    case update(insertions: [U], deletions: [U], modifications: [U])
+public struct Identifier: Hashable, Codable {
+    public var uuid: String
+    public init(rawValue: String) {
+        self.uuid = rawValue
+    }
+}
+
+public enum ItemChange<Deets> {
+    case error(DatumError)
+    case change(Deets)
+    case deleted
+}
+
+public enum CollectionChange<Collection, Deets> {
+    case initial(data: Collection)
+    case update(CollectionChangeUpdate<Deets>)
     case error(error: DatumError)
 }
 
-public protocol ObservationToken {
+public struct CollectionChangeUpdate<U> {
+    public var insertions: [U] = []
+    public var deletions: [U] = []
+    public var modifications: [U] = []
+    public var ez: (insertions: [U], deletions: [U], modifications: [U]) {
+        return (self.insertions, self.deletions, self.modifications)
+    }
+}
+
+extension CollectionChangeUpdate where U == Int {
+    public func transformed(newSection section: Int) -> CollectionChangeUpdate<IndexPath> {
+        return .init(insertions: self.insertions.map { IndexPath(row: $0, section: section) },
+                     deletions: self.deletions.map { IndexPath(row: $0, section: section) },
+                     modifications: self.modifications.map { IndexPath(row: $0, section: section) })
+    }
+}
+
+extension CollectionChangeUpdate where U == IndexPath {
+    public func transformed() -> CollectionChangeUpdate<Int> {
+        return .init(insertions: self.insertions.map { $0.row },
+                     deletions: self.deletions.map { $0.row },
+                     modifications: self.modifications.map { $0.row })
+    }
+}
+
+public protocol ObservationToken: class {
     func invalidate()
 }
 
 extension NotificationToken: ObservationToken {}
+extension NSKeyValueObservation: ObservationToken {}
+
+extension Array where Element == ObservationToken {
+    public func invalidateTokens() {
+        self.forEach { $0.invalidate() }
+    }
+}
+
+internal enum Token {
+    static func wrap(_ block: () -> NSObjectProtocol) -> NCTokenWrapper {
+        return .init(tokens: [block()])
+    }
+    static func wrap(_ block: () -> ObservationToken) -> TokenWrapper {
+        return .init(tokens: [block()])
+    }
+    static func wrap(_ block: () -> [ObservationToken]) -> TokenWrapper {
+        return .init(tokens: block())
+    }
+}
+
+internal class NCTokenWrapper: ObservationToken {
+    private var tokens: [NSObjectProtocol]
+    init(tokens: [NSObjectProtocol]) {
+        self.tokens = tokens
+    }
+    func invalidate() {
+        let nv = NotificationCenter.default
+        self.tokens.forEach { nv.removeObserver($0) }
+    }
+}
+
+internal class TokenWrapper: ObservationToken {
+    private var tokens: [ObservationToken]
+    init(tokens: [ObservationToken]) {
+        self.tokens = tokens
+    }
+    func invalidate() {
+        self.tokens.forEach { $0.invalidate() }
+        self.tokens = []
+    }
+}
+
+internal class UpdatingFetchedResultsControllerDelegate: NSObject, NSFetchedResultsControllerDelegate {
+    private var changeInFlight: CollectionChangeUpdate<IndexPath>!
+    private let block: (CollectionChangeUpdate<IndexPath>) -> Void
+    internal init(_ block: @escaping (CollectionChangeUpdate<IndexPath>) -> Void) {
+        self.block = block
+        super.init()
+    }
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        self.changeInFlight = .init()
+    }
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                    didChange anObject: Any,
+                    at index: IndexPath?,
+                    for type: NSFetchedResultsChangeType,
+                    newIndexPath newIndex: IndexPath?)
+    {
+        switch type {
+        case .insert:
+            self.changeInFlight.insertions.append(newIndex!)
+        case .move:
+            self.changeInFlight.deletions.append(index!)
+            self.changeInFlight.insertions.append(newIndex!)
+        case .update:
+            self.changeInFlight.modifications.append(newIndex!)
+        case .delete:
+            self.changeInFlight.deletions.append(index!)
+        @unknown default:
+            break
+        }
+    }
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        let changeInFlight = self.changeInFlight!
+        self.changeInFlight = nil
+        DispatchQueue.main.async {
+            self.block(changeInFlight)
+        }
+    }
+}

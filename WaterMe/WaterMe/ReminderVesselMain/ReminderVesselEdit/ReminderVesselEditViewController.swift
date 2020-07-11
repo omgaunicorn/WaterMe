@@ -29,7 +29,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     typealias CompletionHandler = (UIViewController) -> Void
     
     class func newVC(basicController: BasicController?,
-                     editVessel vessel: ReminderVesselWrapper? = nil,
+                     editVessel vessel: ReminderVessel? = nil,
                      userActivityCompletion: NSUserActivityContinuedHandler? = nil,
                      completionHandler: @escaping CompletionHandler) -> UIViewController
     {
@@ -46,7 +46,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             vc.vesselResult = .success(vessel)
         } else {
             Analytics.log(event: Analytics.CRUD_Op_RV.create)
-            vc.vesselResult = basicController?.newReminderVessel(displayName: nil, icon: nil, reminders: nil)
+            vc.vesselResult = basicController?.newReminderVessel(displayName: nil, icon: nil)
         }
         vc.userActivity = NSUserActivity(kind: .editReminderVessel,
                                          delegate: vc.userActivityDelegate)
@@ -60,7 +60,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     private lazy var doneBBI: UIBarButtonItem = UIBarButtonItem(localizedDoneButtonWithTarget: self, action: #selector(self.doneButtonTapped(_:)))
     
     var basicRC: BasicController?
-    private(set) var vesselResult: Result<ReminderVesselWrapper, DatumError>?
+    private(set) var vesselResult: Result<ReminderVessel, DatumError>?
     private(set) var completionHandler: CompletionHandler!
     private var userActivityCompletion: NSUserActivityContinuedHandler?
     //swiftlint:disable:next weak_delegate
@@ -105,7 +105,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
 
     private func vesselChanged(_ changes: ReminderVesselChange) {
         switch changes {
-        case .change(let changedDisplayName, let changedIconEmoji, let changedReminders, let changedPointlessBloop):
+        case .change(let deets):
             /*
              BUGFIX: http://crashes.to/s/5a4715f46b9
              I think this fixes this bug crash. Its caused because this change notification was telling the icon and name section to reload
@@ -115,7 +115,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
 
              This fixes the problem by checking which properties changed and only reloads the icon/name section if the reminder section did not change
             */
-            switch (changedDisplayName, changedIconEmoji, changedReminders, changedPointlessBloop) {
+            switch (deets.changedDisplayName, deets.changedIconEmoji, deets.changedReminders, deets.changedPointlessBloop) {
             case (true, _, false, _),
                  (_, true, false, _):
                 // changed icon or name but NOT reminders
@@ -152,10 +152,10 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     }
 
     private func reminderVesselWasDeleted() {
+        self.tableViewController?.invalidateTokens()
         self.vesselResult = nil
         self.notificationToken?.invalidate()
         self.notificationToken = nil
-        self.tableViewController?.reloadAll()
         self.completionHandler?(self)
     }
     
@@ -223,7 +223,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
                                               sender: .right(sender))
                 case .reminderVesselMissingName:
                     self.tableViewController?.nameTextFieldBecomeFirstResponder()
-                case .reminverVesselMissingReminder:
+                case .reminderVesselMissingReminder:
                     self.userChoseAddReminder(controller: self.tableViewController)
                 }
             }
@@ -238,7 +238,7 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
     
     func startNotifications() {
         self.notificationToken =
-            self.vesselResult?.value?.datum_observe({ [weak self] in self?.vesselChanged($0) })
+            self.vesselResult?.value?.observe({ [weak self] in self?.vesselChanged($0) })
     }
     
     var notificationToken: ObservationToken?

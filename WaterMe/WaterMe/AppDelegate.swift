@@ -168,7 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // When a new build is detected, we set a date
         // Two weeks after that date, the user is eligible to be asked for a review
         // Next time they water plants, they will be asked (assuming the system cooperates)
-        result.value?.userDidPerformReminder = {
+        result.value?.userDidPerformReminder = { _ in
             let now = Date()
             let ud = UserDefaults.standard
             guard

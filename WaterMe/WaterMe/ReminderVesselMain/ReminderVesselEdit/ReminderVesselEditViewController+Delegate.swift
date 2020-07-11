@@ -108,7 +108,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         self.present(addReminderVC, animated: true, completion: nil)
     }
 
-    func userChose(reminder: ReminderWrapper,
+    func userChose(reminder: Reminder,
                    deselectRowAnimated: ((Bool) -> Void)?,
                    controller: ReminderVesselEditTableViewController?)
     {
@@ -151,7 +151,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         self.present(vc, animated: true, completion: nil)
     }
 
-    func userDeleted(reminder: ReminderWrapper,
+    func userDeleted(reminder: Reminder,
                      controller: ReminderVesselEditTableViewController?) -> Bool
     {
         self.view.endEditing(false)

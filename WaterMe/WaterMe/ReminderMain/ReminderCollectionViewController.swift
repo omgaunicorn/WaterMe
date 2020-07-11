@@ -26,7 +26,7 @@ import Datum
 import UIKit
 
 protocol ReminderCollectionViewControllerDelegate: class {
-    func userDidSelect(reminderID: ReminderIdentifier,
+    func userDidSelect(reminderID: Identifier,
                        from view: UIView,
                        userActivityContinuation: NSUserActivityContinuedHandler?,
                        deselectAnimated: @escaping (Bool) -> Void,
@@ -44,7 +44,7 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     var basicRC: BasicController?
     var allDataReady: ((Bool) -> Void)?
 
-    private(set) var reminders: GroupedReminderCollection?
+    var reminders: Result<GroupedReminderCollection, DatumError>?
     private let significantTimePassedDetector = SignificantTimePassedDetector()
     weak var delegate: ReminderCollectionViewControllerDelegate?
 
@@ -95,16 +95,31 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         self.collectionView.backgroundColor = Color.systemBackgroundColor
     }
     
+    private var token: ObservationToken?
+    
     private func hardReloadData() {
-        self.reminders = self.basicRC?.groupedReminders()
-        self.reminders?.changeObserver = { [weak self] in self?.remindersChanged($0) }
+        self.token?.invalidate()
+        self.token = nil
+        self.reminders = nil
+        self.collectionView.reloadData()
+        guard let result = self.basicRC?.groupedReminders() else { return }
+        switch result {
+        case .failure(let error):
+            self.allDataReady?(false)
+            self.reminders = .failure(error)
+        case .success(let query):
+            self.token = query.observe { [weak self] in self?.remindersChanged($0) }
+        }
     }
 
     private func remindersChanged(_ change: GroupedReminderCollectionChange) {
         switch change {
-        case .initial:
+        case .initial(let data):
+            self.reminders = .success(data)
             self.collectionView.reloadData()
-        case .update(let ins, let dels, let mods):
+            self.allDataReady?(true)
+        case .update(let updates):
+            let (ins, dels, mods) = updates.ez
             self.performSuperSafeCollectionViewUpdate(insertions: ins,
                                                       deletions: dels,
                                                       modifications: mods)
@@ -114,30 +129,26 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
         }
     }
 
-    func programmaticalySelectReminder(with identifier: ReminderIdentifier) -> (IndexPath, ((Bool) -> Void))? {
+    func programmaticalySelectReminder(with identifier: Identifier) -> (IndexPath, ((Bool) -> Void))? {
         guard
             let collectionView = self.collectionView,
-            let indexPath = self.reminders?.indexPathOfReminder(with: identifier)
+            let indexPath = self.reminders?.value?.indexOfItem(with: identifier)
         else { return nil }
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredVertically)
         return (indexPath, { collectionView.deselectItem(at: indexPath, animated: $0) })
     }
 
-    func indexPathOfReminder(with identifier: ReminderIdentifier) -> IndexPath? {
-        return self.reminders?.indexPathOfReminder(with: identifier)
-    }
-
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return self.reminders?.numberOfSections ?? 0
+        return self.reminders?.value?.numberOfSections ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.reminders?.numberOfItems(inSection: section) ?? 0
+        return self.reminders?.value?.count(at: IndexPath(row: 0, section: section)) ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReminderCollectionViewCell.reuseID, for: indexPath)
-        let reminder = self.reminders?[indexPath]
+        let reminder = self.reminders?.value?[indexPath]
         if let reminder = reminder, let cell = cell as? ReminderCollectionViewCell {
             cell.configure(with: reminder)
         }
@@ -164,10 +175,10 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard
-            let reminder = self.reminders?[indexPath],
+            let reminder = self.reminders?.value?[indexPath],
             let cell = collectionView.cellForItem(at: indexPath)
         else { return }
-        let identifier = ReminderIdentifier(reminder: reminder)
+        let identifier = Identifier(rawValue: reminder.uuid)
         self.delegate?.userDidSelect(reminderID: identifier,
                                      from: cell,
                                      userActivityContinuation: nil,
@@ -181,7 +192,6 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
     }
 
     override var columnCountAndItemHeight: (columnCount: Int, itemHeight: CGFloat) {
-        // TODO: Fix launch sizing being wrong for `isAccessibilityCategory`
         let tc = self.view.traitCollection
         switch (tc.horizontalSizeClassIsCompact,
                 tc.verticalSizeClassIsRegular,
@@ -205,25 +215,36 @@ class ReminderCollectionViewController: StandardCollectionViewController, HasBas
             return (2, 320)
         }
     }
+    
+    deinit {
+        self.token?.invalidate()
+    }
 }
 
 extension ReminderCollectionViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize
+    {
         let kind = ReminderHeaderCollectionReusableView.self
-        guard let reminders = self.reminders, reminders.numberOfItems(inSection: section) > 0 else {
+        let count = self.reminders?.value?.count(at: IndexPath(row: 0, section: section)) ?? 0
+        guard count > 0 else {
             // if I return height of 0 here, things crash
             // instead I'll just have to set the alpha to 0
             return CGSize(width: collectionView.availableContentSize.width, height: 1)
         }
         let isAC = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
-        return CGSize(width: collectionView.availableContentSize.width, height: kind.style_viewHeight(isAccessibilityCategory: isAC))
+        return CGSize(
+            width: collectionView.availableContentSize.width,
+            height: kind.style_viewHeight(isAccessibilityCategory: isAC)
+        )
     }
 }
 
 extension ReminderCollectionViewController: UICollectionViewDragDelegate {
 
     private func dragItemForReminder(at indexPath: IndexPath) -> UIDragItem? {
-        guard let reminder = self.reminders?[indexPath] else { return nil }
+        guard let reminder = self.reminders?.value?[indexPath] else { return nil }
         let item = UIDragItem(itemProvider: NSItemProvider())
         // only make the "small" preview show on iPhones. On iPads, there is plenty of space
         let tc = self.view.traitCollection
@@ -281,11 +302,13 @@ extension ReminderCollectionViewController: SignificantTimePassedDetectorDelegat
 extension ReminderCollectionViewController {
     func performSuperSafeCollectionViewUpdate(insertions     ins: [IndexPath],
                                               deletions     dels: [IndexPath],
-                                              modifications mods: [IndexPath]) {
-        guard let cv = self.collectionView else {
-            let error = "CollectionView is NIL. Something really bad happened."
+                                              modifications mods: [IndexPath])
+    {
+        guard let reminders = self.reminders?.value, let cv = self.collectionView else {
+            let error = "CollectionView or Reminders are NIL. Something really bad happened."
             log.error(error)
             assertionFailure(error)
+            self.collectionView?.reloadData()
             return
         }
         let allEmpty = ins.isEmpty && dels.isEmpty && mods.isEmpty
@@ -300,14 +323,10 @@ extension ReminderCollectionViewController {
             return
         }
 
-        // sanity checking can only be done when the collectionview
-        // is in the window hierarchy. Otherwise its internal state
-        // does not update. So it will pass the first sanity check
-        // but after that its internal state is stale
-        // so it will fail them
         let failureReason = ItemAndSectionSanityCheckFailureReason.check(old: cv,
-                                                                         new: self.reminders!,
+                                                                         new: reminders,
                                                                          delta: (ins, dels))
+        
         guard failureReason == nil else {
             let error = NSError(errorFromSanityCheckFailureReason: failureReason!)
             Analytics.log(error: error)

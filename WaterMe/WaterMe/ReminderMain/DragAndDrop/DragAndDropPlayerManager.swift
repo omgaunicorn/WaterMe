@@ -156,7 +156,6 @@ class DragAndDropPlayerManager {
         self.player.insert(item, after: nil)
     }
 
-
     // MARK: Init
     init(configuration: Configuration) {
         self.configuration = configuration

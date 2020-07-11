@@ -24,6 +24,15 @@
 import Foundation
 
 extension Calendar {
+    
+    public func dateByAddingNumberOfDays(_ numberOfDays: Int, to date: Date) -> Date {
+        if let date = self.date(byAdding: .day, value: numberOfDays, to: date) {
+            return date
+        } else {
+            assertionFailure("Failed to calculate date")
+            return date.addingTimeInterval(TimeInterval(numberOfDays * 60 * 60 * 24))
+        }
+    }
 
     public func numberOfDaysBetween(startDate: Date, endDate: Date, stopCountingAfterMaxDays maxDays: Int = 365) -> Int {
         var numberOfDays = 0

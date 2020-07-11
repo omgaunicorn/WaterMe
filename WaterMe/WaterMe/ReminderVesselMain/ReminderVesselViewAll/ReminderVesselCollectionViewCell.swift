@@ -38,12 +38,12 @@ class ReminderVesselCollectionViewCell: UICollectionViewCell {
         self.prepareForReuse()
     }
     
-    func configure(with vessel: ReminderVesselWrapper) {
+    func configure(with vessel: ReminderVessel) {
         let vesselName = vessel.displayName
         let vesselNameStyle = vesselName != nil ?
             Font.reminderVesselCollectionViewCellPrimary(nil) :
             Font.reminderVesselCollectionViewCellPrimaryDisabled
-        self.nameLabel?.attributedText = NSAttributedString(string: vesselName ?? ReminderVesselWrapper.LocalizedString.untitledPlant,
+        self.nameLabel?.attributedText = NSAttributedString(string: vesselName ?? LocalizedString.ReminderVessel.untitledPlant,
                                                             font: vesselNameStyle)
         self.emojiImageView?.setIcon(vessel.icon)
     }

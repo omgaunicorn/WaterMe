@@ -26,10 +26,10 @@ import RealmSwift
 @objc(Reminder)
 internal class RLM_Reminder: Object {
     @objc internal private(set) dynamic var uuid = UUID().uuidString
-    @objc internal dynamic var interval = RLM_Reminder.defaultInterval
+    @objc internal dynamic var interval = ReminderConstants.defaultInterval
     @objc internal dynamic var note: String?
     @objc internal dynamic var nextPerformDate: Date?
-    @objc internal dynamic var kindString: String = RLM_Reminder.kCaseWaterValue
+    @objc internal dynamic var kindString: String = ReminderKind.kCaseWaterValue
     @objc internal dynamic var descriptionString: String?
     @objc internal dynamic var bloop = false
     internal let performed = List<RLM_ReminderPerform>()
@@ -45,4 +45,19 @@ internal class RLM_Reminder: Object {
 internal class RLM_ReminderPerform: Object {
     @objc internal dynamic var date = Date()
     @objc internal dynamic var bloop = false
+}
+
+extension RLM_Reminder {
+    static func keyPath(for sortOrder: ReminderSortOrder) -> String {
+        switch sortOrder {
+        case .interval:
+            return #keyPath(RLM_Reminder.interval)
+        case .kind:
+            return #keyPath(RLM_Reminder.kindString)
+        case .nextPerformDate:
+            return #keyPath(RLM_Reminder.nextPerformDate)
+        case .note:
+            return #keyPath(RLM_Reminder.note)
+        }
+    }
 }

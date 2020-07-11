@@ -20,6 +20,62 @@
                ReferencedContainer = "container:WaterMe.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5034764A24552CFD00C3DAD3"
+               BuildableName = "DatumTests.xctest"
+               BlueprintName = "DatumTests"
+               ReferencedContainer = "container:WaterMe.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5034766D24552D0700C3DAD3"
+               BuildableName = "StoreTests.xctest"
+               BlueprintName = "StoreTests"
+               ReferencedContainer = "container:WaterMe.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "50C96A361EC2CFE8002802C1"
+               BuildableName = "NoDeviceTests.xctest"
+               BlueprintName = "NoDeviceTests"
+               ReferencedContainer = "container:WaterMe.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "48A7B0DA2467FCB100DC0861"
+               BuildableName = "CalculateTests.xctest"
+               BlueprintName = "CalculateTests"
+               ReferencedContainer = "container:WaterMe.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -38,7 +94,9 @@
       </MacroExpansion>
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5034764A24552CFD00C3DAD3"
@@ -46,9 +104,43 @@
                BlueprintName = "DatumTests"
                ReferencedContainer = "container:WaterMe.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "BasicControllerClosureTests">
+               </Test>
+               <Test
+                  Identifier = "BasicControllerCreateUpdateTests">
+               </Test>
+               <Test
+                  Identifier = "BasicControllerDeleteTests">
+               </Test>
+               <Test
+                  Identifier = "BasicControllerReadTests">
+               </Test>
+               <Test
+                  Identifier = "DatumTestsBase">
+               </Test>
+               <Test
+                  Identifier = "GroupedReminderCollectionTests">
+               </Test>
+               <Test
+                  Identifier = "ReminderCollectionTests">
+               </Test>
+               <Test
+                  Identifier = "ReminderTests">
+               </Test>
+               <Test
+                  Identifier = "ReminderVesselCollectionTests">
+               </Test>
+               <Test
+                  Identifier = "ReminderVesselTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5034766D24552D0700C3DAD3"
@@ -61,19 +153,21 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "48A7B0962467AD6F00DC0861"
+               BlueprintIdentifier = "48A7B0DA2467FCB100DC0861"
                BuildableName = "CalculateTests.xctest"
                BlueprintName = "CalculateTests"
                ReferencedContainer = "container:WaterMe.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "YES"
+            testExecutionOrdering = "random">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "48A7B0DA2467FCB100DC0861"
-               BuildableName = "CalculateTests.xctest"
-               BlueprintName = "CalculateTests"
+               BlueprintIdentifier = "50C96A361EC2CFE8002802C1"
+               BuildableName = "NoDeviceTests.xctest"
+               BlueprintName = "NoDeviceTests"
                ReferencedContainer = "container:WaterMe.xcodeproj">
             </BuildableReference>
          </TestableReference>

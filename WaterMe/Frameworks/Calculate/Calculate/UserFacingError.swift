@@ -29,7 +29,7 @@ public enum RecoveryAction {
     case reminderMissingOtherDescription
     case reminderVesselMissingIcon
     case reminderVesselMissingName
-    case reminverVesselMissingReminder
+    case reminderVesselMissingReminder
     case cancel
     case dismiss
     case saveAnyway

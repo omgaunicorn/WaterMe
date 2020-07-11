@@ -26,7 +26,7 @@ import UIKit
 
 class ReminderVesselCollectionViewController: StandardCollectionViewController, HasBasicController {
     
-    var vesselChosen: ((ReminderVesselWrapper) -> Void)?
+    var vesselChosen: ((ReminderVessel) -> Void)?
         
     var basicRC: BasicController? {
         didSet {
@@ -56,7 +56,7 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
         self.notificationToken = nil
         self.data = nil
         
-        guard let result = self.basicRC?.allVessels() else { return }
+        guard let result = self.basicRC?.allVessels(sorted: .displayName, ascending: true) else { return }
         switch result {
         case .failure(let error):
             self.data = .failure(error)
@@ -70,11 +70,13 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
         case .initial(let data):
             self.data = .success(data)
             self.collectionView?.reloadData()
-        case .update(let ins, let del, let mod):
+        case .update(let updates):
+            let updates = updates.transformed(newSection: 0)
+            let (ins, dels, mods) = updates.ez
             self.collectionView?.performBatchUpdates({
-                self.collectionView?.insertItems(at: ins.map({ IndexPath(row: $0, section: 0) }))
-                self.collectionView?.deleteItems(at: del.map({ IndexPath(row: $0, section: 0) }))
-                self.collectionView?.reloadItems(at: mod.map({ IndexPath(row: $0, section: 0) }))
+                self.collectionView?.insertItems(at: ins)
+                self.collectionView?.deleteItems(at: dels)
+                self.collectionView?.reloadItems(at: mods)
             }, completion: nil)
         case .error(let error):
             Analytics.log(error: error)

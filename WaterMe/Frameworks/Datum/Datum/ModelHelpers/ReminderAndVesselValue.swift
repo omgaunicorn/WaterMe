@@ -28,7 +28,7 @@ public struct ReminderAndVesselValue: Hashable {
     public var reminder: ReminderValue
     public var reminderVessel: ReminderVesselValue
 
-    public init?(reminder: ReminderWrapper?) {
+    public init?(reminder: Reminder?) {
         guard let reminder = reminder else { return nil }
         let _vessel = ReminderVesselValue(reminderVessel: reminder.vessel)
         guard let vessel = _vessel else { return nil }
@@ -45,34 +45,65 @@ public struct ReminderAndVesselValue: Hashable {
 
 public struct ReminderValue: Hashable {
 
-    public var uuid: ReminderIdentifier
+    public var uuid: Identifier
     public var nextPerformDate: Date?
     public var kind: ReminderKind
 
-    internal init(reminder: RLM_Reminder) {
-        self.uuid = ReminderIdentifier(reminder: reminder)
+    public init(reminder: Reminder) {
+        self.uuid = Identifier(rawValue: reminder.uuid)
         self.nextPerformDate = reminder.nextPerformDate
         self.kind = reminder.kind
     }
-    public init(reminder: ReminderWrapper) {
-        self.init(reminder: reminder.wrappedObject)
+    
+    internal init(reminder: RLM_Reminder) {
+        self.uuid = Identifier(rawValue: reminder.uuid)
+        self.nextPerformDate = reminder.nextPerformDate
+        self.kind = reminder.kind
+    }
+
+    internal init?(reminder: CD_Reminder?) {
+        guard let reminder = reminder else { return nil }
+        self.uuid = Identifier(rawValue: reminder.objectID.uriRepresentation().absoluteString)
+        self.nextPerformDate = reminder.nextPerformDate
+        self.kind = reminder.kind
     }
 }
 
 public struct ReminderVesselValue: Hashable {
 
-    public var uuid: ReminderVesselIdentifier
+    public var uuid: Identifier
     public var name: String?
     public var imageData: Data?
-
-    internal init?(reminderVessel: RLM_ReminderVessel?) {
+    
+    public init?(reminderVessel: ReminderVessel?) {
         guard let reminderVessel = reminderVessel else { return nil }
-        self.uuid = ReminderVesselIdentifier(reminderVessel: reminderVessel)
+        self.uuid = Identifier(rawValue: reminderVessel.uuid)
+        self.name = reminderVessel.shortLabelSafeDisplayName
+        self.imageData = (reminderVessel as! HasIconImageData).iconImageData
+    }
+    
+    internal init(reminderVessel: RLM_ReminderVessel) {
+        self.uuid = Identifier(rawValue: reminderVessel.uuid)
         self.name = reminderVessel.shortLabelSafeDisplayName
         self.imageData = reminderVessel.iconImageData
     }
-    
-    public init?(reminderVessel: ReminderVesselWrapper?) {
-        self.init(reminderVessel: reminderVessel?.wrappedObject)
+
+    internal init?(reminderVessel: CD_ReminderVessel?) {
+        guard let reminderVessel = reminderVessel else { return nil }
+        self.uuid = Identifier(rawValue: reminderVessel.objectID.uriRepresentation().absoluteString)
+        self.name = reminderVessel.shortLabelSafeDisplayName
+        self.imageData = reminderVessel.iconImageData
     }
+}
+
+internal protocol HasIconImageData {
+    var iconImageData: Data? { get }
+}
+
+extension RLM_ReminderVesselWrapper: HasIconImageData {
+    var iconImageData: Data? { self.wrappedObject.iconImageData }
+}
+
+extension CD_ReminderVesselWrapper: HasIconImageData {
+    var iconImageData: Data? { self.wrappedObject.iconImageData }
 }

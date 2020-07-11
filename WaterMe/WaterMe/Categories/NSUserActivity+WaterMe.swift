@@ -45,7 +45,7 @@ extension NSUserActivity {
     fileprivate static let stringSeparator = "::"
 
     public static func uniqueString(for rawActivity: RawUserActivity,
-                                    and uuids: [UUIDRepresentable]) -> String
+                                    and uuids: [Identifier]) -> String
     {
         let uuids = uuids.sorted(by: { $0.uuid <= $1.uuid })
         return uuids.reduce(rawActivity.rawValue) { prevValue, item -> String in
@@ -111,7 +111,7 @@ extension NSUserActivity {
         self.waterme_isEligibleForNeededServices = true
     }
 
-    public func update(uuid: UUIDRepresentable,
+    public func update(uuid: Identifier,
                        title: String,
                        phrase: String,
                        description: String,
