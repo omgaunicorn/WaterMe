@@ -1,9 +1,9 @@
-![Xcode: 9.3](https://img.shields.io/badge/Xcode-9.3-lightgrey.svg) ![Swift: 4.1](https://img.shields.io/badge/Swift-4.1-lightgrey.svg) ![iOS: 11.0](https://img.shields.io/badge/iOS-11.0-lightgrey.svg) ![devices: iPhone & iPad](https://img.shields.io/badge/devices-iPad%20%26%20iPhone-lightgrey.svg)
+![Xcode: 11.5](https://img.shields.io/badge/Xcode-11.5-lightgrey.svg) ![Swift: 5.0](https://img.shields.io/badge/Swift-5.0-lightgrey.svg) ![iOS: 11](https://img.shields.io/badge/iOS-11-lightgrey.svg) ![iOS: 12](https://img.shields.io/badge/iOS-12-lightgrey.svg) ![iOS: 13](https://img.shields.io/badge/iOS-13-lightgrey.svg) ![devices: iPhone & iPad](https://img.shields.io/badge/devices-iPad%20%26%20iPhone-lightgrey.svg)
 
 ![WaterMe App Icon](/WaterMe/WaterMe/Assets.xcassets/WaterMeIcon.imageset/all-1x.png)
 # WaterMe - Gardening Reminders
 
-WaterMe is an open source iOS application that is available for free on the App Store. Its a small app by any measure, but its my baby and I love it. According to Fabric analytics, the app has about 3,300 Monthly Active Devices with 42,000 Monthly Sessions. WaterMe is under active development and I welcome feature requests and pull requests.
+WaterMe is an open source iOS application that is available for free on the App Store. Its a small app by any measure, but its my baby and I love it. According to App Store analytics, the app has about 3,300 Monthly Active Devices with 42,000 Monthly Sessions. WaterMe is under active development and I welcome feature requests and pull requests.
 
 [📲 App Store Link](https://itunes.apple.com/app/waterme/id1089742494)<br>
 [🕊 TestFlight Link](https://testflight.apple.com/join/C9vDCb25)
@@ -77,22 +77,16 @@ I am happy to have others contribute to WaterMe. Because WaterMe is a shipping a
 
 ### Requirements
 
-- Xcode 9.3 or higher
-- Cocoapods
+- Xcode 11.5 or higher
 
 ### Instructions
 
 1. Clone the Repo: 
     ```
-    git clone 'https://github.com/jeffreybergier/WaterMe2.git'
-    ```
-1. Install Cocoapods
-    ```
-    cd WaterMe2/WaterMe
-    pod install
+    git clone 'https://github.com/jeffreybergier/WaterMe.git'
     ```
 1. Change Team to your AppleID (needed to run on your physical device)
-    1. Open `WaterMe.xcworkspace` in Xcode.
+    1. Open `WaterMe.xcodeproj` in Xcode.
     1. Browse to the General tab of the WaterMe Target.
     1. Under Signing, change the team from its current setting to your AppleID.
 1. Build and Run
@@ -100,12 +94,12 @@ I am happy to have others contribute to WaterMe. Because WaterMe is a shipping a
     
 ### Caveats
 
-There are 3 files that are placeholders for storage in the repository. Please don't change these files and include them in a pull request. These files are overwritten by me when I build on my computer and for the App Store.
+There are 2 files that are placeholders for storage in the repository. Please don't change these files and include them in a pull request. These files are overwritten by me when I build on my computer and for the App Store.
 
 1. [`emojione-apple.ttc`](/WaterMe/WaterMe/emojione-apple.ttc)
     - WaterMe uses [EmojiOne](https://www.emojione.com) emoji rather than the built-in emoji. This is because Apple rejected the app for using Apple's artwork. Using this alternative emoji font avoid this rejection.
     - The font file is not mine so I don't want to commit it into the repo. The application works fine without this font, it just can't be submitted to the app store. 
-1. `PrivateKeys.swift`: [File 1](/WaterMe/Frameworks/Calculate/Calculate/PrivateKeys.swift)
+1. [`PrivateKeys.swift`](/WaterMe/Frameworks/Calculate/Calculate/PrivateKeys.swift)
     - This file stores keys that I don't want commited to the repo.
     - This file has placeholder values and the app can handle not having this information without crashing.
     - However, it can't be submitted to the App Store without this information
