@@ -113,6 +113,7 @@
 		5034770224557CB200C3DAD3 /* Cheers in Frameworks */ = {isa = PBXBuildFile; productRef = 5034770124557CB200C3DAD3 /* Cheers */; };
 		50380EB4245584F800271545 /* SimpleImageViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50380EB1245584ED00271545 /* SimpleImageViewer.framework */; };
 		50380EB5245584F800271545 /* SimpleImageViewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50380EB1245584ED00271545 /* SimpleImageViewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5040B41724C4768800AB747B /* StarterData.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 5040B41924C4768800AB747B /* StarterData.sqlite */; };
 		5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */; };
 		5045CBAB1EFCCB50008E6D6A /* ReminderEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */; };
 		5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5045CBAC1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift */; };
@@ -148,6 +149,7 @@
 		5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */; };
 		5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */; };
 		5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */; };
+		5087F1E324CD5F100040BF16 /* StarterData.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 5087F1E524CD5F100040BF16 /* StarterData.sqlite-wal */; };
 		5089D125214F458200140F68 /* AppVersionCheckingAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5089D124214F458200140F68 /* AppVersionCheckingAlert.swift */; };
 		508B2EC924741F4800A497E4 /* WaterMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 508B2EC724741F4800A497E4 /* WaterMe.xcdatamodeld */; };
 		508B2ECB24741F6200A497E4 /* CD_BasicController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508B2ECA24741F6100A497E4 /* CD_BasicController.swift */; };
@@ -498,6 +500,7 @@
 		503476E924557A6200C3DAD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50380E99245584B900271545 /* SimpleImageViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SimpleImageViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SimpleImageViewer.xcodeproj; path = GitSubmodules/SimpleImageViewer/SimpleImageViewer.xcodeproj; sourceTree = "<group>"; };
+		5040B41824C4768800AB747B /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/StarterData.sqlite; sourceTree = "<group>"; };
 		5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReminderEdit.storyboard; sourceTree = "<group>"; };
 		5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditViewController.swift; sourceTree = "<group>"; };
 		5045CBAC1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditTableViewController.swift; sourceTree = "<group>"; };
@@ -536,6 +539,7 @@
 		5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmojiPickerCollectionViewCell.xib; sourceTree = "<group>"; };
 		5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCropperViewController.swift; sourceTree = "<group>"; };
 		5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmojiPhotoAlertController.swift; sourceTree = "<group>"; };
+		5087F1E424CD5F100040BF16 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/StarterData.sqlite-wal"; sourceTree = "<group>"; };
 		5089D124214F458200140F68 /* AppVersionCheckingAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCheckingAlert.swift; sourceTree = "<group>"; };
 		508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.6.0.001.xcdatamodel; sourceTree = "<group>"; };
 		508B2ECA24741F6100A497E4 /* CD_BasicController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CD_BasicController.swift; sourceTree = "<group>"; };
@@ -1191,6 +1195,8 @@
 				50B779CA2154138D00AC6240 /* Miscellaneous */,
 				50F388DE1FF6D9870031ED45 /* CoreDataMigration */,
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
+				5040B41924C4768800AB747B /* StarterData.sqlite */,
+				5087F1E524CD5F100040BF16 /* StarterData.sqlite-wal */,
 				50F7A362200844390063A1FC /* StarterRealm.realm */,
 				5085C7112162D0D300030D2A /* emojione-apple.ttc */,
 				50BB0F6B1EC001C200850FF4 /* Videos */,
@@ -1687,9 +1693,11 @@
 				50CA47E821690D360063F51E /* ReminderVesselCollectionViewCell.xib in Resources */,
 				50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */,
 				5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */,
+				5087F1E324CD5F100040BF16 /* StarterData.sqlite-wal in Resources */,
 				5010C22E213F779F00D1832C /* ReminderSummary.storyboard in Resources */,
 				50F7A360200844390063A1FC /* StarterRealm.realm in Resources */,
 				508E61551F8ACC5E00B28DD8 /* ReminderMain.storyboard in Resources */,
+				5040B41724C4768800AB747B /* StarterData.sqlite in Resources */,
 				50281908200BE7C80044BEC8 /* PurchaseThanks.storyboard in Resources */,
 				50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */,
 				50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */,
@@ -2004,6 +2012,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		5040B41924C4768800AB747B /* StarterData.sqlite */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5040B41824C4768800AB747B /* en */,
+			);
+			name = StarterData.sqlite;
+			sourceTree = "<group>";
+		};
 		5065AA27200EC62F00C7F0CC /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2011,6 +2027,14 @@
 				5091F36A2456E57D00FFB28F /* it */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		5087F1E524CD5F100040BF16 /* StarterData.sqlite-wal */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5087F1E424CD5F100040BF16 /* en */,
+			);
+			name = "StarterData.sqlite-wal";
 			sourceTree = "<group>";
 		};
 		50F7A362200844390063A1FC /* StarterRealm.realm */ = {

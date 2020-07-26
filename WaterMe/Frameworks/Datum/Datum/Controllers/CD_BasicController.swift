@@ -38,12 +38,12 @@ internal class CD_BasicController: BasicController {
         
         // when not testing, return normal persistent container
         guard forTesting else {
-            return NSPersistentContainer(name: "WaterMe", managedObjectModel: mom)
+            return WaterMe_PersistentContainer(name: "WaterMe", managedObjectModel: mom)
         }
         
         // when testing make in-memory container
         let randomName = String(Int.random(in: 100_000...1_000_000))
-        let container = NSPersistentContainer(name: randomName, managedObjectModel: mom)
+        let container = WaterMe_PersistentContainer(name: randomName, managedObjectModel: mom)
         let description = NSPersistentStoreDescription()
         description.type = NSInMemoryStoreType
         container.persistentStoreDescriptions = [description]
@@ -54,8 +54,9 @@ internal class CD_BasicController: BasicController {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
-        guard  let container = CD_BasicController.container(forTesting: forTesting)
+        guard let container = CD_BasicController.container(forTesting: forTesting)
             else { throw DatumError.createError }
+        type(of: self).copySampleDBIfNeeded()
         let lock = DispatchSemaphore(value: 0)
         var error: Error?
         container.loadPersistentStores() { _, _error in
@@ -463,5 +464,64 @@ extension CD_BasicController {
     
     fileprivate func didSave(_ token: Any) {
         NotificationCenter.default.removeObserver(token)
+    }
+}
+
+// MARK: First Launch
+
+extension CD_BasicController {
+
+    private static let sampleDB1URL = Bundle.main.url(forResource: "StarterData", withExtension: "sqlite")
+    private static let sampleDB2URL = Bundle.main.url(forResource: "StarterData", withExtension: "sqlite-wal")
+
+    fileprivate class var dbDirectoryURL: URL {
+        let appsupport = FileManager.default.urls(
+            for: FileManager.SearchPathDirectory.applicationSupportDirectory,
+            in: FileManager.SearchPathDomainMask.userDomainMask
+        ).first!
+        let url = appsupport.appendingPathComponent("WaterMe", isDirectory: true)
+                            .appendingPathComponent("CoreData", isDirectory: true)
+        return url
+    }
+
+    private class var dbFileURL1: URL {
+        return self.dbDirectoryURL.appendingPathComponent("WaterMe.sqlite",
+                                                          isDirectory: false)
+    }
+
+    private class var dbFileURL2: URL {
+        return self.dbDirectoryURL.appendingPathComponent("WaterMe.sqlite-wal",
+                                                          isDirectory: false)
+    }
+
+    private class var dbExists: Bool {
+        let fm = FileManager.default
+        let exists = fm.fileExists(atPath: self.dbFileURL1.path)
+        return exists
+    }
+
+    private class func copySampleDBIfNeeded() {
+        guard
+            let sampleDB1URL = self.sampleDB1URL,
+            let sampleDB2URL = self.sampleDB2URL,
+            !self.dbExists
+        else { return }
+        let fm = FileManager.default
+        try? fm.createDirectory(at: self.dbDirectoryURL,
+                                withIntermediateDirectories: true,
+                                attributes: nil)
+        do {
+            try fm.copyItem(at: sampleDB1URL, to: self.dbFileURL1)
+            try fm.copyItem(at: sampleDB2URL, to: self.dbFileURL2)
+        } catch {
+            try? fm.removeItem(at: self.dbDirectoryURL)
+            log.error(error)
+        }
+    }
+}
+
+private class WaterMe_PersistentContainer: NSPersistentContainer {
+    override class func defaultDirectoryURL() -> URL {
+        return CD_BasicController.dbDirectoryURL
     }
 }
