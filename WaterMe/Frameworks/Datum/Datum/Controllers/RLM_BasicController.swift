@@ -386,7 +386,8 @@ extension RLM_BasicController {
         return url
     }
 
-    public class var localRealmExists: Bool {
+    // Internal for Migrator
+    internal class var localRealmExists: Bool {
         let fm = FileManager.default
         let exists = fm.fileExists(atPath: self.localRealmFile.path)
         return exists

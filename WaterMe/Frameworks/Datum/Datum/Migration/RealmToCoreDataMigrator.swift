@@ -21,18 +21,114 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+import CoreData
+import RealmSwift
+
 internal class RealmToCoreDataMigrator: Migratable {
 
-    private let source: BasicController
+    private let source: RLM_BasicController
+    private let queue = DispatchQueue(label: "RealmToCoreDataMigrator", qos: .userInitiated)
 
     init?() {
-        // TODO: Check if realm DB exists and store realm basic controller
-        return nil
+        guard
+            RLM_BasicController.localRealmExists,
+            let source = try? RLM_BasicController(kind: .local, forTesting: false)
+        else { return nil }
+        self.source = source
     }
 
     func start(destination: BasicController, completion: @escaping (Bool) -> Void) -> Progress {
-        // TODO: Start Migration
-        fatalError()
+        let progress = Progress(totalUnitCount: 0)
+        progress.completedUnitCount = 0
+        guard let destination = destination as? CD_BasicController else {
+            DispatchQueue.main.async { completion(false) }
+            return progress
+        }
+
+        // Get off main thread
+        self.queue.async {
+
+            // Get needed contexts and realms
+            let context = destination.container.newBackgroundContext()
+            let _rhsShare: CD_VesselShare? = {
+                let request = CD_VesselShare.fetchRequest() as! NSFetchRequest<CD_VesselShare>
+                let result = try? context.fetch(request)
+                return result?.first
+            }()
+            guard
+                let realm = try? self.source.realm.get(),
+                let rhsShare = _rhsShare
+            else {
+                DispatchQueue.main.async { completion(false) }
+                return
+            }
+
+            // Get our Data to work with
+            var srcVessels = Array(realm.objects(RLM_ReminderVessel.self))
+            progress.totalUnitCount = Int64(srcVessels.count)
+            var srcVessel: RLM_ReminderVessel! = srcVessels.popLast()
+
+            // Loop over every vessel
+            while srcVessel != nil {
+                autoreleasepool {
+                    defer {
+                        // Prepare for next loop
+                        do {
+                            try context.save()
+                            srcVessel = srcVessels.popLast()
+                            progress.completedUnitCount += 1
+                        } catch {
+                            log.error(error)
+                            srcVessel = nil
+
+                        }
+                    }
+
+                    // Vessel: Configure
+                    let destVessel = CD_ReminderVessel(context: context)
+                    context.insert(destVessel)
+
+                    _ = {
+                        // Vessel: Copy Data
+                        destVessel.share = rhsShare
+                        destVessel.displayName = srcVessel.displayName
+                        destVessel.iconImageData = srcVessel.iconImageData
+                        destVessel.iconEmojiString = srcVessel.iconEmojiString
+                        destVessel.kindString = srcVessel.kindString
+                    }()
+
+                    for srcReminder in srcVessel.reminders {
+                        // Reminder: Configure
+                        let destReminder = CD_Reminder(context: context)
+                        destReminder.vessel = destVessel
+                        context.insert(destReminder)
+
+                        _ = {
+                            // Reminder: Copy Data
+                            destReminder.interval = Int32(srcReminder.interval)
+                            destReminder.note = srcReminder.note
+                            destReminder.nextPerformDate = srcReminder.nextPerformDate
+                            destReminder.lastPerformDate = srcReminder.performed.last?.date
+                            destReminder.kindString = srcReminder.kindString
+                            destReminder.descriptionString = srcReminder.descriptionString
+                        }()
+
+                        for srcPerform in srcReminder.performed {
+                            // Perform: Configure
+                            let destPerform = CD_ReminderPerform(context: context)
+                            destPerform.reminder = destReminder
+                            context.insert(destPerform)
+
+                            _ = {
+                                // Perform: Copy Data
+                                destPerform.date = srcPerform.date
+                            }()
+                        }
+                    }
+                }
+            }
+        }
+        return progress
     }
 
     func skipMigration() {
