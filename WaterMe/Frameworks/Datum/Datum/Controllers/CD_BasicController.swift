@@ -65,6 +65,16 @@ internal class CD_BasicController: BasicController {
         }
         lock.wait()
 		guard error == nil else { throw error! }
+        // TODO: For some reason this old version of fetchrequest is needed to make tests pass
+        // let fetchRequest = CD_VesselShare.fetchRequest() as! NSFetchRequest<CD_VesselShare>
+        let fetchRequest = NSFetchRequest<CD_VesselShare>(entityName: "CD_VesselShare")
+        let ctx = container.viewContext
+        let fetchResult = try ctx.fetch(fetchRequest)
+        if fetchResult.isEmpty {
+            let share = CD_VesselShare(context: ctx)
+            ctx.insert(share)
+            try ctx.save()
+        }
         self.kind = .local
         self.container = container
     }
@@ -100,6 +110,7 @@ internal class CD_BasicController: BasicController {
             let wrapper = CD_ReminderWrapper(newReminder, context: { self.container.viewContext })
             return .success(wrapper)
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -128,10 +139,19 @@ internal class CD_BasicController: BasicController {
             vessel.icon = icon
         }
         do {
+            let vesselShares = try context.fetch(CD_VesselShare.fetchRequest() as! NSFetchRequest<CD_VesselShare>)
+            guard vesselShares.count == 1 else {
+                let message = "Unexpected number of VesselShare objects: \(vesselShares.count)"
+                log.error(message)
+                assertionFailure(message)
+                return .failure(.writeError)
+            }
+            vessel.share = vesselShares.first!
             try context.save()
             let wrapper = CD_ReminderVesselWrapper(vessel, context: { self.container.viewContext })
             return .success(wrapper)
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -296,6 +316,7 @@ internal class CD_BasicController: BasicController {
             try context.save()
             return .success(())
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -336,6 +357,7 @@ internal class CD_BasicController: BasicController {
             try context.save()
             return .success(())
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -366,6 +388,7 @@ internal class CD_BasicController: BasicController {
             try context.save()
             return .success(())
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -387,6 +410,7 @@ internal class CD_BasicController: BasicController {
             try context.save()
             return .success(())
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -406,6 +430,7 @@ internal class CD_BasicController: BasicController {
             try context.save()
             return .success(())
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -514,8 +539,8 @@ extension CD_BasicController {
             try fm.copyItem(at: sampleDB1URL, to: self.dbFileURL1)
             try fm.copyItem(at: sampleDB2URL, to: self.dbFileURL2)
         } catch {
-            try? fm.removeItem(at: self.dbDirectoryURL)
             log.error(error)
+            try? fm.removeItem(at: self.dbDirectoryURL)
         }
     }
 }
