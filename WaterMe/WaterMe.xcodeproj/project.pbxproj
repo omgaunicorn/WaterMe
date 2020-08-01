@@ -139,6 +139,9 @@
 		50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */; };
 		50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */; };
 		5073FF0124D5226000E3211B /* VesselShareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073FF0024D5226000E3211B /* VesselShareTests.swift */; };
+		5073FF0C24D52DB700E3211B /* Migratable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073FF0B24D52DB700E3211B /* Migratable.swift */; };
+		5073FF0E24D52FF800E3211B /* DummyMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073FF0D24D52FF800E3211B /* DummyMigrator.swift */; };
+		5073FF1024D532E100E3211B /* RealmToCoreDataMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073FF0F24D532E100E3211B /* RealmToCoreDataMigrator.swift */; };
 		5075B48E1FF178DC007B42D8 /* ReminderDragPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */; };
 		5075B4901FF178EA007B42D8 /* ReminderDragPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5075B48F1FF178EA007B42D8 /* ReminderDragPreviewView.swift */; };
 		507777AA1FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */; };
@@ -210,7 +213,6 @@
 		50D2B2B1216A726000957E04 /* NSUserActivity+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2B2AF216A726000957E04 /* NSUserActivity+WaterMe.swift */; };
 		50D2B2B9216FD4EF00957E04 /* ReminderVesselEditViewController+Delegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2B2B8216FD4EF00957E04 /* ReminderVesselEditViewController+Delegate.swift */; };
 		50DD7A38215D6BBF00047B0C /* EmojiImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B61EE01F2FB904004654B4 /* EmojiImageView.swift */; };
-		50E3F2C91FF6EF35003245E3 /* ImageEmojiObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E3F2C81FF6EF35003245E3 /* ImageEmojiObject.swift */; };
 		50E3F2CB1FF70D27003245E3 /* CoreDataMigration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */; };
 		50E3F2CD1FF70D3B003245E3 /* CoreDataMigratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */; };
 		50E8B1E41EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E8B1E31EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard */; };
@@ -218,8 +220,6 @@
 		50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */; };
 		50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */; };
 		50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */; };
-		50F388E01FF6D9C10031ED45 /* CoreDataMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */; };
-		50F388E41FF6DA490031ED45 /* WaterMeData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50F388E11FF6DA490031ED45 /* WaterMeData.xcdatamodeld */; };
 		50F7A360200844390063A1FC /* StarterRealm.realm in Resources */ = {isa = PBXBuildFile; fileRef = 50F7A362200844390063A1FC /* StarterRealm.realm */; };
 /* End PBXBuildFile section */
 
@@ -531,6 +531,9 @@
 		50734F9C1F0DD90C003E5F41 /* TextViewTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewTableViewCell.swift; sourceTree = "<group>"; };
 		50734F9D1F0DD90C003E5F41 /* TextViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextViewTableViewCell.xib; sourceTree = "<group>"; };
 		5073FF0024D5226000E3211B /* VesselShareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VesselShareTests.swift; sourceTree = "<group>"; };
+		5073FF0B24D52DB700E3211B /* Migratable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Migratable.swift; sourceTree = "<group>"; };
+		5073FF0D24D52FF800E3211B /* DummyMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyMigrator.swift; sourceTree = "<group>"; };
+		5073FF0F24D532E100E3211B /* RealmToCoreDataMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmToCoreDataMigrator.swift; sourceTree = "<group>"; };
 		5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderDragPreviewView.xib; sourceTree = "<group>"; };
 		5075B48F1FF178EA007B42D8 /* ReminderDragPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDragPreviewView.swift; sourceTree = "<group>"; };
 		507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderNotificationUIDelegate.swift; sourceTree = "<group>"; };
@@ -607,7 +610,6 @@
 		50D2B2AE216A726000957E04 /* NSUserActivity+Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+Error.swift"; sourceTree = "<group>"; };
 		50D2B2AF216A726000957E04 /* NSUserActivity+WaterMe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSUserActivity+WaterMe.swift"; sourceTree = "<group>"; };
 		50D2B2B8216FD4EF00957E04 /* ReminderVesselEditViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderVesselEditViewController+Delegate.swift"; sourceTree = "<group>"; };
-		50E3F2C81FF6EF35003245E3 /* ImageEmojiObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEmojiObject.swift; sourceTree = "<group>"; };
 		50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CoreDataMigration.storyboard; sourceTree = "<group>"; };
 		50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMigratorViewController.swift; sourceTree = "<group>"; };
 		50E8B1E31EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReminderVesselEdit.storyboard; sourceTree = "<group>"; };
@@ -615,9 +617,6 @@
 		50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselEditTableViewController.swift; sourceTree = "<group>"; };
 		50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselIconTableViewCell.swift; sourceTree = "<group>"; };
 		50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
-		50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMigrator.swift; sourceTree = "<group>"; };
-		50F388E21FF6DA490031ED45 /* WaterMe_CoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = WaterMe_CoreData.xcdatamodel; sourceTree = "<group>"; };
-		50F388E31FF6DA490031ED45 /* WaterMe_CoreData 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "WaterMe_CoreData 2.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -866,6 +865,7 @@
 				5034769924552EFE00C3DAD3 /* Errors */,
 				5034769524552EFE00C3DAD3 /* HelperClasses */,
 				4832F532246E7BDD001B77F6 /* ModelHelpers */,
+				5073FF0A24D52D9100E3211B /* Migration */,
 				508B2EBE24741F2A00A497E4 /* CoreDataModels */,
 				5034769E24552EFE00C3DAD3 /* RealmModels */,
 				5034764624552CFD00C3DAD3 /* Info.plist */,
@@ -1084,6 +1084,16 @@
 			path = DragAndDrop;
 			sourceTree = "<group>";
 		};
+		5073FF0A24D52D9100E3211B /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				5073FF0B24D52DB700E3211B /* Migratable.swift */,
+				5073FF0D24D52FF800E3211B /* DummyMigrator.swift */,
+				5073FF0F24D532E100E3211B /* RealmToCoreDataMigrator.swift */,
+			);
+			path = Migration;
+			sourceTree = "<group>";
+		};
 		508B2EBE24741F2A00A497E4 /* CoreDataModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -1243,9 +1253,6 @@
 				50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */,
 				50281903200BB57D0044BEC8 /* ModalParentViewController.swift */,
 				50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */,
-				50F388DF1FF6D9C10031ED45 /* CoreDataMigrator.swift */,
-				50E3F2C81FF6EF35003245E3 /* ImageEmojiObject.swift */,
-				50F388E11FF6DA490031ED45 /* WaterMeData.xcdatamodeld */,
 			);
 			path = CoreDataMigration;
 			sourceTree = "<group>";
@@ -1758,6 +1765,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5073FF1024D532E100E3211B /* RealmToCoreDataMigrator.swift in Sources */,
 				48939EA124752759007D73E1 /* CD_ReminderVesselWrapper.swift in Sources */,
 				5090FD842470E280003B03D1 /* BasicController.swift in Sources */,
 				483C96E0247BDEB200D45200 /* AnyCollection.swift in Sources */,
@@ -1767,8 +1775,10 @@
 				4832F52D246E2406001B77F6 /* ReminderWrapper.swift in Sources */,
 				48939EA5247527DA007D73E1 /* CD_ReminderWrapper.swift in Sources */,
 				485482E4247A0FC500E3D4F0 /* CD_ReminderPerformWrapper.swift in Sources */,
+				5073FF0E24D52FF800E3211B /* DummyMigrator.swift in Sources */,
 				503476AF24552EFE00C3DAD3 /* ItemAndSectionable.swift in Sources */,
 				4856E30F2476770200B02577 /* ReminderKind.swift in Sources */,
+				5073FF0C24D52DB700E3211B /* Migratable.swift in Sources */,
 				503476B224552EFE00C3DAD3 /* ModelCompleteError.swift in Sources */,
 				48B77EE024677FD600EF25D3 /* BasicWrappers.swift in Sources */,
 				508B2ECB24741F6200A497E4 /* CD_BasicController.swift in Sources */,
@@ -1853,7 +1863,6 @@
 				50702D13200591CC009EF952 /* EmailDeveloperViewController.swift in Sources */,
 				50B779D1215470FE00AC6240 /* NSFormatter+WaterMe.swift in Sources */,
 				507318E7202D29BB00CF3737 /* ReminderMainViewController+Delegate.swift in Sources */,
-				50F388E01FF6D9C10031ED45 /* CoreDataMigrator.swift in Sources */,
 				50A3BAC8214DC8040053A289 /* ReminderSummaryReminderVesselIconTableViewCell.swift in Sources */,
 				5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */,
 				5002ADE523E6AC5F00CBC2B9 /* NSObject+Runtime.m in Sources */,
@@ -1875,7 +1884,6 @@
 				5087A9201EE337C10046E687 /* EmojiPickerCollectionViewCell.swift in Sources */,
 				50B779D32154716E00AC6240 /* StandardTableCollectionViewController.swift in Sources */,
 				5045CBAD1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift in Sources */,
-				50F388E41FF6DA490031ED45 /* WaterMeData.xcdatamodeld in Sources */,
 				50281904200BB57D0044BEC8 /* ModalParentViewController.swift in Sources */,
 				5051F8FA202BA2BE00741FF9 /* GlobalReminderObserver.swift in Sources */,
 				50B779D7215473F100AC6240 /* NSBundle+WaterMe.swift in Sources */,
@@ -1927,7 +1935,6 @@
 				50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */,
 				5096D19A215478FF006E1019 /* UIFont+Font.swift in Sources */,
 				5085C71D21667A4500030D2A /* DispatchQueue+WaterMe.swift in Sources */,
-				50E3F2C91FF6EF35003245E3 /* ImageEmojiObject.swift in Sources */,
 				506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */,
 				501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */,
 				50572E0A217040400053114C /* ReminderMainViewController+NSUserActivity.swift in Sources */,
@@ -2795,17 +2802,6 @@
 			);
 			currentVersion = 508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */;
 			path = WaterMe.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-		50F388E11FF6DA490031ED45 /* WaterMeData.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				50F388E21FF6DA490031ED45 /* WaterMe_CoreData.xcdatamodel */,
-				50F388E31FF6DA490031ED45 /* WaterMe_CoreData 2.xcdatamodel */,
-			);
-			currentVersion = 50F388E31FF6DA490031ED45 /* WaterMe_CoreData 2.xcdatamodel */;
-			path = WaterMeData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

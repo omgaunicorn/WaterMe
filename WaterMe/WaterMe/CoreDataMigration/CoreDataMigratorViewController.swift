@@ -30,7 +30,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
         case launch, migrating, success, error
     }
 
-    class func newVC(migrator: CoreDataMigratable, basicRC: BasicController, completion: @escaping (UIViewController, Bool) -> Void) -> UIViewController {
+    class func newVC(migrator: Migratable, basicRC: BasicController, completion: @escaping (UIViewController, Bool) -> Void) -> UIViewController {
         let sb = UIStoryboard(name: "CoreDataMigration", bundle: Bundle(for: self))
         // swiftlint:disable:next force_cast
         let vc = sb.instantiateInitialViewController() as! ModalParentViewController
@@ -54,7 +54,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
     @IBOutlet private weak var deleteButton: UIButton?
 
     private var completionHandler: ((UIViewController, Bool) -> Void)!
-    private var migrator: CoreDataMigratable!
+    private var migrator: Migratable!
     var basicRC: BasicController?
     private var state = UIState.launch {
         didSet {
@@ -65,7 +65,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.progressView?.observedProgress = self.migrator.progress
+        self.progressView?.progress = 0
         self.configureAttributedText()
     }
 
@@ -142,7 +142,8 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
             self.state = .migrating
         }, completion: { _ in
             UIApplication.shared.isIdleTimerDisabled = true
-            self.migrator.start(with: basicRC) { [weak self] success in
+            self.progressView?.observedProgress = self.migrator.start(destination: basicRC)
+            { [weak self] success in
                 UIApplication.shared.isIdleTimerDisabled = false
                 guard let welf = self else { return }
                 UIView.style_animateNormal() {
@@ -159,7 +160,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
 
     @IBAction private func deleteButtonTapped(_ sender: Any) {
         Analytics.log(event: Analytics.CoreDataMigration.migrationDeleted)
-        self.migrator.deleteCoreDataStoreWithoutMigrating()
+        self.migrator.skipMigration()
         self.completionHandler(self, false)
     }
 

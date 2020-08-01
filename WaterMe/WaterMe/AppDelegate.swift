@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var basicControllerResult = NewBasicController(of: .local)
 
     let purchaseController = PurchaseController()
-    var coreDataMigrator: CoreDataMigratable? = CoreDataMigrator()
+    var coreDataMigrator: Migratable? = DatumMigrator
     var window: UIWindow?
     var userDefaultObserverTokens: [NSKeyValueObservation] = []
 
