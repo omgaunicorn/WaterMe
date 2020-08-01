@@ -25,9 +25,15 @@ import Foundation
 
 public protocol Migratable {
     func start(destination: BasicController,
-               completion: @escaping (Bool) -> Void) -> Progress
-    func skipMigration() -> Result<Void, Error>
+               completion: @escaping (MigratableResult) -> Void) -> Progress
+    func skipMigration() -> MigratableResult
 }
+
+public enum MigratableError: Error {
+    case skipError, loadError, migrateError
+}
+
+public typealias MigratableResult = Result<Void, MigratableError>
 
 public var DatumMigrator: Migratable? {
     return RealmToCoreDataMigrator() ?? DummyMigrator()

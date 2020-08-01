@@ -37,24 +37,24 @@ internal class RealmToCoreDataMigrator: Migratable {
         self.source = source
     }
 
-    func skipMigration() -> Result<Void, Error> {
+    func skipMigration() -> MigratableResult {
         do {
             try FileManager.default.removeItem(at: RLM_BasicController.localRealmDirectory)
             self.source = nil
             return .success(())
         } catch {
-            return .failure(error)
+            return .failure(.skipError)
         }
     }
 
-    func start(destination: BasicController, completion: @escaping (Bool) -> Void) -> Progress {
+    func start(destination: BasicController, completion: @escaping (MigratableResult) -> Void) -> Progress {
         let progress = Progress(totalUnitCount: 0)
         progress.completedUnitCount = 0
         guard
             let source = self.source,
             let destination = destination as? CD_BasicController
         else {
-            DispatchQueue.main.async { completion(false) }
+            DispatchQueue.main.async { completion(.failure(.loadError)) }
             return progress
         }
 
@@ -72,7 +72,7 @@ internal class RealmToCoreDataMigrator: Migratable {
                 let realm = try? source.realm.get(),
                 let rhsShare = _rhsShare
             else {
-                DispatchQueue.main.async { completion(false) }
+                DispatchQueue.main.async { completion(.failure(.loadError)) }
                 return
             }
 
@@ -93,7 +93,6 @@ internal class RealmToCoreDataMigrator: Migratable {
                         } catch {
                             log.error(error)
                             srcVessel = nil
-
                         }
                     }
 
@@ -139,6 +138,13 @@ internal class RealmToCoreDataMigrator: Migratable {
                         }
                     }
                 }
+            }
+
+            // Loop complete, we're done
+            if srcVessels.isEmpty {
+                DispatchQueue.main.async { completion(.success(())) }
+            } else {
+                DispatchQueue.main.async { completion(.failure(.migrateError)) }
             }
         }
         return progress

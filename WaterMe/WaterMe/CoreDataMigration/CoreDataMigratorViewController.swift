@@ -143,11 +143,16 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
         }, completion: { _ in
             UIApplication.shared.isIdleTimerDisabled = true
             self.progressView?.observedProgress = self.migrator.start(destination: basicRC)
-            { [weak self] success in
+            { [weak self] result in
                 UIApplication.shared.isIdleTimerDisabled = false
                 guard let welf = self else { return }
                 UIView.style_animateNormal() {
-                    welf.state = success ? .success : .error
+                    switch result {
+                    case .success:
+                        welf.state = .success
+                    case .failure:
+                        welf.state = .error
+                    }
                 }
             }
         })
@@ -160,8 +165,14 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
 
     @IBAction private func deleteButtonTapped(_ sender: Any) {
         Analytics.log(event: Analytics.CoreDataMigration.migrationDeleted)
-        self.migrator.skipMigration()
-        self.completionHandler(self, false)
+        do {
+            try self.migrator.skipMigration().get()
+            self.completionHandler(self, false)
+        } catch {
+            UIView.style_animateNormal() {
+                self.state = .error
+            }
+        }
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

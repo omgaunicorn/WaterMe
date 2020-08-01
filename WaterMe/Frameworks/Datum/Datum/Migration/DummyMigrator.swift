@@ -23,14 +23,14 @@
 
 internal class DummyMigrator: Migratable {
 
-    func start(destination: BasicController, completion: @escaping (Bool) -> Void) -> Progress {
+    func start(destination: BasicController, completion: @escaping (MigratableResult) -> Void) -> Progress {
         let progress = Progress(totalUnitCount: 10)
         progress.completedUnitCount = 0
         var current: Int64 = 0
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
             guard current <= 10 else {
                 timer.invalidate()
-                completion(true)
+                completion(.success(()))
                 return
             }
             current += 1
@@ -39,7 +39,7 @@ internal class DummyMigrator: Migratable {
         return progress
     }
 
-    func skipMigration() -> Result<Void, Error> {
+    func skipMigration() -> MigratableResult {
         return .success(())
     }
 }
