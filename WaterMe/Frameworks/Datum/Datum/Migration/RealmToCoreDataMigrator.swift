@@ -26,7 +26,7 @@ import RealmSwift
 
 internal class RealmToCoreDataMigrator: Migratable {
 
-    private let source: RLM_BasicController
+    private var source: RLM_BasicController?
     private let queue = DispatchQueue(label: "RealmToCoreDataMigrator", qos: .userInitiated)
 
     init?() {
@@ -37,10 +37,23 @@ internal class RealmToCoreDataMigrator: Migratable {
         self.source = source
     }
 
+    func skipMigration() -> Result<Void, Error> {
+        do {
+            try FileManager.default.removeItem(at: RLM_BasicController.localRealmDirectory)
+            self.source = nil
+            return .success(())
+        } catch {
+            return .failure(error)
+        }
+    }
+
     func start(destination: BasicController, completion: @escaping (Bool) -> Void) -> Progress {
         let progress = Progress(totalUnitCount: 0)
         progress.completedUnitCount = 0
-        guard let destination = destination as? CD_BasicController else {
+        guard
+            let source = self.source,
+            let destination = destination as? CD_BasicController
+        else {
             DispatchQueue.main.async { completion(false) }
             return progress
         }
@@ -56,7 +69,7 @@ internal class RealmToCoreDataMigrator: Migratable {
                 return result?.first
             }()
             guard
-                let realm = try? self.source.realm.get(),
+                let realm = try? source.realm.get(),
                 let rhsShare = _rhsShare
             else {
                 DispatchQueue.main.async { completion(false) }
@@ -129,9 +142,5 @@ internal class RealmToCoreDataMigrator: Migratable {
             }
         }
         return progress
-    }
-
-    func skipMigration() {
-        // TOOD: Delete Realm DB
     }
 }

@@ -26,7 +26,7 @@ import Foundation
 public protocol Migratable {
     func start(destination: BasicController,
                completion: @escaping (Bool) -> Void) -> Progress
-    func skipMigration()
+    func skipMigration() -> Result<Void, Error>
 }
 
 public var DatumMigrator: Migratable? {

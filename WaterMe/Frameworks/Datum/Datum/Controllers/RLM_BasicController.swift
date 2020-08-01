@@ -380,25 +380,16 @@ internal class RLM_BasicController: BasicController {
 }
 
 extension RLM_BasicController {
-    private class var localRealmDirectory: URL {
+    internal class var localRealmDirectory: URL {
         let appsupport = FileManager.default.urls(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first!
         let url = appsupport.appendingPathComponent("WaterMe", isDirectory: true).appendingPathComponent("Free", isDirectory: true)
         return url
     }
 
-    // Internal for Migrator
     internal class var localRealmExists: Bool {
         let fm = FileManager.default
         let exists = fm.fileExists(atPath: self.localRealmFile.path)
         return exists
-    }
-
-    private class var legacyCoreDataStoreExists: Bool {
-        let fm = FileManager.default
-        let appSupport = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let storeDirectory = appSupport.appendingPathComponent("WaterMe", isDirectory: true)
-        let storeURL = storeDirectory.appendingPathComponent("WaterMeData.sqlite")
-        return fm.fileExists(atPath: storeURL.path)
     }
 
     private class var localRealmFile: URL {
@@ -413,7 +404,6 @@ extension RLM_BasicController {
     private class func copyRealmFromBundleIfNeeded() throws {
         guard
             self.localRealmExists == false,
-            self.legacyCoreDataStoreExists == false,
             let bundleURL = Bundle.main.url(forResource: "StarterRealm", withExtension: "realm")
         else { return }
         try FileManager.default.copyItem(at: bundleURL, to: self.localRealmFile)

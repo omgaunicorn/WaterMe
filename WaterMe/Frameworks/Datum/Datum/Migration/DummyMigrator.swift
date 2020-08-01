@@ -39,7 +39,7 @@ internal class DummyMigrator: Migratable {
         return progress
     }
 
-    func skipMigration() {
-
+    func skipMigration() -> Result<Void, Error> {
+        return .success(())
     }
 }
