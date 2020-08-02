@@ -499,7 +499,7 @@ extension CD_BasicController {
     private static let sampleDB1URL = Bundle.main.url(forResource: "StarterData", withExtension: "sqlite")
     private static let sampleDB2URL = Bundle.main.url(forResource: "StarterData", withExtension: "sqlite-wal")
 
-    fileprivate class var dbDirectoryURL: URL {
+    internal class var dbDirectoryURL: URL {
         let appsupport = FileManager.default.urls(
             for: FileManager.SearchPathDirectory.applicationSupportDirectory,
             in: FileManager.SearchPathDomainMask.userDomainMask

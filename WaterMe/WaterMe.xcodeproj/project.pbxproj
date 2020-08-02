@@ -142,6 +142,7 @@
 		5073FF0C24D52DB700E3211B /* Migratable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073FF0B24D52DB700E3211B /* Migratable.swift */; };
 		5073FF0E24D52FF800E3211B /* DummyMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073FF0D24D52FF800E3211B /* DummyMigrator.swift */; };
 		5073FF1024D532E100E3211B /* RealmToCoreDataMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073FF0F24D532E100E3211B /* RealmToCoreDataMigrator.swift */; };
+		5073FF1224D64A5500E3211B /* RealmToCoreDataMigratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5073FF1124D64A5500E3211B /* RealmToCoreDataMigratorTests.swift */; };
 		5075B48E1FF178DC007B42D8 /* ReminderDragPreviewView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */; };
 		5075B4901FF178EA007B42D8 /* ReminderDragPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5075B48F1FF178EA007B42D8 /* ReminderDragPreviewView.swift */; };
 		507777AA1FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */; };
@@ -534,6 +535,7 @@
 		5073FF0B24D52DB700E3211B /* Migratable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Migratable.swift; sourceTree = "<group>"; };
 		5073FF0D24D52FF800E3211B /* DummyMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyMigrator.swift; sourceTree = "<group>"; };
 		5073FF0F24D532E100E3211B /* RealmToCoreDataMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmToCoreDataMigrator.swift; sourceTree = "<group>"; };
+		5073FF1124D64A5500E3211B /* RealmToCoreDataMigratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmToCoreDataMigratorTests.swift; sourceTree = "<group>"; };
 		5075B48D1FF178DC007B42D8 /* ReminderDragPreviewView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderDragPreviewView.xib; sourceTree = "<group>"; };
 		5075B48F1FF178EA007B42D8 /* ReminderDragPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderDragPreviewView.swift; sourceTree = "<group>"; };
 		507777A91FFED82E00A424F9 /* ReminderNotificationUIDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderNotificationUIDelegate.swift; sourceTree = "<group>"; };
@@ -889,6 +891,7 @@
 				48DD0C1D248146580082C7E3 /* BasicControllerCreateUpdateTests.swift */,
 				48AFA303248646E6002CAFDC /* BasicControllerDeleteTests.swift */,
 				5060A069249B9E1800D96EFA /* BasicControllerClosureTests.swift */,
+				5073FF1124D64A5500E3211B /* RealmToCoreDataMigratorTests.swift */,
 				48F56045247F8C470049F14D /* RealmCoreDataTestSubclasses.swift */,
 				5034765424552CFD00C3DAD3 /* Info.plist */,
 			);
@@ -1822,6 +1825,7 @@
 				48DD0C1E248146580082C7E3 /* BasicControllerCreateUpdateTests.swift in Sources */,
 				509459FF2497776E0090664A /* ReminderPerformTests.swift in Sources */,
 				5073FF0124D5226000E3211B /* VesselShareTests.swift in Sources */,
+				5073FF1224D64A5500E3211B /* RealmToCoreDataMigratorTests.swift in Sources */,
 				481565A32480D24900402045 /* GroupedReminderCollectionTests.swift in Sources */,
 				481565AD2480DB1C00402045 /* BasicControllerReadTests.swift in Sources */,
 				48AFA304248646E6002CAFDC /* BasicControllerDeleteTests.swift in Sources */,
