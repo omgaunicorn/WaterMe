@@ -22,12 +22,13 @@
 //
 
 import XCTest
+import CoreData
 @testable import Datum
 
 class RealmToCoreDataMigratorBaseTests: XCTestCase {
 
-    let source = try! RLM_BasicController(kind: .local, forTesting: true)
-    let destination = try! CD_BasicController(kind: .local, forTesting: true)
+    let source: BasicController = try! RLM_BasicController(kind: .local, forTesting: true)
+    let destination: CD_BasicController = try! CD_BasicController(kind: .local, forTesting: true)
 
     override func tearDownWithError() throws {
         try super.tearDownWithError()
@@ -43,7 +44,125 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
+
+        let v_1 = try source.newReminderVessel(displayName: "One", icon: .emoji("1️⃣")).get()
+        let v_2 = try source.newReminderVessel(displayName: "Two", icon: nil).get()
+        let v_3 = try source.newReminderVessel(displayName: "Three", icon: .emoji("3️⃣")).get()
+
+        let v_1_r_1 = try source.newReminder(for: v_1).get()
+        let v_1_r_2 = try source.newReminder(for: v_1).get()
+        let v_1_r_3 = try source.newReminder(for: v_1).get()
+
+        try source.update(kind: .mist, interval: 1, note: nil, in: v_1_r_1).get()
+        try source.update(kind: .fertilize, interval: 10, note: nil, in: v_1_r_2).get()
+        try source.update(kind: .move(location: "Over There"), interval: 100, note: "This is a Note", in: v_1_r_3).get()
+
+        let v_2_r_1 = try source.newReminder(for: v_2).get()
+        let v_2_r_2 = try source.newReminder(for: v_2).get()
+        let v_2_r_3 = try source.newReminder(for: v_2).get()
+
+        try source.update(kind: .water, interval: -1, note: nil, in: v_2_r_1).get()
+        try source.update(kind: .trim, interval: -10, note: nil, in: v_2_r_2).get()
+        try source.update(kind: .other(description: nil), interval: -100, note: "This is a Note", in: v_2_r_3).get()
+
+        let v_3_r_1 = try source.newReminder(for: v_3).get()
+        let v_3_r_2 = try source.newReminder(for: v_3).get()
+        let v_3_r_3 = try source.newReminder(for: v_3).get()
+
+        try source.update(kind: .move(location: "One"), interval: 10000000, note: "One", in: v_3_r_1).get()
+        try source.update(kind: .move(location: "Two"), interval: 100000000, note: "Two", in: v_3_r_2).get()
+        try source.update(kind: .move(location: "Three"), interval: 1000000000, note: "Three", in: v_3_r_3).get()
+
+        let allReminders = [v_1_r_1, v_1_r_2, v_1_r_3, v_2_r_1, v_2_r_2, v_2_r_3, v_3_r_1, v_3_r_2, v_3_r_3]
+                           .map { Identifier(rawValue: $0.uuid) }
+        try source.appendNewPerformToReminders(with: allReminders).get()
+        try source.appendNewPerformToReminders(with: allReminders).get()
+        try source.appendNewPerformToReminders(with: allReminders).get()
     }
+
+    func test_migrationAccuracy() {
+        let context = self.destination.container.viewContext
+        let req_v = NSFetchRequest<CD_ReminderVessel>(entityName: "CD_ReminderVessel")
+        let req_r = NSFetchRequest<CD_Reminder>(entityName: "CD_Reminder")
+        let req_p = NSFetchRequest<CD_ReminderPerform>(entityName: "CD_ReminderPerform")
+        XCTAssertEqual(try? context.fetch(req_v).count, 0)
+        XCTAssertEqual(try? context.fetch(req_r).count, 0)
+        XCTAssertEqual(try? context.fetch(req_p).count, 0)
+
+        let migrator = RealmToCoreDataMigrator(source: self.source, forTesting: true)!
+        let wait1 = XCTestExpectation()
+        wait1.expectedFulfillmentCount = 1
+        let progress = migrator.start(destination: self.destination) { result in
+            wait1.fulfill()
+            switch result {
+            case .success:
+                let vessels = try! context.fetch(req_v)
+                XCTAssertEqual(vessels.count, 3)
+                XCTAssertEqual(try? context.fetch(req_r).count, 12)
+                XCTAssertEqual(try? context.fetch(req_p).count, 27)
+
+                let v_1 = vessels.filter({ $0.displayName == "One" }).first!
+                let v_2 = vessels.filter({ $0.displayName == "Two" }).first!
+                let v_3 = vessels.filter({ $0.displayName == "Three" }).first!
+
+                XCTAssertEqual(v_1.icon?.emoji, "1️⃣")
+                XCTAssertNil(v_2.icon)
+                XCTAssertEqual(v_3.icon?.emoji, "3️⃣")
+
+                let v_1_r_1 = (v_1.reminders as! Set<CD_Reminder>).filter({ $0.interval == 1 }).first!
+                let v_1_r_2 = (v_1.reminders as! Set<CD_Reminder>).filter({ $0.interval == 10 }).first!
+                let v_1_r_3 = (v_1.reminders as! Set<CD_Reminder>).filter({ $0.interval == 100 }).first!
+
+                XCTAssertEqual(v_1_r_1.kind, .mist)
+                XCTAssertEqual(v_1_r_2.kind, .fertilize)
+                XCTAssertEqual(v_1_r_3.kind, .move(location: "Over There"))
+
+                XCTAssertNil(v_1_r_1.note)
+                XCTAssertNil(v_1_r_2.note)
+                XCTAssertEqual(v_1_r_3.note, "This is a Note")
+
+                let v_2_r_1 = (v_2.reminders as! Set<CD_Reminder>).filter({ $0.interval == -1 }).first!
+                let v_2_r_2 = (v_2.reminders as! Set<CD_Reminder>).filter({ $0.interval == -10 }).first!
+                let v_2_r_3 = (v_2.reminders as! Set<CD_Reminder>).filter({ $0.interval == -100 }).first!
+
+                XCTAssertEqual(v_2_r_1.kind, .water)
+                XCTAssertEqual(v_2_r_2.kind, .trim)
+                XCTAssertEqual(v_2_r_3.kind, .other(description: nil))
+
+                XCTAssertNil(v_2_r_1.note)
+                XCTAssertNil(v_2_r_2.note)
+                XCTAssertEqual(v_2_r_3.note, "This is a Note")
+
+                let v_3_r_1 = (v_3.reminders as! Set<CD_Reminder>).filter({ $0.interval == 10000000 }).first!
+                let v_3_r_2 = (v_3.reminders as! Set<CD_Reminder>).filter({ $0.interval == 100000000 }).first!
+                let v_3_r_3 = (v_3.reminders as! Set<CD_Reminder>).filter({ $0.interval == 1000000000 }).first!
+
+                XCTAssertEqual(v_3_r_1.kind, .move(location: "One"))
+                XCTAssertEqual(v_3_r_2.kind, .move(location: "Two"))
+                XCTAssertEqual(v_3_r_3.kind, .move(location: "Three"))
+
+                XCTAssertEqual(v_3_r_1.note, "One")
+                XCTAssertEqual(v_3_r_2.note, "Two")
+                XCTAssertEqual(v_3_r_3.note, "Three")
+
+                let allReminders = [v_1_r_1, v_1_r_2, v_1_r_3, v_2_r_1, v_2_r_2, v_2_r_3, v_3_r_1, v_3_r_2, v_3_r_3]
+                XCTAssertEqual(allReminders.filter({ $0.performed.count == 3 }).count, allReminders.count)
+            case .failure(let error):
+                XCTFail("Migration failed with error: \(error)")
+            }
+        }
+
+        let wait2 = XCTestExpectation()
+        wait2.expectedFulfillmentCount = 3
+        self.token = progress.observe(\.fractionCompleted) { _, _ in
+            wait2.fulfill()
+            print(progress.fractionCompleted)
+        }
+
+        self.wait(for: [wait1, wait2], timeout: 3)
+    }
+
+    private var token: NSKeyValueObservation?
 
 }
 

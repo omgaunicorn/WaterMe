@@ -29,10 +29,17 @@ internal class RealmToCoreDataMigrator: Migratable {
     private var source: RLM_BasicController?
     private let queue = DispatchQueue(label: "RealmToCoreDataMigrator", qos: .userInitiated)
 
-    init?() {
+    init?(source: BasicController? = nil, forTesting: Bool = false) {
+        guard !forTesting else {
+            self.source = (source as? RLM_BasicController)!
+            return
+        }
+
+        let _source = (source as? RLM_BasicController)
+                      ?? (try? RLM_BasicController(kind: .local, forTesting: false))
         guard
             RLM_BasicController.localRealmExists,
-            let source = try? RLM_BasicController(kind: .local, forTesting: false)
+            let source = _source
         else { return nil }
         self.source = source
     }
