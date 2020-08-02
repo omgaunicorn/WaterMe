@@ -29,19 +29,21 @@ internal class RealmToCoreDataMigrator: Migratable {
     private var source: RLM_BasicController?
     private let queue = DispatchQueue(label: "RealmToCoreDataMigrator", qos: .userInitiated)
 
-    init?(source: BasicController? = nil, forTesting: Bool = false) {
-        guard !forTesting else {
-            self.source = (source as? RLM_BasicController)!
-            return
+    /// If `testingSource` is `NIL` class checks if local realm DB exists.
+    /// If it does exist, then it creates a RLM_BasicController and initializes.
+    /// If it does not exist it returns `NIL`
+    /// If a `testingSource` is provided, then no checks are performed
+    /// and the class always initializes.
+    init?(testingSource: RLM_BasicController? = nil) {
+        if let source = testingSource {
+            self.source = source
+        } else {
+            guard
+                RLM_BasicController.localRealmExists,
+                let source = try? RLM_BasicController(kind: .local, forTesting: false)
+            else { return nil }
+            self.source = source
         }
-
-        let _source = (source as? RLM_BasicController)
-                      ?? (try? RLM_BasicController(kind: .local, forTesting: false))
-        guard
-            RLM_BasicController.localRealmExists,
-            let source = _source
-        else { return nil }
-        self.source = source
     }
 
     func skipMigration() -> MigratableResult {
@@ -61,8 +63,7 @@ internal class RealmToCoreDataMigrator: Migratable {
         progress.completedUnitCount = 0
         guard
             let source = self.source,
-            let destination = destination as? CD_BasicController,
-            source !== destination
+            let destination = destination as? CD_BasicController
         else {
             DispatchQueue.main.async { completion(.failure(.loadError)) }
             return progress
@@ -73,14 +74,9 @@ internal class RealmToCoreDataMigrator: Migratable {
 
             // Get needed contexts and realms
             let context = destination.container.newBackgroundContext()
-            let _rhsShare: CD_VesselShare? = {
-                let request = CD_VesselShare.request
-                let result = try? context.fetch(request)
-                return result?.first
-            }()
             guard
                 let realm = try? source.realm.get(),
-                let rhsShare = _rhsShare
+                let rhsShare = (try? context.fetch(CD_VesselShare.request))?.first
             else {
                 DispatchQueue.main.async { completion(.failure(.loadError)) }
                 return
@@ -88,18 +84,21 @@ internal class RealmToCoreDataMigrator: Migratable {
 
             // Get our Data to work with
             var srcVessels = Array(realm.objects(RLM_ReminderVessel.self))
-            progress.totalUnitCount = Int64(srcVessels.count)
+            let totalUnitCount = Int64(srcVessels.count)
+            progress.totalUnitCount = totalUnitCount
             var srcVessel: RLM_ReminderVessel! = srcVessels.popLast()
 
             // Loop over every vessel
+            var completedUnitCount: Int64 = 0
             while srcVessel != nil {
                 autoreleasepool {
                     defer {
                         // Prepare for next loop
                         do {
                             try context.save()
+                            completedUnitCount += 1
+                            progress.completedUnitCount = completedUnitCount
                             srcVessel = srcVessels.popLast()
-                            progress.completedUnitCount += 1
                         } catch {
                             log.error(error)
                             srcVessel = nil
@@ -150,8 +149,38 @@ internal class RealmToCoreDataMigrator: Migratable {
                 }
             }
 
-            // Loop complete, we're done
-            if srcVessels.isEmpty {
+            // check if we completed by comparing completion count
+            var completed = completedUnitCount == totalUnitCount
+
+            // do cleanup tasks only if we are not using unit tests
+            if !TESTING {
+                if completed {
+                    // Cleanup source, this HAS to work for migration to finish
+                    do {
+                        try FileManager.default.removeItem(at: RLM_BasicController.localRealmDirectory)
+                        log.info("Migration Succeeded")
+                    } catch {
+                        log.error("Migration Error: Succeeded but failed to delete Realm DB: \(error)")
+                        completed = false
+                    }
+                } else {
+                    // If we didn't complete, try to clean up the destination
+                    // Don't clean up destination if source failed to delete
+                    // Too risky, might lose data
+                    for vessel in rhsShare.vessels {
+                        guard let vessel = vessel as? NSManagedObject else { continue }
+                        context.delete(vessel)
+                    }
+                    do {
+                        try context.save()
+                        log.error("Migration Failed: Successfully cleaned up Core Data")
+                    } catch {
+                        log.error("Migration Failed: Failed to clean up Core Data: \(error)")
+                    }
+                }
+            }
+
+            if completed {
                 DispatchQueue.main.async { completion(.success(())) }
             } else {
                 DispatchQueue.main.async { completion(.failure(.migrateError)) }

@@ -27,8 +27,8 @@ import CoreData
 
 class RealmToCoreDataMigratorBaseTests: XCTestCase {
 
-    let source: BasicController = try! RLM_BasicController(kind: .local, forTesting: true)
-    let destination: CD_BasicController = try! CD_BasicController(kind: .local, forTesting: true)
+    let source = try! RLM_BasicController(kind: .local, forTesting: true)
+    let destination = try! CD_BasicController(kind: .local, forTesting: true)
     var token: NSKeyValueObservation?
 
     override func tearDownWithError() throws {
@@ -38,6 +38,47 @@ class RealmToCoreDataMigratorBaseTests: XCTestCase {
         let fm = FileManager.default
         try? fm.removeItem(at: realmDir)
         try? fm.removeItem(at: coreDataDir)
+    }
+}
+
+class RealmToCoreDataMigratorErrorTests: RealmToCoreDataMigratorBaseTests {
+
+    func test_destinationIsNotCD() {
+        let wait = XCTestExpectation()
+        wait.expectedFulfillmentCount = 1
+        let migrator = RealmToCoreDataMigrator(testingSource: self.source)!
+        migrator.start(destination: self.source) { result in
+            guard case .failure(let error) = result, case .loadError = error else {
+                XCTFail()
+                return
+            }
+            wait.fulfill()
+        }
+        self.wait(for: [wait], timeout: 0.3)
+    }
+
+    func test_missingTopLevelVesselShareObject() {
+        do {
+            let ctx = self.destination.container.viewContext
+            let objs = try ctx.fetch(CD_VesselShare.request)
+            XCTAssertEqual(objs.count, 1)
+            ctx.delete(objs.first!)
+            try ctx.save()
+
+            let wait = XCTestExpectation()
+            wait.expectedFulfillmentCount = 1
+            let migrator = RealmToCoreDataMigrator(testingSource: self.source)
+            migrator?.start(destination: self.destination) { result in
+                guard case .failure(let error) = result, case .loadError = error else {
+                    XCTFail()
+                    return
+                }
+                wait.fulfill()
+            }
+            self.wait(for: [wait], timeout: 0.3)
+        } catch {
+            XCTFail("\(error)")
+        }
     }
 }
 
@@ -83,7 +124,7 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
 
     func test_migrationAccuracy() {
         let context = self.destination.container.viewContext
-        let realm = try! (self.source as! RLM_BasicController).realm.get()
+        let realm = try! self.source.realm.get()
         let srcPerforms: [Date] = realm.objects(RLM_ReminderPerform.self).map({ $0.date }).sorted(by: { $0 > $1 })
         let req_v = CD_ReminderVessel.request
         let req_r = CD_Reminder.request
@@ -92,7 +133,7 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
         XCTAssertEqual(try? context.fetch(req_r).count, 0)
         XCTAssertEqual(try? context.fetch(req_p).count, 0)
 
-        let migrator = RealmToCoreDataMigrator(source: self.source, forTesting: true)!
+        let migrator = RealmToCoreDataMigrator(testingSource: self.source)!
         let wait1 = XCTestExpectation()
         wait1.expectedFulfillmentCount = 1
         let progress = migrator.start(destination: self.destination) { result in
@@ -198,7 +239,7 @@ class RealmToCoreDataMigratorScaleTests: RealmToCoreDataMigratorBaseTests {
         XCTAssertEqual(try? context.fetch(req_r).count, 0)
         XCTAssertEqual(try? context.fetch(req_p).count, 0)
 
-        let migrator = RealmToCoreDataMigrator(source: self.source, forTesting: true)!
+        let migrator = RealmToCoreDataMigrator(testingSource: self.source)!
         let wait1 = XCTestExpectation()
         wait1.expectedFulfillmentCount = 1
         let progress = migrator.start(destination: self.destination) { result in
