@@ -85,9 +85,9 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
         let context = self.destination.container.viewContext
         let realm = try! (self.source as! RLM_BasicController).realm.get()
         let srcPerforms: [Date] = realm.objects(RLM_ReminderPerform.self).map({ $0.date }).sorted(by: { $0 > $1 })
-        let req_v = NSFetchRequest<CD_ReminderVessel>(entityName: "CD_ReminderVessel")
-        let req_r = NSFetchRequest<CD_Reminder>(entityName: "CD_Reminder")
-        let req_p = NSFetchRequest<CD_ReminderPerform>(entityName: "CD_ReminderPerform")
+        let req_v = CD_ReminderVessel.request
+        let req_r = CD_Reminder.request
+        let req_p = CD_ReminderPerform.request
         XCTAssertEqual(try? context.fetch(req_v).count, 0)
         XCTAssertEqual(try? context.fetch(req_r).count, 0)
         XCTAssertEqual(try? context.fetch(req_p).count, 0)
@@ -191,9 +191,9 @@ class RealmToCoreDataMigratorScaleTests: RealmToCoreDataMigratorBaseTests {
 
     func test_migrationScale() {
         let context = self.destination.container.viewContext
-        let req_v = NSFetchRequest<CD_ReminderVessel>(entityName: "CD_ReminderVessel")
-        let req_r = NSFetchRequest<CD_Reminder>(entityName: "CD_Reminder")
-        let req_p = NSFetchRequest<CD_ReminderPerform>(entityName: "CD_ReminderPerform")
+        let req_v = CD_ReminderVessel.request
+        let req_r = CD_Reminder.request
+        let req_p = CD_ReminderPerform.request
         XCTAssertEqual(try? context.fetch(req_v).count, 0)
         XCTAssertEqual(try? context.fetch(req_r).count, 0)
         XCTAssertEqual(try? context.fetch(req_p).count, 0)

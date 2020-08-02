@@ -71,7 +71,7 @@ internal class RealmToCoreDataMigrator: Migratable {
             // Get needed contexts and realms
             let context = destination.container.newBackgroundContext()
             let _rhsShare: CD_VesselShare? = {
-                let request = CD_VesselShare.fetchRequest() as! NSFetchRequest<CD_VesselShare>
+                let request = CD_VesselShare.request
                 let result = try? context.fetch(request)
                 return result?.first
             }()

@@ -65,9 +65,7 @@ internal class CD_BasicController: BasicController {
         }
         lock.wait()
 		guard error == nil else { throw error! }
-        // TODO: For some reason this old version of fetchrequest is needed to make tests pass
-        // let fetchRequest = CD_VesselShare.fetchRequest() as! NSFetchRequest<CD_VesselShare>
-        let fetchRequest = NSFetchRequest<CD_VesselShare>(entityName: "CD_VesselShare")
+        let fetchRequest = CD_VesselShare.request
         let ctx = container.viewContext
         let fetchResult = try ctx.fetch(fetchRequest)
         if fetchResult.isEmpty {
@@ -139,7 +137,7 @@ internal class CD_BasicController: BasicController {
             vessel.icon = icon
         }
         do {
-            let vesselShares = try context.fetch(CD_VesselShare.fetchRequest() as! NSFetchRequest<CD_VesselShare>)
+            let vesselShares = try context.fetch(CD_VesselShare.request)
             guard vesselShares.count == 1 else {
                 let message = "Unexpected number of VesselShare objects: \(vesselShares.count)"
                 log.error(message)
@@ -166,7 +164,7 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
         
         let context = self.container.viewContext
-        let fr = CD_ReminderVessel.fetchRequest() as! NSFetchRequest<CD_ReminderVessel>
+        let fr = CD_ReminderVessel.request
         fr.sortDescriptors = [CD_ReminderVessel.sortDescriptor(for: sorted, ascending: ascending)]
         let frc = NSFetchedResultsController<CD_ReminderVessel>(fetchRequest: fr,
                                              managedObjectContext: context,
@@ -183,7 +181,7 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
         
         let context = self.container.viewContext
-        let fr = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
+        let fr = CD_Reminder.request
         fr.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
         let frc = NSFetchedResultsController(fetchRequest: fr,
                                              managedObjectContext: context,
@@ -223,7 +221,7 @@ internal class CD_BasicController: BasicController {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
-        let fetchRequest = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
+        let fetchRequest = CD_Reminder.request
         fetchRequest.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
         let range = section.dateInterval
         let andPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [

@@ -36,7 +36,7 @@ class CD_VesselShareTests: DatumTestsBase {
     }
 
     func test_oneSharePresent_init() {
-        let request = CD_VesselShare.fetchRequest() as! NSFetchRequest<CD_VesselShare>
+        let request = CD_VesselShare.request
         let context = self.context
         let results = try! context.fetch(request)
         XCTAssertEqual(results.count, 1)
@@ -46,7 +46,7 @@ class CD_VesselShareTests: DatumTestsBase {
     func test_oneSharePresent_createTwoVessels() {
         var sharedReference: CD_VesselShare!
         _ = {
-            let request = CD_VesselShare.fetchRequest() as! NSFetchRequest<CD_VesselShare>
+            let request = CD_VesselShare.request
             let context = self.context
             let results = try! context.fetch(request)
             XCTAssertEqual(results.count, 1)
@@ -58,7 +58,7 @@ class CD_VesselShareTests: DatumTestsBase {
         _ = try! self.basicController.newReminderVessel(displayName: "Two", icon: nil).get()
 
         _ = {
-            let request = CD_VesselShare.fetchRequest() as! NSFetchRequest<CD_VesselShare>
+            let request = CD_VesselShare.request
             let context = self.context
             let results = try! context.fetch(request)
             XCTAssertEqual(results.count, 1)
@@ -80,7 +80,7 @@ class CD_VesselShareTests: DatumTestsBase {
         let two = try! self.basicController.newReminderVessel(displayName: "Two", icon: nil).get()
 
         _ = {
-            let request = CD_VesselShare.fetchRequest() as! NSFetchRequest<CD_VesselShare>
+            let request = CD_VesselShare.request
             let context = self.context
             let results = try! context.fetch(request)
             XCTAssertEqual(results.count, 1)
@@ -91,7 +91,7 @@ class CD_VesselShareTests: DatumTestsBase {
         try! self.basicController.delete(vessel: two).get()
 
         _ = {
-            let request = CD_VesselShare.fetchRequest() as! NSFetchRequest<CD_VesselShare>
+            let request = CD_VesselShare.request
             let context = self.context
             let results = try! context.fetch(request)
             XCTAssertEqual(results.count, 1)
@@ -105,8 +105,8 @@ class CD_VesselShareTests: DatumTestsBase {
         _ = try! self.basicController.newReminderVessel(displayName: "One", icon: nil).get()
         _ = try! self.basicController.newReminderVessel(displayName: "Two", icon: nil).get()
 
-        let shareRequest = CD_VesselShare.fetchRequest() as! NSFetchRequest<CD_VesselShare>
-        let vesselRequest = CD_ReminderVessel.fetchRequest() as! NSFetchRequest<CD_ReminderVessel>
+        let shareRequest = CD_VesselShare.request
+        let vesselRequest = CD_ReminderVessel.request
         var share: CD_VesselShare!
         let context = self.context
 
