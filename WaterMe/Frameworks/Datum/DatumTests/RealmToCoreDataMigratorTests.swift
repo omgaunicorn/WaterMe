@@ -29,6 +29,7 @@ class RealmToCoreDataMigratorBaseTests: XCTestCase {
 
     let source: BasicController = try! RLM_BasicController(kind: .local, forTesting: true)
     let destination: CD_BasicController = try! CD_BasicController(kind: .local, forTesting: true)
+    var token: NSKeyValueObservation?
 
     override func tearDownWithError() throws {
         try super.tearDownWithError()
@@ -156,20 +157,68 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
         wait2.expectedFulfillmentCount = 3
         self.token = progress.observe(\.fractionCompleted) { _, _ in
             wait2.fulfill()
-            print(progress.fractionCompleted)
         }
 
         self.wait(for: [wait1, wait2], timeout: 3)
     }
-
-    private var token: NSKeyValueObservation?
-
 }
 
 class RealmToCoreDataMigratorScaleTests: RealmToCoreDataMigratorBaseTests {
 
+    var max: Int { 100 }
+    var waitTime: TimeInterval { 5 }
+
     override func setUpWithError() throws {
         try super.setUpWithError()
+
+        for vIDX in 1...max {
+            let v = try source.newReminderVessel(displayName: "v_\(vIDX)", icon: nil).get()
+            for rIDX in 1...max/10 {
+                let r = try source.newReminder(for: v).get()
+                try source.update(kind: nil, interval: nil, note: "v_\(vIDX)_r_\(rIDX)", in: r).get()
+                for _ in 1...max/100 {
+                    try source.appendNewPerformToReminders(with: [Identifier(rawValue: r.uuid)]).get()
+                }
+            }
+        }
     }
 
+    func test_migrationScale() {
+        let context = self.destination.container.viewContext
+        let req_v = NSFetchRequest<CD_ReminderVessel>(entityName: "CD_ReminderVessel")
+        let req_r = NSFetchRequest<CD_Reminder>(entityName: "CD_Reminder")
+        let req_p = NSFetchRequest<CD_ReminderPerform>(entityName: "CD_ReminderPerform")
+        XCTAssertEqual(try? context.fetch(req_v).count, 0)
+        XCTAssertEqual(try? context.fetch(req_r).count, 0)
+        XCTAssertEqual(try? context.fetch(req_p).count, 0)
+
+        let migrator = RealmToCoreDataMigrator(source: self.source, forTesting: true)!
+        let wait1 = XCTestExpectation()
+        wait1.expectedFulfillmentCount = 1
+        let progress = migrator.start(destination: self.destination) { result in
+            wait1.fulfill()
+            switch result {
+            case .success:
+                let vessels = try! context.fetch(req_v)
+                XCTAssertEqual(vessels.count, self.max)
+                XCTAssertEqual(try? context.fetch(req_r).count, (self.max*10)+self.max)
+                XCTAssertEqual(try? context.fetch(req_p).count, self.max*10)
+            case .failure(let error):
+                XCTFail("Migration failed with error: \(error)")
+            }
+        }
+
+        let wait2 = XCTestExpectation()
+        wait2.expectedFulfillmentCount = 100
+        self.token = progress.observe(\.fractionCompleted) { _, _ in
+            wait2.fulfill()
+        }
+
+        self.wait(for: [wait1, wait2], timeout: waitTime)
+    }
 }
+
+//class RealmToCoreDataMigratorInsaneScaleTests: RealmToCoreDataMigratorScaleTests {
+//    override var max: Int { 1000 }
+//    override var waitTime: TimeInterval { 10*60 }
+//}
