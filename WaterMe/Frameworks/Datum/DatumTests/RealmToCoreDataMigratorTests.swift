@@ -83,6 +83,8 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
 
     func test_migrationAccuracy() {
         let context = self.destination.container.viewContext
+        let realm = try! (self.source as! RLM_BasicController).realm.get()
+        let srcPerforms: [Date] = realm.objects(RLM_ReminderPerform.self).map({ $0.date }).sorted(by: { $0 > $1 })
         let req_v = NSFetchRequest<CD_ReminderVessel>(entityName: "CD_ReminderVessel")
         let req_r = NSFetchRequest<CD_Reminder>(entityName: "CD_Reminder")
         let req_p = NSFetchRequest<CD_ReminderPerform>(entityName: "CD_ReminderPerform")
@@ -98,9 +100,10 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
             switch result {
             case .success:
                 let vessels = try! context.fetch(req_v)
+                let performs = try! context.fetch(req_p)
                 XCTAssertEqual(vessels.count, 3)
                 XCTAssertEqual(try? context.fetch(req_r).count, 12)
-                XCTAssertEqual(try? context.fetch(req_p).count, 27)
+                XCTAssertEqual(performs.count, 27)
 
                 let v_1 = vessels.filter({ $0.displayName == "One" }).first!
                 let v_2 = vessels.filter({ $0.displayName == "Two" }).first!
@@ -148,6 +151,9 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
 
                 let allReminders = [v_1_r_1, v_1_r_2, v_1_r_3, v_2_r_1, v_2_r_2, v_2_r_3, v_3_r_1, v_3_r_2, v_3_r_3]
                 XCTAssertEqual(allReminders.filter({ $0.performed.count == 3 }).count, allReminders.count)
+
+                let destPerforms = performs.map({ $0.date }).sorted(by: { $0 > $1 })
+                XCTAssertEqual(srcPerforms, destPerforms)
             case .failure(let error):
                 XCTFail("Migration failed with error: \(error)")
             }
@@ -166,7 +172,7 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
 class RealmToCoreDataMigratorScaleTests: RealmToCoreDataMigratorBaseTests {
 
     var max: Int { 100 }
-    var waitTime: TimeInterval { 5 }
+    var waitTime: TimeInterval { 10 }
 
     override func setUpWithError() throws {
         try super.setUpWithError()
