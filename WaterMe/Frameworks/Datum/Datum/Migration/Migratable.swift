@@ -24,8 +24,8 @@
 import Foundation
 
 public protocol Migratable {
-    func start(destination: BasicController,
-               completion: @escaping (MigratableResult) -> Void) -> Progress
+    @discardableResult func start(destination: BasicController,
+                                  completion: @escaping (MigratableResult) -> Void) -> Progress
     func skipMigration() -> MigratableResult
 }
 

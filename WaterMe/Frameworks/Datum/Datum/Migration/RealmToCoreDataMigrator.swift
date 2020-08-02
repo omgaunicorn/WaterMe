@@ -54,12 +54,15 @@ internal class RealmToCoreDataMigrator: Migratable {
         }
     }
 
-    func start(destination: BasicController, completion: @escaping (MigratableResult) -> Void) -> Progress {
+    @discardableResult func start(destination: BasicController,
+                                  completion: @escaping (MigratableResult) -> Void) -> Progress
+    {
         let progress = Progress(totalUnitCount: 0)
         progress.completedUnitCount = 0
         guard
             let source = self.source,
-            let destination = destination as? CD_BasicController
+            let destination = destination as? CD_BasicController,
+            source !== destination
         else {
             DispatchQueue.main.async { completion(.failure(.loadError)) }
             return progress

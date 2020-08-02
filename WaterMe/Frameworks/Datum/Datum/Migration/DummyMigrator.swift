@@ -23,7 +23,9 @@
 
 internal class DummyMigrator: Migratable {
 
-    func start(destination: BasicController, completion: @escaping (MigratableResult) -> Void) -> Progress {
+    @discardableResult func start(destination: BasicController,
+                                  completion: @escaping (MigratableResult) -> Void) -> Progress
+    {
         let progress = Progress(totalUnitCount: 10)
         progress.completedUnitCount = 0
         var current: Int64 = 0
