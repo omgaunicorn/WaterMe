@@ -36,5 +36,5 @@ public enum MigratableError: Error {
 public typealias MigratableResult = Result<Void, MigratableError>
 
 public var DatumMigrator: Migratable? {
-    return RealmToCoreDataMigrator() // ?? DummyMigrator()
+    return try? FakeDataMigrator() //RealmToCoreDataMigrator() // ?? DummyMigrator()
 }

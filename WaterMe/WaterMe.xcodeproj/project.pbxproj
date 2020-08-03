@@ -182,6 +182,7 @@
 		50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */; };
 		50B511A51EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50B511A41EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib */; };
 		50B511A71EFE144700ED1DF4 /* ReminderKindTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B511A61EFE144700ED1DF4 /* ReminderKindTableViewCell.swift */; };
+		50B6EB9F24D8134D00F5159C /* FakeDataMigrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B6EB9E24D8134D00F5159C /* FakeDataMigrator.swift */; };
 		50B6F6132365355800C49832 /* Result+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B6F6122365355800C49832 /* Result+Convenience.swift */; };
 		50B779CD2154700A00AC6240 /* UIAlertController+UserFacingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779CC2154700A00AC6240 /* UIAlertController+UserFacingError.swift */; };
 		50B779CF215470B300AC6240 /* UIBarButtonItem+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B779CE215470B300AC6240 /* UIBarButtonItem+WaterMe.swift */; };
@@ -578,6 +579,7 @@
 		50B511A41EFE0C9F00ED1DF4 /* TextFieldTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextFieldTableViewCell.xib; sourceTree = "<group>"; };
 		50B511A61EFE144700ED1DF4 /* ReminderKindTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderKindTableViewCell.swift; sourceTree = "<group>"; };
 		50B61EE01F2FB904004654B4 /* EmojiImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiImageView.swift; sourceTree = "<group>"; };
+		50B6EB9E24D8134D00F5159C /* FakeDataMigrator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeDataMigrator.swift; sourceTree = "<group>"; };
 		50B6F6122365355800C49832 /* Result+Convenience.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+Convenience.swift"; sourceTree = "<group>"; };
 		50B779CC2154700A00AC6240 /* UIAlertController+UserFacingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlertController+UserFacingError.swift"; sourceTree = "<group>"; };
 		50B779CE215470B300AC6240 /* UIBarButtonItem+WaterMe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+WaterMe.swift"; sourceTree = "<group>"; };
@@ -1093,6 +1095,7 @@
 				5073FF0B24D52DB700E3211B /* Migratable.swift */,
 				5073FF0D24D52FF800E3211B /* DummyMigrator.swift */,
 				5073FF0F24D532E100E3211B /* RealmToCoreDataMigrator.swift */,
+				50B6EB9E24D8134D00F5159C /* FakeDataMigrator.swift */,
 			);
 			path = Migration;
 			sourceTree = "<group>";
@@ -1782,6 +1785,7 @@
 				503476AF24552EFE00C3DAD3 /* ItemAndSectionable.swift in Sources */,
 				4856E30F2476770200B02577 /* ReminderKind.swift in Sources */,
 				5073FF0C24D52DB700E3211B /* Migratable.swift in Sources */,
+				50B6EB9F24D8134D00F5159C /* FakeDataMigrator.swift in Sources */,
 				503476B224552EFE00C3DAD3 /* ModelCompleteError.swift in Sources */,
 				48B77EE024677FD600EF25D3 /* BasicWrappers.swift in Sources */,
 				508B2ECB24741F6200A497E4 /* CD_BasicController.swift in Sources */,
