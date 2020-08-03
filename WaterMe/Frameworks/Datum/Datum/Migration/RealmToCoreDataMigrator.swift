@@ -84,6 +84,7 @@ internal class RealmToCoreDataMigrator: Migratable {
 
             // Get our Data to work with
             var srcVessels = Array(realm.objects(RLM_ReminderVessel.self))
+            log.debug("Vessels to Migrate: \(srcVessels.count)")
             let totalUnitCount = Int64(srcVessels.count)
             progress.totalUnitCount = totalUnitCount
             var srcVessel: RLM_ReminderVessel! = srcVessels.popLast()
@@ -99,9 +100,10 @@ internal class RealmToCoreDataMigrator: Migratable {
                             completedUnitCount += 1
                             progress.completedUnitCount = completedUnitCount
                             srcVessel = srcVessels.popLast()
-                            #if DEBUG
-                            sleep(2)
-                            #endif
+                            log.debug("Vessels to Migrate: \(srcVessels.count)")
+//                            #if DEBUG
+//                            sleep(2)
+//                            #endif
                         } catch {
                             log.error(error)
                             srcVessel = nil

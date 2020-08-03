@@ -219,16 +219,20 @@ class RealmToCoreDataMigratorScaleTests: RealmToCoreDataMigratorBaseTests {
 
     override func setUpWithError() throws {
         try super.setUpWithError()
-
+        
         for vIDX in 1...vesselCount {
-            let v = try source.newReminderVessel(displayName: "v_\(vIDX)", icon: nil).get()
-            let rs: [RLM_Reminder] = try (1...reminderCount).map { rIDX in
-                let r = try source.newReminder(for: v).get()
-                try source.update(kind: nil, interval: nil, note: "v_\(vIDX)_r_\(rIDX)", in: r).get()
-                return (r as! RLM_ReminderWrapper).wrappedObject
-            }
-            for _ in 1...performCount {
-                try source.appendNewPerform(to: rs).get()
+            autoreleasepool {
+                let v = try source.newReminderVessel(displayName: "v_\(vIDX)", icon: nil).get()
+                let rs: [RLM_Reminder] = try (1...reminderCount).map { rIDX in
+                    let r = try source.newReminder(for: v).get()
+                    try source.update(kind: nil, interval: nil, note: "v_\(vIDX)_r_\(rIDX)", in: r).get()
+                    return (r as! RLM_ReminderWrapper).wrappedObject
+                }
+                for _ in 1...performCount {
+                    autoreleasepool {
+                        try source.appendNewPerform(to: rs).get()
+                    }
+                }
             }
         }
     }

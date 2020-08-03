@@ -48,10 +48,20 @@ internal class RLM_BasicController: BasicController {
 
     internal let kind: ControllerKind
     private let config: Realm.Configuration
+    #if DEBUG
+    // Reference is needed for using in-memory data stores
+    private var realmReference: Realm?
+    #endif
     // Internal only for testing. Should be private.
     internal var realm: Result<Realm, DatumError> {
         do {
-            return try .success(Realm(configuration: self.config))
+            let realm = try Realm(configuration: self.config)
+            #if DEBUG
+            if self.realmReference == nil {
+                self.realmReference = realm
+            }
+            #endif
+            return try .success(realm)
         } catch {
             log.error(error)
             return .failure(.loadError)
