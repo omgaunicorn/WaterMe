@@ -206,26 +206,29 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
             wait2.fulfill()
         }
 
-        self.wait(for: [wait1, wait2], timeout: 3)
+        self.wait(for: [wait1, wait2], timeout: 10)
     }
 }
 
 class RealmToCoreDataMigratorScaleTests: RealmToCoreDataMigratorBaseTests {
 
-    var max: Int { 100 }
-    var waitTime: TimeInterval { 10 }
+    var vesselCount: Int { 50 }
+    var reminderCount: Int { 30 }
+    var performCount: Int { 10 }
+    var waitTime: TimeInterval { 20 }
 
     override func setUpWithError() throws {
         try super.setUpWithError()
 
-        for vIDX in 1...max {
+        for vIDX in 1...vesselCount {
             let v = try source.newReminderVessel(displayName: "v_\(vIDX)", icon: nil).get()
-            for rIDX in 1...max/10 {
+            let rs: [RLM_Reminder] = try (1...reminderCount).map { rIDX in
                 let r = try source.newReminder(for: v).get()
                 try source.update(kind: nil, interval: nil, note: "v_\(vIDX)_r_\(rIDX)", in: r).get()
-                for _ in 1...max/100 {
-                    try source.appendNewPerformToReminders(with: [Identifier(rawValue: r.uuid)]).get()
-                }
+                return (r as! RLM_ReminderWrapper).wrappedObject
+            }
+            for _ in 1...performCount {
+                try source.appendNewPerform(to: rs).get()
             }
         }
     }
@@ -247,25 +250,37 @@ class RealmToCoreDataMigratorScaleTests: RealmToCoreDataMigratorBaseTests {
             switch result {
             case .success:
                 let vessels = try! context.fetch(req_v)
-                XCTAssertEqual(vessels.count, self.max)
-                XCTAssertEqual(try? context.fetch(req_r).count, (self.max*10)+self.max)
-                XCTAssertEqual(try? context.fetch(req_p).count, self.max*10)
+                XCTAssertEqual(vessels.count, self.vesselCount)
+                XCTAssertEqual(try? context.fetch(req_r).count, self.vesselCount * self.reminderCount + self.vesselCount)
+                XCTAssertEqual(try? context.fetch(req_p).count, self.vesselCount * self.reminderCount * self.performCount)
             case .failure(let error):
                 XCTFail("Migration failed with error: \(error)")
             }
         }
 
         let wait2 = XCTestExpectation()
-        wait2.expectedFulfillmentCount = 100
+        wait2.expectedFulfillmentCount = vesselCount
         self.token = progress.observe(\.fractionCompleted) { _, _ in
             wait2.fulfill()
+            print(progress.fractionCompleted)
         }
 
         self.wait(for: [wait1, wait2], timeout: waitTime)
     }
 }
 
-//class RealmToCoreDataMigratorInsaneScaleTests: RealmToCoreDataMigratorScaleTests {
-//    override var max: Int { 1000 }
-//    override var waitTime: TimeInterval { 10*60 }
-//}
+/*
+class RealmToCoreDataMigratorInsaneScaleTests: RealmToCoreDataMigratorScaleTests {
+    override var vesselCount: Int { 500 }
+    override var reminderCount: Int { 30 }
+    override var performCount: Int { 10 }
+    override var waitTime: TimeInterval { 2*60 }
+}
+
+class RealmToCoreDataMigratorSuperInsaneScaleTests: RealmToCoreDataMigratorScaleTests {
+    override var vesselCount: Int { 1000 }
+    override var reminderCount: Int { 50 }
+    override var performCount: Int { 20 }
+    override var waitTime: TimeInterval { 10*60 }
+}
+*/
