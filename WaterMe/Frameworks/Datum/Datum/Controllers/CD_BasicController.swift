@@ -65,6 +65,7 @@ internal class CD_BasicController: BasicController {
         }
         lock.wait()
 		guard error == nil else { throw error! }
+        container.viewContext.automaticallyMergesChangesFromParent = true
         let fetchRequest = CD_VesselShare.request
         let ctx = container.viewContext
         let fetchResult = try ctx.fetch(fetchRequest)
