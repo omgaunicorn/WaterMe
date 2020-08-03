@@ -21,6 +21,8 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
+#if DEBUG
+
 internal class DummyMigrator: Migratable {
 
     @discardableResult func start(destination: BasicController,
@@ -45,3 +47,5 @@ internal class DummyMigrator: Migratable {
         return .success(())
     }
 }
+
+#endif
