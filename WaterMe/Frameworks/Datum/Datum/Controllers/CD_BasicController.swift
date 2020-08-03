@@ -526,9 +526,10 @@ extension CD_BasicController {
 
     private class func copySampleDBIfNeeded() {
         guard
+            !RLM_BasicController.localRealmExists,
+            !self.dbExists,
             let sampleDB1URL = self.sampleDB1URL,
-            let sampleDB2URL = self.sampleDB2URL,
-            !self.dbExists
+            let sampleDB2URL = self.sampleDB2URL
         else { return }
         let fm = FileManager.default
         try? fm.createDirectory(at: self.dbDirectoryURL,
