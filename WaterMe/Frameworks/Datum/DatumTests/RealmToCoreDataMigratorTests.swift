@@ -33,8 +33,8 @@ class RealmToCoreDataMigratorBaseTests: XCTestCase {
 
     override func tearDownWithError() throws {
         try super.tearDownWithError()
-        let realmDir = RLM_BasicController.localRealmDirectory
-        let coreDataDir = CD_BasicController.dbDirectoryURL
+        let realmDir = RLM_BasicController.storeDirectoryURL
+        let coreDataDir = CD_BasicController.storeDirectoryURL
         let fm = FileManager.default
         try? fm.removeItem(at: realmDir)
         try? fm.removeItem(at: coreDataDir)

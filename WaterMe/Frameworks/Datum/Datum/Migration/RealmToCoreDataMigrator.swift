@@ -39,7 +39,7 @@ internal class RealmToCoreDataMigrator: Migratable {
             self.source = source
         } else {
             guard
-                RLM_BasicController.localRealmExists,
+                RLM_BasicController.storeExists,
                 let source = try? RLM_BasicController(kind: .local, forTesting: false)
             else { return nil }
             self.source = source
@@ -48,7 +48,7 @@ internal class RealmToCoreDataMigrator: Migratable {
 
     func skipMigration() -> MigratableResult {
         do {
-            try FileManager.default.removeItem(at: RLM_BasicController.localRealmDirectory)
+            try FileManager.default.removeItem(at: RLM_BasicController.storeDirectoryURL)
             self.source = nil
             return .success(())
         } catch {
@@ -160,7 +160,7 @@ internal class RealmToCoreDataMigrator: Migratable {
                 if completed {
                     // Cleanup source, this HAS to work for migration to finish
                     do {
-                        try FileManager.default.removeItem(at: RLM_BasicController.localRealmDirectory)
+                        try FileManager.default.removeItem(at: RLM_BasicController.storeDirectoryURL)
                         log.info("Migration Succeeded")
                     } catch {
                         log.error("Migration Error: Succeeded but failed to delete Realm DB: \(error)")

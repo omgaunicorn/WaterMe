@@ -34,6 +34,9 @@ public func NewBasicController(of kind: ControllerKind) -> Result<BasicControlle
 
 public protocol BasicController: class {
 
+    static var storeDirectoryURL: URL { get }
+    static var storeExists: Bool { get }
+
     var remindersDeleted: ((Set<ReminderValue>) -> Void)? { get set }
     var reminderVesselsDeleted: ((Set<ReminderVesselValue>) -> Void)? { get set }
     var userDidPerformReminder: ((Set<ReminderValue>) -> Void)? { get set }

@@ -380,30 +380,30 @@ internal class RLM_BasicController: BasicController {
 }
 
 extension RLM_BasicController {
-    internal class var localRealmDirectory: URL {
+    internal class var storeDirectoryURL: URL {
         let appsupport = FileManager.default.urls(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first!
         let url = appsupport.appendingPathComponent("WaterMe", isDirectory: true).appendingPathComponent("Free", isDirectory: true)
         return url
     }
 
-    internal class var localRealmExists: Bool {
+    internal class var storeExists: Bool {
         let fm = FileManager.default
         let exists = fm.fileExists(atPath: self.localRealmFile.path)
         return exists
     }
 
     private class var localRealmFile: URL {
-        return self.localRealmDirectory.appendingPathComponent("Realm.realm", isDirectory: false)
+        return self.storeDirectoryURL.appendingPathComponent("Realm.realm", isDirectory: false)
     }
 
     private class func createLocalRealmDirectoryIfNeeded() throws {
-        guard self.localRealmExists == false else { return }
-        try FileManager.default.createDirectory(at: self.localRealmDirectory, withIntermediateDirectories: true, attributes: nil)
+        guard self.storeExists == false else { return }
+        try FileManager.default.createDirectory(at: self.storeDirectoryURL, withIntermediateDirectories: true, attributes: nil)
     }
 
     private class func copyRealmFromBundleIfNeeded() throws {
         guard
-            self.localRealmExists == false,
+            self.storeExists == false,
             let bundleURL = Bundle.main.url(forResource: "StarterRealm", withExtension: "realm")
         else { return }
         try FileManager.default.copyItem(at: bundleURL, to: self.localRealmFile)

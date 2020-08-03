@@ -498,7 +498,7 @@ extension CD_BasicController {
     private static let sampleDB1URL = Bundle.main.url(forResource: "StarterData", withExtension: "sqlite")
     private static let sampleDB2URL = Bundle.main.url(forResource: "StarterData", withExtension: "sqlite-wal")
 
-    internal class var dbDirectoryURL: URL {
+    internal class var storeDirectoryURL: URL {
         let appsupport = FileManager.default.urls(
             for: FileManager.SearchPathDirectory.applicationSupportDirectory,
             in: FileManager.SearchPathDomainMask.userDomainMask
@@ -509,16 +509,16 @@ extension CD_BasicController {
     }
 
     private class var dbFileURL1: URL {
-        return self.dbDirectoryURL.appendingPathComponent("WaterMe.sqlite",
+        return self.storeDirectoryURL.appendingPathComponent("WaterMe.sqlite",
                                                           isDirectory: false)
     }
 
     private class var dbFileURL2: URL {
-        return self.dbDirectoryURL.appendingPathComponent("WaterMe.sqlite-wal",
+        return self.storeDirectoryURL.appendingPathComponent("WaterMe.sqlite-wal",
                                                           isDirectory: false)
     }
 
-    private class var dbExists: Bool {
+    internal class var storeExists: Bool {
         let fm = FileManager.default
         let exists = fm.fileExists(atPath: self.dbFileURL1.path)
         return exists
@@ -526,13 +526,13 @@ extension CD_BasicController {
 
     private class func copySampleDBIfNeeded() {
         guard
-            !RLM_BasicController.localRealmExists,
-            !self.dbExists,
+            !RLM_BasicController.storeExists,
+            !self.storeExists,
             let sampleDB1URL = self.sampleDB1URL,
             let sampleDB2URL = self.sampleDB2URL
         else { return }
         let fm = FileManager.default
-        try? fm.createDirectory(at: self.dbDirectoryURL,
+        try? fm.createDirectory(at: self.storeDirectoryURL,
                                 withIntermediateDirectories: true,
                                 attributes: nil)
         do {
@@ -540,13 +540,13 @@ extension CD_BasicController {
             try fm.copyItem(at: sampleDB2URL, to: self.dbFileURL2)
         } catch {
             log.error(error)
-            try? fm.removeItem(at: self.dbDirectoryURL)
+            try? fm.removeItem(at: self.storeDirectoryURL)
         }
     }
 }
 
 private class WaterMe_PersistentContainer: NSPersistentContainer {
     override class func defaultDirectoryURL() -> URL {
-        return CD_BasicController.dbDirectoryURL
+        return CD_BasicController.storeDirectoryURL
     }
 }
