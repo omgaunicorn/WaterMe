@@ -99,12 +99,11 @@ internal class RealmToCoreDataMigrator: Migratable {
                             try context.save()
                             completedUnitCount += 1
                             progress.completedUnitCount = completedUnitCount
-                            srcVessel = srcVessels.popLast()
-                            log.debug("Vessels to Migrate: \(srcVessels.count)")
                         } catch {
                             log.error(error)
-                            srcVessel = nil
                         }
+                        srcVessel = srcVessels.popLast()
+                        log.debug("Vessels to Migrate: \(srcVessels.count)")
                     }
 
                     // Vessel: Configure
