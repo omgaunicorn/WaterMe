@@ -48,4 +48,39 @@ internal class DummyMigrator: Migratable {
     }
 }
 
+internal class DummyErrorMigrator: Migratable {
+    
+    private var completion: MigratableResult?
+
+    @discardableResult func start(destination: BasicController,
+                                  completion: @escaping (MigratableResult) -> Void) -> Progress
+    {
+        let progress = Progress(totalUnitCount: 10)
+        progress.completedUnitCount = 0
+        var current: Int64 = 0
+        _ = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
+            current += 1
+            guard current > 2 else {
+                progress.completedUnitCount = current
+                return
+            }
+            switch current % 3 {
+            case 0:
+                completion(.failure(.loadError))
+            case 1:
+                completion(.failure(.skipError))
+            case 2:
+                completion(.failure(.migrateError))
+            default:
+                break
+            }
+        }
+        return progress
+    }
+
+    func skipMigration() -> MigratableResult {
+        return .success(())
+    }
+}
+
 #endif
