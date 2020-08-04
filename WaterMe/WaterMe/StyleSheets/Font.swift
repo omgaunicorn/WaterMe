@@ -120,12 +120,14 @@ extension Font {
         case .migratorBody:
             return [
                 .font : Font.body,
-                .foregroundColor : Color.textPrimary
+                .foregroundColor : Color.textPrimary,
+                .paragraphStyle : type(of: self).centerStyle
             ]
         case .migratorBodySmall:
             return [
                 .font : Font.bodyMinus,
-                .foregroundColor : Color.textPrimary
+                .foregroundColor : Color.textPrimary,
+                .paragraphStyle : type(of: self).centerStyle
             ]
         case .migratorPrimaryButton:
             return [

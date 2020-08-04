@@ -23,8 +23,8 @@
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d3B-bK-bVz">
                                 <rect key="frame" x="0.0" y="0.0" width="0.0" height="320"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AWv-LN-JGo">
-                                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="320"/>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AWv-LN-JGo">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qkR-Zk-8W3">
                                                 <rect key="frame" x="0.0" y="0.0" width="0.0" height="365.5"/>

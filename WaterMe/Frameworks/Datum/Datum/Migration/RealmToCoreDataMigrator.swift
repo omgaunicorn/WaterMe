@@ -101,9 +101,6 @@ internal class RealmToCoreDataMigrator: Migratable {
                             progress.completedUnitCount = completedUnitCount
                             srcVessel = srcVessels.popLast()
                             log.debug("Vessels to Migrate: \(srcVessels.count)")
-//                            #if DEBUG
-//                            sleep(2)
-//                            #endif
                         } catch {
                             log.error(error)
                             srcVessel = nil
