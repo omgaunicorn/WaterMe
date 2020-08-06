@@ -27,7 +27,7 @@ import UIKit
 class CoreDataMigratorViewController: StandardViewController, HasBasicController {
 
     enum UIState {
-        case launch, migrating, success, error
+        case launch, migrating, success, error(MigratableError)
     }
 
     class func newVC(migrator: Migratable, basicRC: BasicController, completion: @escaping (UIViewController, Bool) -> Void) -> UIViewController {
@@ -132,12 +132,20 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
             self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.doneButtonTitle,
                                                                      font: .migratorPrimaryButton),
                                                                      for: .normal)
-        case .error:
+        case .error(let error):
             self.cancelButton?.alpha = 1
             self.migrateButton?.isHidden = true
             self.deleteButton?.isHidden = true
-            self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodyFailure,
-                                                                font: .migratorBody)
+            let message: String
+            switch error {
+            case .loadError:
+                message = "Load Error"
+            case .skipError:
+                message = "Skip Error"
+            case .migrateError:
+                message = "Migrate Error"
+            }
+            self.bodyLabel?.attributedText = NSAttributedString(string: message, font: .migratorBody)
             self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.doneButtonTitle,
                                                                      font: .migratorPrimaryButton),
                                                                      for: .normal)
@@ -168,8 +176,8 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
                     switch result {
                     case .success:
                         welf.state = .success
-                    case .failure:
-                        welf.state = .error
+                    case .failure(let error):
+                        welf.state = .error(error)
                     }
                 }
             }
@@ -183,12 +191,13 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
 
     @IBAction private func deleteButtonTapped(_ sender: Any) {
         Analytics.log(event: Analytics.CoreDataMigration.migrationDeleted)
-        do {
-            try self.migrator.skipMigration().get()
+        let result = self.migrator.skipMigration()
+        switch result {
+        case .success:
             self.completionHandler(self, false)
-        } catch {
+        case .failure(let error):
             UIView.style_animateNormal() {
-                self.state = .error
+                self.state = .error(error)
             }
         }
     }
