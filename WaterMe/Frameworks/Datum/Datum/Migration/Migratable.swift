@@ -30,14 +30,15 @@ public protocol Migratable {
 }
 
 public enum MigratableError: Error {
-    case skipError, loadError, migrateError
+    case finishError, startError, migrateError
 }
 
 public typealias MigratableResult = Result<Void, MigratableError>
 
 public var DatumMigrator: Migratable? {
     // return RealmToCoreDataMigrator()
-    return DummyErrorMigrator() //DummyMigrator()
+    // return DummyMigrator()
+    return DummyErrorMigrator()
     // return try? FakeDataMigrator()
     // return nil
 }

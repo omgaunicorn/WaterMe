@@ -48,7 +48,7 @@ class RealmToCoreDataMigratorErrorTests: RealmToCoreDataMigratorBaseTests {
         wait.expectedFulfillmentCount = 1
         let migrator = RealmToCoreDataMigrator(testingSource: self.source)!
         migrator.start(destination: self.source) { result in
-            guard case .failure(let error) = result, case .loadError = error else {
+            guard case .failure(let error) = result, case .startError = error else {
                 XCTFail()
                 return
             }
@@ -69,7 +69,7 @@ class RealmToCoreDataMigratorErrorTests: RealmToCoreDataMigratorBaseTests {
             wait.expectedFulfillmentCount = 1
             let migrator = RealmToCoreDataMigrator(testingSource: self.source)
             migrator?.start(destination: self.destination) { result in
-                guard case .failure(let error) = result, case .loadError = error else {
+                guard case .failure(let error) = result, case .startError = error else {
                     XCTFail()
                     return
                 }

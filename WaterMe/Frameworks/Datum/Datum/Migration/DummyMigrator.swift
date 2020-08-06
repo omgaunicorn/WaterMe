@@ -58,23 +58,24 @@ internal class DummyErrorMigrator: Migratable {
         let progress = Progress(totalUnitCount: 10)
         progress.completedUnitCount = 0
         var current: Int64 = 0
-        _ = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
+        let timer = Timer.scheduledTimer(withTimeInterval: 5, repeats: true) { timer in
             current += 1
-            guard current > 2 else {
+            guard current >= 0 else {
                 progress.completedUnitCount = current
                 return
             }
             switch current % 3 {
             case 0:
-                completion(.failure(.loadError))
+                completion(.failure(.startError))
             case 1:
-                completion(.failure(.skipError))
+                completion(.failure(.finishError))
             case 2:
                 completion(.failure(.migrateError))
             default:
                 break
             }
         }
+        timer.fire()
         return progress
     }
 

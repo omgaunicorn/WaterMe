@@ -52,6 +52,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
     @IBOutlet private weak var migrateButton: UIButton?
     @IBOutlet private weak var cancelButton: UIButton?
     @IBOutlet private weak var deleteButton: UIButton?
+    @IBOutlet private weak var contactDeveloperButton: UIButton?
 
     private var completionHandler: ((UIViewController, Bool) -> Void)!
     private var migrator: Migratable!
@@ -59,6 +60,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
     private var state = UIState.launch {
         didSet {
             self.configureAttributedText()
+            self.view.layoutIfNeeded()
         }
     }
 
@@ -78,7 +80,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
     // swiftlint:disable:next function_body_length
     private func configureAttributedText() {
         // set things to all defaults
-        self.titleLabel?.attributedText = NSAttributedString(string: LocalizedString.title,
+        self.titleLabel?.attributedText = NSAttributedString(string: UIApplication.LocalizedString.appTitle,
                                                              font: .migratorTitle)
         self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.subtitle,
                                                                 font: .migratorSubtitle)
@@ -87,23 +89,36 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
         self.migrateButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.migrateButtonTitle,
                                                                   font: .migratorPrimaryButton),
                                                                   for: .normal)
+        self.migrateButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.migratingButtonTitle,
+                                                                  font: .migratorPrimaryButton),
+                                                                  for: .disabled)
         self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.cancelButtonTitle,
                                                                  font: .migratorSecondaryButton),
                                                                  for: .normal)
         self.deleteButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.deleteButtonTitle,
                                                                  font: .migratorSecondaryButton),
                                                                  for: .normal)
+        self.contactDeveloperButton?.setAttributedTitle(
+            NSAttributedString(string: SettingsMainViewController.LocalizedString.cellTitleEmailDeveloper,
+                               font: .migratorSecondaryButton),
+                               for: .normal
+        )
+        
         self.progressView?.isHidden = false
         self.bodyLabel?.isHidden = false
         self.migrateButton?.alpha = 0 // setting alpha to 0 improves animations
         self.cancelButton?.alpha = 0
         self.deleteButton?.alpha = 0
+        self.contactDeveloperButton?.alpha = 0
         self.migrateButton?.isHidden = false
         self.cancelButton?.isHidden = false
         self.deleteButton?.isHidden = false
+        // TODO: Fix this layout issue
+        // self.contactDeveloperButton?.isHidden = true
         self.migrateButton?.isEnabled = true
         self.cancelButton?.isEnabled = true
         self.deleteButton?.isEnabled = true
+        self.contactDeveloperButton?.isEnabled = false
 
         // customize things for each state
         let disableAlpha: CGFloat = 0.3
@@ -117,11 +132,11 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
             self.migrateButton?.alpha = disableAlpha
             self.cancelButton?.isHidden = true
             self.deleteButton?.isHidden = true
+            self.migrateButton?.isEnabled = false
             self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodyMigrating,
                                                                 font: .migratorBodySmall)
-            self.migrateButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.migratingButtonTitle,
-                                                                      font: .migratorPrimaryButton),
-                                                                      for: .normal)
+            self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.migratingButtonTitle,
+                                                                    font: .migratorSubtitle)
         case .success:
             self.progressView?.isHidden = true
             self.migrateButton?.isHidden = true
@@ -129,26 +144,35 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
             self.cancelButton?.alpha = 1
             self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodySuccess,
                                                                 font: .migratorBody)
-            self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.doneButtonTitle,
-                                                                     font: .migratorPrimaryButton),
-                                                                     for: .normal)
+            self.cancelButton?.setAttributedTitle(
+                NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleDismiss,
+                                   font: .migratorPrimaryButton),
+                                   for: .normal
+            )
         case .error(let error):
             self.cancelButton?.alpha = 1
+            self.contactDeveloperButton?.alpha = 1
             self.migrateButton?.isHidden = true
             self.deleteButton?.isHidden = true
+            self.contactDeveloperButton?.isHidden = false
+            self.contactDeveloperButton?.isEnabled = true
             let message: String
             switch error {
-            case .loadError:
-                message = "Load Error"
-            case .skipError:
-                message = "Skip Error"
+            case .startError:
+                message = LocalizedString.bodyFailure1
+            case .finishError:
+                message = LocalizedString.bodyFailure2
             case .migrateError:
-                message = "Migrate Error"
+                message = LocalizedString.bodyFailure3
             }
             self.bodyLabel?.attributedText = NSAttributedString(string: message, font: .migratorBody)
-            self.cancelButton?.setAttributedTitle(NSAttributedString(string: LocalizedString.doneButtonTitle,
-                                                                     font: .migratorPrimaryButton),
-                                                                     for: .normal)
+            self.subtitleLabel?.attributedText = NSAttributedString(string: LocalizedString.subtitleFailure,
+                                                                    font: .migratorSubtitle)
+            self.cancelButton?.setAttributedTitle(
+                NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleDismiss,
+                                   font: .migratorPrimaryButton),
+                                   for: .normal
+            )
         }
     }
 
@@ -157,7 +181,9 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
             let message = "RealmController missing on a VC where this should not be possible."
             log.error(message)
             assertionFailure(message)
-            self.completionHandler(self, false)
+            UIView.style_animateNormal() {
+                self.state = .error(.startError)
+            }
             return
         }
         // this VC could disappear while the migration is in progress
@@ -200,6 +226,15 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
                 self.state = .error(error)
             }
         }
+    }
+    
+    @IBAction private func contactDeveloperButtonTapped(_ sender: Any) {
+        Analytics.log(viewOperation: .emailDeveloper)
+        let vc = EmailDeveloperViewController.newVC() { vc in
+            guard let vc = vc else { return }
+            vc.dismiss(animated: true, completion: nil)
+        }
+        self.present(vc, animated: true, completion: nil)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

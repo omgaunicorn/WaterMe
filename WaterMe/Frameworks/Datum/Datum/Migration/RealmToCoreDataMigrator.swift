@@ -52,7 +52,7 @@ internal class RealmToCoreDataMigrator: Migratable {
             self.source = nil
             return .success(())
         } catch {
-            return .failure(.skipError)
+            return .failure(.finishError)
         }
     }
 
@@ -65,7 +65,7 @@ internal class RealmToCoreDataMigrator: Migratable {
             let source = self.source,
             let destination = destination as? CD_BasicController
         else {
-            DispatchQueue.main.async { completion(.failure(.loadError)) }
+            DispatchQueue.main.async { completion(.failure(.startError)) }
             return progress
         }
 
@@ -78,7 +78,7 @@ internal class RealmToCoreDataMigrator: Migratable {
                 let realm = try? source.realm.get(),
                 let rhsShare = (try? context.fetch(CD_VesselShare.request))?.first
             else {
-                DispatchQueue.main.async { completion(.failure(.loadError)) }
+                DispatchQueue.main.async { completion(.failure(.startError)) }
                 return
             }
 
