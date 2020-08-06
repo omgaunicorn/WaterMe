@@ -216,16 +216,30 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
     }
 
     @IBAction private func deleteButtonTapped(_ sender: Any) {
-        Analytics.log(event: Analytics.CoreDataMigration.migrationDeleted)
-        let result = self.migrator.skipMigration()
-        switch result {
-        case .success:
-            self.completionHandler(self, false)
-        case .failure(let error):
-            UIView.style_animateNormal() {
-                self.state = .error(error)
+        let vc = UIAlertController(title: nil,
+                                   message: LocalizedString.bodyDeleteConfirmation		,
+                                   preferredStyle: .actionSheet)
+        let deleteAction = UIAlertAction(title: LocalizedString.deleteButtonTitle,
+                                         style: .destructive)
+        { _ in
+            Analytics.log(event: Analytics.CoreDataMigration.migrationDeleted)
+            let result = self.migrator.skipMigration()
+            switch result {
+            case .success:
+                self.completionHandler(self, false)
+            case .failure(let error):
+                UIView.style_animateNormal() {
+                    self.state = .error(error)
+                }
             }
         }
+        let cancelAction = UIAlertAction(title: UIAlertController.LocalizedString.buttonTitleCancel,
+                                         style: .cancel,
+                                         handler: nil)
+        vc.addAction(deleteAction)
+        vc.addAction(cancelAction)
+        vc.popoverPresentationController?.sourceView = (sender as? UIView) ?? self.view
+        self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction private func contactDeveloperButtonTapped(_ sender: Any) {
