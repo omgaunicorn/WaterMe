@@ -104,8 +104,12 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         // `checkForErrorsAndOtherUnexpectedViewControllersToPresent`
         // https://github.com/jeffreybergier/WaterMe2/issues/47
         //
-        guard self.isReady.completely else { return }
-        self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+        if self.applicationDidFinishLaunchingError != nil {
+            self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+        } else {
+            guard self.isReady.completely else { return }
+            self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+        }
     }
 
     private func registerForPurchaseNotifications() {

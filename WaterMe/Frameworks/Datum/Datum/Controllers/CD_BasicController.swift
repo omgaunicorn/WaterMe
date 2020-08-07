@@ -55,7 +55,7 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
         
         guard let container = CD_BasicController.container(forTesting: forTesting)
-            else { throw DatumError.createError }
+            else { throw DatumError.loadError }
         type(of: self).copySampleDBIfNeeded()
         let lock = DispatchSemaphore(value: 0)
         var error: Error?
