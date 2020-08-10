@@ -30,5 +30,47 @@ public let log: XCGLogger = {
     #else
     log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
     #endif
+    log.add(destination: LambdaCommsLogDestination())
     return log
 }()
+
+internal class LambdaCommsLogDestination: DestinationProtocol {
+    var identifier: String = "WaterMe-Lambda-LogMonitor"
+    var debugDescription: String { return self.identifier }
+    var outputLevel: XCGLogger.Level = .error
+    var haveLoggedAppDetails: Bool = true
+    var owner: XCGLogger?
+    var formatters: [LogFormatterProtocol]?
+    var filters: [FilterProtocol]?
+
+    func process(logDetails: LogDetails) {
+        // Process things here
+    }
+
+    func processInternal(logDetails: LogDetails) { }
+
+    func isEnabledFor(level: XCGLogger.Level) -> Bool {
+        switch level {
+        case .verbose:
+            return false
+        case .debug:
+            return false
+        case .info:
+            return false
+        case .notice:
+            return false
+        case .warning:
+            return false
+        case .error:
+            return true
+        case .severe:
+            return true
+        case .alert:
+            return true
+        case .emergency:
+            return true
+        case .none:
+            return false
+        }
+    }
+}
