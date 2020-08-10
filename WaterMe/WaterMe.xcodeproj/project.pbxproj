@@ -78,6 +78,9 @@
 		5029E09B214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5029E09A214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m */; };
 		502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */; };
 		502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */; };
+		5032D7D924E1430000C928D7 /* LambdaComms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5032D7D824E1430000C928D7 /* LambdaComms.swift */; };
+		5032D7DB24E1433A00C928D7 /* FileMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5032D7DA24E1433A00C928D7 /* FileMonitor.swift */; };
+		5032D7DD24E1437C00C928D7 /* LogConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5032D7DC24E1437C00C928D7 /* LogConfigurator.swift */; };
 		5034764C24552CFD00C3DAD3 /* Datum.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5034764324552CFD00C3DAD3 /* Datum.framework */; };
 		5034765324552CFD00C3DAD3 /* DatumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034765224552CFD00C3DAD3 /* DatumTests.swift */; };
 		5034765524552CFD00C3DAD3 /* Datum.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034764524552CFD00C3DAD3 /* Datum.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -471,6 +474,9 @@
 		502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderCollectionViewCell.xib; sourceTree = "<group>"; };
 		502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFinishDropTargetViewController.swift; sourceTree = "<group>"; };
 		5032D7CF24E12BA100C928D7 /* LambdaIndex.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = LambdaIndex.js; sourceTree = "<group>"; };
+		5032D7D824E1430000C928D7 /* LambdaComms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LambdaComms.swift; sourceTree = "<group>"; };
+		5032D7DA24E1433A00C928D7 /* FileMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileMonitor.swift; sourceTree = "<group>"; };
+		5032D7DC24E1437C00C928D7 /* LogConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogConfigurator.swift; sourceTree = "<group>"; };
 		5034761324552B5200C3DAD3 /* Datum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Datum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5034763B24552BCF00C3DAD3 /* Store.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Store.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5034764324552CFD00C3DAD3 /* Datum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Datum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -781,6 +787,9 @@
 				48A7B0F12467FDF500DC0861 /* SignificantTimePassedDetector.swift */,
 				48A7B0F42467FDF600DC0861 /* UserFacingError.swift */,
 				5032D7CF24E12BA100C928D7 /* LambdaIndex.js */,
+				5032D7D824E1430000C928D7 /* LambdaComms.swift */,
+				5032D7DA24E1433A00C928D7 /* FileMonitor.swift */,
+				5032D7DC24E1437C00C928D7 /* LogConfigurator.swift */,
 				48A7B0D62467FCB100DC0861 /* Info.plist */,
 			);
 			name = Calculate;
@@ -1755,8 +1764,11 @@
 			files = (
 				48A7B0F62467FDF600DC0861 /* SignificantTimePassedDetector.swift in Sources */,
 				48A7B0F52467FDF600DC0861 /* PrivateKeys.swift in Sources */,
+				5032D7DB24E1433A00C928D7 /* FileMonitor.swift in Sources */,
 				48A7B0F82467FDF600DC0861 /* AppVersion.swift in Sources */,
 				48A7B0F72467FDF600DC0861 /* NSCalendar+WaterMe.swift in Sources */,
+				5032D7DD24E1437C00C928D7 /* LogConfigurator.swift in Sources */,
+				5032D7D924E1430000C928D7 /* LambdaComms.swift in Sources */,
 				48A7B0F92467FDF600DC0861 /* UserFacingError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2152,6 +2164,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Frameworks/Calculate/CalculateTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2177,6 +2190,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Frameworks/Calculate/CalculateTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
