@@ -44,7 +44,8 @@ internal class LambdaCommsLogDestination: DestinationProtocol {
     var filters: [FilterProtocol]?
 
     func process(logDetails: LogDetails) {
-        // Process things here
+        let event = Lambda.Event(details: logDetails)
+        dump(event)
     }
 
     func processInternal(logDetails: LogDetails) { }

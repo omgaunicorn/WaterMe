@@ -32,6 +32,9 @@ extension Lambda {
         let userId = UIDevice.current.identifierForVendor?.uuidString ?? "-1"
         let logDetails: _LogDetails
         let deviceDetails = DeviceDetails()
+        init(details: LogDetails) {
+            self.logDetails = .init(details)
+        }
     }
 }
 
@@ -53,6 +56,9 @@ extension Lambda.Event {
             self.fileName     = input.fileName
             self.lineNumber   = input.lineNumber
             // swiftlint:enable operator_usage_whitespace
+            if !input.userInfo.isEmpty {
+                dump(input.userInfo)
+            }
         }
     }
 
