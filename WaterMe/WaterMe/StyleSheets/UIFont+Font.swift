@@ -22,6 +22,7 @@
 //
 
 import UIKit
+import Calculate
 
 extension Font {
     static var bodyPlusPlusPlus: UIFont {

@@ -23,6 +23,7 @@
 
 import CoreData
 import RealmSwift
+import Calculate
 
 internal class RealmToCoreDataMigrator: Migratable {
 

@@ -22,6 +22,7 @@
 //
 
 import UserNotifications
+import Calculate
 
 class ReminderNotificationUIDelegate: NSObject, UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter,

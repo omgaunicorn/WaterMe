@@ -22,3 +22,13 @@
 //
 
 import XCGLogger
+
+public let log: XCGLogger = {
+    let log = XCGLogger.default
+    #if DEBUG
+    log.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .debug)
+    #else
+    log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
+    #endif
+    return log
+}()

@@ -23,10 +23,7 @@
 
 import Calculate
 import RealmSwift
-import XCGLogger
 import CloudKit
-
-internal let log = XCGLogger.default
 
 extension URL {
     internal func realmURL(withAppName appName: String, userPath: String) -> URL {

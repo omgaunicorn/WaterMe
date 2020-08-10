@@ -23,13 +23,11 @@
 
 import Store
 import Datum
-import XCGLogger
 import UserNotifications
 import AVFoundation
 import StoreKit
 import UIKit
-
-let log = XCGLogger.default
+import Calculate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -58,11 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         super.init()
 
         // configure logging
-        #if DEBUG
-        log.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .debug)
-        #else
-        log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
-        #endif
+        _ = Calculate.log
 
         // configure simulator
         self.simulator_configure()

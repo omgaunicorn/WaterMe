@@ -23,6 +23,8 @@
 
 #if DEBUG
 
+import Calculate
+
 class FakeDataMigrator: Migratable {
 
     let realMigrator: RealmToCoreDataMigrator
