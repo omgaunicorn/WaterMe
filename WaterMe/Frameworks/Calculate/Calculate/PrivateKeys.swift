@@ -21,9 +21,9 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import XCGLogger
 
-internal let log = XCGLogger.default
+
+
 
 /// Intended to be filled out by end user
 /// Do not push private information into the repo
