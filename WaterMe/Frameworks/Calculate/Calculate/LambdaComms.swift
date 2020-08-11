@@ -32,8 +32,10 @@ extension Lambda {
         let userId = UIDevice.current.identifierForVendor?.uuidString ?? "-1"
         let logDetails: _LogDetails
         let deviceDetails = DeviceDetails()
+        let errorDetails: ErrorDetails?
         init(details: LogDetails) {
             self.logDetails = .init(details)
+            self.errorDetails = (details.userInfo[ErrorPreservingLogger.kErrorKey] as? NSError).map { .init($0) }
         }
     }
 }
@@ -56,9 +58,6 @@ extension Lambda.Event {
             self.fileName     = input.fileName
             self.lineNumber   = input.lineNumber
             // swiftlint:enable operator_usage_whitespace
-            if !input.userInfo.isEmpty {
-                dump(input.userInfo)
-            }
         }
     }
 
@@ -82,6 +81,50 @@ extension Lambda.Event {
             self.memoryTotal = memory?.total ?? -1
         }
         // swiftlint:enable operator_usage_whitespace
+    }
+    
+    struct ErrorDetails: Codable {
+        
+        static let NSValidationErrorObjectKey = "NSValidationErrorObject"
+        static let NSValidationErrorKeyKey = "NSValidationErrorKey"
+        static let NSValidationErrorValueKey = "NSValidationErrorValue"
+        
+        let code: Int
+        let domain: String
+        let localizedDescription: String?
+        let localizedRecoveryOptions: [String]?
+        let localizedRecoverySuggestion: String?
+        let localizedFailureReason: String?
+        let validationErrorObjectType: String? // NSValidationErrorObject
+        let validationErrorKey: String? // NSValidationErrorKey
+        let validationErrorValue: String? // NSValidationErrorValue
+        let remainingKeys: [String: String]
+        
+        init(_ input: NSError) {
+            // swiftlint:disable operator_usage_whitespace
+            self.code = input.code
+            self.domain = input.domain
+            self.localizedDescription        = input.localizedDescription
+            self.localizedRecoveryOptions    = input.localizedRecoveryOptions
+            self.localizedRecoverySuggestion = input.localizedRecoverySuggestion
+            self.localizedFailureReason      = input.localizedFailureReason
+            self.validationErrorObjectType   = input.userInfo[ErrorDetails.NSValidationErrorObjectKey]
+                                                    .map { String(describing: type(of: $0)) }
+            self.validationErrorKey          = input.userInfo[ErrorDetails.NSValidationErrorKeyKey] as? String
+            self.validationErrorValue        = input.userInfo[ErrorDetails.NSValidationErrorValueKey] as? String
+            self.remainingKeys               = input.userInfo
+                .compactMapValues { $0 as? String }
+                .filter { key, _ in
+                    return key != NSLocalizedDescriptionKey
+                        && key != NSLocalizedRecoveryOptionsErrorKey
+                        && key != NSLocalizedRecoverySuggestionErrorKey
+                        && key != NSLocalizedFailureReasonErrorKey
+                        && key != ErrorDetails.NSValidationErrorObjectKey
+                        && key != ErrorDetails.NSValidationErrorKeyKey
+                        && key != ErrorDetails.NSValidationErrorValueKey
+            }
+            // swiftlint:enable operator_usage_whitespace
+        }
     }
 }
 

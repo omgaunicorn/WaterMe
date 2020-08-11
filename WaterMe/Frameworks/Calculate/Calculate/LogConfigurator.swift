@@ -24,7 +24,7 @@
 import XCGLogger
 
 public let log: XCGLogger = {
-    let log = XCGLogger.default
+    let log = ErrorPreservingLogger(identifier: "WaterMe-Lambda-Logger", includeDefaultDestinations: true)
     #if DEBUG
     log.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .debug)
     #else
@@ -73,5 +73,27 @@ internal class LambdaCommsLogDestination: DestinationProtocol {
         case .none:
             return false
         }
+    }
+}
+
+internal class ErrorPreservingLogger: XCGLogger {
+    static let kErrorKey = "JSBLoggerError"
+    override func logln(_ level: Level = .debug,
+                        functionName: String = #function,
+                        fileName: String = #file,
+                        lineNumber: Int = #line,
+                        userInfo: [String: Any] = [:],
+                        closure: () -> Any?)
+    {
+        var userInfo = userInfo
+        if let closureResult = closure() as? NSError {
+            userInfo[ErrorPreservingLogger.kErrorKey] = closureResult
+        }
+        super.logln(level,
+                    functionName: functionName,
+                    fileName: fileName,
+                    lineNumber: lineNumber,
+                    userInfo: userInfo,
+                    closure: closure)
     }
 }
