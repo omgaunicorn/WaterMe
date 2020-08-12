@@ -113,7 +113,6 @@ extension Lambda.Event {
             self.validationErrorKey          = input.userInfo[ErrorDetails.NSValidationErrorKeyKey] as? String
             self.validationErrorValue        = input.userInfo[ErrorDetails.NSValidationErrorValueKey] as? String
             self.remainingKeys               = input.userInfo
-                .compactMapValues { $0 as? String }
                 .filter { key, _ in
                     return key != NSLocalizedDescriptionKey
                         && key != NSLocalizedRecoveryOptionsErrorKey
@@ -122,7 +121,9 @@ extension Lambda.Event {
                         && key != ErrorDetails.NSValidationErrorObjectKey
                         && key != ErrorDetails.NSValidationErrorKeyKey
                         && key != ErrorDetails.NSValidationErrorValueKey
-            }
+                }
+                .mapValues { String(describing: $0) }
+
             // swiftlint:enable operator_usage_whitespace
         }
     }
