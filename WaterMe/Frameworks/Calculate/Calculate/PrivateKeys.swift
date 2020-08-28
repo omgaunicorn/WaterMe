@@ -25,7 +25,7 @@
 /// Do not push private information into the repo
 public enum PrivateKeys {
 
-    public static var kLoggerEndpoint: URL? {
+    public static var kLoggerEndpoint: URL {
         log.warning("The endpoint used by JSBServerlessLogger goes here")
         fatalError("kLoggerEndpoint")
     }
