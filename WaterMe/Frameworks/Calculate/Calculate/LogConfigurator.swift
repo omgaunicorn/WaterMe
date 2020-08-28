@@ -22,13 +22,32 @@
 //
 
 import XCGLogger
+import CryptoKit
+import ServerlessLogger
 
-public let log: XCGLogger = {
-    let log = XCGLogger(identifier: "WaterMe-Lambda-Logger", includeDefaultDestinations: true)
+public private(set) var log: XCGLogger!
+
+public func LogConfigure(with delegate: ServerlessLoggerErrorDelegate?) {
+    let identifier = "WaterMe-Lambda-Logger"
+    var _log: XCGLogger!
+    if #available(iOS 13.0, *) {
+        let endpoint = URLComponents(url: PrivateKeys.kLoggerEndpoint, resolvingAgainstBaseURL: false)!
+        let key = SymmetricKey(data: PrivateKeys.kLoggerKey)
+        var config = Logger.DefaultSecureConfiguration(identifier: identifier,
+                                                       endpointURL: endpoint,
+                                                       hmacKey: key,
+                                                       errorDelegate: delegate)
+        config.storageLocation.appName = "WaterMe"
+        #if DEBUG
+        config.logLevel = .debug
+        #endif
+        _log = try? Logger(configuration: config)
+    }
+    _log = _log ?? XCGLogger(identifier: identifier, includeDefaultDestinations: true)
     #if DEBUG
-    log.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .debug)
+    _log.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .debug)
     #else
     log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
     #endif
-    return log
-}()
+    log = _log
+}

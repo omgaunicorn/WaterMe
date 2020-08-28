@@ -39,6 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
     private(set) var reminderObserver: GlobalReminderObserver?
     private lazy var basicControllerResult = NewBasicController(of: .local)
+    private let loggerDelegate = LoggerErrorDelegate()
 
     let purchaseController = PurchaseController()
     var coreDataMigrator: Migratable? = DatumMigrator
@@ -56,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         super.init()
 
         // configure logging
-        _ = Calculate.log
+        LogConfigure(with: self.loggerDelegate)
 
         // configure simulator
         self.simulator_configure()
@@ -267,5 +268,13 @@ extension AppDelegate {
         #if targetEnvironment(simulator)
         log.debug(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         #endif
+    }
+}
+
+import ServerlessLogger
+
+private class LoggerErrorDelegate: ServerlessLoggerErrorDelegate {
+    func logger(with configuration: ServerlessLoggerConfigurationProtocol, produced error: Logger.Error) {
+        log.verbose(error) // meta
     }
 }
