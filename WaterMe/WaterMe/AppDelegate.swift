@@ -35,11 +35,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // swiftlint:disable:next force_cast
     class var shared: AppDelegate { return UIApplication.shared.delegate as! AppDelegate }
 
-    // swiftlint:disable:next weak_delegate
+    // swiftlint:disable weak_delegate
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
+    private let loggerDelegate = LoggerErrorDelegate()
+    // swiftlint:enable weak_delegate
     private(set) var reminderObserver: GlobalReminderObserver?
     private lazy var basicControllerResult = NewBasicController(of: .local)
-    private let loggerDelegate = LoggerErrorDelegate()
 
     let purchaseController = PurchaseController()
     var coreDataMigrator: Migratable? = DatumMigrator
