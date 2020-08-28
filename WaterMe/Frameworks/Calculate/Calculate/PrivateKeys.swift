@@ -45,10 +45,6 @@ public enum PrivateKeys {
         return URL(string: "mailto://" + kEmailAddress)!
     }
     
-    public static func kFrabicAPIKey(isReleaseBuild: Bool) -> String? {
-        return nil
-    }
-    
     public static var kConsumableTipJar: (small: String, medium: String, large: String)? {
         log.warning("These are the IAP product identifiers for the Tip Jar.")
         return nil
