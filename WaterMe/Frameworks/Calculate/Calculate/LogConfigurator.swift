@@ -36,8 +36,7 @@ public func LogConfigure(with delegate: ServerlessLoggerErrorDelegate?) {
         var config = Logger.DefaultSecureConfiguration(identifier: identifier,
                                                        endpointURL: endpoint,
                                                        hmacKey: key,
-                                                       // TODO: Change back to warning
-                                                       logLevel: .debug,
+                                                       logLevel: .warning,
                                                        errorDelegate: delegate)
         config.storageLocation.appName = "WaterMe"
         _log = try? Logger(configuration: config)

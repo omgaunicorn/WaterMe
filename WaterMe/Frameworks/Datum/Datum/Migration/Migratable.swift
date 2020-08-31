@@ -38,7 +38,7 @@ public typealias MigratableResult = Result<Void, MigratableError>
 public var DatumMigrator: Migratable? {
     // return RealmToCoreDataMigrator()
     // return DummyMigrator()
-    return DummyErrorMigrator()
+    // return DummyErrorMigrator()
     // return try? FakeDataMigrator()
-    // return nil
+    return nil
 }
