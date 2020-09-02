@@ -465,8 +465,6 @@
 		503476C224552F9900C3DAD3 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		503476C624552F9900C3DAD3 /* TipJarProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipJarProducts.swift; sourceTree = "<group>"; };
 		503476C824552F9900C3DAD3 /* InFlightTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InFlightTransaction.swift; sourceTree = "<group>"; };
-		503476E824557A6200C3DAD3 /* SPMShim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPMShim.h; sourceTree = "<group>"; };
-		503476E924557A6200C3DAD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50380E99245584B900271545 /* SimpleImageViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SimpleImageViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SimpleImageViewer.xcodeproj; path = GitSubmodules/SimpleImageViewer/SimpleImageViewer.xcodeproj; sourceTree = "<group>"; };
 		5040B41824C4768800AB747B /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/StarterData.sqlite; sourceTree = "<group>"; };
@@ -925,16 +923,6 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		503476E724557A6200C3DAD3 /* SPMShim */ = {
-			isa = PBXGroup;
-			children = (
-				503476E824557A6200C3DAD3 /* SPMShim.h */,
-				503476E924557A6200C3DAD3 /* Info.plist */,
-			);
-			name = SPMShim;
-			path = Frameworks/SPMShim;
-			sourceTree = "<group>";
-		};
 		50380EA9245584ED00271545 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -1133,7 +1121,6 @@
 				5034765124552CFD00C3DAD3 /* DatumTests */,
 				5034767424552D0700C3DAD3 /* StoreTests */,
 				48A7B0E12467FCB100DC0861 /* CalculateTests */,
-				503476E724557A6200C3DAD3 /* SPMShim */,
 				50BB0F511EBFCDE500850FF4 /* Products */,
 				8CCD0EA6DFF9C0E9A378684C /* Frameworks */,
 			);
