@@ -58,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         super.init()
 
         // configure logging
+        UIDevice.current.isBatteryMonitoringEnabled = true // turned on for logger
         LogConfigure(with: self.loggerDelegate)
 
         // configure simulator
