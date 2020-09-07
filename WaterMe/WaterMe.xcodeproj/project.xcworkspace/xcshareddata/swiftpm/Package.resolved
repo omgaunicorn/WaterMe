@@ -6,7 +6,16 @@
         "repositoryURL": "https://github.com/onmyway133/Cheers",
         "state": {
           "branch": "master",
-          "revision": "cfcdcfaadd66a8e07fbc7389c42341a2d7fd30a6",
+          "revision": "361b9820cc54413c87a4d75828b55d5421e34df6",
+          "version": null
+        }
+      },
+      {
+        "package": "ServerlessLogger",
+        "repositoryURL": "https://github.com/jeffreybergier/JSBServerlessLogger.git",
+        "state": {
+          "branch": "master",
+          "revision": "7b6ec932560f8f696f155af5b261ff3845c3d155",
           "version": null
         }
       },
@@ -30,7 +39,7 @@
       },
       {
         "package": "XCGLogger",
-        "repositoryURL": "https://github.com/DaveWoodCom/XCGLogger",
+        "repositoryURL": "https://github.com/DaveWoodCom/XCGLogger.git",
         "state": {
           "branch": null,
           "revision": "a9c4667b247928a29bdd41be2ec2c8d304215a54",

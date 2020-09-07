@@ -25,6 +25,8 @@
  Groups changes from a bunch of different queries so they appear like one big query
  */
 
+import Calculate
+
 internal class GroupedCollection<
     Section: Hashable & RawRepresentable,
     Query: CollectionQuery

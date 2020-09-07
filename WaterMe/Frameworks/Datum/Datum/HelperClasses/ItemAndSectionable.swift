@@ -22,6 +22,7 @@
 //
 
 import Foundation
+import Calculate
 
 public protocol ItemAndSectionable {
     var numberOfSections: Int { get }

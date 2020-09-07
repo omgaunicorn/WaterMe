@@ -22,6 +22,7 @@
 //
 
 import IntentsUI
+import Calculate
 
 @available(iOS 12.0, *)
 class ClosureDelegatingAddVoiceShortcutViewController: INUIAddVoiceShortcutViewController, INUIAddVoiceShortcutViewControllerDelegate {

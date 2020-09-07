@@ -23,6 +23,7 @@
 
 import Datum
 import UIKit
+import Calculate
 
 protocol ReminderEditTableViewControllerDelegate: class {
     var reminderResult: Result<Reminder, DatumError>? { get }

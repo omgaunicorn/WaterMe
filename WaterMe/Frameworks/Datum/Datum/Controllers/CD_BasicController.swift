@@ -23,6 +23,7 @@
 
 import CoreData
 import UIKit
+import Calculate
 
 internal class CD_BasicController: BasicController {
     

@@ -22,6 +22,7 @@
 //
 
 import Foundation
+import Calculate
 
 extension Bundle {
     

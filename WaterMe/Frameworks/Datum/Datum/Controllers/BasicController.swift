@@ -25,7 +25,7 @@ import UIKit
 
 public func NewBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
     do {
-        let bc = try CD_BasicController(kind: kind, forTesting: false)
+        let bc = try RLM_BasicController(kind: kind, forTesting: false)
         return .success(bc)
     } catch {
         return .failure(.loadError)

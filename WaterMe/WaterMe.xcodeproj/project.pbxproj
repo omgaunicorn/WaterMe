@@ -41,7 +41,6 @@
 		48A7B0F72467FDF600DC0861 /* NSCalendar+WaterMe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7B0F22467FDF500DC0861 /* NSCalendar+WaterMe.swift */; };
 		48A7B0F82467FDF600DC0861 /* AppVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7B0F32467FDF500DC0861 /* AppVersion.swift */; };
 		48A7B0F92467FDF600DC0861 /* UserFacingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48A7B0F42467FDF600DC0861 /* UserFacingError.swift */; };
-		48A7B0FA2467FE2A00DC0861 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
 		48A7B0FF2467FE3100DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
 		48A7B1042467FE3800DC0861 /* Calculate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48A7B0D32467FCB100DC0861 /* Calculate.framework */; };
 		48AFA304248646E6002CAFDC /* BasicControllerDeleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AFA303248646E6002CAFDC /* BasicControllerDeleteTests.swift */; };
@@ -78,6 +77,8 @@
 		5029E09B214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5029E09A214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m */; };
 		502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */; };
 		502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */; };
+		5031FBFB24F7ACBE00CBBB2E /* ServerlessLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 5031FBFA24F7ACBE00CBBB2E /* ServerlessLogger */; };
+		5032D7DD24E1437C00C928D7 /* LogConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5032D7DC24E1437C00C928D7 /* LogConfigurator.swift */; };
 		5034764C24552CFD00C3DAD3 /* Datum.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5034764324552CFD00C3DAD3 /* Datum.framework */; };
 		5034765324552CFD00C3DAD3 /* DatumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034765224552CFD00C3DAD3 /* DatumTests.swift */; };
 		5034765524552CFD00C3DAD3 /* Datum.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034764524552CFD00C3DAD3 /* Datum.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -103,13 +104,6 @@
 		503476C924552F9900C3DAD3 /* PurchaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476C224552F9900C3DAD3 /* PurchaseController.swift */; };
 		503476CD24552F9900C3DAD3 /* TipJarProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476C624552F9900C3DAD3 /* TipJarProducts.swift */; };
 		503476CF24552F9900C3DAD3 /* InFlightTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476C824552F9900C3DAD3 /* InFlightTransaction.swift */; };
-		503476EA24557A6200C3DAD3 /* SPMShim.h in Headers */ = {isa = PBXBuildFile; fileRef = 503476E824557A6200C3DAD3 /* SPMShim.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		503476ED24557A6200C3DAD3 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
-		503476EE24557A6200C3DAD3 /* SPMShim.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		503476F324557A6A00C3DAD3 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = 503476F224557A6A00C3DAD3 /* ObjcExceptionBridging */; };
-		503476F524557A6A00C3DAD3 /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 503476F424557A6A00C3DAD3 /* XCGLogger */; };
-		503476F624557A7800C3DAD3 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
-		503476FB24557A7D00C3DAD3 /* SPMShim.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 503476E624557A6200C3DAD3 /* SPMShim.framework */; };
 		5034770224557CB200C3DAD3 /* Cheers in Frameworks */ = {isa = PBXBuildFile; productRef = 5034770124557CB200C3DAD3 /* Cheers */; };
 		50380EB4245584F800271545 /* SimpleImageViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50380EB1245584ED00271545 /* SimpleImageViewer.framework */; };
 		50380EB5245584F800271545 /* SimpleImageViewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50380EB1245584ED00271545 /* SimpleImageViewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -240,13 +234,6 @@
 			remoteGlobalIDString = 48A7B0D22467FCB100DC0861;
 			remoteInfo = Calculate;
 		};
-		48A7B0FC2467FE2A00DC0861 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 503476E524557A6200C3DAD3;
-			remoteInfo = SPMShim;
-		};
 		48A7B1012467FE3100DC0861 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
@@ -331,27 +318,6 @@
 			remoteGlobalIDString = 5034766524552D0600C3DAD3;
 			remoteInfo = Store;
 		};
-		503476EB24557A6200C3DAD3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 503476E524557A6200C3DAD3;
-			remoteInfo = SPMShim;
-		};
-		503476F824557A7800C3DAD3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 503476E524557A6200C3DAD3;
-			remoteInfo = SPMShim;
-		};
-		503476FD24557A7D00C3DAD3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50BB0F481EBFCDE500850FF4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 503476E524557A6200C3DAD3;
-			remoteInfo = SPMShim;
-		};
 		50380EAE245584ED00271545 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */;
@@ -389,7 +355,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				503476EE24557A6200C3DAD3 /* SPMShim.framework in Embed Frameworks */,
 				500D240B2474C18C0070162E /* CropViewController.framework in Embed Frameworks */,
 				5034767C24552D0700C3DAD3 /* Store.framework in Embed Frameworks */,
 				48A7B0E92467FCB100DC0861 /* Calculate.framework in Embed Frameworks */,
@@ -470,6 +435,7 @@
 		5029E09A214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReminderSummaryPopoverBackgroundView.m; sourceTree = "<group>"; };
 		502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderCollectionViewCell.xib; sourceTree = "<group>"; };
 		502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFinishDropTargetViewController.swift; sourceTree = "<group>"; };
+		5032D7DC24E1437C00C928D7 /* LogConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogConfigurator.swift; sourceTree = "<group>"; };
 		5034761324552B5200C3DAD3 /* Datum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Datum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5034763B24552BCF00C3DAD3 /* Store.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Store.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5034764324552CFD00C3DAD3 /* Datum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Datum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -499,9 +465,6 @@
 		503476C224552F9900C3DAD3 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		503476C624552F9900C3DAD3 /* TipJarProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipJarProducts.swift; sourceTree = "<group>"; };
 		503476C824552F9900C3DAD3 /* InFlightTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InFlightTransaction.swift; sourceTree = "<group>"; };
-		503476E624557A6200C3DAD3 /* SPMShim.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SPMShim.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		503476E824557A6200C3DAD3 /* SPMShim.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SPMShim.h; sourceTree = "<group>"; };
-		503476E924557A6200C3DAD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		50380E99245584B900271545 /* SimpleImageViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SimpleImageViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SimpleImageViewer.xcodeproj; path = GitSubmodules/SimpleImageViewer/SimpleImageViewer.xcodeproj; sourceTree = "<group>"; };
 		5040B41824C4768800AB747B /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/StarterData.sqlite; sourceTree = "<group>"; };
@@ -628,7 +591,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				48A7B0FA2467FE2A00DC0861 /* SPMShim.framework in Frameworks */,
+				5031FBFB24F7ACBE00CBBB2E /* ServerlessLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,7 +609,6 @@
 			files = (
 				500D24092474C1800070162E /* RealmSwift in Frameworks */,
 				500D24072474C1800070162E /* Realm in Frameworks */,
-				503476FB24557A7D00C3DAD3 /* SPMShim.framework in Frameworks */,
 				48A7B1042467FE3800DC0861 /* Calculate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -663,7 +625,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				503476F624557A7800C3DAD3 /* SPMShim.framework in Frameworks */,
 				48A7B0FF2467FE3100DC0861 /* Calculate.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -676,15 +637,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		503476E324557A6200C3DAD3 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				503476F324557A6A00C3DAD3 /* ObjcExceptionBridging in Frameworks */,
-				503476F524557A6A00C3DAD3 /* XCGLogger in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		50BB0F4D1EBFCDE500850FF4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -692,7 +644,6 @@
 				48A7B0E82467FCB100DC0861 /* Calculate.framework in Frameworks */,
 				5034770224557CB200C3DAD3 /* Cheers in Frameworks */,
 				5034765824552CFD00C3DAD3 /* Datum.framework in Frameworks */,
-				503476ED24557A6200C3DAD3 /* SPMShim.framework in Frameworks */,
 				500D240A2474C18C0070162E /* CropViewController.framework in Frameworks */,
 				50380EB4245584F800271545 /* SimpleImageViewer.framework in Frameworks */,
 				5034767B24552D0700C3DAD3 /* Store.framework in Frameworks */,
@@ -779,6 +730,7 @@
 				48A7B0F22467FDF500DC0861 /* NSCalendar+WaterMe.swift */,
 				48A7B0F12467FDF500DC0861 /* SignificantTimePassedDetector.swift */,
 				48A7B0F42467FDF600DC0861 /* UserFacingError.swift */,
+				5032D7DC24E1437C00C928D7 /* LogConfigurator.swift */,
 				48A7B0D62467FCB100DC0861 /* Info.plist */,
 			);
 			name = Calculate;
@@ -969,16 +921,6 @@
 				503476AC24552EFE00C3DAD3 /* Realm+WaterMe.swift */,
 			);
 			path = Categories;
-			sourceTree = "<group>";
-		};
-		503476E724557A6200C3DAD3 /* SPMShim */ = {
-			isa = PBXGroup;
-			children = (
-				503476E824557A6200C3DAD3 /* SPMShim.h */,
-				503476E924557A6200C3DAD3 /* Info.plist */,
-			);
-			name = SPMShim;
-			path = Frameworks/SPMShim;
 			sourceTree = "<group>";
 		};
 		50380EA9245584ED00271545 /* Products */ = {
@@ -1179,7 +1121,6 @@
 				5034765124552CFD00C3DAD3 /* DatumTests */,
 				5034767424552D0700C3DAD3 /* StoreTests */,
 				48A7B0E12467FCB100DC0861 /* CalculateTests */,
-				503476E724557A6200C3DAD3 /* SPMShim */,
 				50BB0F511EBFCDE500850FF4 /* Products */,
 				8CCD0EA6DFF9C0E9A378684C /* Frameworks */,
 			);
@@ -1193,7 +1134,6 @@
 				5034764B24552CFD00C3DAD3 /* DatumTests.xctest */,
 				5034766624552D0600C3DAD3 /* Store.framework */,
 				5034766E24552D0700C3DAD3 /* StoreTests.xctest */,
-				503476E624557A6200C3DAD3 /* SPMShim.framework */,
 				48A7B0D32467FCB100DC0861 /* Calculate.framework */,
 				48A7B0DB2467FCB100DC0861 /* CalculateTests.xctest */,
 			);
@@ -1302,14 +1242,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		503476E124557A6200C3DAD3 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				503476EA24557A6200C3DAD3 /* SPMShim.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -1325,9 +1257,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				48A7B0FD2467FE2A00DC0861 /* PBXTargetDependency */,
 			);
 			name = Calculate;
+			packageProductDependencies = (
+				5031FBFA24F7ACBE00CBBB2E /* ServerlessLogger */,
+			);
 			productName = Calculate;
 			productReference = 48A7B0D32467FCB100DC0861 /* Calculate.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1362,7 +1296,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				503476FE24557A7D00C3DAD3 /* PBXTargetDependency */,
 				48A7B1072467FE3800DC0861 /* PBXTargetDependency */,
 			);
 			name = Datum;
@@ -1404,7 +1337,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				503476F924557A7800C3DAD3 /* PBXTargetDependency */,
 				48A7B1022467FE3100DC0861 /* PBXTargetDependency */,
 			);
 			name = Store;
@@ -1430,28 +1362,6 @@
 			productReference = 5034766E24552D0700C3DAD3 /* StoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		503476E524557A6200C3DAD3 /* SPMShim */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 503476EF24557A6200C3DAD3 /* Build configuration list for PBXNativeTarget "SPMShim" */;
-			buildPhases = (
-				503476E124557A6200C3DAD3 /* Headers */,
-				503476E224557A6200C3DAD3 /* Sources */,
-				503476E324557A6200C3DAD3 /* Frameworks */,
-				503476E424557A6200C3DAD3 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SPMShim;
-			packageProductDependencies = (
-				503476F224557A6A00C3DAD3 /* ObjcExceptionBridging */,
-				503476F424557A6A00C3DAD3 /* XCGLogger */,
-			);
-			productName = SPMShim;
-			productReference = 503476E624557A6200C3DAD3 /* SPMShim.framework */;
-			productType = "com.apple.product-type.framework";
-		};
 		50BB0F4F1EBFCDE500850FF4 /* WaterMe */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50BB0F621EBFCDE500850FF4 /* Build configuration list for PBXNativeTarget "WaterMe" */;
@@ -1468,7 +1378,6 @@
 				50380EB72455850200271545 /* PBXTargetDependency */,
 				5034765724552CFD00C3DAD3 /* PBXTargetDependency */,
 				5034767A24552D0700C3DAD3 /* PBXTargetDependency */,
-				503476EC24557A6200C3DAD3 /* PBXTargetDependency */,
 				48A7B0E72467FCB100DC0861 /* PBXTargetDependency */,
 			);
 			name = WaterMe;
@@ -1518,9 +1427,6 @@
 						DevelopmentTeam = V6ESYGU6CV;
 						ProvisioningStyle = Automatic;
 					};
-					503476E524557A6200C3DAD3 = {
-						CreatedOnToolsVersion = 11.4;
-					};
 					50BB0F4F1EBFCDE500850FF4 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = V6ESYGU6CV;
@@ -1548,9 +1454,9 @@
 			);
 			mainGroup = 50BB0F471EBFCDE500850FF4;
 			packageReferences = (
-				503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */,
 				5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */,
 				500D24052474C1800070162E /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				5031FBF924F7ACBE00CBBB2E /* XCRemoteSwiftPackageReference "JSBServerlessLogger" */,
 			);
 			productRefGroup = 50BB0F511EBFCDE500850FF4 /* Products */;
 			projectDirPath = "";
@@ -1573,7 +1479,6 @@
 				5034766D24552D0700C3DAD3 /* StoreTests */,
 				48A7B0D22467FCB100DC0861 /* Calculate */,
 				48A7B0DA2467FCB100DC0861 /* CalculateTests */,
-				503476E524557A6200C3DAD3 /* SPMShim */,
 			);
 		};
 /* End PBXProject section */
@@ -1687,13 +1592,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		503476E424557A6200C3DAD3 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		50BB0F4E1EBFCDE500850FF4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1755,6 +1653,7 @@
 				48A7B0F52467FDF600DC0861 /* PrivateKeys.swift in Sources */,
 				48A7B0F82467FDF600DC0861 /* AppVersion.swift in Sources */,
 				48A7B0F72467FDF600DC0861 /* NSCalendar+WaterMe.swift in Sources */,
+				5032D7DD24E1437C00C928D7 /* LogConfigurator.swift in Sources */,
 				48A7B0F92467FDF600DC0861 /* UserFacingError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1853,13 +1752,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5034767624552D0700C3DAD3 /* StoreTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		503476E224557A6200C3DAD3 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1977,11 +1869,6 @@
 			target = 48A7B0D22467FCB100DC0861 /* Calculate */;
 			targetProxy = 48A7B0E62467FCB100DC0861 /* PBXContainerItemProxy */;
 		};
-		48A7B0FD2467FE2A00DC0861 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 503476E524557A6200C3DAD3 /* SPMShim */;
-			targetProxy = 48A7B0FC2467FE2A00DC0861 /* PBXContainerItemProxy */;
-		};
 		48A7B1022467FE3100DC0861 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 48A7B0D22467FCB100DC0861 /* Calculate */;
@@ -2011,21 +1898,6 @@
 			isa = PBXTargetDependency;
 			target = 5034766524552D0600C3DAD3 /* Store */;
 			targetProxy = 5034767924552D0700C3DAD3 /* PBXContainerItemProxy */;
-		};
-		503476EC24557A6200C3DAD3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 503476E524557A6200C3DAD3 /* SPMShim */;
-			targetProxy = 503476EB24557A6200C3DAD3 /* PBXContainerItemProxy */;
-		};
-		503476F924557A7800C3DAD3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 503476E524557A6200C3DAD3 /* SPMShim */;
-			targetProxy = 503476F824557A7800C3DAD3 /* PBXContainerItemProxy */;
-		};
-		503476FE24557A7D00C3DAD3 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 503476E524557A6200C3DAD3 /* SPMShim */;
-			targetProxy = 503476FD24557A7D00C3DAD3 /* PBXContainerItemProxy */;
 		};
 		50380EB72455850200271545 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2150,6 +2022,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Frameworks/Calculate/CalculateTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2175,6 +2048,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Frameworks/Calculate/CalculateTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2433,71 +2307,6 @@
 			};
 			name = Release;
 		};
-		503476F024557A6200C3DAD3 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = V6ESYGU6CV;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = Frameworks/SPMShim/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.waterme.SPMShim;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		503476F124557A6200C3DAD3 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = V6ESYGU6CV;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = Frameworks/SPMShim/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.waterme.SPMShim;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		50BB0F601EBFCDE500850FF4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2616,7 +2425,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 256001;
+				CURRENT_PROJECT_VERSION = 257009;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2624,7 +2433,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.6;
+				MARKETING_VERSION = 2.5.7;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2642,7 +2451,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 256001;
+				CURRENT_PROJECT_VERSION = 257009;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2650,7 +2459,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.6;
+				MARKETING_VERSION = 2.5.7;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"RELEASE\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2718,15 +2527,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		503476EF24557A6200C3DAD3 /* Build configuration list for PBXNativeTarget "SPMShim" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				503476F024557A6200C3DAD3 /* Debug */,
-				503476F124557A6200C3DAD3 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		50BB0F4B1EBFCDE500850FF4 /* Build configuration list for PBXProject "WaterMe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2756,12 +2556,12 @@
 				minimumVersion = 4.4.1;
 			};
 		};
-		503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */ = {
+		5031FBF924F7ACBE00CBBB2E /* XCRemoteSwiftPackageReference "JSBServerlessLogger" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/DaveWoodCom/XCGLogger";
+			repositoryURL = "https://github.com/jeffreybergier/JSBServerlessLogger.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
+				branch = master;
+				kind = branch;
 			};
 		};
 		5034770024557CB200C3DAD3 /* XCRemoteSwiftPackageReference "Cheers" */ = {
@@ -2785,15 +2585,10 @@
 			package = 500D24052474C1800070162E /* XCRemoteSwiftPackageReference "realm-cocoa" */;
 			productName = RealmSwift;
 		};
-		503476F224557A6A00C3DAD3 /* ObjcExceptionBridging */ = {
+		5031FBFA24F7ACBE00CBBB2E /* ServerlessLogger */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */;
-			productName = ObjcExceptionBridging;
-		};
-		503476F424557A6A00C3DAD3 /* XCGLogger */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 503476D02455792800C3DAD3 /* XCRemoteSwiftPackageReference "XCGLogger" */;
-			productName = XCGLogger;
+			package = 5031FBF924F7ACBE00CBBB2E /* XCRemoteSwiftPackageReference "JSBServerlessLogger" */;
+			productName = ServerlessLogger;
 		};
 		5034770124557CB200C3DAD3 /* Cheers */ = {
 			isa = XCSwiftPackageProductDependency;

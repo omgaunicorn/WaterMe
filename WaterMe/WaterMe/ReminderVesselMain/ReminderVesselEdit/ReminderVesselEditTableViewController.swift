@@ -23,6 +23,7 @@
 
 import Datum
 import UIKit
+import Calculate
 
 protocol ReminderVesselEditTableViewControllerDelegate: class {
     var vesselResult: Result<ReminderVessel, DatumError>? { get }

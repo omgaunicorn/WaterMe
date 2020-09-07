@@ -23,6 +23,7 @@
 
 import Datum
 import Foundation
+import Calculate
 
 protocol UserActivityConfiguratorProtocol: NSUserActivityDelegate {
     var currentReminderAndVessel: (() -> ReminderAndVesselValue?)? { get set }
