@@ -277,6 +277,7 @@ import ServerlessLogger
 
 private class LoggerErrorDelegate: ServerlessLoggerErrorDelegate {
     func logger(with configuration: ServerlessLoggerConfigurationProtocol, produced error: Logger.Error) {
-        log.verbose(error) // meta
+        // Print ServerlessLogger Error in DEBUG mode only
+        assert({ print("LoggerErrorDelegate.error: \(error)"); return true }())
     }
 }
