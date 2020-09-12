@@ -89,7 +89,7 @@ private extension UserActivityConfigurator {
     private func updateEditReminderVessel(activity: NSUserActivity, reminderVessel: ReminderVesselValue?) {
         assert(activity.activityType == RawUserActivity.editReminderVessel.rawValue)
         guard let reminderVessel = reminderVessel else {
-            log.error("Unable to save Activity: Missing Reminder Vessel")
+            "Unable to save Activity: Missing Reminder Vessel".log()
             activity.waterme_isEligibleForNeededServices = false
             return
         }
@@ -111,7 +111,7 @@ private extension UserActivityConfigurator {
     private func updateViewReminder(activity: NSUserActivity, value: ReminderAndVesselValue?) {
         assert(activity.activityType == RawUserActivity.viewReminder.rawValue)
         guard let value = value else {
-            log.error("Unable to save Activity: Missing Reminder")
+            "Unable to save Activity: Missing Reminder".log()
             activity.waterme_isEligibleForNeededServices = false
             return
         }
@@ -136,7 +136,7 @@ private extension UserActivityConfigurator {
     {
         assert(activity.activityType == RawUserActivity.performReminder.rawValue)
         guard let value = value else {
-            log.error("Unable to save Activity: Missing Reminder")
+            "Unable to save Activity: Missing Reminder".log()
             activity.waterme_isEligibleForNeededServices = false
             return
         }
@@ -160,7 +160,7 @@ private extension UserActivityConfigurator {
     {
         assert(activity.activityType == RawUserActivity.editReminder.rawValue)
         guard let value = value else {
-            log.error("Unable to save Activity: Missing Reminder")
+            "Unable to save Activity: Missing Reminder".log()
             activity.waterme_isEligibleForNeededServices = false
             return
         }

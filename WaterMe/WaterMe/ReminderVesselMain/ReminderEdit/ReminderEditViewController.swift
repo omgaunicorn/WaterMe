@@ -110,7 +110,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             self.tableViewController?.tableView.reloadData()
         case .error(let error):
             Analytics.log(error: error)
-            log.error(error)
+            error.log()
             fallthrough
         case .deleted:
             self.stopNotifications()
@@ -213,7 +213,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         self.view.endEditing(false)
         guard let sender = _sender as? UIBarButtonItem else {
             let message = "Expected UIBarButtonItem to call this method"
-            log.error(message)
+            message.log()
             assertionFailure(message)
             self.completionHandler?(self)
             return

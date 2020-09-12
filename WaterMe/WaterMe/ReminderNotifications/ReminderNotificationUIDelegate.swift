@@ -90,7 +90,7 @@ extension UNUserNotificationCenter {
             case .notDetermined, .provisional:
                 self.requestAuthorization(options: [.alert, .badge, .sound]) { _, error in
                     if let error = error {
-                        log.error("Error requesting notification authorization: \(error)")
+                        error.log()
                         Analytics.log(error: error)
                     }
                     self.getNotificationSettings() { postSettings in

@@ -230,7 +230,7 @@ extension SettingsTableViewController {
 extension URLSession {
     func downloadAvatar(completion: @escaping (ReminderVesselIcon?) -> Void) {
         guard let kAvatarURL = PrivateKeys.kAvatarURL else {
-            log.error("PrivateKeys.kAvatarURL was NIL")
+            "PrivateKeys.kAvatarURL was NIL".log()
             completion(nil)
             return
         }
@@ -243,8 +243,7 @@ extension URLSession {
                 let data = data,
                 let image = UIImage(data: data)
             else {
-                let message = "Unable to download avatar image"
-                log.warning(message)
+                "Unable to download avatar image".log(as: .warning)
                 DispatchQueue.main.async {
                     completion(nil)
                 }

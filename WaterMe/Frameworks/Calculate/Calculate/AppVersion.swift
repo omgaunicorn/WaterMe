@@ -80,13 +80,13 @@ extension AppVersion {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             DispatchQueue.main.async {
                 if let error = error {
-                    log.error("Request Failed with Error: \(error)")
+                    error.log(as: .warning)
                     completion(nil)
                     return
                 }
                 let response = response as? HTTPURLResponse
                 guard response?.successfulStatusCode == true else {
-                    log.error("Invalid Response: \(response?.statusCode ?? -1)")
+                    "Invalid Response: \(response?.statusCode ?? -1)".log(as: .warning)
                     completion(nil)
                     return
                 }
@@ -101,7 +101,7 @@ extension AppVersion {
                     let appVersion = AppVersion(versionString: appVersionString),
                     let osVersion = AppVersion(versionString: osVersionString)
                 else {
-                    log.error("Invalid Data")
+                    "Invalid Data".log(as: .warning)
                     completion(nil)
                     return
                 }

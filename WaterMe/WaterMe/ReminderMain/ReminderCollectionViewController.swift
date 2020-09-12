@@ -294,7 +294,7 @@ extension ReminderCollectionViewController: SignificantTimePassedDetectorDelegat
         case .STCNotification:
             Analytics.log(event: Analytics.Event.stpReloadNotification)
         }
-        log.info("Reloading Data...")
+        "Reloading Data...".log(as: .info)
         self.hardReloadData()
     }
 }
@@ -306,7 +306,7 @@ extension ReminderCollectionViewController {
     {
         guard let reminders = self.reminders?.value, let cv = self.collectionView else {
             let error = "CollectionView or Reminders are NIL. Something really bad happened."
-            log.error(error)
+            error.log()
             assertionFailure(error)
             self.collectionView?.reloadData()
             return
@@ -330,7 +330,7 @@ extension ReminderCollectionViewController {
         guard failureReason == nil else {
             let error = NSError(errorFromSanityCheckFailureReason: failureReason!)
             Analytics.log(error: error)
-            log.error(error)
+            error.log()
             cv.reloadData()
             return
         }
@@ -341,8 +341,7 @@ extension ReminderCollectionViewController {
                 cv.reloadItems(at: mods)
             }, completion: { success in
                 guard success == false else { return }
-                let message = "CollectionView failed to Reload Sections: This usually happens when data changes really fast"
-                log.warning(message)
+                "CollectionView failed to Reload Sections: This usually happens when data changes really fast".log(as: .warning)
                 cv.reloadData()
             })
         }, shouldCatch: { exception in
@@ -351,7 +350,7 @@ extension ReminderCollectionViewController {
             }
             let error = NSError(collectionViewBatchUpdateException: exception)
             Analytics.log(error: error)
-            log.error(error)
+            error.log()
             return true
         }, finally: { exceptionWasCaught in
             guard exceptionWasCaught == true else { return }

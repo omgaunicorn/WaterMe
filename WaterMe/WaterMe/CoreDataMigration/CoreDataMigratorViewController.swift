@@ -180,7 +180,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
     @IBAction private func migrateButtonTapped(_ sender: Any) {
         guard let basicRC = self.basicRC else {
             let message = "RealmController missing on a VC where this should not be possible."
-            log.error(message)
+            message.log()
             assertionFailure(message)
             UIView.style_animateNormal() {
                 self.state = .error(.startError)

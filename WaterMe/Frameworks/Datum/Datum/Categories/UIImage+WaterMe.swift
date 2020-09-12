@@ -83,7 +83,7 @@ extension UIImage {
             compressedData = data
         }
         let message = "Image couldn't be compressed to fit: \(max) bytes"
-        log.error(message)
+        message.log()
         assert(compressedData != nil, message)
         return compressedData
     }

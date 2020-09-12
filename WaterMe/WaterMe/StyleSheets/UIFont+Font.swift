@@ -71,7 +71,7 @@ extension Font {
         // try to load the custom emoji font
         guard let customFont = UIFont(name: "AppleColorEmoj2", size: size) else {
             let error = NSError(unableToLoadEmojiFont: nil)
-            log.error(error)
+            error.log()
             Analytics.log(error: error)
             assertionFailure()
             return UIFont.systemFont(ofSize: size)
