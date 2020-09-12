@@ -28,11 +28,14 @@ public func NewBasicController(of kind: ControllerKind) -> Result<BasicControlle
         let bc = try RLM_BasicController(kind: kind, forTesting: false)
         return .success(bc)
     } catch {
-        return .failure(.createError)
+        return .failure(.loadError)
     }
 }
 
 public protocol BasicController: class {
+
+    static var storeDirectoryURL: URL { get }
+    static var storeExists: Bool { get }
 
     var remindersDeleted: ((Set<ReminderValue>) -> Void)? { get set }
     var reminderVesselsDeleted: ((Set<ReminderVesselValue>) -> Void)? { get set }
@@ -84,7 +87,7 @@ internal func testing_NewRLMBasicController(of kind: ControllerKind) -> Result<B
         let bc = try RLM_BasicController(kind: kind, forTesting: true)
         return .success(bc)
     } catch {
-        return .failure(.createError)
+        return .failure(.loadError)
     }
 }
 
@@ -93,6 +96,6 @@ internal func testing_NewCDBasicController(of kind: ControllerKind) -> Result<Ba
         let bc = try CD_BasicController(kind: kind, forTesting: true)
         return .success(bc)
     } catch {
-        return .failure(.createError)
+        return .failure(.loadError)
     }
 }

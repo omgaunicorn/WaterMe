@@ -25,6 +25,10 @@ import CoreData
 
 @objc(CD_Reminder)
 internal class CD_Reminder: CD_Base {
+
+    class var request: NSFetchRequest<CD_Reminder> {
+        NSFetchRequest<CD_Reminder>(entityName: "CD_Reminder")
+    }
     
     @NSManaged var interval: Int32
     @NSManaged var kindString: String
@@ -51,6 +55,10 @@ internal class CD_Reminder: CD_Base {
 
 @objc(CD_ReminderPerform)
 internal class CD_ReminderPerform: CD_Base {
+
+    class var request: NSFetchRequest<CD_ReminderPerform> {
+        NSFetchRequest<CD_ReminderPerform>(entityName: "CD_ReminderPerform")
+    }
     
     @NSManaged var date: Date
     @NSManaged var reminder: CD_Reminder

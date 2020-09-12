@@ -57,17 +57,11 @@
 /* Title of the view controller that allows a user to choose an emoji for the photo of their plant. Is shown in navigation bar. */
 "Choose an Emoji" = "Scegli emoji";
 
-/* MigratorScreen: Done Button Title: After migrtion has failed or succeeded this button is shown to the user. When they tap it, it closes the migrator screen and brings them to the main app. */
-"Continue" = "Continua";
-
 /* Alert: Email Copy: Button Title and Alert Title: When the user taps this button, the developers email address is copied into the users clipboard so the user can paste it into their favorite email app. */
 "Copy Email Address" = "Copia indirizzo mail";
 
 /* Alert: Email Copy: Message: Alert message that tells the user that they can copy my email address into their clipboard and paste it in their favorite email app. */
 "Copy my email address into your clipboard, then paste it in your favorite email app." = "Copia il mio indirizzo e-mail negli appunti, poi incollalo nella tua applicazione e-mail preferita.";
-
-/* MigratorScreen: Subtitle: Explains what is happening on the screen. */
-"Data Migration" = "Migrazione dei dati";
 
 /* Button that allows the user to delete a reminder or a plant. */
 "Delete" = "Elimina";
@@ -92,9 +86,6 @@
 
 /* Alert: Delete Confirmation: Button Title: When the user is being asked to confirm to delete an item, this button lets them not delete it. */
 "Don’t Delete" = "Non eliminare";
-
-/* MigratorScreen: Delete Button Title: When the user clicks this button, the screen is dismissed and it will never appear again and they will not have access to their previous plants. This action is destructive. */
-"Don’t Migrate My Plants" = "Non spostate le mie piante";
 
 /* Alert: New Permission: Button Title: Don’t Send Notifications: Title of the button that will result in the user not being asked for permissions ever again. */
 "Don’t Send Notifications" = "Non inviare notifiche";
@@ -171,9 +162,6 @@
 /* Email Compose: Subject: Shows in the subject line when an iOS in-app mail sheet is presented. */
 "I have an idea for WaterMe!" = "Ho un'idea per WaterMe!";
 
-/* MigratorScreen: Body: Body text that explains the one time migration needed to upgrade to the new WaterMe. */
-"In order to upgrade to WaterMe 2, a one time data migration is required." = "Per l'aggiornamento a WaterMe 2 è necessaria una migrazione dei dati una tantum.";
-
 /* Purchase Thanks: Subtitle: Reminding the user what we’re thanking them for. */
 "In-App Purchase" = "Acquisto in App";
 
@@ -215,12 +203,6 @@
 
 /* SiriShortcut: Description: PerformReminder: Explains to the user that by using this SiriShortcut they mark a reminder as done. */
 "Mark this reminder as done." = "Segna questo promemoria come (fatto).";
-
-/* MigratorScreen: Migrating Button Title: After the user starts the migration, the text of the button changes to this to show that migration is in progress. */
-"Migrating…" = "Esportazione in corso…";
-
-/* MigratorScreen: Body: Body text that explains that the user should not lock the screen or switch apps until the migration is complete. */
-"Migrating… Don’t switch to a different app or lock the screen." = "Esportazione in corso… non passare ad altra App o chiudere l'applicazione.";
 
 /* Error Saving: Reminder: Missing Description: If the user has not entered a description for their other reminder and tries to save, an alert will warn them. This is the button title to fix the error. */
 "Missing Description" = "Descrizione mancante";
@@ -272,9 +254,6 @@
 
 /* Displayed to the user for Reminders that need to be performed now. */
 "Now" = "Ora";
-
-/* MigratorScreen: Body: Body text that explains that the migration failed. */
-"Oh no. A problem ocurred while migrating your plants. Please double check that all your plants are in WaterMe." = "Oh no. Un problema si è verificato durante la migrazione delle piante. Si prega di verificare che tutte le vostre piante siano in WaterMe.";
 
 /* Alert: App Update: Button Title: Button title that allows the user to open the app store in order to update WaterMe. */
 "Open App Store" = "Apri App Store";
@@ -347,15 +326,6 @@
 
 /* Alert Title: On iOS 11, Siri Shortcuts is not available, but they tapped on a button the tries to use this feature. This alert tells them whats wrong. */
 "Siri Shortcuts Unavailable" = "Scorciatoia Siri non disponibile";
-
-/* MigratorScreen: Cancel Button Title: When the user clicks this button the screen is dismissed and the migration does not happen, but next time the app is started, it will ask again. */
-"Skip for Now" = "Salta per ora";
-
-/* MigratorScreen: Start Button Title: When the user clicks this button the migration starts. */
-"Start Migration" = "Inizio esportazione";
-
-/* MigratorScreen: Body: Body text that explains that the migration succeeded. */
-"Success! Your plants have been migrated." = "Completato! Le tue Piante sono state trasferite.";
 
 /* Alert: App Update: Message: Alert title that tells TestFlight beta users that an update is available for WaterMe */
 "Thank you for beta testing WaterMe. A newer version is now available on the App Store. There’s no rush, you can update now or later." = "Grazie per il beta test WaterMe. Una versione più recente è ora disponibile sull'App Store. Non c'è fretta, è possibile aggiornare ora o più tardi.";
@@ -453,9 +423,6 @@
 /* Name of the app. Shows in various places like Navigation Bars and Alerts. */
 "WaterMe" = "WaterMe";
 
-/* MigratorScreen: Title: Name of the app. */
-"WaterMe 2" = "WaterMe 2";
-
 /* Alert Body: Camera Restricted: We can’t access the camera because it is not allowed by an IT policy / parent control. This text needs to explain the problem. */
 "WaterMe cannot access your camera. This feature has been restricted by this device’s administrator." = "WaterMe non può accedere alla videocamera. Questa funzione è stata limitata dall'amministratore di questo dispositivo.";
 
@@ -476,6 +443,58 @@
 
 /* Notification Body: 1 Item: When 1 plant needs to be taken care of in a day, this is the body text of the notification. */
 "‘%@’ needs attention today." = "‘%@’ bisogno di attenzione oggi.";
+
+/*
+ 
+   _____        _          __  __ _                 _   _
+ |  __ \      | |        |  \/  (_)               | | (_)
+ | |  | | __ _| |_ __ _  | \  / |_  __ _ _ __ __ _| |_ _  ___  _ __
+ | |  | |/ _` | __/ _` | | |\/| | |/ _` | '__/ _` | __| |/ _ \| '_ \
+ | |__| | (_| | || (_| | | |  | | | (_| | | | (_| | |_| | (_) | | | |
+ |_____/ \__,_|\__\__,_| |_|  |_|_|\__, |_|  \__,_|\__|_|\___/|_| |_|
+                                    __/ |
+                                   |___/
+ 
+ */
+
+/* MigratorScreen: Subtitle: Explains what is happening on the screen. */
+"Data Migration" = "Data Migration";
+
+/* MigratorScreen: Subtitle: Explains an error ocurred while migrating */
+"Migration Error" = "Migration Error";
+
+/* MigratorScreen: Body: Body text that explains the one time migration needed to upgrade to the new WaterMe. */
+"Sorry for the interruption. A one-time data migration is needed in order to continue using WaterMe." = "Sorry for the interruption. A one-time data migration is needed in order to continue using WaterMe.";
+
+/* MigratorScreen: Body: Body text that explains that the user should not lock the screen or switch apps until the migration is complete. */
+"Don't go to the home screen, change apps, or lock the screen." = "Don't go to the home screen, change apps, or lock the screen.";
+
+/* MigratorScreen: Body: Body text that explains that the migration succeeded. */
+"Success! Your plants have been migrated." = "Success! Your plants have been migrated.";
+
+/* MigratorScreen: Body: An error ocurred before migration started. */
+"Migration could not be started due to an error. Please try again later." = "Migration could not be started due to an error. Please try again later.";
+
+/* MigratorScreen: Body: Body text that explains that all data should be migrated but there was an error cleaning up at the end. */
+"An error ocurred when cleaning up after migration. Please double-check all of your plants are in WaterMe." = "An error ocurred when cleaning up after migration. Please double-check all of your plants are in WaterMe.";
+
+/* MigratorScreen: Body: Body text that explains that migration may be incomplete. */
+"One or more plants could not be migrated. Please double-check all of your plants are in WaterMe." = "One or more plants could not be migrated. Please double-check all of your plants are in WaterMe.";
+
+/* MigratorScreen: Start Button Title: When the user clicks this button the migration starts. */
+"Start Migration" = "Start Migration";
+
+/* MigratorScreen: Migrating Button Title: After the user starts the migration, the text of the button changes to this to show that migration is in progress. */
+"Migrating…" = "Migrating…";
+
+/* MigratorScreen: Cancel Button Title: When the user clicks this button the screen is dismissed and the migration does not happen, but next time the app is started, it will ask again. */
+"Skip for Now" = "Skip for Now";
+
+/* MigratorScreen: Delete Button Title: When the user clicks this button, the screen is dismissed and it will never appear again and they will not have access to their previous plants. This action is destructive. */
+"Don’t Migrate My Plants" = "Don’t Migrate My Plants";
+
+/* MigratorScreen: Confirmation that the user does not want to migrate their plants. */
+"This cannot be undone and may cause data loss." = "This cannot be undone and may cause data loss.";
 
 /*
   _____                       _        _____  ____

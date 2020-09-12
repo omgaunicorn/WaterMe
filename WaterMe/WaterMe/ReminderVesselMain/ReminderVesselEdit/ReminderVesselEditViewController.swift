@@ -23,6 +23,7 @@
 
 import Datum
 import UIKit
+import Calculate
 
 class ReminderVesselEditViewController: StandardViewController, HasBasicController {
     

@@ -25,12 +25,17 @@ import CoreData
 
 @objc(CD_ReminderVessel)
 internal class CD_ReminderVessel: CD_Base {
+
+    class var request: NSFetchRequest<CD_ReminderVessel> {
+        NSFetchRequest<CD_ReminderVessel>(entityName: "CD_ReminderVessel")
+    }
     
     @NSManaged var displayName: String?
     @NSManaged var iconEmojiString: String?
     @NSManaged var iconImageData: Data?
     @NSManaged var kindString: String
     @NSManaged var reminders: NSSet
+    @NSManaged var share: CD_VesselShare
     
     override func awakeFromInsert() {
         super.awakeFromInsert()

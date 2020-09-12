@@ -23,6 +23,7 @@
 
 import RealmSwift
 import UIKit
+import Calculate
 
 extension Realm {
     internal func waterMe_commitWrite() -> Result<Void, DatumError> {
@@ -48,10 +49,20 @@ internal class RLM_BasicController: BasicController {
 
     internal let kind: ControllerKind
     private let config: Realm.Configuration
+    #if DEBUG
+    // Reference is needed for using in-memory data stores
+    private var realmReference: Realm?
+    #endif
     // Internal only for testing. Should be private.
     internal var realm: Result<Realm, DatumError> {
         do {
-            return try .success(Realm(configuration: self.config))
+            let realm = try Realm(configuration: self.config)
+            #if DEBUG
+            if self.realmReference == nil {
+                self.realmReference = realm
+            }
+            #endif
+            return try .success(realm)
         } catch {
             log.error(error)
             return .failure(.loadError)
@@ -380,39 +391,30 @@ internal class RLM_BasicController: BasicController {
 }
 
 extension RLM_BasicController {
-    private class var localRealmDirectory: URL {
+    internal class var storeDirectoryURL: URL {
         let appsupport = FileManager.default.urls(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first!
         let url = appsupport.appendingPathComponent("WaterMe", isDirectory: true).appendingPathComponent("Free", isDirectory: true)
         return url
     }
 
-    public class var localRealmExists: Bool {
+    internal class var storeExists: Bool {
         let fm = FileManager.default
         let exists = fm.fileExists(atPath: self.localRealmFile.path)
         return exists
     }
 
-    private class var legacyCoreDataStoreExists: Bool {
-        let fm = FileManager.default
-        let appSupport = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
-        let storeDirectory = appSupport.appendingPathComponent("WaterMe", isDirectory: true)
-        let storeURL = storeDirectory.appendingPathComponent("WaterMeData.sqlite")
-        return fm.fileExists(atPath: storeURL.path)
-    }
-
     private class var localRealmFile: URL {
-        return self.localRealmDirectory.appendingPathComponent("Realm.realm", isDirectory: false)
+        return self.storeDirectoryURL.appendingPathComponent("Realm.realm", isDirectory: false)
     }
 
     private class func createLocalRealmDirectoryIfNeeded() throws {
-        guard self.localRealmExists == false else { return }
-        try FileManager.default.createDirectory(at: self.localRealmDirectory, withIntermediateDirectories: true, attributes: nil)
+        guard self.storeExists == false else { return }
+        try FileManager.default.createDirectory(at: self.storeDirectoryURL, withIntermediateDirectories: true, attributes: nil)
     }
 
     private class func copyRealmFromBundleIfNeeded() throws {
         guard
-            self.localRealmExists == false,
-            self.legacyCoreDataStoreExists == false,
+            self.storeExists == false,
             let bundleURL = Bundle.main.url(forResource: "StarterRealm", withExtension: "realm")
         else { return }
         try FileManager.default.copyItem(at: bundleURL, to: self.localRealmFile)

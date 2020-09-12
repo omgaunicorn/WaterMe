@@ -23,13 +23,11 @@
 
 import Store
 import Datum
-import XCGLogger
 import UserNotifications
 import AVFoundation
 import StoreKit
 import UIKit
-
-let log = XCGLogger.default
+import Calculate
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,13 +35,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // swiftlint:disable:next force_cast
     class var shared: AppDelegate { return UIApplication.shared.delegate as! AppDelegate }
 
-    // swiftlint:disable:next weak_delegate
+    // swiftlint:disable weak_delegate
     private let notificationUIDelegate = ReminderNotificationUIDelegate()
+    private let loggerDelegate = LoggerErrorDelegate()
+    // swiftlint:enable weak_delegate
     private(set) var reminderObserver: GlobalReminderObserver?
     private lazy var basicControllerResult = NewBasicController(of: .local)
 
     let purchaseController = PurchaseController()
-    var coreDataMigrator: CoreDataMigratable? = CoreDataMigrator()
+    var coreDataMigrator: Migratable? = DatumMigrator
     var window: UIWindow?
     var userDefaultObserverTokens: [NSKeyValueObservation] = []
 
@@ -58,11 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         super.init()
 
         // configure logging
-        #if DEBUG
-        log.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .debug)
-        #else
-        log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
-        #endif
+        UIDevice.current.isBatteryMonitoringEnabled = true // turned on for logger
+        LogConfigure(with: self.loggerDelegate)
 
         // configure simulator
         self.simulator_configure()
@@ -273,5 +270,14 @@ extension AppDelegate {
         #if targetEnvironment(simulator)
         log.debug(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
         #endif
+    }
+}
+
+import ServerlessLogger
+
+private class LoggerErrorDelegate: ServerlessLoggerErrorDelegate {
+    func logger(with configuration: ServerlessLoggerConfigurationProtocol, produced error: Logger.Error) {
+        // Print ServerlessLogger Error in DEBUG mode only
+        assert({ print("LoggerErrorDelegate.error: \(error)"); return true }())
     }
 }

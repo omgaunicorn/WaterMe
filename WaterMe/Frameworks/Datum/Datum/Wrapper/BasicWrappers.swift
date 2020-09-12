@@ -24,6 +24,8 @@
 import RealmSwift
 import CoreData
 
+internal let TESTING: Bool = NSClassFromString("XCTestCase") != nil
+
 public struct Identifier: Hashable, Codable {
     public var uuid: String
     public init(rawValue: String) {

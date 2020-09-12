@@ -23,6 +23,7 @@
 
 import CoreData
 import UIKit
+import Calculate
 
 internal class CD_BasicController: BasicController {
     
@@ -38,12 +39,12 @@ internal class CD_BasicController: BasicController {
         
         // when not testing, return normal persistent container
         guard forTesting else {
-            return NSPersistentContainer(name: "WaterMe", managedObjectModel: mom)
+            return WaterMe_PersistentContainer(name: "WaterMe", managedObjectModel: mom)
         }
         
         // when testing make in-memory container
         let randomName = String(Int.random(in: 100_000...1_000_000))
-        let container = NSPersistentContainer(name: randomName, managedObjectModel: mom)
+        let container = WaterMe_PersistentContainer(name: randomName, managedObjectModel: mom)
         let description = NSPersistentStoreDescription()
         description.type = NSInMemoryStoreType
         container.persistentStoreDescriptions = [description]
@@ -54,8 +55,9 @@ internal class CD_BasicController: BasicController {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
-        guard  let container = CD_BasicController.container(forTesting: forTesting)
-            else { throw DatumError.createError }
+        guard let container = CD_BasicController.container(forTesting: forTesting)
+            else { throw DatumError.loadError }
+        type(of: self).copySampleDBIfNeeded()
         let lock = DispatchSemaphore(value: 0)
         var error: Error?
         container.loadPersistentStores() { _, _error in
@@ -64,6 +66,15 @@ internal class CD_BasicController: BasicController {
         }
         lock.wait()
 		guard error == nil else { throw error! }
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        let fetchRequest = CD_VesselShare.request
+        let ctx = container.viewContext
+        let fetchResult = try ctx.fetch(fetchRequest)
+        if fetchResult.isEmpty {
+            let share = CD_VesselShare(context: ctx)
+            ctx.insert(share)
+            try ctx.save()
+        }
         self.kind = .local
         self.container = container
     }
@@ -99,6 +110,7 @@ internal class CD_BasicController: BasicController {
             let wrapper = CD_ReminderWrapper(newReminder, context: { self.container.viewContext })
             return .success(wrapper)
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -127,10 +139,19 @@ internal class CD_BasicController: BasicController {
             vessel.icon = icon
         }
         do {
+            let vesselShares = try context.fetch(CD_VesselShare.request)
+            guard vesselShares.count == 1 else {
+                let message = "Unexpected number of VesselShare objects: \(vesselShares.count)"
+                log.error(message)
+                assertionFailure(message)
+                return .failure(.writeError)
+            }
+            vessel.share = vesselShares.first!
             try context.save()
             let wrapper = CD_ReminderVesselWrapper(vessel, context: { self.container.viewContext })
             return .success(wrapper)
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -145,7 +166,7 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
         
         let context = self.container.viewContext
-        let fr = CD_ReminderVessel.fetchRequest() as! NSFetchRequest<CD_ReminderVessel>
+        let fr = CD_ReminderVessel.request
         fr.sortDescriptors = [CD_ReminderVessel.sortDescriptor(for: sorted, ascending: ascending)]
         let frc = NSFetchedResultsController<CD_ReminderVessel>(fetchRequest: fr,
                                              managedObjectContext: context,
@@ -162,7 +183,7 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
         
         let context = self.container.viewContext
-        let fr = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
+        let fr = CD_Reminder.request
         fr.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
         let frc = NSFetchedResultsController(fetchRequest: fr,
                                              managedObjectContext: context,
@@ -202,7 +223,7 @@ internal class CD_BasicController: BasicController {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
-        let fetchRequest = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
+        let fetchRequest = CD_Reminder.request
         fetchRequest.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
         let range = section.dateInterval
         let andPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
@@ -295,6 +316,7 @@ internal class CD_BasicController: BasicController {
             try context.save()
             return .success(())
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -335,6 +357,7 @@ internal class CD_BasicController: BasicController {
             try context.save()
             return .success(())
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -365,6 +388,7 @@ internal class CD_BasicController: BasicController {
             try context.save()
             return .success(())
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -386,6 +410,7 @@ internal class CD_BasicController: BasicController {
             try context.save()
             return .success(())
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -405,6 +430,7 @@ internal class CD_BasicController: BasicController {
             try context.save()
             return .success(())
         } catch {
+            log.error(error)
             return .failure(.writeError)
         }
     }
@@ -463,5 +489,65 @@ extension CD_BasicController {
     
     fileprivate func didSave(_ token: Any) {
         NotificationCenter.default.removeObserver(token)
+    }
+}
+
+// MARK: First Launch
+
+extension CD_BasicController {
+
+    private static let sampleDB1URL = Bundle.main.url(forResource: "StarterData", withExtension: "sqlite")
+    private static let sampleDB2URL = Bundle.main.url(forResource: "StarterData", withExtension: "sqlite-wal")
+
+    internal class var storeDirectoryURL: URL {
+        let appsupport = FileManager.default.urls(
+            for: FileManager.SearchPathDirectory.applicationSupportDirectory,
+            in: FileManager.SearchPathDomainMask.userDomainMask
+        ).first!
+        let url = appsupport.appendingPathComponent("WaterMe", isDirectory: true)
+                            .appendingPathComponent("CoreData", isDirectory: true)
+        return url
+    }
+
+    private class var dbFileURL1: URL {
+        return self.storeDirectoryURL.appendingPathComponent("WaterMe.sqlite",
+                                                          isDirectory: false)
+    }
+
+    private class var dbFileURL2: URL {
+        return self.storeDirectoryURL.appendingPathComponent("WaterMe.sqlite-wal",
+                                                          isDirectory: false)
+    }
+
+    internal class var storeExists: Bool {
+        let fm = FileManager.default
+        let exists = fm.fileExists(atPath: self.dbFileURL1.path)
+        return exists
+    }
+
+    private class func copySampleDBIfNeeded() {
+        guard
+            !RLM_BasicController.storeExists,
+            !self.storeExists,
+            let sampleDB1URL = self.sampleDB1URL,
+            let sampleDB2URL = self.sampleDB2URL
+        else { return }
+        let fm = FileManager.default
+        try? fm.createDirectory(at: self.storeDirectoryURL,
+                                withIntermediateDirectories: true,
+                                attributes: nil)
+        do {
+            try fm.copyItem(at: sampleDB1URL, to: self.dbFileURL1)
+            try fm.copyItem(at: sampleDB2URL, to: self.dbFileURL2)
+        } catch {
+            log.error(error)
+            try? fm.removeItem(at: self.storeDirectoryURL)
+        }
+    }
+}
+
+private class WaterMe_PersistentContainer: NSPersistentContainer {
+    override class func defaultDirectoryURL() -> URL {
+        return CD_BasicController.storeDirectoryURL
     }
 }

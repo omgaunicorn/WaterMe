@@ -21,17 +21,18 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import XCGLogger
-
-internal let log = XCGLogger.default
-
 /// Intended to be filled out by end user
 /// Do not push private information into the repo
 public enum PrivateKeys {
-    
-    public static var kRealmServer: URL {
-        log.warning("Your Realm Object Server URL has not been configured.")
-        fatalError("kRealmServer")
+
+    public static var kLoggerEndpoint: URL {
+        log.warning("The endpoint used by JSBServerlessLogger goes here")
+        fatalError("kLoggerEndpoint")
+    }
+
+    public static var kLoggerKey: Data {
+        log.warning("The key used by JSBServerlessLogger goes here")
+        fatalError("kLoggerEndpoint")
     }
     
     public static var kEmailAddress: String {
@@ -42,10 +43,6 @@ public enum PrivateKeys {
     public static var kEmailAddressURL: URL {
         log.warning("Your Email Address Has Not Been Configured")
         return URL(string: "mailto://" + kEmailAddress)!
-    }
-    
-    public static func kFrabicAPIKey(isReleaseBuild: Bool) -> String? {
-        return nil
     }
     
     public static var kConsumableTipJar: (small: String, medium: String, large: String)? {

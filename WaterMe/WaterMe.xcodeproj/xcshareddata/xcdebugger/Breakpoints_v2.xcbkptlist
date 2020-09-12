@@ -14,9 +14,9 @@
             filePath = "Frameworks/Calculate/Calculate/PrivateKeys.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "kRealmServer"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "kLoggerEndpoint"
             landmarkType = "24">
             <Actions>
                <BreakpointActionProxy
@@ -38,8 +38,8 @@
             filePath = "Frameworks/Calculate/Calculate/PrivateKeys.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "38"
-            endingLineNumber = "38"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "kEmailAddress"
             landmarkType = "24">
             <Actions>
@@ -62,34 +62,10 @@
             filePath = "Frameworks/Calculate/Calculate/PrivateKeys.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "kEmailAddressURL"
             landmarkType = "24">
-            <Actions>
-               <BreakpointActionProxy
-                  ActionExtensionID = "Xcode.BreakpointAction.Sound">
-                  <ActionContent
-                     soundName = "Tink">
-                  </ActionContent>
-               </BreakpointActionProxy>
-            </Actions>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "13830A03-4DFE-41C0-9E9B-264159B8C5A3"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "Yes"
-            filePath = "Frameworks/Calculate/Calculate/PrivateKeys.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "kFrabicAPIKey(isReleaseBuild:)"
-            landmarkType = "7">
             <Actions>
                <BreakpointActionProxy
                   ActionExtensionID = "Xcode.BreakpointAction.Sound">
@@ -110,8 +86,8 @@
             filePath = "Frameworks/Calculate/Calculate/PrivateKeys.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
             landmarkName = "kConsumableTipJar"
             landmarkType = "24">
             <Actions>
@@ -134,8 +110,8 @@
             filePath = "Frameworks/Calculate/Calculate/PrivateKeys.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "kWaterMeAppStoreUUID"
             landmarkType = "24">
             <Actions>
@@ -158,8 +134,8 @@
             filePath = "Frameworks/Calculate/Calculate/PrivateKeys.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "kAppStoreURL"
             landmarkType = "24">
             <Actions>
@@ -182,8 +158,8 @@
             filePath = "Frameworks/Calculate/Calculate/PrivateKeys.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "67"
-            endingLineNumber = "67"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
             landmarkName = "kReviewAppURL"
             landmarkType = "24">
             <Actions>
@@ -206,8 +182,8 @@
             filePath = "Frameworks/Calculate/Calculate/PrivateKeys.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
             landmarkName = "kAppInfoJSONURL"
             landmarkType = "24">
             <Actions>
@@ -230,9 +206,33 @@
             filePath = "Frameworks/Calculate/Calculate/PrivateKeys.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "77"
-            endingLineNumber = "77"
+            startingLineNumber = "74"
+            endingLineNumber = "74"
             landmarkName = "kAvatarURL"
+            landmarkType = "24">
+            <Actions>
+               <BreakpointActionProxy
+                  ActionExtensionID = "Xcode.BreakpointAction.Sound">
+                  <ActionContent
+                     soundName = "Tink">
+                  </ActionContent>
+               </BreakpointActionProxy>
+            </Actions>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "739EFE54-27DE-460E-A078-BABB5C789AF1"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "Yes"
+            filePath = "Frameworks/Calculate/Calculate/PrivateKeys.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "kLoggerKey"
             landmarkType = "24">
             <Actions>
                <BreakpointActionProxy

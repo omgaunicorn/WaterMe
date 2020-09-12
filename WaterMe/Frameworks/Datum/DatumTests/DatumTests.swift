@@ -65,12 +65,11 @@ class DatumTestsBase: XCTestCase {
         self.basicController = nil
         self.token?.invalidate()
         self.token = nil
+        let realmDir = RLM_BasicController.storeDirectoryURL
+        let coreDataDir = CD_BasicController.storeDirectoryURL
         let fm = FileManager.default
-        let appSupport = fm.urls(for: .documentDirectory, in: .userDomainMask).first!
-        try? fm.removeItem(at: appSupport.appendingPathComponent("WaterMe", isDirectory: true))
-        try? fm.removeItem(at: appSupport.appendingPathComponent("WaterMe.sqlite"))
-        try? fm.removeItem(at: appSupport.appendingPathComponent("WaterMe.sqlite-shm"))
-        try? fm.removeItem(at: appSupport.appendingPathComponent("WaterMe.sqlite-wal"))
+        try? fm.removeItem(at: realmDir)
+        try? fm.removeItem(at: coreDataDir)
     }
 }
 

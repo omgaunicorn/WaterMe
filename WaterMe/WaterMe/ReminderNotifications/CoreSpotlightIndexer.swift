@@ -24,6 +24,7 @@
 import Datum
 import CoreSpotlight
 import MobileCoreServices
+import Calculate
 
 class CoreSpotlightIndexer {
 

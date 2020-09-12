@@ -82,9 +82,9 @@ extension CD_BasicControllerDeleteTests {
         try! self.basicController.appendNewPerformToReminders(with: [.init(rawValue: reminder.uuid)]).get()
         let bc = self.basicController as! CD_BasicController
         let context = bc.container.viewContext
-        let vesselReq = CD_ReminderVessel.fetchRequest() as! NSFetchRequest<CD_ReminderVessel>
-        let reminderReq = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
-        let performReq = CD_ReminderPerform.fetchRequest() as! NSFetchRequest<CD_ReminderPerform>
+        let vesselReq = CD_ReminderVessel.request
+        let reminderReq = CD_Reminder.request
+        let performReq = CD_ReminderPerform.request
 
         let vesselRes1 = try! context.fetch(vesselReq)
         let reminderRes1 = try! context.fetch(reminderReq)
@@ -111,9 +111,9 @@ extension CD_BasicControllerDeleteTests {
         try! self.basicController.appendNewPerformToReminders(with: [.init(rawValue: reminder.uuid)]).get()
         let bc = self.basicController as! CD_BasicController
         let context = bc.container.viewContext
-        let vesselReq = CD_ReminderVessel.fetchRequest() as! NSFetchRequest<CD_ReminderVessel>
-        let reminderReq = CD_Reminder.fetchRequest() as! NSFetchRequest<CD_Reminder>
-        let performReq = CD_ReminderPerform.fetchRequest() as! NSFetchRequest<CD_ReminderPerform>
+        let vesselReq = CD_ReminderVessel.request
+        let reminderReq = CD_Reminder.request
+        let performReq = CD_ReminderPerform.request
 
         let vesselRes1 = try! context.fetch(vesselReq)
         let reminderRes1 = try! context.fetch(reminderReq)

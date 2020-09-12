@@ -24,6 +24,7 @@
 import Datum
 import UserNotifications
 import UIKit
+import Calculate
 
 enum BadgeNumberController {
 

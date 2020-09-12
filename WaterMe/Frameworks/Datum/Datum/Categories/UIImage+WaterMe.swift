@@ -22,6 +22,7 @@
 //
 
 import UIKit
+import Calculate
 
 extension UIImage {
 
