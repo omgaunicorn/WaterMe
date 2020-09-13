@@ -78,8 +78,8 @@ extension LoggableProtocol {
     }
 }
 
-// swiftlint:disable:next function_parameter_count
 /// Implementation of how the logging function should work
+// swiftlint:disable:next function_parameter_count
 internal func LoggableProtocolImp(on object: Any,
                                   in log: XCGLogger? = Loggable.default,
                                   as level: XCGLogger.Level,
