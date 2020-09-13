@@ -92,7 +92,13 @@ extension ReminderVesselIcon {
         case .emoji:
             return nil
         case .image(let image):
-            let data = image.dataNoLarger(than: 50000)
+            let max = 50000
+            guard let data = image.dataNoLarger(than: max) else {
+                let message = "Image couldn't be compressed to fit: \(max) bytes"
+                message.log()
+                assertionFailure(message)
+                return nil
+            }
             return data
         }
     }

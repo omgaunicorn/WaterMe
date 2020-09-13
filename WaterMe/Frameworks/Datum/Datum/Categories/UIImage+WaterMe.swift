@@ -82,9 +82,6 @@ extension UIImage {
             guard let data = _data, data.count < max else { continue }
             compressedData = data
         }
-        let message = "Image couldn't be compressed to fit: \(max) bytes"
-        message.log()
-        assert(compressedData != nil, message)
         return compressedData
     }
 }
