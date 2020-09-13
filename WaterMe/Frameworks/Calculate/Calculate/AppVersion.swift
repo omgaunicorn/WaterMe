@@ -80,7 +80,7 @@ extension AppVersion {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             DispatchQueue.main.async {
                 if let error = error {
-                    error.log(as: .warning)
+                    error.log(as: .info)
                     completion(nil)
                     return
                 }
@@ -92,8 +92,7 @@ extension AppVersion {
                 }
                 guard
                     let data = data,
-                    let _json = try? JSONSerialization.jsonObject(with: data, options: []),
-                    let json = _json as? NSDictionary,
+                    let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? NSDictionary,
                     let appVersionArray = json.value(forKeyPath: "results.version") as? NSArray,
                     let osVersionArray = json.value(forKeyPath: "results.minimumOsVersion") as? NSArray,
                     let appVersionString = appVersionArray.firstObject as? String,
