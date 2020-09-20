@@ -26,6 +26,15 @@ import Datum
 
 extension DatumError: UserFacingError {
 
+    public var isCritical: Bool {
+        switch self {
+        case .loadError, .createError, .writeError, .readError, .objectDeleted, .imageCouldntBeCompressedEnough:
+            return true
+        case .unableToDeleteLastReminder:
+            return false
+        }
+    }
+
     public var title: String? {
         switch self {
         case .unableToDeleteLastReminder:
@@ -111,6 +120,10 @@ extension RecoveryAction: RecoveryActionSelectable {
 }
 
 extension ModelCompleteError: UserFacingError {
+
+    public var isCritical: Bool {
+        return false
+    }
     
     public var title: String? {
         return UIAlertController.LocalizedString.titleUnsolvedIssues

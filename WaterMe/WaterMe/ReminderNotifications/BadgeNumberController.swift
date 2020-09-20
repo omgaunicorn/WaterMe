@@ -36,13 +36,13 @@ enum BadgeNumberController {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
-            log.info("Background task already in progress. Bailing.")
+            "Background task already in progress. Bailing.".log(as: .info)
             return
         }
         // make sure we're authorized to badge the icon
         guard case .enabled = UNUserNotificationCenter.current().notificationBadgeStatus else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleBadgeIconDeniedBySystem)
-            log.info("User has disabled badge allowance")
+            "User has disabled badge allowance".log(as: .info)
             return
         }
         self.queue.async {

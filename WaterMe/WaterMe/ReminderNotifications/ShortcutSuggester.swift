@@ -64,7 +64,7 @@ class ShortcutSuggester: ShortcutSuggesterProtocol {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
-            log.info("Background task already in progress. Bailing.")
+            "Background task already in progress. Bailing.".log(as: .info)
             return
         }
         self.queue.async {
@@ -133,7 +133,7 @@ class ShortcutSuggester: ShortcutSuggesterProtocol {
 
         INVoiceShortcutCenter.shared.setShortcutSuggestions(allShortcuts)
         self.delegates = [:]
-        log.debug("Shortcut Items Suggested: \(allShortcuts.count)")
+        "Shortcut Items Suggested: \(allShortcuts.count)".log(as: .debug)
     }
 }
 

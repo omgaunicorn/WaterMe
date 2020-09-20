@@ -50,7 +50,7 @@ public enum ReminderVesselIcon: Hashable {
         let smallestScaledDimension = smallestDimension * rawImage.scale
         let originalSquareSize = CGSize(width: smallestScaledDimension, height: smallestScaledDimension)
         let cropped = rawImage.cropping(to: originalSquareSize)
-        let max = UIImage.style_maxSize
+        let max = UIImage.style_maxWidth
         let reducedSize = originalSquareSize.width > max ? CGSize(width: max, height: max) : originalSquareSize
         let resized = cropped.resize(toTargetSize: reducedSize)
         self = .image(resized)
@@ -92,7 +92,13 @@ extension ReminderVesselIcon {
         case .emoji:
             return nil
         case .image(let image):
-            let data = image.dataNoLarger(than: 50000)
+            let max = UIImage.style_maxSize
+            guard let data = image.waterme_jpegData(maxBytes: max) else {
+                let message = "Image couldn't be compressed to fit: \(max) bytes"
+                message.log()
+                assertionFailure(message)
+                return nil
+            }
             return data
         }
     }

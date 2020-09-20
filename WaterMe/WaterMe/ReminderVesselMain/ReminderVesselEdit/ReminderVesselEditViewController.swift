@@ -138,12 +138,12 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
                 let error = NSError(reminderVesselPropertyChangeUnknownCaseError: nil)
                 assertionFailure(String(describing: error))
                 Analytics.log(error: error)
-                log.warning(error)
+                error.log(as: .warning)
                 self.tableViewController?.tableView?.reloadData()
             }
         case .error(let error):
             Analytics.log(error: error)
-            log.error(error)
+            error.log()
             fallthrough
         case .deleted:
             self.reminderVesselWasDeleted()

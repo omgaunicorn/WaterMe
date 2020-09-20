@@ -51,13 +51,13 @@ extension Bundle {
         let __build = self.infoDictionary?[kCFBundleVersionKey as String] as? String
         guard let _build = __build else {
             let message = "Could not retrieve build number from bundle"
-            log.error(message)
+            message.log()
             assertionFailure(message)
             return -2
         }
         guard let build = Int(_build) else {
             let message = "Could not convert build number into Int"
-            log.error(message)
+            message.log()
             assertionFailure(message)
             return -1
         }

@@ -110,7 +110,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 let error = NSError(reminderChangeFiredAfterListOrParentVesselWereSetToNil: nil)
                 assertionFailure(String(describing: error))
                 Analytics.log(error: error)
-                log.error(error)
+                error.log()
                 return
             }
             self.tableView.beginUpdates()
@@ -120,7 +120,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
             self.tableView.endUpdates()
         case .error(let error):
             Analytics.log(error: error)
-            log.error(error)
+            error.log()
             self.reloadReminders()
         }
     }
@@ -154,7 +154,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
             guard invalidated == false else {
                 let error = NSError(underlyingObjectInvalidated: nil)
                 assertionFailure(String(describing: error))
-                log.error(error)
+                error.log()
                 Analytics.log(error: error)
                 return 0
             }

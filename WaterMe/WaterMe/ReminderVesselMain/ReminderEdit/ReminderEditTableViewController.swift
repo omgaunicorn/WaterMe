@@ -339,7 +339,7 @@ fileprivate extension TextFieldTableViewCell {
             self.setTextField(text: description)
         default:
             let error = "Unsupported Kind: \(kind)"
-            log.error(error)
+            error.log()
             assertionFailure(error)
         }
     }

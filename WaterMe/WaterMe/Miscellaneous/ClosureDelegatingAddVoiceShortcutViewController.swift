@@ -50,7 +50,7 @@ class ClosureDelegatingAddVoiceShortcutViewController: INUIAddVoiceShortcutViewC
                                         error: Error?)
     {
         if let error = error {
-            log.error(error)
+            error.log()
             self.completionHandler?(self, .failure(.createShortcutFailed))
         } else if let shortcut = voiceShortcut {
             self.completionHandler?(self, .success(shortcut))

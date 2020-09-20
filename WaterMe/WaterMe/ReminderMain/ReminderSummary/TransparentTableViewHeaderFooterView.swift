@@ -27,8 +27,12 @@ class TransparentTableViewHeaderFooterView: UITableViewHeaderFooterView {
 
     static let reuseID = "TransparentTableViewHeaderFooterView"
 
-    override func didMoveToWindow() {
-        super.didMoveToWindow()
-        self.backgroundView?.alpha = 0
+    override var alpha: CGFloat {
+        get { return 0 }
+        // Something deep inside the framework keeps trying to change
+        // The alpha of my transparent Header/Footer so this override
+        // forces it to be always be 0
+        // swiftlint:disable:next unused_setter_value
+        set { super.alpha = 0 }
     }
 }

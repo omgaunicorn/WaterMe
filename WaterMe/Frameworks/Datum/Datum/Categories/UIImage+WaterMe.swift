@@ -26,7 +26,8 @@ import Calculate
 
 extension UIImage {
 
-    internal static let style_maxSize: CGFloat = 500
+    internal static let style_maxSize: Int = 512000
+    internal static let style_maxWidth: CGFloat = 1536
     internal static let style_scale: CGFloat = 1
 
     internal func cropping(to size: CGSize) -> UIImage {
@@ -73,18 +74,20 @@ extension UIImage {
         return newImage
     }
 
-    internal func dataNoLarger(than max: Int) -> Data? {
-        var compression: CGFloat = 0.5
+    internal func waterme_jpegData(maxBytes: Int? = nil,
+                                   maxQuality: CGFloat = 0.8) -> Data?
+    {
+        var compression = maxQuality <= 1 ? maxQuality : 1
+        guard let maxBytes = maxBytes else {
+            return self.jpegData(compressionQuality: compression)
+        }
         var compressedData: Data?
         while compressedData == nil && compression >= 0 {
             let _data = self.jpegData(compressionQuality: compression)
             compression -= 0.1
-            guard let data = _data, data.count < max else { continue }
+            guard let data = _data, data.count <= maxBytes else { continue }
             compressedData = data
         }
-        let message = "Image couldn't be compressed to fit: \(max) bytes"
-        log.error(message)
-        assert(compressedData != nil, message)
         return compressedData
     }
 }

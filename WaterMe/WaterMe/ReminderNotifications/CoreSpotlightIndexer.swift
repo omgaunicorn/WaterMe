@@ -36,7 +36,7 @@ class CoreSpotlightIndexer {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
-            log.info("Background task already in progress. Bailing.")
+            "Background task already in progress. Bailing.".log(as: .info)
             return
         }
         self.queue.async {
@@ -55,7 +55,7 @@ class CoreSpotlightIndexer {
         let index = CSSearchableIndex.default()
         let deleteError = index.sync_deleteAllSearchableItems()
         if let error = deleteError {
-            log.error(error)
+            error.log()
             Analytics.log(error: error)
             assertionFailure(String(describing: error))
             return
@@ -63,12 +63,12 @@ class CoreSpotlightIndexer {
         let reminderItems = CSSearchableItem.items(from: values)
         let reminderIndexError = index.sync_indexSearchableItems(items: reminderItems)
         if let error = reminderIndexError {
-            log.error(error)
+            error.log()
             Analytics.log(error: error)
             assertionFailure(String(describing: error))
             return
         }
-        log.debug("Spotlight Items Indexed: \(reminderItems.count)")
+        "Spotlight Items Indexed: \(reminderItems.count)".log(as: .debug)
     }
 }
 
