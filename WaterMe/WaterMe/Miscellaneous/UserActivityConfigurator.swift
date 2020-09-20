@@ -89,7 +89,7 @@ private extension UserActivityConfigurator {
     private func updateEditReminderVessel(activity: NSUserActivity, reminderVessel: ReminderVesselValue?) {
         assert(activity.activityType == RawUserActivity.editReminderVessel.rawValue)
         guard let reminderVessel = reminderVessel else {
-            "Unable to save Activity: Missing Reminder Vessel".log()
+            "Unable to save Activity: Missing Reminder Vessel".log(as: .debug)
             activity.waterme_isEligibleForNeededServices = false
             return
         }
