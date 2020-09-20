@@ -243,7 +243,7 @@ extension URLSession {
                 let data = data,
                 let image = UIImage(data: data)
             else {
-                "Unable to download avatar image".log(as: .warning)
+                "Unable to download avatar image".log(as: .info)
                 DispatchQueue.main.async {
                     completion(nil)
                 }
