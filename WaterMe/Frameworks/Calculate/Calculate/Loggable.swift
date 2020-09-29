@@ -39,7 +39,7 @@ public enum Loggable {
             var config = Logger.DefaultSecureConfiguration(identifier: identifier,
                                                            endpointURL: endpoint,
                                                            hmacKey: key,
-                                                           logLevel: .debug,
+                                                           logLevel: .warning,
                                                            errorDelegate: delegate)
             config.storageLocation.appName = "WaterMe"
             log = try? Logger(configuration: config)
