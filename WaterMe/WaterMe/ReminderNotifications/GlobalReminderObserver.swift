@@ -83,7 +83,7 @@ class GlobalReminderObserver {
             self.token?.invalidate()
             self.token = nil
             Analytics.log(error: error)
-            log.error(error)
+            error.log()
         }
     }
 
@@ -91,7 +91,7 @@ class GlobalReminderObserver {
         // make sure there isn't already a background task in progress
         guard self.backgroundTaskID == nil else {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
-            log.info("Background task already in progress. Bailing.")
+            "Background task already in progress. Bailing.".log(as: .info)
             return
         }
         // start a background task

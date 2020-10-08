@@ -85,7 +85,7 @@ internal class RealmToCoreDataMigrator: Migratable {
 
             // Get our Data to work with
             var srcVessels = Array(realm.objects(RLM_ReminderVessel.self))
-            log.debug("Vessels to Migrate: \(srcVessels.count)")
+            "Vessels to Migrate: \(srcVessels.count)".log(as: .debug)
             let totalUnitCount = Int64(srcVessels.count)
             progress.totalUnitCount = totalUnitCount
             var srcVessel: RLM_ReminderVessel! = srcVessels.popLast()
@@ -101,10 +101,10 @@ internal class RealmToCoreDataMigrator: Migratable {
                             completedUnitCount += 1
                             progress.completedUnitCount = completedUnitCount
                         } catch {
-                            log.error(error)
+                            error.log()
                         }
                         srcVessel = srcVessels.popLast()
-                        log.debug("Vessels to Migrate: \(srcVessels.count)")
+                        "Vessels to Migrate: \(srcVessels.count)".log(as: .debug)
                     }
 
                     // Vessel: Configure
@@ -160,9 +160,9 @@ internal class RealmToCoreDataMigrator: Migratable {
                     // Cleanup source, this HAS to work for migration to finish
                     do {
                         try FileManager.default.removeItem(at: RLM_BasicController.storeDirectoryURL)
-                        log.info("Migration Succeeded")
+                        "Migration Succeeded".log(as: .info)
                     } catch {
-                        log.error("Migration Error: Succeeded but failed to delete Realm DB: \(error)")
+                        "Migration Error: Succeeded but failed to delete Realm DB: \(error)".log()
                         completed = false
                     }
                 } else {
@@ -175,9 +175,9 @@ internal class RealmToCoreDataMigrator: Migratable {
                     }
                     do {
                         try context.save()
-                        log.error("Migration Failed: Successfully cleaned up Core Data")
+                        "Migration Failed: Successfully cleaned up Core Data".log()
                     } catch {
-                        log.error("Migration Failed: Failed to clean up Core Data: \(error)")
+                        "Migration Failed: Failed to clean up Core Data: \(error)".log()
                     }
                 }
             }

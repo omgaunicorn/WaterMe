@@ -68,7 +68,7 @@ public enum ItemAndSectionSanityCheckFailureReason {
                 // then there are insertions or deletions in the given section
                 // we need to make sure the math works out
                 let pass = oldCount + insCount - delsCount == newCount
-                log.debug("Sanity Check: Modified Section: \(section): \(pass)")
+                "Sanity Check: Modified Section: \(section): \(pass)".log(as: .debug)
                 if pass == false {
                     return .modifiedSectionMismatch(section: section,
                                                     oldCount: oldCount,
@@ -81,7 +81,7 @@ public enum ItemAndSectionSanityCheckFailureReason {
                 // then there are no changes in the section at hand
                 // we just need to make sure the lhs and rhs count in the section match
                 let pass = oldCount == newCount
-                log.debug("Sanity Check: Unmodified Section: \(section): \(pass)")
+                "Sanity Check: Unmodified Section: \(section): \(pass)".log(as: .debug)
                 if pass == false {
                     return .unmodifiedSectionMismatch(section: section,
                                                       oldCount: oldCount,

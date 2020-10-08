@@ -108,7 +108,7 @@ internal class GroupedCollection<
             let collection = self.data[section]
         else {
             let error = NSError(dataForSectionWasNilInNumberOfItemsInSection: index.section)
-            log.error(error)
+            error.log()
             return nil
         }
         return collection.count
@@ -126,7 +126,7 @@ internal class GroupedCollection<
         else {
             let error = NSError(dataForSectionWasNilInReminderAtIndexPath: index)
             assertionFailure(String(describing: error))
-            log.error(error)
+            error.log()
             return nil
         }
         
@@ -138,7 +138,7 @@ internal class GroupedCollection<
         guard collection.count > row else {
             let error = NSError(outOfBoundsRowAtIndexPath: index)
             assertionFailure(String(describing: error))
-            log.error(error)
+            error.log()
             return nil
         }
 

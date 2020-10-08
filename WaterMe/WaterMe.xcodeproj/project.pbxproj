@@ -78,7 +78,6 @@
 		502E68311F91188D00B0359C /* ReminderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */; };
 		502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */; };
 		5031FBFB24F7ACBE00CBBB2E /* ServerlessLogger in Frameworks */ = {isa = PBXBuildFile; productRef = 5031FBFA24F7ACBE00CBBB2E /* ServerlessLogger */; };
-		5032D7DD24E1437C00C928D7 /* LogConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5032D7DC24E1437C00C928D7 /* LogConfigurator.swift */; };
 		5034764C24552CFD00C3DAD3 /* Datum.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5034764324552CFD00C3DAD3 /* Datum.framework */; };
 		5034765324552CFD00C3DAD3 /* DatumTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5034765224552CFD00C3DAD3 /* DatumTests.swift */; };
 		5034765524552CFD00C3DAD3 /* Datum.h in Headers */ = {isa = PBXBuildFile; fileRef = 5034764524552CFD00C3DAD3 /* Datum.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -211,6 +210,8 @@
 		50DD7A38215D6BBF00047B0C /* EmojiImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B61EE01F2FB904004654B4 /* EmojiImageView.swift */; };
 		50E3F2CB1FF70D27003245E3 /* CoreDataMigration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */; };
 		50E3F2CD1FF70D3B003245E3 /* CoreDataMigratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */; };
+		50E831F3250CB598008758E2 /* Loggable+System.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E831F2250CB598008758E2 /* Loggable+System.swift */; };
+		50E831FD250CF567008758E2 /* Loggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E831FC250CF567008758E2 /* Loggable.swift */; };
 		50E8B1E41EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E8B1E31EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard */; };
 		50E8B1E61EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E51EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift */; };
 		50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */; };
@@ -435,7 +436,6 @@
 		5029E09A214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReminderSummaryPopoverBackgroundView.m; sourceTree = "<group>"; };
 		502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderCollectionViewCell.xib; sourceTree = "<group>"; };
 		502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFinishDropTargetViewController.swift; sourceTree = "<group>"; };
-		5032D7DC24E1437C00C928D7 /* LogConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogConfigurator.swift; sourceTree = "<group>"; };
 		5034761324552B5200C3DAD3 /* Datum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Datum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5034763B24552BCF00C3DAD3 /* Store.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Store.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5034764324552CFD00C3DAD3 /* Datum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Datum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -579,6 +579,8 @@
 		50D2B2B8216FD4EF00957E04 /* ReminderVesselEditViewController+Delegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReminderVesselEditViewController+Delegate.swift"; sourceTree = "<group>"; };
 		50E3F2CA1FF70D27003245E3 /* CoreDataMigration.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CoreDataMigration.storyboard; sourceTree = "<group>"; };
 		50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMigratorViewController.swift; sourceTree = "<group>"; };
+		50E831F2250CB598008758E2 /* Loggable+System.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Loggable+System.swift"; sourceTree = "<group>"; };
+		50E831FC250CF567008758E2 /* Loggable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loggable.swift; sourceTree = "<group>"; };
 		50E8B1E31EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ReminderVesselEdit.storyboard; sourceTree = "<group>"; };
 		50E8B1E51EE1C1F100ACCDAF /* ReminderVesselEditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselEditViewController.swift; sourceTree = "<group>"; };
 		50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselEditTableViewController.swift; sourceTree = "<group>"; };
@@ -730,7 +732,8 @@
 				48A7B0F22467FDF500DC0861 /* NSCalendar+WaterMe.swift */,
 				48A7B0F12467FDF500DC0861 /* SignificantTimePassedDetector.swift */,
 				48A7B0F42467FDF600DC0861 /* UserFacingError.swift */,
-				5032D7DC24E1437C00C928D7 /* LogConfigurator.swift */,
+				50E831FC250CF567008758E2 /* Loggable.swift */,
+				50E831F2250CB598008758E2 /* Loggable+System.swift */,
 				48A7B0D62467FCB100DC0861 /* Info.plist */,
 			);
 			name = Calculate;
@@ -1652,9 +1655,10 @@
 				48A7B0F62467FDF600DC0861 /* SignificantTimePassedDetector.swift in Sources */,
 				48A7B0F52467FDF600DC0861 /* PrivateKeys.swift in Sources */,
 				48A7B0F82467FDF600DC0861 /* AppVersion.swift in Sources */,
+				50E831F3250CB598008758E2 /* Loggable+System.swift in Sources */,
 				48A7B0F72467FDF600DC0861 /* NSCalendar+WaterMe.swift in Sources */,
-				5032D7DD24E1437C00C928D7 /* LogConfigurator.swift in Sources */,
 				48A7B0F92467FDF600DC0861 /* UserFacingError.swift in Sources */,
+				50E831FD250CF567008758E2 /* Loggable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2425,7 +2429,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 257011;
+				CURRENT_PROJECT_VERSION = 258006;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2433,7 +2437,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.7;
+				MARKETING_VERSION = 2.5.8;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"DEBUG\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2451,7 +2455,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 257011;
+				CURRENT_PROJECT_VERSION = 258006;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2459,7 +2463,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.7;
+				MARKETING_VERSION = 2.5.8;
 				OTHER_SWIFT_FLAGS = "$(inherited) \"-D\" \"COCOAPODS\" \"-D\" \"RELEASE\"";
 				PRODUCT_BUNDLE_IDENTIFIER = com.saturdayapps.WaterMe;
 				PRODUCT_NAME = "$(TARGET_NAME)";

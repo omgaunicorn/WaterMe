@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // configure logging
         UIDevice.current.isBatteryMonitoringEnabled = true // turned on for logger
-        LogConfigure(with: self.loggerDelegate)
+        Loggable.configure(with: self.loggerDelegate)
 
         // configure simulator
         self.simulator_configure()
@@ -175,7 +175,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                         to: reviewDate),
                 now >= forwardDate
             else { return }
-            log.info("Requested App Review with SKStoreReviewController")
+            "Requested App Review with SKStoreReviewController".log(as: .info)
             Analytics.log(event: Analytics.Event.reviewRequested)
             SKStoreReviewController.requestReview()
             ud.requestReviewDate = nil // nil this out so they won't be asked again until next update
@@ -268,7 +268,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     private func simulator_configure() {
         #if targetEnvironment(simulator)
-        log.debug(NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0].log(as: .debug)
         #endif
     }
 }

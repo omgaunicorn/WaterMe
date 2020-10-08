@@ -81,7 +81,7 @@ class ReminderVesselCollectionViewController: StandardCollectionViewController, 
             }, completion: nil)
         case .error(let error):
             Analytics.log(error: error)
-            log.error(error)
+            error.log()
         }
     }
     

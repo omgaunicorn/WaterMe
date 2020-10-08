@@ -48,13 +48,13 @@ class ReminderUserNotificationController {
 
             // make sure we have data to work with before continuing
             guard values.isEmpty == false else {
-                log.debug("Reminder array was empty")
+                "Reminder array was empty".log(as: .debug)
                 return
             }
 
             // make sure we're authorized to send notifications
             guard center.notificationAuthorizationStatus.boolValue else {
-                log.info("User has turned System notification toggle off")
+                "User has turned System notification toggle off".log(as: .info)
                 Analytics.log(event: Analytics.NotificationPermission.scheduleDeniedBySystem)
                 return
             }
@@ -63,7 +63,7 @@ class ReminderUserNotificationController {
             Analytics.log(event: Analytics.NotificationPermission.scheduleSucceeded,
                           extras: Analytics.NotificationPermission.extras(forCount: requests.count))
             guard requests.isEmpty == false else {
-                log.debug("No notifications to schedule")
+                "No notifications to schedule".log(as: .debug)
                 return
             }
 
@@ -81,7 +81,7 @@ class ReminderUserNotificationController {
             scheduleLoop = { error in
                 if let error = error {
                     // error, time to bail
-                    log.error(error)
+                    error.log()
                     Analytics.log(error: error)
                     assertionFailure()
                     completion()
@@ -92,7 +92,7 @@ class ReminderUserNotificationController {
                     center.add(requests[idx], withCompletionHandler: scheduleLoop)
                 } else {
                     // finished successfully!
-                    log.debug("Scheduled Notifications: \(requests.count)")
+                    "Scheduled Notifications: \(requests.count)".log(as: .debug)
                     completion()
                 }
                 idx += 1

@@ -31,6 +31,15 @@ public enum UserActivityError: Error {
 
 extension UserActivityError: UserFacingError {
 
+    public var isCritical: Bool {
+        switch self {
+        case .restorationFailed, .createShortcutFailed, .continuationFailed:
+            return true
+        case .reminderNotFound, .reminderVesselNotFound:
+            return false
+        }
+    }
+
     public var title: String? {
         switch self {
         case .continuationFailed, .restorationFailed, .createShortcutFailed:

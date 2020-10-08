@@ -31,7 +31,7 @@ extension Realm {
             try self.commitWrite()
             return .success(())
         } catch {
-            log.error(error)
+            error.log()
             return .failure(.writeError)
         }
     }
@@ -64,7 +64,7 @@ internal class RLM_BasicController: BasicController {
             #endif
             return try .success(realm)
         } catch {
-            log.error(error)
+            error.log()
             return .failure(.loadError)
         }
     }
