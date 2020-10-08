@@ -425,6 +425,9 @@ extension CoreDataMigratorViewController {
         static let deleteButtonTitle =
             NSLocalizedString("Don’t Migrate My Plants",
                               comment: "MigratorScreen: Delete Button Title: When the user clicks this button, the screen is dismissed and it will never appear again and they will not have access to their previous plants. This action is destructive.")
+        static let finishButtonTitle =
+            NSLocalizedString("Finish",
+                              comment: "MigratorScreen: Finish Button Title: After the migration is done, this button allows the user to finish the migration and go back to using the app as normal.")
         static let bodyDeleteConfirmation =
             NSLocalizedString("This cannot be undone and may cause data loss.",
                               comment: "MigratorScreen: Confirmation that the user does not want to migrate their plants.")

@@ -1,4 +1,4 @@
-﻿/**
+/**
                          _____ _        _
     /\                  / ____| |      (_)
    /  \   _ __  _ __   | (___ | |_ _ __ _ _ __   __ _ ___
@@ -458,43 +458,46 @@
  */
 
 /* MigratorScreen: Subtitle: Explains what is happening on the screen. */
-"Data Migration" = "Data Migration";
+//"Data Migration" = "Data Migration";
 
 /* MigratorScreen: Subtitle: Explains an error ocurred while migrating */
-"Migration Error" = "Migration Error";
+//"Migration Error" = "Migration Error";
 
 /* MigratorScreen: Body: Body text that explains the one time migration needed to upgrade to the new WaterMe. */
-"Sorry for the interruption. A one-time data migration is needed in order to continue using WaterMe." = "Sorry for the interruption. A one-time data migration is needed in order to continue using WaterMe.";
+//"Sorry for the interruption. A one-time data migration is needed in order to continue using WaterMe." = "Sorry for the interruption. A one-time data migration is needed in order to continue using WaterMe.";
 
 /* MigratorScreen: Body: Body text that explains that the user should not lock the screen or switch apps until the migration is complete. */
-"Don't go to the home screen, change apps, or lock the screen." = "Don't go to the home screen, change apps, or lock the screen.";
+//"Don't go to the home screen, change apps, or lock the screen." = "Don't go to the home screen, change apps, or lock the screen.";
 
 /* MigratorScreen: Body: Body text that explains that the migration succeeded. */
-"Success! Your plants have been migrated." = "Success! Your plants have been migrated.";
+//"Success! Your plants have been migrated." = "Success! Your plants have been migrated.";
 
 /* MigratorScreen: Body: An error ocurred before migration started. */
-"Migration could not be started due to an error. Please try again later." = "Migration could not be started due to an error. Please try again later.";
+//"Migration could not be started due to an error. Please try again later." = "Migration could not be started due to an error. Please try again later.";
 
 /* MigratorScreen: Body: Body text that explains that all data should be migrated but there was an error cleaning up at the end. */
-"An error ocurred when cleaning up after migration. Please double-check all of your plants are in WaterMe." = "An error ocurred when cleaning up after migration. Please double-check all of your plants are in WaterMe.";
+//"An error ocurred when cleaning up after migration. Please double-check all of your plants are in WaterMe." = "An error ocurred when cleaning up after migration. Please double-check all of your plants are in WaterMe.";
 
 /* MigratorScreen: Body: Body text that explains that migration may be incomplete. */
-"One or more plants could not be migrated. Please double-check all of your plants are in WaterMe." = "One or more plants could not be migrated. Please double-check all of your plants are in WaterMe.";
+//"One or more plants could not be migrated. Please double-check all of your plants are in WaterMe." = "One or more plants could not be migrated. Please double-check all of your plants are in WaterMe.";
 
 /* MigratorScreen: Start Button Title: When the user clicks this button the migration starts. */
-"Start Migration" = "Start Migration";
+//"Start Migration" = "Start Migration";
 
 /* MigratorScreen: Migrating Button Title: After the user starts the migration, the text of the button changes to this to show that migration is in progress. */
-"Migrating…" = "Migrating…";
+//"Migrating…" = "Migrating…";
 
 /* MigratorScreen: Cancel Button Title: When the user clicks this button the screen is dismissed and the migration does not happen, but next time the app is started, it will ask again. */
-"Skip for Now" = "Skip for Now";
+//"Skip for Now" = "Skip for Now";
 
 /* MigratorScreen: Delete Button Title: When the user clicks this button, the screen is dismissed and it will never appear again and they will not have access to their previous plants. This action is destructive. */
-"Don’t Migrate My Plants" = "Don’t Migrate My Plants";
+//"Don’t Migrate My Plants" = "Don’t Migrate My Plants";
 
 /* MigratorScreen: Confirmation that the user does not want to migrate their plants. */
-"This cannot be undone and may cause data loss." = "This cannot be undone and may cause data loss.";
+//"This cannot be undone and may cause data loss." = "This cannot be undone and may cause data loss.";
+
+/* MigratorScreen: Finish Button Title: After the migration is done, this button allows the user to finish the migration and go back to using the app as normal. */
+// "Finish" = "Finish";
 
 /*
   _____                       _        _____  ____

@@ -146,7 +146,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
             self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodySuccess,
                                                                 font: .migratorBody)
             self.cancelButton?.setAttributedTitle(
-                NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleDismiss,
+                NSAttributedString(string: LocalizedString.finishButtonTitle,
                                    font: .migratorPrimaryButton),
                                    for: .normal
             )
