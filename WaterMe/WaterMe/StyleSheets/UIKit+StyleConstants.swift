@@ -26,6 +26,8 @@ import UIKit
 import AVFoundation
 
 extension UIView {
+    /// Animates in a normal way.
+    /// Executes completion closure when animation completes.
     class func style_animateNormal(_ animations: @escaping () -> Void, completion: @escaping ((Bool) -> Void)) {
         self.animate(withDuration: UIApplication.style_animationDurationNormal,
                      delay: 0,
@@ -33,6 +35,7 @@ extension UIView {
                      animations: animations,
                      completion: completion)
     }
+    /// Animates in a normal way.
     class func style_animateNormal(_ animations: @escaping () -> Void) {
         self.animate(withDuration: UIApplication.style_animationDurationNormal,
                      delay: 0,
@@ -40,6 +43,8 @@ extension UIView {
                      animations: animations,
                      completion: nil)
     }
+    /// Animates in a slightly longer way than normal.
+    /// Executes completion closure when animation completes.
     class func style_animateLong(_ animations: @escaping () -> Void, completion: @escaping ((Bool) -> Void)) {
         self.animate(withDuration: UIApplication.style_animationDurationLong,
                      delay: 0,
@@ -47,6 +52,7 @@ extension UIView {
                      animations: animations,
                      completion: completion)
     }
+    /// Animates in a slightly longer way than normal.
     class func style_animateLong(_ animations: @escaping () -> Void) {
         self.animate(withDuration: UIApplication.style_animationDurationLong,
                      delay: 0,
