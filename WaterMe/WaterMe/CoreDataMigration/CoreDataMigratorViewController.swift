@@ -222,7 +222,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
 
     @IBAction private func deleteButtonTapped(_ sender: Any) {
         let vc = UIAlertController(title: nil,
-                                   message: LocalizedString.bodyDeleteConfirmation		,
+                                   message: LocalizedString.bodyDeleteConfirmation,
                                    preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: LocalizedString.deleteButtonTitle,
                                          style: .destructive)

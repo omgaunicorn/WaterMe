@@ -61,11 +61,11 @@ internal class CD_BasicController: BasicController {
         let lock = DispatchSemaphore(value: 0)
         var error: Error?
         container.loadPersistentStores() { _, _error in
-			error = _error
+            error = _error
             lock.signal()
         }
         lock.wait()
-		guard error == nil else { throw error! }
+        guard error == nil else { throw error! }
         container.viewContext.automaticallyMergesChangesFromParent = true
         let fetchRequest = CD_VesselShare.request
         let ctx = container.viewContext
