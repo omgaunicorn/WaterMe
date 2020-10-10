@@ -500,13 +500,12 @@ extension CD_BasicController {
     private static let sampleDB2URL = Bundle.main.url(forResource: "StarterData", withExtension: "sqlite-wal")
 
     internal class var storeDirectoryURL: URL {
-        let appsupport = FileManager.default.urls(
-            for: FileManager.SearchPathDirectory.applicationSupportDirectory,
-            in: FileManager.SearchPathDomainMask.userDomainMask
-        ).first!
-        let url = appsupport.appendingPathComponent("WaterMe", isDirectory: true)
-                            .appendingPathComponent("CoreData", isDirectory: true)
-        return url
+        return FileManager.default
+            .containerURL(forSecurityApplicationGroupIdentifier: "group.com.saturdayapps.WaterMe")!
+            .appendingPathComponent("Library", isDirectory: true)
+            .appendingPathComponent("Application Support", isDirectory: true)
+            .appendingPathComponent("WaterMe", isDirectory: true)
+            .appendingPathComponent("CoreData", isDirectory: true)
     }
 
     private class var dbFileURL1: URL {
