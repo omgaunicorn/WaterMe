@@ -26,8 +26,9 @@ import CoreData
 @objc(CD_Reminder)
 internal class CD_Reminder: CD_Base {
 
+    override class var entityName: String { "CD_Reminder" }
     class var request: NSFetchRequest<CD_Reminder> {
-        NSFetchRequest<CD_Reminder>(entityName: "CD_Reminder")
+        NSFetchRequest<CD_Reminder>(entityName: self.entityName)
     }
     
     @NSManaged var interval: Int32

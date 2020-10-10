@@ -26,8 +26,9 @@ import CoreData
 @objc(CD_ReminderVessel)
 internal class CD_ReminderVessel: CD_Base {
 
+    override class var entityName: String { "CD_ReminderVessel" }
     class var request: NSFetchRequest<CD_ReminderVessel> {
-        NSFetchRequest<CD_ReminderVessel>(entityName: "CD_ReminderVessel")
+        NSFetchRequest<CD_ReminderVessel>(entityName: self.entityName)
     }
     
     @NSManaged var displayName: String?

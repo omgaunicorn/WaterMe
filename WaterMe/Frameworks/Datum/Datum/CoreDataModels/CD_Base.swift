@@ -25,6 +25,8 @@ import CoreData
 
 @objc(CD_Base)
 internal class CD_Base: NSManagedObject {
+
+    class var entityName: String { "CD_Base" }
     
     @NSManaged var dateModified: Date
     @NSManaged var dateCreated: Date

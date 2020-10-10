@@ -258,76 +258,53 @@ internal class CD_BasicController: BasicController {
     }
 
     func reminderVessel(matching id: Identifier) -> Result<ReminderVessel, DatumError> {
-        let coordinator = self.container.persistentStoreCoordinator
-        let context = self.container.viewContext
-        
-        // debug only sanity checks
-        assert(Thread.isMainThread)
-
-        if id.uuid.starts(with: "x-coredata://") {
-            // Core Data reference
-            guard
-                let id = coordinator.managedObjectID(forURIRepresentation: URL(string: id.uuid)!),
-                let reminderVessel = context.object(with: id) as? CD_ReminderVessel
-            else { return .failure(.objectDeleted) }
-            return .success(CD_ReminderVesselWrapper(reminderVessel, context: { self.container.viewContext }))
-        } else if UUID(uuidString: id.uuid) != nil {
-            // Migrated Legacy Realm Reference
-            do {
-                let request = CD_ReminderVessel.request
-                request.predicate = NSPredicate(format: "legacyRealmIdentifier == %@", id.uuid)
-                let results = try context.fetch(request)
-                let count = results.count
-                guard count >= 1 else { return .failure(.objectDeleted) }
-                if count > 1 {
-                    "ID: \(id.uuid), Found: \(count) reminder vessels via legacy realm ID when there should only be 1".log()
-                }
-                return .success(CD_ReminderVesselWrapper(results.first!, context: { self.container.viewContext }))
-            } catch {
-                error.log()
-                return .failure(.loadError)
-            }
-        } else {
-            // Unknown
-            "Unknown kind of ReminderVessel Identifier Requested: \(id.uuid)".log()
-            return .failure(.objectDeleted)
+        return __untyped_object(matching: id, kind: CD_ReminderVessel.self).flatMap {
+            guard let object = $0 as? CD_ReminderVessel else { return .failure(.objectDeleted) }
+            return .success(CD_ReminderVesselWrapper(object, context: { self.container.viewContext }))
         }
     }
 
     func reminder(matching id: Identifier) -> Result<Reminder, DatumError> {
+        return __untyped_object(matching: id, kind: CD_Reminder.self).flatMap {
+            guard let object = $0 as? CD_Reminder else { return .failure(.objectDeleted) }
+            return .success(CD_ReminderWrapper(object, context: { self.container.viewContext }))
+        }
+    }
+
+    func __untyped_object(matching id: Identifier, kind: CD_Base.Type) -> Result<CD_Base, DatumError> {
         let coordinator = self.container.persistentStoreCoordinator
         let context = self.container.viewContext
 
         // debug only sanity checks
         assert(Thread.isMainThread)
 
-        if id.uuid.starts(with: "x-coredata://") {
-            // Core Data reference
-            guard
-                let id = coordinator.managedObjectID(forURIRepresentation: URL(string: id.uuid)!),
-                let reminderVessel = context.object(with: id) as? CD_Reminder
-            else { return .failure(.objectDeleted) }
-            return .success(CD_ReminderWrapper(reminderVessel, context: { self.container.viewContext }))
-        } else if UUID(uuidString: id.uuid) != nil {
-            // Migrated Legacy Realm Reference
-            do {
-                let request = CD_Reminder.request
+        do {
+            if id.uuid.starts(with: "x-coredata://") {
+                // Core Data reference
+                guard
+                    let id = coordinator.managedObjectID(forURIRepresentation: URL(string: id.uuid)!),
+                    let object = try context.existingObject(with: id) as? CD_Base
+                else { return .failure(.objectDeleted) }
+                return .success(object)
+            } else if UUID(uuidString: id.uuid) != nil {
+                // Migrated Legacy Realm Reference
+                let request = NSFetchRequest<NSFetchRequestResult>(entityName: kind.entityName)
                 request.predicate = NSPredicate(format: "legacyRealmIdentifier == %@", id.uuid)
                 let results = try context.fetch(request)
                 let count = results.count
-                guard count >= 1 else { return .failure(.objectDeleted) }
                 if count > 1 {
                     "ID: \(id.uuid), Found: \(count) reminder vessels via legacy realm ID when there should only be 1".log()
                 }
-                return .success(CD_ReminderWrapper(results.first!, context: { self.container.viewContext }))
-            } catch {
-                error.log()
-                return .failure(.loadError)
+                guard let object = results.first as? CD_Base else { return .failure(.objectDeleted) }
+                return .success(object)
+            } else {
+                // Unknown
+                "Unknown kind of ReminderVessel Identifier Requested: \(id.uuid)".log()
+                return .failure(.objectDeleted)
             }
-        } else {
-            // Unknown
-            "Unknown kind of ReminderVessel Identifier Requested: \(id.uuid)".log()
-            return .failure(.objectDeleted)
+        } catch {
+            error.log()
+            return .failure(.loadError)
         }
     }
 
