@@ -31,6 +31,7 @@ internal class CD_Base: NSManagedObject {
     @NSManaged var dateModified: Date
     @NSManaged var dateCreated: Date
     @NSManaged var bloop: Bool
+    @NSManaged var realm_migratedIdentifier: String?
     
     override func awakeFromInsert() {
         super.awakeFromInsert()
