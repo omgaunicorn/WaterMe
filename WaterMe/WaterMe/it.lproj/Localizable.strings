@@ -494,7 +494,7 @@
 //"Don’t Migrate My Plants" = "Don’t Migrate My Plants";
 
 /* MigratorScreen: Confirmation that the user does not want to migrate their plants. */
-//"This cannot be undone and may cause data loss." = "This cannot be undone and may cause data loss.";
+//"This cannot be undone." = "This cannot be undone.";
 
 /* MigratorScreen: Finish Button Title: After the migration is done, this button allows the user to finish the migration and go back to using the app as normal. */
 // "Finish" = "Finish";

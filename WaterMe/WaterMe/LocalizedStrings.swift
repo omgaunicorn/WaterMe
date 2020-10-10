@@ -429,7 +429,7 @@ extension CoreDataMigratorViewController {
             NSLocalizedString("Finish",
                               comment: "MigratorScreen: Finish Button Title: After the migration is done, this button allows the user to finish the migration and go back to using the app as normal.")
         static let bodyDeleteConfirmation =
-            NSLocalizedString("This cannot be undone and may cause data loss.",
+            NSLocalizedString("This cannot be undone.",
                               comment: "MigratorScreen: Confirmation that the user does not want to migrate their plants.")
     }
 }
