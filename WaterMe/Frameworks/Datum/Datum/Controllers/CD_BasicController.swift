@@ -499,24 +499,26 @@ extension CD_BasicController {
     private static let sampleDB1URL = Bundle.main.url(forResource: "StarterData", withExtension: "sqlite")
     private static let sampleDB2URL = Bundle.main.url(forResource: "StarterData", withExtension: "sqlite-wal")
 
-    internal class var storeDirectoryURL: URL {
+    internal static let storeDirectoryURL: URL = {
         return FileManager.default
             .containerURL(forSecurityApplicationGroupIdentifier: "group.com.saturdayapps.WaterMe")!
             .appendingPathComponent("Library", isDirectory: true)
             .appendingPathComponent("Application Support", isDirectory: true)
             .appendingPathComponent("WaterMe", isDirectory: true)
             .appendingPathComponent("CoreData", isDirectory: true)
-    }
+    }()
 
-    private class var dbFileURL1: URL {
-        return self.storeDirectoryURL.appendingPathComponent("WaterMe.sqlite",
-                                                          isDirectory: false)
-    }
+    private static let dbFileURL1: URL = {
+        return CD_BasicController
+            .storeDirectoryURL
+            .appendingPathComponent("WaterMe.sqlite", isDirectory: false)
+    }()
 
-    private class var dbFileURL2: URL {
-        return self.storeDirectoryURL.appendingPathComponent("WaterMe.sqlite-wal",
-                                                          isDirectory: false)
-    }
+    private static let dbFileURL2: URL = {
+        return CD_BasicController
+            .storeDirectoryURL
+            .appendingPathComponent("WaterMe.sqlite-wal", isDirectory: false)
+    }()
 
     internal class var storeExists: Bool {
         let fm = FileManager.default
