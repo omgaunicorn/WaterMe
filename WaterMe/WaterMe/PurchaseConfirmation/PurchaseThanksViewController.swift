@@ -37,6 +37,7 @@ class PurchaseThanksViewController: StandardViewController {
         case .success:
             Analytics.log(event: Analytics.IAPOperation.buySuccess)
             return PurchaseThanksViewController.newVC() { vc in
+                inFlight.transaction.transactionIdentifier?.log(as: .warning)
                 AppDelegate.shared.purchaseController?.finish(inFlight: inFlight)
                 completion(vc)
             }
