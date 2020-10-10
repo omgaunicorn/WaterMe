@@ -38,13 +38,13 @@ internal class RealmToCoreDataMigrator: Migratable {
     init?(testingSource: RLM_BasicController? = nil) {
         if let source = testingSource {
             self.source = source
-        } else {
-            guard
-                RLM_BasicController.storeExists,
-                let source = try? RLM_BasicController(kind: .local, forTesting: false)
-            else { return nil }
-            self.source = source
+            return
         }
+        guard
+            RLM_BasicController.storeExists,
+            let source = try? RLM_BasicController(kind: .local, forTesting: false)
+        else { return nil }
+        self.source = source
     }
 
     func skipMigration() -> MigratableResult {
