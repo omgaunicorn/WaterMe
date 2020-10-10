@@ -316,31 +316,6 @@ internal class RLM_BasicController: BasicController {
             return realm.waterMe_commitWrite()
         }
     }
-
-    internal func coreDataMigration(vesselName: String?,
-                                    vesselImage: UIImage?,
-                                    vesselEmoji: String?,
-                                    reminderInterval: NSNumber?,
-                                    reminderLastPerformDate: Date?) -> Result<Void, DatumError>
-    {
-        return self.realm.flatMap() { realm in
-            realm.beginWrite()
-            let vessel = RLM_ReminderVessel()
-            vessel.displayName = vesselName
-            vessel.icon = ReminderVesselIcon(rawImage: vesselImage, emojiString: vesselEmoji)
-            let reminder = RLM_Reminder()
-            reminder.interval = reminderInterval?.intValue ?? -1
-            if let lastPerformDate = reminderLastPerformDate {
-                let performed = RLM_ReminderPerform()
-                performed.date = lastPerformDate
-                reminder.performed.append(performed)
-                reminder.recalculateNextPerformDate()
-            }
-            vessel.reminders.append(reminder)
-            realm.add(vessel)
-            return realm.waterMe_commitWrite()
-        }
-    }
         
     internal func delete(vessel: ReminderVessel) -> Result<Void, DatumError> {
         let vessel = (vessel as! RLM_ReminderVesselWrapper).wrappedObject

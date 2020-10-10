@@ -62,9 +62,6 @@ public protocol BasicController: class {
     // MARK: Delete
     func delete(vessel: ReminderVessel) -> Result<Void, DatumError>
     func delete(reminder: Reminder) -> Result<Void, DatumError>
-
-    // MARK: Random
-    func coreDataMigration(vesselName: String?, vesselImage: UIImage?, vesselEmoji: String?, reminderInterval: NSNumber?, reminderLastPerformDate: Date?) -> Result<Void, DatumError>
 }
 
 public protocol HasBasicController {

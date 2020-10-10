@@ -434,17 +434,6 @@ internal class CD_BasicController: BasicController {
             return .failure(.writeError)
         }
     }
-
-    // MARK: Random
-    
-    func coreDataMigration(vesselName: String?,
-                           vesselImage: UIImage?,
-                           vesselEmoji: String?,
-                           reminderInterval: NSNumber?,
-                           reminderLastPerformDate: Date?) -> Result<Void, DatumError>
-    {
-        return .failure(.loadError)
-    }
 }
 
 extension CD_BasicController {
