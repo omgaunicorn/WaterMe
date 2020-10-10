@@ -159,18 +159,6 @@
                ReferencedContainer = "container:WaterMe.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "50C96A361EC2CFE8002802C1"
-               BuildableName = "NoDeviceTests.xctest"
-               BlueprintName = "NoDeviceTests"
-               ReferencedContainer = "container:WaterMe.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
