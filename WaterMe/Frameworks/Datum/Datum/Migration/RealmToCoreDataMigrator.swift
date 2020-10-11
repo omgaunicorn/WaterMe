@@ -162,7 +162,7 @@ internal class RealmToCoreDataMigrator: Migratable {
                     // Cleanup source, this HAS to work for migration to finish
                     do {
                         try FileManager.default.removeItem(at: RLM_BasicController.storeDirectoryURL)
-                        "Migration Succeeded".log(as: .warning)
+                        "Migration Succeeded".log(as: .info)
                     } catch {
                         "Migration Error: Succeeded but failed to delete Realm DB: \(error)".log()
                         completed = false
