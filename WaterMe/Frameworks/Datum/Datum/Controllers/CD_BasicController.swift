@@ -277,32 +277,52 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
 
         do {
-            if id.uuid.starts(with: "x-coredata://") {
+            if id.uuid.starts(with: "x-coredata://"), let url = URL(string: id.uuid) {
                 // Core Data reference
-                guard
-                    let id = coordinator.managedObjectID(forURIRepresentation: URL(string: id.uuid)!),
-                    let object = try context.existingObject(with: id) as? CD_Base
-                else { return .failure(.objectDeleted) }
+                guard let id = coordinator.managedObjectID(forURIRepresentation: url)
+                    else { return .failure(.objectDeleted) }
+                let _object = try context.existingObject(with: id)
+                // if the object is the wrong type, log as an error
+                guard let object = _object as? T else {
+                    let e = "found: \(type(of:_object)) != expected: \(T.self))"
+                    assertionFailure(e)
+                    e.log()
+                    return .failure(.objectDeleted)
+                }
                 return .success(object)
             } else if UUID(uuidString: id.uuid) != nil {
                 // Migrated Legacy Realm Reference
-                let request = NSFetchRequest<NSFetchRequestResult>(entityName: kind.entityName)
-                request.predicate = NSPredicate(format: "%K == %@", #keyPath(CD_Base.realm_migratedIdentifier), id.uuid)
-                let results = try context.fetch(request)
+                let req = NSFetchRequest<NSFetchRequestResult>(entityName: T.entityName)
+                req.predicate = .init(format: "%K == %@",
+                                      #keyPath(CD_Base.realm_migratedIdentifier), id.uuid)
+                let results = try context.fetch(req)
                 let count = results.count
+                // if we had no results, return object deleted
+                guard count > 0 else { return .failure(.objectDeleted) }
+                // if we had more than 1 result, just log this as an error
                 if count > 1 {
-                    "ID: \(id.uuid), Found: \(count) reminder vessels via legacy realm ID when there should only be 1".log()
+                    let e = ("\(T.self), id: \(id.uuid), count: \(count): "
+                           + "There should only be 1 match")
+                    assertionFailure(e)
+                    e.log()
                 }
-                guard let object = results.first as? CD_Base else {
+                // if the object is the wrong type, log this as an error
+                let _object = results[0]
+                guard let object = _object as? T else {
+                    let e = "found: \(type(of:_object)) != expected: \(T.self))"
+                    assertionFailure(e)
+                    e.log()
                     return .failure(.objectDeleted)
                 }
                 return .success(object)
             } else {
-                // Unknown
-                "Unknown kind of ReminderVessel Identifier Requested: \(id.uuid)".log()
+                let e = "\(id.uuid): does not appear to be Core Data or Realm identifier"
+                assertionFailure(e)
+                e.log()
                 return .failure(.objectDeleted)
             }
         } catch {
+            assertionFailure("\(error)")
             error.log()
             return .failure(.loadError)
         }
