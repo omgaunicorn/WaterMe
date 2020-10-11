@@ -459,14 +459,21 @@ internal class CD_BasicController: BasicController {
     
     func delete(reminder: Reminder) -> Result<Void, DatumError> {
         let context = self.container.viewContext
-        let token = self.willSave(context)
-        defer { self.didSave(token) }
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
-        
+
         // debug only sanity checks
         assert(Thread.isMainThread)
         assert(context === reminder.managedObjectContext)
-        
+
+        do {
+            try reminder.validateForDelete()
+        } catch {
+            return .failure(.unableToDeleteLastReminder)
+        }
+
+        let token = self.willSave(context)
+        defer { self.didSave(token) }
+
         context.delete(reminder)
         do {
             try context.save()
