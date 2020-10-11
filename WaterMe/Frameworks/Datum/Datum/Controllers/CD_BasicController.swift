@@ -258,20 +258,18 @@ internal class CD_BasicController: BasicController {
     }
 
     func reminderVessel(matching id: Identifier) -> Result<ReminderVessel, DatumError> {
-        return __untyped_object(matching: id, kind: CD_ReminderVessel.self).flatMap {
-            guard let object = $0 as? CD_ReminderVessel else { return .failure(.objectDeleted) }
-            return .success(CD_ReminderVesselWrapper(object, context: { self.container.viewContext }))
+        return __genericSearch(matching: id).map { (object: CD_ReminderVessel) in
+            return CD_ReminderVesselWrapper(object, context: { self.container.viewContext })
         }
     }
 
     func reminder(matching id: Identifier) -> Result<Reminder, DatumError> {
-        return __untyped_object(matching: id, kind: CD_Reminder.self).flatMap {
-            guard let object = $0 as? CD_Reminder else { return .failure(.objectDeleted) }
-            return .success(CD_ReminderWrapper(object, context: { self.container.viewContext }))
+        return __genericSearch(matching: id).map { (object: CD_Reminder) in
+            return CD_ReminderWrapper(object, context: { self.container.viewContext })
         }
     }
 
-    func __untyped_object(matching id: Identifier, kind: CD_Base.Type) -> Result<CD_Base, DatumError> {
+    private func __genericSearch<T: CD_Base>(matching id: Identifier) -> Result<T, DatumError> {
         let coordinator = self.container.persistentStoreCoordinator
         let context = self.container.viewContext
 
