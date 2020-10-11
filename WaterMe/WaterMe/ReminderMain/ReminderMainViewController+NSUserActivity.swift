@@ -83,15 +83,23 @@ extension ReminderMainViewController {
     private func continueActivityEditReminder(with identifier: Identifier,
                                               completion: @escaping NSUserActivityContinuedHandler) -> UserActivityError?
     {
-        guard
-            let deselect = self.collectionVC?.programmaticalySelectReminder(with: identifier),
-            let basicRC = self.basicRC
-        else { return .reminderNotFound }
+        guard let basicRC = self.basicRC else {
+            let e = NSError(basicControllerNotFound: true)
+            assertionFailure("\(e)")
+            e.log()
+            return .reminderNotFound
+        }
+        let deselect = self.collectionVC?.programmaticalySelectReminder(with: identifier)
+        if deselect == nil {
+            let e = "Unable to programmatically select reminder: \(identifier.uuid)"
+            assertionFailure(e)
+            e.log()
+        }
         self.dismissAnimatedIfNeeded() {
             self.userChoseEditReminder(with: identifier,
                                        basicRC: basicRC,
                                        userActivityCompletion: completion,
-                                       completion: deselect.1)
+                                       completion: deselect?.1)
         }
         return nil
     }
@@ -99,10 +107,14 @@ extension ReminderMainViewController {
     private func continueActivityEditReminderVessel(with identifier: Identifier,
                                                     completion: @escaping NSUserActivityContinuedHandler) -> UserActivityError?
     {
-        guard
-            let basicRC = self.basicRC,
-            let vessel = basicRC.reminderVessel(matching: identifier).value
-        else { return .reminderVesselNotFound }
+        guard let basicRC = self.basicRC else {
+            let e = NSError(basicControllerNotFound: true)
+            assertionFailure("\(e)")
+            e.log()
+            return .reminderNotFound
+        }
+        guard let vessel = basicRC.reminderVessel(matching: identifier).value
+            else { return .reminderVesselNotFound }
         self.dismissAnimatedIfNeeded() {
             let vc = ReminderVesselEditViewController.newVC(basicController: basicRC,
                                                             editVessel: vessel,
@@ -118,18 +130,29 @@ extension ReminderMainViewController {
     private func continueActivityViewReminder(with identifier: Identifier,
                                               completion: @escaping NSUserActivityContinuedHandler) -> UserActivityError?
     {
-        guard
-            let collectionVC = self.collectionVC,
-            let deselect = collectionVC.programmaticalySelectReminder(with: identifier)
-        else {
+        guard let collectionVC = self.collectionVC else {
+            let e = NSError(basicControllerNotFound: true)
+            assertionFailure("\(e)")
+            e.log()
             return .reminderNotFound
         }
-        let cellView = collectionVC.collectionView?.cellForItem(at: deselect.0) ?? self.view!
+        let deselect = collectionVC.programmaticalySelectReminder(with: identifier)
+        if deselect == nil {
+            let e = "Unable to programmatically select reminder: \(identifier.uuid)"
+            assertionFailure(e)
+            e.log()
+        }
+        var cellView = self.view!
+        if let indexPath = deselect?.0,
+           let specificView = collectionVC.collectionView?.cellForItem(at: indexPath)
+        {
+            cellView = specificView
+        }
         self.dismissAnimatedIfNeeded() {
             self.userDidSelect(reminderID: identifier,
                                from: cellView,
                                userActivityContinuation: completion,
-                               deselectAnimated: deselect.1,
+                               deselectAnimated: deselect?.1,
                                within: collectionVC)
         }
         return nil

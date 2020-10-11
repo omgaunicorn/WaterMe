@@ -67,7 +67,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
     func userDidSelect(reminderID: Identifier,
                        from view: UIView,
                        userActivityContinuation: NSUserActivityContinuedHandler?,
-                       deselectAnimated: @escaping (Bool) -> Void,
+                       deselectAnimated: ((Bool) -> Void)?,
                        within viewController: ReminderCollectionViewController)
     {
         guard let basicRC = self.basicRC else {
@@ -78,7 +78,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
 
         // closure that needs to be executed whenever all the alerts have disappeared
         let viewDidAppearActions = { (animated: Bool) in
-            deselectAnimated(animated)
+            deselectAnimated?(animated)
             self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
         }
 
