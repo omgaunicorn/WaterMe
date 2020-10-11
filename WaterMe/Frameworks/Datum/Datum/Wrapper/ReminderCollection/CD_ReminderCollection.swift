@@ -45,10 +45,10 @@ internal class CD_ReminderCollection: BaseCollection {
         return self.controller.fetchedObjects?.count
     }
     
-    func index(of lhs: Reminder) -> Int? {
-        let lhs = (lhs as! CD_ReminderWrapper).wrappedObject
-        for (idx, rhs) in (self.controller.fetchedObjects ?? []).enumerated()  {
-            guard lhs.objectID == rhs.objectID else { continue }
+    func index(of reminder: Reminder) -> Int? {
+        let constant = (reminder as! CD_ReminderWrapper).wrappedObject
+        for (idx, loop) in (self.controller.fetchedObjects ?? []).enumerated()  {
+            guard constant.objectID == loop.objectID else { continue }
             return idx
         }
         return nil
@@ -56,8 +56,13 @@ internal class CD_ReminderCollection: BaseCollection {
     
     func indexOfItem(with identifier: Identifier) -> Int? {
         for (idx, reminder) in (self.controller.fetchedObjects ?? []).enumerated()  {
-            guard reminder.objectID.uriRepresentation().absoluteString == identifier.uuid else { continue }
-            return idx
+            if reminder.objectID.uriRepresentation().absoluteString == identifier.uuid {
+                return idx
+            }
+            if reminder.realm_migratedIdentifier == identifier.uuid {
+                return idx
+            }
+            continue
         }
         return nil
     }

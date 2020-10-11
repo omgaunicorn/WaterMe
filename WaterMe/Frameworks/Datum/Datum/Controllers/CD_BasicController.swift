@@ -289,13 +289,15 @@ internal class CD_BasicController: BasicController {
             } else if UUID(uuidString: id.uuid) != nil {
                 // Migrated Legacy Realm Reference
                 let request = NSFetchRequest<NSFetchRequestResult>(entityName: kind.entityName)
-                request.predicate = NSPredicate(format: "legacyRealmIdentifier == %@", id.uuid)
+                request.predicate = NSPredicate(format: "%K == %@", #keyPath(CD_Base.realm_migratedIdentifier), id.uuid)
                 let results = try context.fetch(request)
                 let count = results.count
                 if count > 1 {
                     "ID: \(id.uuid), Found: \(count) reminder vessels via legacy realm ID when there should only be 1".log()
                 }
-                guard let object = results.first as? CD_Base else { return .failure(.objectDeleted) }
+                guard let object = results.first as? CD_Base else {
+                    return .failure(.objectDeleted)
+                }
                 return .success(object)
             } else {
                 // Unknown

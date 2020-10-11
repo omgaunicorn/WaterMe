@@ -52,11 +52,16 @@ internal class CD_ReminderVesselCollection: BaseCollection {
         }
         return nil
     }
-    
+
     func indexOfItem(with identifier: Identifier) -> Int? {
         for (idx, vessel) in (self.controller.fetchedObjects ?? []).enumerated()  {
-            guard vessel.objectID.uriRepresentation().absoluteString == identifier.uuid else { continue }
-            return idx
+            if vessel.objectID.uriRepresentation().absoluteString == identifier.uuid {
+                return idx
+            }
+            if vessel.realm_migratedIdentifier == identifier.uuid {
+                return idx
+            }
+            continue
         }
         return nil
     }
