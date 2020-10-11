@@ -42,6 +42,13 @@ internal class CD_ReminderVessel: CD_Base {
         super.awakeFromInsert()
         self.kindString = ReminderVesselKind.plant.rawValue
     }
+
+    override func datum_willSave() {
+        super.datum_willSave()
+        if let displayName = self.displayName, displayName.nonEmptyString == nil {
+            self.displayName = nil
+        }
+    }
 }
 
 extension CD_ReminderVessel {

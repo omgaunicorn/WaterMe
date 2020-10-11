@@ -53,9 +53,9 @@ extension ReminderKind {
         case .mist:
             return (me.kCaseMistValue, nil)
         case .move(let location):
-            return (me.kCaseMoveValue, location?.nonEmptyString)
+            return (me.kCaseMoveValue, location)
         case .other(let description):
-            return (me.kCaseOtherValue, description?.nonEmptyString)
+            return (me.kCaseOtherValue, description)
         }
     }
     
@@ -70,10 +70,10 @@ extension ReminderKind {
         case type(of: self).kCaseMistValue:
             self = .mist
         case type(of: self).kCaseMoveValue:
-            let description = rawValue.secondary?.nonEmptyString
+            let description = rawValue.secondary
             self = .move(location: description)
         case type(of: self).kCaseOtherValue:
-            let description = rawValue.secondary?.nonEmptyString
+            let description = rawValue.secondary
             self = .other(description: description)
         default:
             fatalError("Reminder.Kind: Invalid Case String Key")

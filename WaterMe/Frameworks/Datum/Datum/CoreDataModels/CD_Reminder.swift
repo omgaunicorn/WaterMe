@@ -52,6 +52,18 @@ internal class CD_Reminder: CD_Base {
         self.nextPerformDate = cal.dateByAddingNumberOfDays(Int(self.interval),
                                                             to: newDate)
     }
+
+    override func datum_willSave() {
+        super.datum_willSave()
+        if let descriptionString = self.descriptionString,
+           descriptionString.nonEmptyString == nil
+        {
+            self.descriptionString = nil
+        }
+        if let note = self.note, note.nonEmptyString == nil {
+            self.note = nil
+        }
+    }
 }
 
 @objc(CD_ReminderPerform)
