@@ -68,16 +68,33 @@ extension ReminderMainViewController {
     private func continueActivityPerformReminders(with identifier: Identifier,
                                                   completion: @escaping NSUserActivityContinuedHandler) -> UserActivityError?
     {
-        guard let dropVC = self.dropTargetViewController else { return .restorationFailed }
-        self.dismissAnimatedIfNeeded() {
+        guard
+            let basicRC = self.basicRC,
+            let dropVC = self.dropTargetViewController
+        else {
+            let e = NSError(basicControllerNotFound: true)
+            assertionFailure("\(e)")
+            e.log()
+            return .perform
+        }
+        let result = basicRC.appendNewPerformToReminders(with: [identifier])
+        switch result {
+        case .success:
+            // do watering animation
             dropVC.isDragInProgress = true
             dropVC.updatePlayAnimationForDrop()
-            self.userDidPerformDrop(with: [identifier], onTargetZoneWithin: nil)
             dropVC.updateDropTargetHeightAndPlayAnimationForDragging(animated: true, completion: nil)
             dropVC.isDragInProgress = false
-            completion(nil)
+            // dismiss all other screens so the user can see
+            self.dismissAnimatedIfNeeded() { completion(nil) }
+            return nil
+        case .failure(let error):
+            if case .objectDeleted = error {
+                return .reminderNotFound
+            } else {
+                return .perform
+            }
         }
-        return nil
     }
 
     private func continueActivityEditReminder(with identifier: Identifier,

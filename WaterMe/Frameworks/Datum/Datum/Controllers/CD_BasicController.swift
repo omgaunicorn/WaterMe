@@ -404,21 +404,18 @@ internal class CD_BasicController: BasicController {
         }
     }
     
-    func appendNewPerformToReminders(with _ids: [Identifier]) -> Result<Void, DatumError> {
-        let coordinator = self.container.persistentStoreCoordinator
-        let ids = _ids.compactMap {
-            coordinator.managedObjectID(forURIRepresentation: URL(string: $0.uuid)!)
-        }
+    func appendNewPerformToReminders(with ids: [Identifier]) -> Result<Void, DatumError> {
+        // debug only sanity checks
+        assert(Thread.isMainThread)
+
+        let results: [Result<CD_Reminder, DatumError>] = ids.map(__genericSearch(matching:))
+        let reminders = results.compactMap { try? $0.get() }
+        guard reminders.count == ids.count else { return .failure(.objectDeleted) }
+
         let context = self.container.viewContext
         let token = self.willSave(context)
         defer { self.didSave(token) }
-        let reminders = ids.compactMap { context.object(with: $0) as? CD_Reminder }
-        
-        // debug only sanity checks
-        assert(Thread.isMainThread)
-        assert(ids.count == _ids.count, "We lost an object")
-        assert(reminders.count == _ids.count, "We lost an object")
-        
+
         reminders.forEach { reminder in
             let perform = CD_ReminderPerform(context: context)
             context.insert(perform)
