@@ -226,7 +226,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         let result: UserActivityResult
-            = .failure(UserActivityToFail(error: .continuationFailed, completion: nil))
+            = .failure(UserActivityToFail(error: .perform, completion: nil))
         self.rootVC?.userActivityResultToContinue += [result]
         let isReady = self.rootVC?.isReady ?? []
         guard isReady.completely else { return }

@@ -87,7 +87,7 @@ extension ReminderMainViewController {
             let e = NSError(basicControllerNotFound: true)
             assertionFailure("\(e)")
             e.log()
-            return .reminderNotFound
+            return .perform
         }
         let deselect = self.collectionVC?.programmaticalySelectReminder(with: identifier)
         if deselect == nil {

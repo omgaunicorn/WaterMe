@@ -26,14 +26,14 @@ import Datum
 import Foundation
 
 public enum UserActivityError: Error {
-    case restorationFailed, reminderNotFound, reminderVesselNotFound, continuationFailed, createShortcutFailed
+    case perform, reminderNotFound, reminderVesselNotFound, siriShortcutCreate
 }
 
 extension UserActivityError: UserFacingError {
 
     public var isCritical: Bool {
         switch self {
-        case .restorationFailed, .createShortcutFailed, .continuationFailed:
+        case .perform, .siriShortcutCreate:
             return true
         case .reminderNotFound, .reminderVesselNotFound:
             return false
@@ -42,7 +42,7 @@ extension UserActivityError: UserFacingError {
 
     public var title: String? {
         switch self {
-        case .continuationFailed, .restorationFailed, .createShortcutFailed:
+        case .perform, .siriShortcutCreate:
             return LocalizedString.siriShortcutGenericErrorAlertTitle
         case .reminderNotFound:
             return LocalizedString.siriShortcutReminderNotFoundErrorAlertTitle
@@ -53,9 +53,9 @@ extension UserActivityError: UserFacingError {
 
     public var message: String? {
         switch self {
-        case .createShortcutFailed:
+        case .siriShortcutCreate:
             return LocalizedString.siriShortcutCreateErrorAlertMessage
-        case .continuationFailed, .restorationFailed:
+        case .perform:
             return LocalizedString.siriShortcutContinuationErrorAlertMessage
         case .reminderNotFound:
             return LocalizedString.siriShortcutReminderNotFoundErrorAlertMessage
@@ -66,9 +66,9 @@ extension UserActivityError: UserFacingError {
     
     public var recoveryActions: [RecoveryAction] {
         switch self {
-        case .createShortcutFailed:
+        case .siriShortcutCreate:
             return [.dismiss]
-        case .continuationFailed, .reminderNotFound, .reminderVesselNotFound, .restorationFailed:
+        case .reminderNotFound, .reminderVesselNotFound, .perform:
             return [.dismiss, .openWaterMeSettings]
         }
     }
