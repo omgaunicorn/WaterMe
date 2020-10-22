@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="2.6.0.001">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17192" systemVersion="19H2" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="2.6.0.001">
     <entity name="CD_Base" representedClassName="CD_Base" isAbstract="YES" syncable="YES">
         <attribute name="bloop" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="dateCreated" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateModified" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="realm_migratedIdentifier" optional="YES" attributeType="String"/>
+        <relationship name="migrated" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CD_Migrated"/>
+    </entity>
+    <entity name="CD_Migrated" representedClassName="CD_Migrated" parentEntity="CD_Base" syncable="YES">
+        <attribute name="realmIdentifier" optional="YES" attributeType="String"/>
     </entity>
     <entity name="CD_Reminder" representedClassName="CD_Reminder" parentEntity="CD_Base" syncable="YES">
         <attribute name="descriptionString" optional="YES" attributeType="String"/>
@@ -32,10 +35,11 @@
         <relationship name="vessels" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderVessel" inverseName="share" inverseEntity="CD_ReminderVessel"/>
     </entity>
     <elements>
-        <element name="CD_Base" positionX="285.828125" positionY="-57.45703125" width="128" height="88"/>
+        <element name="CD_Base" positionX="285.828125" positionY="-57.45703125" width="128" height="103"/>
         <element name="CD_Reminder" positionX="-102.375" positionY="191.87109375" width="128" height="163"/>
         <element name="CD_ReminderPerform" positionX="90.30859375" positionY="378.4609375" width="128" height="73"/>
         <element name="CD_ReminderVessel" positionX="-81.7890625" positionY="-41.59375" width="128" height="133"/>
         <element name="CD_VesselShare" positionX="-86.21875" positionY="-158.2734375" width="128" height="58"/>
+        <element name="CD_Migrated" positionX="393.69140625" positionY="81.95703125" width="128" height="58"/>
     </elements>
 </model>

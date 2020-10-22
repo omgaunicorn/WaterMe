@@ -294,7 +294,7 @@ internal class CD_BasicController: BasicController {
                 // Migrated Legacy Realm Reference
                 let req = NSFetchRequest<NSFetchRequestResult>(entityName: T.entityName)
                 req.predicate = .init(format: "%K == %@",
-                                      #keyPath(CD_Base.realm_migratedIdentifier), id.uuid)
+                                      #keyPath(CD_Base.migrated.realmIdentifier), id.uuid)
                 let results = try context.fetch(req)
                 let count = results.count
                 // if we had no results, return object deleted

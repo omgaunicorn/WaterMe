@@ -31,7 +31,7 @@ internal class CD_Base: NSManagedObject {
     @NSManaged var dateModified: Date
     @NSManaged var dateCreated: Date
     @NSManaged var bloop: Bool
-    @NSManaged var realm_migratedIdentifier: String?
+    @NSManaged var migrated: CD_Migrated?
     
     override func awakeFromInsert() {
         super.awakeFromInsert()
@@ -43,4 +43,9 @@ internal class CD_Base: NSManagedObject {
     func datum_willSave() {
         self.dateModified = Date()
     }
+}
+
+@objc(CD_Migrated)
+internal class CD_Migrated: CD_Base {
+    @NSManaged var realmIdentifier: String?
 }
