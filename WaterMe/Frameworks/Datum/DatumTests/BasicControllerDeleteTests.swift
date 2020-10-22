@@ -71,6 +71,30 @@ class BasicControllerDeleteTests: DatumTestsBase {
         self.wait(for: [wait], timeout: 0.3)
     }
 
+    func test_delete_last_reminder() {
+        let exp = self.expectation(description: "")
+        exp.expectedFulfillmentCount = 1
+        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
+        try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get().observe
+        { change in
+            switch change {
+            case .initial(let data):
+                XCTAssertEqual(data.count, 1)
+                let result = self.basicController.delete(reminder: data[0]!)
+                switch result {
+                case .success:
+                    XCTFail()
+                case .failure(let error):
+                    XCTAssertEqual(error, .unableToDeleteLastReminder)
+                }
+            case .update, .error:
+                XCTFail()
+            }
+            exp.fulfill()
+        }
+        self.wait(for: [exp], timeout: 0.3)
+    }
+
 }
 
 import CoreData

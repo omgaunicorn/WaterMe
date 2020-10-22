@@ -462,12 +462,6 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
         assert(context === reminder.managedObjectContext)
 
-        do {
-            try reminder.validateForDelete()
-        } catch {
-            return .failure(.unableToDeleteLastReminder)
-        }
-
         let token = self.willSave(context)
         defer { self.didSave(token) }
 
@@ -475,6 +469,8 @@ internal class CD_BasicController: BasicController {
         do {
             try context.save()
             return .success(())
+        } catch CocoaError.validationRelationshipLacksMinimumCount {
+            return .failure(.unableToDeleteLastReminder)
         } catch {
             error.log()
             return .failure(.writeError)
