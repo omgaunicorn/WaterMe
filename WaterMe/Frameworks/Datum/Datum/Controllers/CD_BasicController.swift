@@ -462,6 +462,25 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
         assert(context === reminder.managedObjectContext)
 
+        do {
+            try reminder.validateForDelete()
+        } catch let error as NSError where error.code == CocoaError.validationRelationshipDeniedDelete.rawValue {
+            let key = error.userInfo[NSValidationKeyErrorKey] as? String
+            let value = error.userInfo[NSValidationValueErrorKey] as? CD_ReminderVessel
+            if
+                key == #keyPath(CD_Reminder.vessel),
+                value === reminder.vessel,
+                // not sure why I have to check this
+                // core data should be doing this for me
+                // but if I don't check this,
+                // then every delete throws this validation error
+                value?.reminders.count == 1
+            {
+                return .failure(.unableToDeleteLastReminder)
+            }
+            // else, do nothing and attempt delete
+        } catch { /* do nothing and attempt delete */ }
+
         let token = self.willSave(context)
         defer { self.didSave(token) }
 
@@ -469,9 +488,9 @@ internal class CD_BasicController: BasicController {
         do {
             try context.save()
             return .success(())
-        } catch CocoaError.validationRelationshipLacksMinimumCount {
-            return .failure(.unableToDeleteLastReminder)
         } catch {
+            // TODO: Catch `CocoaError.validationRelationshipLacksMinimumCount` here
+            // then rollback properly. When I tried to rollback naively my tableviews crashed
             error.log()
             return .failure(.writeError)
         }
