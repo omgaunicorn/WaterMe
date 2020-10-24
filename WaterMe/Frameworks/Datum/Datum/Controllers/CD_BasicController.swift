@@ -462,38 +462,11 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
         assert(context === reminder.managedObjectContext)
 
-        do {
-            try reminder.validateForDelete()
-        } catch let error as NSError where error.code == CocoaError.validationRelationshipDeniedDelete.rawValue {
-            let key = error.userInfo[NSValidationKeyErrorKey] as? String
-            let value = error.userInfo[NSValidationValueErrorKey] as? CD_ReminderVessel
-            if
-                key == #keyPath(CD_Reminder.vessel),
-                value === reminder.vessel,
-                // not sure why I have to check this
-                // core data should be doing this for me
-                // but if I don't check this,
-                // then every delete throws this validation error
-                value?.reminders.count == 1
-            {
-                return .failure(.unableToDeleteLastReminder)
-            }
-            // else, do nothing and attempt delete
-        } catch { /* do nothing and attempt delete */ }
-
         let token = self.willSave(context)
         defer { self.didSave(token) }
 
         context.delete(reminder)
-        do {
-            try context.save()
-            return .success(())
-        } catch {
-            // TODO: Catch `CocoaError.validationRelationshipLacksMinimumCount` here
-            // then rollback properly. When I tried to rollback naively my tableviews crashed
-            error.log()
-            return .failure(.writeError)
-        }
+        return context.waterme_save()
     }
 }
 
@@ -600,5 +573,36 @@ extension CD_BasicController {
 private class WaterMe_PersistentContainer: NSPersistentContainer {
     override class func defaultDirectoryURL() -> URL {
         return CD_BasicController.storeDirectoryURL
+    }
+}
+
+extension NSManagedObjectContext {
+    fileprivate func waterme_save() -> Result<Void, DatumError> {
+        // debug only sanity checks
+        assert(Thread.isMainThread)
+
+        do {
+            try self.save()
+            return .success(())
+        } catch let error as NSError {
+            // doing this async stops the tableviews from crashing
+            // TODO: Figure out how to remove this async
+            DispatchQueue.main.async {
+                // we need to rollback the context
+                self.rollback()
+            }
+            if
+                // detect if the error is because we tried to delete the last reminder
+                error.code == CocoaError.validationRelationshipLacksMinimumCount.rawValue,
+                let key = error.userInfo[NSValidationKeyErrorKey] as? String,
+                key == #keyPath(CD_ReminderVessel.reminders),
+                error.userInfo[NSValidationObjectErrorKey] is CD_ReminderVessel
+            {
+                return .failure(.unableToDeleteLastReminder)
+            } else {
+                error.log()
+                return .failure(.writeError)
+            }
+        }
     }
 }
