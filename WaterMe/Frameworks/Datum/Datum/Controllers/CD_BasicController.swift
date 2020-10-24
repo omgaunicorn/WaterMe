@@ -105,13 +105,8 @@ internal class CD_BasicController: BasicController {
         context.insert(newReminder)
         // core data hooks up the inverse relationship
         newReminder.vessel = vessel
-        do {
-            try context.save()
-            let wrapper = CD_ReminderWrapper(newReminder, context: { self.container.viewContext })
-            return .success(wrapper)
-        } catch {
-            error.log()
-            return .failure(.writeError)
+        return context.waterme_save().map {
+            CD_ReminderWrapper(newReminder, context: { self.container.viewContext })
         }
     }
     
@@ -138,21 +133,16 @@ internal class CD_BasicController: BasicController {
         if let icon = icon {
             vessel.icon = icon
         }
-        do {
-            let vesselShares = try context.fetch(CD_VesselShare.request)
-            guard vesselShares.count == 1 else {
-                let message = "Unexpected number of VesselShare objects: \(vesselShares.count)"
-                message.log()
-                assertionFailure(message)
-                return .failure(.writeError)
-            }
-            vessel.share = vesselShares.first!
-            try context.save()
-            let wrapper = CD_ReminderVesselWrapper(vessel, context: { self.container.viewContext })
-            return .success(wrapper)
-        } catch {
-            error.log()
+        let vesselShares = try? context.fetch(CD_VesselShare.request)
+        guard vesselShares?.count == 1 else {
+            let message = "Unexpected number of VesselShare objects: \(vesselShares?.count ?? -1)"
+            message.log()
+            assertionFailure(message)
             return .failure(.writeError)
+        }
+        vessel.share = vesselShares!.first!
+        return context.waterme_save().map {
+            CD_ReminderVesselWrapper(vessel, context: { self.container.viewContext })
         }
     }
 
@@ -354,13 +344,7 @@ internal class CD_BasicController: BasicController {
         }
         guard somethingChanged else { return .success(()) }
         vessel.reminders.forEach { ($0 as! CD_Base).bloop.toggle() }
-        do {
-            try context.save()
-            return .success(())
-        } catch {
-            error.log()
-            return .failure(.writeError)
-        }
+        return context.waterme_save()
     }
     
     func update(kind: ReminderKind?,
@@ -395,13 +379,7 @@ internal class CD_BasicController: BasicController {
         }
         guard somethingChanged else { return .success(()) }
         reminder.vessel.bloop.toggle()
-        do {
-            try context.save()
-            return .success(())
-        } catch {
-            error.log()
-            return .failure(.writeError)
-        }
+        return context.waterme_save()
     }
     
     func appendNewPerformToReminders(with ids: [Identifier]) -> Result<Void, DatumError> {
@@ -423,13 +401,7 @@ internal class CD_BasicController: BasicController {
             perform.reminder = reminder
             reminder.updateDates(basedOnAppendedPerformDate: perform.date)
         }
-        do {
-            try context.save()
-            return .success(())
-        } catch {
-            error.log()
-            return .failure(.writeError)
-        }
+        return context.waterme_save()
     }
 
     // MARK: Delete
@@ -445,13 +417,7 @@ internal class CD_BasicController: BasicController {
         assert(context === vessel.managedObjectContext)
         
         context.delete(vessel)
-        do {
-            try context.save()
-            return .success(())
-        } catch {
-            error.log()
-            return .failure(.writeError)
-        }
+        return context.waterme_save()
     }
     
     func delete(reminder: Reminder) -> Result<Void, DatumError> {
