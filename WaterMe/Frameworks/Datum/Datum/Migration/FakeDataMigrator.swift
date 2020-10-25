@@ -42,35 +42,36 @@ class FakeDataMigrator: Migratable {
     }
 
     func skipMigration() -> MigratableResult {
-        let vesselCount = 50
-        let reminderCount = 30
-        let performCount = 10
+        let vesselCount = 200
+        let reminderCount = 50
+        let performCount = 20
         "Creating Fake Vessels: \(vesselCount)".log(as: .debug)
         let emojiChoice = ["💐", "🌷", "🌹", "🥀", "🌻", "🌼", "🌸", "🌺", "🍏", "🍎", "🍐", "🍊", "🍋", "🍌", "🍉", "🍇", "🍓", "🍈", "🍒", "🍑", "🍍", "🥝", "🥑", "🍅", "🍆", "🥒", "🥕", "🌽", "🌶", "🥔", "🍠", "🌰", "🥜", "🌵", "🎄", "🌲", "🌳", "🌴", "🌱", "🌿", "☘️", "🍀", "🎍", "🎋", "🍃", "🍂", "🍁", "🍄", "🌾", "🥚", "🍳", "🐔", "🐧", "🐤", "🐣", "🐥", "🐓", "🦆", "🦃", "🐇", "🦀", "🦑", "🐙", "🦐", "🍤", "🐠", "🐟", "🐢", "🐍", "🦎", "🐝", "🍯", "🥐", "🍞", "🥖", "🧀", "🥗", "🍣", "🍱", "🍛", "🍚", "☕️", "🍵", "🐶", "🐱", "🐭", "🐹", "🐰", "🦊", "🐻", "🐼", "🐨", "🐯", "🦁", "🐮", "🥛", "🐷", "🐽", "🐸", "🐒", "🦅", "🦉", "🦇", "🐺", "🐗", "🐴", "🦄", "🐛", "🦋", "🐌", "🐚", "🐞", "🐜", "🕷", "🦂", "🐡", "🐬", "🦈", "🐳", "🐋", "🐊", "🐆", "🐅", "🐃", "🐂", "🐄", "🦌", "🐪", "🐫", "🐘", "🦏", "🦍", "🐎", "🐖", "🐐", "🐏", "🐑", "🐕", "🐩", "🐈", "🕊", "🐁", "🐀", "🐿", "🐉", "🐲"]
         for vIDX in 1...vesselCount {
-            do {
-                try autoreleasepool {
-                    let icon: ReminderVesselIcon = Int.random(in: 0...3) == 0
-                                                   ? .image(fakeImage)
-                                                   : .emoji(emojiChoice.randomElement()!)
-                    let v = try source.newReminderVessel(displayName: "v_\(vIDX)", icon: icon).get()
-                    let rs: [RLM_Reminder] = try (1...reminderCount).map { rIDX in
-                        let r = try source.newReminder(for: v).get()
-                        try source.update(kind: nil, interval: nil, note: "v_\(vIDX)_r_\(rIDX)", in: r).get()
-                        return (r as! RLM_ReminderWrapper).wrappedObject
-                    }
-                    for _ in 1...performCount {
-                        try autoreleasepool {
-                            try source.appendNewPerform(to: rs).get()
+            DispatchQueue.main.async {
+                do {
+                    try autoreleasepool {
+                        let icon: ReminderVesselIcon = Int.random(in: 0...3) == 0
+                            ? .image(fakeImage)
+                            : .emoji(emojiChoice.randomElement()!)
+                        let v = try self.source.newReminderVessel(displayName: "v_\(vIDX)", icon: icon).get()
+                        let rs: [RLM_Reminder] = try (1...reminderCount).map { rIDX in
+                            let r = try self.source.newReminder(for: v).get()
+                            try self.source.update(kind: nil, interval: nil, note: "v_\(vIDX)_r_\(rIDX)", in: r).get()
+                            return (r as! RLM_ReminderWrapper).wrappedObject
+                        }
+                        for _ in 1...performCount {
+                            try autoreleasepool {
+                                try self.source.appendNewPerform(to: rs).get()
+                            }
                         }
                     }
+                    "Created Fake Vessel: \(vIDX) of \(vesselCount)".log(as: .warning)
+                } catch {
+                    error.log(as: .debug)
                 }
-            } catch {
-                error.log(as: .debug)
-                return .failure(.migrateError)
             }
         }
-        "Created Fake Vessels: \(vesselCount)".log(as: .debug)
         return .success(())
     }
 }
