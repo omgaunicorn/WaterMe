@@ -70,31 +70,6 @@ class BasicControllerDeleteTests: DatumTestsBase {
         }
         self.wait(for: [wait], timeout: 0.3)
     }
-
-    func test_delete_last_reminder() {
-        let exp = self.expectation(description: "")
-        exp.expectedFulfillmentCount = 1
-        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
-        try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get().observe
-        { change in
-            switch change {
-            case .initial(let data):
-                XCTAssertEqual(data.count, 1)
-                let result = self.basicController.delete(reminder: data[0]!)
-                switch result {
-                case .success:
-                    XCTFail()
-                case .failure(let error):
-                    XCTAssertEqual(error, .unableToDeleteLastReminder)
-                }
-            case .update, .error:
-                XCTFail()
-            }
-            exp.fulfill()
-        }
-        self.wait(for: [exp], timeout: 0.3)
-    }
-
 }
 
 import CoreData
@@ -157,6 +132,54 @@ extension CD_BasicControllerDeleteTests {
         XCTAssertEqual(reminderRes2.count, 1)
         XCTAssertEqual(performRes2.count, 0)
     }
+
+    func test_delete_last_reminder() {
+        let exp = self.expectation(description: "")
+        exp.expectedFulfillmentCount = 3
+        var hitCount = 0
+        var _data: AnyCollection<Reminder, Int>!
+        _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
+        self.token = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get().observe
+        { change in
+            switch change {
+            case .initial(let data):
+                _data = data
+                exp.fulfill()
+                XCTAssertEqual(data.count, 1)
+                let result = self.basicController.delete(reminder: data[0]!)
+                switch result {
+                case .success:
+                    XCTFail()
+                case .failure(let error):
+                    XCTAssertEqual(error, .unableToDeleteLastReminder)
+                    XCTAssertEqual(data.count, 0)
+                }
+            case .update(let change):
+                // Test an implementation detail of CD
+                // where the item is deleted for a split second
+                // then is rolled back
+                switch hitCount {
+                case 0:
+                    XCTAssertTrue(change.insertions.isEmpty)
+                    XCTAssertEqual(change.deletions.count, 1)
+                    XCTAssertTrue(change.modifications.isEmpty)
+                    XCTAssertEqual(_data.count, 0)
+                case 1:
+                    XCTAssertEqual(change.insertions.count, 1)
+                    XCTAssertTrue(change.deletions.isEmpty)
+                    XCTAssertTrue(change.modifications.isEmpty)
+                    XCTAssertEqual(_data.count, 1)
+                default:
+                    XCTFail()
+                }
+                exp.fulfill()
+                hitCount += 1
+            case .error:
+                XCTFail()
+            }
+        }
+        self.wait(for: [exp], timeout: 0.3)
+    }
 }
 
 import RealmSwift
@@ -210,5 +233,30 @@ extension RLM_BasicControllerDeleteTests {
         XCTAssertEqual(vesselRes2.count, 1)
         XCTAssertEqual(reminderRes2.count, 1)
         XCTAssertEqual(performRes2.count, 0)
+    }
+
+    func test_delete_last_reminder() {
+        let exp = self.expectation(description: "")
+        exp.expectedFulfillmentCount = 1
+        _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
+        self.token = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get().observe
+        { change in
+            exp.fulfill()
+            switch change {
+            case .initial(let data):
+                XCTAssertEqual(data.count, 1)
+                let result = self.basicController.delete(reminder: data[0]!)
+                switch result {
+                case .success:
+                    XCTFail()
+                case .failure(let error):
+                    XCTAssertEqual(error, .unableToDeleteLastReminder)
+                    XCTAssertEqual(data.count, 1)
+                }
+            case .update, .error:
+                XCTFail()
+            }
+        }
+        self.wait(for: [exp], timeout: 0.3)
     }
 }
