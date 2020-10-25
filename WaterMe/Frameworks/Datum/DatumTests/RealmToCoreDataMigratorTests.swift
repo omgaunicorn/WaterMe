@@ -29,7 +29,7 @@ class RealmToCoreDataMigratorBaseTests: XCTestCase {
 
     let source = try! RLM_BasicController(kind: .local, forTesting: true)
     let destination = try! CD_BasicController(kind: .local, forTesting: true)
-    var token: NSKeyValueObservation?
+    var token: ObservationToken?
 
     override func tearDownWithError() throws {
         try super.tearDownWithError()
@@ -293,6 +293,81 @@ class RealmToCoreDataMigratorScaleTests: RealmToCoreDataMigratorBaseTests {
 
         self.wait(for: [wait1, wait2], timeout: waitTime)
     }
+}
+
+class RealmToCoreDataMigrationSearchTests: RealmToCoreDataMigratorBaseTests {
+
+    var sourceVessel: RLM_ReminderVessel!
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        let sourceVessel = try! self.source.newReminderVessel(displayName: "One", icon: .emoji("1️⃣"))
+                                           .get() as! RLM_ReminderVesselWrapper
+        self.sourceVessel = sourceVessel.wrappedObject
+        let migrator = RealmToCoreDataMigrator(testingSource: self.source)!
+        _ = migrator.start(destination: self.destination) { result in
+            switch result {
+            case .success:
+                break
+            case .failure:
+                XCTFail()
+            }
+        }
+        // Let the migration happen
+        Thread.sleep(forTimeInterval: 0.2)
+    }
+
+    func test_search_vesselCollection() {
+        let id = Identifier(rawValue: self.sourceVessel.uuid)
+        let query = try! self.destination.allVessels(sorted: .displayName, ascending: true).get()
+        let wait = XCTestExpectation()
+        self.token = query.test_observe_loadData { data in
+            wait.fulfill()
+            let idx = data.indexOfItem(with: id)
+            XCTAssertEqual(idx!, 0)
+        }
+        self.wait(for: [wait], timeout: 0.3)
+    }
+
+    func test_search_reminderCollection() {
+        let id = Identifier(rawValue: self.sourceVessel.reminders.first!.uuid)
+        let query = try! self.destination.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let wait = XCTestExpectation()
+        self.token = query.test_observe_loadData { data in
+            wait.fulfill()
+            let idx = data.indexOfItem(with: id)
+            XCTAssertEqual(idx, 0)
+        }
+        self.wait(for: [wait], timeout: 0.3)
+    }
+
+    func test_search_reminderGroupedCollection() {
+        let id = Identifier(rawValue: self.sourceVessel.reminders.first!.uuid)
+        let query = try! self.destination.groupedReminders().get()
+        let wait = XCTestExpectation()
+        self.token = query.test_observe_loadData { data in
+            wait.fulfill()
+            let indexPath = data.indexOfItem(with: id)
+            XCTAssertEqual(indexPath, .init(row: 0, section: 0))
+        }
+        self.wait(for: [wait], timeout: 0.3)
+    }
+
+    func test_search_basicController_vessel() {
+        let id = Identifier(rawValue: self.sourceVessel.uuid)
+        let _vessel = try! self.destination.reminderVessel(matching: id).get()
+        let vessel = (_vessel as! CD_ReminderVesselWrapper).wrappedObject
+        XCTAssertEqual(vessel.migrated?.realmIdentifier, self.sourceVessel.uuid)
+        XCTAssertEqual(vessel.displayName, self.sourceVessel.displayName!)
+    }
+
+    func test_search_basicController_reminder() {
+        let id = Identifier(rawValue: self.sourceVessel.reminders.first!.uuid)
+        let _reminder = try! self.destination.reminder(matching: id).get()
+        let reminder = (_reminder as! CD_ReminderWrapper).wrappedObject
+        XCTAssertEqual(reminder.migrated?.realmIdentifier, self.sourceVessel.reminders.first!.uuid)
+    }
+
 }
 
 /*
