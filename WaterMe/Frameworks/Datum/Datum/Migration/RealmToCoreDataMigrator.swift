@@ -72,124 +72,128 @@ internal class RealmToCoreDataMigrator: Migratable {
 
         // Get off main thread
         self.queue.async {
-
+            
             // Get needed contexts and realms
             let context = destination.container.newBackgroundContext()
-            guard
-                let realm = try? source.realm.get(),
-                let rhsShare = (try? context.fetch(CD_VesselShare.request))?.first
-            else {
-                DispatchQueue.main.async { completion(.failure(.startError)) }
-                return
-            }
-
-            // Get our Data to work with
-            var srcVessels = Array(realm.objects(RLM_ReminderVessel.self))
-            "Vessels to Migrate: \(srcVessels.count)".log(as: .debug)
-            let totalUnitCount = Int64(srcVessels.count)
-            progress.totalUnitCount = totalUnitCount
-            var srcVessel: RLM_ReminderVessel! = srcVessels.popLast()
-
-            // Loop over every vessel
-            var completedUnitCount: Int64 = 0
-            while srcVessel != nil {
-                autoreleasepool {
-                    defer {
-                        // Prepare for next loop
+            context.performAndWait {
+                guard
+                    let realm = try? source.realm.get(),
+                    let rhsShare = (try? context.fetch(CD_VesselShare.request))?.first
+                else {
+                    DispatchQueue.main.async { completion(.failure(.startError)) }
+                    return
+                }
+                
+                // Get our Data to work with
+                var srcVessels = Array(realm.objects(RLM_ReminderVessel.self))
+                "Vessels to Migrate: \(srcVessels.count)".log(as: .debug)
+                let totalUnitCount = Int64(srcVessels.count)
+                progress.totalUnitCount = totalUnitCount
+                var srcVessel: RLM_ReminderVessel! = srcVessels.popLast()
+                
+                // Loop over every vessel
+                var completedUnitCount: Int64 = 0
+                while srcVessel != nil {
+                    autoreleasepool {
+                        defer {
+                            // Prepare for next loop
+                            do {
+                                try context.save()
+                                completedUnitCount += 1
+                                progress.completedUnitCount = completedUnitCount
+                            } catch {
+                                error.log()
+                                context.rollback()
+                            }
+                            srcVessel = srcVessels.popLast()
+                            "Vessels to Migrate: \(srcVessels.count)".log(as: .debug)
+                        }
+                        
+                        // Vessel: Configure
+                        let destVessel = CD_ReminderVessel(context: context)
+                        destVessel.migrated = CD_Migrated(context: context)
+                        context.insert(destVessel)
+                        
+                        _ = {
+                            // Vessel: Copy Data
+                            destVessel.share = rhsShare
+                            destVessel.displayName = srcVessel.displayName
+                            destVessel.iconImageData = srcVessel.iconImageData
+                            destVessel.iconEmojiString = srcVessel.iconEmojiString
+                            destVessel.kindString = srcVessel.kindString
+                            destVessel.migrated!.realmIdentifier = srcVessel.uuid
+                        }()
+                        
+                        for srcReminder in srcVessel.reminders {
+                            // Reminder: Configure
+                            let destReminder = CD_Reminder(context: context)
+                            destReminder.vessel = destVessel
+                            destReminder.migrated = CD_Migrated(context: context)
+                            context.insert(destReminder)
+                            
+                            _ = {
+                                // Reminder: Copy Data
+                                destReminder.interval = Int32(srcReminder.interval)
+                                destReminder.note = srcReminder.note
+                                destReminder.nextPerformDate = srcReminder.nextPerformDate
+                                destReminder.lastPerformDate = srcReminder.performed.last?.date
+                                destReminder.kindString = srcReminder.kindString
+                                destReminder.descriptionString = srcReminder.descriptionString
+                                destReminder.migrated!.realmIdentifier = srcReminder.uuid
+                            }()
+                            
+                            for srcPerform in srcReminder.performed {
+                                // Perform: Configure
+                                let destPerform = CD_ReminderPerform(context: context)
+                                destPerform.reminder = destReminder
+                                context.insert(destPerform)
+                                
+                                _ = {
+                                    // Perform: Copy Data
+                                    destPerform.date = srcPerform.date
+                                }()
+                            }
+                        }
+                    }
+                }
+                
+                // check if we completed by comparing completion count
+                var completed = completedUnitCount == totalUnitCount
+                
+                // do cleanup tasks only if we are not using unit tests
+                if !TESTING {
+                    if completed {
+                        // Cleanup source, this HAS to work for migration to finish
+                        do {
+                            try FileManager.default.removeItem(at: RLM_BasicController.storeDirectoryURL)
+                            "Migration Succeeded".log(as: .info)
+                        } catch {
+                            "Migration Error: Succeeded but failed to delete Realm DB: \(error)".log()
+                            completed = false
+                        }
+                    } else {
+                        // If we didn't complete, try to clean up the destination
+                        // Don't clean up destination if source failed to delete
+                        // Too risky, might lose data
+                        for vessel in rhsShare.vessels {
+                            guard let vessel = vessel as? NSManagedObject else { continue }
+                            context.delete(vessel)
+                        }
                         do {
                             try context.save()
-                            completedUnitCount += 1
-                            progress.completedUnitCount = completedUnitCount
+                            "Migration Failed: Successfully cleaned up Core Data".log()
                         } catch {
-                            error.log()
-                        }
-                        srcVessel = srcVessels.popLast()
-                        "Vessels to Migrate: \(srcVessels.count)".log(as: .debug)
-                    }
-
-                    // Vessel: Configure
-                    let destVessel = CD_ReminderVessel(context: context)
-                    destVessel.migrated = CD_Migrated(context: context)
-                    context.insert(destVessel)
-
-                    _ = {
-                        // Vessel: Copy Data
-                        destVessel.share = rhsShare
-                        destVessel.displayName = srcVessel.displayName
-                        destVessel.iconImageData = srcVessel.iconImageData
-                        destVessel.iconEmojiString = srcVessel.iconEmojiString
-                        destVessel.kindString = srcVessel.kindString
-                        destVessel.migrated!.realmIdentifier = srcVessel.uuid
-                    }()
-
-                    for srcReminder in srcVessel.reminders {
-                        // Reminder: Configure
-                        let destReminder = CD_Reminder(context: context)
-                        destReminder.vessel = destVessel
-                        destReminder.migrated = CD_Migrated(context: context)
-                        context.insert(destReminder)
-
-                        _ = {
-                            // Reminder: Copy Data
-                            destReminder.interval = Int32(srcReminder.interval)
-                            destReminder.note = srcReminder.note
-                            destReminder.nextPerformDate = srcReminder.nextPerformDate
-                            destReminder.lastPerformDate = srcReminder.performed.last?.date
-                            destReminder.kindString = srcReminder.kindString
-                            destReminder.descriptionString = srcReminder.descriptionString
-                            destReminder.migrated!.realmIdentifier = srcReminder.uuid
-                        }()
-
-                        for srcPerform in srcReminder.performed {
-                            // Perform: Configure
-                            let destPerform = CD_ReminderPerform(context: context)
-                            destPerform.reminder = destReminder
-                            context.insert(destPerform)
-
-                            _ = {
-                                // Perform: Copy Data
-                                destPerform.date = srcPerform.date
-                            }()
+                            "Migration Failed: Failed to clean up Core Data: \(error)".log()
+                            context.rollback()
                         }
                     }
                 }
-            }
-
-            // check if we completed by comparing completion count
-            var completed = completedUnitCount == totalUnitCount
-
-            // do cleanup tasks only if we are not using unit tests
-            if !TESTING {
+                
                 if completed {
-                    // Cleanup source, this HAS to work for migration to finish
-                    do {
-                        try FileManager.default.removeItem(at: RLM_BasicController.storeDirectoryURL)
-                        "Migration Succeeded".log(as: .info)
-                    } catch {
-                        "Migration Error: Succeeded but failed to delete Realm DB: \(error)".log()
-                        completed = false
-                    }
+                    DispatchQueue.main.async { completion(.success(())) }
                 } else {
-                    // If we didn't complete, try to clean up the destination
-                    // Don't clean up destination if source failed to delete
-                    // Too risky, might lose data
-                    for vessel in rhsShare.vessels {
-                        guard let vessel = vessel as? NSManagedObject else { continue }
-                        context.delete(vessel)
-                    }
-                    do {
-                        try context.save()
-                        "Migration Failed: Successfully cleaned up Core Data".log()
-                    } catch {
-                        "Migration Failed: Failed to clean up Core Data: \(error)".log()
-                    }
+                    DispatchQueue.main.async { completion(.failure(.migrateError)) }
                 }
-            }
-
-            if completed {
-                DispatchQueue.main.async { completion(.success(())) }
-            } else {
-                DispatchQueue.main.async { completion(.failure(.migrateError)) }
             }
         }
         return progress
