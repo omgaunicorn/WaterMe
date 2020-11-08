@@ -518,10 +518,17 @@ extension CD_BasicController {
     private class func copySampleDBIfNeeded() {
         guard
             !RLM_BasicController.storeExists,
-            !self.storeExists,
+            !self.storeExists
+        else { return }
+        guard
             let sampleDB1URL = self.sampleDB1URL,
             let sampleDB2URL = self.sampleDB2URL
-        else { return }
+        else {
+            let e = "Unable to find sample DB files in bundle"
+            assertionFailure(e)
+            e.log(as: .warning)
+            return
+        }
         let fm = FileManager.default
         try? fm.createDirectory(at: self.storeDirectoryURL,
                                 withIntermediateDirectories: true,
