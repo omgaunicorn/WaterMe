@@ -122,6 +122,8 @@
 		5060A073249B9E1D00D96EFA /* BasicControllerClosureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5060A069249B9E1800D96EFA /* BasicControllerClosureTests.swift */; };
 		5065AA1C200E872900C7F0CC /* UserFacingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5065AA1B200E872900C7F0CC /* UserFacingError.swift */; };
 		5065AA25200EC62F00C7F0CC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5065AA27200EC62F00C7F0CC /* Localizable.strings */; };
+		506669002563F91F00759484 /* StarterData.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 5087F1E524CD5F100040BF16 /* StarterData.sqlite-wal */; };
+		506669112563FBD200759484 /* StarterRealm.realm in Resources */ = {isa = PBXBuildFile; fileRef = 50F7A362200844390063A1FC /* StarterRealm.realm */; };
 		506A6218200562AC008EF601 /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 506A6217200562AC008EF601 /* Settings.storyboard */; };
 		506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A6219200562B9008EF601 /* SettingsMainViewController.swift */; };
 		506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A621B200562C3008EF601 /* SettingsTableViewController.swift */; };
@@ -147,7 +149,6 @@
 		5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5087A91F1EE337C10046E687 /* EmojiPickerCollectionViewCell.xib */; };
 		5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9221EE3A6B00046E687 /* ImagePickerCropperViewController.swift */; };
 		5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087A9241EE3A7FB0046E687 /* EmojiPhotoAlertController.swift */; };
-		5087F1E324CD5F100040BF16 /* StarterData.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 5087F1E524CD5F100040BF16 /* StarterData.sqlite-wal */; };
 		5087F1E724D4F2760040BF16 /* CD_VesselShare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5087F1E624D4F2760040BF16 /* CD_VesselShare.swift */; };
 		5089D125214F458200140F68 /* AppVersionCheckingAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5089D124214F458200140F68 /* AppVersionCheckingAlert.swift */; };
 		508B2EC924741F4800A497E4 /* WaterMe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 508B2EC724741F4800A497E4 /* WaterMe.xcdatamodeld */; };
@@ -217,7 +218,6 @@
 		50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */; };
 		50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */; };
 		50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */; };
-		50F7A360200844390063A1FC /* StarterRealm.realm in Resources */ = {isa = PBXBuildFile; fileRef = 50F7A362200844390063A1FC /* StarterRealm.realm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -486,6 +486,8 @@
 		5065AA1B200E872900C7F0CC /* UserFacingError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFacingError.swift; sourceTree = "<group>"; };
 		5065AA26200EC62F00C7F0CC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5065AA29200EC73400C7F0CC /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/StarterRealm.realm; sourceTree = "<group>"; };
+		506669072563F92500759484 /* it */ = {isa = PBXFileReference; lastKnownFileType = file; name = it; path = it.lproj/StarterData.sqlite; sourceTree = "<group>"; };
+		506669082563F92A00759484 /* it */ = {isa = PBXFileReference; lastKnownFileType = file; name = it; path = "it.lproj/StarterData.sqlite-wal"; sourceTree = "<group>"; };
 		506A6217200562AC008EF601 /* Settings.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Settings.storyboard; sourceTree = "<group>"; };
 		506A6219200562B9008EF601 /* SettingsMainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsMainViewController.swift; sourceTree = "<group>"; };
 		506A621B200562C3008EF601 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
@@ -1604,6 +1606,7 @@
 				506A6218200562AC008EF601 /* Settings.storyboard in Resources */,
 				5065AA25200EC62F00C7F0CC /* Localizable.strings in Resources */,
 				50BB0F691EC0011800850FF4 /* LaunchScreen.storyboard in Resources */,
+				506669002563F91F00759484 /* StarterData.sqlite-wal in Resources */,
 				5085C7122162D0D300030D2A /* emojione-apple.ttc in Resources */,
 				507A64581F049CCA004E18C5 /* ReminderTableViewCell.xib in Resources */,
 				50E8B1E41EE1C1DD00ACCDAF /* ReminderVesselEdit.storyboard in Resources */,
@@ -1613,12 +1616,11 @@
 				50CA47E821690D360063F51E /* ReminderVesselCollectionViewCell.xib in Resources */,
 				50BB0F661EBFF9A700850FF4 /* Settings.bundle in Resources */,
 				5087A9211EE337C10046E687 /* EmojiPickerCollectionViewCell.xib in Resources */,
-				5087F1E324CD5F100040BF16 /* StarterData.sqlite-wal in Resources */,
 				5010C22E213F779F00D1832C /* ReminderSummary.storyboard in Resources */,
-				50F7A360200844390063A1FC /* StarterRealm.realm in Resources */,
 				508E61551F8ACC5E00B28DD8 /* ReminderMain.storyboard in Resources */,
 				5040B41724C4768800AB747B /* StarterData.sqlite in Resources */,
 				50281908200BE7C80044BEC8 /* PurchaseThanks.storyboard in Resources */,
+				506669112563FBD200759484 /* StarterRealm.realm in Resources */,
 				50734F9F1F0DD90C003E5F41 /* TextViewTableViewCell.xib in Resources */,
 				50BB0F5B1EBFCDE500850FF4 /* Assets.xcassets in Resources */,
 				5075B48E1FF178DC007B42D8 /* ReminderDragPreviewView.xib in Resources */,
@@ -1915,6 +1917,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				5040B41824C4768800AB747B /* en */,
+				506669072563F92500759484 /* it */,
 			);
 			name = StarterData.sqlite;
 			sourceTree = "<group>";
@@ -1932,6 +1935,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				5087F1E424CD5F100040BF16 /* en */,
+				506669082563F92A00759484 /* it */,
 			);
 			name = "StarterData.sqlite-wal";
 			sourceTree = "<group>";
