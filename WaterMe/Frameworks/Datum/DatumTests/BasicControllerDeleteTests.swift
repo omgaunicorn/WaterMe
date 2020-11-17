@@ -178,7 +178,7 @@ extension CD_BasicControllerDeleteTests {
                 XCTFail()
             }
         }
-        self.wait(for: [exp], timeout: 0.3)
+        self.wait(for: [exp], timeout: 0.5)
     }
 }
 

@@ -237,7 +237,7 @@ class RealmToCoreDataMigratorScaleTests: RealmToCoreDataMigratorBaseTests {
     var vesselCount: Int { 50 }
     var reminderCount: Int { 30 }
     var performCount: Int { 10 }
-    var waitTime: TimeInterval { 20 }
+    var waitTime: TimeInterval { 30 }
 
     override func setUpWithError() throws {
         try super.setUpWithError()

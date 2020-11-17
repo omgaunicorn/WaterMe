@@ -489,12 +489,19 @@ extension CD_BasicController {
     private static let sampleDB2URL = Bundle.main.url(forResource: "StarterData", withExtension: "sqlite-wal")
 
     internal static let storeDirectoryURL: URL = {
-        return FileManager.default
-            .containerURL(forSecurityApplicationGroupIdentifier: "group.com.saturdayapps.WaterMe")!
-            .appendingPathComponent("Library", isDirectory: true)
-            .appendingPathComponent("Application Support", isDirectory: true)
-            .appendingPathComponent("WaterMe", isDirectory: true)
-            .appendingPathComponent("CoreData", isDirectory: true)
+        let fm = FileManager.default
+        if let appGroup = fm.containerURL(forSecurityApplicationGroupIdentifier: "group.com.saturdayapps.WaterMe") {
+            return appGroup
+                .appendingPathComponent("Library", isDirectory: true)
+                .appendingPathComponent("Application Support", isDirectory: true)
+                .appendingPathComponent("WaterMe", isDirectory: true)
+                .appendingPathComponent("CoreData", isDirectory: true)
+        } else {
+            "App group container could not be found".log(as: .emergency)
+            return fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first!
+                .appendingPathComponent("WaterMe", isDirectory: true)
+                .appendingPathComponent("CoreData", isDirectory: true)
+        }
     }()
 
     private static let dbFileURL1: URL = {
@@ -525,7 +532,6 @@ extension CD_BasicController {
             let sampleDB2URL = self.sampleDB2URL
         else {
             let e = "Unable to find sample DB files in bundle"
-            assertionFailure(e)
             e.log(as: .warning)
             return
         }
