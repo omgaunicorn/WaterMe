@@ -494,7 +494,7 @@
 "Don’t Migrate My Plants" = "Non spostate le mie piante";
 
 /* MigratorScreen: Confirmation that the user does not want to migrate their plants. */ // TODO: This still need more accurate translation
-"This cannot be undone." = "Questo non può essere annullato.";
+"This cannot be undone" = "Questo non può essere annullato.";
 
 /* MigratorScreen: Finish Button Title: After the migration is done, this button allows the user to finish the migration and go back to using the app as normal. */ // TODO: This still need more accurate translation
 "Finish" = "Finire";
