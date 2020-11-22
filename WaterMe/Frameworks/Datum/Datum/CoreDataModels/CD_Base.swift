@@ -47,5 +47,9 @@ internal class CD_Base: NSManagedObject {
 
 @objc(CD_Migrated)
 internal class CD_Migrated: CD_Base {
+    class override var entityName: String { "CD_Migrated" }
+    class var request: NSFetchRequest<CD_Migrated> {
+        NSFetchRequest<CD_Migrated>(entityName: self.entityName)
+    }
     @NSManaged var realmIdentifier: String?
 }

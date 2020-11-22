@@ -69,8 +69,9 @@ internal class CD_Reminder: CD_Base {
 @objc(CD_ReminderPerform)
 internal class CD_ReminderPerform: CD_Base {
 
+    class override var entityName: String { "CD_ReminderPerform" }
     class var request: NSFetchRequest<CD_ReminderPerform> {
-        NSFetchRequest<CD_ReminderPerform>(entityName: "CD_ReminderPerform")
+        NSFetchRequest<CD_ReminderPerform>(entityName: self.entityName)
     }
     
     @NSManaged var date: Date
