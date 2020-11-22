@@ -80,7 +80,9 @@ internal class RealmToCoreDataMigrator: Migratable {
                     let realm = try? source.realm.get(),
                     let rhsShare = (try? context.fetch(CD_VesselShare.request))?.first
                 else {
-                    DispatchQueue.main.async { completion(.failure(.startError)) }
+                    let e = MigratableError.startError
+                    DispatchQueue.main.async { completion(.failure(e)) }
+                    e.log()
                     return
                 }
                 
