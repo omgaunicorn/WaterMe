@@ -66,7 +66,7 @@ class FakeDataMigrator: Migratable {
                             }
                         }
                     }
-                    "Created Fake Vessel: \(vIDX) of \(vesselCount)".log(as: .warning)
+                    "Created Fake Vessel: \(vIDX) of \(vesselCount)".log(as: .debug)
                 } catch {
                     error.log(as: .debug)
                 }

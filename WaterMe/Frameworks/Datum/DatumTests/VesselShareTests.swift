@@ -95,7 +95,6 @@ class CD_VesselShareTests: DatumTestsBase {
             let context = self.context
             let results = try! context.fetch(request)
             XCTAssertEqual(results.count, 1)
-            print(results.first!.vessels)
             XCTAssertEqual(results.first!.vessels.count, 0)
         }()
     }

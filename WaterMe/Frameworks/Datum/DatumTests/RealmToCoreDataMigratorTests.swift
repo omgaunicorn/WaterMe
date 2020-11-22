@@ -288,7 +288,6 @@ class RealmToCoreDataMigratorScaleTests: RealmToCoreDataMigratorBaseTests {
         wait2.expectedFulfillmentCount = vesselCount
         self.token = progress.observe(\.fractionCompleted) { _, _ in
             wait2.fulfill()
-            print(progress.fractionCompleted)
         }
 
         self.wait(for: [wait1, wait2], timeout: waitTime)
