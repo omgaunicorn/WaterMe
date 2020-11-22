@@ -1,4 +1,4 @@
-![Xcode: 12](https://img.shields.io/badge/Xcode-12-lightgrey.svg) ![Swift: 5.3](https://img.shields.io/badge/Swift-5.3-lightgrey.svg) ![iOS: 11 | 12 | 13 | 14](https://img.shields.io/badge/iOS-11%20|%2012%20|%2013%20|%2014-lightgrey.svg) ![devices: iPhone | iPad](https://img.shields.io/badge/devices-iPad%20|%20iPhone-lightgrey.svg)
+![Xcode: 12.2](https://img.shields.io/badge/Xcode-12.2-lightgrey.svg) ![Swift: 5.3](https://img.shields.io/badge/Swift-5.3-lightgrey.svg) ![iOS: 11 | 12 | 13 | 14](https://img.shields.io/badge/iOS-11%20|%2012%20|%2013%20|%2014-lightgrey.svg) ![devices: iPhone | iPad](https://img.shields.io/badge/devices-iPad%20|%20iPhone-lightgrey.svg)
 
 ![WaterMe App Icon](/WaterMe/WaterMe/Assets.xcassets/WaterMeIcon.imageset/all-1x.png)
 # WaterMe - Gardening Reminders
@@ -77,7 +77,7 @@ I am happy to have others contribute to WaterMe. Because WaterMe is a shipping a
 
 ### Requirements
 
-- Xcode 11.5 or higher
+- Xcode 12.2 or higher
 
 ### Instructions
 
@@ -90,7 +90,8 @@ I am happy to have others contribute to WaterMe. Because WaterMe is a shipping a
     1. Browse to the General tab of the WaterMe Target.
     1. Under Signing, change the team from its current setting to your AppleID.
 1. Build and Run
-    - WaterMe works in the simulator and on physical devices
+    - WaterMe uses Swift Package Manager. When opening the first time, Xcode may take a few minutes to resolve dependencies.
+    - WaterMe works in the simulator and on physical devices.
     
 ### Caveats
 
