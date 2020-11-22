@@ -29,6 +29,7 @@ internal class RealmToCoreDataMigrator: Migratable {
 
     private var source: RLM_BasicController?
     private let queue = DispatchQueue(label: "RealmToCoreDataMigrator", qos: .userInitiated)
+    private let isTesting: Bool
 
     /// If `testingSource` is `NIL` class checks if local realm DB exists.
     /// If it does exist, then it creates a RLM_BasicController and initializes.
@@ -38,6 +39,7 @@ internal class RealmToCoreDataMigrator: Migratable {
     init?(testingSource: RLM_BasicController? = nil) {
         if let source = testingSource {
             self.source = source
+            self.isTesting = true
             return
         }
         guard
@@ -45,6 +47,7 @@ internal class RealmToCoreDataMigrator: Migratable {
             let source = try? RLM_BasicController(kind: .local, forTesting: false)
         else { return nil }
         self.source = source
+        self.isTesting = false
     }
 
     func skipMigration() -> MigratableResult {
@@ -98,6 +101,13 @@ internal class RealmToCoreDataMigrator: Migratable {
                 while srcVessel != nil {
                     autoreleasepool {
                         defer {
+                            // if there are a lot of plants, I am worried about
+                            // the collectionview crashing.
+                            // Also, with a normal number of plants, this has
+                            // almost no noticeable effect on speed.
+                            if self.isTesting == false {
+                                Thread.sleep(forTimeInterval: 0.2)
+                            }
                             // Prepare for next loop
                             do {
                                 try context.save()
