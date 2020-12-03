@@ -371,6 +371,7 @@ internal class CD_BasicController: BasicController {
             if converted != reminder.interval {
                 somethingChanged = true
                 reminder.interval = converted
+                reminder.updateDates()
             }
         }
         if let note = note, note != reminder.note {
@@ -399,7 +400,7 @@ internal class CD_BasicController: BasicController {
             context.insert(perform)
             // core data hooks up the inverse relationship
             perform.reminder = reminder
-            reminder.updateDates(basedOnAppendedPerformDate: perform.date)
+            reminder.updateDates(withAppendedPerformDate: perform.date)
         }
         return context.waterme_save()
     }
