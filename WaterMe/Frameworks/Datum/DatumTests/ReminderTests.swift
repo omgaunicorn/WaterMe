@@ -80,4 +80,25 @@ class ReminderTests: DatumTestsBase {
         }
         self.wait(for: [wait], timeout: 0.3)
     }
+    
+    func test_updatePerformDates() {
+        let vessel = try! self.basicController.newReminderVessel(displayName: nil,
+                                                               icon: nil).get()
+        let item = try! self.basicController.newReminder(for: vessel).get()
+        XCTAssertNil(item.nextPerformDate)
+        XCTAssertNil(item.lastPerformDate)
+        let test_lastDate = Date()
+        try! self.basicController.appendNewPerformToReminders(
+            with: [item].map { Identifier(rawValue: $0.uuid) }
+        ).get()
+        XCTAssertDatesClose(item.lastPerformDate!, test_lastDate, within: 0.1)
+        let test_nextDate = Calendar.current.dateByAddingNumberOfDays(Int(item.interval),
+                                                                      to: item.lastPerformDate!)
+        XCTAssertDatesClose(item.nextPerformDate!, test_nextDate, within: 0.1)
+        try! self.basicController.update(kind: nil, interval: 12, note: nil, in: item).get()
+        XCTAssertDatesClose(item.lastPerformDate!, test_lastDate, within: 0.1)
+        let test_nextDate2 = Calendar.current.dateByAddingNumberOfDays(Int(12),
+                                                                      to: item.lastPerformDate!)
+        XCTAssertDatesClose(item.nextPerformDate!, test_nextDate2, within: 0.1)
+    }
 }
