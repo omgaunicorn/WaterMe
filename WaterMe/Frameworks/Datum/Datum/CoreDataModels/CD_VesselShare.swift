@@ -26,8 +26,9 @@ import CoreData
 @objc(CD_VesselShare)
 internal class CD_VesselShare: CD_Base {
 
+    override class var entityName: String { "CD_VesselShare" }
     class var request: NSFetchRequest<CD_VesselShare> {
-        NSFetchRequest<CD_VesselShare>(entityName: "CD_VesselShare")
+        NSFetchRequest<CD_VesselShare>(entityName: self.entityName)
     }
 
     @NSManaged var vessels: NSSet

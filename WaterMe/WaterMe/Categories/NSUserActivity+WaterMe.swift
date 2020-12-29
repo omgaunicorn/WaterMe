@@ -68,7 +68,7 @@ extension NSUserActivity {
             let uuid = uuids.first,
             let kind = RawUserActivity(rawValue: rawValue)
         else {
-            return .failure(.restorationFailed)
+            return .failure(.perform)
         }
         switch kind {
         case .editReminder:
@@ -81,7 +81,7 @@ extension NSUserActivity {
             return .success(.performReminder(.init(rawValue: uuid)))
         case .indexedItem:
             assertionFailure("Unimplmented")
-            return .failure(.restorationFailed)
+            return .failure(.perform)
         }
     }
 

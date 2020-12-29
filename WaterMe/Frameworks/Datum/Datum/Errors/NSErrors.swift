@@ -145,4 +145,13 @@ extension NSError {
         ]
         self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
     }
+
+    public convenience init(basicControllerNotFound _: Bool) {
+        let code = 1013
+        let message = "Basic Controller property was set to NIL"
+        let userInfo: [String : Any] = [
+            NSLocalizedFailureReasonErrorKey : message
+        ]
+        self.init(domain: NSError.kDomain, code: code, userInfo: userInfo)
+    }
 }

@@ -26,27 +26,27 @@
 public enum PrivateKeys {
 
     public static var kLoggerEndpoint: URL {
-        log.warning("The endpoint used by JSBServerlessLogger goes here")
+        print("The endpoint used by JSBServerlessLogger goes here")
         fatalError("kLoggerEndpoint")
     }
 
     public static var kLoggerKey: Data {
-        log.warning("The key used by JSBServerlessLogger goes here")
+        print("The key used by JSBServerlessLogger goes here")
         fatalError("kLoggerEndpoint")
     }
     
     public static var kEmailAddress: String {
-        log.warning("Your Email Address Has Not Been Configured")
+        print("Your Email Address Has Not Been Configured")
         return "EMAIL-ADDRESS@NOT-YET-CONFIGURED.NOT-A-TLD"
     }
     
     public static var kEmailAddressURL: URL {
-        log.warning("Your Email Address Has Not Been Configured")
+        print("Your Email Address Has Not Been Configured")
         return URL(string: "mailto://" + kEmailAddress)!
     }
     
     public static var kConsumableTipJar: (small: String, medium: String, large: String)? {
-        log.warning("These are the IAP product identifiers for the Tip Jar.")
+        print("These are the IAP product identifiers for the Tip Jar.")
         return nil
     }
     
@@ -56,22 +56,22 @@ public enum PrivateKeys {
     }
     
     public static var kAppStoreURL: URL? {
-        log.warning("This is a URL that points to the App Store link of the app.")
+        print("This is a URL that points to the App Store link of the app.")
         return nil
     }
     
     public static var kReviewAppURL: URL? {
-        log.warning("This is a URL that points to the App Store link of the app. With write-review appended.")
+        print("This is a URL that points to the App Store link of the app. With write-review appended.")
         return nil
     }
     
     public static var kAppInfoJSONURL: URL? {
-        log.warning("This is a URL that points to the JSON URL of the App Listing on iTunes")
+        print("This is a URL that points to the JSON URL of the App Listing on iTunes")
         return nil
     }
     
     public static var kAvatarURL: URL? {
-        log.warning("This is a URL that points to the image of the developer.")
+        print("This is a URL that points to the image of the developer.")
         return nil
     }
 }

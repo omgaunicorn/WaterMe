@@ -316,31 +316,6 @@ internal class RLM_BasicController: BasicController {
             return realm.waterMe_commitWrite()
         }
     }
-
-    internal func coreDataMigration(vesselName: String?,
-                                    vesselImage: UIImage?,
-                                    vesselEmoji: String?,
-                                    reminderInterval: NSNumber?,
-                                    reminderLastPerformDate: Date?) -> Result<Void, DatumError>
-    {
-        return self.realm.flatMap() { realm in
-            realm.beginWrite()
-            let vessel = RLM_ReminderVessel()
-            vessel.displayName = vesselName
-            vessel.icon = ReminderVesselIcon(rawImage: vesselImage, emojiString: vesselEmoji)
-            let reminder = RLM_Reminder()
-            reminder.interval = reminderInterval?.intValue ?? -1
-            if let lastPerformDate = reminderLastPerformDate {
-                let performed = RLM_ReminderPerform()
-                performed.date = lastPerformDate
-                reminder.performed.append(performed)
-                reminder.recalculateNextPerformDate()
-            }
-            vessel.reminders.append(reminder)
-            realm.add(vessel)
-            return realm.waterMe_commitWrite()
-        }
-    }
         
     internal func delete(vessel: ReminderVessel) -> Result<Void, DatumError> {
         let vessel = (vessel as! RLM_ReminderVesselWrapper).wrappedObject
@@ -391,11 +366,12 @@ internal class RLM_BasicController: BasicController {
 }
 
 extension RLM_BasicController {
-    internal class var storeDirectoryURL: URL {
-        let appsupport = FileManager.default.urls(for: FileManager.SearchPathDirectory.applicationSupportDirectory, in: FileManager.SearchPathDomainMask.userDomainMask).first!
-        let url = appsupport.appendingPathComponent("WaterMe", isDirectory: true).appendingPathComponent("Free", isDirectory: true)
-        return url
-    }
+    internal static let storeDirectoryURL: URL = {
+        return FileManager.default
+            .urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("WaterMe", isDirectory: true)
+            .appendingPathComponent("Free", isDirectory: true)
+    }()
 
     internal class var storeExists: Bool {
         let fm = FileManager.default
@@ -403,13 +379,16 @@ extension RLM_BasicController {
         return exists
     }
 
-    private class var localRealmFile: URL {
-        return self.storeDirectoryURL.appendingPathComponent("Realm.realm", isDirectory: false)
-    }
+    private static let localRealmFile: URL = {
+        return RLM_BasicController.storeDirectoryURL
+            .appendingPathComponent("Realm.realm", isDirectory: false)
+    }()
 
     private class func createLocalRealmDirectoryIfNeeded() throws {
         guard self.storeExists == false else { return }
-        try FileManager.default.createDirectory(at: self.storeDirectoryURL, withIntermediateDirectories: true, attributes: nil)
+        try FileManager.default.createDirectory(at: self.storeDirectoryURL,
+                                                withIntermediateDirectories: true,
+                                                attributes: nil)
     }
 
     private class func copyRealmFromBundleIfNeeded() throws {

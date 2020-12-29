@@ -26,8 +26,9 @@ import CoreData
 @objc(CD_Reminder)
 internal class CD_Reminder: CD_Base {
 
+    override class var entityName: String { "CD_Reminder" }
     class var request: NSFetchRequest<CD_Reminder> {
-        NSFetchRequest<CD_Reminder>(entityName: "CD_Reminder")
+        NSFetchRequest<CD_Reminder>(entityName: self.entityName)
     }
     
     @NSManaged var interval: Int32
@@ -45,19 +46,40 @@ internal class CD_Reminder: CD_Base {
         self.interval = Int32(ReminderConstants.defaultInterval)
     }
     
-    internal func updateDates(basedOnAppendedPerformDate newDate: Date) {
-        self.lastPerformDate = newDate
-        let cal = Calendar.current
-        self.nextPerformDate = cal.dateByAddingNumberOfDays(Int(self.interval),
-                                                            to: newDate)
+    /// Update `nextPerformDate` & `lastPerformDate` based on new date
+    /// If `nil` is passed for `newDate` then current `lastPerformDate` is used for update calculation.
+    internal func updateDates(withAppendedPerformDate newDate: Date? = nil) {
+        if let newDate = newDate {
+            self.lastPerformDate = newDate
+        }
+        if let lastPerformDate = self.lastPerformDate {
+            let cal = Calendar.current
+            self.nextPerformDate = cal.dateByAddingNumberOfDays(Int(self.interval),
+                                                                to: lastPerformDate)
+        } else {
+            self.nextPerformDate = nil
+        }
+    }
+
+    override func datum_willSave() {
+        super.datum_willSave()
+        if let descriptionString = self.descriptionString,
+           descriptionString.nonEmptyString == nil
+        {
+            self.descriptionString = nil
+        }
+        if let note = self.note, note.nonEmptyString == nil {
+            self.note = nil
+        }
     }
 }
 
 @objc(CD_ReminderPerform)
 internal class CD_ReminderPerform: CD_Base {
 
+    class override var entityName: String { "CD_ReminderPerform" }
     class var request: NSFetchRequest<CD_ReminderPerform> {
-        NSFetchRequest<CD_ReminderPerform>(entityName: "CD_ReminderPerform")
+        NSFetchRequest<CD_ReminderPerform>(entityName: self.entityName)
     }
     
     @NSManaged var date: Date

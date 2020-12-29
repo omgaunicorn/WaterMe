@@ -68,13 +68,13 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.view.tintColor = Color.tint
         self.progressView?.progress = 0
         self.configureAttributedText()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         Analytics.log(viewOperation: .coreDataMigration)
     }
 
@@ -119,7 +119,8 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
         self.migrateButton?.isEnabled = true
         self.cancelButton?.isEnabled = true
         self.deleteButton?.isEnabled = true
-        self.contactDeveloperButton?.isEnabled = false
+        // TODO: Fix issue where button is grayed out
+        // self.contactDeveloperButton?.isEnabled = false
 
         // customize things for each state
         let disableAlpha: CGFloat = 0.3
@@ -146,7 +147,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
             self.bodyLabel?.attributedText = NSAttributedString(string: LocalizedString.bodySuccess,
                                                                 font: .migratorBody)
             self.cancelButton?.setAttributedTitle(
-                NSAttributedString(string: UIAlertController.LocalizedString.buttonTitleDismiss,
+                NSAttributedString(string: LocalizedString.finishButtonTitle,
                                    font: .migratorPrimaryButton),
                                    for: .normal
             )
@@ -184,6 +185,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
             assertionFailure(message)
             UIView.style_animateNormal() {
                 self.state = .error(.startError)
+                self.view.layoutIfNeeded()
             }
             return
         }
@@ -193,6 +195,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
         // So this weak self is required
         UIView.style_animateNormal({
             self.state = .migrating
+            self.view.layoutIfNeeded()
         }, completion: { _ in
             UIApplication.shared.isIdleTimerDisabled = true
             self.progressView?.observedProgress = self.migrator.start(destination: basicRC)
@@ -206,6 +209,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
                     case .failure(let error):
                         welf.state = .error(error)
                     }
+                    self?.view.layoutIfNeeded()
                 }
             }
         })
@@ -218,7 +222,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
 
     @IBAction private func deleteButtonTapped(_ sender: Any) {
         let vc = UIAlertController(title: nil,
-                                   message: LocalizedString.bodyDeleteConfirmation		,
+                                   message: LocalizedString.bodyDeleteConfirmation,
                                    preferredStyle: .actionSheet)
         let deleteAction = UIAlertAction(title: LocalizedString.deleteButtonTitle,
                                          style: .destructive)
@@ -231,6 +235,7 @@ class CoreDataMigratorViewController: StandardViewController, HasBasicController
             case .failure(let error):
                 UIView.style_animateNormal() {
                     self.state = .error(error)
+                    self.view.layoutIfNeeded()
                 }
             }
         }

@@ -33,7 +33,7 @@ extension CD_Reminder {
         set {
             let raw = newValue.rawValue
             self.kindString = raw.primary
-            raw.secondary.map { self.descriptionString = $0 }
+            self.descriptionString = raw.secondary
         }
     }
 }
@@ -44,11 +44,11 @@ extension CD_Reminder: ModelCompleteCheckable {
         case .fertilize, .water, .trim, .mist:
             return nil
         case .move(let description):
-            return description?.nonEmptyString == nil ?
+            return description == nil ?
                 ModelCompleteError(_actions: [.reminderMissingMoveLocation, .cancel, .saveAnyway])
                 : nil
         case .other(let description):
-            return description?.nonEmptyString == nil ?
+            return description == nil ?
                 ModelCompleteError(_actions: [.reminderMissingOtherDescription, .cancel, .saveAnyway])
                 : nil
         }
@@ -85,11 +85,11 @@ extension RLM_Reminder: ModelCompleteCheckable {
         case .fertilize, .water, .trim, .mist:
             return nil
         case .move(let description):
-            return description?.nonEmptyString == nil ?
+            return description == nil ?
                 ModelCompleteError(_actions: [.reminderMissingMoveLocation, .cancel, .saveAnyway])
                 : nil
         case .other(let description):
-            return description?.nonEmptyString == nil ?
+            return description == nil ?
                 ModelCompleteError(_actions: [.reminderMissingOtherDescription, .cancel, .saveAnyway])
                 : nil
         }

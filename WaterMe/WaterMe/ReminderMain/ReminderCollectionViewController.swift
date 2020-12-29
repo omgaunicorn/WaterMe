@@ -29,7 +29,7 @@ protocol ReminderCollectionViewControllerDelegate: class {
     func userDidSelect(reminderID: Identifier,
                        from view: UIView,
                        userActivityContinuation: NSUserActivityContinuedHandler?,
-                       deselectAnimated: @escaping (Bool) -> Void,
+                       deselectAnimated: ((Bool) -> Void)?,
                        within viewController: ReminderCollectionViewController)
     func dragSessionWillBegin(_ session: UIDragSession,
                               within viewController: ReminderCollectionViewController)

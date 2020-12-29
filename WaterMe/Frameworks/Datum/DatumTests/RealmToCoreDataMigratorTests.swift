@@ -29,7 +29,7 @@ class RealmToCoreDataMigratorBaseTests: XCTestCase {
 
     let source = try! RLM_BasicController(kind: .local, forTesting: true)
     let destination = try! CD_BasicController(kind: .local, forTesting: true)
-    var token: NSKeyValueObservation?
+    var token: ObservationToken?
 
     override func tearDownWithError() throws {
         try super.tearDownWithError()
@@ -154,6 +154,10 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
                 XCTAssertNil(v_2.icon)
                 XCTAssertEqual(v_3.icon?.emoji, "3️⃣")
 
+                XCTAssertNotNil(v_1.migrated!.realmIdentifier)
+                XCTAssertNotNil(v_2.migrated!.realmIdentifier)
+                XCTAssertNotNil(v_3.migrated!.realmIdentifier)
+
                 let v_1_r_1 = (v_1.reminders as! Set<CD_Reminder>).filter({ $0.interval == 1 }).first!
                 let v_1_r_2 = (v_1.reminders as! Set<CD_Reminder>).filter({ $0.interval == 10 }).first!
                 let v_1_r_3 = (v_1.reminders as! Set<CD_Reminder>).filter({ $0.interval == 100 }).first!
@@ -165,6 +169,10 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
                 XCTAssertNil(v_1_r_1.note)
                 XCTAssertNil(v_1_r_2.note)
                 XCTAssertEqual(v_1_r_3.note, "This is a Note")
+
+                XCTAssertNotNil(v_1_r_1.migrated!.realmIdentifier)
+                XCTAssertNotNil(v_1_r_2.migrated!.realmIdentifier)
+                XCTAssertNotNil(v_1_r_3.migrated!.realmIdentifier)
 
                 let v_2_r_1 = (v_2.reminders as! Set<CD_Reminder>).filter({ $0.interval == -1 }).first!
                 let v_2_r_2 = (v_2.reminders as! Set<CD_Reminder>).filter({ $0.interval == -10 }).first!
@@ -178,6 +186,10 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
                 XCTAssertNil(v_2_r_2.note)
                 XCTAssertEqual(v_2_r_3.note, "This is a Note")
 
+                XCTAssertNotNil(v_2_r_1.migrated!.realmIdentifier)
+                XCTAssertNotNil(v_2_r_2.migrated!.realmIdentifier)
+                XCTAssertNotNil(v_2_r_3.migrated!.realmIdentifier)
+
                 let v_3_r_1 = (v_3.reminders as! Set<CD_Reminder>).filter({ $0.interval == 10000000 }).first!
                 let v_3_r_2 = (v_3.reminders as! Set<CD_Reminder>).filter({ $0.interval == 100000000 }).first!
                 let v_3_r_3 = (v_3.reminders as! Set<CD_Reminder>).filter({ $0.interval == 1000000000 }).first!
@@ -190,8 +202,18 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
                 XCTAssertEqual(v_3_r_2.note, "Two")
                 XCTAssertEqual(v_3_r_3.note, "Three")
 
+                XCTAssertNotNil(v_3_r_1.migrated!.realmIdentifier)
+                XCTAssertNotNil(v_3_r_2.migrated!.realmIdentifier)
+                XCTAssertNotNil(v_3_r_3.migrated!.realmIdentifier)
+
                 let allReminders = [v_1_r_1, v_1_r_2, v_1_r_3, v_2_r_1, v_2_r_2, v_2_r_3, v_3_r_1, v_3_r_2, v_3_r_3]
                 XCTAssertEqual(allReminders.filter({ $0.performed.count == 3 }).count, allReminders.count)
+                allReminders.forEach() {
+                    $0.performed.forEach() {
+                        let p = $0 as! CD_ReminderPerform
+                        XCTAssertNil(p.migrated)
+                    }
+                }
 
                 let destPerforms = performs.map({ $0.date }).sorted(by: { $0 > $1 })
                 XCTAssertEqual(srcPerforms, destPerforms)
@@ -215,7 +237,7 @@ class RealmToCoreDataMigratorScaleTests: RealmToCoreDataMigratorBaseTests {
     var vesselCount: Int { 50 }
     var reminderCount: Int { 30 }
     var performCount: Int { 10 }
-    var waitTime: TimeInterval { 20 }
+    var waitTime: TimeInterval { 30 }
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -266,11 +288,85 @@ class RealmToCoreDataMigratorScaleTests: RealmToCoreDataMigratorBaseTests {
         wait2.expectedFulfillmentCount = vesselCount
         self.token = progress.observe(\.fractionCompleted) { _, _ in
             wait2.fulfill()
-            print(progress.fractionCompleted)
         }
 
         self.wait(for: [wait1, wait2], timeout: waitTime)
     }
+}
+
+class RealmToCoreDataMigrationSearchTests: RealmToCoreDataMigratorBaseTests {
+
+    var sourceVessel: RLM_ReminderVessel!
+
+    override func setUpWithError() throws {
+        try super.setUpWithError()
+        let sourceVessel = try! self.source.newReminderVessel(displayName: "One", icon: .emoji("1️⃣"))
+                                           .get() as! RLM_ReminderVesselWrapper
+        self.sourceVessel = sourceVessel.wrappedObject
+        let migrator = RealmToCoreDataMigrator(testingSource: self.source)!
+        _ = migrator.start(destination: self.destination) { result in
+            switch result {
+            case .success:
+                break
+            case .failure:
+                XCTFail()
+            }
+        }
+        // Let the migration happen
+        Thread.sleep(forTimeInterval: 0.2)
+    }
+
+    func test_search_vesselCollection() {
+        let id = Identifier(rawValue: self.sourceVessel.uuid)
+        let query = try! self.destination.allVessels(sorted: .displayName, ascending: true).get()
+        let wait = XCTestExpectation()
+        self.token = query.test_observe_loadData { data in
+            wait.fulfill()
+            let idx = data.indexOfItem(with: id)
+            XCTAssertEqual(idx!, 0)
+        }
+        self.wait(for: [wait], timeout: 0.3)
+    }
+
+    func test_search_reminderCollection() {
+        let id = Identifier(rawValue: self.sourceVessel.reminders.first!.uuid)
+        let query = try! self.destination.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let wait = XCTestExpectation()
+        self.token = query.test_observe_loadData { data in
+            wait.fulfill()
+            let idx = data.indexOfItem(with: id)
+            XCTAssertEqual(idx, 0)
+        }
+        self.wait(for: [wait], timeout: 0.3)
+    }
+
+    func test_search_reminderGroupedCollection() {
+        let id = Identifier(rawValue: self.sourceVessel.reminders.first!.uuid)
+        let query = try! self.destination.groupedReminders().get()
+        let wait = XCTestExpectation()
+        self.token = query.test_observe_loadData { data in
+            wait.fulfill()
+            let indexPath = data.indexOfItem(with: id)
+            XCTAssertEqual(indexPath, .init(row: 0, section: 0))
+        }
+        self.wait(for: [wait], timeout: 0.3)
+    }
+
+    func test_search_basicController_vessel() {
+        let id = Identifier(rawValue: self.sourceVessel.uuid)
+        let _vessel = try! self.destination.reminderVessel(matching: id).get()
+        let vessel = (_vessel as! CD_ReminderVesselWrapper).wrappedObject
+        XCTAssertEqual(vessel.migrated?.realmIdentifier, self.sourceVessel.uuid)
+        XCTAssertEqual(vessel.displayName, self.sourceVessel.displayName!)
+    }
+
+    func test_search_basicController_reminder() {
+        let id = Identifier(rawValue: self.sourceVessel.reminders.first!.uuid)
+        let _reminder = try! self.destination.reminder(matching: id).get()
+        let reminder = (_reminder as! CD_ReminderWrapper).wrappedObject
+        XCTAssertEqual(reminder.migrated?.realmIdentifier, self.sourceVessel.reminders.first!.uuid)
+    }
+
 }
 
 /*

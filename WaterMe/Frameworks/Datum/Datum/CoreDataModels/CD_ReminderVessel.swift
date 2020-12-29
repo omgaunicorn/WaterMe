@@ -26,8 +26,9 @@ import CoreData
 @objc(CD_ReminderVessel)
 internal class CD_ReminderVessel: CD_Base {
 
+    override class var entityName: String { "CD_ReminderVessel" }
     class var request: NSFetchRequest<CD_ReminderVessel> {
-        NSFetchRequest<CD_ReminderVessel>(entityName: "CD_ReminderVessel")
+        NSFetchRequest<CD_ReminderVessel>(entityName: self.entityName)
     }
     
     @NSManaged var displayName: String?
@@ -40,6 +41,13 @@ internal class CD_ReminderVessel: CD_Base {
     override func awakeFromInsert() {
         super.awakeFromInsert()
         self.kindString = ReminderVesselKind.plant.rawValue
+    }
+
+    override func datum_willSave() {
+        super.datum_willSave()
+        if let displayName = self.displayName, displayName.nonEmptyString == nil {
+            self.displayName = nil
+        }
     }
 }
 

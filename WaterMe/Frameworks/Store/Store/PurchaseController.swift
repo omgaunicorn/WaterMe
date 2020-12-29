@@ -32,9 +32,9 @@ public class PurchaseController {
 
     public init?() {
         guard SKPaymentQueue.canMakePayments() else { return nil }
-        self.purchaser.transactionsUpdated = { [unowned self] inFlights in
-            self.transactionsInFlight += inFlights
-            self.transactionsInFlightUpdated?()
+        self.purchaser.transactionsUpdated = { [weak self] inFlights in
+            self?.transactionsInFlight += inFlights
+            self?.transactionsInFlightUpdated?()
         }
     }
 
@@ -85,5 +85,9 @@ internal class Purchaser: NSObject, SKPaymentTransactionObserver {
         let (inFlight, _, readyToBeFinished) = InFlightTransaction.process(transactions: transactions)
         readyToBeFinished.forEach({ self.finish(transaction: $0) })
         self.transactionsUpdated?(inFlight)
+    }
+
+    deinit {
+        SKPaymentQueue.default().remove(self)
     }
 }

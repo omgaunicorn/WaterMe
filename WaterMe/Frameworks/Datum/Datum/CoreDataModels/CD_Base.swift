@@ -25,10 +25,13 @@ import CoreData
 
 @objc(CD_Base)
 internal class CD_Base: NSManagedObject {
+
+    class var entityName: String { "CD_Base" }
     
     @NSManaged var dateModified: Date
     @NSManaged var dateCreated: Date
     @NSManaged var bloop: Bool
+    @NSManaged var migrated: CD_Migrated?
     
     override func awakeFromInsert() {
         super.awakeFromInsert()
@@ -40,4 +43,13 @@ internal class CD_Base: NSManagedObject {
     func datum_willSave() {
         self.dateModified = Date()
     }
+}
+
+@objc(CD_Migrated)
+internal class CD_Migrated: CD_Base {
+    class override var entityName: String { "CD_Migrated" }
+    class var request: NSFetchRequest<CD_Migrated> {
+        NSFetchRequest<CD_Migrated>(entityName: self.entityName)
+    }
+    @NSManaged var realmIdentifier: String?
 }

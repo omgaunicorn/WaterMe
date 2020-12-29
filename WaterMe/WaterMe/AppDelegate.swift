@@ -226,7 +226,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         let result: UserActivityResult
-            = .failure(UserActivityToFail(error: .continuationFailed, completion: nil))
+            = .failure(UserActivityToFail(error: .perform, completion: nil))
         self.rootVC?.userActivityResultToContinue += [result]
         let isReady = self.rootVC?.isReady ?? []
         guard isReady.completely else { return }
@@ -268,7 +268,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     private func simulator_configure() {
         #if targetEnvironment(simulator)
-        NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0].log(as: .debug)
+        let fm = FileManager.default
+        fm.urls(for: .documentDirectory, in: .userDomainMask)[0].deletingLastPathComponent().path.log(as: .debug)
+        fm.containerURL(forSecurityApplicationGroupIdentifier: "group.com.saturdayapps.WaterMe")!.path.log(as: .debug)
         #endif
     }
 }

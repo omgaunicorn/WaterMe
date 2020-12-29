@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bbV-Xm-AwN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bbV-Xm-AwN">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -24,34 +24,34 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="320"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qkR-Zk-8W3">
-                                                <rect key="frame" x="0.0" y="0.0" width="320" height="454.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="456.5"/>
                                                 <subviews>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="1CK-FK-Fe4">
-                                                        <rect key="frame" x="20" y="20" width="280" height="414.5"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="1CK-FK-Fe4">
+                                                        <rect key="frame" x="20" y="20" width="280" height="416.5"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Vbb-a2-mbR">
-                                                                <rect key="frame" x="1.5" y="0.0" width="277" height="214.5"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Vbb-a2-mbR">
+                                                                <rect key="frame" x="0.0" y="0.0" width="280" height="214.5"/>
                                                                 <subviews>
                                                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="WaterMeIcon" translatesAutoresizingMaskIntoConstraints="NO" id="p43-5K-qnb">
-                                                                        <rect key="frame" x="53.5" y="0.0" width="170" height="88"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="280" height="88"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="88" id="0zo-id-b1s"/>
                                                                         </constraints>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WaaterMee 2" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tbi-qO-Oa2">
-                                                                        <rect key="frame" x="58" y="96" width="161" height="33.5"/>
+                                                                        <rect key="frame" x="0.0" y="96" width="280" height="33.5"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Daata Migraation" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YhU-zO-RJN">
-                                                                        <rect key="frame" x="57.5" y="137.5" width="162.5" height="26.5"/>
+                                                                        <rect key="frame" x="0.0" y="137.5" width="280" height="26.5"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In order to upgrade to WaterMe 2, a one time data migration is required." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q2J-te-B9f">
-                                                                        <rect key="frame" x="0.0" y="172" width="277" height="42.5"/>
+                                                                        <rect key="frame" x="0.0" y="172" width="280" height="42.5"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -59,37 +59,37 @@
                                                                 </subviews>
                                                             </stackView>
                                                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="aBe-3I-naL">
-                                                                <rect key="frame" x="0.0" y="230.5" width="280" height="2"/>
+                                                                <rect key="frame" x="0.0" y="230.5" width="280" height="4"/>
                                                             </progressView>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="72e-kW-wud">
-                                                                <rect key="frame" x="30.5" y="248.5" width="219" height="166"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="72e-kW-wud">
+                                                                <rect key="frame" x="0.0" y="250.5" width="280" height="166"/>
                                                                 <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DhK-ya-eYs">
-                                                                        <rect key="frame" x="73" y="0.0" width="73" height="46"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DhK-ya-eYs">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="280" height="46"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                                         <state key="normal" title="Staart"/>
                                                                         <connections>
                                                                             <action selector="migrateButtonTapped:" destination="5Wc-5Z-rXQ" eventType="touchUpInside" id="jXB-9h-Fc1"/>
                                                                         </connections>
                                                                     </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jfd-eH-OrJ">
-                                                                        <rect key="frame" x="28" y="50" width="163" height="36"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jfd-eH-OrJ">
+                                                                        <rect key="frame" x="0.0" y="50" width="280" height="36"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                                         <state key="normal" title="Skippp for Nowww"/>
                                                                         <connections>
                                                                             <action selector="cancelButtonTapped:" destination="5Wc-5Z-rXQ" eventType="touchUpInside" id="Skx-XF-K8t"/>
                                                                         </connections>
                                                                     </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCa-67-Z4a">
-                                                                        <rect key="frame" x="29.5" y="90" width="160" height="36"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dCa-67-Z4a">
+                                                                        <rect key="frame" x="0.0" y="90" width="280" height="36"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                                         <state key="normal" title="Donnn't Migraaate"/>
                                                                         <connections>
                                                                             <action selector="deleteButtonTapped:" destination="5Wc-5Z-rXQ" eventType="touchUpInside" id="MdN-NK-aCs"/>
                                                                         </connections>
                                                                     </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqh-S6-F9b">
-                                                                        <rect key="frame" x="0.0" y="130" width="219" height="36"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tqh-S6-F9b">
+                                                                        <rect key="frame" x="0.0" y="130" width="280" height="36"/>
                                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                                         <state key="normal" title="Eeeemmmaillll Developer"/>
                                                                         <connections>
@@ -129,13 +129,13 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="tUD-bH-2bc"/>
                         <constraints>
                             <constraint firstItem="d3B-bK-bVz" firstAttribute="centerY" secondItem="ucO-YE-z2N" secondAttribute="centerYWithinMargins" id="5pe-3C-bbp"/>
                             <constraint firstItem="d3B-bK-bVz" firstAttribute="height" secondItem="ucO-YE-z2N" secondAttribute="height" id="IhQ-et-VsV"/>
                             <constraint firstItem="d3B-bK-bVz" firstAttribute="centerX" secondItem="ucO-YE-z2N" secondAttribute="centerXWithinMargins" id="VqB-5r-Aeh"/>
                             <constraint firstItem="d3B-bK-bVz" firstAttribute="width" secondItem="ucO-YE-z2N" secondAttribute="width" id="uro-Mc-a7L"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="tUD-bH-2bc"/>
                     </view>
                     <connections>
                         <outlet property="bodyLabel" destination="q2J-te-B9f" id="Ns7-KA-Jfb"/>
@@ -172,11 +172,11 @@
                                 </connections>
                             </containerView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="HCO-P4-dIc"/>
                         <constraints>
                             <constraint firstItem="zd9-B3-alQ" firstAttribute="centerY" secondItem="HCO-P4-dIc" secondAttribute="centerY" placeholder="YES" id="PNV-jc-UBq"/>
                             <constraint firstItem="zd9-B3-alQ" firstAttribute="centerX" secondItem="HCO-P4-dIc" secondAttribute="centerX" placeholder="YES" id="aCv-p7-hcv"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="HCO-P4-dIc"/>
                     </view>
                     <connections>
                         <outlet property="childVCContainerView" destination="zd9-B3-alQ" id="DJ1-sP-o65"/>
