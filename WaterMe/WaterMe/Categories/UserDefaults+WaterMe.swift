@@ -28,6 +28,7 @@ extension UserDefaults {
     
     enum Constants {
         static let kFirstRun = "FIRST_RUN"
+        static let kCloudSync = "CLOUD_SYNC"
         static let kReminderHour = "REMINDER_HOUR"
         static let kNumberOfReminderDays = "NUMBER_OF_REMINDER_DAYS"
         static let kIncreaseContrast = "INCREASE_CONTRAST"
@@ -108,6 +109,18 @@ extension UserDefaults {
         }
     }
     
+    // TODO: Fix other Bools to use is
+    var isCloudSyncEnabled: Bool {
+        get {
+            guard let number = self.object(forKey: Constants.kCloudSync) as? NSNumber
+                else { fatalError("Must call configure() before accessing user defaults") }
+            return number.boolValue
+        }
+        set {
+            self.set(NSNumber(value: newValue), forKey: Constants.kCloudSync)
+        }
+    }
+    
     var reminderHour: Int {
         get {
             guard let number = self.object(forKey: Constants.kReminderHour) as? NSNumber
@@ -131,8 +144,10 @@ extension UserDefaults {
     }
     
     func configure() {
+        // TODO: Fix colon alignment
         self.register(defaults: [
             Constants.kFirstRun : true,
+            Constants.kCloudSync : kCloudSyncDefault,
             Constants.kReminderHour : 8,
             Constants.kNumberOfReminderDays : 14,
             Constants.kIncreaseContrast : false,
@@ -159,4 +174,13 @@ extension UserDefaults {
     @objc dynamic var NUMBER_OF_REMINDER_DAYS: Any { fatalError() }
     @objc dynamic var REMINDER_HOUR: Any { fatalError() }
     @objc dynamic var FIRST_RUN: Any { fatalError() }
+    @objc dynamic var CLOUD_SYNC: Any { fatalError() }
 }
+
+private let kCloudSyncDefault: Bool = {
+    if #available(iOS 14.0, *) {
+        return true
+    } else {
+        return false
+    }
+}()
