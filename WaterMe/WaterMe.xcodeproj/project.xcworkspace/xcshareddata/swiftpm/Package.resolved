@@ -38,6 +38,15 @@
         }
       },
       {
+        "package": "SimpleImageViewer",
+        "repositoryURL": "https://github.com/jeffreybergier/SimpleImageViewer.git",
+        "state": {
+          "branch": "main",
+          "revision": "901b1f3c5aa4a752843ff0f060b4f8bcf815ea06",
+          "version": null
+        }
+      },
+      {
         "package": "TOCropViewController",
         "repositoryURL": "https://github.com/TimOliver/TOCropViewController.git",
         "state": {

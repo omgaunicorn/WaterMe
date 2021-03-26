@@ -102,8 +102,6 @@
 		503476CD24552F9900C3DAD3 /* TipJarProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476C624552F9900C3DAD3 /* TipJarProducts.swift */; };
 		503476CF24552F9900C3DAD3 /* InFlightTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503476C824552F9900C3DAD3 /* InFlightTransaction.swift */; };
 		5034770224557CB200C3DAD3 /* Cheers in Frameworks */ = {isa = PBXBuildFile; productRef = 5034770124557CB200C3DAD3 /* Cheers */; };
-		50380EB4245584F800271545 /* SimpleImageViewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50380EB1245584ED00271545 /* SimpleImageViewer.framework */; };
-		50380EB5245584F800271545 /* SimpleImageViewer.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50380EB1245584ED00271545 /* SimpleImageViewer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5040B41724C4768800AB747B /* StarterData.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 5040B41924C4768800AB747B /* StarterData.sqlite */; };
 		5045CBA91EFCCA5C008E6D6A /* ReminderEdit.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */; };
 		5045CBAB1EFCCB50008E6D6A /* ReminderEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */; };
@@ -217,6 +215,7 @@
 		50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */; };
 		50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */; };
 		7313858E260E15B000CDC138 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 7313858D260E15B000CDC138 /* CropViewController */; };
+		73730858260E2F22000B99DB /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -276,34 +275,6 @@
 			remoteGlobalIDString = 5034766524552D0600C3DAD3;
 			remoteInfo = Store;
 		};
-		50380EAE245584ED00271545 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A07E76D31ECC94A400B77D46;
-			remoteInfo = Example;
-		};
-		50380EB0245584ED00271545 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A0BF70A71EDC5B1400109F6E;
-			remoteInfo = SimpleImageViewer;
-		};
-		50380EB2245584ED00271545 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A02EE5D41EF1897D000EAB41;
-			remoteInfo = SimpleImageViewerTests;
-		};
-		50380EB62455850200271545 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A0BF70A61EDC5B1400109F6E;
-			remoteInfo = SimpleImageViewer;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -315,7 +286,6 @@
 			files = (
 				5034767C24552D0700C3DAD3 /* Store.framework in Embed Frameworks */,
 				48A7B0E92467FCB100DC0861 /* Calculate.framework in Embed Frameworks */,
-				50380EB5245584F800271545 /* SimpleImageViewer.framework in Embed Frameworks */,
 				5034765924552CFD00C3DAD3 /* Datum.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -391,8 +361,6 @@
 		5029E09A214234B4005285F5 /* ReminderSummaryPopoverBackgroundView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReminderSummaryPopoverBackgroundView.m; sourceTree = "<group>"; };
 		502E68301F91169000B0359C /* ReminderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReminderCollectionViewCell.xib; sourceTree = "<group>"; };
 		502E68321F9122F100B0359C /* ReminderFinishDropTargetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderFinishDropTargetViewController.swift; sourceTree = "<group>"; };
-		5034761324552B5200C3DAD3 /* Datum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Datum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5034763B24552BCF00C3DAD3 /* Store.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Store.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5034764324552CFD00C3DAD3 /* Datum.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Datum.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5034764524552CFD00C3DAD3 /* Datum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Datum.h; sourceTree = "<group>"; };
 		5034764624552CFD00C3DAD3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -420,8 +388,6 @@
 		503476C224552F9900C3DAD3 /* PurchaseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseController.swift; sourceTree = "<group>"; };
 		503476C624552F9900C3DAD3 /* TipJarProducts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipJarProducts.swift; sourceTree = "<group>"; };
 		503476C824552F9900C3DAD3 /* InFlightTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InFlightTransaction.swift; sourceTree = "<group>"; };
-		50380E99245584B900271545 /* SimpleImageViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SimpleImageViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SimpleImageViewer.xcodeproj; path = GitSubmodules/SimpleImageViewer/SimpleImageViewer.xcodeproj; sourceTree = "<group>"; };
 		5040B41824C4768800AB747B /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/StarterData.sqlite; sourceTree = "<group>"; };
 		5045CBA81EFCCA5C008E6D6A /* ReminderEdit.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ReminderEdit.storyboard; sourceTree = "<group>"; };
 		5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEditViewController.swift; sourceTree = "<group>"; };
@@ -603,7 +569,7 @@
 				48A7B0E82467FCB100DC0861 /* Calculate.framework in Frameworks */,
 				5034770224557CB200C3DAD3 /* Cheers in Frameworks */,
 				5034765824552CFD00C3DAD3 /* Datum.framework in Frameworks */,
-				50380EB4245584F800271545 /* SimpleImageViewer.framework in Frameworks */,
+				73730858260E2F22000B99DB /* SimpleImageViewer in Frameworks */,
 				5034767B24552D0700C3DAD3 /* Store.framework in Frameworks */,
 				7313858E260E15B000CDC138 /* CropViewController in Frameworks */,
 			);
@@ -870,16 +836,6 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
-		50380EA9245584ED00271545 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				50380EAF245584ED00271545 /* Example.app */,
-				50380EB1245584ED00271545 /* SimpleImageViewer.framework */,
-				50380EB3245584ED00271545 /* SimpleImageViewerTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		50402387200ABD8F004C7FA7 /* PurchaseConfirmation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1069,7 +1025,6 @@
 				5034767424552D0700C3DAD3 /* StoreTests */,
 				48A7B0E12467FCB100DC0861 /* CalculateTests */,
 				50BB0F511EBFCDE500850FF4 /* Products */,
-				8CCD0EA6DFF9C0E9A378684C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1148,17 +1103,6 @@
 				50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */,
 			);
 			path = CoreDataMigration;
-			sourceTree = "<group>";
-		};
-		8CCD0EA6DFF9C0E9A378684C /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				50380E99245584B900271545 /* SimpleImageViewer.framework */,
-				5034763B24552BCF00C3DAD3 /* Store.framework */,
-				5034761324552B5200C3DAD3 /* Datum.framework */,
-				50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1321,7 +1265,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				50380EB72455850200271545 /* PBXTargetDependency */,
 				5034765724552CFD00C3DAD3 /* PBXTargetDependency */,
 				5034767A24552D0700C3DAD3 /* PBXTargetDependency */,
 				48A7B0E72467FCB100DC0861 /* PBXTargetDependency */,
@@ -1330,6 +1273,7 @@
 			packageProductDependencies = (
 				5034770124557CB200C3DAD3 /* Cheers */,
 				7313858D260E15B000CDC138 /* CropViewController */,
+				73730857260E2F22000B99DB /* SimpleImageViewer */,
 			);
 			productName = WaterMe;
 			productReference = 50BB0F501EBFCDE500850FF4 /* WaterMe.app */;
@@ -1405,15 +1349,10 @@
 				500D24052474C1800070162E /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				5031FBF924F7ACBE00CBBB2E /* XCRemoteSwiftPackageReference "JSBServerlessLogger" */,
 				7313858C260E15B000CDC138 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
+				73730856260E2F22000B99DB /* XCRemoteSwiftPackageReference "SimpleImageViewer" */,
 			);
 			productRefGroup = 50BB0F511EBFCDE500850FF4 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 50380EA9245584ED00271545 /* Products */;
-					ProjectRef = 50380EA8245584ED00271545 /* SimpleImageViewer.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				50BB0F4F1EBFCDE500850FF4 /* WaterMe */,
@@ -1426,30 +1365,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		50380EAF245584ED00271545 /* Example.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = Example.app;
-			remoteRef = 50380EAE245584ED00271545 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		50380EB1245584ED00271545 /* SimpleImageViewer.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SimpleImageViewer.framework;
-			remoteRef = 50380EB0245584ED00271545 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		50380EB3245584ED00271545 /* SimpleImageViewerTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SimpleImageViewerTests.xctest;
-			remoteRef = 50380EB2245584ED00271545 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		48A7B0D12467FCB100DC0861 /* Resources */ = {
@@ -1801,11 +1716,6 @@
 			isa = PBXTargetDependency;
 			target = 5034766524552D0600C3DAD3 /* Store */;
 			targetProxy = 5034767924552D0700C3DAD3 /* PBXContainerItemProxy */;
-		};
-		50380EB72455850200271545 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SimpleImageViewer;
-			targetProxy = 50380EB62455850200271545 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2487,6 +2397,14 @@
 				minimumVersion = 2.6.0;
 			};
 		};
+		73730856260E2F22000B99DB /* XCRemoteSwiftPackageReference "SimpleImageViewer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jeffreybergier/SimpleImageViewer.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2514,6 +2432,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7313858C260E15B000CDC138 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
 			productName = CropViewController;
+		};
+		73730857260E2F22000B99DB /* SimpleImageViewer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 73730856260E2F22000B99DB /* XCRemoteSwiftPackageReference "SimpleImageViewer" */;
+			productName = SimpleImageViewer;
 		};
 /* End XCSwiftPackageProductDependency section */
 
