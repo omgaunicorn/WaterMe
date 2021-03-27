@@ -27,7 +27,7 @@ import Calculate
 
 internal class CD_BasicController: BasicController {
     
-    private class func container(forTesting: Bool) -> NSPersistentContainer? {
+    private class func container(kind: ControllerKind) -> NSPersistentContainer? {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
@@ -37,25 +37,33 @@ internal class CD_BasicController: BasicController {
             let mom = NSManagedObjectModel(contentsOf: url)
         else { return nil }
         
-        // when not testing, return normal persistent container
-        guard forTesting else {
+        switch kind {
+        case .local:
             return WaterMe_PersistentContainer(name: "WaterMe", managedObjectModel: mom)
+        case .sync:
+            if #available(iOS 14.0, *) {
+                return WaterMe_PersistentSyncContainer(name: "WaterMe", managedObjectModel: mom)
+            } else {
+                let message = "Attempted to load Sync container from iOS 13 or lower"
+                message.log(as: .emergency)
+                return nil
+            }
+        case .testing:
+            // when testing make in-memory container
+            let randomName = String(Int.random(in: 100_000...1_000_000))
+            let container = WaterMe_PersistentContainer(name: randomName, managedObjectModel: mom)
+            let description = NSPersistentStoreDescription()
+            description.type = NSInMemoryStoreType
+            container.persistentStoreDescriptions = [description]
+            return container
         }
-        
-        // when testing make in-memory container
-        let randomName = String(Int.random(in: 100_000...1_000_000))
-        let container = WaterMe_PersistentContainer(name: randomName, managedObjectModel: mom)
-        let description = NSPersistentStoreDescription()
-        description.type = NSInMemoryStoreType
-        container.persistentStoreDescriptions = [description]
-        return container
     }
 
-    init(kind: ControllerKind, forTesting: Bool) throws {
+    init(kind: ControllerKind) throws {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
-        guard let container = CD_BasicController.container(forTesting: forTesting)
+        guard let container = CD_BasicController.container(kind: kind)
             else { throw DatumError.loadError }
         type(of: self).copySampleDBIfNeeded()
         let lock = DispatchSemaphore(value: 0)
@@ -75,7 +83,7 @@ internal class CD_BasicController: BasicController {
             ctx.insert(share)
             try ctx.save()
         }
-        self.kind = .local
+        self.kind = kind
         self.container = container
     }
 
@@ -551,6 +559,13 @@ extension CD_BasicController {
 }
 
 private class WaterMe_PersistentContainer: NSPersistentContainer {
+    override class func defaultDirectoryURL() -> URL {
+        return CD_BasicController.storeDirectoryURL
+    }
+}
+
+@available(iOS 14.0, *)
+private class WaterMe_PersistentSyncContainer: NSPersistentCloudKitContainer {
     override class func defaultDirectoryURL() -> URL {
         return CD_BasicController.storeDirectoryURL
     }
