@@ -75,8 +75,16 @@ extension HasBasicController {
     }
 }
 
-public enum ControllerKind {
-    case local, sync
+public enum ControllerKind: RawRepresentable {
+    
+    case local
+    case sync
+    
+    public var rawValue: Bool { return self == .sync }
+    
+    public init(rawValue: Bool) {
+        self = rawValue ? .sync : .local
+    }
 }
 
 internal func testing_NewRLMBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {

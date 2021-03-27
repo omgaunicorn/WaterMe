@@ -21,8 +21,8 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import Foundation
+import Datum
 
 extension UserDefaults {
     
@@ -110,15 +110,14 @@ extension UserDefaults {
         }
     }
     
-    // TODO: Fix other Bools to use is
-    var isCloudSyncEnabled: Bool {
+    var controllerKind: ControllerKind {
         get {
             guard let number = self.object(forKey: Constants.kCloudSync) as? NSNumber
                 else { fatalError("Must call configure() before accessing user defaults") }
-            return number.boolValue
+            return .init(rawValue: number.boolValue)
         }
         set {
-            self.set(NSNumber(value: newValue), forKey: Constants.kCloudSync)
+            self.set(NSNumber(value: newValue.rawValue), forKey: Constants.kCloudSync)
         }
     }
     
@@ -185,14 +184,14 @@ extension UserDefaults {
                 self.hasCloudSyncInfoShown = false
                 // if they are running an old version of iOS also disable Cloud Sync
                 if #available(iOS 14, *) { /* Do Nothing */ } else {
-                    self.isCloudSyncEnabled = false
+                    self.controllerKind = .local
                 }
             }
         } else {
             // if this is a fresh install on an old version of iOS,
             // force disable cloud sync
             if #available(iOS 14, *) { /* Do Nothing */ } else {
-                self.isCloudSyncEnabled = false
+                self.controllerKind = .local
             }
         }
     }

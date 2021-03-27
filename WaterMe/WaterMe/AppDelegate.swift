@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let loggerDelegate = LoggerErrorDelegate()
     // swiftlint:enable weak_delegate
     private(set) var reminderObserver: GlobalReminderObserver?
-    private lazy var basicControllerResult = NewBasicController(of: .local)
+    private lazy var basicControllerResult = NewBasicController(of: UserDefaults.standard.controllerKind)
 
     let purchaseController = PurchaseController()
     var coreDataMigrator: Migratable? = DatumMigrator
@@ -112,8 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self?.basicControllerResult = .failure(.loadError)
             }
             // Create new VC with recreated data source
-            // TODO: change this to also support sync
-            let controller = NewBasicController(of: .local)
+            let controller = NewBasicController(of: UserDefaults.standard.controllerKind)
             self?.basicControllerResult = controller
             self?.window?.rootViewController = ReminderMainViewController.newVC(basic: controller)
         }

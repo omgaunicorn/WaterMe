@@ -118,12 +118,12 @@ extension UIAlertController {
     class func newLocalizedCloudSyncImproperlyConfigured() -> UIAlertController? {
         if #available(iOS 14.0, *) { return nil } else {
             let ud = UserDefaults.standard
-            guard ud.isCloudSyncEnabled else { return nil }
+            guard case .sync = ud.controllerKind else { return nil }
             let alertVC = UIAlertController(title: LocalizedString.cloudSyncImproperTitle,
                                             message: LocalizedString.cloudSyncImproperMessage,
                                             preferredStyle: .alert)
             let dismiss = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
-                ud.isCloudSyncEnabled = false
+                ud.controllerKind = .local
             }
             alertVC.addAction(dismiss)
             return alertVC
