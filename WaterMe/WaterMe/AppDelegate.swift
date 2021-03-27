@@ -160,6 +160,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 ud.lastBuildNumber = currentBuild
                 ud.requestReviewDate = Date()
             }
+            // TODO: change to correct build number
+            if let oldBuild = oldBuild, oldBuild <= 261001 {
+                // if the user is upgrading from an old build then mark this
+                // info screen as not seen.
+                // For new users, use the default of TRUE (already seen)
+                // as new users don't need to be concerned.
+                ud.hasCloudSyncInfoShown = false
+            }
         }()
 
         // configure my notification delegate

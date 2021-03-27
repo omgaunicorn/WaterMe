@@ -29,6 +29,7 @@ extension UserDefaults {
     enum Constants {
         static let kFirstRun = "FIRST_RUN"
         static let kCloudSync = "CLOUD_SYNC"
+        static let kCloudSyncInfoShown = "CLOUD_SYNC_INFO_SHOWN"
         static let kReminderHour = "REMINDER_HOUR"
         static let kNumberOfReminderDays = "NUMBER_OF_REMINDER_DAYS"
         static let kIncreaseContrast = "INCREASE_CONTRAST"
@@ -121,6 +122,17 @@ extension UserDefaults {
         }
     }
     
+    var hasCloudSyncInfoShown: Bool {
+        get {
+            guard let number = self.object(forKey: Constants.kCloudSyncInfoShown) as? NSNumber
+                else { fatalError("Must call configure() before accessing user defaults") }
+            return number.boolValue
+        }
+        set {
+            self.set(NSNumber(value: newValue), forKey: Constants.kCloudSyncInfoShown)
+        }
+    }
+    
     var reminderHour: Int {
         get {
             guard let number = self.object(forKey: Constants.kReminderHour) as? NSNumber
@@ -144,14 +156,14 @@ extension UserDefaults {
     }
     
     func configure() {
-        // TODO: Fix colon alignment
         self.register(defaults: [
-            Constants.kFirstRun : true,
-            Constants.kCloudSync : kCloudSyncDefault,
-            Constants.kReminderHour : 8,
-            Constants.kNumberOfReminderDays : 14,
-            Constants.kIncreaseContrast : false,
-            Constants.kDarkMode : 0,
+            Constants.kFirstRun                : true,
+            Constants.kCloudSync               : kCloudSyncDefault,
+            Constants.kCloudSyncInfoShown      : true,
+            Constants.kReminderHour            : 8,
+            Constants.kNumberOfReminderDays    : 14,
+            Constants.kIncreaseContrast        : false,
+            Constants.kDarkMode                : 0,
             Constants.kCheckForUpdatesOnLaunch : true
         ])
 
