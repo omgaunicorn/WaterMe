@@ -434,6 +434,17 @@ extension CoreDataMigratorViewController {
     }
 }
 
+extension CloudSyncInfoViewController {
+    enum LocalizedString {
+        static let title =
+            NSLocalizedString("iCloud Sync",
+                              comment: "Cloud Sync Info: Title: Lets the user know that iCloud sync is possible")
+        static let body =
+            NSLocalizedString("WaterMe now automatically syncs all plants and reminders via iCloud. You can enable and disable iCloud sync from the settings screen.",
+                              comment: "Cloud Sync Info: Body: Lets the user know how iCloud sync works and that it can be enabled and disabled from the settings app.")
+    }
+}
+
 extension PurchaseThanksViewController {
     enum LocalizedString {
         static let title =

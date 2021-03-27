@@ -124,11 +124,13 @@ extension UserDefaults {
     
     var hasCloudSyncInfoShown: Bool {
         get {
+            guard #available(iOS 14, *) else { return true }
             guard let number = self.object(forKey: Constants.kCloudSyncInfoShown) as? NSNumber
                 else { fatalError("Must call configure() before accessing user defaults") }
             return number.boolValue
         }
         set {
+            guard #available(iOS 14, *) else { return }
             self.set(NSNumber(value: newValue), forKey: Constants.kCloudSyncInfoShown)
         }
     }
@@ -158,7 +160,7 @@ extension UserDefaults {
     func configure() {
         self.register(defaults: [
             Constants.kFirstRun                : true,
-            Constants.kCloudSync               : kCloudSyncDefault,
+            Constants.kCloudSync               : true,
             Constants.kCloudSyncInfoShown      : true,
             Constants.kReminderHour            : 8,
             Constants.kNumberOfReminderDays    : 14,
@@ -167,10 +169,23 @@ extension UserDefaults {
             Constants.kCheckForUpdatesOnLaunch : true
         ])
 
-        // fix bug where this toggle is always off in v1.0 and it needs to be on in 2.0
-        let build = self.lastBuildNumber ?? 0
-        if build < 201027 {
+        let build = self.lastBuildNumber
+        
+        if let build = build, build <= 201027 {
+            // fix bug where this toggle is always off in v1.0 and it needs to be on in 2.0
             self.askForNotifications = true
+        }
+        
+        if let build = build, build <= 261001 {
+            // if the user is upgrading from an old build then mark this
+            // info screen as not seen.
+            // For new users, use the default of TRUE (already seen)
+            // as new users don't need to be concerned.
+            self.hasCloudSyncInfoShown = false
+            // if they are running an old version of iOS also disable Cloud Sync
+            if #available(iOS 14, *) { /* Do Nothing */ } else {
+                self.isCloudSyncEnabled = false
+            }
         }
     }
 
@@ -188,11 +203,3 @@ extension UserDefaults {
     @objc dynamic var FIRST_RUN: Any { fatalError() }
     @objc dynamic var CLOUD_SYNC: Any { fatalError() }
 }
-
-private let kCloudSyncDefault: Bool = {
-    if #available(iOS 14.0, *) {
-        return true
-    } else {
-        return false
-    }
-}()

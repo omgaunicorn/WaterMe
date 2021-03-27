@@ -147,6 +147,14 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             UIAlertController.presentAlertVC(for: collectionLoadError, over: self) { _ in
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
+        } else if UserDefaults.standard.hasCloudSyncInfoShown == false {
+            let vc = CloudSyncInfoViewController.newVC() { vc in
+                UserDefaults.standard.hasCloudSyncInfoShown = true
+                vc.dismiss(animated: true) {
+                    self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+                }
+            }
+            self.present(vc, animated: true, completion: nil)
         } else if let vc = UIAlertController.newLocalizedDarkModeImproperlyConfigured() {
             self.present(vc, animated: true, completion: nil)
         } else if let error = self.applicationDidFinishLaunchingError {
