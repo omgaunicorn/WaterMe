@@ -176,13 +176,21 @@ extension UserDefaults {
             self.askForNotifications = true
         }
         
-        if let build = build, build <= 261001 {
+        if let build = build {
             // if the user is upgrading from an old build then mark this
             // info screen as not seen.
             // For new users, use the default of TRUE (already seen)
             // as new users don't need to be concerned.
-            self.hasCloudSyncInfoShown = false
-            // if they are running an old version of iOS also disable Cloud Sync
+            if build <= 261001 {
+                self.hasCloudSyncInfoShown = false
+                // if they are running an old version of iOS also disable Cloud Sync
+                if #available(iOS 14, *) { /* Do Nothing */ } else {
+                    self.isCloudSyncEnabled = false
+                }
+            }
+        } else {
+            // if this is a fresh install on an old version of iOS,
+            // force disable cloud sync
             if #available(iOS 14, *) { /* Do Nothing */ } else {
                 self.isCloudSyncEnabled = false
             }
