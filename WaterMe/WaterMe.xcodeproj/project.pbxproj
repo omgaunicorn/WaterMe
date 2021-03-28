@@ -218,6 +218,8 @@
 		734048C3260F1BA1001FAB8E /* CloudSyncInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 734048C1260F1BA1001FAB8E /* CloudSyncInfo.storyboard */; };
 		734048C4260F1BA1001FAB8E /* CloudSyncInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734048C2260F1BA1001FAB8E /* CloudSyncInfoViewController.swift */; };
 		73730858260E2F22000B99DB /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
+		73755A592610238400FCC684 /* ContinuousProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73755A4B2610226000FCC684 /* ContinuousProgress.swift */; };
+		73755A612610241F00FCC684 /* CloudKitContainerContinuousProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73755A602610241F00FCC684 /* CloudKitContainerContinuousProgress.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -513,6 +515,8 @@
 		50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		734048C1260F1BA1001FAB8E /* CloudSyncInfo.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CloudSyncInfo.storyboard; sourceTree = "<group>"; };
 		734048C2260F1BA1001FAB8E /* CloudSyncInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSyncInfoViewController.swift; sourceTree = "<group>"; };
+		73755A4B2610226000FCC684 /* ContinuousProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousProgress.swift; sourceTree = "<group>"; };
+		73755A602610241F00FCC684 /* CloudKitContainerContinuousProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitContainerContinuousProgress.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -659,6 +663,8 @@
 				48A7B0F22467FDF500DC0861 /* NSCalendar+WaterMe.swift */,
 				48A7B0F12467FDF500DC0861 /* SignificantTimePassedDetector.swift */,
 				48A7B0F42467FDF600DC0861 /* UserFacingError.swift */,
+				73755A4B2610226000FCC684 /* ContinuousProgress.swift */,
+				73755A602610241F00FCC684 /* CloudKitContainerContinuousProgress.swift */,
 				50E831FC250CF567008758E2 /* Loggable.swift */,
 				50E831F2250CB598008758E2 /* Loggable+System.swift */,
 				48A7B0D62467FCB100DC0861 /* Info.plist */,
@@ -1485,9 +1491,11 @@
 				48A7B0F52467FDF600DC0861 /* PrivateKeys.swift in Sources */,
 				48A7B0F82467FDF600DC0861 /* AppVersion.swift in Sources */,
 				50E831F3250CB598008758E2 /* Loggable+System.swift in Sources */,
+				73755A612610241F00FCC684 /* CloudKitContainerContinuousProgress.swift in Sources */,
 				48A7B0F72467FDF600DC0861 /* NSCalendar+WaterMe.swift in Sources */,
 				48A7B0F92467FDF600DC0861 /* UserFacingError.swift in Sources */,
 				50E831FD250CF567008758E2 /* Loggable.swift in Sources */,
+				73755A592610238400FCC684 /* ContinuousProgress.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
