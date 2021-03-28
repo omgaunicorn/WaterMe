@@ -220,6 +220,7 @@
 		73730858260E2F22000B99DB /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
 		73755A592610238400FCC684 /* ContinuousProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73755A4B2610226000FCC684 /* ContinuousProgress.swift */; };
 		73755A612610241F00FCC684 /* CloudKitContainerContinuousProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73755A602610241F00FCC684 /* CloudKitContainerContinuousProgress.swift */; };
+		73755A6A2610AA4000FCC684 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73755A692610AA4000FCC684 /* CloudKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -517,6 +518,7 @@
 		734048C2260F1BA1001FAB8E /* CloudSyncInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSyncInfoViewController.swift; sourceTree = "<group>"; };
 		73755A4B2610226000FCC684 /* ContinuousProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousProgress.swift; sourceTree = "<group>"; };
 		73755A602610241F00FCC684 /* CloudKitContainerContinuousProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitContainerContinuousProgress.swift; sourceTree = "<group>"; };
+		73755A692610AA4000FCC684 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -574,6 +576,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73755A6A2610AA4000FCC684 /* CloudKit.framework in Frameworks */,
 				48A7B0E82467FCB100DC0861 /* Calculate.framework in Frameworks */,
 				5034770224557CB200C3DAD3 /* Cheers in Frameworks */,
 				5034765824552CFD00C3DAD3 /* Datum.framework in Frameworks */,
@@ -1035,6 +1038,7 @@
 				5034767424552D0700C3DAD3 /* StoreTests */,
 				48A7B0E12467FCB100DC0861 /* CalculateTests */,
 				50BB0F511EBFCDE500850FF4 /* Products */,
+				73755A682610AA4000FCC684 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1123,6 +1127,14 @@
 				734048C2260F1BA1001FAB8E /* CloudSyncInfoViewController.swift */,
 			);
 			path = CloudSyncInfo;
+			sourceTree = "<group>";
+		};
+		73755A682610AA4000FCC684 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73755A692610AA4000FCC684 /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
