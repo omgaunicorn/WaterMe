@@ -85,6 +85,11 @@ internal class CD_BasicController: BasicController {
         }
         self.kind = kind
         self.container = container
+        if #available(iOS 14.0, *), container is NSPersistentCloudKitContainer {
+            _syncProgress = AnyContinousProgress(CloudKitContainerContinuousProgress(container))
+        } else {
+            _syncProgress = nil
+        }
     }
 
     // MARK: Properties
@@ -93,9 +98,14 @@ internal class CD_BasicController: BasicController {
     internal var reminderVesselsDeleted: ((Set<ReminderVesselValue>) -> Void)?
     internal var userDidPerformReminder: ((Set<ReminderValue>) -> Void)?
 
-    internal let kind: ControllerKind
     // Internal only for testing. Should be private.
     internal let container: NSPersistentContainer
+    internal let kind: ControllerKind
+    private let _syncProgress: AnyObject?
+    @available(iOS 14.0, *)
+    internal var syncProgress: AnyContinousProgress? {
+        _syncProgress as? AnyContinousProgress
+    }
 
     // MARK: Create
     

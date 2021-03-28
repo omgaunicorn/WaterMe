@@ -22,6 +22,7 @@
 //
 
 import UIKit
+import Calculate
 
 public func NewBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
     do {
@@ -42,6 +43,9 @@ public protocol BasicController: class {
     var userDidPerformReminder: ((Set<ReminderValue>) -> Void)? { get set }
 
     var kind: ControllerKind { get }
+    
+    @available(iOS 14.0, *)
+    var syncProgress: AnyContinousProgress? { get }
 
     // MARK: Create
     func newReminder(for vessel: ReminderVessel) -> Result<Reminder, DatumError>
