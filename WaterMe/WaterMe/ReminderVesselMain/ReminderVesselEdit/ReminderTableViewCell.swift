@@ -51,6 +51,9 @@ class ReminderTableViewCell: UITableViewCell {
                                         font: .selectableTableViewCellHelper)
         self.middleLabel?.attributedText = helper + interval
         self.emojiImageView?.setKind(reminder.kind)
+        if !reminder.isEnabled {
+            self.backgroundColor = UIColor.red // TODO devise a better UI to convey disabled reminders
+        }
         
         // do stuff that is case specific
         switch reminder.kind {
@@ -93,6 +96,7 @@ class ReminderTableViewCell: UITableViewCell {
         self.middleLabel?.isHidden = false
         self.bottomLabel?.isHidden = false
         self.emojiImageView?.setKind(nil)
+        self.backgroundColor = nil
     }
     
     override func prepareForReuse() {

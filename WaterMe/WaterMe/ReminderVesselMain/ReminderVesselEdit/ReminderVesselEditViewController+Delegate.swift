@@ -169,6 +169,24 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         }
     }
 
+    func userToggled(reminder: Reminder,
+                     controller: ReminderVesselEditTableViewController?) -> Bool {
+        self.view.endEditing(false)
+        guard let basicRC = self.basicRC else {
+            assertionFailure("Missing Realm Controller.")
+            return false
+        }
+        // TODO does this warrant having a specialized function to toggle the enabled flag?
+        let toggleResult = basicRC.update(kind: nil, interval: nil, isEnabled: !reminder.isEnabled, note: nil, in: reminder)
+        switch toggleResult {
+        case .success:
+            return true
+        case .failure(let error):
+            UIAlertController.presentAlertVC(for: error, over: self)
+            return false
+        }
+    }
+
     private func updateIcon(_ icon: ReminderVesselIcon) {
         guard let vessel = self.vesselResult?.value, let basicRC = self.basicRC else {
             assertionFailure("Missing ReminderVessel or Realm Controller")

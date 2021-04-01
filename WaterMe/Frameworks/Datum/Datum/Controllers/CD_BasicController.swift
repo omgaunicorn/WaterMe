@@ -349,6 +349,7 @@ internal class CD_BasicController: BasicController {
     
     func update(kind: ReminderKind?,
                 interval: Int?,
+                isEnabled: Bool?,
                 note: String?,
                 in reminder: Reminder) -> Result<Void, DatumError>
     {
@@ -373,6 +374,10 @@ internal class CD_BasicController: BasicController {
                 reminder.interval = converted
                 reminder.updateDates()
             }
+        }
+        if let isEnabled = isEnabled, isEnabled != reminder.isEnabled {
+            somethingChanged = true
+            reminder.isEnabled = isEnabled
         }
         if let note = note, note != reminder.note {
             somethingChanged = true
