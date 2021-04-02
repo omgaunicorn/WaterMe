@@ -217,6 +217,10 @@ internal class CD_BasicController: BasicController {
         fetchRequest.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
         let range = section.dateInterval
         let andPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+            NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.isEnabled)),
+                                  rightExpression: NSExpression(forConstantValue: true),
+                                  modifier: .direct,
+                                  type: .equalTo),
             NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.nextPerformDate)),
                                   rightExpression: NSExpression(forConstantValue: range.start),
                                   modifier: .direct,
@@ -227,14 +231,23 @@ internal class CD_BasicController: BasicController {
                                   type: .lessThan)
         ])
         if case .late = section {
-            let nilCheck = NSComparisonPredicate(
-                leftExpression: NSExpression(forKeyPath:#keyPath(CD_Reminder.nextPerformDate)),
-                rightExpression: NSExpression(forConstantValue: nil),
-                modifier: .direct,
-                type: .equalTo
-            )
+            let nilCheck = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.isEnabled)),
+                                      rightExpression: NSExpression(forConstantValue: true),
+                                      modifier: .direct,
+                                      type: .equalTo),
+                NSComparisonPredicate(leftExpression: NSExpression(forKeyPath:#keyPath(CD_Reminder.nextPerformDate)),
+                                      rightExpression: NSExpression(forConstantValue: nil),
+                                      modifier: .direct,
+                                      type: .equalTo)
+            ])
             let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [nilCheck, andPredicate])
             fetchRequest.predicate = orPredicate
+        } else if case .disabled = section {
+            fetchRequest.predicate = NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.isEnabled)),
+                                                           rightExpression: NSExpression(forConstantValue: false),
+                                                           modifier: .direct,
+                                                           type: .equalTo)
         } else {
             fetchRequest.predicate = andPredicate
         }

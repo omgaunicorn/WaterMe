@@ -82,6 +82,8 @@ enum Color {
             return _thisWeek
         case .later:
             return _later
+        case .disabled:
+            return _disabled
         }
     }
 }
@@ -118,6 +120,10 @@ extension Color {
 
     static private var _later: UIColor {
         return _tint
+    }
+
+    static private var _disabled: UIColor {
+        return UIColor.gray // TODO
     }
 
     static private var _tint: UIColor {
