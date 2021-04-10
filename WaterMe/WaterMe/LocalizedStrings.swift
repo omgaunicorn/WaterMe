@@ -119,12 +119,12 @@ extension UIAlertController {
         static let buttonTitleCameraLocked =
             NSLocalizedString("Camera 🔒",
                               comment: "Button Title in an Alert that allows the user to open the camera and take a new photo. In this case, the user has denied access to the camera.")
-        static let buttonTitleEnable =
-            NSLocalizedString("Enable",
-                              comment: "Button that allows user to enable a reminder.")
-        static let buttonTitleDisable =
-            NSLocalizedString("Disable",
-                              comment: "Button that allows user to disable a reminder.")
+        static let buttonTitlePause =
+            NSLocalizedString("PauseButton",
+                              comment: "Button Title in an Alert that allows the user to pause notifications for a reminder")
+        static let buttonTitleUnpause =
+            NSLocalizedString("UnpauseButton",
+                              comment: "Button Title in an Alert that allows the user to unpause/resume notifications for a reminder")
         static let buttonTitleDelete =
             NSLocalizedString("Delete",
                               comment: "Button that allows the user to delete a reminder or a plant.")

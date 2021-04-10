@@ -255,6 +255,7 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         case .name, .photo:
             return UISwipeActionsConfiguration(actions: [])
         case .reminders:
+            // TODO: Add comfirm box for deleting
             let deleteAction = UIContextualAction(style: .destructive,
                                                   title: UIAlertController.LocalizedString.buttonTitleDelete)
             { [unowned self] _, _, successfullyDeleted in
@@ -266,12 +267,10 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 successfullyDeleted(deleted)
             }
 
-            guard let reminder = self.remindersData?[indexPath.row] else {
-                return UISwipeActionsConfiguration(actions: [deleteAction])
-            }
-
-            let toggleAction = UIContextualAction(style: .normal,
-                                                  title: reminder.isEnabled ?  UIAlertController.LocalizedString.buttonTitleDisable : UIAlertController.LocalizedString.buttonTitleEnable)
+            let pauseAction = UIContextualAction(style: .normal,
+                                                 title: (self.remindersData?[indexPath.row]?.isEnabled ?? true)
+                                                    ? UIAlertController.LocalizedString.buttonTitlePause
+                                                    : UIAlertController.LocalizedString.buttonTitleUnpause)
             { [unowned self] _, _, successfullyToggled in
                 guard let reminder = self.remindersData?[indexPath.row] else {
                     successfullyToggled(false)
@@ -280,10 +279,8 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 let toggled = self.delegate?.userToggled(reminder: reminder, controller: self) ?? false
                 successfullyToggled(toggled)
             }
-            return UISwipeActionsConfiguration(actions: [
-                toggleAction,
-                deleteAction,
-            ])
+            
+            return UISwipeActionsConfiguration(actions: [deleteAction, pauseAction])
         case .siriShortcuts:
             return UISwipeActionsConfiguration(actions: [])
         }
