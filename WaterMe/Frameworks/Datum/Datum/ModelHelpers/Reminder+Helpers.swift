@@ -98,7 +98,7 @@ extension RLM_Reminder: ModelCompleteCheckable {
 
 public enum ReminderSection: Int, CaseIterable {
     case late, today, tomorrow, thisWeek, later, disabled
-    var dateInterval: DateInterval {
+    internal var dateInterval: DateInterval {
         switch self {
         case .late:
             return ReminderDateCalculator.late()
@@ -111,7 +111,7 @@ public enum ReminderSection: Int, CaseIterable {
         case .later:
             return ReminderDateCalculator.later()
         case .disabled:
-            return ReminderDateCalculator.disabled()
+            fatalError("DISABLED does not have a date range")
         }
     }
 }

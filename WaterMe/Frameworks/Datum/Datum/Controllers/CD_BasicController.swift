@@ -213,44 +213,36 @@ internal class CD_BasicController: BasicController {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
+        let enabledPredicate = NSPredicate(format: "%K == YES", #keyPath(CD_Reminder.isEnabled))
+        let disabledPredicate = NSPredicate(format: "%K == NO", #keyPath(CD_Reminder.isEnabled))
+        let normalPredicate: (DateInterval) -> NSPredicate = { range in
+            return NSCompoundPredicate(andPredicateWithSubpredicates: [
+                enabledPredicate,
+                NSPredicate(format: "%K >= %@", #keyPath(CD_Reminder.nextPerformDate), (range.start as NSDate)),
+                NSPredicate(format: "%K < %@", #keyPath(CD_Reminder.nextPerformDate), (range.end as NSDate)),
+            ])
+        }
+        
+        let predicate: NSPredicate
+        switch section {
+        case .disabled:
+            predicate = disabledPredicate
+        case .later, .thisWeek, .today, .tomorrow:
+            predicate = normalPredicate(section.dateInterval)
+        case .late:
+            let neverPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                enabledPredicate,
+                NSPredicate(format: "%K == nil", #keyPath(CD_Reminder.nextPerformDate))
+            ])
+            predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
+                normalPredicate(section.dateInterval),
+                neverPredicate
+            ])
+        }
+        
         let fetchRequest = CD_Reminder.request
         fetchRequest.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
-        let range = section.dateInterval
-        let andPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
-            NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.isEnabled)),
-                                  rightExpression: NSExpression(forConstantValue: true),
-                                  modifier: .direct,
-                                  type: .equalTo),
-            NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.nextPerformDate)),
-                                  rightExpression: NSExpression(forConstantValue: range.start),
-                                  modifier: .direct,
-                                  type: .greaterThanOrEqualTo),
-            NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.nextPerformDate)),
-                                  rightExpression: NSExpression(forConstantValue: range.end),
-                                  modifier: .direct,
-                                  type: .lessThan)
-        ])
-        if case .late = section {
-            let nilCheck = NSCompoundPredicate(andPredicateWithSubpredicates: [
-                NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.isEnabled)),
-                                      rightExpression: NSExpression(forConstantValue: true),
-                                      modifier: .direct,
-                                      type: .equalTo),
-                NSComparisonPredicate(leftExpression: NSExpression(forKeyPath:#keyPath(CD_Reminder.nextPerformDate)),
-                                      rightExpression: NSExpression(forConstantValue: nil),
-                                      modifier: .direct,
-                                      type: .equalTo)
-            ])
-            let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [nilCheck, andPredicate])
-            fetchRequest.predicate = orPredicate
-        } else if case .disabled = section {
-            fetchRequest.predicate = NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.isEnabled)),
-                                                           rightExpression: NSExpression(forConstantValue: false),
-                                                           modifier: .direct,
-                                                           type: .equalTo)
-        } else {
-            fetchRequest.predicate = andPredicate
-        }
+        fetchRequest.predicate = predicate
         let context = self.container.viewContext
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                     managedObjectContext: context,
