@@ -355,9 +355,9 @@ extension ReminderEditViewController {
         static let sectionTitleInterval =
             NSLocalizedString("Remind Every",
                               comment: "Edit Reminder: Section Title: Describes the section that asks the user to enter how often they want to be reminded.")
-        static let sectionTitleTweaks =
-            NSLocalizedString("Tweaks",
-                              comment: "Edit Reminder: Section Title: Describes the section that allows the user to tweak settings for the reminder.")
+        static let sectionTitlePause =
+            NSLocalizedString("Pause Reminder",
+                              comment: "Edit Reminder: Section Title: Describes the section that allows the user to pause the reminder")
         static let sectionTitleNotes =
             NSLocalizedString("Notes",
                               comment: "Edit Reminder: Section Title: Describes the section that asks the user to enter any optional notes.")

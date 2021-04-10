@@ -100,7 +100,7 @@ class ReminderEditTableViewController: StandardTableViewController {
             self.delegate?.userDidSelect(siriShortcut: shortcut,
                                          deselectRowAnimated: closure,
                                          within: self)
-        case .details, .notes, .performed, .tweaks:
+        case .details, .notes, .performed, .pause:
             assertionFailure("User was allowed to select unselectable row")
         }
     }
@@ -112,7 +112,7 @@ class ReminderEditTableViewController: StandardTableViewController {
         }
         let section = Section(section: indexPath.section, for: reminder.kind)
         switch section {
-        case .details, .notes, .performed, .tweaks:
+        case .details, .notes, .performed, .pause:
             return nil
         case .kind, .interval, .siriShortcuts:
             return indexPath
@@ -188,6 +188,7 @@ class ReminderEditTableViewController: StandardTableViewController {
             return _cell
         case .tweaks:
             let id = ReminderIsEnabledTableViewCell.reuseID
+        case .pause:
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
             let cell = _cell as? ReminderIsEnabledTableViewCell
             cell?.configure(with: reminder.isEnabled)
@@ -264,7 +265,7 @@ extension ReminderEditTableViewController {
         }
     }
     private enum Section {
-        case kind, details, interval, notes, siriShortcuts, performed, tweaks
+        case kind, details, interval, notes, siriShortcuts, performed, pause
         static func count(for kind: ReminderKind) -> Int {
             switch kind {
             case .fertilize, .water, .trim, .mist:
@@ -283,13 +284,13 @@ extension ReminderEditTableViewController {
                 case 1:
                     self = .interval
                 case 2:
-                    self = .notes
+                    self = .pause
                 case 3:
-                    self = .siriShortcuts
+                    self = .notes
                 case 4:
-                    self = .performed
+                    self = .siriShortcuts
                 case 5:
-                    self = .tweaks
+                    self = .performed
                 default:
                     fatalError("Invalid Section")
                 }
@@ -302,13 +303,13 @@ extension ReminderEditTableViewController {
                 case 2:
                     self = .interval
                 case 3:
-                    self = .notes
+                    self = .pause
                 case 4:
-                    self = .siriShortcuts
+                    self = .notes
                 case 5:
-                    self = .performed
+                    self = .siriShortcuts
                 case 6:
-                    self = .tweaks
+                    self = .performed
                 default:
                     fatalError("Invalid Section")
                 }
@@ -328,8 +329,8 @@ extension ReminderEditTableViewController {
                 return "Siri Shortcuts"
             case .performed:
                 return ReminderEditViewController.LocalizedString.sectionTitleLastPerformed
-            case .tweaks:
-                return ReminderEditViewController.LocalizedString.sectionTitleTweaks
+            case .pause:
+                return ReminderEditViewController.LocalizedString.sectionTitlePause
             }
         }
         func numberOfRows(for kind: ReminderKind) -> Int {
@@ -338,7 +339,7 @@ extension ReminderEditTableViewController {
                 return type(of: kind).count
             case .siriShortcuts:
                 return SiriShortcut.allCases.count
-            case .details, .performed, .interval, .notes, .tweaks:
+            case .details, .performed, .interval, .notes, .pause:
                 return 1
             }
         }
