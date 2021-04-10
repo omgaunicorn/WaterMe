@@ -355,9 +355,9 @@ extension ReminderEditViewController {
         static let sectionTitleInterval =
             NSLocalizedString("Remind Every",
                               comment: "Edit Reminder: Section Title: Describes the section that asks the user to enter how often they want to be reminded.")
-        static let sectionTitlePause =
-            NSLocalizedString("Pause Reminder",
-                              comment: "Edit Reminder: Section Title: Describes the section that allows the user to pause the reminder")
+        static let sectionTitleNotifications =
+            NSLocalizedString("Notifications",
+                              comment: "Edit Reminder: Section Title: Describes the section that allows the user to edit notification settings")
         static let sectionTitleNotes =
             NSLocalizedString("Notes",
                               comment: "Edit Reminder: Section Title: Describes the section that asks the user to enter any optional notes.")
@@ -365,7 +365,7 @@ extension ReminderEditViewController {
             NSLocalizedString("Last Performed",
                               comment: "Edit Reminder: Section Title: Describes the section that displays when the reminder was last performed.")
         static let pauseLabelTitle =
-            NSLocalizedString("Paused",
+            NSLocalizedString("Pause",
                               comment: "Edit Reminder: Pause Label Title: The label to the left of the toggle to pause the reminder")
         static let dataEntryLabelMove =
             NSLocalizedString("Move to",
@@ -520,6 +520,9 @@ extension ReminderSection {
                               comment: "Reminder Main List: Section Header: Title")
         static let later =
             NSLocalizedString("Later",
+                              comment: "Reminder Main List: Section Header: Title")
+        static let pause =
+            NSLocalizedString("Paused",
                               comment: "Reminder Main List: Section Header: Title")
     }
 }

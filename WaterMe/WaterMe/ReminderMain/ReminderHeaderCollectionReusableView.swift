@@ -81,7 +81,7 @@ extension ReminderSection {
         case .later:
             return LocalizedString.later
         case .disabled:
-            return "DISABLED" // TODO
+            return LocalizedString.pause
         }
     }
 }

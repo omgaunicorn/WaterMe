@@ -322,14 +322,14 @@ extension ReminderEditTableViewController {
                 return ReminderEditViewController.LocalizedString.sectionTitleDetails
             case .interval:
                 return ReminderEditViewController.LocalizedString.sectionTitleInterval
+            case .pause:
+                return ReminderEditViewController.LocalizedString.sectionTitleNotifications
             case .notes:
                 return ReminderEditViewController.LocalizedString.sectionTitleNotes
             case .siriShortcuts:
                 return "Siri Shortcuts"
             case .performed:
                 return ReminderEditViewController.LocalizedString.sectionTitleLastPerformed
-            case .pause:
-                return ReminderEditViewController.LocalizedString.sectionTitlePause
             }
         }
         func numberOfRows(for kind: ReminderKind) -> Int {
