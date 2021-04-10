@@ -21,9 +21,9 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-class SimpleToggleTableViewCell: UITableViewCell {
+class SimpleToggleTableViewCell: SimpleLabelTableViewCell {
 
-    class var reuseID: String { return "SimpleToggleTableViewCell" }
+    override class var reuseID: String { return "SimpleToggleTableViewCell" }
 
     let toggle = UISwitch()
     var toggleChanged: ((Bool) -> Void)?
@@ -38,7 +38,8 @@ class SimpleToggleTableViewCell: UITableViewCell {
         self.setup()
     }
 
-    func setup() {
+    override func setup() {
+        super.setup()
         self.selectionStyle = .none
         self.accessoryView = self.toggle
         self.toggle.addTarget(self, action: #selector(userToggledSwitch(_:)), for: .valueChanged)

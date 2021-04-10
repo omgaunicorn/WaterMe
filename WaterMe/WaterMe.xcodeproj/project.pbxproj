@@ -218,7 +218,6 @@
 		50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */; };
 		50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */; };
 		50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */; };
-		C738E1062614C647001F645F /* ReminderEnableTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C738E1052614C647001F645F /* ReminderEnableTableViewCell.swift */; };
 		C738E116261561F2001F645F /* SimpleToggleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C738E115261561F2001F645F /* SimpleToggleTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -591,7 +590,6 @@
 		50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselIconTableViewCell.swift; sourceTree = "<group>"; };
 		50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		C70BB051261598A4008140D7 /* v2.7.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.7.0.001.xcdatamodel; sourceTree = "<group>"; };
-		C738E1052614C647001F645F /* ReminderEnableTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderEnableTableViewCell.swift; sourceTree = "<group>"; };
 		C738E115261561F2001F645F /* SimpleToggleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleToggleTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -959,7 +957,6 @@
 				5045CBAA1EFCCB50008E6D6A /* ReminderEditViewController.swift */,
 				5045CBAC1EFCCB5B008E6D6A /* ReminderEditTableViewController.swift */,
 				50B511A61EFE144700ED1DF4 /* ReminderKindTableViewCell.swift */,
-				C738E1052614C647001F645F /* ReminderEnableTableViewCell.swift */,
 				50C30E531EFF490D006003A1 /* ReminderIntervalPickerViewController.swift */,
 				50C30E551EFF9349006003A1 /* ReminderIntervalTableViewCell.swift */,
 				50AA4A471F00A28500D81831 /* LastPerformedTableViewCell.swift */,
@@ -1849,7 +1846,6 @@
 				50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */,
 				5096D19A215478FF006E1019 /* UIFont+Font.swift in Sources */,
 				5085C71D21667A4500030D2A /* DispatchQueue+WaterMe.swift in Sources */,
-				C738E1062614C647001F645F /* ReminderEnableTableViewCell.swift in Sources */,
 				506A621A200562B9008EF601 /* SettingsMainViewController.swift in Sources */,
 				501A9AE51FE9682C0016160D /* LocalizedStrings.swift in Sources */,
 				50572E0A217040400053114C /* ReminderMainViewController+NSUserActivity.swift in Sources */,

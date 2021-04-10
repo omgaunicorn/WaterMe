@@ -364,6 +364,9 @@ extension ReminderEditViewController {
         static let sectionTitleLastPerformed =
             NSLocalizedString("Last Performed",
                               comment: "Edit Reminder: Section Title: Describes the section that displays when the reminder was last performed.")
+        static let pauseLabelTitle =
+            NSLocalizedString("Paused",
+                              comment: "Edit Reminder: Pause Label Title: The label to the left of the toggle to pause the reminder")
         static let dataEntryLabelMove =
             NSLocalizedString("Move to",
                               comment: "Edit Reminder: Data Entry Label: The label to the left of a text field. The user should type where they want to move their plant to in the textfield.")

@@ -59,8 +59,8 @@ class ReminderEditTableViewController: StandardTableViewController {
                                 forCellReuseIdentifier: ReminderKindTableViewCell.reuseID)
         self.tableView.register(ReminderIntervalTableViewCell.self,
                                 forCellReuseIdentifier: ReminderIntervalTableViewCell.reuseID)
-        self.tableView.register(ReminderIsEnabledTableViewCell.self,
-                                forCellReuseIdentifier: ReminderIsEnabledTableViewCell.reuseID)
+        self.tableView.register(SimpleToggleTableViewCell.self,
+                                forCellReuseIdentifier: SimpleToggleTableViewCell.reuseID)
         self.tableView.register(SiriShortcutTableViewCell.self,
                                 forCellReuseIdentifier: SiriShortcutTableViewCell.reuseID)
         self.tableView.register(LastPerformedTableViewCell.self,
@@ -186,14 +186,13 @@ class ReminderEditTableViewController: StandardTableViewController {
             let cell = _cell as? LastPerformedTableViewCell
             cell?.configureWith(lastPerformedDate: reminder.lastPerformDate)
             return _cell
-        case .tweaks:
-            let id = ReminderIsEnabledTableViewCell.reuseID
         case .pause:
+            let id = SimpleToggleTableViewCell.reuseID
             let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
-            let cell = _cell as? ReminderIsEnabledTableViewCell
-            cell?.configure(with: reminder.isEnabled)
-            cell?.toggleChanged = { [unowned self] newIsEnabled in
-                self.delegate?.userChangedIsEnabled(to: newIsEnabled, within: self)
+            let cell = _cell as? SimpleToggleTableViewCell
+            cell?.configure(isPaused: !reminder.isEnabled)
+            cell?.toggleChanged = { [unowned self] newValue in
+                self.delegate?.userChangedIsEnabled(to: !newValue, within: self)
             }
             return _cell
         }
@@ -362,5 +361,13 @@ fileprivate extension TextFieldTableViewCell {
             error.log()
             assertionFailure(error)
         }
+    }
+}
+
+fileprivate extension SimpleToggleTableViewCell {
+    func configure(isPaused: Bool) {
+        self.label.attributedText = NSAttributedString(string: ReminderEditViewController.LocalizedString.pauseLabelTitle,
+                                                       font: .textInputTableViewCell)
+        self.toggle.isOn = isPaused
     }
 }
