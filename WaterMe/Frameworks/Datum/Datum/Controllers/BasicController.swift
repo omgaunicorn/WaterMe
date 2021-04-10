@@ -56,7 +56,7 @@ public protocol BasicController: class {
 
     // MARK: Update
     func update(displayName: String?, icon: ReminderVesselIcon?, in vessel: ReminderVessel) -> Result<Void, DatumError>
-    func update(kind: ReminderKind?, interval: Int?, note: String?, in reminder: Reminder) -> Result<Void, DatumError>
+    func update(kind: ReminderKind?, interval: Int?, isEnabled: Bool?, note: String?, in reminder: Reminder) -> Result<Void, DatumError>
     func appendNewPerformToReminders(with identifiers: [Identifier]) -> Result<Void, DatumError>
 
     // MARK: Delete

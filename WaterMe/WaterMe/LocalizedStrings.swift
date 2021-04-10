@@ -119,6 +119,12 @@ extension UIAlertController {
         static let buttonTitleCameraLocked =
             NSLocalizedString("Camera 🔒",
                               comment: "Button Title in an Alert that allows the user to open the camera and take a new photo. In this case, the user has denied access to the camera.")
+        static let buttonTitleEnable =
+            NSLocalizedString("Enable",
+                              comment: "Button that allows user to enable a reminder.")
+        static let buttonTitleDisable =
+            NSLocalizedString("Disable",
+                              comment: "Button that allows user to disable a reminder.")
         static let buttonTitleDelete =
             NSLocalizedString("Delete",
                               comment: "Button that allows the user to delete a reminder or a plant.")
@@ -349,6 +355,9 @@ extension ReminderEditViewController {
         static let sectionTitleInterval =
             NSLocalizedString("Remind Every",
                               comment: "Edit Reminder: Section Title: Describes the section that asks the user to enter how often they want to be reminded.")
+        static let sectionTitleTweaks =
+            NSLocalizedString("Tweaks",
+                              comment: "Edit Reminder: Section Title: Describes the section that allows the user to tweak settings for the reminder.")
         static let sectionTitleNotes =
             NSLocalizedString("Notes",
                               comment: "Edit Reminder: Section Title: Describes the section that asks the user to enter any optional notes.")

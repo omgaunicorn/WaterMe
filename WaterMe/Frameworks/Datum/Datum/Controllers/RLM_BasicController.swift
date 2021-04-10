@@ -290,6 +290,7 @@ internal class RLM_BasicController: BasicController {
     
     internal func update(kind: ReminderKind? = nil,
                          interval: Int? = nil,
+                         isEnabled: Bool? = nil,
                          note: String? = nil,
                          in reminder: Reminder) -> Result<Void, DatumError>
     {
@@ -303,6 +304,9 @@ internal class RLM_BasicController: BasicController {
             if let interval = interval {
                 reminder.interval = interval
                 reminder.recalculateNextPerformDate()
+            }
+            if let isEnabled = isEnabled {
+                reminder.isEnabled = isEnabled
             }
             if let note = note {
                 // make sure the string is not empty. If it is empty, set it to blank string

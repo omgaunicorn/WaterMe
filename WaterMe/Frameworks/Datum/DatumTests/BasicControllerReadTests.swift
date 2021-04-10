@@ -83,12 +83,12 @@ class BasicControllerReadTests: DatumTestsBase {
         let mist = try self.basicController.newReminder(for: vessel).get()
         let move = try self.basicController.newReminder(for: vessel).get()
         let other = try self.basicController.newReminder(for: vessel).get()
-        try self.basicController.update(kind: .water, interval: 8, note: "K", in: water).get()
-        try self.basicController.update(kind: .trim, interval: 4, note: "P", in: trim).get()
-        try self.basicController.update(kind: .fertilize, interval: 10, note: "A", in: fertilize).get()
-        try self.basicController.update(kind: .mist, interval: 9, note: "Z", in: mist).get()
-        try self.basicController.update(kind: .move(location: "ZZZ"), interval: 11, note: "C", in: move).get()
-        try self.basicController.update(kind: .other(description: "YYY"), interval: 2, note: "M", in: other).get()
+        try self.basicController.update(kind: .water, interval: 8, isEnabled: true, note: "K", in: water).get()
+        try self.basicController.update(kind: .trim, interval: 4, isEnabled: true, note: "P", in: trim).get()
+        try self.basicController.update(kind: .fertilize, interval: 10, isEnabled: true, note: "A", in: fertilize).get()
+        try self.basicController.update(kind: .mist, interval: 9, isEnabled: true, note: "Z", in: mist).get()
+        try self.basicController.update(kind: .move(location: "ZZZ"), interval: 11, isEnabled: true, note: "C", in: move).get()
+        try self.basicController.update(kind: .other(description: "YYY"), interval: 2, isEnabled: true, note: "M", in: other).get()
         try self.basicController.appendNewPerformToReminders(with:
             [water,trim,fertilize,mist,move,other].map { Identifier(rawValue: $0.uuid) }
         ).get()

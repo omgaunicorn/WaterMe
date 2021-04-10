@@ -51,6 +51,7 @@ class DatumTestsBase: XCTestCase {
                     // this time period is important to make sure that no reminders
                     // switch between this week and later when running tests
                     interval: 20,
+                    isEnabled: true,
                     note: "Vessel: \(vessel.displayName!): Reminder: \(y * 100)",
                     in: reminder
                 ).get()

@@ -387,6 +387,9 @@
 /* Edit Reminder: Data Entry Placeholder: Placeholder text in a textfield. The user should type in what they want to be reminded to do to their plant. */
 "Trim the leaves and throw out the clippings." = "Taglia le foglie e butta via i ritagli.";
 
+/* Edit Reminder: Section Title: Describes the section that allows the user to tweak settings for the reminder. */
+"Tweaks" = "Tweaks";
+
 /* Realm Error: Delete: Message: Unable to delete the last reminder associated with a plant. */
 "Unable to delete this reminder because its the only reminder for this plant. Each plant must have at least one reminder." = "Impossibile eliminare questo promemoria perché è l'unico promemoria per questa pianta. Ogni pianta deve avere almeno un promemoria.";
 

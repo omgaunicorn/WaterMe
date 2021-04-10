@@ -39,6 +39,8 @@ protocol ReminderVesselEditTableViewControllerDelegate: class {
                    controller: ReminderVesselEditTableViewController?)
     func userDeleted(reminder: Reminder,
                      controller: ReminderVesselEditTableViewController?) -> Bool
+    func userToggled(reminder: Reminder,
+                     controller: ReminderVesselEditTableViewController?) -> Bool
 }
 
 class ReminderVesselEditTableViewController: StandardTableViewController {
@@ -263,7 +265,25 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
                 let deleted = self.delegate?.userDeleted(reminder: reminder, controller: self) ?? false
                 successfullyDeleted(deleted)
             }
-            return UISwipeActionsConfiguration(actions: [deleteAction])
+
+            guard let reminder = self.remindersData?[indexPath.row] else {
+                return UISwipeActionsConfiguration(actions: [deleteAction])
+            }
+
+            let toggleAction = UIContextualAction(style: .normal,
+                                                  title: reminder.isEnabled ?  UIAlertController.LocalizedString.buttonTitleDisable : UIAlertController.LocalizedString.buttonTitleEnable)
+            { [unowned self] _, _, successfullyToggled in
+                guard let reminder = self.remindersData?[indexPath.row] else {
+                    successfullyToggled(false)
+                    return
+                }
+                let toggled = self.delegate?.userToggled(reminder: reminder, controller: self) ?? false
+                successfullyToggled(toggled)
+            }
+            return UISwipeActionsConfiguration(actions: [
+                toggleAction,
+                deleteAction,
+            ])
         case .siriShortcuts:
             return UISwipeActionsConfiguration(actions: [])
         }

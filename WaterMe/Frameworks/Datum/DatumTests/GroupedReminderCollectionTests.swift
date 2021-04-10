@@ -123,7 +123,7 @@ class GroupedReminderCollectionTests: DatumTestsBase {
             XCTAssertEqual(changes.deletions.count, 0)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            try! self.basicController.update(kind: .mist, interval: 10, note: "a new note", in: reminder).get()
+            try! self.basicController.update(kind: .mist, interval: 10, isEnabled: true, note: "a new note", in: reminder).get()
         }
         self.wait(for: [wait], timeout: 0.3)
     }

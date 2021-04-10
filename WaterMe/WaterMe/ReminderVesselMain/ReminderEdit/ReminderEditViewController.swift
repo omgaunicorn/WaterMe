@@ -123,6 +123,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     
     private func update(kind: ReminderKind? = nil,
                         interval: Int? = nil,
+                        isEnabled: Bool? = nil,
                         note: String? = nil,
                         fromKeyboard: Bool = false)
     {
@@ -151,6 +152,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         // update the Reminder in Realm
         let updateResult = basicRC.update(kind: kind,
                                           interval: interval,
+                                          isEnabled: isEnabled,
                                           note: note,
                                           in: reminder)
         
@@ -288,6 +290,12 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
                          within: ReminderEditTableViewController)
     {
         self.update(note: newNote, fromKeyboard: true)
+    }
+
+    func userChangedIsEnabled(to newIsEnabled: Bool,
+                              within: ReminderEditTableViewController)
+    {
+        self.update(isEnabled: newIsEnabled)
     }
 
     func userDidSelectChangeInterval(popoverSourceView: UIView?,
