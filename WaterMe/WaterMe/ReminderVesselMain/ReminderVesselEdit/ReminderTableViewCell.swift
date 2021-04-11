@@ -33,6 +33,7 @@ class ReminderTableViewCell: UITableViewCell {
     @IBOutlet private weak var middleLabel: UILabel?
     @IBOutlet private weak var bottomLabel: UILabel?
     @IBOutlet private weak var emojiImageView: EmojiImageView?
+    @IBOutlet private weak var muteIndicator: UILabel?
 
     @IBOutlet private weak var leadingConstraint: NSLayoutConstraint?
     @IBOutlet private weak var trailingConstraint: NSLayoutConstraint?
@@ -51,7 +52,9 @@ class ReminderTableViewCell: UITableViewCell {
                                         font: .selectableTableViewCellHelper)
         self.middleLabel?.attributedText = helper + interval
         self.emojiImageView?.setKind(reminder.kind)
+
         if !reminder.isEnabled {
+            self.muteIndicator?.isHidden = false
             self.contentView.alpha = 0.3
         }
         
@@ -96,6 +99,7 @@ class ReminderTableViewCell: UITableViewCell {
         self.middleLabel?.isHidden = false
         self.bottomLabel?.isHidden = false
         self.emojiImageView?.setKind(nil)
+        self.muteIndicator?.isHidden = true
         self.contentView.alpha = 100
     }
     
