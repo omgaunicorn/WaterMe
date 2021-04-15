@@ -62,13 +62,13 @@ extension UIAlertController {
 
 extension UIAlertController {
 
-    enum localizedDeleteConfirmationAlertResult {
+    enum ReminderDeleteConfirmationResult {
         case delete, pause, cancel
     }
 
     convenience init(localizedDeleteConfirmationAlertPresentedFrom sender: PopoverSender?,
                      withPauseOptionDisplayed displayPause: Bool,
-                     userConfirmationHandler confirmed: ((localizedDeleteConfirmationAlertResult) -> Void)?)
+                     userConfirmationHandler confirmed: ((ReminderDeleteConfirmationResult) -> Void)?)
     {
         let style: UIAlertController.Style = sender != nil ? .actionSheet : .alert
         self.init(title: nil, message: LocalizedString.deleteAlertMessage, preferredStyle: style)
