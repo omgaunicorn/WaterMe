@@ -269,8 +269,8 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
 
             let pauseAction = UIContextualAction(style: .normal,
                                                  title: (self.remindersData?[indexPath.row]?.isEnabled ?? true)
-                                                    ? UIAlertController.LocalizedString.buttonTitlePause
-                                                    : UIAlertController.LocalizedString.buttonTitleUnpause)
+                                                    ? UIAlertController.LocalizedString.buttonTitlePauseShort
+                                                    : UIAlertController.LocalizedString.buttonTitleUnpauseShort)
             { [unowned self] _, _, successfullyToggled in
                 guard let reminder = self.remindersData?[indexPath.row] else {
                     successfullyToggled(false)

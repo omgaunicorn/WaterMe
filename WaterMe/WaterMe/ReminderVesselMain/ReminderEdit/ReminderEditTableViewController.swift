@@ -366,7 +366,7 @@ fileprivate extension TextFieldTableViewCell {
 
 fileprivate extension SimpleToggleTableViewCell {
     func configure(isPaused: Bool) {
-        self.label.attributedText = NSAttributedString(string: ReminderEditViewController.LocalizedString.pauseLabelTitle,
+        self.label.attributedText = NSAttributedString(string: UIAlertController.LocalizedString.buttonTitlePause,
                                                        font: .textInputTableViewCell)
         self.toggle.isOn = isPaused
     }

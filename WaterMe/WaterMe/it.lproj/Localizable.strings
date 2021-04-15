@@ -36,6 +36,15 @@
 /* Button Title in an Alert that allows the user to open the camera and take a new photo. */
 "Camera" = "Camera";
 
+/* "Button Title in an Alert that allows the user to pause notifications for a reminder */
+"Pause Notifications" = "LOCALIZEME";
+
+/* Button Title in an Alert that allows the user to pause notifications for a reminder */
+"Pause" = "LOCALIZEME";
+
+/* Button Title in an Alert that allows the user to unpause/resume notifications for a reminder */
+"Unpause" = "LOCALIZEME";
+
 /* Alert Title: Camera Restricted: We can’t access the camera because it is not allowed by an IT policy / parent control. */
 "Camera Restricted" = "Accesso camera limitato";
 
@@ -180,6 +189,9 @@
 /* Reminder Main List: Section Header: Title */
 "Later" = "Più tardi";
 
+/* Reminder Main List: Section Header: Title") */
+"Paused" = "LOCALIZEME";
+
 /* SiriShortcut: Phrase: Random6 */
 "Live long and prosper." = "Lunga vita e prosperità.";
 
@@ -251,6 +263,9 @@
 
 /* Edit Reminder: Section Title: Describes the section that asks the user to enter any optional notes. */
 "Notes" = "Note";
+
+/* Edit Reminder: Section Title: Describes the section that allows the user to edit notification settings */
+"Notifications" = "LOCALIZEME";
 
 /* Displayed to the user for Reminders that need to be performed now. */
 "Now" = "Ora";
@@ -386,9 +401,6 @@
 
 /* Edit Reminder: Data Entry Placeholder: Placeholder text in a textfield. The user should type in what they want to be reminded to do to their plant. */
 "Trim the leaves and throw out the clippings." = "Taglia le foglie e butta via i ritagli.";
-
-/* Edit Reminder: Section Title: Describes the section that allows the user to tweak settings for the reminder. */
-"Tweaks" = "Tweaks";
 
 /* Realm Error: Delete: Message: Unable to delete the last reminder associated with a plant. */
 "Unable to delete this reminder because its the only reminder for this plant. Each plant must have at least one reminder." = "Impossibile eliminare questo promemoria perché è l'unico promemoria per questa pianta. Ogni pianta deve avere almeno un promemoria.";
