@@ -195,16 +195,30 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             return
         }
 
-        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .right(sender))
+        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .right(sender),
+                                             withPauseOptionDisplayed: reminder.isEnabled)
         { confirmed in
-            Analytics.log(event: Analytics.CRUD_Op_R.delete)
-            guard confirmed == true else { return }
-            let deleteResult = basicRC.delete(reminder: reminder)
-            switch deleteResult {
-            case .success:
-                self.completionHandler?(self)
-            case .failure(let error):
-                UIAlertController.presentAlertVC(for: error, over: self, from: sender)
+            switch confirmed {
+            case.delete:
+                Analytics.log(event: Analytics.CRUD_Op_R.delete)
+                let deleteResult = basicRC.delete(reminder: reminder)
+                switch deleteResult {
+                case .success:
+                    self.completionHandler?(self)
+                case .failure(let error):
+                    UIAlertController.presentAlertVC(for: error, over: self, from: sender)
+                }
+            case .pause:
+                Analytics.log(event: Analytics.CRUD_Op_R.pause)
+                let pauseResult = basicRC.update(kind: nil, interval: nil, isEnabled: !reminder.isEnabled, note: nil, in: reminder)
+                switch pauseResult {
+                case .success:
+                    self.completionHandler?(self)
+                case .failure(let error):
+                    UIAlertController.presentAlertVC(for: error, over: self, from: sender)
+                }
+            default:
+                return
             }
         }
         self.present(confirmation, animated: true, completion: nil)

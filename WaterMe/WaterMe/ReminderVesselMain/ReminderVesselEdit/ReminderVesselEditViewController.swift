@@ -171,9 +171,10 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             self.completionHandler?(self)
             return
         }
-        let vc = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .right(sender))
+        let vc = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .right(sender),
+                                   withPauseOptionDisplayed: false)
         { confirmed in
-            guard confirmed == true else { return }
+            guard confirmed == .delete else { return }
 
             Analytics.log(event: Analytics.CRUD_Op_RV.delete)
 

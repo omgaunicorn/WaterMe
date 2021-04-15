@@ -61,19 +61,30 @@ extension UIAlertController {
 }
 
 extension UIAlertController {
+
+    enum localizedDeleteConfirmationAlertResult {
+        case delete, pause, cancel
+    }
+
     convenience init(localizedDeleteConfirmationAlertPresentedFrom sender: PopoverSender?,
-                     userConfirmationHandler confirmed: ((Bool) -> Void)?)
+                     withPauseOptionDisplayed displayPause: Bool,
+                     userConfirmationHandler confirmed: ((localizedDeleteConfirmationAlertResult) -> Void)?)
     {
         let style: UIAlertController.Style = sender != nil ? .actionSheet : .alert
         self.init(title: nil, message: LocalizedString.deleteAlertMessage, preferredStyle: style)
         let delete = UIAlertAction(title: LocalizedString.buttonTitleDelete, style: .destructive) { _ in
-            confirmed?(true)
+            confirmed?(.delete)
         }
         let dont = UIAlertAction(title: LocalizedString.buttonTitleDontDelete, style: .cancel) { _ in
-            confirmed?(false)
+            confirmed?(.cancel)
         }
         self.addAction(delete)
         self.addAction(dont)
+        if displayPause {
+            self.addAction(UIAlertAction(title: "Put on Pause", style: .default) { _ in
+                confirmed?(.pause)
+            })
+        }
         guard let sender = sender else { return }
         switch sender {
         case .right(let bbi):
