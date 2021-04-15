@@ -123,7 +123,7 @@ extension Color {
     }
 
     static private var _disabled: UIColor {
-        return UIColor.gray // TODO
+        return .lightGray
     }
 
     static private var _tint: UIColor {
