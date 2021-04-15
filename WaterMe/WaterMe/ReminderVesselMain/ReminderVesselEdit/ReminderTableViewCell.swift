@@ -46,17 +46,18 @@ class ReminderTableViewCell: UITableViewCell {
         guard let reminder = reminder else { self.reset(); return; }
         
         // do stuff that is the same for all cases
-        self.topLabel?.attributedText = NSAttributedString(string: reminder.kind.localizedShortString, font: .selectableTableViewCell)
-        let interval = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval), font: .selectableTableViewCell)
+        self.topLabel?.attributedText = NSAttributedString(string: reminder.kind.localizedShortString,
+                                                           font: .selectableTableViewCell)
+        let interval = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval),
+                                          font: .selectableTableViewCell)
         let helper = NSAttributedString(string: ReminderVesselEditViewController.LocalizedString.rowLabelInterval,
                                         font: .selectableTableViewCellHelper)
         self.middleLabel?.attributedText = helper + interval
         self.emojiImageView?.setKind(reminder.kind)
 
-        if !reminder.isEnabled {
-            self.muteIndicator?.isHidden = false
-            self.contentView.alpha = 0.3
-        }
+        // cover the case that the reminder is disabled
+        self.muteIndicator?.isHidden = reminder.isEnabled
+        self.contentView.alpha = reminder.isEnabled ? 1.0 : 0.3
         
         // do stuff that is case specific
         switch reminder.kind {
@@ -100,7 +101,7 @@ class ReminderTableViewCell: UITableViewCell {
         self.bottomLabel?.isHidden = false
         self.emojiImageView?.setKind(nil)
         self.muteIndicator?.isHidden = true
-        self.contentView.alpha = 100
+        self.contentView.alpha = 1
     }
     
     override func prepareForReuse() {
