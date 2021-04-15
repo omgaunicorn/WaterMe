@@ -195,8 +195,12 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             return
         }
 
-        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .right(sender),
-                                             withPauseOptionDisplayed: reminder.isEnabled)
+        let options: UIAlertController.ReminderDeleteConfirmationOptions
+            = reminder.isEnabled
+            ? [.pause]
+            : []
+        let confirmation = UIAlertController(localizedDeleteConfirmationWithOptions: options,
+                                             sender: .right(sender))
         { confirmed in
             switch confirmed {
             case.delete:
