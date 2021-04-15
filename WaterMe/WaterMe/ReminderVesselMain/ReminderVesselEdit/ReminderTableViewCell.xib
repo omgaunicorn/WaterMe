@@ -49,6 +49,13 @@
                             </label>
                         </subviews>
                     </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="🔕" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mXb-Bl-isq">
+                        <rect key="frame" x="262" y="11" width="42" height="42"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="pJ1-Qa-CHB" firstAttribute="leading" secondItem="cqQ-mh-PX3" secondAttribute="trailing" constant="12" id="GOh-yB-03Q"/>
@@ -66,6 +73,7 @@
                 <outlet property="emojiImageView" destination="cqQ-mh-PX3" id="myK-j7-8jj"/>
                 <outlet property="leadingConstraint" destination="XNp-4R-Tf3" id="dwP-lr-Jfi"/>
                 <outlet property="middleLabel" destination="XRB-j7-927" id="Tcd-A2-q8R"/>
+                <outlet property="muteIndicator" destination="mXb-Bl-isq" id="GG2-mC-YeG"/>
                 <outlet property="topConstraint" destination="Jjx-TH-D2S" id="nCP-15-0vw"/>
                 <outlet property="topLabel" destination="Icd-mF-8hY" id="wwr-8S-cOk"/>
                 <outlet property="trailingConstraint" destination="vux-3O-Ynd" id="oG7-O6-ekb"/>
