@@ -259,6 +259,8 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
                     break
                 case .saveAnyway:
                     self.completionHandler?(self)
+                case .reminderMissingEnabled:
+                    self.tableViewController?.forceScrollToIsEnabledRow()
                 case .reminderMissingMoveLocation, .reminderMissingOtherDescription:
                     self.tableViewController?.forceTextFieldToBecomeFirstResponder()
                 }

@@ -213,7 +213,8 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
                 case .dismiss,
                      .openWaterMeSettings,
                      .reminderMissingMoveLocation,
-                     .reminderMissingOtherDescription:
+                     .reminderMissingOtherDescription,
+                     .reminderMissingEnabled:
                     assertionFailure()
                     fallthrough
                 case .cancel:

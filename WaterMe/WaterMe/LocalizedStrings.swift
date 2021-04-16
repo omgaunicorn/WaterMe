@@ -544,6 +544,9 @@ extension RecoveryAction {
         static let missingDescription =
             NSLocalizedString("Missing Description",
                               comment: "Error Saving: Reminder: Missing Description: If the user has not entered a description for their other reminder and tries to save, an alert will warn them. This is the button title to fix the error.")
+        static let missingEnabled =
+            NSLocalizedString("Notifications Paused",
+                              comment: "Error Saving: Reminder: Notifications Paused: If the user has paused notifications for the reminder, a warning is presented when they try to save changes to a reminder.")
     }
 }
 
