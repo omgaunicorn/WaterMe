@@ -118,6 +118,9 @@ public enum ReminderSection: Int, CaseIterable {
             fatalError("DISABLED does not have a date range")
         }
     }
+    internal static var __realmCases: [ReminderSection] {
+        return self.allCases.dropLast()
+    }
 }
 
 public enum ReminderSortOrder {

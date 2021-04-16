@@ -59,6 +59,11 @@ class DatumTestsBase: XCTestCase {
                     try self.basicController.appendNewPerformToReminders(with: [.init(rawValue: reminder.uuid)]).get()
                 }
             }
+            if self.basicController is CD_BasicController {
+                // add disabled reminder only for core data controller
+                let disabled = try self.basicController.newReminder(for: vessel).get()
+                try self.basicController.update(kind: nil, interval: nil, isEnabled: false, note: nil, in: disabled).get()
+            }
         }
     }
 
