@@ -330,7 +330,7 @@ class RealmToCoreDataMigrationSearchTests: RealmToCoreDataMigratorBaseTests {
 
     func test_search_reminderCollection() {
         let id = Identifier(rawValue: self.sourceVessel.reminders.first!.uuid)
-        let query = try! self.destination.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let query = try! self.destination.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData { data in
             wait.fulfill()

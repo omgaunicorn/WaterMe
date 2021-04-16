@@ -166,8 +166,9 @@ internal class CD_BasicController: BasicController {
         return .success(AnyCollectionQuery(query))
     }
     
-    func allReminders(sorted: ReminderSortOrder,
-                      ascending: Bool) -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
+    func enabledReminders(sorted: ReminderSortOrder,
+                          ascending: Bool)
+                          -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     {
         // debug only sanity checks
         assert(Thread.isMainThread)
@@ -175,6 +176,7 @@ internal class CD_BasicController: BasicController {
         let context = self.container.viewContext
         let fr = CD_Reminder.request
         fr.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
+        fr.predicate = NSPredicate(format: "%K == YES", #keyPath(CD_Reminder.isEnabled))
         let frc = NSFetchedResultsController(fetchRequest: fr,
                                              managedObjectContext: context,
                                              sectionNameKeyPath: nil,

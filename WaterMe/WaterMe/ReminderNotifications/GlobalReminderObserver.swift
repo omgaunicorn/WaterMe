@@ -62,7 +62,7 @@ class GlobalReminderObserver {
             self.shortcutSuggester?.deleteActivities(for: reminders)
         }
         DispatchQueue.main.async {
-            let collection = basicController.allReminders(sorted: .nextPerformDate, ascending: true).value
+            let collection = basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).value
             self.token = collection?.observe({ [weak self] in self?.dataChanged($0) })
         }
     }

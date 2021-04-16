@@ -108,9 +108,9 @@ internal class RLM_BasicController: BasicController {
         }
     }
 
-    internal func allReminders(sorted: ReminderSortOrder = .nextPerformDate,
-                               ascending: Bool = true)
-                               -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
+    internal func enabledReminders(sorted: ReminderSortOrder = .nextPerformDate,
+                                   ascending: Bool = true)
+                                   -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     {
         return self.realm.map {
             AnyCollectionQuery(
