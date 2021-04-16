@@ -88,7 +88,24 @@ class ReminderTableViewCell: UITableViewCell {
         self.trailingConstraint?.constant = UITableViewCell.style_labelCellTrailingPadding
         self.topConstraint?.constant = UITableViewCell.style_labelCellTopPadding
         self.bottomConstraint?.constant = UITableViewCell.style_labelCellBottomPadding
-
+        // TODO: Clean this up
+        if #available(iOS 13.0, *) {
+            if let image = UIImage(systemName: "speaker.zzz") {
+                self.muteIndicator?.attributedText = NSAttributedString(
+                    attachment: NSTextAttachment(image: image)
+                )
+            } else {
+                self.muteIndicator?.attributedText = NSAttributedString(
+                    string: "🔕",
+                    font: .emojiSuperSmall
+                )
+            }
+        } else {
+            self.muteIndicator?.attributedText = NSAttributedString(
+                string: "🔕",
+                font: .emojiSuperSmall
+            )
+        }
         self.reset()
     }
     
