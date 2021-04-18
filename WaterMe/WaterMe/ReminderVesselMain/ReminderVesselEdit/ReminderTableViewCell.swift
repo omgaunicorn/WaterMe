@@ -58,6 +58,7 @@ class ReminderTableViewCell: UITableViewCell {
         // cover the case that the reminder is disabled
         self.muteIndicator?.isHidden = reminder.isEnabled
         self.contentView.alpha = reminder.isEnabled ? 1.0 : 0.3
+        self.muteIndicator?.attributedText = type(of: self).muteIndicatorString
         
         // do stuff that is case specific
         switch reminder.kind {
@@ -88,24 +89,6 @@ class ReminderTableViewCell: UITableViewCell {
         self.trailingConstraint?.constant = UITableViewCell.style_labelCellTrailingPadding
         self.topConstraint?.constant = UITableViewCell.style_labelCellTopPadding
         self.bottomConstraint?.constant = UITableViewCell.style_labelCellBottomPadding
-        // TODO: Clean this up
-        if #available(iOS 13.0, *) {
-            if let image = UIImage(systemName: "speaker.zzz") {
-                self.muteIndicator?.attributedText = NSAttributedString(
-                    attachment: NSTextAttachment(image: image)
-                )
-            } else {
-                self.muteIndicator?.attributedText = NSAttributedString(
-                    string: "🔕",
-                    font: .emojiSuperSmall
-                )
-            }
-        } else {
-            self.muteIndicator?.attributedText = NSAttributedString(
-                string: "🔕",
-                font: .emojiSuperSmall
-            )
-        }
         self.reset()
     }
     
@@ -124,5 +107,22 @@ class ReminderTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         self.reset()
     }
-
+    
+    private class var muteIndicatorString: NSAttributedString {
+        let font = Font.emojiSuperSmall
+        let fallback = NSAttributedString(
+            string: "🔕",
+            font: font
+        )
+        guard
+            #available(iOS 13.0, *),
+            let image = UIImage(systemName: "speaker.zzz")
+        else { return fallback }
+        let imageRatio = image.size.width / image.size.height
+        let rawFont = font.attributes[.font] as! UIFont
+        let desiredSize = rawFont.pointSize
+        let attachment = NSTextAttachment(image: image)
+        attachment.bounds = .init(x: 0, y: 0, width: desiredSize * imageRatio, height: desiredSize)
+        return NSAttributedString(attachment: attachment)
+    }
 }
