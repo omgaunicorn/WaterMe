@@ -49,13 +49,14 @@ class EmojiImageView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         self.addSubview(stackView)
         let constraints = [
-            self.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 0),
+            stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
+            stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             self.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 0),
-            self.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 0),
             self.bottomAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 0),
-            imageView.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: 1)
         ]
         self.addConstraints(constraints)
         label.isHidden = true
