@@ -32,9 +32,9 @@ public enum Loggable {
 
     public static func configure(with delegate: ServerlessLoggerErrorDelegate?) {
         let identifier = "WaterMe-Lambda-Logger"
-        var log: XCGLogger?
-        if #available(iOS 13.0, *) {
-            let endpoint = URLComponents(url: PrivateKeys.kLoggerEndpoint, resolvingAgainstBaseURL: false)!
+        var _log: XCGLogger?
+        if #available(iOS 13.0, *), let loggerEndpoint = PrivateKeys.kLoggerEndpoint {
+            let endpoint = URLComponents(url: loggerEndpoint, resolvingAgainstBaseURL: false)!
             let key = SymmetricKey(data: PrivateKeys.kLoggerKey)
             var config = Logger.DefaultSecureConfiguration(identifier: identifier,
                                                            endpointURL: endpoint,
@@ -42,13 +42,13 @@ public enum Loggable {
                                                            logLevel: .warning,
                                                            errorDelegate: delegate)
             config.storageLocation.appName = "WaterMe"
-            log = try? Logger(configuration: config)
+            _log = try? Logger(configuration: config)
         }
-        log = log ?? XCGLogger(identifier: identifier, includeDefaultDestinations: true)
+        let log = _log ?? XCGLogger(identifier: identifier, includeDefaultDestinations: true)
         #if DEBUG
-        log?.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .debug)
+        log.setup(level: .debug, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .debug)
         #else
-        log?.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
+        log.setup(level: .warning, showLogIdentifier: false, showFunctionName: true, showThreadName: true, showLevel: true, showFileNames: false, showLineNumbers: false, showDate: true, writeToFile: false, fileLevel: .warning)
         #endif
         self.default = log
     }
