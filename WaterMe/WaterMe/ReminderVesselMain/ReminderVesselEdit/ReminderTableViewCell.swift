@@ -56,8 +56,8 @@ class ReminderTableViewCell: UITableViewCell {
         self.emojiImageView?.setKind(reminder.kind)
 
         // cover the case that the reminder is disabled
-        self.muteIndicator?.isHidden = reminder.isEnabled
         self.contentView.alpha = reminder.isEnabled ? 1.0 : 0.3
+        self.muteIndicator?.isHidden = reminder.isEnabled
         self.muteIndicator?.attributedText = type(of: self).muteIndicatorString
         
         // do stuff that is case specific
