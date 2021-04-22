@@ -218,6 +218,24 @@ class ReminderEditTableViewController: StandardTableViewController {
         }
     }
     
+    func forceScrollToIsEnabledRow() {
+        guard let reminder = self.delegate?.reminderResult?.value else {
+            assertionFailure("Missing Reminder Object")
+            return
+        }
+        let reminderKind = reminder.kind
+        let indexPath: IndexPath
+        switch reminderKind {
+        case .other, .move:
+            indexPath = .init(row: 0, section: 3)
+        case .fertilize, .water, .trim, .mist:
+            indexPath = .init(row: 0, section: 2)
+        }
+        UIView.style_animateNormal() {
+            self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+        }
+    }
+    
     override func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         self.view.endEditing(false)
     }
@@ -366,7 +384,7 @@ fileprivate extension TextFieldTableViewCell {
 
 fileprivate extension SimpleToggleTableViewCell {
     func configure(isPaused: Bool) {
-        self.label.attributedText = NSAttributedString(string: ReminderEditViewController.LocalizedString.pauseLabelTitle,
+        self.label.attributedText = NSAttributedString(string: UIAlertController.LocalizedString.buttonTitlePause,
                                                        font: .textInputTableViewCell)
         self.toggle.isOn = isPaused
     }

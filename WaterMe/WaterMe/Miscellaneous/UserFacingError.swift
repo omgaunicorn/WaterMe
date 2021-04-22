@@ -89,6 +89,8 @@ extension RecoveryAction: RecoveryActionSelectable {
             return LocalizedString.missingLocation
         case .reminderMissingOtherDescription:
             return LocalizedString.missingDescription
+        case .reminderMissingEnabled:
+            return LocalizedString.missingEnabled
         case .reminderVesselMissingIcon:
             return LocalizedString.missingPhoto
         case .reminderVesselMissingName:

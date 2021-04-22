@@ -46,17 +46,19 @@ class ReminderTableViewCell: UITableViewCell {
         guard let reminder = reminder else { self.reset(); return; }
         
         // do stuff that is the same for all cases
-        self.topLabel?.attributedText = NSAttributedString(string: reminder.kind.localizedShortString, font: .selectableTableViewCell)
-        let interval = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval), font: .selectableTableViewCell)
+        self.topLabel?.attributedText = NSAttributedString(string: reminder.kind.localizedShortString,
+                                                           font: .selectableTableViewCell)
+        let interval = NSAttributedString(string: self.formatter.string(forDayInterval: reminder.interval),
+                                          font: .selectableTableViewCell)
         let helper = NSAttributedString(string: ReminderVesselEditViewController.LocalizedString.rowLabelInterval,
                                         font: .selectableTableViewCellHelper)
         self.middleLabel?.attributedText = helper + interval
         self.emojiImageView?.setKind(reminder.kind)
 
-        if !reminder.isEnabled {
-            self.muteIndicator?.isHidden = false
-            self.contentView.alpha = 0.3
-        }
+        // cover the case that the reminder is disabled
+        self.contentView.alpha = reminder.isEnabled ? 1.0 : 0.3
+        self.muteIndicator?.isHidden = reminder.isEnabled
+        self.muteIndicator?.attributedText = type(of: self).muteIndicatorString
         
         // do stuff that is case specific
         switch reminder.kind {
@@ -87,7 +89,6 @@ class ReminderTableViewCell: UITableViewCell {
         self.trailingConstraint?.constant = UITableViewCell.style_labelCellTrailingPadding
         self.topConstraint?.constant = UITableViewCell.style_labelCellTopPadding
         self.bottomConstraint?.constant = UITableViewCell.style_labelCellBottomPadding
-
         self.reset()
     }
     
@@ -100,11 +101,28 @@ class ReminderTableViewCell: UITableViewCell {
         self.bottomLabel?.isHidden = false
         self.emojiImageView?.setKind(nil)
         self.muteIndicator?.isHidden = true
-        self.contentView.alpha = 100
+        self.contentView.alpha = 1
     }
     
     override func prepareForReuse() {
         self.reset()
     }
-
+    
+    private class var muteIndicatorString: NSAttributedString {
+        let font = Font.emojiSuperSmall
+        let fallback = NSAttributedString(
+            string: "🔕",
+            font: font
+        )
+        guard
+            #available(iOS 13.0, *),
+            let image = UIImage(systemName: "speaker.zzz")
+        else { return fallback }
+        let imageRatio = image.size.width / image.size.height
+        let rawFont = font.attributes[.font] as! UIFont
+        let desiredSize = rawFont.pointSize
+        let attachment = NSTextAttachment(image: image)
+        attachment.bounds = .init(x: 0, y: 0, width: desiredSize * imageRatio, height: desiredSize)
+        return NSAttributedString(attachment: attachment)
+    }
 }

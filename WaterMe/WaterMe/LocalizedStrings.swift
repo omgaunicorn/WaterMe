@@ -120,10 +120,13 @@ extension UIAlertController {
             NSLocalizedString("Camera 🔒",
                               comment: "Button Title in an Alert that allows the user to open the camera and take a new photo. In this case, the user has denied access to the camera.")
         static let buttonTitlePause =
-            NSLocalizedString("PauseButton",
+            NSLocalizedString("Pause Notifications",
                               comment: "Button Title in an Alert that allows the user to pause notifications for a reminder")
-        static let buttonTitleUnpause =
-            NSLocalizedString("UnpauseButton",
+        static let buttonTitlePauseShort =
+            NSLocalizedString("Pause",
+                              comment: "Button Title in an Alert that allows the user to pause notifications for a reminder")
+        static let buttonTitleUnpauseShort =
+            NSLocalizedString("Unpause",
                               comment: "Button Title in an Alert that allows the user to unpause/resume notifications for a reminder")
         static let buttonTitleDelete =
             NSLocalizedString("Delete",
@@ -364,9 +367,6 @@ extension ReminderEditViewController {
         static let sectionTitleLastPerformed =
             NSLocalizedString("Last Performed",
                               comment: "Edit Reminder: Section Title: Describes the section that displays when the reminder was last performed.")
-        static let pauseLabelTitle =
-            NSLocalizedString("Pause",
-                              comment: "Edit Reminder: Pause Label Title: The label to the left of the toggle to pause the reminder")
         static let dataEntryLabelMove =
             NSLocalizedString("Move to",
                               comment: "Edit Reminder: Data Entry Label: The label to the left of a text field. The user should type where they want to move their plant to in the textfield.")
@@ -544,6 +544,9 @@ extension RecoveryAction {
         static let missingDescription =
             NSLocalizedString("Missing Description",
                               comment: "Error Saving: Reminder: Missing Description: If the user has not entered a description for their other reminder and tries to save, an alert will warn them. This is the button title to fix the error.")
+        static let missingEnabled =
+            NSLocalizedString("Notifications Paused",
+                              comment: "Error Saving: Reminder: Notifications Paused: If the user has paused notifications for the reminder, a warning is presented when they try to save changes to a reminder.")
     }
 }
 

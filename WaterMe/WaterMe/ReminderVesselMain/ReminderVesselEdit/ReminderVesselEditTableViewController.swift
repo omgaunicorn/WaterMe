@@ -259,18 +259,33 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
             let deleteAction = UIContextualAction(style: .destructive,
                                                   title: UIAlertController.LocalizedString.buttonTitleDelete)
             { [unowned self] _, _, successfullyDeleted in
-                guard let reminder = self.remindersData?[indexPath.row] else {
-                    successfullyDeleted(false)
-                    return
+                // TODO: Improve this
+                // This causes bug when swiping to delete where popover
+                // on iPAd is pointed way over outside the table/
+                // let cell = tableView.cellForRow(at: indexPath)
+                // let sender = cell.map { PopoverSender.left($0) }
+                let confirmation = UIAlertController(localizedDeleteConfirmationWithOptions: [],
+                                                     sender: nil)
+                { confirmed in
+                    switch confirmed {
+                    case .cancel, .pause:
+                        successfullyDeleted(false)
+                    case .delete:
+                        guard let reminder = self.remindersData?[indexPath.row] else {
+                            successfullyDeleted(false)
+                            return
+                        }
+                        let deleted = self.delegate?.userDeleted(reminder: reminder, controller: self) ?? false
+                        successfullyDeleted(deleted)
+                    }
                 }
-                let deleted = self.delegate?.userDeleted(reminder: reminder, controller: self) ?? false
-                successfullyDeleted(deleted)
+                self.present(confirmation, animated: true, completion: nil)
             }
 
             let pauseAction = UIContextualAction(style: .normal,
                                                  title: (self.remindersData?[indexPath.row]?.isEnabled ?? true)
-                                                    ? UIAlertController.LocalizedString.buttonTitlePause
-                                                    : UIAlertController.LocalizedString.buttonTitleUnpause)
+                                                    ? UIAlertController.LocalizedString.buttonTitlePauseShort
+                                                    : UIAlertController.LocalizedString.buttonTitleUnpauseShort)
             { [unowned self] _, _, successfullyToggled in
                 guard let reminder = self.remindersData?[indexPath.row] else {
                     successfullyToggled(false)

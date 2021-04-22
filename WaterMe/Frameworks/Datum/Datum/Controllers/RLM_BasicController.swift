@@ -108,9 +108,9 @@ internal class RLM_BasicController: BasicController {
         }
     }
 
-    internal func allReminders(sorted: ReminderSortOrder = .nextPerformDate,
-                               ascending: Bool = true)
-                               -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
+    internal func enabledReminders(sorted: ReminderSortOrder = .nextPerformDate,
+                                   ascending: Bool = true)
+                                   -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     {
         return self.realm.map {
             AnyCollectionQuery(
@@ -126,7 +126,7 @@ internal class RLM_BasicController: BasicController {
 
     internal func groupedReminders() -> Result<AnyCollectionQuery<Reminder, IndexPath>, DatumError> {
         var failure: DatumError?
-        let _queries = ReminderSection.allCases.compactMap
+        let _queries = ReminderSection.__realmCases.compactMap
         { section -> (ReminderSection, AnyCollectionQuery<Reminder, Int>)? in
             let result = self.reminders(in: section)
             switch result {

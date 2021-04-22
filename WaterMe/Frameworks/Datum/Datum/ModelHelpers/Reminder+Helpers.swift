@@ -40,18 +40,22 @@ extension CD_Reminder {
 
 extension CD_Reminder: ModelCompleteCheckable {
     internal var isModelComplete: ModelCompleteError? {
+        var recoveries: [RecoveryAction] = []
         switch self.kind {
         case .fertilize, .water, .trim, .mist:
-            return nil
+            break // no errors
         case .move(let description):
-            return description == nil ?
-                ModelCompleteError(_actions: [.reminderMissingMoveLocation, .cancel, .saveAnyway])
-                : nil
+            guard description == nil else { break }
+            recoveries.append(.reminderMissingMoveLocation)
         case .other(let description):
-            return description == nil ?
-                ModelCompleteError(_actions: [.reminderMissingOtherDescription, .cancel, .saveAnyway])
-                : nil
+            guard description == nil else { break }
+            recoveries.append(.reminderMissingOtherDescription)
         }
+        if !self.isEnabled {
+            recoveries.append(.reminderMissingEnabled)
+        }
+        guard !recoveries.isEmpty else { return nil }
+        return ModelCompleteError(_actions: recoveries + [.cancel, .saveAnyway])
     }
 }
 
@@ -113,6 +117,9 @@ public enum ReminderSection: Int, CaseIterable {
         case .disabled:
             fatalError("DISABLED does not have a date range")
         }
+    }
+    internal static var __realmCases: [ReminderSection] {
+        return self.allCases.dropLast()
     }
 }
 

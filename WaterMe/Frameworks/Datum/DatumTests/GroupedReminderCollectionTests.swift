@@ -31,40 +31,6 @@ class GroupedReminderCollectionTests: DatumTestsBase {
         try self.setUpSmall()
     }
     
-    func test_load() {
-        let query = try! self.basicController.groupedReminders().get()
-        let wait = XCTestExpectation()
-        self.token = query.test_observe_loadData() { data in
-            wait.fulfill()
-            XCTAssertEqual(data.numberOfSections, 5)
-            for section in 0..<6 {
-                if section < 5 {
-                    XCTAssertEqual(data.numberOfItems(inSection: section),
-                                   data.count(at: IndexPath(row: 0, section: section)))
-                }
-                switch section {
-                case 0:
-                    XCTAssertEqual(data.numberOfItems(inSection: section), 2)
-                    XCTAssertEqual(data[IndexPath(row: 1, section: section)]!.interval, 7)
-                case 1:
-                    XCTAssertEqual(data.numberOfItems(inSection: section), 0)
-                case 2:
-                    XCTAssertEqual(data.numberOfItems(inSection: section), 0)
-                case 3:
-                    XCTAssertEqual(data.numberOfItems(inSection: section), 0)
-                case 4:
-                    XCTAssertEqual(data.numberOfItems(inSection: section), 6)
-                    XCTAssertEqual(data[IndexPath(row: 3, section: section)]!.note!, "Vessel: 200番花: Reminder: 100")
-                case 5:
-                    XCTAssertNil(data.count(at: IndexPath(row: 0, section: section)))
-                default:
-                    XCTFail()
-                }
-            }
-        }
-        self.wait(for: [wait], timeout: 0.1)
-    }
-    
     func test_indexOfItem() {
         let query = try! self.basicController.groupedReminders().get()
         let wait = XCTestExpectation()
@@ -145,3 +111,78 @@ class GroupedReminderCollectionTests: DatumTestsBase {
     }
 }
 
+extension CD_GroupedReminderCollectionTests {
+    func test_load() {
+        let query = try! self.basicController.groupedReminders().get()
+        let wait = XCTestExpectation()
+        self.token = query.test_observe_loadData() { data in
+            wait.fulfill()
+            XCTAssertEqual(data.numberOfSections, 6)
+            for section in 0 ..< 7 {
+                if section < 6 {
+                    XCTAssertEqual(data.numberOfItems(inSection: section),
+                                   data.count(at: IndexPath(row: 0, section: section)))
+                }
+                switch section {
+                case 0:
+                    XCTAssertEqual(data.numberOfItems(inSection: section), 2)
+                    XCTAssertEqual(data[IndexPath(row: 1, section: section)]!.interval, 7)
+                case 1:
+                    XCTAssertEqual(data.numberOfItems(inSection: section), 0)
+                case 2:
+                    XCTAssertEqual(data.numberOfItems(inSection: section), 0)
+                case 3:
+                    XCTAssertEqual(data.numberOfItems(inSection: section), 0)
+                case 4:
+                    XCTAssertEqual(data.numberOfItems(inSection: section), 6)
+                    XCTAssertEqual(data[IndexPath(row: 3, section: section)]!.note!, "Vessel: 200番花: Reminder: 100")
+                case 5:
+                    XCTAssertEqual(data.numberOfItems(inSection: section), 2)
+                    XCTAssertEqual(data[IndexPath(row: 0, section: section)]!.isEnabled, false)
+                    XCTAssertEqual(data[IndexPath(row: 1, section: section)]!.isEnabled, false)
+                case 6:
+                    XCTAssertNil(data.count(at: IndexPath(row: 0, section: section)))
+                default:
+                    XCTFail()
+                }
+            }
+        }
+        self.wait(for: [wait], timeout: 0.1)
+    }
+}
+
+extension RLM_GroupedReminderCollectionTests {
+    func test_load() {
+        let query = try! self.basicController.groupedReminders().get()
+        let wait = XCTestExpectation()
+        self.token = query.test_observe_loadData() { data in
+            wait.fulfill()
+            XCTAssertEqual(data.numberOfSections, 5)
+            for section in 0..<6 {
+                if section < 5 {
+                    XCTAssertEqual(data.numberOfItems(inSection: section),
+                                   data.count(at: IndexPath(row: 0, section: section)))
+                }
+                switch section {
+                case 0:
+                    XCTAssertEqual(data.numberOfItems(inSection: section), 2)
+                    XCTAssertEqual(data[IndexPath(row: 1, section: section)]!.interval, 7)
+                case 1:
+                    XCTAssertEqual(data.numberOfItems(inSection: section), 0)
+                case 2:
+                    XCTAssertEqual(data.numberOfItems(inSection: section), 0)
+                case 3:
+                    XCTAssertEqual(data.numberOfItems(inSection: section), 0)
+                case 4:
+                    XCTAssertEqual(data.numberOfItems(inSection: section), 6)
+                    XCTAssertEqual(data[IndexPath(row: 3, section: section)]!.note!, "Vessel: 200番花: Reminder: 100")
+                case 5:
+                    XCTAssertNil(data.count(at: IndexPath(row: 0, section: section)))
+                default:
+                    XCTFail()
+                }
+            }
+        }
+        self.wait(for: [wait], timeout: 0.1)
+    }
+}
