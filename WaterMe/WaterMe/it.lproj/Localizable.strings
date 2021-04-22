@@ -37,13 +37,13 @@
 "Camera" = "Camera";
 
 /* "Button Title in an Alert that allows the user to pause notifications for a reminder */
-"Pause Notifications" = "LOCALIZEME";
+"Pause Notifications" = "Pausa notifiche";
 
 /* Button Title in an Alert that allows the user to pause notifications for a reminder */
-"Pause" = "LOCALIZEME";
+"Pause" = "Pausa";
 
 /* Button Title in an Alert that allows the user to unpause/resume notifications for a reminder */
-"Unpause" = "LOCALIZEME";
+"Unpause" = "Riattiva";
 
 /* Alert Title: Camera Restricted: We can’t access the camera because it is not allowed by an IT policy / parent control. */
 "Camera Restricted" = "Accesso camera limitato";
@@ -190,7 +190,7 @@
 "Later" = "Più tardi";
 
 /* Reminder Main List: Section Header: Title") */
-"Paused" = "LOCALIZEME";
+"Paused" = "In pausa";
 
 /* SiriShortcut: Phrase: Random6 */
 "Live long and prosper." = "Lunga vita e prosperità.";
@@ -217,7 +217,7 @@
 "Mark this reminder as done." = "Segna questo promemoria come (fatto).";
 
 /* Error Saving: Reminder: Notifications Paused: If the user has paused notifications for the reminder, a warning is presented when they try to save changes to a reminder. */
-"Notifications Paused" = "LOCALIZEME";
+"Notifications Paused" = "Notifiche in pausa";
 
 /* Error Saving: Reminder: Missing Description: If the user has not entered a description for their other reminder and tries to save, an alert will warn them. This is the button title to fix the error. */
 "Missing Description" = "Descrizione mancante";
@@ -268,7 +268,7 @@
 "Notes" = "Note";
 
 /* Edit Reminder: Section Title: Describes the section that allows the user to edit notification settings */
-"Notifications" = "LOCALIZEME";
+"Notifications" = "Notifiche";
 
 /* Displayed to the user for Reminders that need to be performed now. */
 "Now" = "Ora";
