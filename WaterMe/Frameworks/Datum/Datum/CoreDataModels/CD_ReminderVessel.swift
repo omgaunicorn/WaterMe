@@ -31,13 +31,6 @@ internal class CD_ReminderVessel: CD_Base {
         NSFetchRequest<CD_ReminderVessel>(entityName: self.entityName)
     }
     
-    @NSManaged var displayName: String?
-    @NSManaged var iconEmojiString: String?
-    @NSManaged var iconImageData: Data?
-    @NSManaged var kindString: String
-    @NSManaged var reminders: NSSet
-    @NSManaged var share: CD_VesselShare
-    
     override func awakeFromInsert() {
         super.awakeFromInsert()
         self.kindString = ReminderVesselKind.plant.rawValue

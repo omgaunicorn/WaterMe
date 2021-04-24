@@ -107,12 +107,12 @@ extension CD_BasicControllerCreateUpdateTests {
         let _item2 = try! self.basicController.newReminder(for: vessel).get()
         let item1 = (_item1 as! CD_ReminderWrapper).wrappedObject
         let item2 = (_item2 as! CD_ReminderWrapper).wrappedObject
-        XCTAssertEqual(item1.performed.count, 0)
-        XCTAssertEqual(item2.performed.count, 0)
+        XCTAssertEqual(item1.performed!.count, 0)
+        XCTAssertEqual(item2.performed!.count, 0)
         try! self.basicController.appendNewPerformToReminders(
             with: [_item1, _item2].map { .init(rawValue: $0.uuid) }
         ).get()
-        XCTAssertEqual(item1.performed.count, 1)
-        XCTAssertEqual(item2.performed.count, 1)
+        XCTAssertEqual(item1.performed!.count, 1)
+        XCTAssertEqual(item2.performed!.count, 1)
     }
 }

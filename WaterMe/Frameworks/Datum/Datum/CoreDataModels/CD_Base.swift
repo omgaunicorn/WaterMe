@@ -28,11 +28,6 @@ internal class CD_Base: NSManagedObject {
 
     class var entityName: String { "CD_Base" }
     
-    @NSManaged var dateModified: Date
-    @NSManaged var dateCreated: Date
-    @NSManaged var bloop: Bool
-    @NSManaged var migrated: CD_Migrated?
-    
     override func awakeFromInsert() {
         super.awakeFromInsert()
         let now = Date()
@@ -51,5 +46,4 @@ internal class CD_Migrated: CD_Base {
     class var request: NSFetchRequest<CD_Migrated> {
         NSFetchRequest<CD_Migrated>(entityName: self.entityName)
     }
-    @NSManaged var realmIdentifier: String?
 }

@@ -368,7 +368,7 @@ internal class CD_BasicController: BasicController {
             vessel.icon = icon
         }
         guard somethingChanged else { return .success(()) }
-        vessel.reminders.forEach { ($0 as! CD_Base).bloop.toggle() }
+        vessel.reminders?.forEach { ($0 as! CD_Base).bloop.toggle() }
         return context.waterme_save()
     }
     
@@ -409,7 +409,7 @@ internal class CD_BasicController: BasicController {
             reminder.note = note
         }
         guard somethingChanged else { return .success(()) }
-        reminder.vessel.bloop.toggle()
+        reminder.vessel?.bloop.toggle()
         return context.waterme_save()
     }
     

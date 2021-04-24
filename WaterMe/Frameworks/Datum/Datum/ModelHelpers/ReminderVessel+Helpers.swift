@@ -42,7 +42,7 @@ extension CD_ReminderVessel {
         }
     }
     internal var kind: ReminderVesselKind {
-        get { return ReminderVesselKind(rawValue: self.kindString) ?? .plant }
+        get { return ReminderVesselKind(rawValue: self.kindString ?? "-1") ?? .plant }
         set { self.kindString = newValue.rawValue }
     }
 }
@@ -52,7 +52,7 @@ extension CD_ReminderVessel: ModelCompleteCheckable {
         let issues: [RecoveryAction] = [
             self.icon == nil ? .reminderVesselMissingIcon : nil,
             self.displayName == nil ? .reminderVesselMissingName : nil,
-            self.reminders.count == 0 ? .reminderVesselMissingReminder : nil
+            (self.reminders?.count ?? 0) >= 1 ? .reminderVesselMissingReminder : nil
             ].compactMap({ $0 })
         if issues.isEmpty {
             return nil

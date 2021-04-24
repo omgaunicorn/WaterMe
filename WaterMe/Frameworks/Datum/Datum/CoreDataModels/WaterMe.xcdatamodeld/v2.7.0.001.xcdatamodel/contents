@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="2.6.0.001">
-    <entity name="CD_Base" representedClassName="CD_Base" isAbstract="YES" syncable="YES">
+    <entity name="CD_Base" representedClassName="CD_Base" isAbstract="YES" syncable="YES" codeGenerationType="category">
         <attribute name="bloop" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateModified" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="migrated" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CD_Migrated" inverseName="parent" inverseEntity="CD_Migrated"/>
     </entity>
-    <entity name="CD_Migrated" representedClassName="CD_Migrated" parentEntity="CD_Base" syncable="YES">
+    <entity name="CD_Migrated" representedClassName="CD_Migrated" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
         <attribute name="realmIdentifier" optional="YES" attributeType="String"/>
         <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Base" inverseName="migrated" inverseEntity="CD_Base"/>
     </entity>
-    <entity name="CD_Reminder" representedClassName="CD_Reminder" parentEntity="CD_Base" syncable="YES">
+    <entity name="CD_Reminder" representedClassName="CD_Reminder" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
         <attribute name="descriptionString" optional="YES" attributeType="String"/>
         <attribute name="interval" attributeType="Integer 32" defaultValueString="-1" usesScalarValueType="YES"/>
         <attribute name="isEnabled" attributeType="Boolean" defaultValueString="YES" usesScalarValueType="YES"/>
@@ -21,11 +21,11 @@
         <relationship name="performed" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderPerform" inverseName="reminder" inverseEntity="CD_ReminderPerform"/>
         <relationship name="vessel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_ReminderVessel" inverseName="reminders" inverseEntity="CD_ReminderVessel"/>
     </entity>
-    <entity name="CD_ReminderPerform" representedClassName="CD_ReminderPerform" parentEntity="CD_Base" syncable="YES">
+    <entity name="CD_ReminderPerform" representedClassName="CD_ReminderPerform" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
         <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Reminder" inverseName="performed" inverseEntity="CD_Reminder"/>
     </entity>
-    <entity name="CD_ReminderVessel" representedClassName="CD_ReminderVessel" parentEntity="CD_Base" syncable="YES">
+    <entity name="CD_ReminderVessel" representedClassName="CD_ReminderVessel" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
         <attribute name="displayName" optional="YES" attributeType="String"/>
         <attribute name="iconEmojiString" optional="YES" attributeType="String"/>
         <attribute name="iconImageData" optional="YES" attributeType="Binary"/>
@@ -33,7 +33,7 @@
         <relationship name="reminders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_Reminder" inverseName="vessel" inverseEntity="CD_Reminder"/>
         <relationship name="share" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_VesselShare" inverseName="vessels" inverseEntity="CD_VesselShare"/>
     </entity>
-    <entity name="CD_VesselShare" representedClassName="CD_VesselShare" parentEntity="CD_Base" syncable="YES">
+    <entity name="CD_VesselShare" representedClassName="CD_VesselShare" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
         <relationship name="vessels" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderVessel" inverseName="share" inverseEntity="CD_ReminderVessel"/>
     </entity>
     <elements>
