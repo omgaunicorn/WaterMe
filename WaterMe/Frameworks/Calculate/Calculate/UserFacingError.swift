@@ -36,6 +36,7 @@ public enum RecoveryAction {
     case saveAnyway
 }
 
+// TODO: Replace with Umbrella Library
 public protocol UserFacingError: Swift.Error {
     var isCritical: Bool { get }
     var title: String? { get }

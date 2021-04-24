@@ -22,10 +22,11 @@
 //
 
 import UIKit
+import Calculate
 
 public func NewBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
     do {
-        let bc = try CD_BasicController(kind: kind, forTesting: false)
+        let bc = try CD_BasicController(kind: kind)
         return .success(bc)
     } catch {
         return .failure(.loadError)
@@ -42,6 +43,9 @@ public protocol BasicController: class {
     var userDidPerformReminder: ((Set<ReminderValue>) -> Void)? { get set }
 
     var kind: ControllerKind { get }
+    
+    @available(iOS 14.0, *)
+    var syncProgress: AnyContinousProgress? { get }
 
     // MARK: Create
     func newReminder(for vessel: ReminderVessel) -> Result<Reminder, DatumError>
@@ -75,22 +79,40 @@ extension HasBasicController {
     }
 }
 
-public enum ControllerKind {
-    case local, sync
+public enum ControllerKind: RawRepresentable {
+    
+    case local
+    case sync
+    case testing
+    
+    public var rawValue: Bool {
+        switch self {
+        case .local:
+            return false
+        case .sync:
+            return true
+        case .testing:
+            fatalError("RawValue unsupported while testing")
+        }
+    }
+    
+    public init(rawValue: Bool) {
+        self = rawValue ? .sync : .local
+    }
 }
 
-internal func testing_NewRLMBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
+internal func testing_NewRLMBasicController() -> Result<BasicController, DatumError> {
     do {
-        let bc = try RLM_BasicController(kind: kind, forTesting: true)
+        let bc = try RLM_BasicController(kind: .testing)
         return .success(bc)
     } catch {
         return .failure(.loadError)
     }
 }
 
-internal func testing_NewCDBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
+internal func testing_NewCDBasicController() -> Result<BasicController, DatumError> {
     do {
-        let bc = try CD_BasicController(kind: kind, forTesting: true)
+        let bc = try CD_BasicController(kind: .testing)
         return .success(bc)
     } catch {
         return .failure(.loadError)

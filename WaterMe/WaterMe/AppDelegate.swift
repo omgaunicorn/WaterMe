@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let loggerDelegate = LoggerErrorDelegate()
     // swiftlint:enable weak_delegate
     private(set) var reminderObserver: GlobalReminderObserver?
-    private lazy var basicControllerResult = NewBasicController(of: .local)
+    private lazy var basicControllerResult = NewBasicController(of: UserDefaults.standard.controllerKind)
 
     let purchaseController = PurchaseController()
     var coreDataMigrator: Migratable? = DatumMigrator
@@ -102,8 +102,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // replace with newVC
             window.rootViewController = newVC
         }
-        let notificationChanges = {
-            self.reminderObserver?.notificationPermissionsMayHaveChanged()
+        let notificationChanges = { [weak self] in
+            self?.reminderObserver?.notificationPermissionsMayHaveChanged()
+        }
+        let cloudSyncChanges = { [weak self] in
+            autoreleasepool {
+                // Clean things up
+                self?.window?.rootViewController = nil
+                self?.basicControllerResult = .failure(.loadError)
+            }
+            // Create new VC with recreated data source
+            let controller = NewBasicController(of: UserDefaults.standard.controllerKind)
+            self?.basicControllerResult = controller
+            self?.window?.rootViewController = ReminderMainViewController.newVC(basic: controller)
         }
         // register for notifications about the increase contrast setting
         _ = NotificationCenter.default.addObserver(forName: UIAccessibility.darkerSystemColorsStatusDidChangeNotification,
@@ -128,7 +139,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let token5 = ud.observe(\.FIRST_RUN) { _, _ in
             notificationChanges()
         }
-        self.userDefaultObserverTokens += [token1, token2, token3, token4, token5]
+        let token6 = ud.observe(\.CLOUD_SYNC) { _, _ in
+            cloudSyncChanges()
+        }
+        self.userDefaultObserverTokens += [token1, token2, token3, token4, token5, token6]
     }
     
     func application(_ application: UIApplication,

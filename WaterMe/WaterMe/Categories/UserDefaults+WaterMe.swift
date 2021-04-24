@@ -21,13 +21,15 @@
 //  along with WaterMe.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-import UIKit
 import Foundation
+import Datum
 
 extension UserDefaults {
     
     enum Constants {
         static let kFirstRun = "FIRST_RUN"
+        static let kCloudSync = "CLOUD_SYNC"
+        static let kCloudSyncInfoShown = "CLOUD_SYNC_INFO_SHOWN"
         static let kReminderHour = "REMINDER_HOUR"
         static let kNumberOfReminderDays = "NUMBER_OF_REMINDER_DAYS"
         static let kIncreaseContrast = "INCREASE_CONTRAST"
@@ -108,6 +110,30 @@ extension UserDefaults {
         }
     }
     
+    var controllerKind: ControllerKind {
+        get {
+            guard let number = self.object(forKey: Constants.kCloudSync) as? NSNumber
+                else { fatalError("Must call configure() before accessing user defaults") }
+            return .init(rawValue: number.boolValue)
+        }
+        set {
+            self.set(NSNumber(value: newValue.rawValue), forKey: Constants.kCloudSync)
+        }
+    }
+    
+    var hasCloudSyncInfoShown: Bool {
+        get {
+            guard #available(iOS 14, *) else { return true }
+            guard let number = self.object(forKey: Constants.kCloudSyncInfoShown) as? NSNumber
+                else { fatalError("Must call configure() before accessing user defaults") }
+            return number.boolValue
+        }
+        set {
+            guard #available(iOS 14, *) else { return }
+            self.set(NSNumber(value: newValue), forKey: Constants.kCloudSyncInfoShown)
+        }
+    }
+    
     var reminderHour: Int {
         get {
             guard let number = self.object(forKey: Constants.kReminderHour) as? NSNumber
@@ -132,18 +158,41 @@ extension UserDefaults {
     
     func configure() {
         self.register(defaults: [
-            Constants.kFirstRun : true,
-            Constants.kReminderHour : 8,
-            Constants.kNumberOfReminderDays : 14,
-            Constants.kIncreaseContrast : false,
-            Constants.kDarkMode : 0,
+            Constants.kFirstRun                : true,
+            Constants.kCloudSync               : true,
+            Constants.kCloudSyncInfoShown      : true,
+            Constants.kReminderHour            : 8,
+            Constants.kNumberOfReminderDays    : 14,
+            Constants.kIncreaseContrast        : false,
+            Constants.kDarkMode                : 0,
             Constants.kCheckForUpdatesOnLaunch : true
         ])
 
-        // fix bug where this toggle is always off in v1.0 and it needs to be on in 2.0
-        let build = self.lastBuildNumber ?? 0
-        if build < 201027 {
+        let build = self.lastBuildNumber
+        
+        if let build = build, build <= 201027 {
+            // fix bug where this toggle is always off in v1.0 and it needs to be on in 2.0
             self.askForNotifications = true
+        }
+        
+        if let build = build {
+            // if the user is upgrading from an old build then mark this
+            // info screen as not seen.
+            // For new users, use the default of TRUE (already seen)
+            // as new users don't need to be concerned.
+            if build <= 261001 {
+                self.hasCloudSyncInfoShown = false
+                // if they are running an old version of iOS also disable Cloud Sync
+                if #available(iOS 14, *) { /* Do Nothing */ } else {
+                    self.controllerKind = .local
+                }
+            }
+        } else {
+            // if this is a fresh install on an old version of iOS,
+            // force disable cloud sync
+            if #available(iOS 14, *) { /* Do Nothing */ } else {
+                self.controllerKind = .local
+            }
         }
     }
 
@@ -159,4 +208,5 @@ extension UserDefaults {
     @objc dynamic var NUMBER_OF_REMINDER_DAYS: Any { fatalError() }
     @objc dynamic var REMINDER_HOUR: Any { fatalError() }
     @objc dynamic var FIRST_RUN: Any { fatalError() }
+    @objc dynamic var CLOUD_SYNC: Any { fatalError() }
 }

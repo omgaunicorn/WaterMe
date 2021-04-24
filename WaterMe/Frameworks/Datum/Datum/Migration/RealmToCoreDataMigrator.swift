@@ -44,7 +44,7 @@ internal class RealmToCoreDataMigrator: Migratable {
         }
         guard
             RLM_BasicController.storeExists,
-            let source = try? RLM_BasicController(kind: .local, forTesting: false)
+            let source = try? RLM_BasicController(kind: .local)
         else { return nil }
         self.source = source
         self.isTesting = false

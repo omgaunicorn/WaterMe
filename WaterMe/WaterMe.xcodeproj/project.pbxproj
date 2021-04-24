@@ -214,9 +214,14 @@
 		50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */; };
 		50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */; };
 		50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */; };
-		73360B702631A1E50029F993 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 7313858D260E15B000CDC138 /* CropViewController */; };
-		73360B802631A3A30029F993 /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
-		C738E116261561F2001F645F /* SimpleToggleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C738E115261561F2001F645F /* SimpleToggleTableViewCell.swift */; };
+		7313858E260E15B000CDC138 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 7313858D260E15B000CDC138 /* CropViewController */; };
+		734048C3260F1BA1001FAB8E /* CloudSyncInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 734048C1260F1BA1001FAB8E /* CloudSyncInfo.storyboard */; };
+		734048C4260F1BA1001FAB8E /* CloudSyncInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 734048C2260F1BA1001FAB8E /* CloudSyncInfoViewController.swift */; };
+		73730858260E2F22000B99DB /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
+		73755A592610238400FCC684 /* ContinuousProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73755A4B2610226000FCC684 /* ContinuousProgress.swift */; };
+		73755A612610241F00FCC684 /* CloudKitContainerContinuousProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73755A602610241F00FCC684 /* CloudKitContainerContinuousProgress.swift */; };
+		73755A6A2610AA4000FCC684 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73755A692610AA4000FCC684 /* CloudKit.framework */; };
+		73B19EAF2633AE45001099EC /* SimpleToggleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B19EAE2633AE45001099EC /* SimpleToggleTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -510,8 +515,13 @@
 		50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselEditTableViewController.swift; sourceTree = "<group>"; };
 		50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselIconTableViewCell.swift; sourceTree = "<group>"; };
 		50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
-		C70BB051261598A4008140D7 /* v2.7.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.7.0.001.xcdatamodel; sourceTree = "<group>"; };
-		C738E115261561F2001F645F /* SimpleToggleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleToggleTableViewCell.swift; sourceTree = "<group>"; };
+		734048C1260F1BA1001FAB8E /* CloudSyncInfo.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CloudSyncInfo.storyboard; sourceTree = "<group>"; };
+		734048C2260F1BA1001FAB8E /* CloudSyncInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSyncInfoViewController.swift; sourceTree = "<group>"; };
+		73755A4B2610226000FCC684 /* ContinuousProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousProgress.swift; sourceTree = "<group>"; };
+		73755A602610241F00FCC684 /* CloudKitContainerContinuousProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitContainerContinuousProgress.swift; sourceTree = "<group>"; };
+		73755A692610AA4000FCC684 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		738AB94F2610B07A00162114 /* v2.7.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.7.0.001.xcdatamodel; sourceTree = "<group>"; };
+		73B19EAE2633AE45001099EC /* SimpleToggleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleToggleTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -569,12 +579,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73755A6A2610AA4000FCC684 /* CloudKit.framework in Frameworks */,
 				48A7B0E82467FCB100DC0861 /* Calculate.framework in Frameworks */,
 				5034770224557CB200C3DAD3 /* Cheers in Frameworks */,
-				73360B802631A3A30029F993 /* SimpleImageViewer in Frameworks */,
 				5034765824552CFD00C3DAD3 /* Datum.framework in Frameworks */,
+				73730858260E2F22000B99DB /* SimpleImageViewer in Frameworks */,
 				5034767B24552D0700C3DAD3 /* Store.framework in Frameworks */,
-				73360B702631A1E50029F993 /* CropViewController in Frameworks */,
+				7313858E260E15B000CDC138 /* CropViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -658,6 +669,8 @@
 				48A7B0F22467FDF500DC0861 /* NSCalendar+WaterMe.swift */,
 				48A7B0F12467FDF500DC0861 /* SignificantTimePassedDetector.swift */,
 				48A7B0F42467FDF600DC0861 /* UserFacingError.swift */,
+				73755A4B2610226000FCC684 /* ContinuousProgress.swift */,
+				73755A602610241F00FCC684 /* CloudKitContainerContinuousProgress.swift */,
 				50E831FC250CF567008758E2 /* Loggable.swift */,
 				50E831F2250CB598008758E2 /* Loggable+System.swift */,
 				48A7B0D62467FCB100DC0861 /* Info.plist */,
@@ -978,7 +991,7 @@
 				50C28D9821811BD900101D0A /* RestoredAndRawUserActivities.swift */,
 				50CA47EF21699FED0063F51E /* UserActivityConfigurator.swift */,
 				509A0864215FFEDF00389339 /* SimpleLabelTableViewCell.swift */,
-				C738E115261561F2001F645F /* SimpleToggleTableViewCell.swift */,
+				73B19EAE2633AE45001099EC /* SimpleToggleTableViewCell.swift */,
 				509A0866215FFEF700389339 /* SiriShortcutTableViewCell.swift */,
 				504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */,
 				5065AA1B200E872900C7F0CC /* UserFacingError.swift */,
@@ -1029,6 +1042,7 @@
 				5034767424552D0700C3DAD3 /* StoreTests */,
 				48A7B0E12467FCB100DC0861 /* CalculateTests */,
 				50BB0F511EBFCDE500850FF4 /* Products */,
+				73755A682610AA4000FCC684 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1061,6 +1075,7 @@
 				5096D1942154773D006E1019 /* StyleSheets */,
 				50B779CB21546FE200AC6240 /* Categories */,
 				50B779CA2154138D00AC6240 /* Miscellaneous */,
+				734048C0260F1B04001FAB8E /* CloudSyncInfo */,
 				50F388DE1FF6D9870031ED45 /* CoreDataMigration */,
 				50BB0F5A1EBFCDE500850FF4 /* Assets.xcassets */,
 				5040B41924C4768800AB747B /* StarterData.sqlite */,
@@ -1107,6 +1122,23 @@
 				50E3F2CC1FF70D3B003245E3 /* CoreDataMigratorViewController.swift */,
 			);
 			path = CoreDataMigration;
+			sourceTree = "<group>";
+		};
+		734048C0260F1B04001FAB8E /* CloudSyncInfo */ = {
+			isa = PBXGroup;
+			children = (
+				734048C1260F1BA1001FAB8E /* CloudSyncInfo.storyboard */,
+				734048C2260F1BA1001FAB8E /* CloudSyncInfoViewController.swift */,
+			);
+			path = CloudSyncInfo;
+			sourceTree = "<group>";
+		};
+		73755A682610AA4000FCC684 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				73755A692610AA4000FCC684 /* CloudKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1417,6 +1449,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				734048C3260F1BA1001FAB8E /* CloudSyncInfo.storyboard in Resources */,
 				508FFCB01EF64B49001B1ADC /* OptionalAddButtonTableViewHeaderFooterView.xib in Resources */,
 				50CA47EB21690D360063F51E /* ReminderVesselMain.storyboard in Resources */,
 				506A6218200562AC008EF601 /* Settings.storyboard in Resources */,
@@ -1474,9 +1507,11 @@
 				48A7B0F52467FDF600DC0861 /* PrivateKeys.swift in Sources */,
 				48A7B0F82467FDF600DC0861 /* AppVersion.swift in Sources */,
 				50E831F3250CB598008758E2 /* Loggable+System.swift in Sources */,
+				73755A612610241F00FCC684 /* CloudKitContainerContinuousProgress.swift in Sources */,
 				48A7B0F72467FDF600DC0861 /* NSCalendar+WaterMe.swift in Sources */,
 				48A7B0F92467FDF600DC0861 /* UserFacingError.swift in Sources */,
 				50E831FD250CF567008758E2 /* Loggable.swift in Sources */,
+				73755A592610238400FCC684 /* ContinuousProgress.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1620,9 +1655,10 @@
 				50CF864D23FAA403002B2D3D /* UNUserNotificationCenter+WaterMe.swift in Sources */,
 				509A0865215FFEDF00389339 /* SimpleLabelTableViewCell.swift in Sources */,
 				508E61571F8AD57400B28DD8 /* ReminderCollectionViewController.swift in Sources */,
+				734048C4260F1BA1001FAB8E /* CloudSyncInfoViewController.swift in Sources */,
 				5085C71B216523CB00030D2A /* CoreSpotlightIndexer.swift in Sources */,
+				73B19EAF2633AE45001099EC /* SimpleToggleTableViewCell.swift in Sources */,
 				50C96A321EC2BB03002802C1 /* Either.swift in Sources */,
-				C738E116261561F2001F645F /* SimpleToggleTableViewCell.swift in Sources */,
 				50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */,
 				505B8C28214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift in Sources */,
 				5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */,
@@ -2449,10 +2485,10 @@
 		508B2EC724741F4800A497E4 /* WaterMe.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C70BB051261598A4008140D7 /* v2.7.0.001.xcdatamodel */,
+				738AB94F2610B07A00162114 /* v2.7.0.001.xcdatamodel */,
 				508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */,
 			);
-			currentVersion = C70BB051261598A4008140D7 /* v2.7.0.001.xcdatamodel */;
+			currentVersion = 508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */;
 			path = WaterMe.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

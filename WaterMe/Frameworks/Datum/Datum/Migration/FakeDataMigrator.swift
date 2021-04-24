@@ -32,7 +32,7 @@ class FakeDataMigrator: Migratable {
     let source: RLM_BasicController
 
     init() throws {
-        let source = try RLM_BasicController(kind: .local, forTesting: false)
+        let source = try RLM_BasicController(kind: .local)
         self.realMigrator = RealmToCoreDataMigrator(testingSource: source)!
         self.source = source
     }

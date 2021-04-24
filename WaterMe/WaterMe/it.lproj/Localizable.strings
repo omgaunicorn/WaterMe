@@ -174,6 +174,12 @@
 /* Purchase Thanks: Subtitle: Reminding the user what we’re thanking them for. */
 "In-App Purchase" = "Acquisto in App";
 
+/* Cloud Sync Info: Title: Lets the user know that iCloud sync is possible */
+"iCloud Sync" = "LOCALIZE ME";
+
+/* Cloud Sync Info: Body: Lets the user know how iCloud sync works and that it can be enabled and disabled from the settings app. */
+"WaterMe now automatically syncs all plants and reminders via iCloud. You can enable and disable iCloud sync from the settings screen." = "LOCALIZE ME";
+
 /* Settings: Info Cell: Title: Text in the tip jar area that explains why someone should give money. */
 "I’m Jeff, a professional iOS Developer and UX Designer. I like making small and polished apps in my spare time. If you find WaterMe useful and would like to fund its development, consider supporting the app with the buttons below." = "Ciao io sono Jeff, sviluppatore professionale di iOS e UX Designer. Mi piace creare piccole e raffinate applicazioni nel mio tempo libero e WatwerMe è una di queste. Se trovate utile WaterMe e volete finanziarne lo sviluppo, avete la possibilità di supportare l'app con i pulsanti sottostanti.";
 
@@ -356,6 +362,9 @@
 
 /* Alert: Dark Mode Improper: Message: Message of alert that is presented when Dark Mode settings are configured on iOS 11 or 12. */
 "The dark mode settings for WaterMe only work when running iOS 13 or higher." = "Le impostazioni Dark Mode per WaterMe funzionano solo se si utilizza iOS 13 o superiore.";
+
+/* Alert: Cloud Sync Improper: Message: Message of alert that is presented when iCloud Sync is enabled on devices running iOS 11, 12, or 13. iCloud Sync requires iOS 14. */
+"iCloud Sync is only supported on devices running iOS 14 or higher." = "LOCALIZE ME";
 
 /* Purchase Thanks: Body: Body text thanking the user for their support. */
 "Thank you for your purchase. Your support is critical to the continued development of WaterMe." = "Grazie per l'acquisto. Il vostro sostegno è fondamentale per il continuo sviluppo di WaterMe.";

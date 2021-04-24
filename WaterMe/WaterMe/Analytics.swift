@@ -113,6 +113,7 @@ enum Analytics {
     // MARK: View Controller Views
 
     enum VCViewOperation: String {
+        case cloudSyncInfo = "VCView.CloudSyncInfo"
         case purchaseThanks = "VCView.PurchaseThanks"
         case coreDataMigration = "VCView.CoreDataMigration"
         case reminderList = "VCView.ReminderList"
