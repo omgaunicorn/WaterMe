@@ -73,7 +73,6 @@ extension Font {
             let error = NSError(unableToLoadEmojiFont: nil)
             error.log()
             Analytics.log(error: error)
-            assertionFailure()
             return UIFont.systemFont(ofSize: size)
         }
 

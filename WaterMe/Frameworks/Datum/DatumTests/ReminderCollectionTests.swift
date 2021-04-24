@@ -32,7 +32,7 @@ class ReminderCollectionTests: DatumTestsBase {
     }
     
     func test_load() {
-        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData() { data in
             wait.fulfill()
@@ -44,7 +44,7 @@ class ReminderCollectionTests: DatumTestsBase {
     }
     
     func test_map() {
-        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData() { data in
             wait.fulfill()
@@ -58,7 +58,7 @@ class ReminderCollectionTests: DatumTestsBase {
     }
     
     func test_compactMap() {
-        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData() { data in
             wait.fulfill()
@@ -71,7 +71,7 @@ class ReminderCollectionTests: DatumTestsBase {
     }
     
     func test_indexOfItem() {
-        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()
         let inputIndex = 3
         self.token = query.test_observe_loadData() { data in
@@ -86,7 +86,7 @@ class ReminderCollectionTests: DatumTestsBase {
     }
     
     func test_indexOfIdentifier() {
-        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()
         let inputIndex = 3
         self.token = query.test_observe_loadData() { data in
@@ -102,7 +102,7 @@ class ReminderCollectionTests: DatumTestsBase {
     }
     
     func test_update_modifications() {
-        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
         let reminder = try! self.basicController.newReminder(for: vessel).get()
         let wait = XCTestExpectation()
@@ -113,13 +113,13 @@ class ReminderCollectionTests: DatumTestsBase {
             XCTAssertEqual(changes.deletions.count, 0)
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            try! self.basicController.update(kind: .mist, interval: 10, note: "a new note", in: reminder).get()
+            try! self.basicController.update(kind: .mist, interval: 10, isEnabled: true, note: "a new note", in: reminder).get()
         }
         self.wait(for: [wait], timeout: 0.3)
     }
     
     func test_update_deletions() {
-        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_receiveUpdates() { (_, changes) in
@@ -137,7 +137,7 @@ class ReminderCollectionTests: DatumTestsBase {
 
 extension CD_ReminderCollectionTests {
     func test_update_insert() {
-        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()
         wait.expectedFulfillmentCount = 2
         var hitCount = 0
@@ -166,7 +166,7 @@ extension CD_ReminderCollectionTests {
 
 extension RLM_ReminderCollectionTests {
     func test_update_insert() {
-        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_receiveUpdates() { (_, changes) in
             wait.fulfill()

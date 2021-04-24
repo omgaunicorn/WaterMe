@@ -30,6 +30,8 @@ protocol ReminderEditTableViewControllerDelegate: class {
     func userChangedKind(to newKind: ReminderKind,
                          byUsingKeyboard usingKeyboard: Bool,
                          within: ReminderEditTableViewController)
+    func userChangedIsEnabled(to newEnabled: Bool,
+                              within: ReminderEditTableViewController)
     func userDidSelectChangeInterval(popoverSourceView: UIView?,
                                      deselectHandler: @escaping () -> Void,
                                      within: ReminderEditTableViewController)
@@ -57,6 +59,8 @@ class ReminderEditTableViewController: StandardTableViewController {
                                 forCellReuseIdentifier: ReminderKindTableViewCell.reuseID)
         self.tableView.register(ReminderIntervalTableViewCell.self,
                                 forCellReuseIdentifier: ReminderIntervalTableViewCell.reuseID)
+        self.tableView.register(SimpleToggleTableViewCell.self,
+                                forCellReuseIdentifier: SimpleToggleTableViewCell.reuseID)
         self.tableView.register(SiriShortcutTableViewCell.self,
                                 forCellReuseIdentifier: SiriShortcutTableViewCell.reuseID)
         self.tableView.register(LastPerformedTableViewCell.self,
@@ -96,7 +100,7 @@ class ReminderEditTableViewController: StandardTableViewController {
             self.delegate?.userDidSelect(siriShortcut: shortcut,
                                          deselectRowAnimated: closure,
                                          within: self)
-        case .details, .notes, .performed:
+        case .details, .notes, .performed, .pause:
             assertionFailure("User was allowed to select unselectable row")
         }
     }
@@ -108,7 +112,7 @@ class ReminderEditTableViewController: StandardTableViewController {
         }
         let section = Section(section: indexPath.section, for: reminder.kind)
         switch section {
-        case .details, .notes, .performed:
+        case .details, .notes, .performed, .pause:
             return nil
         case .kind, .interval, .siriShortcuts:
             return indexPath
@@ -182,6 +186,15 @@ class ReminderEditTableViewController: StandardTableViewController {
             let cell = _cell as? LastPerformedTableViewCell
             cell?.configureWith(lastPerformedDate: reminder.lastPerformDate)
             return _cell
+        case .pause:
+            let id = SimpleToggleTableViewCell.reuseID
+            let _cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath)
+            let cell = _cell as? SimpleToggleTableViewCell
+            cell?.configure(isPaused: !reminder.isEnabled)
+            cell?.toggleChanged = { [unowned self] newValue in
+                self.delegate?.userChangedIsEnabled(to: !newValue, within: self)
+            }
+            return _cell
         }
     }
     
@@ -202,6 +215,24 @@ class ReminderEditTableViewController: StandardTableViewController {
             })
         case .fertilize, .water, .trim, .mist:
             assertionFailure("Water and Fertilize Reminders don't have a textfield to select")
+        }
+    }
+    
+    func forceScrollToIsEnabledRow() {
+        guard let reminder = self.delegate?.reminderResult?.value else {
+            assertionFailure("Missing Reminder Object")
+            return
+        }
+        let reminderKind = reminder.kind
+        let indexPath: IndexPath
+        switch reminderKind {
+        case .other, .move:
+            indexPath = .init(row: 0, section: 3)
+        case .fertilize, .water, .trim, .mist:
+            indexPath = .init(row: 0, section: 2)
+        }
+        UIView.style_animateNormal() {
+            self.tableView.scrollToRow(at: indexPath, at: .top, animated: false)
         }
     }
     
@@ -251,13 +282,13 @@ extension ReminderEditTableViewController {
         }
     }
     private enum Section {
-        case kind, details, interval, notes, siriShortcuts, performed
+        case kind, details, interval, notes, siriShortcuts, performed, pause
         static func count(for kind: ReminderKind) -> Int {
             switch kind {
             case .fertilize, .water, .trim, .mist:
-                return 5
-            case .other, .move:
                 return 6
+            case .other, .move:
+                return 7
             }
         }
         // swiftlint:disable:next cyclomatic_complexity
@@ -270,10 +301,12 @@ extension ReminderEditTableViewController {
                 case 1:
                     self = .interval
                 case 2:
-                    self = .notes
+                    self = .pause
                 case 3:
-                    self = .siriShortcuts
+                    self = .notes
                 case 4:
+                    self = .siriShortcuts
+                case 5:
                     self = .performed
                 default:
                     fatalError("Invalid Section")
@@ -287,10 +320,12 @@ extension ReminderEditTableViewController {
                 case 2:
                     self = .interval
                 case 3:
-                    self = .notes
+                    self = .pause
                 case 4:
-                    self = .siriShortcuts
+                    self = .notes
                 case 5:
+                    self = .siriShortcuts
+                case 6:
                     self = .performed
                 default:
                     fatalError("Invalid Section")
@@ -305,6 +340,8 @@ extension ReminderEditTableViewController {
                 return ReminderEditViewController.LocalizedString.sectionTitleDetails
             case .interval:
                 return ReminderEditViewController.LocalizedString.sectionTitleInterval
+            case .pause:
+                return ReminderEditViewController.LocalizedString.sectionTitleNotifications
             case .notes:
                 return ReminderEditViewController.LocalizedString.sectionTitleNotes
             case .siriShortcuts:
@@ -319,7 +356,7 @@ extension ReminderEditTableViewController {
                 return type(of: kind).count
             case .siriShortcuts:
                 return SiriShortcut.allCases.count
-            case .details, .performed, .interval, .notes:
+            case .details, .performed, .interval, .notes, .pause:
                 return 1
             }
         }
@@ -342,5 +379,13 @@ fileprivate extension TextFieldTableViewCell {
             error.log()
             assertionFailure(error)
         }
+    }
+}
+
+fileprivate extension SimpleToggleTableViewCell {
+    func configure(isPaused: Bool) {
+        self.label.attributedText = NSAttributedString(string: UIAlertController.LocalizedString.buttonTitlePause,
+                                                       font: .textInputTableViewCell)
+        self.toggle.isOn = isPaused
     }
 }

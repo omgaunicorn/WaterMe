@@ -27,6 +27,7 @@ public enum RecoveryAction {
     case openWaterMeSettings
     case reminderMissingMoveLocation
     case reminderMissingOtherDescription
+    case reminderMissingEnabled
     case reminderVesselMissingIcon
     case reminderVesselMissingName
     case reminderVesselMissingReminder

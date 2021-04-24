@@ -29,6 +29,7 @@ public func NewBasicController(of kind: ControllerKind) -> Result<BasicControlle
         let bc = try CD_BasicController(kind: kind)
         return .success(bc)
     } catch {
+        error.log(as: .emergency)
         return .failure(.loadError)
     }
 }
@@ -53,14 +54,14 @@ public protocol BasicController: class {
 
     // MARK: Read
     func allVessels(sorted: ReminderVesselSortOrder, ascending: Bool) -> Result<AnyCollectionQuery<ReminderVessel, Int>, DatumError>
-    func allReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
+    func enabledReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     func groupedReminders() -> Result<AnyCollectionQuery<Reminder, IndexPath>, DatumError>
     func reminderVessel(matching identifier: Identifier) -> Result<ReminderVessel, DatumError>
     func reminder(matching identifier: Identifier) -> Result<Reminder, DatumError>
 
     // MARK: Update
     func update(displayName: String?, icon: ReminderVesselIcon?, in vessel: ReminderVessel) -> Result<Void, DatumError>
-    func update(kind: ReminderKind?, interval: Int?, note: String?, in reminder: Reminder) -> Result<Void, DatumError>
+    func update(kind: ReminderKind?, interval: Int?, isEnabled: Bool?, note: String?, in reminder: Reminder) -> Result<Void, DatumError>
     func appendNewPerformToReminders(with identifiers: [Identifier]) -> Result<Void, DatumError>
 
     // MARK: Delete

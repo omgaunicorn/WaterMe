@@ -31,4 +31,5 @@ public enum DatumError: Error {
     case objectDeleted
     case unableToDeleteLastReminder
     case imageCouldntBeCompressedEnough
+    case realmIsEnabledFalseUnsupported
 }

@@ -32,6 +32,7 @@ internal class CD_Reminder: CD_Base {
     }
     
     @NSManaged var interval: Int32
+    @NSManaged var isEnabled: Bool
     @NSManaged var kindString: String
     @NSManaged var descriptionString: String?
     @NSManaged var nextPerformDate: Date?
@@ -44,6 +45,7 @@ internal class CD_Reminder: CD_Base {
         super.awakeFromInsert()
         self.kindString = ReminderKind.kCaseWaterValue
         self.interval = Int32(ReminderConstants.defaultInterval)
+        self.isEnabled = true
     }
     
     /// Update `nextPerformDate` & `lastPerformDate` based on new date

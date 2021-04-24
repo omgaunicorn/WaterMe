@@ -139,7 +139,7 @@ extension CD_BasicControllerDeleteTests {
         var hitCount = 0
         var _data: AnyCollection<Reminder, Int>!
         _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
-        self.token = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get().observe
+        self.token = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get().observe
         { change in
             switch change {
             case .initial(let data):
@@ -239,7 +239,7 @@ extension RLM_BasicControllerDeleteTests {
         let exp = self.expectation(description: "")
         exp.expectedFulfillmentCount = 1
         _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
-        self.token = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get().observe
+        self.token = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get().observe
         { change in
             exp.fulfill()
             switch change {

@@ -37,6 +37,7 @@ internal struct CD_ReminderWrapper: Reminder {
     var kind: ReminderKind { self.wrappedObject.kind }
     var uuid: String { self.wrappedObject.objectID.uriRepresentation().absoluteString }
     var interval: Int { Int(self.wrappedObject.interval) }
+    var isEnabled: Bool { self.wrappedObject.isEnabled }
     var note: String? { self.wrappedObject.note }
     var nextPerformDate: Date? { self.wrappedObject.nextPerformDate }
     var lastPerformDate: Date? { self.wrappedObject.lastPerformDate }

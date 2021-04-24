@@ -184,8 +184,9 @@ internal class CD_BasicController: BasicController {
         return .success(AnyCollectionQuery(query))
     }
     
-    func allReminders(sorted: ReminderSortOrder,
-                      ascending: Bool) -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
+    func enabledReminders(sorted: ReminderSortOrder,
+                          ascending: Bool)
+                          -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     {
         // debug only sanity checks
         assert(Thread.isMainThread)
@@ -193,6 +194,7 @@ internal class CD_BasicController: BasicController {
         let context = self.container.viewContext
         let fr = CD_Reminder.request
         fr.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
+        fr.predicate = NSPredicate(format: "%K == YES", #keyPath(CD_Reminder.isEnabled))
         let frc = NSFetchedResultsController(fetchRequest: fr,
                                              managedObjectContext: context,
                                              sectionNameKeyPath: nil,
@@ -231,31 +233,36 @@ internal class CD_BasicController: BasicController {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
+        let enabledPredicate = NSPredicate(format: "%K == YES", #keyPath(CD_Reminder.isEnabled))
+        let disabledPredicate = NSPredicate(format: "%K == NO", #keyPath(CD_Reminder.isEnabled))
+        let normalPredicate: (DateInterval) -> NSPredicate = { range in
+            return NSCompoundPredicate(andPredicateWithSubpredicates: [
+                enabledPredicate,
+                NSPredicate(format: "%K >= %@", #keyPath(CD_Reminder.nextPerformDate), (range.start as NSDate)),
+                NSPredicate(format: "%K < %@", #keyPath(CD_Reminder.nextPerformDate), (range.end as NSDate)),
+            ])
+        }
+        
+        let predicate: NSPredicate
+        switch section {
+        case .disabled:
+            predicate = disabledPredicate
+        case .later, .thisWeek, .today, .tomorrow:
+            predicate = normalPredicate(section.dateInterval)
+        case .late:
+            let neverPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                enabledPredicate,
+                NSPredicate(format: "%K == nil", #keyPath(CD_Reminder.nextPerformDate))
+            ])
+            predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
+                normalPredicate(section.dateInterval),
+                neverPredicate
+            ])
+        }
+        
         let fetchRequest = CD_Reminder.request
         fetchRequest.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
-        let range = section.dateInterval
-        let andPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
-            NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.nextPerformDate)),
-                                  rightExpression: NSExpression(forConstantValue: range.start),
-                                  modifier: .direct,
-                                  type: .greaterThanOrEqualTo),
-            NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.nextPerformDate)),
-                                  rightExpression: NSExpression(forConstantValue: range.end),
-                                  modifier: .direct,
-                                  type: .lessThan)
-        ])
-        if case .late = section {
-            let nilCheck = NSComparisonPredicate(
-                leftExpression: NSExpression(forKeyPath:#keyPath(CD_Reminder.nextPerformDate)),
-                rightExpression: NSExpression(forConstantValue: nil),
-                modifier: .direct,
-                type: .equalTo
-            )
-            let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [nilCheck, andPredicate])
-            fetchRequest.predicate = orPredicate
-        } else {
-            fetchRequest.predicate = andPredicate
-        }
+        fetchRequest.predicate = predicate
         let context = self.container.viewContext
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                     managedObjectContext: context,
@@ -367,6 +374,7 @@ internal class CD_BasicController: BasicController {
     
     func update(kind: ReminderKind?,
                 interval: Int?,
+                isEnabled: Bool?,
                 note: String?,
                 in reminder: Reminder) -> Result<Void, DatumError>
     {
@@ -391,6 +399,10 @@ internal class CD_BasicController: BasicController {
                 reminder.interval = converted
                 reminder.updateDates()
             }
+        }
+        if let isEnabled = isEnabled, isEnabled != reminder.isEnabled {
+            somethingChanged = true
+            reminder.isEnabled = isEnabled
         }
         if let note = note, note != reminder.note {
             somethingChanged = true

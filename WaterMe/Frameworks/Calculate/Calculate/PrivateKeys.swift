@@ -25,14 +25,14 @@
 /// Do not push private information into the repo
 public enum PrivateKeys {
 
-    public static var kLoggerEndpoint: URL {
+    public static var kLoggerEndpoint: URL? {
         print("The endpoint used by JSBServerlessLogger goes here")
-        fatalError("kLoggerEndpoint")
+        return nil
     }
 
     public static var kLoggerKey: Data {
         print("The key used by JSBServerlessLogger goes here")
-        fatalError("kLoggerEndpoint")
+        return Data()
     }
     
     public static var kEmailAddress: String {

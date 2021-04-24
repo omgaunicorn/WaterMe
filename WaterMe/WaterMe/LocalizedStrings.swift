@@ -119,6 +119,15 @@ extension UIAlertController {
         static let buttonTitleCameraLocked =
             NSLocalizedString("Camera 🔒",
                               comment: "Button Title in an Alert that allows the user to open the camera and take a new photo. In this case, the user has denied access to the camera.")
+        static let buttonTitlePause =
+            NSLocalizedString("Pause Notifications",
+                              comment: "Button Title in an Alert that allows the user to pause notifications for a reminder")
+        static let buttonTitlePauseShort =
+            NSLocalizedString("Pause",
+                              comment: "Button Title in an Alert that allows the user to pause notifications for a reminder")
+        static let buttonTitleUnpauseShort =
+            NSLocalizedString("Unpause",
+                              comment: "Button Title in an Alert that allows the user to unpause/resume notifications for a reminder")
         static let buttonTitleDelete =
             NSLocalizedString("Delete",
                               comment: "Button that allows the user to delete a reminder or a plant.")
@@ -355,6 +364,9 @@ extension ReminderEditViewController {
         static let sectionTitleInterval =
             NSLocalizedString("Remind Every",
                               comment: "Edit Reminder: Section Title: Describes the section that asks the user to enter how often they want to be reminded.")
+        static let sectionTitleNotifications =
+            NSLocalizedString("Notifications",
+                              comment: "Edit Reminder: Section Title: Describes the section that allows the user to edit notification settings")
         static let sectionTitleNotes =
             NSLocalizedString("Notes",
                               comment: "Edit Reminder: Section Title: Describes the section that asks the user to enter any optional notes.")
@@ -479,6 +491,9 @@ extension PurchaseThanksViewController {
 
 extension DatumError {
     enum LocalizedString {
+        static let realmIsEnabledFalseUnsupportedMessage =
+            NSLocalizedString("Pausing notifications not available.",
+                              comment: "Realm Error: Pause: Message: Pausing reminders not supported.")
         static let deleteTitle =
             NSLocalizedString("Error Deleting",
                               comment: "Realm Error: Delete: Title: Unable to delete the last reminder associated with a plant.")
@@ -526,6 +541,9 @@ extension ReminderSection {
         static let later =
             NSLocalizedString("Later",
                               comment: "Reminder Main List: Section Header: Title")
+        static let pause =
+            NSLocalizedString("Paused",
+                              comment: "Reminder Main List: Section Header: Title")
     }
 }
 
@@ -546,6 +564,9 @@ extension RecoveryAction {
         static let missingDescription =
             NSLocalizedString("Missing Description",
                               comment: "Error Saving: Reminder: Missing Description: If the user has not entered a description for their other reminder and tries to save, an alert will warn them. This is the button title to fix the error.")
+        static let missingEnabled =
+            NSLocalizedString("Notifications Paused",
+                              comment: "Error Saving: Reminder: Notifications Paused: If the user has paused notifications for the reminder, a warning is presented when they try to save changes to a reminder.")
     }
 }
 

@@ -51,12 +51,18 @@ class DatumTestsBase: XCTestCase {
                     // this time period is important to make sure that no reminders
                     // switch between this week and later when running tests
                     interval: 20,
+                    isEnabled: true,
                     note: "Vessel: \(vessel.displayName!): Reminder: \(y * 100)",
                     in: reminder
                 ).get()
                 for _ in 1...10 {
                     try self.basicController.appendNewPerformToReminders(with: [.init(rawValue: reminder.uuid)]).get()
                 }
+            }
+            if self.basicController is CD_BasicController {
+                // add disabled reminder only for core data controller
+                let disabled = try self.basicController.newReminder(for: vessel).get()
+                try self.basicController.update(kind: nil, interval: nil, isEnabled: false, note: nil, in: disabled).get()
             }
         }
     }

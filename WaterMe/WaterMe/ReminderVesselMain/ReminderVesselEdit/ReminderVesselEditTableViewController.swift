@@ -39,6 +39,8 @@ protocol ReminderVesselEditTableViewControllerDelegate: class {
                    controller: ReminderVesselEditTableViewController?)
     func userDeleted(reminder: Reminder,
                      controller: ReminderVesselEditTableViewController?) -> Bool
+    func userToggled(reminder: Reminder,
+                     controller: ReminderVesselEditTableViewController?) -> Bool
 }
 
 class ReminderVesselEditTableViewController: StandardTableViewController {
@@ -253,17 +255,47 @@ class ReminderVesselEditTableViewController: StandardTableViewController {
         case .name, .photo:
             return UISwipeActionsConfiguration(actions: [])
         case .reminders:
+            // TODO: Add comfirm box for deleting
             let deleteAction = UIContextualAction(style: .destructive,
                                                   title: UIAlertController.LocalizedString.buttonTitleDelete)
             { [unowned self] _, _, successfullyDeleted in
+                // TODO: Improve this
+                // This causes bug when swiping to delete where popover
+                // on iPAd is pointed way over outside the table/
+                // let cell = tableView.cellForRow(at: indexPath)
+                // let sender = cell.map { PopoverSender.left($0) }
+                let confirmation = UIAlertController(localizedDeleteConfirmationWithOptions: [],
+                                                     sender: nil)
+                { confirmed in
+                    switch confirmed {
+                    case .cancel, .pause:
+                        successfullyDeleted(false)
+                    case .delete:
+                        guard let reminder = self.remindersData?[indexPath.row] else {
+                            successfullyDeleted(false)
+                            return
+                        }
+                        let deleted = self.delegate?.userDeleted(reminder: reminder, controller: self) ?? false
+                        successfullyDeleted(deleted)
+                    }
+                }
+                self.present(confirmation, animated: true, completion: nil)
+            }
+
+            let pauseAction = UIContextualAction(style: .normal,
+                                                 title: (self.remindersData?[indexPath.row]?.isEnabled ?? true)
+                                                    ? UIAlertController.LocalizedString.buttonTitlePauseShort
+                                                    : UIAlertController.LocalizedString.buttonTitleUnpauseShort)
+            { [unowned self] _, _, successfullyToggled in
                 guard let reminder = self.remindersData?[indexPath.row] else {
-                    successfullyDeleted(false)
+                    successfullyToggled(false)
                     return
                 }
-                let deleted = self.delegate?.userDeleted(reminder: reminder, controller: self) ?? false
-                successfullyDeleted(deleted)
+                let toggled = self.delegate?.userToggled(reminder: reminder, controller: self) ?? false
+                successfullyToggled(toggled)
             }
-            return UISwipeActionsConfiguration(actions: [deleteAction])
+            
+            return UISwipeActionsConfiguration(actions: [deleteAction, pauseAction])
         case .siriShortcuts:
             return UISwipeActionsConfiguration(actions: [])
         }
