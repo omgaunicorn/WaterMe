@@ -29,6 +29,7 @@ public func NewBasicController(of kind: ControllerKind) -> Result<BasicControlle
         let bc = try CD_BasicController(kind: kind)
         return .success(bc)
     } catch {
+        error.log(as: .emergency)
         return .failure(.loadError)
     }
 }
