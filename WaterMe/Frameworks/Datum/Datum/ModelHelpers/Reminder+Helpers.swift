@@ -28,7 +28,8 @@ import Calculate
 extension CD_Reminder {
     internal var kind: ReminderKind {
         get {
-            return .init(rawValue: (self.kindString, self.descriptionString))
+            return .init(rawValue: (self.kindString ?? ReminderKind.kCaseWaterValue,
+                                    self.descriptionString))
         }
         set {
             let raw = newValue.rawValue

@@ -207,15 +207,15 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
                 XCTAssertNotNil(v_3_r_3.migrated!.realmIdentifier)
 
                 let allReminders = [v_1_r_1, v_1_r_2, v_1_r_3, v_2_r_1, v_2_r_2, v_2_r_3, v_3_r_1, v_3_r_2, v_3_r_3]
-                XCTAssertEqual(allReminders.filter({ $0.performed.count == 3 }).count, allReminders.count)
+                XCTAssertEqual(allReminders.filter({ $0.performed!.count == 3 }).count, allReminders.count)
                 allReminders.forEach() {
-                    $0.performed.forEach() {
+                    $0.performed!.forEach() {
                         let p = $0 as! CD_ReminderPerform
                         XCTAssertNil(p.migrated)
                     }
                 }
 
-                let destPerforms = performs.map({ $0.date }).sorted(by: { $0 > $1 })
+                let destPerforms = performs.map({ $0.date! }).sorted(by: { $0 > $1 })
                 XCTAssertEqual(srcPerforms, destPerforms)
             case .failure(let error):
                 XCTFail("Migration failed with error: \(error)")

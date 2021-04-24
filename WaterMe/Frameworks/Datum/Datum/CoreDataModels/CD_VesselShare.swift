@@ -30,6 +30,4 @@ internal class CD_VesselShare: CD_Base {
     class var request: NSFetchRequest<CD_VesselShare> {
         NSFetchRequest<CD_VesselShare>(entityName: self.entityName)
     }
-
-    @NSManaged var vessels: NSSet
 }

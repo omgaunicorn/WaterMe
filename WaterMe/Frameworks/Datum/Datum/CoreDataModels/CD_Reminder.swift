@@ -31,16 +31,6 @@ internal class CD_Reminder: CD_Base {
         NSFetchRequest<CD_Reminder>(entityName: self.entityName)
     }
     
-    @NSManaged var interval: Int32
-    @NSManaged var isEnabled: Bool
-    @NSManaged var kindString: String
-    @NSManaged var descriptionString: String?
-    @NSManaged var nextPerformDate: Date?
-    @NSManaged var lastPerformDate: Date?
-    @NSManaged var note: String?
-    @NSManaged var performed: NSSet
-    @NSManaged var vessel: CD_ReminderVessel
-    
     override func awakeFromInsert() {
         super.awakeFromInsert()
         self.kindString = ReminderKind.kCaseWaterValue
@@ -83,9 +73,6 @@ internal class CD_ReminderPerform: CD_Base {
     class var request: NSFetchRequest<CD_ReminderPerform> {
         NSFetchRequest<CD_ReminderPerform>(entityName: self.entityName)
     }
-    
-    @NSManaged var date: Date
-    @NSManaged var reminder: CD_Reminder
     
     override func awakeFromInsert() {
         super.awakeFromInsert()
