@@ -491,6 +491,9 @@ extension PurchaseThanksViewController {
 
 extension DatumError {
     enum LocalizedString {
+        static let realmIsEnabledFalseUnsupportedMessage =
+            NSLocalizedString("Pausing notifications not available.",
+                              comment: "Realm Error: Pause: Message: Pausing reminders not supported.")
         static let deleteTitle =
             NSLocalizedString("Error Deleting",
                               comment: "Realm Error: Delete: Title: Unable to delete the last reminder associated with a plant.")
