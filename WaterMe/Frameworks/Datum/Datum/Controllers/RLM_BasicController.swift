@@ -305,8 +305,9 @@ internal class RLM_BasicController: BasicController {
                 reminder.interval = interval
                 reminder.recalculateNextPerformDate()
             }
-            if let isEnabled = isEnabled {
-                reminder.isEnabled = isEnabled
+            if let isEnabled = isEnabled, isEnabled == false {
+                realm.cancelWrite()
+                return .failure(.realmIsEnabledFalseUnsupported)
             }
             if let note = note {
                 // make sure the string is not empty. If it is empty, set it to blank string

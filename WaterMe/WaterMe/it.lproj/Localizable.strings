@@ -132,6 +132,9 @@
 /* Button Title in an Alert that allows the user to open a screen where they can choose from various emoji instead of a photo for their plant. */
 "Emoji" = "Emoji";
 
+/* Realm Error: Pause: Message: Pausing reminders not supported. */
+"Pausing notifications not available." = "Notifiche in pausa non disponibile.";
+
 /* Realm Error: Delete: Title: Unable to delete the last reminder associated with a plant. */
 "Error Deleting" = "Errore di eliminazione";
 

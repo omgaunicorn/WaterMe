@@ -158,7 +158,9 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         
         // show the user errors that may have ocurred
         guard case .failure(let error) = updateResult else { return }
-        UIAlertController.presentAlertVC(for: error, over: self)
+        UIAlertController.presentAlertVC(for: error, over: self) { _ in
+            self.tableViewController?.tableView.reloadData()
+        }
     }
     
     private func intervalChosen(popoverSourceView: UIView?,
