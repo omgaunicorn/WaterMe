@@ -133,7 +133,7 @@ internal class RealmToCoreDataMigrator: Migratable {
                             destVessel.iconImageData = srcVessel.iconImageData
                             destVessel.iconEmojiString = srcVessel.iconEmojiString
                             destVessel.kindString = srcVessel.kindString
-                            destVessel.raw_migrated!.realmIdentifier = srcVessel.uuid
+                            destVessel.raw_migrated!.raw_realmIdentifier = srcVessel.uuid
                         }()
                         
                         for srcReminder in srcVessel.reminders {
@@ -151,7 +151,7 @@ internal class RealmToCoreDataMigrator: Migratable {
                                 destReminder.lastPerformDate = srcReminder.performed.last?.date
                                 destReminder.kindString = srcReminder.kindString
                                 destReminder.descriptionString = srcReminder.descriptionString
-                                destReminder.raw_migrated!.realmIdentifier = srcReminder.uuid
+                                destReminder.raw_migrated!.raw_realmIdentifier = srcReminder.uuid
                             }()
                             
                             for srcPerform in srcReminder.performed {
