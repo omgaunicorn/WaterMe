@@ -31,10 +31,10 @@
         <attribute name="raw_iconImageData" optional="YES" attributeType="Binary" elementID="iconImageData"/>
         <attribute name="raw_kindString" optional="YES" attributeType="String" elementID="kindString"/>
         <relationship name="raw_reminders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_Reminder" inverseName="vessel" inverseEntity="CD_Reminder" elementID="reminders"/>
-        <relationship name="raw_share" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_VesselShare" inverseName="vessels" inverseEntity="CD_VesselShare" elementID="share"/>
+        <relationship name="raw_share" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_VesselShare" inverseName="raw_vessels" inverseEntity="CD_VesselShare" elementID="share"/>
     </entity>
     <entity name="CD_VesselShare" representedClassName="CD_VesselShare" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
-        <relationship name="vessels" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderVessel" inverseName="raw_share" inverseEntity="CD_ReminderVessel"/>
+        <relationship name="raw_vessels" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderVessel" inverseName="raw_share" inverseEntity="CD_ReminderVessel" elementID="vessels"/>
     </entity>
     <elements>
         <element name="CD_Base" positionX="285.828125" positionY="-57.45703125" width="128" height="89"/>

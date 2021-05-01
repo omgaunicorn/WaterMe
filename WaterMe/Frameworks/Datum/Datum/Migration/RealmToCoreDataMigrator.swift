@@ -187,7 +187,7 @@ internal class RealmToCoreDataMigrator: Migratable {
                         // If we didn't complete, try to clean up the destination
                         // Don't clean up destination if source failed to delete
                         // Too risky, might lose data
-                        for vessel in rhsShare.vessels ?? [] {
+                        for vessel in rhsShare.raw_vessels ?? [] {
                             guard let vessel = vessel as? NSManagedObject else { continue }
                             context.delete(vessel)
                         }
