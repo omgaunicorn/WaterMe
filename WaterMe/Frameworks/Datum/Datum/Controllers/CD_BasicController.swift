@@ -128,7 +128,7 @@ internal class CD_BasicController: BasicController {
         // core data hooks up the inverse relationship
         newReminder.vessel = vessel
         if let displayName = displayName {
-            vessel.displayName = displayName
+            vessel.raw_displayName = displayName
         }
         if let icon = icon {
             vessel.icon = icon
@@ -140,7 +140,7 @@ internal class CD_BasicController: BasicController {
             assertionFailure(message)
             return .failure(.writeError)
         }
-        vessel.share = vesselShares!.first!
+        vessel.raw_share = vesselShares!.first!
         return context.waterme_save().map {
             CD_ReminderVesselWrapper(vessel, context: { self.container.viewContext })
         }
@@ -341,16 +341,16 @@ internal class CD_BasicController: BasicController {
         assert(context === vessel.managedObjectContext)
         
         var somethingChanged = false
-        if let displayName = displayName, vessel.displayName != displayName {
+        if let displayName = displayName, vessel.raw_displayName != displayName {
             somethingChanged = true
-            vessel.displayName = displayName
+            vessel.raw_displayName = displayName
         }
         if let icon = icon, icon != vessel.icon {
             somethingChanged = true
             vessel.icon = icon
         }
         guard somethingChanged else { return .success(()) }
-        vessel.reminders?.forEach { ($0 as! CD_Base).raw_bloop.toggle() }
+        vessel.raw_reminders?.forEach { ($0 as! CD_Base).raw_bloop.toggle() }
         return context.waterme_save()
     }
     
@@ -587,7 +587,7 @@ extension NSManagedObjectContext {
                 // detect if the error is because we tried to delete the last reminder
                 error.code == CocoaError.validationRelationshipLacksMinimumCount.rawValue,
                 let key = error.userInfo[NSValidationKeyErrorKey] as? String,
-                key == #keyPath(CD_ReminderVessel.reminders),
+                key == #keyPath(CD_ReminderVessel.raw_reminders),
                 error.userInfo[NSValidationObjectErrorKey] is CD_ReminderVessel
             {
                 return .failure(.unableToDeleteLastReminder)

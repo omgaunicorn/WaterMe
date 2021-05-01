@@ -67,8 +67,8 @@ class CD_VesselShareTests: DatumTestsBase {
         }()
 
         _ = {
-            let one = sharedReference.vessels!.filter({ ($0 as! CD_ReminderVessel).displayName == "One" })
-            let two = sharedReference.vessels!.filter({ ($0 as! CD_ReminderVessel).displayName == "Two" })
+            let one = sharedReference.vessels!.filter({ ($0 as! CD_ReminderVessel).raw_displayName == "One" })
+            let two = sharedReference.vessels!.filter({ ($0 as! CD_ReminderVessel).raw_displayName == "Two" })
             XCTAssertEqual(one.count, 1)
             XCTAssertEqual(two.count, 1)
         }()
