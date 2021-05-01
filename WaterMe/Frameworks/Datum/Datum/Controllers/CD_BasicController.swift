@@ -308,8 +308,8 @@ internal class CD_BasicController: BasicController {
             } else if UUID(uuidString: id.uuid) != nil {
                 // Migrated Legacy Realm Reference
                 let req = NSFetchRequest<NSFetchRequestResult>(entityName: T.entityName)
-                req.predicate = .init(format: "%K == %@",
-                                      #keyPath(CD_Base.migrated.realmIdentifier), id.uuid)
+                let kp = #keyPath(CD_Base.raw_migrated.realmIdentifier)
+                req.predicate = .init(format: "%K == %@", kp, id.uuid)
                 let results = try context.fetch(req)
                 let count = results.count
                 // if we had no results, return object deleted
@@ -368,7 +368,7 @@ internal class CD_BasicController: BasicController {
             vessel.icon = icon
         }
         guard somethingChanged else { return .success(()) }
-        vessel.reminders?.forEach { ($0 as! CD_Base).bloop.toggle() }
+        vessel.reminders?.forEach { ($0 as! CD_Base).raw_bloop.toggle() }
         return context.waterme_save()
     }
     
@@ -409,7 +409,7 @@ internal class CD_BasicController: BasicController {
             reminder.note = note
         }
         guard somethingChanged else { return .success(()) }
-        reminder.vessel?.bloop.toggle()
+        reminder.vessel?.raw_bloop.toggle()
         return context.waterme_save()
     }
     
