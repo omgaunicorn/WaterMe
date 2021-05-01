@@ -411,8 +411,8 @@ internal class CD_BasicController: BasicController {
             let perform = CD_ReminderPerform(context: context)
             context.insert(perform)
             // core data hooks up the inverse relationship
-            perform.reminder = reminder
-            reminder.updateDates(withAppendedPerformDate: perform.date)
+            perform.raw_reminder = reminder
+            reminder.updateDates(withAppendedPerformDate: perform.raw_date)
         }
         return context.waterme_save()
     }
@@ -467,7 +467,7 @@ extension CD_BasicController {
             // Capture Deleted Values for API Contract
             // This must be done now because they will be deleted soon
             let performedReminders = context.insertedObjects
-                .compactMap { ReminderValue(reminder: ($0 as? CD_ReminderPerform)?.reminder) }
+                .compactMap { ReminderValue(reminder: ($0 as? CD_ReminderPerform)?.raw_reminder) }
             let deletedReminders = context.deletedObjects
                 .compactMap { ReminderValue(reminder: $0 as? CD_Reminder) }
             let deletedReminderVessels = context.deletedObjects

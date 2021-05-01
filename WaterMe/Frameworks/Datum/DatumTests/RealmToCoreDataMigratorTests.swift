@@ -215,7 +215,7 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
                     }
                 }
 
-                let destPerforms = performs.map({ $0.date! }).sorted(by: { $0 > $1 })
+                let destPerforms = performs.map({ $0.raw_date! }).sorted(by: { $0 > $1 })
                 XCTAssertEqual(srcPerforms, destPerforms)
             case .failure(let error):
                 XCTFail("Migration failed with error: \(error)")

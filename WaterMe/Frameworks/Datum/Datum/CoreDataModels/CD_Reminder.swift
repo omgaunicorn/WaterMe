@@ -76,7 +76,7 @@ internal class CD_ReminderPerform: CD_Base {
     
     override func awakeFromInsert() {
         super.awakeFromInsert()
-        self.date = Date()
+        self.raw_date = Date()
     }
 }
 
