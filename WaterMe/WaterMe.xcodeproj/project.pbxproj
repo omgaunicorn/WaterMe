@@ -510,8 +510,13 @@
 		50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselEditTableViewController.swift; sourceTree = "<group>"; };
 		50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselIconTableViewCell.swift; sourceTree = "<group>"; };
 		50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
-		C70BB051261598A4008140D7 /* v2.7.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.7.0.001.xcdatamodel; sourceTree = "<group>"; };
-		C738E115261561F2001F645F /* SimpleToggleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleToggleTableViewCell.swift; sourceTree = "<group>"; };
+		734048C1260F1BA1001FAB8E /* CloudSyncInfo.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CloudSyncInfo.storyboard; sourceTree = "<group>"; };
+		734048C2260F1BA1001FAB8E /* CloudSyncInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSyncInfoViewController.swift; sourceTree = "<group>"; };
+		73755A4B2610226000FCC684 /* ContinuousProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousProgress.swift; sourceTree = "<group>"; };
+		73755A602610241F00FCC684 /* CloudKitContainerContinuousProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitContainerContinuousProgress.swift; sourceTree = "<group>"; };
+		73755A692610AA4000FCC684 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		738AB94F2610B07A00162114 /* v2.6.1.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.6.1.001.xcdatamodel; sourceTree = "<group>"; };
+		73B19EAE2633AE45001099EC /* SimpleToggleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleToggleTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2449,10 +2454,10 @@
 		508B2EC724741F4800A497E4 /* WaterMe.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C70BB051261598A4008140D7 /* v2.7.0.001.xcdatamodel */,
+				738AB94F2610B07A00162114 /* v2.6.1.001.xcdatamodel */,
 				508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */,
 			);
-			currentVersion = 738AB94F2610B07A00162114 /* v2.7.0.001.xcdatamodel */;
+			currentVersion = 738AB94F2610B07A00162114 /* v2.6.1.001.xcdatamodel */;
 			path = WaterMe.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
