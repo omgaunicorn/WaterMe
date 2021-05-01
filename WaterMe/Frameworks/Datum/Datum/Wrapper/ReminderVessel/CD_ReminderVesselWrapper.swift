@@ -71,7 +71,7 @@ internal struct CD_ReminderVesselWrapper: ReminderVessel {
     
     func observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
         let request = CD_Reminder.request
-        request.predicate = NSPredicate(format: "\(#keyPath(CD_Reminder.vessel)) == %@", self.wrappedObject)
+        request.predicate = NSPredicate(format: "\(#keyPath(CD_Reminder.raw_vessel)) == %@", self.wrappedObject)
         request.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_Reminder.raw_dateCreated), ascending: false)]
         let context = self.context()
         let controller = NSFetchedResultsController(fetchRequest: request,

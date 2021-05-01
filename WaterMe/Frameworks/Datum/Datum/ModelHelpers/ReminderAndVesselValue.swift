@@ -64,7 +64,7 @@ public struct ReminderValue: Hashable {
     internal init?(reminder: CD_Reminder?) {
         guard let reminder = reminder else { return nil }
         self.uuid = Identifier(rawValue: reminder.objectID.uriRepresentation().absoluteString)
-        self.nextPerformDate = reminder.nextPerformDate
+        self.nextPerformDate = reminder.raw_nextPerformDate
         self.kind = reminder.kind
     }
 }

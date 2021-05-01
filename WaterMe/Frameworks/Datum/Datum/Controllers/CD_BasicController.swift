@@ -122,7 +122,7 @@ internal class CD_BasicController: BasicController {
         let newReminder = CD_Reminder(context: context)
         context.insert(newReminder)
         // core data hooks up the inverse relationship
-        newReminder.vessel = vessel
+        newReminder.raw_vessel = vessel
         return context.waterme_save().map {
             CD_ReminderWrapper(newReminder, context: { self.container.viewContext })
         }
@@ -144,7 +144,7 @@ internal class CD_BasicController: BasicController {
         context.insert(newReminder)
         context.insert(vessel)
         // core data hooks up the inverse relationship
-        newReminder.vessel = vessel
+        newReminder.raw_vessel = vessel
         if let displayName = displayName {
             vessel.raw_displayName = displayName
         }
@@ -194,7 +194,7 @@ internal class CD_BasicController: BasicController {
         let context = self.container.viewContext
         let fr = CD_Reminder.request
         fr.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
-        fr.predicate = NSPredicate(format: "%K == YES", #keyPath(CD_Reminder.isEnabled))
+        fr.predicate = NSPredicate(format: "%K == YES", #keyPath(CD_Reminder.raw_isEnabled))
         let frc = NSFetchedResultsController(fetchRequest: fr,
                                              managedObjectContext: context,
                                              sectionNameKeyPath: nil,
@@ -233,13 +233,13 @@ internal class CD_BasicController: BasicController {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
-        let enabledPredicate = NSPredicate(format: "%K == YES", #keyPath(CD_Reminder.isEnabled))
-        let disabledPredicate = NSPredicate(format: "%K == NO", #keyPath(CD_Reminder.isEnabled))
+        let enabledPredicate = NSPredicate(format: "%K == YES", #keyPath(CD_Reminder.raw_isEnabled))
+        let disabledPredicate = NSPredicate(format: "%K == NO", #keyPath(CD_Reminder.raw_isEnabled))
         let normalPredicate: (DateInterval) -> NSPredicate = { range in
             return NSCompoundPredicate(andPredicateWithSubpredicates: [
                 enabledPredicate,
-                NSPredicate(format: "%K >= %@", #keyPath(CD_Reminder.nextPerformDate), (range.start as NSDate)),
-                NSPredicate(format: "%K < %@", #keyPath(CD_Reminder.nextPerformDate), (range.end as NSDate)),
+                NSPredicate(format: "%K >= %@", #keyPath(CD_Reminder.raw_nextPerformDate), (range.start as NSDate)),
+                NSPredicate(format: "%K < %@", #keyPath(CD_Reminder.raw_nextPerformDate), (range.end as NSDate)),
             ])
         }
         
@@ -252,7 +252,7 @@ internal class CD_BasicController: BasicController {
         case .late:
             let neverPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
                 enabledPredicate,
-                NSPredicate(format: "%K == nil", #keyPath(CD_Reminder.nextPerformDate))
+                NSPredicate(format: "%K == nil", #keyPath(CD_Reminder.raw_nextPerformDate))
             ])
             predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
                 normalPredicate(section.dateInterval),
@@ -394,22 +394,22 @@ internal class CD_BasicController: BasicController {
         }
         if let interval = interval {
             let converted = Int32(interval)
-            if converted != reminder.interval {
+            if converted != reminder.raw_interval {
                 somethingChanged = true
-                reminder.interval = converted
+                reminder.raw_interval = converted
                 reminder.updateDates()
             }
         }
-        if let isEnabled = isEnabled, isEnabled != reminder.isEnabled {
+        if let isEnabled = isEnabled, isEnabled != reminder.raw_isEnabled {
             somethingChanged = true
-            reminder.isEnabled = isEnabled
+            reminder.raw_isEnabled = isEnabled
         }
-        if let note = note, note != reminder.note {
+        if let note = note, note != reminder.raw_note {
             somethingChanged = true
-            reminder.note = note
+            reminder.raw_note = note
         }
         guard somethingChanged else { return .success(()) }
-        reminder.vessel?.raw_bloop.toggle()
+        reminder.raw_vessel?.raw_bloop.toggle()
         return context.waterme_save()
     }
     

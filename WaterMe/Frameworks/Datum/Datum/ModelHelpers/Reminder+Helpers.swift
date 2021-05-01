@@ -28,13 +28,13 @@ import Calculate
 extension CD_Reminder {
     internal var kind: ReminderKind {
         get {
-            return .init(rawValue: (self.kindString ?? ReminderKind.kCaseWaterValue,
-                                    self.descriptionString))
+            return .init(rawValue: (self.raw_kindString ?? ReminderKind.kCaseWaterValue,
+                                    self.raw_descriptionString))
         }
         set {
             let raw = newValue.rawValue
-            self.kindString = raw.primary
-            self.descriptionString = raw.secondary
+            self.raw_kindString = raw.primary
+            self.raw_descriptionString = raw.secondary
         }
     }
 }
@@ -52,7 +52,7 @@ extension CD_Reminder: ModelCompleteCheckable {
             guard description == nil else { break }
             recoveries.append(.reminderMissingOtherDescription)
         }
-        if !self.isEnabled {
+        if !self.raw_isEnabled {
             recoveries.append(.reminderMissingEnabled)
         }
         guard !recoveries.isEmpty else { return nil }

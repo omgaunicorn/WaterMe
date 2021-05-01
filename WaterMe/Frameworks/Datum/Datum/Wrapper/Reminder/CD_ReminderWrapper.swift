@@ -31,17 +31,17 @@ internal struct CD_ReminderWrapper: Reminder {
     internal init(_ wrappedObject: CD_Reminder, context: @escaping LazyContext) {
         self.context = context
         // TODO: Remove force unwrap
-        self.vessel = CD_ReminderVesselWrapper(wrappedObject.vessel!, context: context)
+        self.vessel = CD_ReminderVesselWrapper(wrappedObject.raw_vessel!, context: context)
         self.wrappedObject = wrappedObject
     }
     
     var kind: ReminderKind { self.wrappedObject.kind }
     var uuid: String { self.wrappedObject.objectID.uriRepresentation().absoluteString }
-    var interval: Int { Int(self.wrappedObject.interval ?? Int32(ReminderConstants.defaultInterval)) }
-    var isEnabled: Bool { self.wrappedObject.isEnabled }
-    var note: String? { self.wrappedObject.note }
-    var nextPerformDate: Date? { self.wrappedObject.nextPerformDate }
-    var lastPerformDate: Date? { self.wrappedObject.lastPerformDate }
+    var interval: Int { Int(self.wrappedObject.raw_interval) }
+    var isEnabled: Bool { self.wrappedObject.raw_isEnabled }
+    var note: String? { self.wrappedObject.raw_note }
+    var nextPerformDate: Date? { self.wrappedObject.raw_nextPerformDate }
+    var lastPerformDate: Date? { self.wrappedObject.raw_lastPerformDate }
     var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
     let vessel: ReminderVessel?
 

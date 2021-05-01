@@ -139,18 +139,18 @@ internal class RealmToCoreDataMigrator: Migratable {
                         for srcReminder in srcVessel.reminders {
                             // Reminder: Configure
                             let destReminder = CD_Reminder(context: context)
-                            destReminder.vessel = destVessel
+                            destReminder.raw_vessel = destVessel
                             destReminder.raw_migrated = CD_Migrated(context: context)
                             context.insert(destReminder)
                             
                             _ = {
                                 // Reminder: Copy Data
-                                destReminder.interval = Int32(srcReminder.interval)
-                                destReminder.note = srcReminder.note
-                                destReminder.nextPerformDate = srcReminder.nextPerformDate
-                                destReminder.lastPerformDate = srcReminder.performed.last?.date
-                                destReminder.kindString = srcReminder.kindString
-                                destReminder.descriptionString = srcReminder.descriptionString
+                                destReminder.raw_interval = Int32(srcReminder.interval)
+                                destReminder.raw_note = srcReminder.note
+                                destReminder.raw_nextPerformDate = srcReminder.nextPerformDate
+                                destReminder.raw_lastPerformDate = srcReminder.performed.last?.date
+                                destReminder.raw_kindString = srcReminder.kindString
+                                destReminder.raw_descriptionString = srcReminder.descriptionString
                                 destReminder.raw_migrated!.raw_realmIdentifier = srcReminder.uuid
                             }()
                             
