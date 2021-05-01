@@ -4,11 +4,11 @@
         <attribute name="raw_bloop" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" elementID="bloop"/>
         <attribute name="raw_dateCreated" optional="YES" attributeType="Date" usesScalarValueType="NO" elementID="dateCreated"/>
         <attribute name="raw_dateModified" optional="YES" attributeType="Date" usesScalarValueType="NO" elementID="dateModified"/>
-        <relationship name="raw_migrated" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CD_Migrated" inverseName="parent" inverseEntity="CD_Migrated" elementID="migrated"/>
+        <relationship name="raw_migrated" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="CD_Migrated" inverseName="raw_parent" inverseEntity="CD_Migrated" elementID="migrated"/>
     </entity>
     <entity name="CD_Migrated" representedClassName="CD_Migrated" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
-        <attribute name="realmIdentifier" optional="YES" attributeType="String"/>
-        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Base" inverseName="raw_migrated" inverseEntity="CD_Base"/>
+        <attribute name="raw_realmIdentifier" optional="YES" attributeType="String" elementID="realmIdentifier"/>
+        <relationship name="raw_parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Base" inverseName="raw_migrated" inverseEntity="CD_Base" elementID="parent"/>
     </entity>
     <entity name="CD_Reminder" representedClassName="CD_Reminder" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
         <attribute name="descriptionString" optional="YES" attributeType="String"/>

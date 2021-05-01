@@ -290,7 +290,7 @@ internal class CD_BasicController: BasicController {
             } else if UUID(uuidString: id.uuid) != nil {
                 // Migrated Legacy Realm Reference
                 let req = NSFetchRequest<NSFetchRequestResult>(entityName: T.entityName)
-                let kp = #keyPath(CD_Base.raw_migrated.realmIdentifier)
+                let kp = #keyPath(CD_Base.raw_migrated.raw_realmIdentifier)
                 req.predicate = .init(format: "%K == %@", kp, id.uuid)
                 let results = try context.fetch(req)
                 let count = results.count
