@@ -128,11 +128,11 @@ internal class RealmToCoreDataMigrator: Migratable {
                         
                         _ = {
                             // Vessel: Copy Data
-                            destVessel.share = rhsShare
-                            destVessel.displayName = srcVessel.displayName
-                            destVessel.iconImageData = srcVessel.iconImageData
-                            destVessel.iconEmojiString = srcVessel.iconEmojiString
-                            destVessel.kindString = srcVessel.kindString
+                            destVessel.raw_share = rhsShare
+                            destVessel.raw_displayName = srcVessel.displayName
+                            destVessel.raw_iconImageData = srcVessel.iconImageData
+                            destVessel.raw_iconEmojiString = srcVessel.iconEmojiString
+                            destVessel.raw_kindString = srcVessel.kindString
                             destVessel.raw_migrated!.raw_realmIdentifier = srcVessel.uuid
                         }()
                         

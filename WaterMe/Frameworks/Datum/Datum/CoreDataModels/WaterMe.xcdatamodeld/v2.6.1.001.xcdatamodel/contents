@@ -19,22 +19,22 @@
         <attribute name="nextPerformDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="note" optional="YES" attributeType="String"/>
         <relationship name="performed" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderPerform" inverseName="raw_reminder" inverseEntity="CD_ReminderPerform"/>
-        <relationship name="vessel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_ReminderVessel" inverseName="reminders" inverseEntity="CD_ReminderVessel"/>
+        <relationship name="vessel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_ReminderVessel" inverseName="raw_reminders" inverseEntity="CD_ReminderVessel"/>
     </entity>
     <entity name="CD_ReminderPerform" representedClassName="CD_ReminderPerform" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
         <attribute name="raw_date" optional="YES" attributeType="Date" usesScalarValueType="NO" elementID="date"/>
         <relationship name="raw_reminder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Reminder" inverseName="performed" inverseEntity="CD_Reminder" elementID="reminder"/>
     </entity>
     <entity name="CD_ReminderVessel" representedClassName="CD_ReminderVessel" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
-        <attribute name="displayName" optional="YES" attributeType="String"/>
-        <attribute name="iconEmojiString" optional="YES" attributeType="String"/>
-        <attribute name="iconImageData" optional="YES" attributeType="Binary"/>
-        <attribute name="kindString" optional="YES" attributeType="String"/>
-        <relationship name="reminders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_Reminder" inverseName="vessel" inverseEntity="CD_Reminder"/>
-        <relationship name="share" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_VesselShare" inverseName="vessels" inverseEntity="CD_VesselShare"/>
+        <attribute name="raw_displayName" optional="YES" attributeType="String" elementID="displayName"/>
+        <attribute name="raw_iconEmojiString" optional="YES" attributeType="String" elementID="iconEmojiString"/>
+        <attribute name="raw_iconImageData" optional="YES" attributeType="Binary" elementID="iconImageData"/>
+        <attribute name="raw_kindString" optional="YES" attributeType="String" elementID="kindString"/>
+        <relationship name="raw_reminders" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_Reminder" inverseName="vessel" inverseEntity="CD_Reminder" elementID="reminders"/>
+        <relationship name="raw_share" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_VesselShare" inverseName="vessels" inverseEntity="CD_VesselShare" elementID="share"/>
     </entity>
     <entity name="CD_VesselShare" representedClassName="CD_VesselShare" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
-        <relationship name="vessels" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderVessel" inverseName="share" inverseEntity="CD_ReminderVessel"/>
+        <relationship name="vessels" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderVessel" inverseName="raw_share" inverseEntity="CD_ReminderVessel"/>
     </entity>
     <elements>
         <element name="CD_Base" positionX="285.828125" positionY="-57.45703125" width="128" height="89"/>

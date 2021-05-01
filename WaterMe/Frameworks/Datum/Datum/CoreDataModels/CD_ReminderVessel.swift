@@ -33,13 +33,13 @@ internal class CD_ReminderVessel: CD_Base {
     
     override func awakeFromInsert() {
         super.awakeFromInsert()
-        self.kindString = ReminderVesselKind.plant.rawValue
+        self.raw_kindString = ReminderVesselKind.plant.rawValue
     }
 
     override func datum_willSave() {
         super.datum_willSave()
-        if let displayName = self.displayName, displayName.nonEmptyString == nil {
-            self.displayName = nil
+        if let displayName = self.raw_displayName, displayName.nonEmptyString == nil {
+            self.raw_displayName = nil
         }
     }
 }
@@ -50,9 +50,9 @@ extension CD_ReminderVessel {
     {
         switch sortOrder {
         case .displayName:
-            return .init(key: #keyPath(CD_ReminderVessel.displayName), ascending: ascending)
+            return .init(key: #keyPath(CD_ReminderVessel.raw_displayName), ascending: ascending)
         case .kind:
-            return .init(key: #keyPath(CD_ReminderVessel.kindString), ascending: ascending)
+            return .init(key: #keyPath(CD_ReminderVessel.raw_kindString), ascending: ascending)
         }
     }
 }

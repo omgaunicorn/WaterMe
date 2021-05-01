@@ -146,9 +146,9 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
                 XCTAssertEqual(try? context.fetch(req_r).count, 12)
                 XCTAssertEqual(performs.count, 27)
 
-                let v_1 = vessels.filter({ $0.displayName == "One" }).first!
-                let v_2 = vessels.filter({ $0.displayName == "Two" }).first!
-                let v_3 = vessels.filter({ $0.displayName == "Three" }).first!
+                let v_1 = vessels.filter({ $0.raw_displayName == "One" }).first!
+                let v_2 = vessels.filter({ $0.raw_displayName == "Two" }).first!
+                let v_3 = vessels.filter({ $0.raw_displayName == "Three" }).first!
 
                 XCTAssertEqual(v_1.icon?.emoji, "1️⃣")
                 XCTAssertNil(v_2.icon)
@@ -158,9 +158,9 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
                 XCTAssertNotNil(v_2.raw_migrated!.raw_realmIdentifier)
                 XCTAssertNotNil(v_3.raw_migrated!.raw_realmIdentifier)
 
-                let v_1_r_1 = (v_1.reminders as! Set<CD_Reminder>).filter({ $0.interval == 1 }).first!
-                let v_1_r_2 = (v_1.reminders as! Set<CD_Reminder>).filter({ $0.interval == 10 }).first!
-                let v_1_r_3 = (v_1.reminders as! Set<CD_Reminder>).filter({ $0.interval == 100 }).first!
+                let v_1_r_1 = (v_1.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == 1 }).first!
+                let v_1_r_2 = (v_1.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == 10 }).first!
+                let v_1_r_3 = (v_1.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == 100 }).first!
 
                 XCTAssertEqual(v_1_r_1.kind, .mist)
                 XCTAssertEqual(v_1_r_2.kind, .fertilize)
@@ -174,9 +174,9 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
                 XCTAssertNotNil(v_1_r_2.raw_migrated!.raw_realmIdentifier)
                 XCTAssertNotNil(v_1_r_3.raw_migrated!.raw_realmIdentifier)
 
-                let v_2_r_1 = (v_2.reminders as! Set<CD_Reminder>).filter({ $0.interval == -1 }).first!
-                let v_2_r_2 = (v_2.reminders as! Set<CD_Reminder>).filter({ $0.interval == -10 }).first!
-                let v_2_r_3 = (v_2.reminders as! Set<CD_Reminder>).filter({ $0.interval == -100 }).first!
+                let v_2_r_1 = (v_2.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == -1 }).first!
+                let v_2_r_2 = (v_2.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == -10 }).first!
+                let v_2_r_3 = (v_2.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == -100 }).first!
 
                 XCTAssertEqual(v_2_r_1.kind, .water)
                 XCTAssertEqual(v_2_r_2.kind, .trim)
@@ -190,9 +190,9 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
                 XCTAssertNotNil(v_2_r_2.raw_migrated!.raw_realmIdentifier)
                 XCTAssertNotNil(v_2_r_3.raw_migrated!.raw_realmIdentifier)
 
-                let v_3_r_1 = (v_3.reminders as! Set<CD_Reminder>).filter({ $0.interval == 10000000 }).first!
-                let v_3_r_2 = (v_3.reminders as! Set<CD_Reminder>).filter({ $0.interval == 100000000 }).first!
-                let v_3_r_3 = (v_3.reminders as! Set<CD_Reminder>).filter({ $0.interval == 1000000000 }).first!
+                let v_3_r_1 = (v_3.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == 10000000 }).first!
+                let v_3_r_2 = (v_3.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == 100000000 }).first!
+                let v_3_r_3 = (v_3.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == 1000000000 }).first!
 
                 XCTAssertEqual(v_3_r_1.kind, .move(location: "One"))
                 XCTAssertEqual(v_3_r_2.kind, .move(location: "Two"))
@@ -357,7 +357,7 @@ class RealmToCoreDataMigrationSearchTests: RealmToCoreDataMigratorBaseTests {
         let _vessel = try! self.destination.reminderVessel(matching: id).get()
         let vessel = (_vessel as! CD_ReminderVesselWrapper).wrappedObject
         XCTAssertEqual(vessel.raw_migrated?.raw_realmIdentifier, self.sourceVessel.uuid)
-        XCTAssertEqual(vessel.displayName, self.sourceVessel.displayName!)
+        XCTAssertEqual(vessel.raw_displayName, self.sourceVessel.displayName!)
     }
 
     func test_search_basicController_reminder() {
