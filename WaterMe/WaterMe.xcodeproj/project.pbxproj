@@ -520,7 +520,7 @@
 		73755A4B2610226000FCC684 /* ContinuousProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousProgress.swift; sourceTree = "<group>"; };
 		73755A602610241F00FCC684 /* CloudKitContainerContinuousProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitContainerContinuousProgress.swift; sourceTree = "<group>"; };
 		73755A692610AA4000FCC684 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
-		738AB94F2610B07A00162114 /* v2.7.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.7.0.001.xcdatamodel; sourceTree = "<group>"; };
+		738AB94F2610B07A00162114 /* v2.6.1.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.6.1.001.xcdatamodel; sourceTree = "<group>"; };
 		73B19EAE2633AE45001099EC /* SimpleToggleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleToggleTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2485,10 +2485,10 @@
 		508B2EC724741F4800A497E4 /* WaterMe.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				738AB94F2610B07A00162114 /* v2.7.0.001.xcdatamodel */,
+				738AB94F2610B07A00162114 /* v2.6.1.001.xcdatamodel */,
 				508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */,
 			);
-			currentVersion = 738AB94F2610B07A00162114 /* v2.7.0.001.xcdatamodel */;
+			currentVersion = 738AB94F2610B07A00162114 /* v2.6.1.001.xcdatamodel */;
 			path = WaterMe.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
