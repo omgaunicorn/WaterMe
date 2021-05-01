@@ -158,58 +158,58 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
                 XCTAssertNotNil(v_2.raw_migrated!.raw_realmIdentifier)
                 XCTAssertNotNil(v_3.raw_migrated!.raw_realmIdentifier)
 
-                let v_1_r_1 = (v_1.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == 1 }).first!
-                let v_1_r_2 = (v_1.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == 10 }).first!
-                let v_1_r_3 = (v_1.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == 100 }).first!
+                let v_1_r_1 = (v_1.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == 1 }).first!
+                let v_1_r_2 = (v_1.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == 10 }).first!
+                let v_1_r_3 = (v_1.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == 100 }).first!
 
                 XCTAssertEqual(v_1_r_1.kind, .mist)
                 XCTAssertEqual(v_1_r_2.kind, .fertilize)
                 XCTAssertEqual(v_1_r_3.kind, .move(location: "Over There"))
 
-                XCTAssertNil(v_1_r_1.note)
-                XCTAssertNil(v_1_r_2.note)
-                XCTAssertEqual(v_1_r_3.note, "This is a Note")
+                XCTAssertNil(v_1_r_1.raw_note)
+                XCTAssertNil(v_1_r_2.raw_note)
+                XCTAssertEqual(v_1_r_3.raw_note, "This is a Note")
 
                 XCTAssertNotNil(v_1_r_1.raw_migrated!.raw_realmIdentifier)
                 XCTAssertNotNil(v_1_r_2.raw_migrated!.raw_realmIdentifier)
                 XCTAssertNotNil(v_1_r_3.raw_migrated!.raw_realmIdentifier)
 
-                let v_2_r_1 = (v_2.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == -1 }).first!
-                let v_2_r_2 = (v_2.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == -10 }).first!
-                let v_2_r_3 = (v_2.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == -100 }).first!
+                let v_2_r_1 = (v_2.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == -1 }).first!
+                let v_2_r_2 = (v_2.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == -10 }).first!
+                let v_2_r_3 = (v_2.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == -100 }).first!
 
                 XCTAssertEqual(v_2_r_1.kind, .water)
                 XCTAssertEqual(v_2_r_2.kind, .trim)
                 XCTAssertEqual(v_2_r_3.kind, .other(description: nil))
 
-                XCTAssertNil(v_2_r_1.note)
-                XCTAssertNil(v_2_r_2.note)
-                XCTAssertEqual(v_2_r_3.note, "This is a Note")
+                XCTAssertNil(v_2_r_1.raw_note)
+                XCTAssertNil(v_2_r_2.raw_note)
+                XCTAssertEqual(v_2_r_3.raw_note, "This is a Note")
 
                 XCTAssertNotNil(v_2_r_1.raw_migrated!.raw_realmIdentifier)
                 XCTAssertNotNil(v_2_r_2.raw_migrated!.raw_realmIdentifier)
                 XCTAssertNotNil(v_2_r_3.raw_migrated!.raw_realmIdentifier)
 
-                let v_3_r_1 = (v_3.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == 10000000 }).first!
-                let v_3_r_2 = (v_3.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == 100000000 }).first!
-                let v_3_r_3 = (v_3.raw_reminders as! Set<CD_Reminder>).filter({ $0.interval == 1000000000 }).first!
+                let v_3_r_1 = (v_3.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == 10000000 }).first!
+                let v_3_r_2 = (v_3.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == 100000000 }).first!
+                let v_3_r_3 = (v_3.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == 1000000000 }).first!
 
                 XCTAssertEqual(v_3_r_1.kind, .move(location: "One"))
                 XCTAssertEqual(v_3_r_2.kind, .move(location: "Two"))
                 XCTAssertEqual(v_3_r_3.kind, .move(location: "Three"))
 
-                XCTAssertEqual(v_3_r_1.note, "One")
-                XCTAssertEqual(v_3_r_2.note, "Two")
-                XCTAssertEqual(v_3_r_3.note, "Three")
+                XCTAssertEqual(v_3_r_1.raw_note, "One")
+                XCTAssertEqual(v_3_r_2.raw_note, "Two")
+                XCTAssertEqual(v_3_r_3.raw_note, "Three")
 
                 XCTAssertNotNil(v_3_r_1.raw_migrated!.raw_realmIdentifier)
                 XCTAssertNotNil(v_3_r_2.raw_migrated!.raw_realmIdentifier)
                 XCTAssertNotNil(v_3_r_3.raw_migrated!.raw_realmIdentifier)
 
                 let allReminders = [v_1_r_1, v_1_r_2, v_1_r_3, v_2_r_1, v_2_r_2, v_2_r_3, v_3_r_1, v_3_r_2, v_3_r_3]
-                XCTAssertEqual(allReminders.filter({ $0.performed!.count == 3 }).count, allReminders.count)
+                XCTAssertEqual(allReminders.filter({ $0.raw_performed!.count == 3 }).count, allReminders.count)
                 allReminders.forEach() {
-                    $0.performed!.forEach() {
+                    $0.raw_performed!.forEach() {
                         let p = $0 as! CD_ReminderPerform
                         XCTAssertNil(p.raw_migrated)
                     }
