@@ -2452,7 +2452,7 @@
 				C70BB051261598A4008140D7 /* v2.7.0.001.xcdatamodel */,
 				508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */,
 			);
-			currentVersion = C70BB051261598A4008140D7 /* v2.7.0.001.xcdatamodel */;
+			currentVersion = 738AB94F2610B07A00162114 /* v2.7.0.001.xcdatamodel */;
 			path = WaterMe.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
