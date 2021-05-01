@@ -59,7 +59,7 @@ internal class CD_ReminderCollection: BaseCollection {
             if reminder.objectID.uriRepresentation().absoluteString == identifier.uuid {
                 return idx
             }
-            if reminder.migrated?.realmIdentifier == identifier.uuid {
+            if reminder.raw_migrated?.realmIdentifier == identifier.uuid {
                 return idx
             }
             continue

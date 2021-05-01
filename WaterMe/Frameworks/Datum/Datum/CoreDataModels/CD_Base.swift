@@ -31,12 +31,12 @@ internal class CD_Base: NSManagedObject {
     override func awakeFromInsert() {
         super.awakeFromInsert()
         let now = Date()
-        self.dateCreated = now
-        self.dateModified = now
+        self.raw_dateCreated = now
+        self.raw_dateModified = now
     }
     
     func datum_willSave() {
-        self.dateModified = Date()
+        self.raw_dateModified = Date()
     }
 }
 
