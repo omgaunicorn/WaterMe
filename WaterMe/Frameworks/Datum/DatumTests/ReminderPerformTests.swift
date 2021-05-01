@@ -55,7 +55,7 @@ extension CD_ReminderPerformTests {
         try! self.basicController.appendNewPerformToReminders(with: [.init(rawValue: _item.uuid)]).get()
         XCTAssertEqual(item.performed!.count, 1)
         let perform = item.performed!.allObjects.first! as! CD_ReminderPerform
-        XCTAssertDatesClose(perform.date!, now, within: 1)
+        XCTAssertDatesClose(perform.raw_date!, now, within: 1)
         XCTAssertDatesClose(_item.lastPerformDate!, now, within: 1)
         XCTAssertDatesClose(_item.nextPerformDate!, future, within: 1)
     }

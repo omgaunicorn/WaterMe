@@ -18,12 +18,12 @@
         <attribute name="lastPerformDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="nextPerformDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="note" optional="YES" attributeType="String"/>
-        <relationship name="performed" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderPerform" inverseName="reminder" inverseEntity="CD_ReminderPerform"/>
+        <relationship name="performed" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CD_ReminderPerform" inverseName="raw_reminder" inverseEntity="CD_ReminderPerform"/>
         <relationship name="vessel" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_ReminderVessel" inverseName="reminders" inverseEntity="CD_ReminderVessel"/>
     </entity>
     <entity name="CD_ReminderPerform" representedClassName="CD_ReminderPerform" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
-        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <relationship name="reminder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Reminder" inverseName="performed" inverseEntity="CD_Reminder"/>
+        <attribute name="raw_date" optional="YES" attributeType="Date" usesScalarValueType="NO" elementID="date"/>
+        <relationship name="raw_reminder" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CD_Reminder" inverseName="performed" inverseEntity="CD_Reminder" elementID="reminder"/>
     </entity>
     <entity name="CD_ReminderVessel" representedClassName="CD_ReminderVessel" parentEntity="CD_Base" syncable="YES" codeGenerationType="category">
         <attribute name="displayName" optional="YES" attributeType="String"/>

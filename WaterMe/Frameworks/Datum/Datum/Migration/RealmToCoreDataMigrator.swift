@@ -157,12 +157,12 @@ internal class RealmToCoreDataMigrator: Migratable {
                             for srcPerform in srcReminder.performed {
                                 // Perform: Configure
                                 let destPerform = CD_ReminderPerform(context: context)
-                                destPerform.reminder = destReminder
+                                destPerform.raw_reminder = destReminder
                                 context.insert(destPerform)
                                 
                                 _ = {
                                     // Perform: Copy Data
-                                    destPerform.date = srcPerform.date
+                                    destPerform.raw_date = srcPerform.date
                                 }()
                             }
                         }
