@@ -40,7 +40,7 @@ class CD_VesselShareTests: DatumTestsBase {
         let context = self.context
         let results = try! context.fetch(request)
         XCTAssertEqual(results.count, 1)
-        XCTAssertEqual(results.first!.vessels.count, 0)
+        XCTAssertEqual(results.first!.raw_vessels!.count, 0)
     }
 
     func test_oneSharePresent_createTwoVessels() {
@@ -51,7 +51,7 @@ class CD_VesselShareTests: DatumTestsBase {
             let results = try! context.fetch(request)
             XCTAssertEqual(results.count, 1)
             sharedReference = results.first!
-            XCTAssertEqual(sharedReference.vessels.count, 0)
+            XCTAssertEqual(sharedReference.raw_vessels!.count, 0)
         }()
 
         _ = try! self.basicController.newReminderVessel(displayName: "One", icon: nil).get()
@@ -62,13 +62,13 @@ class CD_VesselShareTests: DatumTestsBase {
             let context = self.context
             let results = try! context.fetch(request)
             XCTAssertEqual(results.count, 1)
-            XCTAssertEqual(results.first!.vessels.count, 2)
-            XCTAssertEqual(sharedReference.vessels.count, 2)
+            XCTAssertEqual(results.first!.raw_vessels!.count, 2)
+            XCTAssertEqual(sharedReference.raw_vessels!.count, 2)
         }()
 
         _ = {
-            let one = sharedReference.vessels.filter({ ($0 as! CD_ReminderVessel).displayName == "One" })
-            let two = sharedReference.vessels.filter({ ($0 as! CD_ReminderVessel).displayName == "Two" })
+            let one = sharedReference.raw_vessels!.filter({ ($0 as! CD_ReminderVessel).raw_displayName == "One" })
+            let two = sharedReference.raw_vessels!.filter({ ($0 as! CD_ReminderVessel).raw_displayName == "Two" })
             XCTAssertEqual(one.count, 1)
             XCTAssertEqual(two.count, 1)
         }()
@@ -84,7 +84,7 @@ class CD_VesselShareTests: DatumTestsBase {
             let context = self.context
             let results = try! context.fetch(request)
             XCTAssertEqual(results.count, 1)
-            XCTAssertEqual(results.first!.vessels.count, 2)
+            XCTAssertEqual(results.first!.raw_vessels!.count, 2)
         }()
 
         try! self.basicController.delete(vessel: one).get()
@@ -95,7 +95,7 @@ class CD_VesselShareTests: DatumTestsBase {
             let context = self.context
             let results = try! context.fetch(request)
             XCTAssertEqual(results.count, 1)
-            XCTAssertEqual(results.first!.vessels.count, 0)
+            XCTAssertEqual(results.first!.raw_vessels!.count, 0)
         }()
     }
 
@@ -113,7 +113,7 @@ class CD_VesselShareTests: DatumTestsBase {
             let results = try! context.fetch(shareRequest)
             XCTAssertEqual(results.count, 1)
             share = results.first!
-            XCTAssertEqual(share.vessels.count, 2)
+            XCTAssertEqual(share.raw_vessels!.count, 2)
         }()
 
         context.delete(share)

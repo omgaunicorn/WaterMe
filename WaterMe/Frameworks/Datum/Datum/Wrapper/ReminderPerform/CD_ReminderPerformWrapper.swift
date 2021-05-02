@@ -28,5 +28,5 @@ internal struct CD_ReminderPerformWrapper: ReminderPerform {
     internal init(_ wrappedObject: CD_ReminderPerform) {
         self.wrappedObject = wrappedObject
     }
-    internal var date: Date { self.wrappedObject.date }
+    internal var date: Date { self.wrappedObject.raw_date ?? Date() }
 }
