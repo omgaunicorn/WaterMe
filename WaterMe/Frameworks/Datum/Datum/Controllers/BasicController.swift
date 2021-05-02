@@ -22,10 +22,12 @@
 //
 
 import UIKit
+import Calculate
+import CoreData
 
 public func NewBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
     do {
-        let bc = try CD_BasicController(kind: kind, forTesting: false)
+        let bc = try CD_BasicController(kind: kind)
         return .success(bc)
     } catch {
         error.log(as: .emergency)
@@ -43,6 +45,9 @@ public protocol BasicController: AnyObject {
     var userDidPerformReminder: ((Set<ReminderValue>) -> Void)? { get set }
 
     var kind: ControllerKind { get }
+    
+    @available(iOS 14.0, *)
+    var syncProgress: AnyContinousProgress? { get }
 
     // MARK: Create
     func newReminder(for vessel: ReminderVessel) -> Result<Reminder, DatumError>
@@ -76,22 +81,41 @@ extension HasBasicController {
     }
 }
 
-public enum ControllerKind {
-    case local, sync
+public enum ControllerKind: RawRepresentable {
+    
+    case local
+    case sync
+    case __testing_inMemory
+    case __testing_withClass(NSPersistentContainer.Type)
+    
+    public var rawValue: Bool {
+        switch self {
+        case .local:
+            return false
+        case .sync:
+            return true
+        case .__testing_inMemory, .__testing_withClass:
+            fatalError("RawValue unsupported while testing")
+        }
+    }
+    
+    public init(rawValue: Bool) {
+        self = rawValue ? .sync : .local
+    }
 }
 
-internal func testing_NewRLMBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
+internal func testing_NewRLMBasicController() -> Result<BasicController, DatumError> {
     do {
-        let bc = try RLM_BasicController(kind: kind, forTesting: true)
+        let bc = try RLM_BasicController(kind: .__testing_inMemory)
         return .success(bc)
     } catch {
         return .failure(.loadError)
     }
 }
 
-internal func testing_NewCDBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
+internal func testing_NewCDBasicController() -> Result<BasicController, DatumError> {
     do {
-        let bc = try CD_BasicController(kind: kind, forTesting: true)
+        let bc = try CD_BasicController(kind: .__testing_inMemory)
         return .success(bc)
     } catch {
         return .failure(.loadError)

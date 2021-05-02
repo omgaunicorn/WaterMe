@@ -48,6 +48,11 @@ internal class RLM_BasicController: BasicController {
     // MARK: Initialization
 
     internal let kind: ControllerKind
+    private let _syncProgress: AnyObject? = nil
+    @available(iOS 14.0, *)
+    internal var syncProgress: AnyContinousProgress? {
+        _syncProgress as? AnyContinousProgress
+    }
     private let config: Realm.Configuration
     #if DEBUG
     // Reference is needed for using in-memory data stores
@@ -69,20 +74,18 @@ internal class RLM_BasicController: BasicController {
         }
     }
 
-    internal init(kind: ControllerKind, forTesting: Bool) throws {
+    internal init(kind: ControllerKind) throws {
         self.kind = kind
         var realmConfig = Realm.Configuration()
         realmConfig.schemaVersion = 14
         realmConfig.objectTypes = [RLM_ReminderVessel.self, RLM_Reminder.self, RLM_ReminderPerform.self]
+        try type(of: self).createLocalRealmDirectoryIfNeeded()
+        try type(of: self).copyRealmFromBundleIfNeeded()
         switch kind {
         case .local:
-            try type(of: self).createLocalRealmDirectoryIfNeeded()
-            try type(of: self).copyRealmFromBundleIfNeeded()
-            if forTesting {
-                realmConfig.inMemoryIdentifier = String(Int.random(in: 100_000...1_000_000))
-            } else {
-                realmConfig.fileURL = type(of: self).localRealmFile
-            }
+            realmConfig.fileURL = type(of: self).localRealmFile
+        case .__testing_inMemory, .__testing_withClass:
+            realmConfig.inMemoryIdentifier = String(Int.random(in: 100_000...1_000_000))
         case .sync: /*(let user)*/
             // let url = user.realmURL(withAppName: "WaterMeBasic")
             fatalError("Syncing Realms are Not Implemented for WaterMe Yet")
