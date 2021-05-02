@@ -64,11 +64,9 @@ public struct InFlightTransaction {
                     inFlight += [InFlightTransaction(state: .errorNetwork, transaction: transaction)]
                 case .paymentNotAllowed:
                     inFlight += [InFlightTransaction(state: .errorNotAllowed, transaction: transaction)]
-                case .privacyAcknowledgementRequired, .unauthorizedRequestData, .invalidOfferIdentifier, .invalidSignature, .missingOfferParams, .invalidOfferPrice:
+                case .privacyAcknowledgementRequired, .unauthorizedRequestData, .invalidOfferIdentifier, .invalidSignature, .missingOfferParams, .invalidOfferPrice, .overlayCancelled, .overlayInvalidConfiguration, .overlayTimeout, .ineligibleForOffer, .unsupportedPlatform, .overlayPresentedInBackgroundScene:
                     fallthrough
                 @unknown default:
-                    // TODO: New Cases for iOS 12.2
-                    // Go through them
                     inFlight += [InFlightTransaction(state: .errorUnknown, transaction: transaction)]
                 }
             @unknown default:

@@ -63,7 +63,7 @@ extension UNUserNotificationCenter {
             _settings = s
             semaphore.signal()
         }
-        _ = semaphore.wait()
+        semaphore.wait()
         guard let settings = _settings else {
             Analytics.log(event: Analytics.Event.notificationSettingsFail)
             assertionFailure("Failed to get settings in time")
@@ -87,7 +87,7 @@ extension UNUserNotificationCenter {
     func requestAuthorizationIfNeeded(completion: ((Bool) -> Void)?) {
         self.getNotificationSettings() { preSettings in
             switch preSettings.authorizationStatus {
-            case .notDetermined, .provisional:
+            case .notDetermined, .provisional, .ephemeral:
                 self.requestAuthorization(options: [.alert, .badge, .sound]) { _, error in
                     if let error = error {
                         error.log()
@@ -115,7 +115,7 @@ extension UNAuthorizationStatus {
         switch self {
         case .authorized:
             return true
-        case .notDetermined, .denied, .provisional:
+        case .notDetermined, .denied, .provisional, .ephemeral:
             return false
         @unknown default:
             return false

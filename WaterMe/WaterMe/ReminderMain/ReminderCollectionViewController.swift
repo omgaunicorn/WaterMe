@@ -25,7 +25,7 @@ import Calculate
 import Datum
 import UIKit
 
-protocol ReminderCollectionViewControllerDelegate: class {
+protocol ReminderCollectionViewControllerDelegate: AnyObject {
     func userDidSelect(reminderID: Identifier,
                        from view: UIView,
                        userActivityContinuation: NSUserActivityContinuedHandler?,
