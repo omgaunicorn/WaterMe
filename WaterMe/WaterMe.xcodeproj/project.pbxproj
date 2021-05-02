@@ -521,6 +521,7 @@
 		7311AF02263E76A60089B36E /* CloudSyncInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSyncInfoViewController.swift; sourceTree = "<group>"; };
 		7311AF03263E76A60089B36E /* CloudSyncInfo.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CloudSyncInfo.storyboard; sourceTree = "<group>"; };
 		738AB94F2610B07A00162114 /* v2.6.1.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.6.1.001.xcdatamodel; sourceTree = "<group>"; };
+		73F017A8263E85CE00B2CEA9 /* v2.7.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.7.0.001.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2483,10 +2484,11 @@
 		508B2EC724741F4800A497E4 /* WaterMe.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				73F017A8263E85CE00B2CEA9 /* v2.7.0.001.xcdatamodel */,
 				738AB94F2610B07A00162114 /* v2.6.1.001.xcdatamodel */,
 				508B2EC824741F4800A497E4 /* v2.6.0.001.xcdatamodel */,
 			);
-			currentVersion = 738AB94F2610B07A00162114 /* v2.6.1.001.xcdatamodel */;
+			currentVersion = 73F017A8263E85CE00B2CEA9 /* v2.7.0.001.xcdatamodel */;
 			path = WaterMe.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
