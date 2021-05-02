@@ -58,7 +58,7 @@ internal class CD_ReminderVesselCollection: BaseCollection {
             if vessel.objectID.uriRepresentation().absoluteString == identifier.uuid {
                 return idx
             }
-            if vessel.migrated?.realmIdentifier == identifier.uuid {
+            if vessel.raw_migrated?.raw_realmIdentifier == identifier.uuid {
                 return idx
             }
             continue

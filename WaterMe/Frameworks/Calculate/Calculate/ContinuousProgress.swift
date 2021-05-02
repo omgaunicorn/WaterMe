@@ -37,6 +37,7 @@ public typealias ErrorQueue = [UserFacingError]
 /// of NSPersistentCloudKitContainer sync. But its generic enough to be used for
 /// many types of long-running / background processes.
 /// Use `AnyContinousProgress` to get around AssociatedType compile errors.
+@available(iOS 13.0, *)
 public protocol ContinousProgress: ObservableObject {
     /// Fixed error that only occurs on startup and doesn't change
     /// for the lifetime of the process.

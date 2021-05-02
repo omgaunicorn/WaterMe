@@ -67,7 +67,7 @@ internal class RLM_BasicController: BasicController {
                 self.realmReference = realm
             }
             #endif
-            return try .success(realm)
+            return .success(realm)
         } catch {
             error.log()
             return .failure(.loadError)

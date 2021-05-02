@@ -77,51 +77,7 @@ class ReminderVesselTests: DatumTestsBase {
         }
         self.wait(for: [wait], timeout: 0.3)
     }
-}
-
-extension CD_ReminderVesselTests {
-    func test_updateReminders_vessel() {
-        let item = try! self.basicController.newReminderVessel(displayName: nil,
-                                                               icon: nil).get()
-        let wait = XCTestExpectation()
-        wait.expectedFulfillmentCount = 3
-        var hitCount = 0
-        self.token = item.observeReminders { changes in
-            switch changes {
-            case .initial(let data):
-                switch hitCount {
-                case 0:
-                    XCTAssertEqual(data.count, 1)
-                default:
-                    XCTFail()
-                }
-            case .update(let changes):
-                switch hitCount {
-                case 1:
-                    XCTAssertEqual(changes.insertions.count, 1)
-                    XCTAssertEqual(changes.modifications.count, 0)
-                    XCTAssertEqual(changes.deletions.count, 0)
-                case 2:
-                    XCTAssertEqual(changes.insertions.count, 0)
-                    XCTAssertEqual(changes.modifications.count, 1)
-                    XCTAssertEqual(changes.deletions.count, 0)
-                default:
-                    XCTFail()
-                }
-            case .error:
-                XCTFail()
-            }
-            hitCount += 1
-            wait.fulfill()
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            _ = try! self.basicController.newReminder(for: item).get()
-        }
-        self.wait(for: [wait], timeout: 0.3)
-    }
-}
-
-extension RLM_ReminderVesselTests {
+    
     func test_updateReminders_vessel() {
         let item = try! self.basicController.newReminderVessel(displayName: nil,
                                                                icon: nil).get()

@@ -32,7 +32,7 @@ internal struct CD_ReminderVesselWrapper: ReminderVessel {
     }
     
     public var uuid: String { self.wrappedObject.objectID.uriRepresentation().absoluteString }
-    public var displayName: String? { self.wrappedObject.displayName }
+    public var displayName: String? { self.wrappedObject.raw_displayName }
     public var icon: ReminderVesselIcon? { self.wrappedObject.icon }
     public var kind: ReminderVesselKind { self.wrappedObject.kind }
     public var isModelComplete: ModelCompleteError? { self.wrappedObject.isModelComplete }
@@ -41,16 +41,16 @@ internal struct CD_ReminderVesselWrapper: ReminderVessel {
     func observe(_ block: @escaping (ReminderVesselChange) -> Void) -> ObservationToken {
         let queue = DispatchQueue.main
         let vessel = self.wrappedObject
-        let token1 = vessel.observe(\.displayName) { _, _ in
+        let token1 = vessel.observe(\.raw_displayName) { _, _ in
             queue.async { block(.change(.init(changedDisplayName: true))) }
         }
-        let token2 = vessel.observe(\.iconEmojiString) { _, _ in
+        let token2 = vessel.observe(\.raw_iconEmojiString) { _, _ in
             queue.async { block(.change(.init(changedIconEmoji: true))) }
         }
-        let token3 = vessel.observe(\.iconImageData) { _, _ in
+        let token3 = vessel.observe(\.raw_iconImageData) { _, _ in
             queue.async { block(.change(.init(changedIconEmoji: true))) }
         }
-        let token4 = vessel.observe(\.kindString) { _, _ in
+        let token4 = vessel.observe(\.raw_kindString) { _, _ in
             queue.async { block(.change(.init(changedPointlessBloop: true))) }
         }
         
@@ -71,8 +71,8 @@ internal struct CD_ReminderVesselWrapper: ReminderVessel {
     
     func observeReminders(_ block: @escaping (ReminderCollectionChange) -> Void) -> ObservationToken {
         let request = CD_Reminder.request
-        request.predicate = NSPredicate(format: "\(#keyPath(CD_Reminder.vessel)) == %@", self.wrappedObject)
-        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_Reminder.dateCreated), ascending: false)]
+        request.predicate = NSPredicate(format: "\(#keyPath(CD_Reminder.raw_vessel)) == %@", self.wrappedObject)
+        request.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_Reminder.raw_dateCreated), ascending: false)]
         let context = self.context()
         let controller = NSFetchedResultsController(fetchRequest: request,
                                                     managedObjectContext: context,

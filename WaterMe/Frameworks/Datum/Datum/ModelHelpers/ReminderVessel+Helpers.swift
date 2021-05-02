@@ -33,17 +33,17 @@ public enum ReminderVesselSortOrder {
 extension CD_ReminderVessel {
     internal var icon: ReminderVesselIcon? {
         get {
-            return ReminderVesselIcon(rawImageData: self.iconImageData,
-                                      emojiString: self.iconEmojiString)
+            return ReminderVesselIcon(rawImageData: self.raw_iconImageData,
+                                      emojiString: self.raw_iconEmojiString)
         }
         set {
-            self.iconImageData = newValue?.dataValue
-            self.iconEmojiString = newValue?.stringValue
+            self.raw_iconImageData = newValue?.dataValue
+            self.raw_iconEmojiString = newValue?.stringValue
         }
     }
     internal var kind: ReminderVesselKind {
-        get { return ReminderVesselKind(rawValue: self.kindString) ?? .plant }
-        set { self.kindString = newValue.rawValue }
+        get { return ReminderVesselKind(rawValue: self.raw_kindString ?? "-1") ?? .plant }
+        set { self.raw_kindString = newValue.rawValue }
     }
 }
 
@@ -51,8 +51,8 @@ extension CD_ReminderVessel: ModelCompleteCheckable {
     internal var isModelComplete: ModelCompleteError? {
         let issues: [RecoveryAction] = [
             self.icon == nil ? .reminderVesselMissingIcon : nil,
-            self.displayName == nil ? .reminderVesselMissingName : nil,
-            self.reminders.count == 0 ? .reminderVesselMissingReminder : nil
+            self.raw_displayName == nil ? .reminderVesselMissingName : nil,
+            (self.raw_reminders?.count ?? 0) <= 0 ? .reminderVesselMissingReminder : nil
             ].compactMap({ $0 })
         if issues.isEmpty {
             return nil
@@ -64,7 +64,7 @@ extension CD_ReminderVessel: ModelCompleteCheckable {
 
 extension CD_ReminderVessel {
     internal var shortLabelSafeDisplayName: String? {
-        return self.displayName?.truncated(to: 20)
+        return self.raw_displayName?.truncated(to: 20)
     }
 }
 
