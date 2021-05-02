@@ -33,7 +33,7 @@ public func NewBasicController(of kind: ControllerKind) -> Result<BasicControlle
     }
 }
 
-public protocol BasicController: class {
+public protocol BasicController: AnyObject {
 
     static var storeDirectoryURL: URL { get }
     static var storeExists: Bool { get }

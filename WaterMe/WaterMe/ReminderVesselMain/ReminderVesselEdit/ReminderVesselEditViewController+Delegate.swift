@@ -58,9 +58,9 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
                 self.present(vc, animated: true, completion: nil)
             case .viewCurrentPhoto:
                 guard let image = self.vesselResult?.value?.icon?.image else { return }
-                let config = DismissHandlingImageViewerConfiguration(image: image) { vc in
+                let config = DismissHandlingImageViewerConfiguration(image: image, completion: { vc in
                     vc.dismiss(animated: true, completion: nil)
-                }
+                })
                 let vc = DismissHandlingImageViewerController(configuration: config)
                 self.present(vc, animated: true, completion: nil)
             case .error(let errorVC):

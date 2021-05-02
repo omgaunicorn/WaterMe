@@ -162,11 +162,9 @@ extension ReminderSummaryViewController: ReminderSummaryTableViewControllerDeleg
                             rowDeselectionHandler: @escaping () -> Void,
                             within: ReminderSummaryTableViewController)
     {
-        let config = DismissHandlingImageViewerConfiguration(image: image) { vc in
-            vc.dismiss(animated: true) {
-                rowDeselectionHandler()
-            }
-        }
+        let config = DismissHandlingImageViewerConfiguration(image: image, completion:  { vc in
+            vc.dismiss(animated: true) { rowDeselectionHandler() }
+        })
         let vc = DismissHandlingImageViewerController(configuration: config)
         self.present(vc, animated: true, completion: nil)
     }
