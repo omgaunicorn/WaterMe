@@ -25,7 +25,7 @@ import Datum
 import UIKit
 import Calculate
 
-protocol ReminderEditTableViewControllerDelegate: class {
+protocol ReminderEditTableViewControllerDelegate: AnyObject {
     var reminderResult: Result<Reminder, DatumError>? { get }
     func userChangedKind(to newKind: ReminderKind,
                          byUsingKeyboard usingKeyboard: Bool,

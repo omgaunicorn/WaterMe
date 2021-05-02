@@ -23,7 +23,7 @@
 
 import UIKit
 
-public protocol SignificantTimePassedDetectorDelegate: class {
+public protocol SignificantTimePassedDetectorDelegate: AnyObject {
     func significantTimeDidPass(with reason: SignificantTimePassedDetector.Reason,
                                 detector: SignificantTimePassedDetector)
 }

@@ -24,7 +24,7 @@
 import UIKit
 import Datum
 
-protocol ReminderSummaryTableViewControllerDelegate: class {
+protocol ReminderSummaryTableViewControllerDelegate: AnyObject {
     var reminderResult: Result<Reminder, DatumError>! { get }
     var isPresentedAsPopover: Bool { get }
     func userChose(action: ReminderSummaryViewController.Action, within: ReminderSummaryTableViewController)
