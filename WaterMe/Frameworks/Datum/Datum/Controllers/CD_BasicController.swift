@@ -454,10 +454,16 @@ internal class CD_BasicController: BasicController {
     func delete(reminder: Reminder) -> Result<Void, DatumError> {
         let context = self.container.viewContext
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
+        let vessel = reminder.raw_vessel
 
         // debug only sanity checks
         assert(Thread.isMainThread)
         assert(context === reminder.managedObjectContext)
+        
+        let reminderCount = vessel?.raw_reminders?.count ?? 0
+        guard reminderCount >= 2 else {
+            return .failure(.unableToDeleteLastReminder)
+        }
 
         let token = self.willSave(context)
         defer { self.didSave(token) }
@@ -477,10 +483,6 @@ extension CD_BasicController {
                 assertionFailure("Core Data Dates Not Updated")
                 return
             }
-            // Update Save Modified Dates in Objects
-            context.insertedObjects
-                .union(context.updatedObjects)
-                .forEach { ($0 as? CD_Base)?.datum_willSave() }
 
             // Capture Deleted Values for API Contract
             // This must be done now because they will be deleted soon
@@ -608,18 +610,8 @@ extension NSManagedObjectContext {
                 // we need to rollback the context
                 self.rollback()
             }
-            if
-                // detect if the error is because we tried to delete the last reminder
-                error.code == CocoaError.validationRelationshipLacksMinimumCount.rawValue,
-                let key = error.userInfo[NSValidationKeyErrorKey] as? String,
-                key == #keyPath(CD_ReminderVessel.raw_reminders),
-                error.userInfo[NSValidationObjectErrorKey] is CD_ReminderVessel
-            {
-                return .failure(.unableToDeleteLastReminder)
-            } else {
-                error.log()
-                return .failure(.writeError)
-            }
+            error.log()
+            return .failure(.writeError)
         }
     }
 }

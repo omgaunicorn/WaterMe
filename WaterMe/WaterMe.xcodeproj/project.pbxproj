@@ -515,13 +515,8 @@
 		50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselEditTableViewController.swift; sourceTree = "<group>"; };
 		50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselIconTableViewCell.swift; sourceTree = "<group>"; };
 		50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
-		734048C1260F1BA1001FAB8E /* CloudSyncInfo.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CloudSyncInfo.storyboard; sourceTree = "<group>"; };
-		734048C2260F1BA1001FAB8E /* CloudSyncInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSyncInfoViewController.swift; sourceTree = "<group>"; };
-		73755A4B2610226000FCC684 /* ContinuousProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousProgress.swift; sourceTree = "<group>"; };
-		73755A602610241F00FCC684 /* CloudKitContainerContinuousProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitContainerContinuousProgress.swift; sourceTree = "<group>"; };
-		73755A692610AA4000FCC684 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		7311AEFB263E17780089B36E /* SimpleToggleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleToggleTableViewCell.swift; sourceTree = "<group>"; };
 		738AB94F2610B07A00162114 /* v2.6.1.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.6.1.001.xcdatamodel; sourceTree = "<group>"; };
-		73B19EAE2633AE45001099EC /* SimpleToggleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleToggleTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -991,7 +986,7 @@
 				50C28D9821811BD900101D0A /* RestoredAndRawUserActivities.swift */,
 				50CA47EF21699FED0063F51E /* UserActivityConfigurator.swift */,
 				509A0864215FFEDF00389339 /* SimpleLabelTableViewCell.swift */,
-				73B19EAE2633AE45001099EC /* SimpleToggleTableViewCell.swift */,
+				7311AEFB263E17780089B36E /* SimpleToggleTableViewCell.swift */,
 				509A0866215FFEF700389339 /* SiriShortcutTableViewCell.swift */,
 				504A36FA214C7ECC009543C0 /* SimpleImageViewerSubclass.swift */,
 				5065AA1B200E872900C7F0CC /* UserFacingError.swift */,
@@ -1659,6 +1654,8 @@
 				5085C71B216523CB00030D2A /* CoreSpotlightIndexer.swift in Sources */,
 				73B19EAF2633AE45001099EC /* SimpleToggleTableViewCell.swift in Sources */,
 				50C96A321EC2BB03002802C1 /* Either.swift in Sources */,
+				7311AEFC263E17780089B36E /* SimpleToggleTableViewCell.swift in Sources */,
+				C738E116261561F2001F645F /* (null) in Sources */,
 				50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */,
 				505B8C28214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift in Sources */,
 				5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */,

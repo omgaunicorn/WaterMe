@@ -30,8 +30,7 @@ internal struct CD_ReminderWrapper: Reminder {
     
     internal init(_ wrappedObject: CD_Reminder, context: @escaping LazyContext) {
         self.context = context
-        // TODO: Remove force unwrap
-        self.vessel = CD_ReminderVesselWrapper(wrappedObject.raw_vessel!, context: context)
+        self.vessel = wrappedObject.raw_vessel.map { CD_ReminderVesselWrapper($0, context: context) }
         self.wrappedObject = wrappedObject
     }
     

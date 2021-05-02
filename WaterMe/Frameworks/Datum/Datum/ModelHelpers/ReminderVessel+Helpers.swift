@@ -52,7 +52,7 @@ extension CD_ReminderVessel: ModelCompleteCheckable {
         let issues: [RecoveryAction] = [
             self.icon == nil ? .reminderVesselMissingIcon : nil,
             self.raw_displayName == nil ? .reminderVesselMissingName : nil,
-            (self.raw_reminders?.count ?? 0) >= 1 ? .reminderVesselMissingReminder : nil
+            (self.raw_reminders?.count ?? 0) <= 0 ? .reminderVesselMissingReminder : nil
             ].compactMap({ $0 })
         if issues.isEmpty {
             return nil
