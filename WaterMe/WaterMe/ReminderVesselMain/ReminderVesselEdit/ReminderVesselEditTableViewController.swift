@@ -25,7 +25,7 @@ import Datum
 import UIKit
 import Calculate
 
-protocol ReminderVesselEditTableViewControllerDelegate: class {
+protocol ReminderVesselEditTableViewControllerDelegate: AnyObject {
     var vesselResult: Result<ReminderVessel, DatumError>? { get }
     func userChangedName(to: String, controller: ReminderVesselEditTableViewController?)
     func userChoseAddReminder(controller: ReminderVesselEditTableViewController?)

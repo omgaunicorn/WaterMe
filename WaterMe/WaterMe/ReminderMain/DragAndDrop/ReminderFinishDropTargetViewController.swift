@@ -24,7 +24,7 @@
 import Datum
 import UIKit
 
-protocol ReminderFinishDropTargetViewControllerDelegate: class {
+protocol ReminderFinishDropTargetViewControllerDelegate: AnyObject {
     func userDidCancelDrag(within: ReminderFinishDropTargetViewController)
     func userDidStartDrag(with values: [ReminderAndVesselValue],
                           within: ReminderFinishDropTargetViewController)
