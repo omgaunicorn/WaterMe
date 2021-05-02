@@ -128,6 +128,23 @@ extension CD_ReminderTests {
 
         self.wait(for: [wait], timeout: 0.3)
     }
+    
+    func test_modelComplete_isEnabled() throws {
+        let vessel = try self.basicController.newReminderVessel(displayName: nil,
+                                                               icon: nil).get()
+        let item1 = try self.basicController.newReminder(for: vessel).get()
+        try! self.basicController.update(kind: .move(location: nil),
+                                         interval: nil,
+                                         isEnabled: false,
+                                         note: nil,
+                                         in: item1).get()
+        let item1Error = item1.isModelComplete
+        XCTAssertNotNil(item1Error)
+        XCTAssertEqual(item1Error?._actions[0], .reminderMissingMoveLocation)
+        XCTAssertEqual(item1Error?._actions[1], .reminderMissingEnabled)
+        XCTAssertEqual(item1Error?._actions[2], .cancel)
+        XCTAssertEqual(item1Error?._actions[3], .saveAnyway)
+    }
 }
 
 extension RLM_ReminderTests {
