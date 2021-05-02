@@ -48,7 +48,7 @@ internal class CD_BasicController: BasicController {
                 message.log(as: .emergency)
                 return nil
             }
-        case .testing:
+        case .__testing_inMemory:
             // when testing make in-memory container
             let randomName = String(Int.random(in: 100_000...1_000_000))
             let container = WaterMe_PersistentContainer(name: randomName, managedObjectModel: mom)
@@ -56,6 +56,8 @@ internal class CD_BasicController: BasicController {
             description.type = NSInMemoryStoreType
             container.persistentStoreDescriptions = [description]
             return container
+        case .__testing_withClass(let _type):
+            return _type.init(name: "WaterMe", managedObjectModel: mom)
         }
     }
 
@@ -65,7 +67,14 @@ internal class CD_BasicController: BasicController {
         
         guard let container = CD_BasicController.container(kind: kind)
             else { throw DatumError.loadError }
-        type(of: self).copySampleDBIfNeeded()
+        
+        switch kind {
+        case .local, .sync:
+            type(of: self).copySampleDBIfNeeded()
+        case .__testing_inMemory, .__testing_withClass:
+            break // don't copy sameple DB when testing
+        }
+        
         let lock = DispatchSemaphore(value: 0)
         var error: Error?
         container.loadPersistentStores() { _, _error in
@@ -73,6 +82,7 @@ internal class CD_BasicController: BasicController {
             lock.signal()
         }
         lock.wait()
+        
         guard error == nil else { throw error! }
         container.viewContext.automaticallyMergesChangesFromParent = true
         let fetchRequest = CD_VesselShare.request
@@ -83,6 +93,7 @@ internal class CD_BasicController: BasicController {
             ctx.insert(share)
             try ctx.save()
         }
+        
         self.kind = kind
         self.container = container
         if #available(iOS 14.0, *), container is NSPersistentCloudKitContainer {

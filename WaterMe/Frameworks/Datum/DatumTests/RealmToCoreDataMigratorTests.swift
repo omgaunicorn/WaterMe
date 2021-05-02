@@ -27,8 +27,8 @@ import CoreData
 
 class RealmToCoreDataMigratorBaseTests: XCTestCase {
 
-    let source = try! RLM_BasicController(kind: .testing)
-    let destination = try! CD_BasicController(kind: .testing)
+    let source = try! RLM_BasicController(kind: .__testing_inMemory)
+    let destination = try! CD_BasicController(kind: .__testing_inMemory)
     var token: ObservationToken?
 
     override func tearDownWithError() throws {

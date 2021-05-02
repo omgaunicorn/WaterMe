@@ -23,6 +23,7 @@
 
 import UIKit
 import Calculate
+import CoreData
 
 public func NewBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
     do {
@@ -84,7 +85,8 @@ public enum ControllerKind: RawRepresentable {
     
     case local
     case sync
-    case testing
+    case __testing_inMemory
+    case __testing_withClass(NSPersistentContainer.Type)
     
     public var rawValue: Bool {
         switch self {
@@ -92,7 +94,7 @@ public enum ControllerKind: RawRepresentable {
             return false
         case .sync:
             return true
-        case .testing:
+        case .__testing_inMemory, .__testing_withClass:
             fatalError("RawValue unsupported while testing")
         }
     }
@@ -104,7 +106,7 @@ public enum ControllerKind: RawRepresentable {
 
 internal func testing_NewRLMBasicController() -> Result<BasicController, DatumError> {
     do {
-        let bc = try RLM_BasicController(kind: .testing)
+        let bc = try RLM_BasicController(kind: .__testing_inMemory)
         return .success(bc)
     } catch {
         return .failure(.loadError)
@@ -113,7 +115,7 @@ internal func testing_NewRLMBasicController() -> Result<BasicController, DatumEr
 
 internal func testing_NewCDBasicController() -> Result<BasicController, DatumError> {
     do {
-        let bc = try CD_BasicController(kind: .testing)
+        let bc = try CD_BasicController(kind: .__testing_inMemory)
         return .success(bc)
     } catch {
         return .failure(.loadError)
