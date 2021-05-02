@@ -214,9 +214,17 @@
 		50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */; };
 		50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */; };
 		50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */; };
-		7311AEFC263E17780089B36E /* SimpleToggleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AEFB263E17780089B36E /* SimpleToggleTableViewCell.swift */; };
-		73360B702631A1E50029F993 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 7313858D260E15B000CDC138 /* CropViewController */; };
-		73360B802631A3A30029F993 /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
+		7311AEFF263E762C0089B36E /* ContinuousProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AEFD263E76260089B36E /* ContinuousProgress.swift */; };
+		7311AF01263E765A0089B36E /* CloudKitContainerContinuousProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AF00263E765A0089B36E /* CloudKitContainerContinuousProgress.swift */; };
+		7311AF04263E76A60089B36E /* CloudSyncInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AF02263E76A60089B36E /* CloudSyncInfoViewController.swift */; };
+		7311AF05263E76A60089B36E /* CloudSyncInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7311AF03263E76A60089B36E /* CloudSyncInfo.storyboard */; };
+		7311AF06263E76CA0089B36E /* SimpleToggleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AEFB263E17780089B36E /* SimpleToggleTableViewCell.swift */; };
+		7313858E260E15B000CDC138 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 7313858D260E15B000CDC138 /* CropViewController */; };
+		73730858260E2F22000B99DB /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
+		73755A6A2610AA4000FCC684 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		73D02F66263F683300E90138 /* WaterMe.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F64263F683200E90138 /* WaterMe.sqlite */; };
+		73D02F67263F683300E90138 /* WaterMe.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F65263F683300E90138 /* WaterMe.sqlite-wal */; };
+		73D02F69263F69ED00E90138 /* SchemaMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -512,6 +520,10 @@
 		50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		7311AEFB263E17780089B36E /* SimpleToggleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleToggleTableViewCell.swift; sourceTree = "<group>"; };
 		738AB94F2610B07A00162114 /* v2.6.1.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.6.1.001.xcdatamodel; sourceTree = "<group>"; };
+		73D02F64263F683200E90138 /* WaterMe.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = WaterMe.sqlite; sourceTree = "<group>"; };
+		73D02F65263F683300E90138 /* WaterMe.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WaterMe.sqlite-wal"; sourceTree = "<group>"; };
+		73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaMigrationTests.swift; sourceTree = "<group>"; };
+		73F017A8263E85CE00B2CEA9 /* v2.7.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.7.0.001.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -763,6 +775,7 @@
 				5060A069249B9E1800D96EFA /* BasicControllerClosureTests.swift */,
 				5073FF1124D64A5500E3211B /* RealmToCoreDataMigratorTests.swift */,
 				48F56045247F8C470049F14D /* RealmCoreDataTestSubclasses.swift */,
+				73D02F63263F680F00E90138 /* SchemaMigration */,
 				5034765424552CFD00C3DAD3 /* Info.plist */,
 			);
 			name = DatumTests;
@@ -1109,6 +1122,16 @@
 			path = CoreDataMigration;
 			sourceTree = "<group>";
 		};
+		73D02F63263F680F00E90138 /* SchemaMigration */ = {
+			isa = PBXGroup;
+			children = (
+				73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */,
+				73D02F64263F683200E90138 /* WaterMe.sqlite */,
+				73D02F65263F683300E90138 /* WaterMe.sqlite-wal */,
+			);
+			path = SchemaMigration;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1396,6 +1419,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				73D02F67263F683300E90138 /* WaterMe.sqlite-wal in Resources */,
+				73D02F66263F683300E90138 /* WaterMe.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1556,6 +1581,7 @@
 				48AFA304248646E6002CAFDC /* BasicControllerDeleteTests.swift in Sources */,
 				488CCDC6247F7E8000E92036 /* ReminderCollectionTests.swift in Sources */,
 				48AFA34C2488E67B002CAFDC /* ReminderTests.swift in Sources */,
+				73D02F69263F69ED00E90138 /* SchemaMigrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1666,6 +1692,7 @@
 				50CA47EE21699A8D0063F51E /* UIBarButtonItemLongPressGestureRecognizer.swift in Sources */,
 				50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */,
 				5010C230213F77B200D1832C /* ReminderSummaryViewController.swift in Sources */,
+				7311AF06263E76CA0089B36E /* SimpleToggleTableViewCell.swift in Sources */,
 				5028190A200C06FD0044BEC8 /* SettingsMainPurchaseDimmingViewController.swift in Sources */,
 				50B779CD2154700A00AC6240 /* UIAlertController+UserFacingError.swift in Sources */,
 				50734F9E1F0DD90C003E5F41 /* TextViewTableViewCell.swift in Sources */,
