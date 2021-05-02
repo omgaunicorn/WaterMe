@@ -52,9 +52,9 @@ internal class CD_Reminder: CD_Base {
             self.raw_nextPerformDate = nil
         }
     }
-
-    override func datum_willSave() {
-        super.datum_willSave()
+    
+    override func willSave() {
+        super.willSave()
         if let descriptionString = self.raw_descriptionString,
            descriptionString.nonEmptyString == nil
         {

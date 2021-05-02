@@ -133,38 +133,7 @@ class ReminderCollectionTests: DatumTestsBase {
         }
         self.wait(for: [wait], timeout: 0.3)
     }
-}
-
-extension CD_ReminderCollectionTests {
-    func test_update_insert() {
-        let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
-        let wait = XCTestExpectation()
-        wait.expectedFulfillmentCount = 2
-        var hitCount = 0
-        self.token = query.test_observe_receiveUpdates() { (_, changes) in
-            wait.fulfill()
-            switch hitCount {
-            case 0:
-                XCTAssertEqual(changes.insertions.count, 1)
-                XCTAssertEqual(changes.modifications.count, 0)
-                XCTAssertEqual(changes.deletions.count, 0)
-            case 1:
-                XCTAssertEqual(changes.insertions.count, 0)
-                XCTAssertEqual(changes.modifications.count, 1)
-                XCTAssertEqual(changes.deletions.count, 0)
-            default:
-                XCTFail()
-            }
-            hitCount += 1
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            _ = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
-        }
-        self.wait(for: [wait], timeout: 0.3)
-    }
-}
-
-extension RLM_ReminderCollectionTests {
+    
     func test_update_insert() {
         let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()

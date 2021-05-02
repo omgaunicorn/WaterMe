@@ -36,8 +36,8 @@ internal class CD_ReminderVessel: CD_Base {
         self.raw_kindString = ReminderVesselKind.plant.rawValue
     }
 
-    override func datum_willSave() {
-        super.datum_willSave()
+    override func willSave() {
+        super.willSave()
         if let displayName = self.raw_displayName, displayName.nonEmptyString == nil {
             self.raw_displayName = nil
         }

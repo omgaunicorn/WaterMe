@@ -35,8 +35,14 @@ internal class CD_Base: NSManagedObject {
         self.raw_dateModified = now
     }
     
-    func datum_willSave() {
-        self.raw_dateModified = Date()
+    override func willSave() {
+        super.willSave()
+        
+        let now = Date()
+        let mod = self.raw_dateModified ?? now
+        let interval = abs(mod.timeIntervalSince(now))
+        guard interval >= 1 else { return }
+        self.raw_dateModified = now
     }
 }
 

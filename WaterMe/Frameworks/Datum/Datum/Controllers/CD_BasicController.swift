@@ -459,10 +459,6 @@ extension CD_BasicController {
                 assertionFailure("Core Data Dates Not Updated")
                 return
             }
-            // Update Save Modified Dates in Objects
-            context.insertedObjects
-                .union(context.updatedObjects)
-                .forEach { ($0 as? CD_Base)?.datum_willSave() }
 
             // Capture Deleted Values for API Contract
             // This must be done now because they will be deleted soon
