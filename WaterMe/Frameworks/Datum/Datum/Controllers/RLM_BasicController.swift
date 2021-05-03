@@ -84,7 +84,7 @@ internal class RLM_BasicController: BasicController {
         switch kind {
         case .local:
             realmConfig.fileURL = type(of: self).localRealmFile
-        case .testing:
+        case .__testing_inMemory, .__testing_withClass:
             realmConfig.inMemoryIdentifier = String(Int.random(in: 100_000...1_000_000))
         case .sync: /*(let user)*/
             // let url = user.realmURL(withAppName: "WaterMeBasic")
