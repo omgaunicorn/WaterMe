@@ -28,7 +28,7 @@ import CoreData
 class CD_VesselShareTests: DatumTestsBase {
 
     override func newBasicController() -> BasicController {
-        return try! testing_NewCDBasicController(of: .local).get()
+        return try! testing_NewCDBasicController().get()
     }
 
     var context: NSManagedObjectContext {

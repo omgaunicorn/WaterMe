@@ -27,7 +27,7 @@ import Calculate
 
 internal class CD_BasicController: BasicController {
     
-    private class func container(forTesting: Bool) -> NSPersistentContainer? {
+    private class func container(kind: ControllerKind) -> NSPersistentContainer? {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
@@ -37,27 +37,36 @@ internal class CD_BasicController: BasicController {
             let mom = NSManagedObjectModel(contentsOf: url)
         else { return nil }
         
-        // when not testing, return normal persistent container
-        guard forTesting else {
+        switch kind {
+        case .local, .sync:
             return WaterMe_PersistentContainer(name: "WaterMe", managedObjectModel: mom)
+        case .__testing_withClass(let _type):
+            return _type.init(name: "WaterMe", managedObjectModel: mom)
+        case .__testing_inMemory:
+            // when testing make in-memory container
+            let randomName = String(Int.random(in: 100_000...1_000_000))
+            let container = WaterMe_PersistentContainer(name: randomName, managedObjectModel: mom)
+            let description = NSPersistentStoreDescription()
+            description.type = NSInMemoryStoreType
+            container.persistentStoreDescriptions = [description]
+            return container
         }
-        
-        // when testing make in-memory container
-        let randomName = String(Int.random(in: 100_000...1_000_000))
-        let container = WaterMe_PersistentContainer(name: randomName, managedObjectModel: mom)
-        let description = NSPersistentStoreDescription()
-        description.type = NSInMemoryStoreType
-        container.persistentStoreDescriptions = [description]
-        return container
     }
 
-    init(kind: ControllerKind, forTesting: Bool) throws {
+    init(kind: ControllerKind) throws {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
-        guard let container = CD_BasicController.container(forTesting: forTesting)
+        guard let container = CD_BasicController.container(kind: kind)
             else { throw DatumError.loadError }
-        type(of: self).copySampleDBIfNeeded()
+        
+        switch kind {
+        case .local, .sync:
+            type(of: self).copySampleDBIfNeeded()
+        case .__testing_inMemory, .__testing_withClass:
+            break // don't copy sameple DB when testing
+        }
+        
         let lock = DispatchSemaphore(value: 0)
         var error: Error?
         container.loadPersistentStores() { _, _error in
@@ -65,6 +74,7 @@ internal class CD_BasicController: BasicController {
             lock.signal()
         }
         lock.wait()
+        
         guard error == nil else { throw error! }
         container.viewContext.automaticallyMergesChangesFromParent = true
         let fetchRequest = CD_VesselShare.request
@@ -75,7 +85,8 @@ internal class CD_BasicController: BasicController {
             ctx.insert(share)
             try ctx.save()
         }
-        self.kind = .local
+        
+        self.kind = kind
         self.container = container
     }
 
