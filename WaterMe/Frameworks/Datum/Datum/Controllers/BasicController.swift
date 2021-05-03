@@ -45,9 +45,6 @@ public protocol BasicController: AnyObject {
     var userDidPerformReminder: ((Set<ReminderValue>) -> Void)? { get set }
 
     var kind: ControllerKind { get }
-    
-    @available(iOS 14.0, *)
-    var syncProgress: AnyContinousProgress? { get }
 
     // MARK: Create
     func newReminder(for vessel: ReminderVessel) -> Result<Reminder, DatumError>

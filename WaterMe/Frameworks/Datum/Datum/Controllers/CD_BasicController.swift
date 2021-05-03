@@ -38,24 +38,26 @@ internal class CD_BasicController: BasicController {
         else { return nil }
         
         switch kind {
-        case .local:
+        case .local, .sync:
             return WaterMe_PersistentContainer(name: "WaterMe", managedObjectModel: mom)
+        case .__testing_withClass(let _type):
+            return _type.init(name: "WaterMe", managedObjectModel: mom)
+        case .__testing_inMemory:
+            // when testing make in-memory container
+            let randomName = String(Int.random(in: 100_000...1_000_000))
+            let container = WaterMe_PersistentContainer(name: randomName, managedObjectModel: mom)
+            let description = NSPersistentStoreDescription()
+            description.type = NSInMemoryStoreType
+            container.persistentStoreDescriptions = [description]
+            return container
         }
-        
-        // when testing make in-memory container
-        let randomName = String(Int.random(in: 100_000...1_000_000))
-        let container = WaterMe_PersistentContainer(name: randomName, managedObjectModel: mom)
-        let description = NSPersistentStoreDescription()
-        description.type = NSInMemoryStoreType
-        container.persistentStoreDescriptions = [description]
-        return container
     }
 
     init(kind: ControllerKind) throws {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
-        guard let container = CD_BasicController.container(forTesting: forTesting)
+        guard let container = CD_BasicController.container(kind: kind)
             else { throw DatumError.loadError }
         
         switch kind {

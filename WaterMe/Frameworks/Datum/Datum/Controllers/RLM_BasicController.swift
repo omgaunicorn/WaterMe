@@ -48,11 +48,6 @@ internal class RLM_BasicController: BasicController {
     // MARK: Initialization
 
     internal let kind: ControllerKind
-    private let _syncProgress: AnyObject? = nil
-    @available(iOS 14.0, *)
-    internal var syncProgress: AnyContinousProgress? {
-        _syncProgress as? AnyContinousProgress
-    }
     private let config: Realm.Configuration
     #if DEBUG
     // Reference is needed for using in-memory data stores
