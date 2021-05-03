@@ -214,17 +214,12 @@
 		50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */; };
 		50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */; };
 		50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */; };
-		7311AEFF263E762C0089B36E /* ContinuousProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AEFD263E76260089B36E /* ContinuousProgress.swift */; };
-		7311AF01263E765A0089B36E /* CloudKitContainerContinuousProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AF00263E765A0089B36E /* CloudKitContainerContinuousProgress.swift */; };
-		7311AF04263E76A60089B36E /* CloudSyncInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AF02263E76A60089B36E /* CloudSyncInfoViewController.swift */; };
-		7311AF05263E76A60089B36E /* CloudSyncInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7311AF03263E76A60089B36E /* CloudSyncInfo.storyboard */; };
 		7311AF06263E76CA0089B36E /* SimpleToggleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AEFB263E17780089B36E /* SimpleToggleTableViewCell.swift */; };
-		7313858E260E15B000CDC138 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 7313858D260E15B000CDC138 /* CropViewController */; };
-		73730858260E2F22000B99DB /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
-		73755A6A2610AA4000FCC684 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		73D02F66263F683300E90138 /* TestDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F64263F683200E90138 /* TestDB.sqlite */; };
 		73D02F67263F683300E90138 /* TestDB.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F65263F683300E90138 /* TestDB.sqlite-wal */; };
 		73D02F69263F69ED00E90138 /* SchemaMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */; };
+		73D02F74263F864500E90138 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 7313858D260E15B000CDC138 /* CropViewController */; };
+		73D02F75263F864500E90138 /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -523,7 +518,6 @@
 		73D02F64263F683200E90138 /* TestDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestDB.sqlite; sourceTree = "<group>"; };
 		73D02F65263F683300E90138 /* TestDB.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TestDB.sqlite-wal"; sourceTree = "<group>"; };
 		73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaMigrationTests.swift; sourceTree = "<group>"; };
-		73F017A8263E85CE00B2CEA9 /* v2.7.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.7.0.001.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -583,10 +577,10 @@
 			files = (
 				48A7B0E82467FCB100DC0861 /* Calculate.framework in Frameworks */,
 				5034770224557CB200C3DAD3 /* Cheers in Frameworks */,
-				73360B802631A3A30029F993 /* SimpleImageViewer in Frameworks */,
+				73D02F75263F864500E90138 /* SimpleImageViewer in Frameworks */,
 				5034765824552CFD00C3DAD3 /* Datum.framework in Frameworks */,
+				73D02F74263F864500E90138 /* CropViewController in Frameworks */,
 				5034767B24552D0700C3DAD3 /* Store.framework in Frameworks */,
-				73360B702631A1E50029F993 /* CropViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1648,7 +1642,6 @@
 				508E61571F8AD57400B28DD8 /* ReminderCollectionViewController.swift in Sources */,
 				5085C71B216523CB00030D2A /* CoreSpotlightIndexer.swift in Sources */,
 				50C96A321EC2BB03002802C1 /* Either.swift in Sources */,
-				7311AEFC263E17780089B36E /* SimpleToggleTableViewCell.swift in Sources */,
 				50AA4A481F00A28500D81831 /* LastPerformedTableViewCell.swift in Sources */,
 				505B8C28214DE115003555B6 /* ReminderSummaryTableViewCells+Models.swift in Sources */,
 				5087A9251EE3A7FB0046E687 /* EmojiPhotoAlertController.swift in Sources */,
@@ -2275,7 +2268,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WaterMe/WaterMe.entitlements;
-				CURRENT_PROJECT_VERSION = 262007;
+				CURRENT_PROJECT_VERSION = 262008;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -2302,7 +2295,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = WaterMe/WaterMe.entitlements;
-				CURRENT_PROJECT_VERSION = 262007;
+				CURRENT_PROJECT_VERSION = 262008;
 				DEVELOPMENT_TEAM = V6ESYGU6CV;
 				INFOPLIST_FILE = WaterMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
