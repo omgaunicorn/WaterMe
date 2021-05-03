@@ -40,7 +40,8 @@ fileprivate class NonSyncContainer: NSPersistentContainer {
     }
 }
 
-fileprivate class SyncContainer: NSPersistentContainer {
+@available(iOS 14.0, *)
+fileprivate class SyncContainer: NSPersistentCloudKitContainer {
     override class func defaultDirectoryURL() -> URL {
         return StoreParentURL
     }
@@ -68,6 +69,7 @@ class CoreDataSchemaMigrationTests: XCTestCase {
         _ = try CD_BasicController(kind: .__testing_withClass(NonSyncContainer.self))
     }
     
+    @available(iOS 14.0, *)
     func test_sync_initialize_simpleMigration() throws {
         _ = try CD_BasicController(kind: .__testing_withClass(SyncContainer.self))
     }

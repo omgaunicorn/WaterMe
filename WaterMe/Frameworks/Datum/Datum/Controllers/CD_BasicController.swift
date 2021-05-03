@@ -96,10 +96,14 @@ internal class CD_BasicController: BasicController {
         
         self.kind = kind
         self.container = container
-        if #available(iOS 14.0, *), container is NSPersistentCloudKitContainer {
-            _syncProgress = AnyContinousProgress(CloudKitContainerContinuousProgress(container))
-        } else {
-            _syncProgress = nil
+        
+        switch kind {
+        case .local, .sync:
+            guard #available(iOS 14.0, *), container is NSPersistentCloudKitContainer
+            else { self._syncProgress = nil; break; }
+            self._syncProgress = AnyContinousProgress(CloudKitContainerContinuousProgress(container))
+        case .__testing_inMemory, .__testing_withClass:
+            self._syncProgress = nil
         }
     }
 
