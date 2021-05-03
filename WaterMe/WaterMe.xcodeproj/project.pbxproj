@@ -222,8 +222,8 @@
 		7313858E260E15B000CDC138 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 7313858D260E15B000CDC138 /* CropViewController */; };
 		73730858260E2F22000B99DB /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
 		73755A6A2610AA4000FCC684 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		73D02F66263F683300E90138 /* WaterMe.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F64263F683200E90138 /* WaterMe.sqlite */; };
-		73D02F67263F683300E90138 /* WaterMe.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F65263F683300E90138 /* WaterMe.sqlite-wal */; };
+		73D02F66263F683300E90138 /* TestDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F64263F683200E90138 /* TestDB.sqlite */; };
+		73D02F67263F683300E90138 /* TestDB.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F65263F683300E90138 /* TestDB.sqlite-wal */; };
 		73D02F69263F69ED00E90138 /* SchemaMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -520,8 +520,8 @@
 		50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		7311AEFB263E17780089B36E /* SimpleToggleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleToggleTableViewCell.swift; sourceTree = "<group>"; };
 		738AB94F2610B07A00162114 /* v2.6.1.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.6.1.001.xcdatamodel; sourceTree = "<group>"; };
-		73D02F64263F683200E90138 /* WaterMe.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = WaterMe.sqlite; sourceTree = "<group>"; };
-		73D02F65263F683300E90138 /* WaterMe.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WaterMe.sqlite-wal"; sourceTree = "<group>"; };
+		73D02F64263F683200E90138 /* TestDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestDB.sqlite; sourceTree = "<group>"; };
+		73D02F65263F683300E90138 /* TestDB.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TestDB.sqlite-wal"; sourceTree = "<group>"; };
 		73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaMigrationTests.swift; sourceTree = "<group>"; };
 		73F017A8263E85CE00B2CEA9 /* v2.7.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.7.0.001.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1126,8 +1126,8 @@
 			isa = PBXGroup;
 			children = (
 				73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */,
-				73D02F64263F683200E90138 /* WaterMe.sqlite */,
-				73D02F65263F683300E90138 /* WaterMe.sqlite-wal */,
+				73D02F64263F683200E90138 /* TestDB.sqlite */,
+				73D02F65263F683300E90138 /* TestDB.sqlite-wal */,
 			);
 			path = SchemaMigration;
 			sourceTree = "<group>";
@@ -1419,8 +1419,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73D02F67263F683300E90138 /* WaterMe.sqlite-wal in Resources */,
-				73D02F66263F683300E90138 /* WaterMe.sqlite in Resources */,
+				73D02F67263F683300E90138 /* TestDB.sqlite-wal in Resources */,
+				73D02F66263F683300E90138 /* TestDB.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
