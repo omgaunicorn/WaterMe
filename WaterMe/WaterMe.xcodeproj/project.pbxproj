@@ -219,11 +219,11 @@
 		7311AF04263E76A60089B36E /* CloudSyncInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AF02263E76A60089B36E /* CloudSyncInfoViewController.swift */; };
 		7311AF05263E76A60089B36E /* CloudSyncInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7311AF03263E76A60089B36E /* CloudSyncInfo.storyboard */; };
 		7311AF06263E76CA0089B36E /* SimpleToggleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AEFB263E17780089B36E /* SimpleToggleTableViewCell.swift */; };
-		7313858E260E15B000CDC138 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 7313858D260E15B000CDC138 /* CropViewController */; };
-		73730858260E2F22000B99DB /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
 		73D02F66263F683300E90138 /* TestDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F64263F683200E90138 /* TestDB.sqlite */; };
 		73D02F67263F683300E90138 /* TestDB.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F65263F683300E90138 /* TestDB.sqlite-wal */; };
 		73D02F69263F69ED00E90138 /* SchemaMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */; };
+		73D02F74263F864500E90138 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 7313858D260E15B000CDC138 /* CropViewController */; };
+		73D02F75263F864500E90138 /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -586,10 +586,10 @@
 			files = (
 				48A7B0E82467FCB100DC0861 /* Calculate.framework in Frameworks */,
 				5034770224557CB200C3DAD3 /* Cheers in Frameworks */,
+				73D02F75263F864500E90138 /* SimpleImageViewer in Frameworks */,
 				5034765824552CFD00C3DAD3 /* Datum.framework in Frameworks */,
-				73730858260E2F22000B99DB /* SimpleImageViewer in Frameworks */,
+				73D02F74263F864500E90138 /* CropViewController in Frameworks */,
 				5034767B24552D0700C3DAD3 /* Store.framework in Frameworks */,
-				7313858E260E15B000CDC138 /* CropViewController in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
