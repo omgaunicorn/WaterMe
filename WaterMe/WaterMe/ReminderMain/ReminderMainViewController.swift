@@ -74,6 +74,16 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         // configure toolbar buttons
         self.navigationItem.rightBarButtonItem = self.plantsBBI
         self.navigationItem.leftBarButtonItem = self.settingsBBI
+        
+        // configure the bottom bar for iCloud sync
+        if case .sync = self.basicRC?.kind ?? .local {
+            self.navigationController?.isToolbarHidden = false
+            self.toolbarItems = [
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+                UIBarButtonItem(customView: CloudSyncProgressView(controller: self.basicRC)),
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            ]
+        }
 
         // configure my childVC so it can tell me what the user does in the CollectionView
         self.collectionVC?.delegate = self

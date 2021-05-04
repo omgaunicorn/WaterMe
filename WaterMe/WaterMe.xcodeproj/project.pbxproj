@@ -219,6 +219,7 @@
 		7311AF04263E76A60089B36E /* CloudSyncInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AF02263E76A60089B36E /* CloudSyncInfoViewController.swift */; };
 		7311AF05263E76A60089B36E /* CloudSyncInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7311AF03263E76A60089B36E /* CloudSyncInfo.storyboard */; };
 		7311AF06263E76CA0089B36E /* SimpleToggleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AEFB263E17780089B36E /* SimpleToggleTableViewCell.swift */; };
+		731B01E826411E8B00165220 /* CloudSyncProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731B01E726411E8B00165220 /* CloudSyncProgressView.swift */; };
 		73D02F66263F683300E90138 /* TestDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F64263F683200E90138 /* TestDB.sqlite */; };
 		73D02F67263F683300E90138 /* TestDB.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F65263F683300E90138 /* TestDB.sqlite-wal */; };
 		73D02F69263F69ED00E90138 /* SchemaMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */; };
@@ -522,6 +523,7 @@
 		7311AF00263E765A0089B36E /* CloudKitContainerContinuousProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitContainerContinuousProgress.swift; sourceTree = "<group>"; };
 		7311AF02263E76A60089B36E /* CloudSyncInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudSyncInfoViewController.swift; sourceTree = "<group>"; };
 		7311AF03263E76A60089B36E /* CloudSyncInfo.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = CloudSyncInfo.storyboard; sourceTree = "<group>"; };
+		731B01E726411E8B00165220 /* CloudSyncProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncProgressView.swift; sourceTree = "<group>"; };
 		738AB94F2610B07A00162114 /* v2.6.2.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.6.2.001.xcdatamodel; sourceTree = "<group>"; };
 		73D02F64263F683200E90138 /* TestDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestDB.sqlite; sourceTree = "<group>"; };
 		73D02F65263F683300E90138 /* TestDB.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TestDB.sqlite-wal"; sourceTree = "<group>"; };
@@ -1134,6 +1136,7 @@
 			children = (
 				7311AF03263E76A60089B36E /* CloudSyncInfo.storyboard */,
 				7311AF02263E76A60089B36E /* CloudSyncInfoViewController.swift */,
+				731B01E726411E8B00165220 /* CloudSyncProgressView.swift */,
 			);
 			path = CloudSyncInfo;
 			sourceTree = "<group>";
@@ -1727,6 +1730,7 @@
 				506A621C200562C3008EF601 /* SettingsTableViewController.swift in Sources */,
 				506DFA4D201D52B3007FEAB5 /* ReminderHeaderCollectionReusableView.swift in Sources */,
 				504B1BA7207332E20090CD7F /* TCF.m in Sources */,
+				731B01E826411E8B00165220 /* CloudSyncProgressView.swift in Sources */,
 				5029E0942140A158005285F5 /* ReminderSummaryTableViewCells.swift in Sources */,
 				5049D1A31FACFA1B0076565E /* ReminderUserNotificationController.swift in Sources */,
 			);
