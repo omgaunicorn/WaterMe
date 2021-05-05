@@ -35,19 +35,21 @@ internal class CD_BasicController: BasicController {
             let url = Bundle(for: CD_BasicController.self)
                             .url(forResource: "WaterMe", withExtension: "momd"),
             let mom = NSManagedObjectModel(contentsOf: url)
-        else { return nil }
+        else {
+            "Unable to load MOM from application bundle".log(as: .emergency)
+            return nil
+        }
         
         switch kind {
+        case .sync:
+            guard #available(iOS 14.0, *) else {
+                let message = "Attempted to load Sync container from iOS 13 or lower."
+                message.log()
+                fallthrough
+            }
+            return WaterMe_PersistentSyncContainer(name: "WaterMe", managedObjectModel: mom)
         case .local:
             return WaterMe_PersistentContainer(name: "WaterMe", managedObjectModel: mom)
-        case .sync:
-            if #available(iOS 14.0, *) {
-                return WaterMe_PersistentSyncContainer(name: "WaterMe", managedObjectModel: mom)
-            } else {
-                let message = "Attempted to load Sync container from iOS 13 or lower"
-                message.log(as: .emergency)
-                return nil
-            }
         case .__testing_inMemory:
             // when testing make in-memory container
             let randomName = String(Int.random(in: 100_000...1_000_000))
