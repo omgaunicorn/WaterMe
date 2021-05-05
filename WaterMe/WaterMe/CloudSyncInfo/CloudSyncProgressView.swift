@@ -27,6 +27,10 @@ import Datum
 
 class CloudSyncProgressView: UIStackView {
     
+    enum Lifecycle {
+        case show, hide, present(UserFacingError)
+    }
+    
     private enum State {
         case idle, syncing, error, unavailable
     }
@@ -35,10 +39,10 @@ class CloudSyncProgressView: UIStackView {
     private let syncingButton     = UIButton(type: .system)
     private let errorButton       = UIButton(type: .system)
     private let unavailableButton = UIButton(type: .system)
-
-    private let _progress: Any?
     private var progressToken: Any?
     private var timer: Timer?
+    
+    private let _progress: Any?
     @available(iOS 13.0, *)
     private var progress: AnyContinousProgress? {
         return _progress as? AnyContinousProgress
@@ -62,6 +66,18 @@ class CloudSyncProgressView: UIStackView {
                     self.unavailableButton.isHidden = false
                 }
             }
+        }
+    }
+    
+    var lifecycleDelegate: ((Lifecycle, CloudSyncProgressView) -> Void)? {
+        didSet {
+            guard self.lifecycleDelegate != nil else { return }
+            DispatchQueue.main.async { self.activateTimer() }
+        }
+    }
+    private var lifecycle: Lifecycle = .show {
+        didSet {
+            self.lifecycleDelegate?(self.lifecycle, self)
         }
     }
     
@@ -97,7 +113,6 @@ class CloudSyncProgressView: UIStackView {
         self.progressToken = controller?.syncProgress?.objectWillChange.sink { [weak self] in
             self?.activateTimer()
         }
-        self.activateTimer()
     }
     
     private func updateLabels() {
@@ -143,25 +158,31 @@ class CloudSyncProgressView: UIStackView {
         guard self.timer == nil else { return }
         defer { self.timer?.fire() }
         self.timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
+            let invalidate = {
+                self?.timer?.invalidate()
+                self?.timer = nil
+            }
             let error = progress.initializeError ?? progress.errorQ.first
             guard error == nil else {
                 self?.state = .error
-                self?.timer?.invalidate()
-                self?.timer = nil
+                invalidate()
+                self?.lifecycle = .show
                 return
             }
-            switch progress.progress.fractionCompleted {
-            case ..<1:
+            if progress.progress.fractionCompleted < 1 {
                 self?.state = .syncing
-            case 1...:
+                self?.lifecycle = .show
+            } else {
                 self?.state = .idle
-                self?.timer?.invalidate()
-                self?.timer = nil
-            default:
-                assertionFailure("Unreachable")
-                break
+                invalidate()
+                self?.lifecycle = .hide
             }
         }
+    }
+    
+    @objc private func showNextError(_ sender: UIButton?) {
+        guard #available(iOS 13.0, *) else { return }
+        // TODO: Implement showing errors
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

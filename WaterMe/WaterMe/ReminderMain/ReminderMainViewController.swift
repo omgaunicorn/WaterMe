@@ -78,10 +78,11 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         // configure the bottom bar for iCloud sync
         // TODO: Restore kind check
         // if case .sync = self.basicRC?.kind ?? .local {
-        self.navigationController?.isToolbarHidden = false
+        let progressView = CloudSyncProgressView(controller: self.basicRC)
+        progressView.lifecycleDelegate = { [weak self] in self?.didUpdate(lifecycle: $0, in: $1) }
         self.toolbarItems = [
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(customView: CloudSyncProgressView(controller: self.basicRC)),
+            UIBarButtonItem(customView: progressView),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
         ]
 
@@ -119,6 +120,22 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         } else {
             guard self.isReady.completely else { return }
             self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
+        }
+    }
+    
+    private func didUpdate(lifecycle: CloudSyncProgressView.Lifecycle, in progressView: CloudSyncProgressView) {
+        switch lifecycle {
+        case .hide:
+            UIView.style_animateNormal {
+                self.navigationController?.isToolbarHidden = true
+            }
+        case .show:
+            UIView.style_animateNormal {
+                self.navigationController?.isToolbarHidden = false
+            }
+        case .present(let error):
+            // TODO: Present error
+            break
         }
     }
 
