@@ -75,16 +75,18 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         self.navigationItem.rightBarButtonItem = self.plantsBBI
         self.navigationItem.leftBarButtonItem = self.settingsBBI
         
-        // configure the bottom bar for iCloud sync
-        // TODO: Restore kind check
-        // if case .sync = self.basicRC?.kind ?? .local {
-        let progressView = CloudSyncProgressView(controller: self.basicRC)
-        progressView.lifecycleDelegate = { [weak self] in self?.didUpdate($0, $1) }
-        self.toolbarItems = [
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(customView: progressView),
-            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-        ]
+        // Configure the bottom bar for iCloud sync
+        // Whether the bar shows is related to the user's preference,
+        // not the actual capabilities of the device.
+        if case .sync = UserDefaults.standard.controllerKind {
+            let progressView = CloudSyncProgressView(controller: self.basicRC)
+            progressView.lifecycleDelegate = { [weak self] in self?.didUpdate($0, $1) }
+            self.toolbarItems = [
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+                UIBarButtonItem(customView: progressView),
+                UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+            ]
+        }
 
         // configure my childVC so it can tell me what the user does in the CollectionView
         self.collectionVC?.delegate = self

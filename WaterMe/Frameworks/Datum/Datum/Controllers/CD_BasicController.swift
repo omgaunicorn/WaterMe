@@ -118,8 +118,8 @@ internal class CD_BasicController: BasicController {
     internal let kind: ControllerKind
     private let _syncProgress: AnyObject?
     @available(iOS 14.0, *)
-    internal var syncProgress: AnyContinousProgress? {
-        _syncProgress as? AnyContinousProgress
+    internal var syncProgress: AnyContinousProgress<GenericInitializationError, GenericSyncError>? {
+        _syncProgress as? AnyContinousProgress<GenericInitializationError, GenericSyncError>
     }
 
     // MARK: Create

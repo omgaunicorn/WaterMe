@@ -38,31 +38,37 @@ public typealias ErrorQueue = Deque<UserFacingError>
 /// Use `AnyContinousProgress` to get around AssociatedType compile errors.
 @available(iOS 13.0, *)
 public protocol ContinousProgress: ObservableObject {
+    associatedtype InitializeError: Swift.Error
+    associatedtype QueueError: Swift.Error
     /// Fixed error that only occurs on startup and doesn't change
     /// for the lifetime of the process.
-    var initializeError: UserFacingError? { get }
+    var initializeError: InitializeError? { get }
     var progress: Progress { get }
     /// When an error occurs, append it to the Queue.
-    var errorQ: ErrorQueue { get set }
+    var errorQ: Deque<QueueError> { get set }
 }
 
 @available(iOS 13.0, *)
-public class AnyContinousProgress: ContinousProgress {
+public class AnyContinousProgress<InitError: Swift.Error, QError: Swift.Error>: ContinousProgress {
     
     public let objectWillChange: ObservableObjectPublisher
-    public var initializeError: UserFacingError? { _initializeError() }
+    public var initializeError: InitError? { _initializeError() }
     public var progress: Progress { _progress() }
-    public var errorQ: ErrorQueue {
+    public var errorQ: Deque<QError> {
         get { _errorQ_get() }
         set { _errorQ_set(newValue) }
     }
     
-    private var _initializeError: () -> UserFacingError?
+    private var _initializeError: () -> InitError?
     private var _progress: () -> Progress
-    private var _errorQ_get: () -> ErrorQueue
-    private var _errorQ_set: (ErrorQueue) -> Void
+    private var _errorQ_get: () -> Deque<QError>
+    private var _errorQ_set: (Deque<QError>) -> Void
     
-    public init<T: ContinousProgress>(_ progress: T) where T.ObjectWillChangePublisher == ObservableObjectPublisher {
+    public init<T: ContinousProgress>(_ progress: T) where
+        T.ObjectWillChangePublisher == ObservableObjectPublisher,
+        T.InitializeError == InitError,
+        T.QueueError == QError
+    {
         self.objectWillChange = progress.objectWillChange
         _initializeError      = { progress.initializeError }
         _progress             = { progress.progress }
@@ -73,8 +79,45 @@ public class AnyContinousProgress: ContinousProgress {
 
 /// Use when you have no progress to report
 public class NoContinousProgress: ContinousProgress {
-    public let initializeError: UserFacingError? = nil
+    public let initializeError: Swift.Error? = nil
     public let progress: Progress = .init()
-    public var errorQ: ErrorQueue = .init()
+    public var errorQ: Deque<Swift.Error> = .init()
     public init() {}
+}
+
+public enum GenericInitializationError: Swift.Error, RawRepresentable {
+    
+    case couldNotDetermine
+    case restricted
+    case noAccount
+    
+    public init?(rawValue: CKAccountStatus) {
+        switch rawValue {
+        case .available:
+            return nil
+        case .restricted:
+            self = .restricted
+        case .noAccount:
+            self = .noAccount
+        case .couldNotDetermine:
+            fallthrough
+        @unknown default:
+            self = .couldNotDetermine
+        }
+    }
+    
+    public var rawValue: CKAccountStatus {
+        switch self {
+        case .couldNotDetermine:
+            return .couldNotDetermine
+        case .restricted:
+            return .restricted
+        case .noAccount:
+            return .noAccount
+        }
+    }
+}
+
+public enum GenericSyncError: Swift.Error {
+    case unknown(Swift.Error)
 }

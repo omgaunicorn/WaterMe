@@ -3,7 +3,7 @@
 //  WaterMe
 //
 //  Created by Jeffrey Bergier on 2021/05/04.
-//  Copyright © 2018 Saturday Apps.
+//  Copyright © 2021 Saturday Apps.
 //
 //  This file is part of WaterMe.  Simple Plant Watering Reminders for iOS.
 //
@@ -48,8 +48,8 @@ class CloudSyncProgressView: UIStackView {
     
     private let _progress: Any?
     @available(iOS 13.0, *)
-    private var progress: AnyContinousProgress? {
-        return _progress as? AnyContinousProgress
+    private var progress: AnyContinousProgress<GenericInitializationError, GenericSyncError>? {
+        return _progress as? AnyContinousProgress<GenericInitializationError, GenericSyncError>
     }
     
     private var state: State = .idle {
@@ -93,6 +93,7 @@ class CloudSyncProgressView: UIStackView {
             self.unavailableButton.imageEdgeInsets.left = -8
             // TODO: Add target action for ErrorButton, UnavailableButton
             self.errorButton.addTarget(self, action: #selector(self.showNextError(_:)), for: .touchUpInside)
+            self.unavailableButton.addTarget(self, action: #selector(self.showUnavailableError(_:)), for: .touchUpInside)
         }
         
         guard #available(iOS 14.0, *) else {
@@ -150,6 +151,7 @@ class CloudSyncProgressView: UIStackView {
         guard #available(iOS 14.0, *), let progress = self.progress else {
             invalidate()
             self.state = .unavailable
+            self.lifecycle = .show
             return
         }
         
@@ -157,7 +159,7 @@ class CloudSyncProgressView: UIStackView {
         defer { self.timer?.fire() }
         
         self.timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
-            let error = progress.initializeError ?? progress.errorQ.first
+            let error: UserFacingError? = progress.initializeError ?? progress.errorQ.first
             guard error == nil else {
                 invalidate()
                 self?.state = .error
@@ -177,11 +179,15 @@ class CloudSyncProgressView: UIStackView {
     
     @objc private func showNextError(_ sender: UIButton) {
         guard
-            #available(iOS 13.0, *),
-              let error = self.progress?.initializeError
-                       ?? self.progress?.errorQ.popFirst()
+            #available(iOS 14.0, *),
+            let error: UserFacingError = self.progress?.initializeError
+                                      ?? self.progress?.errorQ.popFirst()
         else { return }
         self.lifecycle = .present(error, sender)
+    }
+    
+    @objc private func showUnavailableError(_ sender: UIButton) {
+        self.lifecycle = .present(Error.notAvailable, sender)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
