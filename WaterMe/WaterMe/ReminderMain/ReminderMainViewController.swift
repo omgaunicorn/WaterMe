@@ -79,13 +79,10 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         // TODO: Restore kind check
         // if case .sync = self.basicRC?.kind ?? .local {
         let progressView = CloudSyncProgressView(controller: self.basicRC)
-        let progressBarItem = UIBarButtonItem(customView: progressView)
-        progressView.lifecycleDelegate = { [weak self, weak progressBarItem] in
-            self?.didUpdate(lifecycle: $0, progressView: $1, sender: progressBarItem)
-        }
+        progressView.lifecycleDelegate = { [weak self] in self?.didUpdate($0, $1) }
         self.toolbarItems = [
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            progressBarItem,
+            UIBarButtonItem(customView: progressView),
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
         ]
 
@@ -126,11 +123,8 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         }
     }
     
-    private func didUpdate(lifecycle: CloudSyncProgressView.Lifecycle,
-                           progressView: CloudSyncProgressView,
-                           sender: UIBarButtonItem?)
-    {
-        switch lifecycle {
+    private func didUpdate(_ progressView: CloudSyncProgressView, _ completion: ((Bool) -> Void)?) {
+        switch progressView.lifecycle {
         case .hide:
             UIView.style_animateNormal {
                 self.navigationController?.isToolbarHidden = true
@@ -139,9 +133,9 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
             UIView.style_animateNormal {
                 self.navigationController?.isToolbarHidden = false
             }
-        case .present(let error):
-            let errorVC = UIAlertController(error: error, sender: sender.map { .right($0) }) { _ in
-                progressView.activateTimer()
+        case .present(let error, let sender):
+            let errorVC = UIAlertController(error: error, sender: .left(sender)) { _ in
+                completion?(true)
             }
             self.present(errorVC, animated: true, completion: nil)
         }

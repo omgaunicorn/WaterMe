@@ -27,8 +27,12 @@ import Datum
 
 class CloudSyncProgressView: UIStackView {
     
+    /// Sends the progress view and a closure to complete when done with performing lifecycle changes
+    /// Pass true in closure to mark the item as able to be completed and false to indicate it could not be completed
+    typealias LifecycleDelegate = (CloudSyncProgressView, ((Bool) -> Void)?) -> Void
+    
     enum Lifecycle {
-        case show, hide, present(UserFacingError)
+        case show, hide, present(UserFacingError, UIButton)
     }
     
     private enum State {
@@ -57,15 +61,15 @@ class CloudSyncProgressView: UIStackView {
         }
     }
     
-    var lifecycleDelegate: ((Lifecycle, CloudSyncProgressView) -> Void)? {
+    var lifecycleDelegate: LifecycleDelegate? {
         didSet {
             guard self.lifecycleDelegate != nil else { return }
             DispatchQueue.main.async { self.activateTimer() }
         }
     }
-    private var lifecycle: Lifecycle = .show {
+    private(set) var lifecycle: Lifecycle = .show {
         didSet {
-            self.lifecycleDelegate?(self.lifecycle, self)
+            self.lifecycleDelegate?(self, { [weak self] _ in self?.activateTimer() })
         }
     }
     
@@ -137,25 +141,26 @@ class CloudSyncProgressView: UIStackView {
         )
     }
     
-    // TODO: Make private again
-    func activateTimer() {
-        guard #available(iOS 14.0, *), let progress = self.progress else {
+    private func activateTimer() {
+        let invalidate = {
             self.timer?.invalidate()
             self.timer = nil
+        }
+        
+        guard #available(iOS 14.0, *), let progress = self.progress else {
+            invalidate()
             self.state = .unavailable
             return
         }
+        
         guard self.timer == nil else { return }
         defer { self.timer?.fire() }
+        
         self.timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
-            let invalidate = {
-                self?.timer?.invalidate()
-                self?.timer = nil
-            }
             let error = progress.initializeError ?? progress.errorQ.first
             guard error == nil else {
-                self?.state = .error
                 invalidate()
+                self?.state = .error
                 self?.lifecycle = .show
                 return
             }
@@ -163,20 +168,20 @@ class CloudSyncProgressView: UIStackView {
                 self?.state = .syncing
                 self?.lifecycle = .show
             } else {
-                self?.state = .idle
                 invalidate()
+                self?.state = .idle
                 self?.lifecycle = .hide
             }
         }
     }
     
-    @objc private func showNextError(_ sender: UIButton?) {
+    @objc private func showNextError(_ sender: UIButton) {
         guard
             #available(iOS 13.0, *),
               let error = self.progress?.initializeError
                        ?? self.progress?.errorQ.popFirst()
         else { return }
-        self.lifecycle = .present(error)
+        self.lifecycle = .present(error, sender)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
