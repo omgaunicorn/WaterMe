@@ -220,6 +220,7 @@
 		7311AF05263E76A60089B36E /* CloudSyncInfo.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7311AF03263E76A60089B36E /* CloudSyncInfo.storyboard */; };
 		7311AF06263E76CA0089B36E /* SimpleToggleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AEFB263E17780089B36E /* SimpleToggleTableViewCell.swift */; };
 		731B01E826411E8B00165220 /* CloudSyncProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731B01E726411E8B00165220 /* CloudSyncProgressView.swift */; };
+		732B1FCB26423AAD00B36C12 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 732B1FCA26423AAD00B36C12 /* Collections */; };
 		73D02F66263F683300E90138 /* TestDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F64263F683200E90138 /* TestDB.sqlite */; };
 		73D02F67263F683300E90138 /* TestDB.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F65263F683300E90138 /* TestDB.sqlite-wal */; };
 		73D02F69263F69ED00E90138 /* SchemaMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */; };
@@ -536,6 +537,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				732B1FCB26423AAD00B36C12 /* Collections in Frameworks */,
 				5031FBFB24F7ACBE00CBBB2E /* ServerlessLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1204,6 +1206,7 @@
 			name = Calculate;
 			packageProductDependencies = (
 				5031FBFA24F7ACBE00CBBB2E /* ServerlessLogger */,
+				732B1FCA26423AAD00B36C12 /* Collections */,
 			);
 			productName = Calculate;
 			productReference = 48A7B0D32467FCB100DC0861 /* Calculate.framework */;
@@ -1403,6 +1406,7 @@
 				5031FBF924F7ACBE00CBBB2E /* XCRemoteSwiftPackageReference "JSBServerlessLogger" */,
 				7313858C260E15B000CDC138 /* XCRemoteSwiftPackageReference "TOCropViewController" */,
 				73730856260E2F22000B99DB /* XCRemoteSwiftPackageReference "SimpleImageViewer" */,
+				732B1FC926423AAD00B36C12 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = 50BB0F511EBFCDE500850FF4 /* Products */;
 			projectDirPath = "";
@@ -2461,6 +2465,14 @@
 				minimumVersion = 2.6.0;
 			};
 		};
+		732B1FC926423AAD00B36C12 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.2;
+			};
+		};
 		73730856260E2F22000B99DB /* XCRemoteSwiftPackageReference "SimpleImageViewer" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jeffreybergier/SimpleImageViewer.git";
@@ -2496,6 +2508,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7313858C260E15B000CDC138 /* XCRemoteSwiftPackageReference "TOCropViewController" */;
 			productName = CropViewController;
+		};
+		732B1FCA26423AAD00B36C12 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 732B1FC926423AAD00B36C12 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
 		};
 		73730857260E2F22000B99DB /* SimpleImageViewer */ = {
 			isa = XCSwiftPackageProductDependency;

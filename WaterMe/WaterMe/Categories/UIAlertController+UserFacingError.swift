@@ -70,6 +70,35 @@ extension UIAlertController {
         let rawValue: Int
         static let pause = ReminderDeleteConfirmationOptions(rawValue: 1 << 0)
     }
+    
+    convenience init(error: UserFacingError,
+                     sender: PopoverSender?,
+                     selectionHandler: ((RecoveryAction?) -> Void)? = nil)
+    {
+        self.init(title: error.title, message: error.message, preferredStyle: sender == nil ? .alert : .actionSheet)
+        error.recoveryActions.forEach { option in
+            let action = UIAlertAction(title: option.title,
+                                       style: option.actionStyle)
+            { _ in
+                option.automaticExecution?()
+                selectionHandler?(option)
+            }
+            self.addAction(action)
+        }
+        let dismiss = UIAlertAction(title: LocalizedString.buttonTitleDontDelete,
+                                    style: .cancel,
+                                    handler: { _ in selectionHandler?(nil) })
+        self.addAction(dismiss)
+        guard let sender = sender else { return }
+        switch sender {
+        case .right(let bbi):
+            self.popoverPresentationController?.barButtonItem = bbi
+        case .left(let view):
+            self.popoverPresentationController?.sourceView = view
+            self.popoverPresentationController?.sourceRect = view.bounds.centerRect
+            self.popoverPresentationController?.permittedArrowDirections = [.up, .down]
+        }
+    }
 
     convenience init(localizedDeleteConfirmationWithOptions options: ReminderDeleteConfirmationOptions,
                      sender: PopoverSender?,

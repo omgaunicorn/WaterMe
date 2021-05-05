@@ -50,22 +50,10 @@ class CloudSyncProgressView: UIStackView {
     
     private var state: State = .idle {
         didSet {
-            UIView.style_animateNormal {
-                self.idleButton.isHidden = true
-                self.syncingButton.isHidden = true
-                self.errorButton.isHidden = true
-                self.unavailableButton.isHidden = true
-                switch self.state {
-                case .idle:
-                    self.idleButton.isHidden = false
-                case .syncing:
-                    self.syncingButton.isHidden = false
-                case .error:
-                    self.errorButton.isHidden = false
-                case .unavailable:
-                    self.unavailableButton.isHidden = false
-                }
-            }
+            self.idleButton.isHidden        = self.state != .idle
+            self.syncingButton.isHidden     = self.state != .syncing
+            self.errorButton.isHidden       = self.state != .error
+            self.unavailableButton.isHidden = self.state != .unavailable
         }
     }
     
@@ -100,6 +88,7 @@ class CloudSyncProgressView: UIStackView {
             self.errorButton.imageEdgeInsets.left = -8
             self.unavailableButton.imageEdgeInsets.left = -8
             // TODO: Add target action for ErrorButton, UnavailableButton
+            self.errorButton.addTarget(self, action: #selector(self.showNextError(_:)), for: .touchUpInside)
         }
         
         guard #available(iOS 14.0, *) else {
@@ -148,7 +137,8 @@ class CloudSyncProgressView: UIStackView {
         )
     }
     
-    private func activateTimer() {
+    // TODO: Make private again
+    func activateTimer() {
         guard #available(iOS 14.0, *), let progress = self.progress else {
             self.timer?.invalidate()
             self.timer = nil
@@ -181,8 +171,12 @@ class CloudSyncProgressView: UIStackView {
     }
     
     @objc private func showNextError(_ sender: UIButton?) {
-        guard #available(iOS 13.0, *) else { return }
-        // TODO: Implement showing errors
+        guard
+            #available(iOS 13.0, *),
+              let error = self.progress?.initializeError
+                       ?? self.progress?.errorQ.popFirst()
+        else { return }
+        self.lifecycle = .present(error)
     }
     
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

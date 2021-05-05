@@ -79,10 +79,13 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         // TODO: Restore kind check
         // if case .sync = self.basicRC?.kind ?? .local {
         let progressView = CloudSyncProgressView(controller: self.basicRC)
-        progressView.lifecycleDelegate = { [weak self] in self?.didUpdate(lifecycle: $0, in: $1) }
+        let progressBarItem = UIBarButtonItem(customView: progressView)
+        progressView.lifecycleDelegate = { [weak self, weak progressBarItem] in
+            self?.didUpdate(lifecycle: $0, progressView: $1, sender: progressBarItem)
+        }
         self.toolbarItems = [
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-            UIBarButtonItem(customView: progressView),
+            progressBarItem,
             UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
         ]
 
@@ -123,7 +126,10 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         }
     }
     
-    private func didUpdate(lifecycle: CloudSyncProgressView.Lifecycle, in progressView: CloudSyncProgressView) {
+    private func didUpdate(lifecycle: CloudSyncProgressView.Lifecycle,
+                           progressView: CloudSyncProgressView,
+                           sender: UIBarButtonItem?)
+    {
         switch lifecycle {
         case .hide:
             UIView.style_animateNormal {
@@ -134,8 +140,10 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
                 self.navigationController?.isToolbarHidden = false
             }
         case .present(let error):
-            // TODO: Present error
-            break
+            let errorVC = UIAlertController(error: error, sender: sender.map { .right($0) }) { _ in
+                progressView.activateTimer()
+            }
+            self.present(errorVC, animated: true, completion: nil)
         }
     }
 
