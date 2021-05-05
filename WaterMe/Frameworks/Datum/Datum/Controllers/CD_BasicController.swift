@@ -107,6 +107,20 @@ internal class CD_BasicController: BasicController {
         case .__testing_inMemory, .__testing_withClass:
             self._syncProgress = nil
         }
+        
+        #if DEBUG
+        guard
+            #available(iOS 14.0, *),
+            let container = container as? NSPersistentCloudKitContainer
+        else { return }
+        // initialize the CloudKit schema
+        // only do this once per change to CD MOM
+        let configureCKSchema = false
+        if configureCKSchema {
+            try! container.initializeCloudKitSchema(options: [.printSchema])
+            fatalError("Cannot continue while using: initializeCloudKitSchema")
+        }
+        #endif
     }
 
     // MARK: Properties
