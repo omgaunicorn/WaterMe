@@ -54,10 +54,16 @@ class CloudSyncProgressView: UIStackView {
     
     private var state: State = .idle {
         didSet {
-            self.idleButton.isHidden        = self.state != .idle
-            self.syncingButton.isHidden     = self.state != .syncing
-            self.errorButton.isHidden       = self.state != .error
-            self.unavailableButton.isHidden = self.state != .unavailable
+            UIView.style_animateNormal {
+                self.idleButton.isHidden        = self.state != .idle
+                self.syncingButton.isHidden     = self.state != .syncing
+                self.errorButton.isHidden       = self.state != .error
+                self.unavailableButton.isHidden = self.state != .unavailable
+                self.idleButton.alpha           = self.state == .idle        ? 1 : 0.1
+                self.syncingButton.alpha        = self.state == .syncing     ? 1 : 0.1
+                self.errorButton.alpha          = self.state == .error       ? 1 : 0.1
+                self.unavailableButton.alpha    = self.state == .unavailable ? 1 : 0.1
+            }
         }
     }
     
@@ -170,9 +176,16 @@ class CloudSyncProgressView: UIStackView {
                 self?.state = .syncing
                 self?.lifecycle = .show
             } else {
-                invalidate()
+                let oldState = self?.state
                 self?.state = .idle
-                self?.lifecycle = .hide
+                if oldState == .idle {
+                    // if the state was previously idle, then we want to let
+                    // the timer invalidate and for the hide lifecycle to be fired.
+                    // This makes it so the user sees the sync was completed
+                    // 2 seconds before disappearing
+                    invalidate()
+                    self?.lifecycle = .hide
+                }
             }
         }
     }
@@ -197,7 +210,10 @@ class CloudSyncProgressView: UIStackView {
     
     override func didMoveToWindow() {
         super.didMoveToWindow()
+        guard self.window != nil else { return }
         self.updateLabels()
+        let oldState = self.state
+        self.state = oldState
     }
     
     required init(coder: NSCoder) {

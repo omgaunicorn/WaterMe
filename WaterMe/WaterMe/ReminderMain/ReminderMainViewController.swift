@@ -128,13 +128,9 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
     private func didUpdate(_ progressView: CloudSyncProgressView, _ completion: ((Bool) -> Void)?) {
         switch progressView.lifecycle {
         case .hide:
-            UIView.style_animateNormal {
-                self.navigationController?.isToolbarHidden = true
-            }
+            self.navigationController?.setToolbarHidden(true, animated: true)
         case .show:
-            UIView.style_animateNormal {
-                self.navigationController?.isToolbarHidden = false
-            }
+            self.navigationController?.setToolbarHidden(false, animated: true)
         case .present(let error, let sender):
             let errorVC = UIAlertController(error: error, sender: .left(sender)) { _ in
                 completion?(true)
