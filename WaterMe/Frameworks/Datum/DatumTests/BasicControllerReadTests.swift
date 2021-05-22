@@ -83,12 +83,17 @@ class BasicControllerReadTests: DatumTestsBase {
         let mist = try self.basicController.newReminder(for: vessel).get()
         let move = try self.basicController.newReminder(for: vessel).get()
         let other = try self.basicController.newReminder(for: vessel).get()
-        try self.basicController.update(kind: .water, interval: 8, note: "K", in: water).get()
-        try self.basicController.update(kind: .trim, interval: 4, note: "P", in: trim).get()
-        try self.basicController.update(kind: .fertilize, interval: 10, note: "A", in: fertilize).get()
-        try self.basicController.update(kind: .mist, interval: 9, note: "Z", in: mist).get()
-        try self.basicController.update(kind: .move(location: "ZZZ"), interval: 11, note: "C", in: move).get()
-        try self.basicController.update(kind: .other(description: "YYY"), interval: 2, note: "M", in: other).get()
+        try self.basicController.update(kind: .water, interval: 8, isEnabled: true, note: "K", in: water).get()
+        try self.basicController.update(kind: .trim, interval: 4, isEnabled: true, note: "P", in: trim).get()
+        try self.basicController.update(kind: .fertilize, interval: 10, isEnabled: true, note: "A", in: fertilize).get()
+        try self.basicController.update(kind: .mist, interval: 9, isEnabled: true, note: "Z", in: mist).get()
+        try self.basicController.update(kind: .move(location: "ZZZ"), interval: 11, isEnabled: true, note: "C", in: move).get()
+        try self.basicController.update(kind: .other(description: "YYY"), interval: 2, isEnabled: true, note: "M", in: other).get()
+        if self.basicController is CD_BasicController {
+            // Test that Disabled reminders work properly in CD only
+            let disabled = try self.basicController.newReminder(for: vessel).get()
+            try self.basicController.update(kind: .other(description: "xxDDxx"), interval: 2, isEnabled: false, note: "Disabled", in: disabled).get()
+        }
         try self.basicController.appendNewPerformToReminders(with:
             [water,trim,fertilize,mist,move,other].map { Identifier(rawValue: $0.uuid) }
         ).get()
@@ -102,7 +107,7 @@ class BasicControllerReadTests: DatumTestsBase {
     
     func test_reminder_sort_kind_ascend() {
         _ = try! self.reminderSortingSetup()
-        let query = try! self.basicController.allReminders(sorted: .kind, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .kind, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData { data in
             wait.fulfill()
@@ -120,7 +125,7 @@ class BasicControllerReadTests: DatumTestsBase {
     
     func test_reminder_sort_kind_descend() {
         _ = try! self.reminderSortingSetup()
-        let query = try! self.basicController.allReminders(sorted: .kind, ascending: false).get()
+        let query = try! self.basicController.enabledReminders(sorted: .kind, ascending: false).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData { data in
             wait.fulfill()
@@ -138,7 +143,7 @@ class BasicControllerReadTests: DatumTestsBase {
     
     func test_reminder_sort_interval_ascend() {
         _ = try! self.reminderSortingSetup()
-        let query = try! self.basicController.allReminders(sorted: .interval, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .interval, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData { data in
             wait.fulfill()
@@ -156,7 +161,7 @@ class BasicControllerReadTests: DatumTestsBase {
     
     func test_reminder_sort_interval_descend() {
         _ = try! self.reminderSortingSetup()
-        let query = try! self.basicController.allReminders(sorted: .interval, ascending: false).get()
+        let query = try! self.basicController.enabledReminders(sorted: .interval, ascending: false).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData { data in
             wait.fulfill()
@@ -174,7 +179,7 @@ class BasicControllerReadTests: DatumTestsBase {
     
     func test_reminder_sort_note_ascend() {
         _ = try! self.reminderSortingSetup()
-        let query = try! self.basicController.allReminders(sorted: .note, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .note, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData { data in
             wait.fulfill()
@@ -192,7 +197,7 @@ class BasicControllerReadTests: DatumTestsBase {
     
     func test_reminder_sort_note_descend() {
         _ = try! self.reminderSortingSetup()
-        let query = try! self.basicController.allReminders(sorted: .note, ascending: false).get()
+        let query = try! self.basicController.enabledReminders(sorted: .note, ascending: false).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData { data in
             wait.fulfill()
@@ -210,7 +215,7 @@ class BasicControllerReadTests: DatumTestsBase {
     
     func test_reminder_sort_nextPerformDate_ascend() {
         _ = try! self.reminderSortingSetup()
-        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData { data in
             wait.fulfill()
@@ -228,7 +233,7 @@ class BasicControllerReadTests: DatumTestsBase {
     
     func test_reminder_sort_nextPerformDate_descend() {
         _ = try! self.reminderSortingSetup()
-        let query = try! self.basicController.allReminders(sorted: .nextPerformDate, ascending: false).get()
+        let query = try! self.basicController.enabledReminders(sorted: .nextPerformDate, ascending: false).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData { data in
             wait.fulfill()

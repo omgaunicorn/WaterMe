@@ -43,6 +43,7 @@ enum Analytics {
         case create = "CRUD.R.Create"
         case update = "CRUD.R.Update"
         case delete = "CRUD.R.Delete"
+        case pause = "CRUD.R.Pause"
         case performLegacy = "CRUD.R.performLegacy"
         case performDrag = "CRUD.R.performDrag"
 

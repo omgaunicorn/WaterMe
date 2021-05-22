@@ -22,17 +22,20 @@
 //
 
 import UIKit
+import Calculate
+import CoreData
 
 public func NewBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
     do {
-        let bc = try CD_BasicController(kind: kind, forTesting: false)
+        let bc = try CD_BasicController(kind: kind)
         return .success(bc)
     } catch {
+        error.log(as: .emergency)
         return .failure(.loadError)
     }
 }
 
-public protocol BasicController: class {
+public protocol BasicController: AnyObject {
 
     static var storeDirectoryURL: URL { get }
     static var storeExists: Bool { get }
@@ -49,14 +52,14 @@ public protocol BasicController: class {
 
     // MARK: Read
     func allVessels(sorted: ReminderVesselSortOrder, ascending: Bool) -> Result<AnyCollectionQuery<ReminderVessel, Int>, DatumError>
-    func allReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
+    func enabledReminders(sorted: ReminderSortOrder, ascending: Bool) -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     func groupedReminders() -> Result<AnyCollectionQuery<Reminder, IndexPath>, DatumError>
     func reminderVessel(matching identifier: Identifier) -> Result<ReminderVessel, DatumError>
     func reminder(matching identifier: Identifier) -> Result<Reminder, DatumError>
 
     // MARK: Update
     func update(displayName: String?, icon: ReminderVesselIcon?, in vessel: ReminderVessel) -> Result<Void, DatumError>
-    func update(kind: ReminderKind?, interval: Int?, note: String?, in reminder: Reminder) -> Result<Void, DatumError>
+    func update(kind: ReminderKind?, interval: Int?, isEnabled: Bool?, note: String?, in reminder: Reminder) -> Result<Void, DatumError>
     func appendNewPerformToReminders(with identifiers: [Identifier]) -> Result<Void, DatumError>
 
     // MARK: Delete
@@ -75,22 +78,41 @@ extension HasBasicController {
     }
 }
 
-public enum ControllerKind {
-    case local, sync
+public enum ControllerKind: RawRepresentable {
+    
+    case local
+    case sync
+    case __testing_inMemory
+    case __testing_withClass(NSPersistentContainer.Type)
+    
+    public var rawValue: Bool {
+        switch self {
+        case .local:
+            return false
+        case .sync:
+            return true
+        case .__testing_inMemory, .__testing_withClass:
+            fatalError("RawValue unsupported while testing")
+        }
+    }
+    
+    public init(rawValue: Bool) {
+        self = rawValue ? .sync : .local
+    }
 }
 
-internal func testing_NewRLMBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
+internal func testing_NewRLMBasicController() -> Result<BasicController, DatumError> {
     do {
-        let bc = try RLM_BasicController(kind: kind, forTesting: true)
+        let bc = try RLM_BasicController(kind: .__testing_inMemory)
         return .success(bc)
     } catch {
         return .failure(.loadError)
     }
 }
 
-internal func testing_NewCDBasicController(of kind: ControllerKind) -> Result<BasicController, DatumError> {
+internal func testing_NewCDBasicController() -> Result<BasicController, DatumError> {
     do {
-        let bc = try CD_BasicController(kind: kind, forTesting: true)
+        let bc = try CD_BasicController(kind: .__testing_inMemory)
         return .success(bc)
     } catch {
         return .failure(.loadError)

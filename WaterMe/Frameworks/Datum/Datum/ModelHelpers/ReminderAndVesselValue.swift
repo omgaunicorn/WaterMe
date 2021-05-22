@@ -64,7 +64,7 @@ public struct ReminderValue: Hashable {
     internal init?(reminder: CD_Reminder?) {
         guard let reminder = reminder else { return nil }
         self.uuid = Identifier(rawValue: reminder.objectID.uriRepresentation().absoluteString)
-        self.nextPerformDate = reminder.nextPerformDate
+        self.nextPerformDate = reminder.raw_nextPerformDate
         self.kind = reminder.kind
     }
 }
@@ -92,7 +92,7 @@ public struct ReminderVesselValue: Hashable {
         guard let reminderVessel = reminderVessel else { return nil }
         self.uuid = Identifier(rawValue: reminderVessel.objectID.uriRepresentation().absoluteString)
         self.name = reminderVessel.shortLabelSafeDisplayName
-        self.imageData = reminderVessel.iconImageData
+        self.imageData = reminderVessel.raw_iconImageData
     }
 }
 
@@ -105,5 +105,5 @@ extension RLM_ReminderVesselWrapper: HasIconImageData {
 }
 
 extension CD_ReminderVesselWrapper: HasIconImageData {
-    var iconImageData: Data? { self.wrappedObject.iconImageData }
+    var iconImageData: Data? { self.wrappedObject.raw_iconImageData }
 }

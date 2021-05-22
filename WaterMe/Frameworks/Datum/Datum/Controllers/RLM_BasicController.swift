@@ -62,27 +62,25 @@ internal class RLM_BasicController: BasicController {
                 self.realmReference = realm
             }
             #endif
-            return try .success(realm)
+            return .success(realm)
         } catch {
             error.log()
             return .failure(.loadError)
         }
     }
 
-    internal init(kind: ControllerKind, forTesting: Bool) throws {
+    internal init(kind: ControllerKind) throws {
         self.kind = kind
         var realmConfig = Realm.Configuration()
         realmConfig.schemaVersion = 14
         realmConfig.objectTypes = [RLM_ReminderVessel.self, RLM_Reminder.self, RLM_ReminderPerform.self]
+        try type(of: self).createLocalRealmDirectoryIfNeeded()
+        try type(of: self).copyRealmFromBundleIfNeeded()
         switch kind {
         case .local:
-            try type(of: self).createLocalRealmDirectoryIfNeeded()
-            try type(of: self).copyRealmFromBundleIfNeeded()
-            if forTesting {
-                realmConfig.inMemoryIdentifier = String(Int.random(in: 100_000...1_000_000))
-            } else {
-                realmConfig.fileURL = type(of: self).localRealmFile
-            }
+            realmConfig.fileURL = type(of: self).localRealmFile
+        case .__testing_inMemory, .__testing_withClass:
+            realmConfig.inMemoryIdentifier = String(Int.random(in: 100_000...1_000_000))
         case .sync: /*(let user)*/
             // let url = user.realmURL(withAppName: "WaterMeBasic")
             fatalError("Syncing Realms are Not Implemented for WaterMe Yet")
@@ -108,9 +106,9 @@ internal class RLM_BasicController: BasicController {
         }
     }
 
-    internal func allReminders(sorted: ReminderSortOrder = .nextPerformDate,
-                               ascending: Bool = true)
-                               -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
+    internal func enabledReminders(sorted: ReminderSortOrder = .nextPerformDate,
+                                   ascending: Bool = true)
+                                   -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     {
         return self.realm.map {
             AnyCollectionQuery(
@@ -126,7 +124,7 @@ internal class RLM_BasicController: BasicController {
 
     internal func groupedReminders() -> Result<AnyCollectionQuery<Reminder, IndexPath>, DatumError> {
         var failure: DatumError?
-        let _queries = ReminderSection.allCases.compactMap
+        let _queries = ReminderSection.__realmCases.compactMap
         { section -> (ReminderSection, AnyCollectionQuery<Reminder, Int>)? in
             let result = self.reminders(in: section)
             switch result {
@@ -290,6 +288,7 @@ internal class RLM_BasicController: BasicController {
     
     internal func update(kind: ReminderKind? = nil,
                          interval: Int? = nil,
+                         isEnabled: Bool? = nil,
                          note: String? = nil,
                          in reminder: Reminder) -> Result<Void, DatumError>
     {
@@ -303,6 +302,10 @@ internal class RLM_BasicController: BasicController {
             if let interval = interval {
                 reminder.interval = interval
                 reminder.recalculateNextPerformDate()
+            }
+            if let isEnabled = isEnabled, isEnabled == false {
+                realm.cancelWrite()
+                return .failure(.realmIsEnabledFalseUnsupported)
             }
             if let note = note {
                 // make sure the string is not empty. If it is empty, set it to blank string

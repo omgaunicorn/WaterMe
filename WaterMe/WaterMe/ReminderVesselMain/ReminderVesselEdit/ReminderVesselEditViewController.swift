@@ -171,9 +171,10 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
             self.completionHandler?(self)
             return
         }
-        let vc = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .right(sender))
+        let vc = UIAlertController(localizedDeleteConfirmationWithOptions: [],
+                                   sender: .right(sender))
         { confirmed in
-            guard confirmed == true else { return }
+            guard confirmed == .delete else { return }
 
             Analytics.log(event: Analytics.CRUD_Op_RV.delete)
 
@@ -212,7 +213,8 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
                 case .dismiss,
                      .openWaterMeSettings,
                      .reminderMissingMoveLocation,
-                     .reminderMissingOtherDescription:
+                     .reminderMissingOtherDescription,
+                     .reminderMissingEnabled:
                     assertionFailure()
                     fallthrough
                 case .cancel:

@@ -39,23 +39,23 @@ extension CD_ReminderPerformTests {
     func test_append() {
         let _item = self.newItem() as! CD_ReminderWrapper
         let item = _item.wrappedObject
-        XCTAssertEqual(item.performed.count, 0)
+        XCTAssertEqual(item.raw_performed!.count, 0)
         try! self.basicController.appendNewPerformToReminders(with: [.init(rawValue: _item.uuid)]).get()
-        XCTAssertEqual(item.performed.count, 1)
+        XCTAssertEqual(item.raw_performed!.count, 1)
         try! self.basicController.appendNewPerformToReminders(with: [.init(rawValue: _item.uuid)]).get()
-        XCTAssertEqual(item.performed.count, 2)
+        XCTAssertEqual(item.raw_performed!.count, 2)
     }
 
     func test_perform_dates() {
         let _item = self.newItem() as! CD_ReminderWrapper
         let item = _item.wrappedObject
-        XCTAssertEqual(item.performed.count, 0)
+        XCTAssertEqual(item.raw_performed!.count, 0)
         let now = Date()
         let future = Calendar.current.dateByAddingNumberOfDays(_item.interval, to: now)
         try! self.basicController.appendNewPerformToReminders(with: [.init(rawValue: _item.uuid)]).get()
-        XCTAssertEqual(item.performed.count, 1)
-        let perform = item.performed.allObjects.first! as! CD_ReminderPerform
-        XCTAssertDatesClose(perform.date, now, within: 1)
+        XCTAssertEqual(item.raw_performed!.count, 1)
+        let perform = item.raw_performed!.allObjects.first! as! CD_ReminderPerform
+        XCTAssertDatesClose(perform.raw_date!, now, within: 1)
         XCTAssertDatesClose(_item.lastPerformDate!, now, within: 1)
         XCTAssertDatesClose(_item.nextPerformDate!, future, within: 1)
     }

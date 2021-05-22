@@ -58,7 +58,7 @@ class BasicControllerCreateUpdateTests: DatumTestsBase {
         XCTAssertNil(item.note)
         XCTAssertEqual(item.kind, .water)
         XCTAssertEqual(item.interval, 7)
-        try! self.basicController.update(kind: .move(location: "ベランダー"), interval: 20, note: "お花水", in: item).get()
+        try! self.basicController.update(kind: .move(location: "ベランダー"), interval: 20, isEnabled: true, note: "お花水", in: item).get()
         XCTAssertEqual(item.note, "お花水")
         XCTAssertEqual(item.kind, .move(location: "ベランダー"))
         XCTAssertEqual(item.interval, 20)
@@ -70,11 +70,11 @@ class BasicControllerCreateUpdateTests: DatumTestsBase {
         XCTAssertNil(item.note)
         XCTAssertEqual(item.kind, .water)
         XCTAssertEqual(item.interval, 7)
-        try! self.basicController.update(kind: .move(location: "ベランダー"), interval: 20, note: "お花水", in: item).get()
+        try! self.basicController.update(kind: .move(location: "ベランダー"), interval: 20, isEnabled: true, note: "お花水", in: item).get()
         XCTAssertEqual(item.note, "お花水")
         XCTAssertEqual(item.kind, .move(location: "ベランダー"))
         XCTAssertEqual(item.interval, 20)
-        try! self.basicController.update(kind: nil, interval: nil, note: nil, in: item).get()
+        try! self.basicController.update(kind: nil, interval: nil, isEnabled: true, note: nil, in: item).get()
         XCTAssertEqual(item.note, "お花水")
         XCTAssertEqual(item.kind, .move(location: "ベランダー"))
         XCTAssertEqual(item.interval, 20)
@@ -107,12 +107,12 @@ extension CD_BasicControllerCreateUpdateTests {
         let _item2 = try! self.basicController.newReminder(for: vessel).get()
         let item1 = (_item1 as! CD_ReminderWrapper).wrappedObject
         let item2 = (_item2 as! CD_ReminderWrapper).wrappedObject
-        XCTAssertEqual(item1.performed.count, 0)
-        XCTAssertEqual(item2.performed.count, 0)
+        XCTAssertEqual(item1.raw_performed!.count, 0)
+        XCTAssertEqual(item2.raw_performed!.count, 0)
         try! self.basicController.appendNewPerformToReminders(
             with: [_item1, _item2].map { .init(rawValue: $0.uuid) }
         ).get()
-        XCTAssertEqual(item1.performed.count, 1)
-        XCTAssertEqual(item2.performed.count, 1)
+        XCTAssertEqual(item1.raw_performed!.count, 1)
+        XCTAssertEqual(item2.raw_performed!.count, 1)
     }
 }

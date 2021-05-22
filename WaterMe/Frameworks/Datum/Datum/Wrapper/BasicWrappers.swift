@@ -70,7 +70,7 @@ extension CollectionChangeUpdate where U == IndexPath {
     }
 }
 
-public protocol ObservationToken: class {
+public protocol ObservationToken: AnyObject {
     func invalidate()
 }
 

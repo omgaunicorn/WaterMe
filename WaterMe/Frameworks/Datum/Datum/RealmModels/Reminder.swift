@@ -39,6 +39,8 @@ internal class RLM_Reminder: Object {
     internal override class func primaryKey() -> String {
         return #keyPath(RLM_Reminder.uuid)
     }
+    // Added into CoreData but on Realm we don't support this value
+    internal var isEnabled: Bool { return true }
 }
 
 @objc(ReminderPerform)

@@ -27,8 +27,8 @@ import CoreData
 
 class RealmToCoreDataMigratorBaseTests: XCTestCase {
 
-    let source = try! RLM_BasicController(kind: .local, forTesting: true)
-    let destination = try! CD_BasicController(kind: .local, forTesting: true)
+    let source = try! RLM_BasicController(kind: .__testing_inMemory)
+    let destination = try! CD_BasicController(kind: .__testing_inMemory)
     var token: ObservationToken?
 
     override func tearDownWithError() throws {
@@ -146,76 +146,76 @@ class RealmToCoreDataMigratorAccuracyTests: RealmToCoreDataMigratorBaseTests {
                 XCTAssertEqual(try? context.fetch(req_r).count, 12)
                 XCTAssertEqual(performs.count, 27)
 
-                let v_1 = vessels.filter({ $0.displayName == "One" }).first!
-                let v_2 = vessels.filter({ $0.displayName == "Two" }).first!
-                let v_3 = vessels.filter({ $0.displayName == "Three" }).first!
+                let v_1 = vessels.filter({ $0.raw_displayName == "One" }).first!
+                let v_2 = vessels.filter({ $0.raw_displayName == "Two" }).first!
+                let v_3 = vessels.filter({ $0.raw_displayName == "Three" }).first!
 
                 XCTAssertEqual(v_1.icon?.emoji, "1️⃣")
                 XCTAssertNil(v_2.icon)
                 XCTAssertEqual(v_3.icon?.emoji, "3️⃣")
 
-                XCTAssertNotNil(v_1.migrated!.realmIdentifier)
-                XCTAssertNotNil(v_2.migrated!.realmIdentifier)
-                XCTAssertNotNil(v_3.migrated!.realmIdentifier)
+                XCTAssertNotNil(v_1.raw_migrated!.raw_realmIdentifier)
+                XCTAssertNotNil(v_2.raw_migrated!.raw_realmIdentifier)
+                XCTAssertNotNil(v_3.raw_migrated!.raw_realmIdentifier)
 
-                let v_1_r_1 = (v_1.reminders as! Set<CD_Reminder>).filter({ $0.interval == 1 }).first!
-                let v_1_r_2 = (v_1.reminders as! Set<CD_Reminder>).filter({ $0.interval == 10 }).first!
-                let v_1_r_3 = (v_1.reminders as! Set<CD_Reminder>).filter({ $0.interval == 100 }).first!
+                let v_1_r_1 = (v_1.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == 1 }).first!
+                let v_1_r_2 = (v_1.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == 10 }).first!
+                let v_1_r_3 = (v_1.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == 100 }).first!
 
                 XCTAssertEqual(v_1_r_1.kind, .mist)
                 XCTAssertEqual(v_1_r_2.kind, .fertilize)
                 XCTAssertEqual(v_1_r_3.kind, .move(location: "Over There"))
 
-                XCTAssertNil(v_1_r_1.note)
-                XCTAssertNil(v_1_r_2.note)
-                XCTAssertEqual(v_1_r_3.note, "This is a Note")
+                XCTAssertNil(v_1_r_1.raw_note)
+                XCTAssertNil(v_1_r_2.raw_note)
+                XCTAssertEqual(v_1_r_3.raw_note, "This is a Note")
 
-                XCTAssertNotNil(v_1_r_1.migrated!.realmIdentifier)
-                XCTAssertNotNil(v_1_r_2.migrated!.realmIdentifier)
-                XCTAssertNotNil(v_1_r_3.migrated!.realmIdentifier)
+                XCTAssertNotNil(v_1_r_1.raw_migrated!.raw_realmIdentifier)
+                XCTAssertNotNil(v_1_r_2.raw_migrated!.raw_realmIdentifier)
+                XCTAssertNotNil(v_1_r_3.raw_migrated!.raw_realmIdentifier)
 
-                let v_2_r_1 = (v_2.reminders as! Set<CD_Reminder>).filter({ $0.interval == -1 }).first!
-                let v_2_r_2 = (v_2.reminders as! Set<CD_Reminder>).filter({ $0.interval == -10 }).first!
-                let v_2_r_3 = (v_2.reminders as! Set<CD_Reminder>).filter({ $0.interval == -100 }).first!
+                let v_2_r_1 = (v_2.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == -1 }).first!
+                let v_2_r_2 = (v_2.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == -10 }).first!
+                let v_2_r_3 = (v_2.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == -100 }).first!
 
                 XCTAssertEqual(v_2_r_1.kind, .water)
                 XCTAssertEqual(v_2_r_2.kind, .trim)
                 XCTAssertEqual(v_2_r_3.kind, .other(description: nil))
 
-                XCTAssertNil(v_2_r_1.note)
-                XCTAssertNil(v_2_r_2.note)
-                XCTAssertEqual(v_2_r_3.note, "This is a Note")
+                XCTAssertNil(v_2_r_1.raw_note)
+                XCTAssertNil(v_2_r_2.raw_note)
+                XCTAssertEqual(v_2_r_3.raw_note, "This is a Note")
 
-                XCTAssertNotNil(v_2_r_1.migrated!.realmIdentifier)
-                XCTAssertNotNil(v_2_r_2.migrated!.realmIdentifier)
-                XCTAssertNotNil(v_2_r_3.migrated!.realmIdentifier)
+                XCTAssertNotNil(v_2_r_1.raw_migrated!.raw_realmIdentifier)
+                XCTAssertNotNil(v_2_r_2.raw_migrated!.raw_realmIdentifier)
+                XCTAssertNotNil(v_2_r_3.raw_migrated!.raw_realmIdentifier)
 
-                let v_3_r_1 = (v_3.reminders as! Set<CD_Reminder>).filter({ $0.interval == 10000000 }).first!
-                let v_3_r_2 = (v_3.reminders as! Set<CD_Reminder>).filter({ $0.interval == 100000000 }).first!
-                let v_3_r_3 = (v_3.reminders as! Set<CD_Reminder>).filter({ $0.interval == 1000000000 }).first!
+                let v_3_r_1 = (v_3.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == 10000000 }).first!
+                let v_3_r_2 = (v_3.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == 100000000 }).first!
+                let v_3_r_3 = (v_3.raw_reminders as! Set<CD_Reminder>).filter({ $0.raw_interval == 1000000000 }).first!
 
                 XCTAssertEqual(v_3_r_1.kind, .move(location: "One"))
                 XCTAssertEqual(v_3_r_2.kind, .move(location: "Two"))
                 XCTAssertEqual(v_3_r_3.kind, .move(location: "Three"))
 
-                XCTAssertEqual(v_3_r_1.note, "One")
-                XCTAssertEqual(v_3_r_2.note, "Two")
-                XCTAssertEqual(v_3_r_3.note, "Three")
+                XCTAssertEqual(v_3_r_1.raw_note, "One")
+                XCTAssertEqual(v_3_r_2.raw_note, "Two")
+                XCTAssertEqual(v_3_r_3.raw_note, "Three")
 
-                XCTAssertNotNil(v_3_r_1.migrated!.realmIdentifier)
-                XCTAssertNotNil(v_3_r_2.migrated!.realmIdentifier)
-                XCTAssertNotNil(v_3_r_3.migrated!.realmIdentifier)
+                XCTAssertNotNil(v_3_r_1.raw_migrated!.raw_realmIdentifier)
+                XCTAssertNotNil(v_3_r_2.raw_migrated!.raw_realmIdentifier)
+                XCTAssertNotNil(v_3_r_3.raw_migrated!.raw_realmIdentifier)
 
                 let allReminders = [v_1_r_1, v_1_r_2, v_1_r_3, v_2_r_1, v_2_r_2, v_2_r_3, v_3_r_1, v_3_r_2, v_3_r_3]
-                XCTAssertEqual(allReminders.filter({ $0.performed.count == 3 }).count, allReminders.count)
+                XCTAssertEqual(allReminders.filter({ $0.raw_performed!.count == 3 }).count, allReminders.count)
                 allReminders.forEach() {
-                    $0.performed.forEach() {
+                    $0.raw_performed!.forEach() {
                         let p = $0 as! CD_ReminderPerform
-                        XCTAssertNil(p.migrated)
+                        XCTAssertNil(p.raw_migrated)
                     }
                 }
 
-                let destPerforms = performs.map({ $0.date }).sorted(by: { $0 > $1 })
+                let destPerforms = performs.map({ $0.raw_date! }).sorted(by: { $0 > $1 })
                 XCTAssertEqual(srcPerforms, destPerforms)
             case .failure(let error):
                 XCTFail("Migration failed with error: \(error)")
@@ -330,7 +330,7 @@ class RealmToCoreDataMigrationSearchTests: RealmToCoreDataMigratorBaseTests {
 
     func test_search_reminderCollection() {
         let id = Identifier(rawValue: self.sourceVessel.reminders.first!.uuid)
-        let query = try! self.destination.allReminders(sorted: .nextPerformDate, ascending: true).get()
+        let query = try! self.destination.enabledReminders(sorted: .nextPerformDate, ascending: true).get()
         let wait = XCTestExpectation()
         self.token = query.test_observe_loadData { data in
             wait.fulfill()
@@ -356,15 +356,15 @@ class RealmToCoreDataMigrationSearchTests: RealmToCoreDataMigratorBaseTests {
         let id = Identifier(rawValue: self.sourceVessel.uuid)
         let _vessel = try! self.destination.reminderVessel(matching: id).get()
         let vessel = (_vessel as! CD_ReminderVesselWrapper).wrappedObject
-        XCTAssertEqual(vessel.migrated?.realmIdentifier, self.sourceVessel.uuid)
-        XCTAssertEqual(vessel.displayName, self.sourceVessel.displayName!)
+        XCTAssertEqual(vessel.raw_migrated?.raw_realmIdentifier, self.sourceVessel.uuid)
+        XCTAssertEqual(vessel.raw_displayName, self.sourceVessel.displayName!)
     }
 
     func test_search_basicController_reminder() {
         let id = Identifier(rawValue: self.sourceVessel.reminders.first!.uuid)
         let _reminder = try! self.destination.reminder(matching: id).get()
         let reminder = (_reminder as! CD_ReminderWrapper).wrappedObject
-        XCTAssertEqual(reminder.migrated?.realmIdentifier, self.sourceVessel.reminders.first!.uuid)
+        XCTAssertEqual(reminder.raw_migrated?.raw_realmIdentifier, self.sourceVessel.reminders.first!.uuid)
     }
 
 }

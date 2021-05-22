@@ -33,6 +33,7 @@ public protocol Reminder: ModelCompleteCheckable {
     var kind: ReminderKind { get }
     var uuid: String { get }
     var interval: Int { get }
+    var isEnabled: Bool { get }
     var note: String? { get }
     var nextPerformDate: Date? { get }
     var lastPerformDate: Date? { get }

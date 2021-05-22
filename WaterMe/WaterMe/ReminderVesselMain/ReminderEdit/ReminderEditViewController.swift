@@ -123,6 +123,7 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
     
     private func update(kind: ReminderKind? = nil,
                         interval: Int? = nil,
+                        isEnabled: Bool? = nil,
                         note: String? = nil,
                         fromKeyboard: Bool = false)
     {
@@ -151,12 +152,15 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
         // update the Reminder in Realm
         let updateResult = basicRC.update(kind: kind,
                                           interval: interval,
+                                          isEnabled: isEnabled,
                                           note: note,
                                           in: reminder)
         
         // show the user errors that may have ocurred
         guard case .failure(let error) = updateResult else { return }
-        UIAlertController.presentAlertVC(for: error, over: self)
+        UIAlertController.presentAlertVC(for: error, over: self) { _ in
+            self.tableViewController?.tableView.reloadData()
+        }
     }
     
     private func intervalChosen(popoverSourceView: UIView?,
@@ -193,16 +197,34 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
             return
         }
 
-        let confirmation = UIAlertController(localizedDeleteConfirmationAlertPresentedFrom: .right(sender))
+        let options: UIAlertController.ReminderDeleteConfirmationOptions
+            = reminder.isEnabled
+            ? [.pause]
+            : []
+        let confirmation = UIAlertController(localizedDeleteConfirmationWithOptions: options,
+                                             sender: .right(sender))
         { confirmed in
-            Analytics.log(event: Analytics.CRUD_Op_R.delete)
-            guard confirmed == true else { return }
-            let deleteResult = basicRC.delete(reminder: reminder)
-            switch deleteResult {
-            case .success:
-                self.completionHandler?(self)
-            case .failure(let error):
-                UIAlertController.presentAlertVC(for: error, over: self, from: sender)
+            switch confirmed {
+            case.delete:
+                Analytics.log(event: Analytics.CRUD_Op_R.delete)
+                let deleteResult = basicRC.delete(reminder: reminder)
+                switch deleteResult {
+                case .success:
+                    self.completionHandler?(self)
+                case .failure(let error):
+                    UIAlertController.presentAlertVC(for: error, over: self, from: sender)
+                }
+            case .pause:
+                Analytics.log(event: Analytics.CRUD_Op_R.pause)
+                let pauseResult = basicRC.update(kind: nil, interval: nil, isEnabled: !reminder.isEnabled, note: nil, in: reminder)
+                switch pauseResult {
+                case .success:
+                    self.completionHandler?(self)
+                case .failure(let error):
+                    UIAlertController.presentAlertVC(for: error, over: self, from: sender)
+                }
+            default:
+                return
             }
         }
         self.present(confirmation, animated: true, completion: nil)
@@ -239,6 +261,8 @@ class ReminderEditViewController: StandardViewController, HasBasicController {
                     break
                 case .saveAnyway:
                     self.completionHandler?(self)
+                case .reminderMissingEnabled:
+                    self.tableViewController?.forceScrollToIsEnabledRow()
                 case .reminderMissingMoveLocation, .reminderMissingOtherDescription:
                     self.tableViewController?.forceTextFieldToBecomeFirstResponder()
                 }
@@ -288,6 +312,12 @@ extension ReminderEditViewController: ReminderEditTableViewControllerDelegate {
                          within: ReminderEditTableViewController)
     {
         self.update(note: newNote, fromKeyboard: true)
+    }
+
+    func userChangedIsEnabled(to newIsEnabled: Bool,
+                              within: ReminderEditTableViewController)
+    {
+        self.update(isEnabled: newIsEnabled)
     }
 
     func userDidSelectChangeInterval(popoverSourceView: UIView?,

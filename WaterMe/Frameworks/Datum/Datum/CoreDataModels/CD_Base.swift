@@ -28,20 +28,21 @@ internal class CD_Base: NSManagedObject {
 
     class var entityName: String { "CD_Base" }
     
-    @NSManaged var dateModified: Date
-    @NSManaged var dateCreated: Date
-    @NSManaged var bloop: Bool
-    @NSManaged var migrated: CD_Migrated?
-    
     override func awakeFromInsert() {
         super.awakeFromInsert()
         let now = Date()
-        self.dateCreated = now
-        self.dateModified = now
+        self.raw_dateCreated = now
+        self.raw_dateModified = now
     }
     
-    func datum_willSave() {
-        self.dateModified = Date()
+    override func willSave() {
+        super.willSave()
+        
+        let now = Date()
+        let mod = self.raw_dateModified ?? now
+        let interval = abs(mod.timeIntervalSince(now))
+        guard interval >= 1 else { return }
+        self.raw_dateModified = now
     }
 }
 
@@ -51,5 +52,4 @@ internal class CD_Migrated: CD_Base {
     class var request: NSFetchRequest<CD_Migrated> {
         NSFetchRequest<CD_Migrated>(entityName: self.entityName)
     }
-    @NSManaged var realmIdentifier: String?
 }

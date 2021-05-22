@@ -36,6 +36,15 @@
 /* Button Title in an Alert that allows the user to open the camera and take a new photo. */
 "Camera" = "Camera";
 
+/* "Button Title in an Alert that allows the user to pause notifications for a reminder */
+"Pause Notifications" = "Pausa notifiche";
+
+/* Button Title in an Alert that allows the user to pause notifications for a reminder */
+"Pause" = "Pausa";
+
+/* Button Title in an Alert that allows the user to unpause/resume notifications for a reminder */
+"Unpause" = "Riattiva";
+
 /* Alert Title: Camera Restricted: We can’t access the camera because it is not allowed by an IT policy / parent control. */
 "Camera Restricted" = "Accesso camera limitato";
 
@@ -123,6 +132,9 @@
 /* Button Title in an Alert that allows the user to open a screen where they can choose from various emoji instead of a photo for their plant. */
 "Emoji" = "Emoji";
 
+/* Realm Error: Pause: Message: Pausing reminders not supported. */
+"Pausing notifications not available." = "Notifiche in pausa non disponibile.";
+
 /* Realm Error: Delete: Title: Unable to delete the last reminder associated with a plant. */
 "Error Deleting" = "Errore di eliminazione";
 
@@ -180,6 +192,9 @@
 /* Reminder Main List: Section Header: Title */
 "Later" = "Più tardi";
 
+/* Reminder Main List: Section Header: Title") */
+"Paused" = "In pausa";
+
 /* SiriShortcut: Phrase: Random6 */
 "Live long and prosper." = "Lunga vita e prosperità.";
 
@@ -203,6 +218,9 @@
 
 /* SiriShortcut: Description: PerformReminder: Explains to the user that by using this SiriShortcut they mark a reminder as done. */
 "Mark this reminder as done." = "Segna questo promemoria come (fatto).";
+
+/* Error Saving: Reminder: Notifications Paused: If the user has paused notifications for the reminder, a warning is presented when they try to save changes to a reminder. */
+"Notifications Paused" = "Notifiche in pausa";
 
 /* Error Saving: Reminder: Missing Description: If the user has not entered a description for their other reminder and tries to save, an alert will warn them. This is the button title to fix the error. */
 "Missing Description" = "Descrizione mancante";
@@ -251,6 +269,9 @@
 
 /* Edit Reminder: Section Title: Describes the section that asks the user to enter any optional notes. */
 "Notes" = "Note";
+
+/* Edit Reminder: Section Title: Describes the section that allows the user to edit notification settings */
+"Notifications" = "Notifiche";
 
 /* Displayed to the user for Reminders that need to be performed now. */
 "Now" = "Ora";

@@ -28,30 +28,35 @@ import Calculate
 extension CD_Reminder {
     internal var kind: ReminderKind {
         get {
-            return .init(rawValue: (self.kindString, self.descriptionString))
+            return .init(rawValue: (self.raw_kindString ?? ReminderKind.kCaseWaterValue,
+                                    self.raw_descriptionString))
         }
         set {
             let raw = newValue.rawValue
-            self.kindString = raw.primary
-            self.descriptionString = raw.secondary
+            self.raw_kindString = raw.primary
+            self.raw_descriptionString = raw.secondary
         }
     }
 }
 
 extension CD_Reminder: ModelCompleteCheckable {
     internal var isModelComplete: ModelCompleteError? {
+        var recoveries: [RecoveryAction] = []
         switch self.kind {
         case .fertilize, .water, .trim, .mist:
-            return nil
+            break // no errors
         case .move(let description):
-            return description == nil ?
-                ModelCompleteError(_actions: [.reminderMissingMoveLocation, .cancel, .saveAnyway])
-                : nil
+            guard description == nil else { break }
+            recoveries.append(.reminderMissingMoveLocation)
         case .other(let description):
-            return description == nil ?
-                ModelCompleteError(_actions: [.reminderMissingOtherDescription, .cancel, .saveAnyway])
-                : nil
+            guard description == nil else { break }
+            recoveries.append(.reminderMissingOtherDescription)
         }
+        if !self.raw_isEnabled {
+            recoveries.append(.reminderMissingEnabled)
+        }
+        guard !recoveries.isEmpty else { return nil }
+        return ModelCompleteError(_actions: recoveries + [.cancel, .saveAnyway])
     }
 }
 
@@ -97,8 +102,8 @@ extension RLM_Reminder: ModelCompleteCheckable {
 }
 
 public enum ReminderSection: Int, CaseIterable {
-    case late, today, tomorrow, thisWeek, later
-    var dateInterval: DateInterval {
+    case late, today, tomorrow, thisWeek, later, disabled
+    internal var dateInterval: DateInterval {
         switch self {
         case .late:
             return ReminderDateCalculator.late()
@@ -110,7 +115,12 @@ public enum ReminderSection: Int, CaseIterable {
             return ReminderDateCalculator.thisWeek()
         case .later:
             return ReminderDateCalculator.later()
+        case .disabled:
+            fatalError("DISABLED does not have a date range")
         }
+    }
+    internal static var __realmCases: [ReminderSection] {
+        return self.allCases.dropLast()
     }
 }
 

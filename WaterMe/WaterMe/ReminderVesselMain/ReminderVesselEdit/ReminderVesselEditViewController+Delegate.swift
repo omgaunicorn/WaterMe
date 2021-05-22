@@ -58,9 +58,9 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
                 self.present(vc, animated: true, completion: nil)
             case .viewCurrentPhoto:
                 guard let image = self.vesselResult?.value?.icon?.image else { return }
-                let config = DismissHandlingImageViewerConfiguration(image: image) { vc in
+                let config = DismissHandlingImageViewerConfiguration(image: image, completion: { vc in
                     vc.dismiss(animated: true, completion: nil)
-                }
+                })
                 let vc = DismissHandlingImageViewerController(configuration: config)
                 self.present(vc, animated: true, completion: nil)
             case .error(let errorVC):
@@ -161,6 +161,24 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         }
         let deleteResult = basicRC.delete(reminder: reminder)
         switch deleteResult {
+        case .success:
+            return true
+        case .failure(let error):
+            UIAlertController.presentAlertVC(for: error, over: self)
+            return false
+        }
+    }
+
+    func userToggled(reminder: Reminder,
+                     controller: ReminderVesselEditTableViewController?) -> Bool {
+        self.view.endEditing(false)
+        guard let basicRC = self.basicRC else {
+            assertionFailure("Missing Realm Controller.")
+            return false
+        }
+        // TODO does this warrant having a specialized function to toggle the enabled flag?
+        let toggleResult = basicRC.update(kind: nil, interval: nil, isEnabled: !reminder.isEnabled, note: nil, in: reminder)
+        switch toggleResult {
         case .success:
             return true
         case .failure(let error):

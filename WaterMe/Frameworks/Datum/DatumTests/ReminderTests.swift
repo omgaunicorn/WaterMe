@@ -33,6 +33,7 @@ class ReminderTests: DatumTestsBase {
         let item = try! self.basicController.newReminder(for: vessel).get()
         XCTAssertEqual(item.kind, .water)
         XCTAssertEqual(item.interval, 7)
+        XCTAssertTrue(item.isEnabled)
         XCTAssertNil(item.note)
         XCTAssertNil(item.nextPerformDate)
         XCTAssertNil(item.lastPerformDate)
@@ -45,8 +46,8 @@ class ReminderTests: DatumTestsBase {
                                                                icon: nil).get()
         let item1 = try! self.basicController.newReminder(for: vessel).get()
         let item2 = try! self.basicController.newReminder(for: vessel).get()
-        try! self.basicController.update(kind: .move(location: nil), interval: nil, note: nil, in: item1).get()
-        try! self.basicController.update(kind: .other(description: nil), interval: nil, note: nil, in: item2).get()
+        try! self.basicController.update(kind: .move(location: nil), interval: nil, isEnabled: nil, note: nil, in: item1).get()
+        try! self.basicController.update(kind: .other(description: nil), interval: nil, isEnabled: nil, note: nil, in: item2).get()
         let item1Error = item1.isModelComplete
         let item2Error = item2.isModelComplete
         XCTAssertNotNil(item1Error)
@@ -76,7 +77,7 @@ class ReminderTests: DatumTestsBase {
             wait.fulfill()
         }
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            try! self.basicController.update(kind: .mist, interval: 4, note: "A Cool Note", in: item).get()
+            try! self.basicController.update(kind: .mist, interval: 4, isEnabled: true, note: "A Cool Note", in: item).get()
         }
         self.wait(for: [wait], timeout: 0.3)
     }
@@ -95,10 +96,80 @@ class ReminderTests: DatumTestsBase {
         let test_nextDate = Calendar.current.dateByAddingNumberOfDays(Int(item.interval),
                                                                       to: item.lastPerformDate!)
         XCTAssertDatesClose(item.nextPerformDate!, test_nextDate, within: 0.1)
-        try! self.basicController.update(kind: nil, interval: 12, note: nil, in: item).get()
+        try! self.basicController.update(kind: nil, interval: 12, isEnabled: true, note: nil, in: item).get()
         XCTAssertDatesClose(item.lastPerformDate!, test_lastDate, within: 0.1)
         let test_nextDate2 = Calendar.current.dateByAddingNumberOfDays(Int(12),
                                                                       to: item.lastPerformDate!)
         XCTAssertDatesClose(item.nextPerformDate!, test_nextDate2, within: 0.1)
+    }
+}
+
+extension CD_ReminderTests {
+    func test_updateIsEnabled() {
+        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
+
+        let item = try! self.basicController.newReminder(for: vessel).get()
+        XCTAssertTrue(item.isEnabled)
+
+        let wait = XCTestExpectation()
+        self.token = item.observe() { change in
+            switch change {
+            case .change:
+                XCTAssertFalse(item.isEnabled)
+            case .deleted, .error:
+                XCTFail()
+            }
+            wait.fulfill()
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            try! self.basicController.update(kind: nil, interval: nil, isEnabled: false, note: nil, in: item).get()
+        }
+
+        self.wait(for: [wait], timeout: 0.3)
+    }
+    
+    func test_modelComplete_isEnabled() throws {
+        let vessel = try self.basicController.newReminderVessel(displayName: nil,
+                                                               icon: nil).get()
+        let item1 = try self.basicController.newReminder(for: vessel).get()
+        try! self.basicController.update(kind: .move(location: nil),
+                                         interval: nil,
+                                         isEnabled: false,
+                                         note: nil,
+                                         in: item1).get()
+        let item1Error = item1.isModelComplete
+        XCTAssertNotNil(item1Error)
+        XCTAssertEqual(item1Error?._actions[0], .reminderMissingMoveLocation)
+        XCTAssertEqual(item1Error?._actions[1], .reminderMissingEnabled)
+        XCTAssertEqual(item1Error?._actions[2], .cancel)
+        XCTAssertEqual(item1Error?._actions[3], .saveAnyway)
+    }
+}
+
+extension RLM_ReminderTests {
+    func test_updateIsEnabled() {
+        let vessel = try! self.basicController.newReminderVessel(displayName: nil, icon: nil).get()
+
+        let item = try! self.basicController.newReminder(for: vessel).get()
+        XCTAssertTrue(item.isEnabled)
+
+        self.token = item.observe() { change in
+            XCTFail()
+        }
+
+        let wait = XCTestExpectation()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            let result = self.basicController.update(kind: nil, interval: nil, isEnabled: false, note: nil, in: item)
+            switch result {
+            case .failure(let error):
+                XCTAssertEqual(error, .realmIsEnabledFalseUnsupported)
+            case .success:
+                XCTFail()
+            }
+            wait.fulfill()
+        }
+
+        self.wait(for: [wait], timeout: 0.3)
     }
 }

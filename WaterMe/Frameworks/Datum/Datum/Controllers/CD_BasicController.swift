@@ -27,7 +27,7 @@ import Calculate
 
 internal class CD_BasicController: BasicController {
     
-    private class func container(forTesting: Bool) -> NSPersistentContainer? {
+    private class func container(kind: ControllerKind) -> NSPersistentContainer? {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
@@ -37,27 +37,36 @@ internal class CD_BasicController: BasicController {
             let mom = NSManagedObjectModel(contentsOf: url)
         else { return nil }
         
-        // when not testing, return normal persistent container
-        guard forTesting else {
+        switch kind {
+        case .local, .sync:
             return WaterMe_PersistentContainer(name: "WaterMe", managedObjectModel: mom)
+        case .__testing_withClass(let _type):
+            return _type.init(name: "WaterMe", managedObjectModel: mom)
+        case .__testing_inMemory:
+            // when testing make in-memory container
+            let randomName = String(Int.random(in: 100_000...1_000_000))
+            let container = WaterMe_PersistentContainer(name: randomName, managedObjectModel: mom)
+            let description = NSPersistentStoreDescription()
+            description.type = NSInMemoryStoreType
+            container.persistentStoreDescriptions = [description]
+            return container
         }
-        
-        // when testing make in-memory container
-        let randomName = String(Int.random(in: 100_000...1_000_000))
-        let container = WaterMe_PersistentContainer(name: randomName, managedObjectModel: mom)
-        let description = NSPersistentStoreDescription()
-        description.type = NSInMemoryStoreType
-        container.persistentStoreDescriptions = [description]
-        return container
     }
 
-    init(kind: ControllerKind, forTesting: Bool) throws {
+    init(kind: ControllerKind) throws {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
-        guard let container = CD_BasicController.container(forTesting: forTesting)
+        guard let container = CD_BasicController.container(kind: kind)
             else { throw DatumError.loadError }
-        type(of: self).copySampleDBIfNeeded()
+        
+        switch kind {
+        case .local, .sync:
+            type(of: self).copySampleDBIfNeeded()
+        case .__testing_inMemory, .__testing_withClass:
+            break // don't copy sameple DB when testing
+        }
+        
         let lock = DispatchSemaphore(value: 0)
         var error: Error?
         container.loadPersistentStores() { _, _error in
@@ -65,6 +74,7 @@ internal class CD_BasicController: BasicController {
             lock.signal()
         }
         lock.wait()
+        
         guard error == nil else { throw error! }
         container.viewContext.automaticallyMergesChangesFromParent = true
         let fetchRequest = CD_VesselShare.request
@@ -75,7 +85,8 @@ internal class CD_BasicController: BasicController {
             ctx.insert(share)
             try ctx.save()
         }
-        self.kind = .local
+        
+        self.kind = kind
         self.container = container
     }
 
@@ -104,7 +115,7 @@ internal class CD_BasicController: BasicController {
         let newReminder = CD_Reminder(context: context)
         context.insert(newReminder)
         // core data hooks up the inverse relationship
-        newReminder.vessel = vessel
+        newReminder.raw_vessel = vessel
         return context.waterme_save().map {
             CD_ReminderWrapper(newReminder, context: { self.container.viewContext })
         }
@@ -126,9 +137,9 @@ internal class CD_BasicController: BasicController {
         context.insert(newReminder)
         context.insert(vessel)
         // core data hooks up the inverse relationship
-        newReminder.vessel = vessel
+        newReminder.raw_vessel = vessel
         if let displayName = displayName {
-            vessel.displayName = displayName
+            vessel.raw_displayName = displayName
         }
         if let icon = icon {
             vessel.icon = icon
@@ -140,7 +151,7 @@ internal class CD_BasicController: BasicController {
             assertionFailure(message)
             return .failure(.writeError)
         }
-        vessel.share = vesselShares!.first!
+        vessel.raw_share = vesselShares!.first!
         return context.waterme_save().map {
             CD_ReminderVesselWrapper(vessel, context: { self.container.viewContext })
         }
@@ -166,8 +177,9 @@ internal class CD_BasicController: BasicController {
         return .success(AnyCollectionQuery(query))
     }
     
-    func allReminders(sorted: ReminderSortOrder,
-                      ascending: Bool) -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
+    func enabledReminders(sorted: ReminderSortOrder,
+                          ascending: Bool)
+                          -> Result<AnyCollectionQuery<Reminder, Int>, DatumError>
     {
         // debug only sanity checks
         assert(Thread.isMainThread)
@@ -175,6 +187,7 @@ internal class CD_BasicController: BasicController {
         let context = self.container.viewContext
         let fr = CD_Reminder.request
         fr.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
+        fr.predicate = NSPredicate(format: "%K == YES", #keyPath(CD_Reminder.raw_isEnabled))
         let frc = NSFetchedResultsController(fetchRequest: fr,
                                              managedObjectContext: context,
                                              sectionNameKeyPath: nil,
@@ -213,31 +226,36 @@ internal class CD_BasicController: BasicController {
         // debug only sanity checks
         assert(Thread.isMainThread)
         
+        let enabledPredicate = NSPredicate(format: "%K == YES", #keyPath(CD_Reminder.raw_isEnabled))
+        let disabledPredicate = NSPredicate(format: "%K == NO", #keyPath(CD_Reminder.raw_isEnabled))
+        let normalPredicate: (DateInterval) -> NSPredicate = { range in
+            return NSCompoundPredicate(andPredicateWithSubpredicates: [
+                enabledPredicate,
+                NSPredicate(format: "%K >= %@", #keyPath(CD_Reminder.raw_nextPerformDate), (range.start as NSDate)),
+                NSPredicate(format: "%K < %@", #keyPath(CD_Reminder.raw_nextPerformDate), (range.end as NSDate)),
+            ])
+        }
+        
+        let predicate: NSPredicate
+        switch section {
+        case .disabled:
+            predicate = disabledPredicate
+        case .later, .thisWeek, .today, .tomorrow:
+            predicate = normalPredicate(section.dateInterval)
+        case .late:
+            let neverPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
+                enabledPredicate,
+                NSPredicate(format: "%K == nil", #keyPath(CD_Reminder.raw_nextPerformDate))
+            ])
+            predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
+                normalPredicate(section.dateInterval),
+                neverPredicate
+            ])
+        }
+        
         let fetchRequest = CD_Reminder.request
         fetchRequest.sortDescriptors = [CD_Reminder.sortDescriptor(for: sorted, ascending: ascending)]
-        let range = section.dateInterval
-        let andPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
-            NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.nextPerformDate)),
-                                  rightExpression: NSExpression(forConstantValue: range.start),
-                                  modifier: .direct,
-                                  type: .greaterThanOrEqualTo),
-            NSComparisonPredicate(leftExpression: NSExpression(forKeyPath: #keyPath(CD_Reminder.nextPerformDate)),
-                                  rightExpression: NSExpression(forConstantValue: range.end),
-                                  modifier: .direct,
-                                  type: .lessThan)
-        ])
-        if case .late = section {
-            let nilCheck = NSComparisonPredicate(
-                leftExpression: NSExpression(forKeyPath:#keyPath(CD_Reminder.nextPerformDate)),
-                rightExpression: NSExpression(forConstantValue: nil),
-                modifier: .direct,
-                type: .equalTo
-            )
-            let orPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [nilCheck, andPredicate])
-            fetchRequest.predicate = orPredicate
-        } else {
-            fetchRequest.predicate = andPredicate
-        }
+        fetchRequest.predicate = predicate
         let context = self.container.viewContext
         let controller = NSFetchedResultsController(fetchRequest: fetchRequest,
                                                     managedObjectContext: context,
@@ -283,8 +301,8 @@ internal class CD_BasicController: BasicController {
             } else if UUID(uuidString: id.uuid) != nil {
                 // Migrated Legacy Realm Reference
                 let req = NSFetchRequest<NSFetchRequestResult>(entityName: T.entityName)
-                req.predicate = .init(format: "%K == %@",
-                                      #keyPath(CD_Base.migrated.realmIdentifier), id.uuid)
+                let kp = #keyPath(CD_Base.raw_migrated.raw_realmIdentifier)
+                req.predicate = .init(format: "%K == %@", kp, id.uuid)
                 let results = try context.fetch(req)
                 let count = results.count
                 // if we had no results, return object deleted
@@ -334,21 +352,22 @@ internal class CD_BasicController: BasicController {
         assert(context === vessel.managedObjectContext)
         
         var somethingChanged = false
-        if let displayName = displayName, vessel.displayName != displayName {
+        if let displayName = displayName, vessel.raw_displayName != displayName {
             somethingChanged = true
-            vessel.displayName = displayName
+            vessel.raw_displayName = displayName
         }
         if let icon = icon, icon != vessel.icon {
             somethingChanged = true
             vessel.icon = icon
         }
         guard somethingChanged else { return .success(()) }
-        vessel.reminders.forEach { ($0 as! CD_Base).bloop.toggle() }
+        vessel.raw_reminders?.forEach { ($0 as! CD_Base).raw_bloop.toggle() }
         return context.waterme_save()
     }
     
     func update(kind: ReminderKind?,
                 interval: Int?,
+                isEnabled: Bool?,
                 note: String?,
                 in reminder: Reminder) -> Result<Void, DatumError>
     {
@@ -368,18 +387,22 @@ internal class CD_BasicController: BasicController {
         }
         if let interval = interval {
             let converted = Int32(interval)
-            if converted != reminder.interval {
+            if converted != reminder.raw_interval {
                 somethingChanged = true
-                reminder.interval = converted
+                reminder.raw_interval = converted
                 reminder.updateDates()
             }
         }
-        if let note = note, note != reminder.note {
+        if let isEnabled = isEnabled, isEnabled != reminder.raw_isEnabled {
             somethingChanged = true
-            reminder.note = note
+            reminder.raw_isEnabled = isEnabled
+        }
+        if let note = note, note != reminder.raw_note {
+            somethingChanged = true
+            reminder.raw_note = note
         }
         guard somethingChanged else { return .success(()) }
-        reminder.vessel.bloop.toggle()
+        reminder.raw_vessel?.raw_bloop.toggle()
         return context.waterme_save()
     }
     
@@ -399,8 +422,8 @@ internal class CD_BasicController: BasicController {
             let perform = CD_ReminderPerform(context: context)
             context.insert(perform)
             // core data hooks up the inverse relationship
-            perform.reminder = reminder
-            reminder.updateDates(withAppendedPerformDate: perform.date)
+            perform.raw_reminder = reminder
+            reminder.updateDates(withAppendedPerformDate: perform.raw_date)
         }
         return context.waterme_save()
     }
@@ -424,10 +447,16 @@ internal class CD_BasicController: BasicController {
     func delete(reminder: Reminder) -> Result<Void, DatumError> {
         let context = self.container.viewContext
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
+        let vessel = reminder.raw_vessel
 
         // debug only sanity checks
         assert(Thread.isMainThread)
         assert(context === reminder.managedObjectContext)
+        
+        let reminderCount = vessel?.raw_reminders?.count ?? 0
+        guard reminderCount >= 2 else {
+            return .failure(.unableToDeleteLastReminder)
+        }
 
         let token = self.willSave(context)
         defer { self.didSave(token) }
@@ -447,15 +476,11 @@ extension CD_BasicController {
                 assertionFailure("Core Data Dates Not Updated")
                 return
             }
-            // Update Save Modified Dates in Objects
-            context.insertedObjects
-                .union(context.updatedObjects)
-                .forEach { ($0 as? CD_Base)?.datum_willSave() }
 
             // Capture Deleted Values for API Contract
             // This must be done now because they will be deleted soon
             let performedReminders = context.insertedObjects
-                .compactMap { ReminderValue(reminder: ($0 as? CD_ReminderPerform)?.reminder) }
+                .compactMap { ReminderValue(reminder: ($0 as? CD_ReminderPerform)?.raw_reminder) }
             let deletedReminders = context.deletedObjects
                 .compactMap { ReminderValue(reminder: $0 as? CD_Reminder) }
             let deletedReminderVessels = context.deletedObjects
@@ -571,18 +596,8 @@ extension NSManagedObjectContext {
                 // we need to rollback the context
                 self.rollback()
             }
-            if
-                // detect if the error is because we tried to delete the last reminder
-                error.code == CocoaError.validationRelationshipLacksMinimumCount.rawValue,
-                let key = error.userInfo[NSValidationKeyErrorKey] as? String,
-                key == #keyPath(CD_ReminderVessel.reminders),
-                error.userInfo[NSValidationObjectErrorKey] is CD_ReminderVessel
-            {
-                return .failure(.unableToDeleteLastReminder)
-            } else {
-                error.log()
-                return .failure(.writeError)
-            }
+            error.log()
+            return .failure(.writeError)
         }
     }
 }

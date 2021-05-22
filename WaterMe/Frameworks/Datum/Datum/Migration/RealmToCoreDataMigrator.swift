@@ -44,7 +44,7 @@ internal class RealmToCoreDataMigrator: Migratable {
         }
         guard
             RLM_BasicController.storeExists,
-            let source = try? RLM_BasicController(kind: .local, forTesting: false)
+            let source = try? RLM_BasicController(kind: .local)
         else { return nil }
         self.source = source
         self.isTesting = false
@@ -123,46 +123,46 @@ internal class RealmToCoreDataMigrator: Migratable {
                         
                         // Vessel: Configure
                         let destVessel = CD_ReminderVessel(context: context)
-                        destVessel.migrated = CD_Migrated(context: context)
+                        destVessel.raw_migrated = CD_Migrated(context: context)
                         context.insert(destVessel)
                         
                         _ = {
                             // Vessel: Copy Data
-                            destVessel.share = rhsShare
-                            destVessel.displayName = srcVessel.displayName
-                            destVessel.iconImageData = srcVessel.iconImageData
-                            destVessel.iconEmojiString = srcVessel.iconEmojiString
-                            destVessel.kindString = srcVessel.kindString
-                            destVessel.migrated!.realmIdentifier = srcVessel.uuid
+                            destVessel.raw_share = rhsShare
+                            destVessel.raw_displayName = srcVessel.displayName
+                            destVessel.raw_iconImageData = srcVessel.iconImageData
+                            destVessel.raw_iconEmojiString = srcVessel.iconEmojiString
+                            destVessel.raw_kindString = srcVessel.kindString
+                            destVessel.raw_migrated!.raw_realmIdentifier = srcVessel.uuid
                         }()
                         
                         for srcReminder in srcVessel.reminders {
                             // Reminder: Configure
                             let destReminder = CD_Reminder(context: context)
-                            destReminder.vessel = destVessel
-                            destReminder.migrated = CD_Migrated(context: context)
+                            destReminder.raw_vessel = destVessel
+                            destReminder.raw_migrated = CD_Migrated(context: context)
                             context.insert(destReminder)
                             
                             _ = {
                                 // Reminder: Copy Data
-                                destReminder.interval = Int32(srcReminder.interval)
-                                destReminder.note = srcReminder.note
-                                destReminder.nextPerformDate = srcReminder.nextPerformDate
-                                destReminder.lastPerformDate = srcReminder.performed.last?.date
-                                destReminder.kindString = srcReminder.kindString
-                                destReminder.descriptionString = srcReminder.descriptionString
-                                destReminder.migrated!.realmIdentifier = srcReminder.uuid
+                                destReminder.raw_interval = Int32(srcReminder.interval)
+                                destReminder.raw_note = srcReminder.note
+                                destReminder.raw_nextPerformDate = srcReminder.nextPerformDate
+                                destReminder.raw_lastPerformDate = srcReminder.performed.last?.date
+                                destReminder.raw_kindString = srcReminder.kindString
+                                destReminder.raw_descriptionString = srcReminder.descriptionString
+                                destReminder.raw_migrated!.raw_realmIdentifier = srcReminder.uuid
                             }()
                             
                             for srcPerform in srcReminder.performed {
                                 // Perform: Configure
                                 let destPerform = CD_ReminderPerform(context: context)
-                                destPerform.reminder = destReminder
+                                destPerform.raw_reminder = destReminder
                                 context.insert(destPerform)
                                 
                                 _ = {
                                     // Perform: Copy Data
-                                    destPerform.date = srcPerform.date
+                                    destPerform.raw_date = srcPerform.date
                                 }()
                             }
                         }
@@ -187,7 +187,7 @@ internal class RealmToCoreDataMigrator: Migratable {
                         // If we didn't complete, try to clean up the destination
                         // Don't clean up destination if source failed to delete
                         // Too risky, might lose data
-                        for vessel in rhsShare.vessels {
+                        for vessel in rhsShare.raw_vessels ?? [] {
                             guard let vessel = vessel as? NSManagedObject else { continue }
                             context.delete(vessel)
                         }

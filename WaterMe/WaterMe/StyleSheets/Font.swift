@@ -172,7 +172,7 @@ extension Font {
             ]
         case .emojiSuperSmall:
             return [
-                .font : UIFont.systemFont(ofSize: 20)
+                .font : Font.emojiFont(ofSize: 24)
             ]
         case .emojiSmall(let accessibilityFontSizeEnabled):
             let baselineOffset: NSNumber = {

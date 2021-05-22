@@ -31,45 +31,37 @@ internal class CD_Reminder: CD_Base {
         NSFetchRequest<CD_Reminder>(entityName: self.entityName)
     }
     
-    @NSManaged var interval: Int32
-    @NSManaged var kindString: String
-    @NSManaged var descriptionString: String?
-    @NSManaged var nextPerformDate: Date?
-    @NSManaged var lastPerformDate: Date?
-    @NSManaged var note: String?
-    @NSManaged var performed: NSSet
-    @NSManaged var vessel: CD_ReminderVessel
-    
     override func awakeFromInsert() {
         super.awakeFromInsert()
-        self.kindString = ReminderKind.kCaseWaterValue
-        self.interval = Int32(ReminderConstants.defaultInterval)
+        self.raw_kindString = ReminderKind.kCaseWaterValue
+        self.raw_interval = Int32(ReminderConstants.defaultInterval)
+        self.raw_isEnabled = true
     }
     
     /// Update `nextPerformDate` & `lastPerformDate` based on new date
     /// If `nil` is passed for `newDate` then current `lastPerformDate` is used for update calculation.
     internal func updateDates(withAppendedPerformDate newDate: Date? = nil) {
         if let newDate = newDate {
-            self.lastPerformDate = newDate
+            self.raw_lastPerformDate = newDate
         }
-        if let lastPerformDate = self.lastPerformDate {
+        if let lastPerformDate = self.raw_lastPerformDate {
             let cal = Calendar.current
-            self.nextPerformDate = cal.dateByAddingNumberOfDays(Int(self.interval),
+            self.raw_nextPerformDate = cal.dateByAddingNumberOfDays(Int(self.raw_interval),
                                                                 to: lastPerformDate)
         } else {
-            self.nextPerformDate = nil
+            self.raw_nextPerformDate = nil
         }
     }
-
-    override func datum_willSave() {
-        super.datum_willSave()
-        if let descriptionString = self.descriptionString,
+    
+    override func willSave() {
+        super.willSave()
+        if let descriptionString = self.raw_descriptionString,
            descriptionString.nonEmptyString == nil
         {
-            self.descriptionString = nil
+            self.raw_descriptionString = nil
         }
-        if let note = self.note, note.nonEmptyString == nil {
-            self.note = nil
+        if let note = self.raw_note, note.nonEmptyString == nil {
+            self.raw_note = nil
         }
     }
 }
@@ -82,12 +74,9 @@ internal class CD_ReminderPerform: CD_Base {
         NSFetchRequest<CD_ReminderPerform>(entityName: self.entityName)
     }
     
-    @NSManaged var date: Date
-    @NSManaged var reminder: CD_Reminder
-    
     override func awakeFromInsert() {
         super.awakeFromInsert()
-        self.date = Date()
+        self.raw_date = Date()
     }
 }
 
@@ -97,13 +86,13 @@ extension CD_Reminder {
     {
         switch sortOrder {
         case .interval:
-            return .init(key: #keyPath(CD_Reminder.interval), ascending: ascending)
+            return .init(key: #keyPath(CD_Reminder.raw_interval), ascending: ascending)
         case .kind:
-            return .init(key: #keyPath(CD_Reminder.kindString), ascending: ascending)
+            return .init(key: #keyPath(CD_Reminder.raw_kindString), ascending: ascending)
         case .nextPerformDate:
-            return .init(key: #keyPath(CD_Reminder.nextPerformDate), ascending: ascending)
+            return .init(key: #keyPath(CD_Reminder.raw_nextPerformDate), ascending: ascending)
         case .note:
-            return .init(key: #keyPath(CD_Reminder.note), ascending: ascending)
+            return .init(key: #keyPath(CD_Reminder.raw_note), ascending: ascending)
         }
     }
 }
