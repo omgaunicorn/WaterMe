@@ -350,7 +350,7 @@ extension ReminderCollectionViewController {
             }
             let error = NSError(collectionViewBatchUpdateException: exception)
             Analytics.log(error: error)
-            error.log()
+            error.log(as: .severe)
             return true
         }, finally: { exceptionWasCaught in
             guard exceptionWasCaught == true else { return }
