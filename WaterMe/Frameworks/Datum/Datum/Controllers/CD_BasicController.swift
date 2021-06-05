@@ -475,13 +475,17 @@ internal class CD_BasicController: BasicController {
     func delete(reminder: Reminder) -> Result<Void, DatumError> {
         let context = self.container.viewContext
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
-        let vessel = reminder.raw_vessel
 
         // debug only sanity checks
         assert(Thread.isMainThread)
         assert(context === reminder.managedObjectContext)
         
-        let reminderCount = vessel?.raw_reminders?.count ?? 0
+        guard let vessel = reminder.raw_vessel else {
+            context.delete(reminder)
+            return context.waterme_save()
+        }
+                
+        let reminderCount = vessel.raw_reminders?.count ?? 0
         guard reminderCount >= 2 else {
             return .failure(.unableToDeleteLastReminder)
         }
