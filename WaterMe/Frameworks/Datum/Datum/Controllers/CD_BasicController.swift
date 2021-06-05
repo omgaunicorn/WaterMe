@@ -180,14 +180,20 @@ internal class CD_BasicController: BasicController {
         if let icon = icon {
             vessel.icon = icon
         }
-        let vesselShares = try? context.fetch(CD_VesselShare.request)
-        guard vesselShares?.count == 1 else {
-            let message = "Unexpected number of VesselShare objects: \(vesselShares?.count ?? -1)"
-            message.log()
+        let fetchRequest = CD_VesselShare.request
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_VesselShare.raw_dateCreated), ascending: true)]
+        let vesselShares = try? context.fetch(fetchRequest)
+        if (vesselShares?.count ?? -1) > 1 {
+            // TODO: Perform maintenance
+        }
+        guard let vesselShare = vesselShares?.first else {
+            let message = "No vesselshares present"
             assertionFailure(message)
+            message.log(as: .emergency)
+            // TODO: Create error for missing vessel share
             return .failure(.writeError)
         }
-        vessel.raw_share = vesselShares!.first!
+        vessel.raw_share = vesselShare
         return context.waterme_save().map {
             CD_ReminderVesselWrapper(vessel, context: { self.container.viewContext })
         }
