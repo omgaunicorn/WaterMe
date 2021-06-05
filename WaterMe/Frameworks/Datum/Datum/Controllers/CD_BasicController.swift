@@ -96,9 +96,6 @@ internal class CD_BasicController: BasicController {
             try ctx.save()
         }
         
-        self.kind = kind
-        self.container = container
-        
         switch kind {
         case .local, .sync:
             guard #available(iOS 14.0, *), container is NSPersistentCloudKitContainer
@@ -107,6 +104,10 @@ internal class CD_BasicController: BasicController {
         case .__testing_inMemory, .__testing_withClass:
             self._syncProgress = nil
         }
+        
+        self.kind = kind
+        self.container = container
+        self.maintainanceToken = self.maintenanceMonitor(ctx)
         
         #if DEBUG
         guard
@@ -132,6 +133,7 @@ internal class CD_BasicController: BasicController {
     // Internal only for testing. Should be private.
     internal let container: NSPersistentContainer
     internal let kind: ControllerKind
+    private var maintainanceToken: Any?
     private let _syncProgress: AnyObject?
     @available(iOS 14.0, *)
     internal var syncProgress: AnyContinousProgress<GenericInitializationError, GenericSyncError>? {
@@ -148,8 +150,6 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
         assert(context === vessel.managedObjectContext!)
         
-        let token = self.willSave(context)
-        defer { self.didSave(token) }
         let newReminder = CD_Reminder(context: context)
         context.insert(newReminder)
         // core data hooks up the inverse relationship
@@ -167,8 +167,6 @@ internal class CD_BasicController: BasicController {
         assert(Thread.isMainThread)
         
         let context = self.container.viewContext
-        let token = self.willSave(context)
-        defer { self.didSave(token) }
         let vessel = CD_ReminderVessel(context: context)
         // enforce at least 1 reminder
         let newReminder = CD_Reminder(context: context)
@@ -381,8 +379,6 @@ internal class CD_BasicController: BasicController {
                 in vessel: ReminderVessel) -> Result<Void, DatumError>
     {
         let context = self.container.viewContext
-        let token = self.willSave(context)
-        defer { self.didSave(token) }
         let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
         
         // debug only sanity checks
@@ -410,8 +406,6 @@ internal class CD_BasicController: BasicController {
                 in reminder: Reminder) -> Result<Void, DatumError>
     {
         let context = self.container.viewContext
-        let token = self.willSave(context)
-        defer { self.didSave(token) }
         let reminder = (reminder as! CD_ReminderWrapper).wrappedObject
         
         // debug only sanity checks
@@ -453,8 +447,6 @@ internal class CD_BasicController: BasicController {
         guard reminders.count == ids.count else { return .failure(.objectDeleted) }
 
         let context = self.container.viewContext
-        let token = self.willSave(context)
-        defer { self.didSave(token) }
 
         reminders.forEach { reminder in
             let perform = CD_ReminderPerform(context: context)
@@ -470,8 +462,6 @@ internal class CD_BasicController: BasicController {
     
     func delete(vessel: ReminderVessel) -> Result<Void, DatumError> {
         let context = self.container.viewContext
-        let token = self.willSave(context)
-        defer { self.didSave(token) }
         let vessel = (vessel as! CD_ReminderVesselWrapper).wrappedObject
         
         // debug only sanity checks
@@ -496,16 +486,18 @@ internal class CD_BasicController: BasicController {
             return .failure(.unableToDeleteLastReminder)
         }
 
-        let token = self.willSave(context)
-        defer { self.didSave(token) }
-
         context.delete(reminder)
         return context.waterme_save()
+    }
+    
+    deinit {
+        guard let maintainanceToken = self.maintainanceToken else { return }
+        NotificationCenter.default.removeObserver(maintainanceToken)
     }
 }
 
 extension CD_BasicController {
-    fileprivate func willSave(_ context: NSManagedObjectContext) -> Any {
+    fileprivate func maintenanceMonitor(_ context: NSManagedObjectContext) -> Any {
         return NotificationCenter.default.addObserver(forName: .NSManagedObjectContextWillSave,
                                                       object: context,
                                                       queue: nil)
@@ -513,6 +505,75 @@ extension CD_BasicController {
             guard let context = notification.object as? NSManagedObjectContext else {
                 assertionFailure("Core Data Dates Not Updated")
                 return
+            }
+            
+            let insertedBase = context.insertedObjects.compactMap { $0 as? CD_Base }
+                .filter { $0.raw_dateModified == nil || $0.raw_dateCreated == nil }
+            let modifiedBase = context.updatedObjects.compactMap { $0 as? CD_Base }
+                .filter { $0.raw_dateModified == nil || $0.raw_dateCreated == nil }
+            let insertedVesselShares = context.insertedObjects.compactMap { $0 as? CD_VesselShare }
+            let insertedVessels = context.insertedObjects.compactMap { $0 as? CD_ReminderVessel }
+            let modifiedVessels = context.updatedObjects.compactMap { $0 as? CD_ReminderVessel }
+            let insertedReminders = context.insertedObjects.compactMap { $0 as? CD_Reminder }
+            let modifiedReminders = context.updatedObjects.compactMap { $0 as? CD_Reminder }
+            
+            let now = Date()
+            let fixDatesClosure: (CD_Base) -> Void = {
+                if $0.raw_dateCreated == nil {
+                    let message = "DateCreated missing: \($0)"
+                    assertionFailure(message)
+                    message.log(as: .error)
+                    $0.raw_dateCreated = now
+                }
+                if $0.raw_dateModified == nil {
+                    let message = "DateModified missing: \($0)"
+                    assertionFailure(message)
+                    message.log(as: .error)
+                    $0.raw_dateModified = now
+                }
+            }
+            (insertedBase + modifiedBase).forEach(fixDatesClosure)
+            
+            if !insertedVesselShares.isEmpty {
+                // TODO: Put this in its own function
+                do {
+                    // Clean up any errors caused by weird syncing
+                    // 1. Fetch all VesselShare objects
+                    let fetchRequest = CD_VesselShare.request
+                    fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_VesselShare.raw_dateCreated), ascending: true)]
+                    let fetchResult = try context.fetch(fetchRequest)
+                    let dateError = fetchResult.filter { $0.raw_dateModified == nil || $0.raw_dateCreated == nil }
+                    dateError.forEach(fixDatesClosure)
+                    if fetchResult.count > 1 {
+                        // 1.a Find the oldest one
+                        let originalVesselShare = fetchResult[0]
+                        fetchResult.dropFirst().forEach {
+                            // 1.b Get all vessels from all other ones
+                            $0.raw_vessels.map { originalVesselShare.addToRaw_vessels($0) }
+                            // 1.c Delete all shares other than oldest one
+                            context.delete($0)
+                        }
+                    }
+                } catch {
+                    assertionFailure(String(describing: error))
+                    error.log(as: .emergency)
+                }
+            }
+            
+            (insertedVessels + modifiedVessels).forEach {
+                guard $0.raw_share == nil else { return }
+                let message = "Vessel missing parent share. Deleted to maintain consistency: \($0)"
+                assertionFailure(message)
+                message.log(as: .emergency)
+                context.delete($0)
+            }
+            
+            (insertedReminders + modifiedReminders).forEach {
+                guard $0.raw_vessel == nil else { return }
+                let message = "Reminder missing parent vessel. Deleted to maintain consistency: \($0)"
+                assertionFailure(message)
+                message.log(as: .emergency)
+                context.delete($0)
             }
 
             // Capture Deleted Values for API Contract
@@ -538,10 +599,6 @@ extension CD_BasicController {
                 }
             }
         }
-    }
-    
-    fileprivate func didSave(_ token: Any) {
-        NotificationCenter.default.removeObserver(token)
     }
 }
 
