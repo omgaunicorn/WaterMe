@@ -87,14 +87,6 @@ internal class CD_BasicController: BasicController {
         
         guard error == nil else { throw error! }
         container.viewContext.automaticallyMergesChangesFromParent = true
-        let fetchRequest = CD_VesselShare.request
-        let ctx = container.viewContext
-        let fetchResult = try ctx.fetch(fetchRequest)
-        if fetchResult.isEmpty {
-            let share = CD_VesselShare(context: ctx)
-            ctx.insert(share)
-            try ctx.save()
-        }
         
         switch kind {
         case .local, .sync:
@@ -107,7 +99,8 @@ internal class CD_BasicController: BasicController {
         
         self.kind = kind
         self.container = container
-        self.maintainanceToken = self.maintenanceMonitor(ctx)
+        self.maintenance_cleanVesselShares()
+        self.maintenance_monitorToken = self.maintenance_monitor(container.viewContext)
         
         #if DEBUG
         guard
@@ -133,7 +126,7 @@ internal class CD_BasicController: BasicController {
     // Internal only for testing. Should be private.
     internal let container: NSPersistentContainer
     internal let kind: ControllerKind
-    private var maintainanceToken: Any?
+    private var maintenance_monitorToken: Any?
     private let _syncProgress: AnyObject?
     @available(iOS 14.0, *)
     internal var syncProgress: AnyContinousProgress<GenericInitializationError, GenericSyncError>? {
@@ -180,22 +173,16 @@ internal class CD_BasicController: BasicController {
         if let icon = icon {
             vessel.icon = icon
         }
-        let fetchRequest = CD_VesselShare.request
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_VesselShare.raw_dateCreated), ascending: true)]
-        let vesselShares = try? context.fetch(fetchRequest)
-        if (vesselShares?.count ?? -1) > 1 {
-            // TODO: Perform maintenance
-        }
-        guard let vesselShare = vesselShares?.first else {
-            let message = "No vesselshares present"
-            assertionFailure(message)
-            message.log(as: .emergency)
-            // TODO: Create error for missing vessel share
-            return .failure(.writeError)
-        }
-        vessel.raw_share = vesselShare
-        return context.waterme_save().map {
-            CD_ReminderVesselWrapper(vessel, context: { self.container.viewContext })
+        
+        let vesselShareResult = self.maintenance_cleanVesselShares()
+        switch vesselShareResult {
+        case .failure(let error):
+            return .failure(error)
+        case .success(let vesselShare):
+            vessel.raw_share = vesselShare
+            return context.waterme_save().map {
+                CD_ReminderVesselWrapper(vessel, context: { self.container.viewContext })
+            }
         }
     }
 
@@ -501,18 +488,37 @@ internal class CD_BasicController: BasicController {
     }
     
     deinit {
-        guard let maintainanceToken = self.maintainanceToken else { return }
+        guard let maintainanceToken = self.maintenance_monitorToken else { return }
         NotificationCenter.default.removeObserver(maintainanceToken)
+    }
+    
+    fileprivate let maintenance_fixDatesClosure: (CD_Base) -> Void = {
+        let now = Date()
+        if $0.raw_dateCreated == nil {
+            let message = "DateCreated missing: \($0)"
+            assertionFailure(message)
+            message.log(as: .error)
+            $0.raw_dateCreated = now
+        }
+        if $0.raw_dateModified == nil {
+            let message = "DateModified missing: \($0)"
+            assertionFailure(message)
+            message.log(as: .error)
+            $0.raw_dateModified = now
+        }
     }
 }
 
 extension CD_BasicController {
-    fileprivate func maintenanceMonitor(_ context: NSManagedObjectContext) -> Any {
+    fileprivate func maintenance_monitor(_ context: NSManagedObjectContext) -> Any {
         return NotificationCenter.default.addObserver(forName: .NSManagedObjectContextWillSave,
                                                       object: context,
                                                       queue: nil)
         { [weak self] notification in
-            guard let context = notification.object as? NSManagedObjectContext else {
+            guard
+                let context = notification.object as? NSManagedObjectContext,
+                let self = self
+            else {
                 assertionFailure("Core Data Dates Not Updated")
                 return
             }
@@ -527,46 +533,12 @@ extension CD_BasicController {
             let insertedReminders = context.insertedObjects.compactMap { $0 as? CD_Reminder }
             let modifiedReminders = context.updatedObjects.compactMap { $0 as? CD_Reminder }
             
-            let now = Date()
-            let fixDatesClosure: (CD_Base) -> Void = {
-                if $0.raw_dateCreated == nil {
-                    let message = "DateCreated missing: \($0)"
-                    assertionFailure(message)
-                    message.log(as: .error)
-                    $0.raw_dateCreated = now
-                }
-                if $0.raw_dateModified == nil {
-                    let message = "DateModified missing: \($0)"
-                    assertionFailure(message)
-                    message.log(as: .error)
-                    $0.raw_dateModified = now
-                }
-            }
-            (insertedBase + modifiedBase).forEach(fixDatesClosure)
+            (insertedBase + modifiedBase).forEach(self.maintenance_fixDatesClosure)
             
             if !insertedVesselShares.isEmpty {
-                // TODO: Put this in its own function
-                do {
-                    // Clean up any errors caused by weird syncing
-                    // 1. Fetch all VesselShare objects
-                    let fetchRequest = CD_VesselShare.request
-                    fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_VesselShare.raw_dateCreated), ascending: true)]
-                    let fetchResult = try context.fetch(fetchRequest)
-                    let dateError = fetchResult.filter { $0.raw_dateModified == nil || $0.raw_dateCreated == nil }
-                    dateError.forEach(fixDatesClosure)
-                    if fetchResult.count > 1 {
-                        // 1.a Find the oldest one
-                        let originalVesselShare = fetchResult[0]
-                        fetchResult.dropFirst().forEach {
-                            // 1.b Get all vessels from all other ones
-                            $0.raw_vessels.map { originalVesselShare.addToRaw_vessels($0) }
-                            // 1.c Delete all shares other than oldest one
-                            context.delete($0)
-                        }
-                    }
-                } catch {
-                    assertionFailure(String(describing: error))
-                    error.log(as: .emergency)
+                // Dispatch so the context can save
+                DispatchQueue.main.async {
+                    self.maintenance_cleanVesselShares()
                 }
             }
             
@@ -599,15 +571,58 @@ extension CD_BasicController {
             // Then we can update any API Contracts
             DispatchQueue.main.async {
                 if !performedReminders.isEmpty {
-                    self?.userDidPerformReminder?(Set(performedReminders))
+                    self.userDidPerformReminder?(Set(performedReminders))
                 }
                 if !deletedReminders.isEmpty {
-                    self?.remindersDeleted?(Set(deletedReminders))
+                    self.remindersDeleted?(Set(deletedReminders))
                 }
                 if !deletedReminderVessels.isEmpty {
-                    self?.reminderVesselsDeleted?(Set(deletedReminderVessels))
+                    self.reminderVesselsDeleted?(Set(deletedReminderVessels))
                 }
             }
+        }
+    }
+    
+    @discardableResult
+    fileprivate func maintenance_cleanVesselShares() -> Result<CD_VesselShare, DatumError> {
+        let context = self.container.viewContext
+        // TODO: Put this in its own function
+        do {
+            // Clean up any errors caused by weird syncing
+            // 1. Fetch all VesselShare objects
+            let fetchRequest = CD_VesselShare.request
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_VesselShare.raw_dateCreated), ascending: true)]
+            let fetchResult = try context.fetch(fetchRequest)
+            let dateError = fetchResult.filter { $0.raw_dateModified == nil || $0.raw_dateCreated == nil }
+            dateError.forEach(self.maintenance_fixDatesClosure)
+            switch fetchResult.count {
+            case 0:
+                let share = CD_VesselShare(context: context)
+                context.insert(share)
+                try context.save()
+                "0 VesselShares present, but was able to create".log(as: .warning)
+                return .success(share)
+            case 1:
+                let originalVesselShare = fetchResult[0]
+                return .success(originalVesselShare)
+            default:
+                // 1.a Find the oldest one
+                let originalVesselShare = fetchResult[0]
+                fetchResult.dropFirst().forEach {
+                    // 1.b Get all vessels from all other ones
+                    $0.raw_vessels.map { originalVesselShare.addToRaw_vessels($0) }
+                    // 1.c Delete all shares other than oldest one
+                    context.delete($0)
+                }
+                try context.save()
+                "2+ VesselShares present, but was able to clean.".log(as: .warning)
+                return .success(originalVesselShare)
+            }
+        } catch {
+            assertionFailure(String(describing: error))
+            error.log(as: .error)
+            // TODO: Create maintenance error
+            return .failure(.writeError)
         }
     }
 }
