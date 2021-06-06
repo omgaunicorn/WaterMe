@@ -97,18 +97,29 @@ internal class CD_BasicController: BasicController {
             self._syncProgress = nil
         }
         
+        // Set properties
         self.kind = kind
         self.container = container
-        self.maintenance_cleanVesselShares()
+        
+        // Do maintenance
+        // TODO: Decide what to do with these warnings
+        self.maintenance_oneTrueVesselShare()
+        self.maintenance_deleteOrphanedReminders()
+        self.maintenance_deleteOrphanedVessels()
+        
+        // Configure maintenance monitor
         self.maintenance_monitorToken = self.maintenance_monitor(container.viewContext)
         
+        //
+        // DEBUG ONLY
+        // initialize the CloudKit schema
+        // only do this once per change to CD MOM
+        //
         #if DEBUG
         guard
             #available(iOS 14.0, *),
             let container = container as? NSPersistentCloudKitContainer
         else { return }
-        // initialize the CloudKit schema
-        // only do this once per change to CD MOM
         let configureCKSchema = false
         if configureCKSchema {
             try! container.initializeCloudKitSchema(options: [.printSchema])
@@ -174,7 +185,7 @@ internal class CD_BasicController: BasicController {
             vessel.icon = icon
         }
         
-        let vesselShareResult = self.maintenance_cleanVesselShares()
+        let vesselShareResult = self.maintenance_oneTrueVesselShare()
         switch vesselShareResult {
         case .failure(let error):
             return .failure(error)
@@ -538,7 +549,7 @@ extension CD_BasicController {
             if !insertedVesselShares.isEmpty {
                 // Dispatch so the context can save
                 DispatchQueue.main.async {
-                    self.maintenance_cleanVesselShares()
+                    self.maintenance_oneTrueVesselShare()
                 }
             }
             
@@ -583,8 +594,7 @@ extension CD_BasicController {
         }
     }
     
-    @discardableResult
-    fileprivate func maintenance_cleanVesselShares() -> Result<CD_VesselShare, DatumError> {
+    fileprivate func maintenance_oneTrueVesselShare() -> Result<CD_VesselShare, DatumError> {
         let context = self.container.viewContext
         // TODO: Put this in its own function
         do {
@@ -618,6 +628,46 @@ extension CD_BasicController {
                 "2+ VesselShares present, but was able to clean.".log(as: .warning)
                 return .success(originalVesselShare)
             }
+        } catch {
+            assertionFailure(String(describing: error))
+            error.log(as: .error)
+            // TODO: Create maintenance error
+            return .failure(.writeError)
+        }
+    }
+    
+    fileprivate func maintenance_deleteOrphanedReminders() -> Result<Void, DatumError> {
+        let context = self.container.viewContext
+        let fetchRequest = CD_Reminder.request
+        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(CD_Reminder.raw_vessel)) == nil")
+        do {
+            let fetchResult = try context.fetch(fetchRequest)
+            let count = fetchResult.count
+            guard count > 0 else { return .success(()) }
+            fetchResult.forEach { context.delete($0) }
+            try context.save()
+            "Orphaned Reminders Deleted: \(count)".log(as: .error)
+            return .success(())
+        } catch {
+            assertionFailure(String(describing: error))
+            error.log(as: .error)
+            // TODO: Create maintenance error
+            return .failure(.writeError)
+        }
+    }
+    
+    fileprivate func maintenance_deleteOrphanedVessels() -> Result<Void, DatumError> {
+        let context = self.container.viewContext
+        let fetchRequest = CD_ReminderVessel.request
+        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(CD_ReminderVessel.raw_share)) == nil")
+        do {
+            let fetchResult = try context.fetch(fetchRequest)
+            let count = fetchResult.count
+            guard count > 0 else { return .success(()) }
+            fetchResult.forEach { context.delete($0) }
+            try context.save()
+            "Orphaned ReminderVessels Deleted: \(count)".log(as: .error)
+            return .success(())
         } catch {
             assertionFailure(String(describing: error))
             error.log(as: .error)
