@@ -102,7 +102,23 @@ internal class CD_BasicController: BasicController {
         self.container = container
         
         // Configure maintenance monitor
-        self.maintenance_monitorToken = self.maintenance_changeMonitor()
+        self.maintenance_changeToken = self.maintenance_changeMonitor()
+        
+        // Observe sync changes to perform maintenance
+        if #available(iOS 14.0, *) {
+            self.maintenance_syncToken = self.syncProgress?
+                .objectWillChange
+                .debounce(for: .seconds(1), scheduler: RunLoop.main)
+                .sink
+                { [weak syncProgress] _ in
+                    guard syncProgress?.progress.fractionCompleted == 1 else { return }
+                    // TODO: Figure out what to do with these errors
+                    let r1 = self.maintenance_fixDates()
+                    let r2 = self.maintenance_deleteOrphanedReminders()
+                    let r3 = self.maintenance_deleteOrphanedVessels()
+                    let r4 = self.maintenance_oneTrueVesselShare()
+                }
+        }
         
         //
         // DEBUG ONLY
@@ -131,7 +147,8 @@ internal class CD_BasicController: BasicController {
     // Internal only for testing. Should be private.
     internal let container: NSPersistentContainer
     internal let kind: ControllerKind
-    private var maintenance_monitorToken: Any?
+    private var maintenance_changeToken: Any?
+    private var maintenance_syncToken: Any?
     private let _syncProgress: AnyObject?
     @available(iOS 14.0, *)
     internal var syncProgress: AnyContinousProgress<GenericInitializationError, GenericSyncError>? {
@@ -499,7 +516,7 @@ internal class CD_BasicController: BasicController {
     }
     
     deinit {
-        guard let maintainanceToken = self.maintenance_monitorToken else { return }
+        guard let maintainanceToken = self.maintenance_changeToken else { return }
         NotificationCenter.default.removeObserver(maintainanceToken)
     }
 }
@@ -550,7 +567,6 @@ extension CD_BasicController {
             // Clean up any errors caused by weird syncing
             // 1. Fetch all VesselShare objects
             let fetchRequest = CD_VesselShare.request
-            fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_VesselShare.raw_dateCreated), ascending: true)]
             let fetchResult = try context.fetch(fetchRequest)
             switch fetchResult.count {
             case 0:
@@ -564,8 +580,9 @@ extension CD_BasicController {
                 return .success(originalVesselShare)
             default:
                 // 1.a Find the oldest one
-                let originalVesselShare = fetchResult[0]
-                fetchResult.dropFirst().forEach {
+                let sorted = fetchResult.sorted(by: { $0.raw_vessels?.count ?? 0 > $1.raw_vessels?.count ?? 0 })
+                let originalVesselShare = sorted[0]
+                sorted.dropFirst().forEach {
                     // 1.b Get all vessels from all other ones
                     $0.raw_vessels.map { originalVesselShare.addToRaw_vessels($0) }
                     // 1.c Delete all shares other than oldest one
@@ -625,7 +642,7 @@ extension CD_BasicController {
     fileprivate func maintenance_deleteOrphanedReminders() -> Result<Void, DatumError> {
         let context = self.container.viewContext
         let fetchRequest = CD_Reminder.request
-        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(CD_Reminder.raw_vessel)) == nil")
+        fetchRequest.predicate = NSPredicate(format: "%K == nil", #keyPath(CD_Reminder.raw_vessel))
         do {
             let fetchResult = try context.fetch(fetchRequest)
             let count = fetchResult.count
@@ -642,10 +659,11 @@ extension CD_BasicController {
         }
     }
     
+    // TODO: Change to `fixOrphanedVessels`
     fileprivate func maintenance_deleteOrphanedVessels() -> Result<Void, DatumError> {
         let context = self.container.viewContext
         let fetchRequest = CD_ReminderVessel.request
-        fetchRequest.predicate = NSPredicate(format: "\(#keyPath(CD_ReminderVessel.raw_share)) == nil")
+        fetchRequest.predicate = NSPredicate(format: "%K == nil", #keyPath(CD_ReminderVessel.raw_share))
         do {
             let fetchResult = try context.fetch(fetchRequest)
             let count = fetchResult.count
