@@ -101,14 +101,8 @@ internal class CD_BasicController: BasicController {
         self.kind = kind
         self.container = container
         
-        // Do maintenance
-        // TODO: Decide what to do with these warnings
-        self.maintenance_oneTrueVesselShare()
-        self.maintenance_deleteOrphanedReminders()
-        self.maintenance_deleteOrphanedVessels()
-        
         // Configure maintenance monitor
-        self.maintenance_monitorToken = self.maintenance_monitor(container.viewContext)
+        self.maintenance_monitorToken = self.maintenance_changeMonitor()
         
         //
         // DEBUG ONLY
@@ -169,6 +163,12 @@ internal class CD_BasicController: BasicController {
     {
         // debug only sanity checks
         assert(Thread.isMainThread)
+        
+        // Manually do cleanup during this "heavyweight" operation
+        // TODO: Figure out what to do with these errors
+        let r1 = self.maintenance_fixDates()
+        let r2 = self.maintenance_deleteOrphanedReminders()
+        let r3 = self.maintenance_deleteOrphanedVessels()
         
         let context = self.container.viewContext
         let vessel = CD_ReminderVessel(context: context)
@@ -502,28 +502,12 @@ internal class CD_BasicController: BasicController {
         guard let maintainanceToken = self.maintenance_monitorToken else { return }
         NotificationCenter.default.removeObserver(maintainanceToken)
     }
-    
-    fileprivate let maintenance_fixDatesClosure: (CD_Base) -> Void = {
-        let now = Date()
-        if $0.raw_dateCreated == nil {
-            let message = "DateCreated missing: \($0)"
-            assertionFailure(message)
-            message.log(as: .error)
-            $0.raw_dateCreated = now
-        }
-        if $0.raw_dateModified == nil {
-            let message = "DateModified missing: \($0)"
-            assertionFailure(message)
-            message.log(as: .error)
-            $0.raw_dateModified = now
-        }
-    }
 }
 
 extension CD_BasicController {
-    fileprivate func maintenance_monitor(_ context: NSManagedObjectContext) -> Any {
+    fileprivate func maintenance_changeMonitor() -> Any {
         return NotificationCenter.default.addObserver(forName: .NSManagedObjectContextWillSave,
-                                                      object: context,
+                                                      object: nil,
                                                       queue: nil)
         { [weak self] notification in
             guard
@@ -532,41 +516,6 @@ extension CD_BasicController {
             else {
                 assertionFailure("Core Data Dates Not Updated")
                 return
-            }
-            
-            let insertedBase = context.insertedObjects.compactMap { $0 as? CD_Base }
-                .filter { $0.raw_dateModified == nil || $0.raw_dateCreated == nil }
-            let modifiedBase = context.updatedObjects.compactMap { $0 as? CD_Base }
-                .filter { $0.raw_dateModified == nil || $0.raw_dateCreated == nil }
-            let insertedVesselShares = context.insertedObjects.compactMap { $0 as? CD_VesselShare }
-            let insertedVessels = context.insertedObjects.compactMap { $0 as? CD_ReminderVessel }
-            let modifiedVessels = context.updatedObjects.compactMap { $0 as? CD_ReminderVessel }
-            let insertedReminders = context.insertedObjects.compactMap { $0 as? CD_Reminder }
-            let modifiedReminders = context.updatedObjects.compactMap { $0 as? CD_Reminder }
-            
-            (insertedBase + modifiedBase).forEach(self.maintenance_fixDatesClosure)
-            
-            if !insertedVesselShares.isEmpty {
-                // Dispatch so the context can save
-                DispatchQueue.main.async {
-                    self.maintenance_oneTrueVesselShare()
-                }
-            }
-            
-            (insertedVessels + modifiedVessels).forEach {
-                guard $0.raw_share == nil else { return }
-                let message = "Vessel missing parent share. Deleted to maintain consistency: \($0)"
-                assertionFailure(message)
-                message.log(as: .emergency)
-                context.delete($0)
-            }
-            
-            (insertedReminders + modifiedReminders).forEach {
-                guard $0.raw_vessel == nil else { return }
-                let message = "Reminder missing parent vessel. Deleted to maintain consistency: \($0)"
-                assertionFailure(message)
-                message.log(as: .emergency)
-                context.delete($0)
             }
 
             // Capture Deleted Values for API Contract
@@ -603,8 +552,6 @@ extension CD_BasicController {
             let fetchRequest = CD_VesselShare.request
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: #keyPath(CD_VesselShare.raw_dateCreated), ascending: true)]
             let fetchResult = try context.fetch(fetchRequest)
-            let dateError = fetchResult.filter { $0.raw_dateModified == nil || $0.raw_dateCreated == nil }
-            dateError.forEach(self.maintenance_fixDatesClosure)
             switch fetchResult.count {
             case 0:
                 let share = CD_VesselShare(context: context)
@@ -628,6 +575,45 @@ extension CD_BasicController {
                 "2+ VesselShares present, but was able to clean.".log(as: .warning)
                 return .success(originalVesselShare)
             }
+        } catch {
+            assertionFailure(String(describing: error))
+            error.log(as: .error)
+            // TODO: Create maintenance error
+            return .failure(.writeError)
+        }
+    }
+    
+    fileprivate func maintenance_fixDates() -> Result<Void, DatumError> {
+        
+        let context = self.container.viewContext
+        let fetchRequest = CD_Base.requestBase
+        fetchRequest.predicate = NSCompoundPredicate(orPredicateWithSubpredicates: [
+            NSPredicate(format: "%K == nil", #keyPath(CD_Base.raw_dateModified)),
+            NSPredicate(format: "%K == nil", #keyPath(CD_Base.raw_dateCreated))
+        ])
+        
+        do {
+            let fetchResult = try context.fetch(fetchRequest)
+            let count = fetchResult.count
+            guard count > 0 else { return .success(()) }
+            let now = Date()
+            fetchResult.forEach {
+                if $0.raw_dateCreated == nil {
+                    let message = "DateCreated missing: \($0)"
+                    assertionFailure(message)
+                    message.log(as: .error)
+                    $0.raw_dateCreated = now
+                }
+                if $0.raw_dateModified == nil {
+                    let message = "DateModified missing: \($0)"
+                    assertionFailure(message)
+                    message.log(as: .error)
+                    $0.raw_dateModified = now
+                }
+            }
+            try context.save()
+            "NIL Dates found: \(count)".log(as: .error)
+            return .success(())
         } catch {
             assertionFailure(String(describing: error))
             error.log(as: .error)
