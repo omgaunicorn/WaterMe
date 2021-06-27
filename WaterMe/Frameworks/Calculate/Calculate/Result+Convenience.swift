@@ -51,12 +51,16 @@ extension Result {
         case let .failure(error): return .failure(failure(error))
         }
     }
-}
-
-extension Result where Success == Void {
-    public func reduce(_ next: @autoclosure () -> Result<Success, Failure>) -> Result<Success, Failure> {
+    
+    
+    /// Lazily chains multiple result closures.
+    /// On error, stops and returns error.
+    /// On success, continues and returns last success.
+    /// - Parameter next: Closure to execute on success, passing in result of last operation.
+    /// - Returns: Last success or first failure.
+    public func reduce<NewSuccess>(_ next: (Success) -> Result<NewSuccess, Failure>) -> Result<NewSuccess, Failure> {
         switch self {
-        case .success: return next()
+        case .success(let value): return next(value)
         case .failure(let error): return .failure(error)
         }
     }

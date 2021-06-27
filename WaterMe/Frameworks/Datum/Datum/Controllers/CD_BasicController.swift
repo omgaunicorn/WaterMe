@@ -106,17 +106,18 @@ internal class CD_BasicController: BasicController {
         
         // Observe sync changes to perform maintenance
         if #available(iOS 14.0, *) {
-            self.maintenance_syncToken = self.syncProgress?
-                .objectWillChange
+            self.maintenance_syncToken = self.syncProgress?.objectWillChange
                 .debounce(for: .seconds(1), scheduler: RunLoop.main)
-                .sink
-                { [weak syncProgress] _ in
-                    guard syncProgress?.progress.fractionCompleted == 1 else { return }
+                .sink { [weak self] _ in
+                    guard
+                        let self = self,
+                        self.syncProgress?.progress.fractionCompleted == 1
+                    else { return }
                     // Perform maintenance and log any errors
                     self.maintenance_fixDates()
-                        .reduce(self.maintenance_deleteOrphanedReminders())
-                        .reduce(self.maintenance_deleteOrphanedVessels())
-                        .reduce(self.maintenance_oneTrueVesselShare().map { _ in () })
+                        .reduce(self.maintenance_deleteOrphanedReminders)
+                        .reduce(self.maintenance_oneTrueVesselShare)
+                        .reduce(self.maintenance_fixOrphanedVessels(share:))
                         .error?.log()
                 }
         }
@@ -473,9 +474,10 @@ internal class CD_BasicController: BasicController {
         }
         
         return context.waterme_save()
-            .reduce(self.maintenance_fixDates())
-            .reduce(self.maintenance_deleteOrphanedReminders())
-            .reduce(self.maintenance_deleteOrphanedVessels())
+            .reduce(self.maintenance_fixDates)
+            .reduce(self.maintenance_deleteOrphanedReminders)
+            .reduce(self.maintenance_oneTrueVesselShare)
+            .reduce(self.maintenance_fixOrphanedVessels(share:))
     }
 
     // MARK: Delete
@@ -594,8 +596,7 @@ extension CD_BasicController {
         } catch {
             assertionFailure(String(describing: error))
             error.log(as: .error)
-            // TODO: Create maintenance error
-            return .failure(.writeError)
+            return .failure(.maintenanceError)
         }
     }
     
@@ -633,8 +634,7 @@ extension CD_BasicController {
         } catch {
             assertionFailure(String(describing: error))
             error.log(as: .error)
-            // TODO: Create maintenance error
-            return .failure(.writeError)
+            return .failure(.maintenanceError)
         }
     }
     
@@ -653,13 +653,12 @@ extension CD_BasicController {
         } catch {
             assertionFailure(String(describing: error))
             error.log(as: .error)
-            // TODO: Create maintenance error
-            return .failure(.writeError)
+            return .failure(.maintenanceError)
         }
     }
     
     // TODO: Change to `fixOrphanedVessels`
-    fileprivate func maintenance_deleteOrphanedVessels() -> Result<Void, DatumError> {
+    fileprivate func maintenance_fixOrphanedVessels(share: CD_VesselShare) -> Result<Void, DatumError> {
         let context = self.container.viewContext
         let fetchRequest = CD_ReminderVessel.request
         fetchRequest.predicate = NSPredicate(format: "%K == nil", #keyPath(CD_ReminderVessel.raw_share))
@@ -667,15 +666,15 @@ extension CD_BasicController {
             let fetchResult = try context.fetch(fetchRequest)
             let count = fetchResult.count
             guard count > 0 else { return .success(()) }
-            fetchResult.forEach { context.delete($0) }
+            guard context === share.managedObjectContext else { return .failure(.maintenanceError) }
+            fetchResult.forEach { share.addToRaw_vessels($0) }
             try context.save()
-            "Orphaned ReminderVessels Deleted: \(count)".log(as: .error)
+            "Orphaned ReminderVessels Found: \(count)".log(as: .error)
             return .success(())
         } catch {
             assertionFailure(String(describing: error))
             error.log(as: .error)
-            // TODO: Create maintenance error
-            return .failure(.writeError)
+            return .failure(.maintenanceError)
         }
     }
 }
