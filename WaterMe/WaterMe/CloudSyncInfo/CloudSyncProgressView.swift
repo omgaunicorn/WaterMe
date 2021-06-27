@@ -25,7 +25,7 @@ import UIKit
 import Calculate
 import Datum
 
-class CloudSyncProgressView: UIStackView {
+class CloudSyncProgressView: ZStackView {
     
     /// Sends the progress view and a closure to complete when done with performing lifecycle changes
     /// Pass true in closure to mark the item as able to be completed and false to indicate it could not be completed
@@ -54,16 +54,18 @@ class CloudSyncProgressView: UIStackView {
     
     private var state: State = .idle {
         didSet {
-            UIView.style_animateNormal {
-                self.idleButton.isHidden        = self.state != .idle
-                self.syncingButton.isHidden     = self.state != .syncing
-                self.errorButton.isHidden       = self.state != .error
-                self.unavailableButton.isHidden = self.state != .unavailable
-                self.idleButton.alpha           = self.state == .idle        ? 1 : 0.1
-                self.syncingButton.alpha        = self.state == .syncing     ? 1 : 0.1
-                self.errorButton.alpha          = self.state == .error       ? 1 : 0.1
-                self.unavailableButton.alpha    = self.state == .unavailable ? 1 : 0.1
+            let view: UIView
+            switch self.state {
+            case .idle:
+                view = self.idleButton
+            case .syncing:
+                view = self.syncingButton
+            case .error:
+                view = self.errorButton
+            case .unavailable:
+                view = self.unavailableButton
             }
+            self.bringArrangedSubviewToFront(view)
         }
     }
     
@@ -82,7 +84,6 @@ class CloudSyncProgressView: UIStackView {
     init(controller: BasicController?) {
         
         defer {
-            self.axis = .horizontal
             self.addArrangedSubview(self.idleButton)
             self.addArrangedSubview(self.syncingButton)
             self.addArrangedSubview(self.errorButton)

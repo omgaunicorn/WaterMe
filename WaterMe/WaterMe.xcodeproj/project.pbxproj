@@ -222,6 +222,7 @@
 		732B1FCB26423AAD00B36C12 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 732B1FCA26423AAD00B36C12 /* Collections */; };
 		7334FE1D26429286004381A0 /* CloudSyncErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7334FE1C26429286004381A0 /* CloudSyncErrors.swift */; };
 		733BC95326880E9700F821D6 /* Result+Convenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733BC95226880E9700F821D6 /* Result+Convenience.swift */; };
+		733BC955268821A800F821D6 /* ZStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733BC954268821A800F821D6 /* ZStackView.swift */; };
 		73D02F66263F683300E90138 /* TestDB.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F64263F683200E90138 /* TestDB.sqlite */; };
 		73D02F67263F683300E90138 /* TestDB.sqlite-wal in Resources */ = {isa = PBXBuildFile; fileRef = 73D02F65263F683300E90138 /* TestDB.sqlite-wal */; };
 		73D02F69263F69ED00E90138 /* SchemaMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */; };
@@ -527,6 +528,7 @@
 		731B01E726411E8B00165220 /* CloudSyncProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncProgressView.swift; sourceTree = "<group>"; };
 		7334FE1C26429286004381A0 /* CloudSyncErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudSyncErrors.swift; sourceTree = "<group>"; };
 		733BC95226880E9700F821D6 /* Result+Convenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Result+Convenience.swift"; sourceTree = "<group>"; };
+		733BC954268821A800F821D6 /* ZStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZStackView.swift; sourceTree = "<group>"; };
 		738AB94F2610B07A00162114 /* v2.7.0.001.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = v2.7.0.001.xcdatamodel; sourceTree = "<group>"; };
 		73D02F64263F683200E90138 /* TestDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestDB.sqlite; sourceTree = "<group>"; };
 		73D02F65263F683300E90138 /* TestDB.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TestDB.sqlite-wal"; sourceTree = "<group>"; };
@@ -1141,6 +1143,7 @@
 				7311AF02263E76A60089B36E /* CloudSyncInfoViewController.swift */,
 				731B01E726411E8B00165220 /* CloudSyncProgressView.swift */,
 				7334FE1C26429286004381A0 /* CloudSyncErrors.swift */,
+				733BC954268821A800F821D6 /* ZStackView.swift */,
 			);
 			path = CloudSyncInfo;
 			sourceTree = "<group>";
@@ -1651,6 +1654,7 @@
 				5087A9231EE3A6B00046E687 /* ImagePickerCropperViewController.swift in Sources */,
 				5002ADE523E6AC5F00CBC2B9 /* NSObject+Runtime.m in Sources */,
 				502E68331F9122F100B0359C /* ReminderFinishDropTargetViewController.swift in Sources */,
+				733BC955268821A800F821D6 /* ZStackView.swift in Sources */,
 				504A36FB214C7ECC009543C0 /* SimpleImageViewerSubclass.swift in Sources */,
 				5096D1962154775D006E1019 /* Font.swift in Sources */,
 				509A0869215FFF1C00389339 /* ClosureDelegatingAddVoiceShortcutViewController.swift in Sources */,
