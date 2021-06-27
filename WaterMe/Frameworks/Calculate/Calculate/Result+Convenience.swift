@@ -52,3 +52,12 @@ extension Result {
         }
     }
 }
+
+extension Result where Success == Void {
+    public func reduce(_ next: @autoclosure () -> Result<Success, Failure>) -> Result<Success, Failure> {
+        switch self {
+        case .success: return next()
+        case .failure(let error): return .failure(error)
+        }
+    }
+}

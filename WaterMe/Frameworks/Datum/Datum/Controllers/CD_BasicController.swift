@@ -112,11 +112,12 @@ internal class CD_BasicController: BasicController {
                 .sink
                 { [weak syncProgress] _ in
                     guard syncProgress?.progress.fractionCompleted == 1 else { return }
-                    // TODO: Figure out what to do with these errors
-                    let r1 = self.maintenance_fixDates()
-                    let r2 = self.maintenance_deleteOrphanedReminders()
-                    let r3 = self.maintenance_deleteOrphanedVessels()
-                    let r4 = self.maintenance_oneTrueVesselShare()
+                    // Perform maintenance and log any errors
+                    self.maintenance_fixDates()
+                        .reduce(self.maintenance_deleteOrphanedReminders())
+                        .reduce(self.maintenance_deleteOrphanedVessels())
+                        .reduce(self.maintenance_oneTrueVesselShare().map { _ in () })
+                        .error?.log()
                 }
         }
         
@@ -180,12 +181,6 @@ internal class CD_BasicController: BasicController {
     {
         // debug only sanity checks
         assert(Thread.isMainThread)
-        
-        // Manually do cleanup during this "heavyweight" operation
-        // TODO: Figure out what to do with these errors
-        let r1 = self.maintenance_fixDates()
-        let r2 = self.maintenance_deleteOrphanedReminders()
-        let r3 = self.maintenance_deleteOrphanedVessels()
         
         let context = self.container.viewContext
         let vessel = CD_ReminderVessel(context: context)
@@ -476,7 +471,11 @@ internal class CD_BasicController: BasicController {
             perform.raw_reminder = reminder
             reminder.updateDates(withAppendedPerformDate: perform.raw_date)
         }
+        
         return context.waterme_save()
+            .reduce(self.maintenance_fixDates())
+            .reduce(self.maintenance_deleteOrphanedReminders())
+            .reduce(self.maintenance_deleteOrphanedVessels())
     }
 
     // MARK: Delete
