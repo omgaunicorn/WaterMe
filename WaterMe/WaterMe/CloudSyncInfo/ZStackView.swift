@@ -30,6 +30,7 @@ public class ZStackView: UIView {
     }
     
     public private(set) var arrangedSubviews: [UIView] = []
+    public weak var animationDelegate: ZStackViewAnimationDelegate?
     
     public func addArrangedSubview(_ view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -57,10 +58,18 @@ public class ZStackView: UIView {
     @discardableResult
     public func bringArrangedSubviewToFront(_ view: UIView) -> Result<Void, Error> {
         guard let index = self.arrangedSubviews.firstIndex(of: view) else { return .failure(.givenViewNotManaged) }
+        guard index > 0 else { return .success(()) }
         self.arrangedSubviews.remove(at: index)
         self.arrangedSubviews = [view] + self.arrangedSubviews
-        self.arrangedSubviews.reversed().forEach { self.bringSubviewToFront($0) }
+        self.arrangedSubviews.enumerated().reversed().forEach { index, view in
+            self.bringSubviewToFront(view)
+        }
+        self.animationDelegate?.didReorderArrangedSubviews(self)
         return .success(())
     }
     
+}
+
+public protocol ZStackViewAnimationDelegate: AnyObject {
+    func didReorderArrangedSubviews(_: ZStackView)
 }

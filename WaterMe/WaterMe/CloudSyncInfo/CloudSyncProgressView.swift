@@ -84,13 +84,18 @@ class CloudSyncProgressView: ZStackView {
     init(controller: BasicController?) {
         
         defer {
+            self.animationDelegate = self
             self.addArrangedSubview(self.idleButton)
             self.addArrangedSubview(self.syncingButton)
             self.addArrangedSubview(self.errorButton)
             self.addArrangedSubview(self.unavailableButton)
+            self.idleButton.alpha = 0
+            self.syncingButton.alpha = 0
+            self.errorButton.alpha = 0
+            self.unavailableButton.alpha = 0
             // TODO: Put light gray somewhere in style
-            // self.idleButton.tintColor = .lightGray
-            // self.syncingButton.tintColor = .lightGray
+            self.idleButton.tintColor = .lightGray
+            self.syncingButton.tintColor = .lightGray
             self.idleButton.isUserInteractionEnabled = false
             self.syncingButton.isUserInteractionEnabled = false
             // TODO: Put this -8 somewhere in style
@@ -219,5 +224,27 @@ class CloudSyncProgressView: ZStackView {
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension CloudSyncProgressView: ZStackViewAnimationDelegate {
+    func didReorderArrangedSubviews(_ stackView: ZStackView) {
+        UIView.style_animateNormal({
+            stackView.arrangedSubviews.enumerated().forEach { index, view in
+                if index == 0 {
+                    view.alpha = 1
+                    view.transform = .identity
+                } else {
+                    view.alpha = 0
+                    view.transform = CGAffineTransform(translationX: -100, y: 0)
+                }
+            }
+        }, completion: { _ in
+            stackView.arrangedSubviews.first?.isUserInteractionEnabled = true
+            stackView.arrangedSubviews.dropFirst().forEach { view in
+                view.isUserInteractionEnabled = false
+                view.transform = CGAffineTransform(translationX: +100, y: 0)
+            }
+        })
     }
 }
