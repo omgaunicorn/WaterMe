@@ -521,6 +521,9 @@ extension DatumError {
         static let objectDeletedMessage =
             NSLocalizedString("Unable to save changes because the item was deleted. Possibly from another device.",
                               comment: "Realm Error: Object Deleted: Message: Error saving because the object that is being saved has already been deleted.")
+        static let maintenanceMessage =
+            NSLocalizedString("Error performing maintenance. Check to make sure there is free space available on this device.",
+                              comment: "Realm Error: Save: Message: There was an error performing maintenance. The app is probably not usable if this error happens.")
     }
 }
 

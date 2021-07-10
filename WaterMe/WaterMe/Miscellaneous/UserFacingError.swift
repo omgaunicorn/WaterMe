@@ -63,8 +63,7 @@ extension DatumError: UserFacingError {
         case .realmIsEnabledFalseUnsupported:
             return LocalizedString.realmIsEnabledFalseUnsupportedMessage
         case .maintenanceError:
-            // TODO: Add localized strings
-            fatalError()
+            return LocalizedString.maintenanceMessage
         }
     }
 
