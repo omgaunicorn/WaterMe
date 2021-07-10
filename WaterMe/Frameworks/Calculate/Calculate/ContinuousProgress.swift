@@ -118,6 +118,32 @@ public enum GenericInitializationError: Swift.Error, RawRepresentable {
     }
 }
 
-public enum GenericSyncError: Swift.Error {
-    case unknown(Swift.Error)
+public struct GenericSyncError: CustomNSError {
+    
+    public enum Kind {
+        case password
+        case unknown
+    }
+    
+    public static var errorDomain: String { "com.saturdayapps.waterme.GenericSyncError" }
+    public var errorCode: Int { self.originalError.code }
+    public var errorUserInfo: [String : Any] { self.originalError.userInfo }
+    
+    public let kind: Kind
+    public let originalError: NSError
+    
+    init(_ _error: Swift.Error) {
+        let error = _error as NSError
+        self.originalError = error
+        guard error.domain == CKErrorDomain else {
+            self.kind = .unknown
+            return
+        }
+        switch error.code {
+        case 2:
+            self.kind = .password
+        default:
+            self.kind = .unknown
+        }
+    }
 }

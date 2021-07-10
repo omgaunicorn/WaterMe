@@ -24,20 +24,22 @@
 import Calculate
 
 extension GenericSyncError: UserFacingError {
-    public static var errorDomain: String { "com.saturdayapps.waterme.GenericSyncError" }
     public var isCritical: Bool { false }
-    public var recoveryActions: [RecoveryAction] { [] }
     public var title: String? { "iCloud Sync Error" }
     public var message: String? {
-        switch self {
-        case .unknown(let error):
-            return error.localizedDescription
+        switch self.kind {
+        case .password:
+            return "Sync failed because there is an issue with your iCloud password. Check your password in Settings → Apple ID → iCloud."
+        case .unknown:
+            return self.originalError.localizedDescription
         }
     }
-    public var errorCode: Int {
-        switch self {
-        case .unknown(let error):
-            return (error as NSError).code
+    public var recoveryActions: [RecoveryAction] {
+        switch self.kind {
+        case .password:
+            return [.openWaterMeSettings]
+        case .unknown:
+            return []
         }
     }
 }

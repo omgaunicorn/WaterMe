@@ -90,7 +90,7 @@ public class CloudKitContainerContinuousProgress: ContinousProgress {
             self.objectWillChange.send()
             if let error = event.error {
                 error.log()
-                self.errorQ.append(.unknown(error))
+                self.errorQ.append(.init(error))
             }
             if self.io.contains(event.identifier) {
                 "- \(event.identifier)".log(as: .debug)
