@@ -44,6 +44,7 @@ class CloudSyncProgressView: ZStackView {
     private let errorButton       = UIButton(type: .system)
     private let unavailableButton = UIButton(type: .system)
     private var progressToken: Any?
+    private var lastError: UserFacingError?
     private var timer: Timer?
     
     private let _progress: Any?
@@ -93,12 +94,8 @@ class CloudSyncProgressView: ZStackView {
             self.syncingButton.alpha = 0
             self.errorButton.alpha = 0
             self.unavailableButton.alpha = 0
-            // TODO: Put light gray somewhere in style
-            self.idleButton.tintColor = .lightGray
-            self.syncingButton.tintColor = .lightGray
             self.idleButton.isUserInteractionEnabled = false
             self.syncingButton.isUserInteractionEnabled = false
-            // TODO: Add target action for ErrorButton, UnavailableButton
             self.errorButton.addTarget(self, action: #selector(self.showNextError(_:)), for: .touchUpInside)
             self.unavailableButton.addTarget(self, action: #selector(self.showUnavailableError(_:)), for: .touchUpInside)
         }
@@ -112,6 +109,7 @@ class CloudSyncProgressView: ZStackView {
         self._progress = controller?.syncProgress
         super.init(frame: .zero)
         self.progressToken = controller?.syncProgress?.objectWillChange.sink { [weak self] in
+            self?.lastError = nil
             self?.activateTimer()
         }
     }
@@ -178,8 +176,9 @@ class CloudSyncProgressView: ZStackView {
         
         self.timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
             let error: UserFacingError? = progress.initializeError ?? progress.errorQ.first
-            guard error == nil else {
+            guard (error ?? self?.lastError) == nil else {
                 invalidate()
+                self?.lastError = error
                 self?.state = .error
                 self?.lifecycle = .show
                 return
@@ -203,11 +202,7 @@ class CloudSyncProgressView: ZStackView {
     }
     
     @objc private func showNextError(_ sender: UIButton) {
-        guard
-            #available(iOS 14.0, *),
-            let error: UserFacingError = self.progress?.initializeError
-                                      ?? self.progress?.errorQ.popFirst()
-        else { return }
+        guard let error: UserFacingError = self.lastError else { return }
         self.lifecycle = .present(error, sender)
     }
     
