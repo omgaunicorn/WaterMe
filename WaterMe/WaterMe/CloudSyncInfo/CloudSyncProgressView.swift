@@ -48,8 +48,8 @@ class CloudSyncProgressView: ZStackView {
     
     private let _progress: Any?
     @available(iOS 13.0, *)
-    private var progress: AnyContinousProgress<GenericInitializationError, GenericSyncError>? {
-        return _progress as? AnyContinousProgress<GenericInitializationError, GenericSyncError>
+    private var progress: AnyContinousProgress<GenericInitializationError, CloudKitSyncError>? {
+        return _progress as? AnyContinousProgress<GenericInitializationError, CloudKitSyncError>
     }
     
     private var state: State = .idle {

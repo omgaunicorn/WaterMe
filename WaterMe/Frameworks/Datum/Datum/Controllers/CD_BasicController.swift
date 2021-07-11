@@ -153,8 +153,8 @@ internal class CD_BasicController: BasicController {
     private var maintenance_syncToken: Any?
     private let _syncProgress: AnyObject?
     @available(iOS 14.0, *)
-    internal var syncProgress: AnyContinousProgress<GenericInitializationError, GenericSyncError>? {
-        _syncProgress as? AnyContinousProgress<GenericInitializationError, GenericSyncError>
+    internal var syncProgress: AnyContinousProgress<GenericInitializationError, CloudKitSyncError>? {
+        _syncProgress as? AnyContinousProgress<GenericInitializationError, CloudKitSyncError>
     }
 
     // MARK: Create

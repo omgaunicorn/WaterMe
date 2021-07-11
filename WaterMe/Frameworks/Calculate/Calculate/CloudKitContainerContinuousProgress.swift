@@ -42,7 +42,7 @@ public class CloudKitContainerContinuousProgress: ContinousProgress {
     
     public var initializeError: GenericInitializationError?
     public let progress: Progress
-    public var errorQ = Deque<GenericSyncError>()
+    public var errorQ = Deque<CloudKitSyncError>()
     
     private let syncName = NSPersistentCloudKitContainer.eventChangedNotification
     private let accountName = Notification.Name.CKAccountChanged

@@ -49,7 +49,7 @@ internal class RLM_BasicController: BasicController {
 
     internal let kind: ControllerKind
     @available(iOS 14.0, *)
-    internal var syncProgress: AnyContinousProgress<GenericInitializationError, GenericSyncError>? {
+    internal var syncProgress: AnyContinousProgress<GenericInitializationError, CloudKitSyncError>? {
         return nil
     }
     private let config: Realm.Configuration

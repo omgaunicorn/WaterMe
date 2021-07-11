@@ -23,19 +23,19 @@
 
 import Calculate
 
-extension GenericSyncError: UserFacingError {
+extension CloudKitSyncError: UserFacingError {
     public var isCritical: Bool { false }
     public var title: String? { "iCloud Sync Error" }
     public var message: String? {
-        switch self.kind {
+        switch self.typed {
         case .password:
             return "Sync failed because there is an issue with your iCloud password. Check your password in Settings → Apple ID → iCloud."
         case .unknown:
-            return self.originalError.localizedDescription
+            return self.untyped.localizedDescription
         }
     }
     public var recoveryActions: [RecoveryAction] {
-        switch self.kind {
+        switch self.typed {
         case .password:
             return [.openWaterMeSettings]
         case .unknown:
@@ -83,7 +83,8 @@ extension CloudSyncProgressView {
             }
         }
         var title: String? { "iCloud Sync Error" }
-        var message: String? { "iCloud Sync is not available on this device. iCloud Sync in WaterMe is only available on devices running iOS 14 or newer. Also, verify that 'Sync via iCloud' is enabled in settings." }
+        // TODO: fix this message to have correct instructions.
+        var message: String? { "iCloud Sync is not available on this device. iCloud Sync in WaterMe is only available on devices running iOS 14 or newer. If you do not want to see this error, disable 'Sync via iCloud' using the button below." }
         var recoveryActions: [RecoveryAction] { [.openWaterMeSettings] }
         var isCritical: Bool { false }
     }
