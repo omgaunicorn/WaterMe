@@ -27,7 +27,7 @@ public protocol ErrorInitable {
     init(_ error: Swift.Error)
 }
 
-open class TypedError<T: ErrorInitable>: ErrorInitable, CustomNSError {
+open class TypedNSError<T: ErrorInitable>: ErrorInitable, CustomNSError {
     
     open class var errorDomain: String { "com.saturdayapps.WaterMe.InvalidDomain" }
     open var errorCode: Int { self.untyped.code }

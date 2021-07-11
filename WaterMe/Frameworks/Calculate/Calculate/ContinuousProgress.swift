@@ -118,7 +118,7 @@ public enum GenericInitializationError: Swift.Error, RawRepresentable {
     }
 }
 
-public class CloudKitSyncError: TypedError<CloudKitSyncErrorKind> {
+public class CloudKitSyncError: TypedNSError<CloudKitSyncErrorKind> {
     public override class var errorDomain: String { "com.saturdayapps.waterme.CloudKitSyncError" }
 }
 
