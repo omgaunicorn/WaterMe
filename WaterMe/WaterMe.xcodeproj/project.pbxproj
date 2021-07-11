@@ -213,6 +213,7 @@
 		50E8B1E81EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */; };
 		50E8B1EA1EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */; };
 		50E8B1EC1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */; };
+		730E74B9269A889C00E63335 /* TypedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730E74B7269A84A500E63335 /* TypedError.swift */; };
 		7311AEFF263E762C0089B36E /* ContinuousProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AEFD263E76260089B36E /* ContinuousProgress.swift */; };
 		7311AF01263E765A0089B36E /* CloudKitContainerContinuousProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AF00263E765A0089B36E /* CloudKitContainerContinuousProgress.swift */; };
 		7311AF04263E76A60089B36E /* CloudSyncInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7311AF02263E76A60089B36E /* CloudSyncInfoViewController.swift */; };
@@ -520,6 +521,7 @@
 		50E8B1E71EE1C20200ACCDAF /* ReminderVesselEditTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselEditTableViewController.swift; sourceTree = "<group>"; };
 		50E8B1E91EE1C39400ACCDAF /* ReminderVesselIconTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderVesselIconTableViewCell.swift; sourceTree = "<group>"; };
 		50E8B1EB1EE1CDC200ACCDAF /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		730E74B7269A84A500E63335 /* TypedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypedError.swift; sourceTree = "<group>"; };
 		7311AEFB263E17780089B36E /* SimpleToggleTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleToggleTableViewCell.swift; sourceTree = "<group>"; };
 		7311AEFD263E76260089B36E /* ContinuousProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContinuousProgress.swift; sourceTree = "<group>"; };
 		7311AF00263E765A0089B36E /* CloudKitContainerContinuousProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudKitContainerContinuousProgress.swift; sourceTree = "<group>"; };
@@ -685,6 +687,7 @@
 				50E831FC250CF567008758E2 /* Loggable.swift */,
 				50E831F2250CB598008758E2 /* Loggable+System.swift */,
 				733BC95226880E9700F821D6 /* Result+Convenience.swift */,
+				730E74B7269A84A500E63335 /* TypedError.swift */,
 				48A7B0D62467FCB100DC0861 /* Info.plist */,
 			);
 			name = Calculate;
@@ -1535,6 +1538,7 @@
 				48A7B0F62467FDF600DC0861 /* SignificantTimePassedDetector.swift in Sources */,
 				48A7B0F52467FDF600DC0861 /* PrivateKeys.swift in Sources */,
 				48A7B0F82467FDF600DC0861 /* AppVersion.swift in Sources */,
+				730E74B9269A889C00E63335 /* TypedError.swift in Sources */,
 				50E831F3250CB598008758E2 /* Loggable+System.swift in Sources */,
 				7311AEFF263E762C0089B36E /* ContinuousProgress.swift in Sources */,
 				48A7B0F72467FDF600DC0861 /* NSCalendar+WaterMe.swift in Sources */,
