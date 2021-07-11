@@ -132,7 +132,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         case .show:
             self.navigationController?.setToolbarHidden(false, animated: true)
         case .present(let error, let sender):
-            let errorVC = UIAlertController(error: error, sender: .left(sender)) { _ in
+            let errorVC = UIAlertController(error: error, sender: .left((sender, .center))) { _ in
                 completion?(true)
             }
             self.present(errorVC, animated: true, completion: nil)

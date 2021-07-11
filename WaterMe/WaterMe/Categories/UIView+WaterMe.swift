@@ -37,13 +37,20 @@ extension UIView {
     }
 }
 
-typealias PopoverSender = Either<UIView, UIBarButtonItem>
+typealias PopoverSender = Either<(UIView, PopoverLocation), UIBarButtonItem>
+
+enum PopoverLocation {
+    case center, topTrailing
+}
 
 extension CGRect {
     /// Used to point Popovers at the middle of the presenting view
     var centerRect: CGRect {
-        return CGRect(origin: CGPoint(x: self.width / 2, y: self.height / 2),
-                      size: .zero)
+        CGRect(origin: CGPoint(x: self.width / 2, y: self.height / 2), size: .zero)
+    }
+    var topTrailing: CGRect {
+        let width = UIApplication.shared.userInterfaceLayoutDirection == .leftToRight ? self.width : 0
+        return CGRect(origin: CGPoint(x: width, y: 0), size: .zero)
     }
 }
 

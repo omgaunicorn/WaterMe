@@ -53,9 +53,11 @@ extension UIAlertController {
         switch sender {
         case .right(let bbi):
             self.popoverPresentationController?.barButtonItem = bbi
-        case .left(let view):
+        case .left(let (view, location)):
             self.popoverPresentationController?.sourceView = view
-            self.popoverPresentationController?.sourceRect = view.bounds.centerRect
+            self.popoverPresentationController?.sourceRect = location == .center
+                                                             ? view.bounds.centerRect
+                                                             : view.bounds.topTrailing
             self.popoverPresentationController?.permittedArrowDirections = [.up, .down]
         }
     }
