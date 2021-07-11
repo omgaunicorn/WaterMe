@@ -728,3 +728,26 @@ extension UserActivityError {
                                 comment: "Alert Message: Error ocurred when executing an existing Shortcut.")
     }
 }
+
+extension CloudSyncProgressView {
+    enum LocalizedString {
+        static let errorAlertTitle: String
+            = NSLocalizedString("iCloud Sync Error",
+                                comment: "Alert Title: Indicates there was an error with iCloud Sync.")
+        static let passwordErrorAlertMessage: String
+            = NSLocalizedString("Sync failed because there is an issue with your iCloud password. Check your password in Settings → Apple ID → iCloud.",
+                                comment: "Alert Message: Indicates there was an issue with the password used for iCloud. This requires going to the phone's settings app.")
+        static let notDeterminedErrorAlertMessage: String
+            = NSLocalizedString("Unable to detect your iCloud account status. Turning your device off and on may resolve this issue.",
+                                comment: "Alert Message: App could not detect iCloud login status. Very strange error, restarting device might help.")
+        static let restrictedErrorAlertMessage: String
+            = NSLocalizedString("iCloud Sync is restricted by parental or administrator controls.",
+                                comment: "Alert Message: iCloud is restricted on this device. The user cannot fix this issue.")
+        static let iCloudLoggedOutErrorAlertMessage: String
+            = NSLocalizedString("You are not signed into iCloud on this device. To use iCloud Sync with WaterMe, please sign into an iCloud account. If you do not want to see this error, disable 'Sync via iCloud' in WaterMe Settings using the button below.",
+                                comment: "Alert Message: The user is not signed in with iCloud and therefore cannot use iCloud Sync with WaterMe.")
+        static let unsupportedDeviceErrorAlertMessage: String
+            = NSLocalizedString("iCloud Sync is not available on this device. iCloud Sync in WaterMe is only available on devices running iOS 14 or newer. If you do not want to see this error, disable 'Sync via iCloud' using the button below.",
+                                comment: "Alert Message: The device is running an old version of iOS and cannot use iCloud Sync.")
+    }
+}

@@ -177,12 +177,6 @@
 /* Purchase Thanks: Subtitle: Reminding the user what we’re thanking them for. */
 "In-App Purchase" = "Acquisto in App";
 
-/* Cloud Sync Info: Title: Lets the user know that iCloud sync is possible */
-"iCloud Sync" = "LOCALIZE ME";
-
-/* Cloud Sync Info: Body: Lets the user know how iCloud sync works and that it can be enabled and disabled from the settings app. */
-"WaterMe now automatically syncs all plants and reminders via iCloud. You can enable and disable iCloud sync from the settings screen." = "LOCALIZE ME";
-
 /* Settings: Info Cell: Title: Text in the tip jar area that explains why someone should give money. */
 "I’m Jeff, a professional iOS Developer and UX Designer. I like making small and polished apps in my spare time. If you find WaterMe useful and would like to fund its development, consider supporting the app with the buttons below." = "Ciao io sono Jeff, sviluppatore professionale di iOS e UX Designer. Mi piace creare piccole e raffinate applicazioni nel mio tempo libero e WatwerMe è una di queste. Se trovate utile WaterMe e volete finanziarne lo sviluppo, avete la possibilità di supportare l'app con i pulsanti sottostanti.";
 
@@ -476,6 +470,43 @@
 
 /* Notification Body: 1 Item: When 1 plant needs to be taken care of in a day, this is the body text of the notification. */
 "‘%@’ needs attention today." = "‘%@’ bisogno di attenzione oggi.";
+
+/*
+
+_  _____ _                 _    _____
+(_)/ ____| |               | |  / ____|
+_| |    | | ___  _   _  __| | | (___  _   _ _ __   ___
+| | |    | |/ _ \| | | |/ _` |  \___ \| | | | '_ \ / __|
+| | |____| | (_) | |_| | (_| |  ____) | |_| | | | | (__
+|_|\_____|_|\___/ \__,_|\__,_| |_____/ \__, |_| |_|\___|
+                                       __/ |
+                                      |___/
+
+*/
+
+/* Cloud Sync Info: Title: Lets the user know that iCloud sync is possible */
+"iCloud Sync" = "LOCALIZE ME";
+
+/* Cloud Sync Info: Body: Lets the user know how iCloud sync works and that it can be enabled and disabled from the settings app. */
+"WaterMe now automatically syncs all plants and reminders via iCloud. You can enable and disable iCloud sync from the settings screen." = "LOCALIZE ME";
+
+/* Alert Title: Indicates there was an error with iCloud Sync. */
+"iCloud Sync Error" = "LOCALIZED ME";
+
+/* Alert Message: Indicates there was an issue with the password used for iCloud. This requires going to the phone's settings app. */
+"Sync failed because there is an issue with your iCloud password. Check your password in Settings → Apple ID → iCloud." = "LOCALIZE ME";
+
+/* Alert Message: App could not detect iCloud login status. Very strange error, restarting device might help. */
+"Unable to detect your iCloud account status. Turning your device off and on may resolve this issue." = "LOCALIZED ME";
+
+/* Alert Message: iCloud is restricted on this device. The user cannot fix this issue. */
+"iCloud Sync is restricted by parental or administrator controls." = "LOCALIZED ME";
+
+/* Alert Message: The user is not signed in with iCloud and therefore cannot use iCloud Sync with WaterMe. */
+"You are not signed into iCloud on this device. To use iCloud Sync with WaterMe, please sign into an iCloud account. If you do not want to see this error, disable 'Sync via iCloud' in WaterMe Settings using the button below." = "LOCALIZE ME";
+
+/* Alert Message: The device is running an old version of iOS and cannot use iCloud Sync. */
+"iCloud Sync is not available on this device. iCloud Sync in WaterMe is only available on devices running iOS 14 or newer. If you do not want to see this error, disable 'Sync via iCloud' using the button below." = "LOCALIZE ME";
 
 /*
  

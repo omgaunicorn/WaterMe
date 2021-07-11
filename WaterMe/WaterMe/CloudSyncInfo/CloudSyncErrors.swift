@@ -25,11 +25,11 @@ import Calculate
 
 extension CloudKitSyncError: UserFacingError {
     public var isCritical: Bool { false }
-    public var title: String? { "iCloud Sync Error" }
+    public var title: String? { CloudSyncProgressView.LocalizedString.errorAlertTitle }
     public var message: String? {
         switch self.typed {
         case .password:
-            return "Sync failed because there is an issue with your iCloud password. Check your password in Settings → Apple ID → iCloud."
+            return CloudSyncProgressView.LocalizedString.passwordErrorAlertMessage
         case .unknown:
             return self.untyped.localizedDescription
         }
@@ -45,16 +45,15 @@ extension CloudKitSyncError: UserFacingError {
 }
 
 extension GenericInitializationError: UserFacingError {
-    // TODO: Localize this
-    public var title: String? { "iCloud Sync Error" }
+    public var title: String? { CloudSyncProgressView.LocalizedString.errorAlertTitle }
     public var message: String? {
         switch self {
         case .couldNotDetermine:
-            return "Unable to detect your iCloud account status. Turning your device off and on may resolve this issue."
+            return CloudSyncProgressView.LocalizedString.notDeterminedErrorAlertMessage
         case .restricted:
-            return "iCloud Sync is restricted by parental or administrator controls."
+            return CloudSyncProgressView.LocalizedString.restrictedErrorAlertMessage
         case .noAccount:
-            return "You are not signed into iCloud on this device. To use iCloud Sync with WaterMe, please sign into an iCloud account. If you do not want to see this error, disable 'Sync via iCloud' using the button below."
+            return CloudSyncProgressView.LocalizedString.iCloudLoggedOutErrorAlertMessage
         }
     }
     public var recoveryActions: [RecoveryAction] { [.openWaterMeSettings] }
@@ -82,9 +81,8 @@ extension CloudSyncProgressView {
                 return 1001
             }
         }
-        var title: String? { "iCloud Sync Error" }
-        // TODO: fix this message to have correct instructions.
-        var message: String? { "iCloud Sync is not available on this device. iCloud Sync in WaterMe is only available on devices running iOS 14 or newer. If you do not want to see this error, disable 'Sync via iCloud' using the button below." }
+        var title: String? { LocalizedString.errorAlertTitle }
+        var message: String? { CloudSyncProgressView.LocalizedString.unsupportedDeviceErrorAlertMessage }
         var recoveryActions: [RecoveryAction] { [.openWaterMeSettings] }
         var isCritical: Bool { false }
     }
