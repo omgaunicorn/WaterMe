@@ -98,11 +98,6 @@ class CloudSyncProgressView: ZStackView {
             self.syncingButton.tintColor = .lightGray
             self.idleButton.isUserInteractionEnabled = false
             self.syncingButton.isUserInteractionEnabled = false
-            // TODO: Put this -8 somewhere in style
-            self.idleButton.imageEdgeInsets.left = -8
-            self.syncingButton.imageEdgeInsets.left = -8
-            self.errorButton.imageEdgeInsets.left = -8
-            self.unavailableButton.imageEdgeInsets.left = -8
             // TODO: Add target action for ErrorButton, UnavailableButton
             self.errorButton.addTarget(self, action: #selector(self.showNextError(_:)), for: .touchUpInside)
             self.unavailableButton.addTarget(self, action: #selector(self.showUnavailableError(_:)), for: .touchUpInside)
@@ -122,6 +117,17 @@ class CloudSyncProgressView: ZStackView {
     }
     
     private func updateLabels() {
+        
+        let property: WritableKeyPath<UIEdgeInsets, CGFloat>
+            = self.traitCollection.layoutDirection == .rightToLeft
+            ? \.right
+            : \.left
+        // TODO: Put this -8 somewhere in style
+        self.idleButton.imageEdgeInsets[keyPath: property] = -8
+        self.syncingButton.imageEdgeInsets[keyPath: property] = -8
+        self.errorButton.imageEdgeInsets[keyPath: property] = -8
+        self.unavailableButton.imageEdgeInsets[keyPath: property] = -8
+        
         if #available(iOS 13.0, *) {
             self.idleButton.setImage(UIImage(systemName: "checkmark.icloud"), for: .normal)
             self.syncingButton.setImage(UIImage(systemName: "arrow.clockwise.icloud"), for: .normal)
