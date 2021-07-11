@@ -70,9 +70,7 @@ extension ReminderVesselEditViewController: ReminderVesselEditTableViewControlle
         switch sender {
         case .left(let (sender, location)):
             vc.popoverPresentationController?.sourceView = sender
-            vc.popoverPresentationController?.sourceRect = location == .center
-                                                           ? view.bounds.centerRect
-                                                           : view.bounds.topTrailing
+            vc.popoverPresentationController?.sourceRect = sender.bounds.rect(with: location)
         case .right(let sender):
             vc.popoverPresentationController?.barButtonItem = sender
         }

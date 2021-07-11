@@ -95,9 +95,7 @@ extension UIAlertController {
             self.popoverPresentationController?.barButtonItem = bbi
         case .left(let (view, location)):
             self.popoverPresentationController?.sourceView = view
-            self.popoverPresentationController?.sourceRect = location == .center
-                                                             ? view.bounds.centerRect
-                                                             : view.bounds.topTrailing
+            self.popoverPresentationController?.sourceRect = view.bounds.rect(with: location)
             self.popoverPresentationController?.permittedArrowDirections = [.up, .down]
         }
     }
@@ -128,9 +126,7 @@ extension UIAlertController {
             self.popoverPresentationController?.barButtonItem = bbi
         case .left(let (view, location)):
             self.popoverPresentationController?.sourceView = view
-            self.popoverPresentationController?.sourceRect = location == .center
-                                                             ? view.bounds.centerRect
-                                                             : view.bounds.topTrailing
+            self.popoverPresentationController?.sourceRect = view.bounds.rect(with: location)
             self.popoverPresentationController?.permittedArrowDirections = [.up, .down]
         }
     }
