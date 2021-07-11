@@ -49,7 +49,9 @@ extension CGRect {
         CGRect(origin: CGPoint(x: self.width / 2, y: self.height / 2), size: .zero)
     }
     var topTrailing: CGRect {
-        let width = UIApplication.shared.userInterfaceLayoutDirection == .leftToRight ? self.width : 0
+        let width = UIApplication.shared.userInterfaceLayoutDirection == .rightToLeft
+                                                                       ? 0
+                                                                       : self.width
         return CGRect(origin: CGPoint(x: width, y: 0), size: .zero)
     }
 }
