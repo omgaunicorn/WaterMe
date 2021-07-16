@@ -563,7 +563,6 @@ extension CD_BasicController {
     
     fileprivate func maintenance_oneTrueVesselShare() -> Result<CD_VesselShare, DatumError> {
         let context = self.container.viewContext
-        // TODO: Put this in its own function
         do {
             // Clean up any errors caused by weird syncing
             // 1. Fetch all VesselShare objects
@@ -657,7 +656,6 @@ extension CD_BasicController {
         }
     }
     
-    // TODO: Change to `fixOrphanedVessels`
     fileprivate func maintenance_fixOrphanedVessels(share: CD_VesselShare) -> Result<Void, DatumError> {
         let context = self.container.viewContext
         let fetchRequest = CD_ReminderVessel.request
