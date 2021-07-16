@@ -263,3 +263,9 @@ extension AVPlayerItem {
         return item
     }
 }
+
+extension CloudSyncProgressView {
+    enum Style {
+        static let statusIconTextGap: CGFloat = -8
+    }
+}

@@ -94,8 +94,8 @@ class CloudSyncProgressView: ZStackView {
             self.syncingButton.alpha = 0
             self.errorButton.alpha = 0
             self.unavailableButton.alpha = 0
-            self.idleButton.isUserInteractionEnabled = false
-            self.syncingButton.isUserInteractionEnabled = false
+            self.idleButton.isEnabled = false
+            self.syncingButton.isEnabled = false
             self.errorButton.addTarget(self, action: #selector(self.showNextError(_:)), for: .touchUpInside)
             self.unavailableButton.addTarget(self, action: #selector(self.showUnavailableError(_:)), for: .touchUpInside)
         }
@@ -116,15 +116,14 @@ class CloudSyncProgressView: ZStackView {
     
     private func updateLabels() {
         
-        let property: WritableKeyPath<UIEdgeInsets, CGFloat>
+        let edge: WritableKeyPath<UIEdgeInsets, CGFloat>
             = self.traitCollection.layoutDirection == .rightToLeft
             ? \.right
             : \.left
-        // TODO: Put this -8 somewhere in style
-        self.idleButton.imageEdgeInsets[keyPath: property] = -8
-        self.syncingButton.imageEdgeInsets[keyPath: property] = -8
-        self.errorButton.imageEdgeInsets[keyPath: property] = -8
-        self.unavailableButton.imageEdgeInsets[keyPath: property] = -8
+        self.idleButton.imageEdgeInsets[keyPath: edge] = Style.statusIconTextGap
+        self.syncingButton.imageEdgeInsets[keyPath: edge] = Style.statusIconTextGap
+        self.errorButton.imageEdgeInsets[keyPath: edge] = Style.statusIconTextGap
+        self.unavailableButton.imageEdgeInsets[keyPath: edge] = Style.statusIconTextGap
         
         if #available(iOS 13.0, *) {
             self.idleButton.setImage(UIImage(systemName: "checkmark.icloud"), for: .normal)
@@ -132,27 +131,29 @@ class CloudSyncProgressView: ZStackView {
             self.errorButton.setImage(UIImage(systemName: "exclamationmark.icloud"), for: .normal)
             self.unavailableButton.setImage(UIImage(systemName: "xmark.icloud"), for: .normal)
         }
-        // TODO: Create mew font for this use case
-        // IdleButton and SyncingButton need black fonts
-        // ErrorButton and UnavailableButton need tint color fonts
-        self.idleButton.setAttributedTitle(
-            NSAttributedString(string: LocalizedString.statusSyncComplete,
-                               font: .migratorSecondaryButton),
+        
+        // Setting AttributedStrings on buttons breaks their automatic coloring
+        // Setting font manually here
+        
+        self.idleButton.titleLabel?.font = Font.migratorSecondaryButton.attributes[.font] as? UIFont
+        self.syncingButton.titleLabel?.font = Font.migratorSecondaryButton.attributes[.font] as? UIFont
+        self.errorButton.titleLabel?.font = Font.migratorSecondaryButton.attributes[.font] as? UIFont
+        self.unavailableButton.titleLabel?.font = Font.migratorSecondaryButton.attributes[.font] as? UIFont
+        
+        self.idleButton.setTitle(
+            LocalizedString.statusSyncComplete,
             for: .normal
         )
-        self.syncingButton.setAttributedTitle(
-            NSAttributedString(string: LocalizedString.statusSyncInProgress,
-                               font: .migratorSecondaryButton),
+        self.syncingButton.setTitle(
+            LocalizedString.statusSyncInProgress,
             for: .normal
         )
-        self.errorButton.setAttributedTitle(
-            NSAttributedString(string: LocalizedString.statusSyncError,
-                               font: .migratorSecondaryButton),
+        self.errorButton.setTitle(
+            LocalizedString.statusSyncError,
             for: .normal
         )
-        self.unavailableButton.setAttributedTitle(
-            NSAttributedString(string: LocalizedString.statusSyncUnavailable,
-                               font: .migratorSecondaryButton),
+        self.unavailableButton.setTitle(
+            LocalizedString.statusSyncUnavailable,
             for: .normal
         )
     }
