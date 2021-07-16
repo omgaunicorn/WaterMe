@@ -749,5 +749,17 @@ extension CloudSyncProgressView {
         static let unsupportedDeviceErrorAlertMessage: String
             = NSLocalizedString("iCloud Sync is not available on this device. iCloud Sync in WaterMe is only available on devices running iOS 14 or newer. If you do not want to see this error, disable 'Sync via iCloud' using the button below.",
                                 comment: "Alert Message: The device is running an old version of iOS and cannot use iCloud Sync.")
+        static let statusSyncComplete: String
+            = NSLocalizedString("iCloud Sync Complete",
+                                comment: "Status Bar: iCloud sync recently completed. Not a button.")
+        static let statusSyncInProgress: String
+            = NSLocalizedString("Syncing with iCloud…",
+                                comment: "Status Bar: iCloud syncing is currently in progress. Not a button.")
+        static let statusSyncError: String
+            = NSLocalizedString("Sync Error",
+                                comment: "Status Bar: iCloud syncing had an error. A tappable button.")
+        static let statusSyncUnavailable: String
+            = NSLocalizedString("iCloud Sync Unavailable on this Device",
+                                comment: "Status Bar: iCloud syncing unavailable on this device. A tappable button.")
     }
 }

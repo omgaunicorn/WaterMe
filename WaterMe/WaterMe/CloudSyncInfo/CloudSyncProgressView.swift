@@ -132,27 +132,26 @@ class CloudSyncProgressView: ZStackView {
             self.errorButton.setImage(UIImage(systemName: "exclamationmark.icloud"), for: .normal)
             self.unavailableButton.setImage(UIImage(systemName: "xmark.icloud"), for: .normal)
         }
-        // TODO: Localize Strings
         // TODO: Create mew font for this use case
         // IdleButton and SyncingButton need black fonts
         // ErrorButton and UnavailableButton need tint color fonts
         self.idleButton.setAttributedTitle(
-            NSAttributedString(string: "iCloud Sync Complete",
+            NSAttributedString(string: LocalizedString.statusSyncComplete,
                                font: .migratorSecondaryButton),
             for: .normal
         )
         self.syncingButton.setAttributedTitle(
-            NSAttributedString(string: "Syncing with iCloud…",
+            NSAttributedString(string: LocalizedString.statusSyncInProgress,
                                font: .migratorSecondaryButton),
             for: .normal
         )
         self.errorButton.setAttributedTitle(
-            NSAttributedString(string: "Sync Error",
+            NSAttributedString(string: LocalizedString.statusSyncError,
                                font: .migratorSecondaryButton),
             for: .normal
         )
         self.unavailableButton.setAttributedTitle(
-            NSAttributedString(string: "iCloud Sync Unavailable on this Device",
+            NSAttributedString(string: LocalizedString.statusSyncUnavailable,
                                font: .migratorSecondaryButton),
             for: .normal
         )

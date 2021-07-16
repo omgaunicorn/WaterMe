@@ -508,6 +508,18 @@ _| |    | | ___  _   _  __| | | (___  _   _ _ __   ___
 /* Alert Message: The device is running an old version of iOS and cannot use iCloud Sync. */
 "iCloud Sync is not available on this device. iCloud Sync in WaterMe is only available on devices running iOS 14 or newer. If you do not want to see this error, disable 'Sync via iCloud' using the button below." = "LOCALIZE ME";
 
+/* Status Bar: iCloud sync recently completed. Not a button. */
+"iCloud Sync Complete" = "LOCALIZE ME";
+
+/* Status Bar: iCloud syncing is currently in progress. Not a button. */
+"Syncing with iCloud…" = "LOCALIZE ME";
+
+/* Status Bar: iCloud syncing had an error. A tappable button. */
+"Sync Error" = "LOCALIZE ME";
+
+/* Status Bar: iCloud syncing unavailable on this device. A tappable button. */
+"iCloud Sync Unavailable on this Device" = "LOCALIZE ME";
+
 /*
  
    _____        _          __  __ _                 _   _
