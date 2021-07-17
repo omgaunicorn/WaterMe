@@ -73,53 +73,60 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // make re-usable closures for notifications I'll register for later
         let appearanceChanges = { [weak self] in
-            // if the window is not configured yet, bail
-            guard
-                let self = self,
-                let window = self.window
-            else { return }
-
-            // need to rip the view hierarchy out of the window and put it back in
-            // in order for the new UIAppearance to take effect
-            UIApplication.style_configure()
-
-            // force window to update everything by
-            // get the old vc in iOS 13
-            var newVC: UIViewController!
-            if #available(iOS 13.0, *) {
-                newVC = window.rootViewController
+            DispatchQueue.main.async {
+                // if the window is not configured yet, bail
+                guard
+                    let self = self,
+                    let window = self.window
+                else { return }
+                
+                // need to rip the view hierarchy out of the window and put it back in
+                // in order for the new UIAppearance to take effect
+                UIApplication.style_configure()
+                
+                // force window to update everything by
+                // get the old vc in iOS 13
+                var newVC: UIViewController!
+                if #available(iOS 13.0, *) {
+                    newVC = window.rootViewController
+                }
+                // create a new VC in older versions
+                // for some reason this is needed
+                if newVC == nil {
+                    let result = self.basicControllerResult
+                    newVC = ReminderMainViewController.newVC(basic: result)
+                }
+                // clear the vc from the window
+                window.rootViewController = nil
+                // configuring the window
+                window.style_configure()
+                // replace with newVC
+                window.rootViewController = newVC
             }
-            // create a new VC in older versions
-            // for some reason this is needed
-            if newVC == nil {
-                let result = self.basicControllerResult
-                newVC = ReminderMainViewController.newVC(basic: result)
-            }
-            // clear the vc from the window
-            window.rootViewController = nil
-            // configuring the window
-            window.style_configure()
-            // replace with newVC
-            window.rootViewController = newVC
         }
         let notificationChanges = { [weak self] in
-            self?.reminderObserver?.notificationPermissionsMayHaveChanged()
+            DispatchQueue.main.async {
+                self?.reminderObserver?.notificationPermissionsMayHaveChanged()
+            }
         }
         let cloudSyncChanges = { [weak self] in
-            autoreleasepool {
-                // Clean things up
-                self?.window?.rootViewController = nil
-                self?.basicControllerResult = .failure(.loadError)
+            DispatchQueue.main.async {
+                autoreleasepool {
+                    // Clean things up
+                    self?.window?.rootViewController = nil
+                    self?.basicControllerResult = .failure(.loadError)
+                }
+                // Create new VC with recreated data source
+                let controller = NewBasicController(of: UserDefaults.standard.controllerKind)
+                self?.basicControllerResult = controller
+                self?.window?.rootViewController = ReminderMainViewController.newVC(basic: controller)
             }
-            // Create new VC with recreated data source
-            let controller = NewBasicController(of: UserDefaults.standard.controllerKind)
-            self?.basicControllerResult = controller
-            self?.window?.rootViewController = ReminderMainViewController.newVC(basic: controller)
         }
         // register for notifications about the increase contrast setting
-        _ = NotificationCenter.default.addObserver(forName: UIAccessibility.darkerSystemColorsStatusDidChangeNotification,
-                                                   object: nil,
-                                                   queue: nil)
+        let nc = NotificationCenter.default
+        _ = nc.addObserver(forName: UIAccessibility.darkerSystemColorsStatusDidChangeNotification,
+                           object: nil,
+                           queue: nil)
         { _ in
             appearanceChanges()
         }
@@ -142,13 +149,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let token6 = ud.observe(\.CLOUD_SYNC) { _, _ in
             cloudSyncChanges()
         }
+        // TODO: test to make sure this notification actually does something
+        _ = nc.addObserver(forName: .NSUbiquityIdentityDidChange, object: nil, queue: nil)
+        { _ in
+            cloudSyncChanges()
+        }
         self.userDefaultObserverTokens += [token1, token2, token3, token4, token5, token6]
     }
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
     {
-
         // see if there is a new build
         _ = {
             // check the build and see if its new
