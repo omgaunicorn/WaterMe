@@ -493,6 +493,9 @@ _| |    | | ___  _   _  __| | | (___  _   _ _ __   ___
 /* Alert Message: Indicates there was an issue with the password used for iCloud. This requires going to the phone's settings app. */
 "Sync failed because there is an issue with your iCloud password. Check your password in Settings → Apple ID → iCloud." = "LOCALIZE ME";
 
+/* Alert Message: Indicates there was a network error. Syncing will automatically resume when connected again. */
+"Sync failed because there was a network error. Next time there is a network connection, sync will automatically resume." = "Localize Me";
+
 /* Alert Message: App could not detect iCloud login status. Very strange error, restarting device might help. */
 "Unable to detect your iCloud account status. Turning your device off and on may resolve this issue." = "LOCALIZED ME";
 

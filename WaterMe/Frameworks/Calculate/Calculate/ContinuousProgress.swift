@@ -124,6 +124,7 @@ public class CloudKitSyncError: TypedNSError<CloudKitSyncErrorKind> {
 
 public enum CloudKitSyncErrorKind: ErrorInitable {
     case password
+    case network
     case unknown
     public init(_ _error: Error) {
         let error = _error as NSError
@@ -131,6 +132,7 @@ public enum CloudKitSyncErrorKind: ErrorInitable {
             else { self = .unknown; return; }
         switch error.code {
         case 2: self = .password
+        case 3: self = .network
         default: self = .unknown
         }
     }

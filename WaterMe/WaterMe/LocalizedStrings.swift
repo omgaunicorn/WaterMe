@@ -717,9 +717,12 @@ extension CloudSyncProgressView {
         static let errorAlertTitle: String
             = NSLocalizedString("iCloud Sync Error",
                                 comment: "Alert Title: Indicates there was an error with iCloud Sync.")
-        static let passwordErrorAlertMessage: String
+        static let errorPasswordAlertMessage: String
             = NSLocalizedString("Sync failed because there is an issue with your iCloud password. Check your password in Settings → Apple ID → iCloud.",
                                 comment: "Alert Message: Indicates there was an issue with the password used for iCloud. This requires going to the phone's settings app.")
+        static let errorNetworkAlertMessage: String
+            = NSLocalizedString("Sync failed because there was a network error. Next time there is a network connection, sync will automatically resume.",
+                                comment: "Alert Message: Indicates there was a network error. Syncing will automatically resume when connected again.")
         static let notDeterminedErrorAlertMessage: String
             = NSLocalizedString("Unable to detect your iCloud account status. Turning your device off and on may resolve this issue.",
                                 comment: "Alert Message: App could not detect iCloud login status. Very strange error, restarting device might help.")
