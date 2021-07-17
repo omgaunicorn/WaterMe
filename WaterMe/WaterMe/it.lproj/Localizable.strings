@@ -503,10 +503,10 @@ _| |    | | ___  _   _  __| | | (___  _   _ _ __   ___
 "iCloud Sync is restricted by parental or administrator controls." = "LOCALIZED ME";
 
 /* Alert Message: The user is not signed in with iCloud and therefore cannot use iCloud Sync with WaterMe. */
-"You are not signed into iCloud on this device. To use iCloud Sync with WaterMe, please sign into an iCloud account. If you do not want to see this error, disable 'Sync via iCloud' in WaterMe Settings using the button below." = "LOCALIZE ME";
+"To use iCloud Sync with WaterMe, please sign into your iCloud account. If you do not want to see this error, disable 'Sync via iCloud' in Settings." = "LOCALIZE ME";
 
 /* Alert Message: The device is running an old version of iOS and cannot use iCloud Sync. */
-"iCloud Sync is not available on this device. iCloud Sync in WaterMe is only available on devices running iOS 14 or newer. If you do not want to see this error, disable 'Sync via iCloud' using the button below." = "LOCALIZE ME";
+"iCloud Sync in WaterMe is only available on devices running iOS 14 or newer. If you do not want to see this error, turn off 'Sync via iCloud' in Settings." = "LOCALIZE ME";
 
 /* Status Bar: iCloud sync recently completed. Not a button. */
 "iCloud Sync Complete" = "LOCALIZE ME";

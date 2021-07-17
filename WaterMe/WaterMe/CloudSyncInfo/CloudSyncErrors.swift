@@ -84,7 +84,12 @@ extension CloudSyncProgressView {
             }
         }
         var title: String? { LocalizedString.errorAlertTitle }
-        var message: String? { CloudSyncProgressView.LocalizedString.unsupportedDeviceErrorAlertMessage }
+        var message: String? {
+            switch self {
+            case .notAvailable:
+                return CloudSyncProgressView.LocalizedString.unsupportedDeviceErrorAlertMessage
+            }
+        }
         var recoveryActions: [RecoveryAction] { [.openWaterMeSettings] }
         var isCritical: Bool { false }
     }
