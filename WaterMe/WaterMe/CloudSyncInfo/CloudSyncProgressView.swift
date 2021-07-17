@@ -72,13 +72,17 @@ class CloudSyncProgressView: ZStackView {
     
     var lifecycleDelegate: LifecycleDelegate? {
         didSet {
-            guard self.lifecycleDelegate != nil else { return }
-            DispatchQueue.main.async { self.activateTimer() }
+            self.lastError = nil
+            self.activateTimer()
         }
     }
     private(set) var lifecycle: Lifecycle = .show {
         didSet {
-            self.lifecycleDelegate?(self, { [weak self] _ in self?.activateTimer() })
+            self.lifecycleDelegate?(self,
+                                    { [weak self] _ in
+                                        self?.lastError = nil
+                                        self?.activateTimer()
+                                    })
         }
     }
     
@@ -93,7 +97,7 @@ class CloudSyncProgressView: ZStackView {
             self.idleButton.alpha = 0
             self.syncingButton.alpha = 0
             self.errorButton.alpha = 0
-            self.unavailableButton.alpha = 1
+            self.unavailableButton.alpha = 0
             self.idleButton.isEnabled = false
             self.syncingButton.isEnabled = false
             self.errorButton.addTarget(self, action: #selector(self.showNextError(_:)), for: .touchUpInside)
@@ -109,7 +113,6 @@ class CloudSyncProgressView: ZStackView {
         self._progress = controller?.syncProgress
         super.init(frame: .zero)
         self.progressToken = controller?.syncProgress?.objectWillChange.sink { [weak self] in
-            self?.lastError = nil
             self?.activateTimer()
         }
     }
@@ -175,8 +178,10 @@ class CloudSyncProgressView: ZStackView {
         defer { self.timer?.fire() }
         
         self.timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
-            let error: UserFacingError? = progress.initializeError ?? progress.errorQ.first
-            guard (error ?? self?.lastError) == nil else {
+            let error: UserFacingError? = progress.initializeError
+                ?? progress.errorQ.popFirst()
+                ?? self?.lastError
+            guard error == nil else {
                 invalidate()
                 self?.lastError = error
                 self?.state = .error
@@ -188,6 +193,14 @@ class CloudSyncProgressView: ZStackView {
                 self?.lifecycle = .show
             } else {
                 let oldState = self?.state
+                // if the old state was an error
+                // then we just want to hide
+                // without first switching to idle
+                if oldState == .error {
+                    invalidate()
+                    self?.lifecycle = .hide
+                    return
+                }
                 self?.state = .idle
                 if oldState == .idle {
                     // if the state was previously idle, then we want to let

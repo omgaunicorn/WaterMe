@@ -58,7 +58,6 @@ public class ZStackView: UIView {
     @discardableResult
     public func bringArrangedSubviewToFront(_ view: UIView) -> Result<Void, Error> {
         guard let index = self.arrangedSubviews.firstIndex(of: view) else { return .failure(.givenViewNotManaged) }
-        guard index > 0 else { return .success(()) }
         self.arrangedSubviews.remove(at: index)
         self.arrangedSubviews = [view] + self.arrangedSubviews
         self.arrangedSubviews.enumerated().reversed().forEach { index, view in
