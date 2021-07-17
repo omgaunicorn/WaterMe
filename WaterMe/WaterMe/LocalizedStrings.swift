@@ -197,12 +197,6 @@ extension UIAlertController {
         static let darkModeImproperMessage: String =
             NSLocalizedString("The dark mode settings for WaterMe only work when running iOS 13 or higher.",
                               comment: "Alert: Dark Mode Improper: Message: Message of alert that is presented when Dark Mode settings are configured on iOS 11 or 12.")
-        static let cloudSyncImproperTitle: String =
-            NSLocalizedString("iCloud Sync",
-                              comment: "Duplicate of 'CloudSyncInfoViewController.Title'")
-        static let cloudSyncImproperMessage: String =
-            NSLocalizedString("iCloud Sync is only supported on devices running iOS 14 or higher.",
-                              comment: "Alert: Cloud Sync Improper: Message: Message of alert that is presented when iCloud Sync is enabled on devices running iOS 11, 12, or 13. iCloud Sync requires iOS 14.")
 
     }
 }
@@ -449,17 +443,6 @@ extension CoreDataMigratorViewController {
         static let bodyDeleteConfirmation =
             NSLocalizedString("This cannot be undone",
                               comment: "MigratorScreen: Confirmation that the user does not want to migrate their plants.")
-    }
-}
-
-extension CloudSyncInfoViewController {
-    enum LocalizedString {
-        static let title =
-            NSLocalizedString("iCloud Sync",
-                              comment: "Cloud Sync Info: Title: Lets the user know that iCloud sync is possible")
-        static let body =
-            NSLocalizedString("WaterMe now automatically syncs all plants and reminders via iCloud. You can enable and disable iCloud sync from the settings screen.",
-                              comment: "Cloud Sync Info: Body: Lets the user know how iCloud sync works and that it can be enabled and disabled from the settings app.")
     }
 }
 
@@ -759,7 +742,18 @@ extension CloudSyncProgressView {
             = NSLocalizedString("Sync Error",
                                 comment: "Status Bar: iCloud syncing had an error. A tappable button.")
         static let statusSyncUnavailable: String
-            = NSLocalizedString("iCloud Sync Unavailable on this Device",
+            = NSLocalizedString("iCloud Sync Unavailable",
                                 comment: "Status Bar: iCloud syncing unavailable on this device. A tappable button.")
+    }
+}
+
+extension CloudSyncInfoViewController {
+    enum LocalizedString {
+        static let title =
+            NSLocalizedString("iCloud Sync",
+                              comment: "Cloud Sync Info: Title: Lets the user know that iCloud sync is possible")
+        static let body =
+            NSLocalizedString("WaterMe now automatically syncs all plants and reminders via iCloud. You can enable and disable iCloud sync from the settings screen.",
+                              comment: "Cloud Sync Info: Body: Lets the user know how iCloud sync works and that it can be enabled and disabled from the settings app.")
     }
 }

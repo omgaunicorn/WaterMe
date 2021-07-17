@@ -85,7 +85,7 @@ extension UIAlertController {
             }
             self.addAction(action)
         }
-        let dismiss = UIAlertAction(title: LocalizedString.buttonTitleDontDelete,
+        let dismiss = UIAlertAction(title: LocalizedString.buttonTitleDismiss,
                                     style: .cancel,
                                     handler: { _ in selectionHandler?(nil) })
         self.addAction(dismiss)
@@ -156,20 +156,6 @@ extension UIAlertController {
                                             preferredStyle: .alert)
             let dismiss = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
                 ud.darkMode = .system
-            }
-            alertVC.addAction(dismiss)
-            return alertVC
-        }
-    }
-    class func newLocalizedCloudSyncImproperlyConfigured() -> UIAlertController? {
-        if #available(iOS 14.0, *) { return nil } else {
-            let ud = UserDefaults.standard
-            guard case .sync = ud.controllerKind else { return nil }
-            let alertVC = UIAlertController(title: LocalizedString.cloudSyncImproperTitle,
-                                            message: LocalizedString.cloudSyncImproperMessage,
-                                            preferredStyle: .alert)
-            let dismiss = UIAlertAction(title: LocalizedString.buttonTitleDismiss, style: .cancel) { _ in
-                ud.controllerKind = .local
             }
             alertVC.addAction(dismiss)
             return alertVC

@@ -360,9 +360,6 @@
 /* Alert: Dark Mode Improper: Message: Message of alert that is presented when Dark Mode settings are configured on iOS 11 or 12. */
 "The dark mode settings for WaterMe only work when running iOS 13 or higher." = "Le impostazioni Dark Mode per WaterMe funzionano solo se si utilizza iOS 13 o superiore.";
 
-/* Alert: Cloud Sync Improper: Message: Message of alert that is presented when iCloud Sync is enabled on devices running iOS 11, 12, or 13. iCloud Sync requires iOS 14. */
-"iCloud Sync is only supported on devices running iOS 14 or higher." = "LOCALIZE ME";
-
 /* Purchase Thanks: Body: Body text thanking the user for their support. */
 "Thank you for your purchase. Your support is critical to the continued development of WaterMe." = "Grazie per l'acquisto. Il vostro sostegno è fondamentale per il continuo sviluppo di WaterMe.";
 
@@ -518,8 +515,7 @@ _| |    | | ___  _   _  __| | | (___  _   _ _ __   ___
 "Sync Error" = "LOCALIZE ME";
 
 /* Status Bar: iCloud syncing unavailable on this device. A tappable button. */
-"iCloud Sync Unavailable on this Device" = "LOCALIZE ME";
-
+"iCloud Sync Unavailable" = "Localize Me";
 /*
  
    _____        _          __  __ _                 _   _

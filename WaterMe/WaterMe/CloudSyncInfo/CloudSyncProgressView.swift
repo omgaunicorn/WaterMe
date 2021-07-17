@@ -93,7 +93,7 @@ class CloudSyncProgressView: ZStackView {
             self.idleButton.alpha = 0
             self.syncingButton.alpha = 0
             self.errorButton.alpha = 0
-            self.unavailableButton.alpha = 0
+            self.unavailableButton.alpha = 1
             self.idleButton.isEnabled = false
             self.syncingButton.isEnabled = false
             self.errorButton.addTarget(self, action: #selector(self.showNextError(_:)), for: .touchUpInside)
