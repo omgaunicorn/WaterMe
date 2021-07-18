@@ -45,7 +45,8 @@ class CloudSyncProgressView: ZStackView {
     private let unavailableButton = UIButton(type: .system)
     private var progressToken: Any?
     private var lastError: UserFacingError?
-    private var timer: Timer?
+    private var lastErrorResetTimer: Timer?
+    private var syncProgressActivityTimer: Timer?
     
     private let _progress: Any?
     @available(iOS 13.0, *)
@@ -163,8 +164,8 @@ class CloudSyncProgressView: ZStackView {
     
     private func activateTimer() {
         let invalidate = {
-            self.timer?.invalidate()
-            self.timer = nil
+            self.syncProgressActivityTimer?.invalidate()
+            self.syncProgressActivityTimer = nil
         }
         
         guard #available(iOS 14.0, *), let progress = self.progress else {
@@ -174,16 +175,26 @@ class CloudSyncProgressView: ZStackView {
             return
         }
         
-        guard self.timer == nil else { return }
-        defer { self.timer?.fire() }
+        guard self.syncProgressActivityTimer == nil else { return }
+        defer { self.syncProgressActivityTimer?.fire() }
         
-        self.timer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
+        self.syncProgressActivityTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true)
+        { [weak self] _ in
             let error: UserFacingError? = progress.initializeError
                 ?? progress.errorQ.popFirst()
                 ?? self?.lastError
             guard error == nil else {
                 invalidate()
                 self?.lastError = error
+                if self?.lastErrorResetTimer == nil {
+                    // clear the error after 2 minutes
+                    self?.lastErrorResetTimer = Timer.scheduledTimer(withTimeInterval: 120, repeats: false) { _ in
+                        self?.lastError = nil
+                        self?.lastErrorResetTimer?.invalidate()
+                        self?.lastErrorResetTimer = nil
+                        self?.activateTimer()
+                    }
+                }
                 self?.state = .error
                 self?.lifecycle = .show
                 return
