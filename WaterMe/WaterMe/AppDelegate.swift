@@ -160,6 +160,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
     {
+        // Remote notifications used for CloudKit
+        application.registerForRemoteNotifications()
+
         // see if there is a new build
         _ = {
             // check the build and see if its new
@@ -287,6 +290,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      shouldRestoreApplicationState coder: NSCoder) -> Bool
     {
         return self.application(application, shouldRestoreSecureApplicationState: coder)
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        "didRegisterForRemoteNotifications".log(as: .debug)
+    }
+
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        error.log()
     }
 }
 
