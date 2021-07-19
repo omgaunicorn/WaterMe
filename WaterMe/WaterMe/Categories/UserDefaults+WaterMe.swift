@@ -37,6 +37,8 @@ extension UserDefaults {
         static let kBuildNumberKey = "LAST_BUILD_NUMBER"
         static let kRequestReviewDate = "REQUEST_REVIEW_DATE"
         static let kCheckForUpdatesOnLaunch = "CHECK_FOR_UPDATES"
+        // Make sure this stays in sync with BasicWrappers.swift file
+        static let kDidRunWithoutCloudSync = "DID_RUN_WITHOUT_CLOUD_SYNC"
     }
 
     var checkForUpdatesOnLaunch: Bool {
@@ -165,7 +167,8 @@ extension UserDefaults {
             Constants.kNumberOfReminderDays    : 14,
             Constants.kIncreaseContrast        : false,
             Constants.kDarkMode                : 0,
-            Constants.kCheckForUpdatesOnLaunch : true
+            Constants.kCheckForUpdatesOnLaunch : true,
+            Constants.kDidRunWithoutCloudSync  : true
         ])
 
         let build = self.lastBuildNumber

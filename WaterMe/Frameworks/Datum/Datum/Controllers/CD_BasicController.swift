@@ -106,6 +106,9 @@ internal class CD_BasicController: BasicController {
         
         // Configure maintenance monitor
         self.maintenance_changeToken = self.maintenance_changeMonitor()
+        if case .local = self.kind {
+            UserDefaults.standard.didRunWithoutCloudSync = true
+        }
         
         // Observe sync changes to perform maintenance
         if #available(iOS 14.0, *) {
@@ -121,6 +124,7 @@ internal class CD_BasicController: BasicController {
                         .reduce(self.maintenance_deleteOrphanedReminders)
                         .reduce(self.maintenance_oneTrueVesselShare)
                         .reduce(self.maintenance_fixOrphanedVessels(share:))
+                        .reduce(self.maintenance_massageAllEntries)
                         .error?.log()
                 }
         }
@@ -565,12 +569,16 @@ extension CD_BasicController {
     }
     
     fileprivate func maintenance_massageAllEntries() -> Result<Void, DatumError> {
+        guard UserDefaults.standard.didRunWithoutCloudSync else {
+            return .success(())
+        }
         do {
             let fetchRequest = CD_Base.requestBase
             let context = self.container.viewContext
             let data = try context.fetch(fetchRequest)
             data.forEach { $0.raw_bloop.toggle() }
             try context.save()
+            UserDefaults.standard.didRunWithoutCloudSync = false
             return .success(())
         } catch {
             error.log()
