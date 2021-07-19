@@ -606,16 +606,21 @@ extension CD_BasicController {
             default:
                 // 1.a Find the oldest one
                 let sorted = fetchResult.sorted(by: { $0.raw_vessels?.count ?? 0 > $1.raw_vessels?.count ?? 0 })
-                let originalVesselShare = sorted[0]
-                sorted.dropFirst().forEach {
+                let willKeepShare = sorted[0]
+                sorted.dropFirst().forEach { willDeleteShare in
                     // 1.b Get all vessels from all other ones
-                    $0.raw_vessels.map { originalVesselShare.addToRaw_vessels($0) }
+                    let vessels = (willDeleteShare.raw_vessels?.copy() as? NSSet) ?? []
+                    for vessel in vessels {
+                        guard let vessel = vessel as? CD_ReminderVessel else { continue }
+                        willDeleteShare.removeFromRaw_vessels(vessel)
+                        willKeepShare.addToRaw_vessels(vessel)
+                    }
                     // 1.c Delete all shares other than oldest one
-                    context.delete($0)
+                    context.delete(willDeleteShare)
                 }
                 try context.save()
                 "2+ VesselShares present, but was able to clean.".log(as: .warning)
-                return .success(originalVesselShare)
+                return .success(willKeepShare)
             }
         } catch {
             assertionFailure(String(describing: error))
