@@ -49,7 +49,10 @@ internal class CD_BasicController: BasicController {
             }
             return WaterMe_PersistentSyncContainer(name: "WaterMe", managedObjectModel: mom)
         case .local:
-            return WaterMe_PersistentContainer(name: "WaterMe", managedObjectModel: mom)
+            let container = WaterMe_PersistentContainer(name: "WaterMe", managedObjectModel: mom)
+            let description = container.persistentStoreDescriptions.first!
+            description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+            return container
         case .__testing_inMemory:
             // when testing make in-memory container
             let randomName = String(Int.random(in: 100_000...1_000_000))
