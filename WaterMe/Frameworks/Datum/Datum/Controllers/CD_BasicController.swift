@@ -561,6 +561,20 @@ extension CD_BasicController {
         }
     }
     
+    fileprivate func maintenance_massageAllEntries() -> Result<Void, DatumError> {
+        do {
+            let fetchRequest = CD_Base.requestBase
+            let context = self.container.viewContext
+            let data = try context.fetch(fetchRequest)
+            data.forEach { $0.raw_bloop.toggle() }
+            try context.save()
+            return .success(())
+        } catch {
+            error.log()
+            return .failure(.maintenanceError)
+        }
+    }
+    
     fileprivate func maintenance_oneTrueVesselShare() -> Result<CD_VesselShare, DatumError> {
         let context = self.container.viewContext
         do {
