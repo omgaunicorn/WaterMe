@@ -104,6 +104,8 @@ class ReminderVesselEditViewController: StandardViewController, HasBasicControll
         self.tableViewController?.delegate = self
     }
 
+    // TODO: Fix crasher here when deleting or adding reminder on remote device
+    // TODO: Fix issue where deleting plant on remote device does not dismiss view
     private func vesselChanged(_ changes: ReminderVesselChange) {
         switch changes {
         case .change(let deets):

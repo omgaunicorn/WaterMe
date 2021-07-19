@@ -26,6 +26,7 @@ import IntentsUI
 import UIKit
 import Calculate
 
+// TODO: Fix issues where screen does not refresh when edited on remote device
 class ReminderEditViewController: StandardViewController, HasBasicController {
     
     enum Purpose {
