@@ -122,6 +122,7 @@ public class CloudKitSyncError: TypedNSError<CloudKitSyncErrorKind> {
     public override class var errorDomain: String { "com.saturdayapps.waterme.CloudKitSyncError" }
 }
 
+// See CKError.h for all errors
 public enum CloudKitSyncErrorKind: ErrorInitable {
     case password
     case network
