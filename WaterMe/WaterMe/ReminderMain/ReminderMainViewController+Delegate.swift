@@ -89,7 +89,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                                                         sourceView: view,
                                                         userActivityContinuation: userActivityContinuation)
         { action, identifier, vc in
-            vc.dismiss(animated: true) {
+            vc.dismissNoForReal() {
                 switch action {
                 case .cancel:
                     viewDidAppearActions(true)
@@ -126,7 +126,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
                                                       purpose: .existing(reminder),
                                                       userActivityCompletion: userActivityCompletion)
             { vc in
-                vc.dismiss(animated: true, completion: { completion?(true) })
+                vc.dismissNoForReal(completion: { completion?(true) })
             }
             self.present(vc, animated: true, completion: nil)
         case .failure(let error):
@@ -144,7 +144,7 @@ extension ReminderMainViewController: ReminderCollectionViewControllerDelegate {
             let vc = ReminderVesselEditViewController.newVC(basicController: self.basicRC,
                                                             editVessel: reminder.vessel)
             { vc in
-                vc.dismiss(animated: true, completion: { completion?(true) })
+                vc.dismissNoForReal(completion: { completion?(true) })
             }
             self.present(vc, animated: true, completion: nil)
         case .failure(let error):

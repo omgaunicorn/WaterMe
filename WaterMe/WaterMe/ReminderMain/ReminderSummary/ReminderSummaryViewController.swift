@@ -163,7 +163,7 @@ extension ReminderSummaryViewController: ReminderSummaryTableViewControllerDeleg
                             within: ReminderSummaryTableViewController)
     {
         let config = DismissHandlingImageViewerConfiguration(image: image, completion:  { vc in
-            vc.dismiss(animated: true) { rowDeselectionHandler() }
+            vc.dismissNoForReal(completion: { rowDeselectionHandler() })
         })
         let vc = DismissHandlingImageViewerController(configuration: config)
         self.present(vc, animated: true, completion: nil)

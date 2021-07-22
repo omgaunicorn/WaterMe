@@ -179,7 +179,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         } else if UserDefaults.standard.hasCloudSyncInfoShown == false {
             let vc = CloudSyncInfoViewController.newVC() { vc in
                 UserDefaults.standard.hasCloudSyncInfoShown = true
-                vc.dismiss(animated: true) {
+                vc.dismissNoForReal() {
                     self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
                 }
             }
@@ -192,7 +192,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         } else if let migrator = AppDelegate.shared.coreDataMigrator, let basicRC = self.basicRC {
             let vc = CoreDataMigratorViewController.newVC(migrator: migrator, basicRC: basicRC) { vc, _ in
                 AppDelegate.shared.coreDataMigrator = nil
-                vc.dismiss(animated: true) {
+                vc.dismissNoForReal() {
                     self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
                 }
             }
@@ -215,7 +215,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         guard let transaction = pc?.nextTransactionForPresentingToUser() else { return }
         let _vc = PurchaseThanksViewController.newVC(for: transaction) { vc in
             guard let vc = vc else { self.checkForPurchasesInFlight(); return; }
-            vc.dismiss(animated: true) {
+            vc.dismissNoForReal() {
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
         }
@@ -234,7 +234,7 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         let editVC = ReminderVesselEditViewController.newVC(basicController: basicRC,
                                                             editVessel: nil)
         { vc in
-            vc.dismiss(animated: true) {
+            vc.dismissNoForReal() {
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
             }
         }
@@ -248,14 +248,14 @@ class ReminderMainViewController: StandardViewController, HasProController, HasB
         else { return }
         let vc = ReminderVesselMainViewController.newVC(basicController: self.basicRC)
         { vc in
-            vc.dismiss(animated: true, completion: nil)
+            vc.dismissNoForReal()
         }
         self.present(vc, animated: true, completion: nil)
     }
 
     @IBAction private func settingsButtonTapped(_ sender: Any) {
         let vc = SettingsMainViewController.newVC() { vc in
-            vc.dismiss(animated: true) {
+            vc.dismissNoForReal() {
                 // re-register to receive purchase updates
                 self.registerForPurchaseNotifications()
                 self.checkForErrorsAndOtherUnexpectedViewControllersToPresent()
