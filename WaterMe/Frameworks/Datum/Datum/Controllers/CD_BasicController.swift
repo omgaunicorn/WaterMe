@@ -113,12 +113,13 @@ internal class CD_BasicController: BasicController {
         // Observe sync changes to perform maintenance
         if #available(iOS 14.0, *) {
             self.maintenance_syncToken = self.syncProgress?.objectWillChange
-                .debounce(for: .seconds(1), scheduler: RunLoop.main)
+                .debounce(for: .seconds(3), scheduler: RunLoop.main)
                 .sink { [weak self] _ in
                     guard
                         let self = self,
                         self.syncProgress?.progress.fractionCompleted == 1
                     else { return }
+                    "Performing post syncing maintenance".log(as: .debug)
                     // Perform maintenance and log any errors
                     self.maintenance_fixDates()
                         .reduce(self.maintenance_deleteOrphanedReminders)
@@ -619,6 +620,7 @@ extension CD_BasicController {
                     context.delete(willDeleteShare)
                 }
                 try context.save()
+                UserDefaults.standard.didRunWithoutCloudSync = true
                 "2+ VesselShares present, but was able to clean.".log(as: .warning)
                 return .success(willKeepShare)
             }
