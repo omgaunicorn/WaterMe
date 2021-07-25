@@ -720,6 +720,12 @@ extension CloudSyncProgressView {
         static let errorPasswordAlertMessage: String
             = NSLocalizedString("Sync failed because there is an issue with your iCloud password. Check your password in Settings → Apple ID → iCloud.",
                                 comment: "Alert Message: Indicates there was an issue with the password used for iCloud. This requires going to the phone's settings app.")
+        static let errorStorageLimitAlertMessage: String
+            = NSLocalizedString("Sync couldn't be completed because of an iCloud rate limit. Syncing will automatically resume later.",
+                                comment: "Alert Message: Indicates there was an issue because iCloud reached a rate limit.")
+        static let errorRateLimitAlertMessage: String
+            = NSLocalizedString("Sync failed because your iCloud storage is full. You can buy more iCloud storage, delete data in iCloud, or disable iCloud sync for WaterMe in the settings app.",
+                                comment: "Alert Message: Indicates there was an issue because the user's iCloud storage is full.")
         static let errorNetworkAlertMessage: String
             = NSLocalizedString("Sync failed because there was a network error. Next time there is a network connection, sync will automatically resume.",
                                 comment: "Alert Message: Indicates there was a network error. Syncing will automatically resume when connected again.")

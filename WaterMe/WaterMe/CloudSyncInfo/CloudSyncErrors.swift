@@ -28,6 +28,10 @@ extension CloudKitSyncError: UserFacingError {
     public var title: String? { CloudSyncProgressView.LocalizedString.errorAlertTitle }
     public var message: String? {
         switch self.typed {
+        case .storageLimit:
+            return CloudSyncProgressView.LocalizedString.errorStorageLimitAlertMessage
+        case .rateLimit:
+            return CloudSyncProgressView.LocalizedString.errorRateLimitAlertMessage
         case .password:
             return CloudSyncProgressView.LocalizedString.errorPasswordAlertMessage
         case .network:
@@ -38,9 +42,9 @@ extension CloudKitSyncError: UserFacingError {
     }
     public var recoveryActions: [RecoveryAction] {
         switch self.typed {
-        case .password:
+        case .password, .storageLimit:
             return [.openWaterMeSettings]
-        case .unknown, .network:
+        case .unknown, .network, .rateLimit:
             return []
         }
     }
