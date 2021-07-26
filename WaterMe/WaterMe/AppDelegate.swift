@@ -160,6 +160,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool
     {
+        // Let things know that we launched in the background
+        self.didLaunchInBackground = application.applicationState == .background
+        
         // Remote notifications used for CloudKit
         application.registerForRemoteNotifications()
 
@@ -298,6 +301,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         error.log()
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        self.didLaunchInBackground = false
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
+        self.didLaunchInBackground = false
+    }
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        self.didLaunchInBackground = application.applicationState == .background
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        self.didLaunchInBackground = application.applicationState == .background
     }
 }
 

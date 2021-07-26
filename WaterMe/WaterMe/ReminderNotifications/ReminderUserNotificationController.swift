@@ -36,15 +36,24 @@ class ReminderUserNotificationController {
             Analytics.log(event: Analytics.NotificationPermission.scheduleAlreadyInProgress)
             return
         }
+        
+        let application = UIApplication.shared
+        let appDelegate = AppDelegate.shared
+        
         // tell the OS I'm running a background task
-        self.backgroundTaskID = UIApplication.shared.beginBackgroundTask(withName: self.taskName,
-                                                                         expirationHandler: nil)
+        self.backgroundTaskID = application.beginBackgroundTask(withName: self.taskName,
+                                                                expirationHandler: nil)
         // hop on a background queue to do the processing
         self.queue.async {
             // clear out all the old stuff before making new stuff
             let center = UNUserNotificationCenter.current()
-            center.removeAllDeliveredNotifications()
             center.removeAllPendingNotificationRequests()
+            if appDelegate.didLaunchInBackground == false {
+                // only clear the delivered notifications if the app was
+                // launched normally. If it was launched automatically,
+                // we just want to update future notifications and badge
+                center.removeAllDeliveredNotifications()
+            }
 
             // make sure we have data to work with before continuing
             guard values.isEmpty == false else {
@@ -72,7 +81,7 @@ class ReminderUserNotificationController {
                 // tell the OS I'm done with the background task
                 guard let id = self.backgroundTaskID else { return }
                 self.backgroundTaskID = nil
-                UIApplication.shared.endBackgroundTask(id)
+                application.endBackgroundTask(id)
             }
 
             // ask the notification center to schedule the notifications
