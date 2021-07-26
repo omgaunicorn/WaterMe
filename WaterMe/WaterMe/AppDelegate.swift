@@ -40,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private let loggerDelegate = LoggerErrorDelegate()
     // swiftlint:enable weak_delegate
     private(set) var reminderObserver: GlobalReminderObserver?
+    private(set) var didLaunchInBackground: Bool = false
     private lazy var basicControllerResult = NewBasicController(of: UserDefaults.standard.controllerKind)
 
     let purchaseController = PurchaseController()
