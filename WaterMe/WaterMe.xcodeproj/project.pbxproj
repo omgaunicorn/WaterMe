@@ -229,6 +229,7 @@
 		73D02F69263F69ED00E90138 /* SchemaMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */; };
 		73D02F74263F864500E90138 /* CropViewController in Frameworks */ = {isa = PBXBuildFile; productRef = 7313858D260E15B000CDC138 /* CropViewController */; };
 		73D02F75263F864500E90138 /* SimpleImageViewer in Frameworks */ = {isa = PBXBuildFile; productRef = 73730857260E2F22000B99DB /* SimpleImageViewer */; };
+		73F2D73726B17D8300A4D353 /* Logger+Exceptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F2D73526B02EC400A4D353 /* Logger+Exceptions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -535,6 +536,7 @@
 		73D02F64263F683200E90138 /* TestDB.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestDB.sqlite; sourceTree = "<group>"; };
 		73D02F65263F683300E90138 /* TestDB.sqlite-wal */ = {isa = PBXFileReference; lastKnownFileType = file; path = "TestDB.sqlite-wal"; sourceTree = "<group>"; };
 		73D02F68263F69ED00E90138 /* SchemaMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchemaMigrationTests.swift; sourceTree = "<group>"; };
+		73F2D73526B02EC400A4D353 /* Logger+Exceptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Exceptions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -686,6 +688,7 @@
 				48A7B0F42467FDF600DC0861 /* UserFacingError.swift */,
 				50E831FC250CF567008758E2 /* Loggable.swift */,
 				50E831F2250CB598008758E2 /* Loggable+System.swift */,
+				73F2D73526B02EC400A4D353 /* Logger+Exceptions.swift */,
 				733BC95226880E9700F821D6 /* Result+Convenience.swift */,
 				730E74B7269A84A500E63335 /* TypedNSError.swift */,
 				48A7B0D62467FCB100DC0861 /* Info.plist */,
@@ -1545,6 +1548,7 @@
 				48A7B0F92467FDF600DC0861 /* UserFacingError.swift in Sources */,
 				50E831FD250CF567008758E2 /* Loggable.swift in Sources */,
 				7311AF01263E765A0089B36E /* CloudKitContainerContinuousProgress.swift in Sources */,
+				73F2D73726B17D8300A4D353 /* Logger+Exceptions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
